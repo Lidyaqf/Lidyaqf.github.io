@@ -20,30 +20,32 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="服人以诚不以言">
-<meta property="og:type" content="website">
-<meta property="og:title" content="枫叶白">
-<meta property="og:url" content="http://example.com/index.html">
+  <meta name="description" content="前端项目 GitLab CI&#x2F;CD 持续集成部署指南（Mac 环境）概要在日常开发过程中，我们经常需要将打包后的 dist 包手动发送给后端部署，效率低且容易出错。CI（Continuous Integration，持续集成）可以自动化这一过程，本文将介绍如何通过 GitLab CI 实现持续集成部署。  一、安装 GitLab Runner请参考官方文档：GitLab Runner 安">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前端项目 GitLab CI&#x2F;CD 持续集成部署指南（Mac 环境）">
+<meta property="og:url" content="http://example.com/2025/04/10/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/index.html">
 <meta property="og:site_name" content="枫叶白">
-<meta property="og:description" content="服人以诚不以言">
+<meta property="og:description" content="前端项目 GitLab CI&#x2F;CD 持续集成部署指南（Mac 环境）概要在日常开发过程中，我们经常需要将打包后的 dist 包手动发送给后端部署，效率低且容易出错。CI（Continuous Integration，持续集成）可以自动化这一过程，本文将介绍如何通过 GitLab CI 实现持续集成部署。  一、安装 GitLab Runner请参考官方文档：GitLab Runner 安">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-04-10T03:41:51.000Z">
+<meta property="article:modified_time" content="2025-04-10T09:09:24.700Z">
 <meta property="article:author" content="lidya">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://example.com/">
+<link rel="canonical" href="http://example.com/2025/04/10/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome : true,
-    isPost : false,
+    isHome : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>枫叶白</title>
+  <title>前端项目 GitLab CI/CD 持续集成部署指南（Mac 环境） | 枫叶白</title>
   
 
 
@@ -141,9 +143,10 @@
         <div class="content-wrap">
           
 
-          <div class="content index posts-expand">
+          <div class="content post posts-expand">
             
-      
+
+    
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
@@ -159,10 +162,9 @@
       <meta itemprop="name" content="枫叶白">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2025/04/10/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/" class="post-title-link" itemprop="url">前端项目 GitLab CI/CD 持续集成部署指南（Mac 环境）</a>
-        </h2>
+        <h1 class="post-title" itemprop="name headline">
+          前端项目 GitLab CI/CD 持续集成部署指南（Mac 环境）
+        </h1>
 
         <div class="post-meta">
             <span class="post-meta-item">
@@ -186,7 +188,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="前端项目-GitLab-CI-CD-持续集成部署指南（Mac-环境）"><a href="#前端项目-GitLab-CI-CD-持续集成部署指南（Mac-环境）" class="headerlink" title="前端项目 GitLab CI&#x2F;CD 持续集成部署指南（Mac 环境）"></a>前端项目 GitLab CI&#x2F;CD 持续集成部署指南（Mac 环境）</h1><h2 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h2><p>在日常开发过程中，我们经常需要将打包后的 <code>dist</code> 包手动发送给后端部署，效率低且容易出错。CI（Continuous Integration，持续集成）可以自动化这一过程，本文将介绍如何通过 GitLab CI 实现持续集成部署。</p>
+        <h1 id="前端项目-GitLab-CI-CD-持续集成部署指南（Mac-环境）"><a href="#前端项目-GitLab-CI-CD-持续集成部署指南（Mac-环境）" class="headerlink" title="前端项目 GitLab CI&#x2F;CD 持续集成部署指南（Mac 环境）"></a>前端项目 GitLab CI&#x2F;CD 持续集成部署指南（Mac 环境）</h1><h2 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h2><p>在日常开发过程中，我们经常需要将打包后的 <code>dist</code> 包手动发送给后端部署，效率低且容易出错。CI（Continuous Integration，持续集成）可以自动化这一过程，本文将介绍如何通过 GitLab CI 实现持续集成部署。</p>
 <hr>
 <h2 id="一、安装-GitLab-Runner"><a href="#一、安装-GitLab-Runner" class="headerlink" title="一、安装 GitLab Runner"></a>一、安装 GitLab Runner</h2><p>请参考官方文档：<a target="_blank" rel="noopener" href="https://docs.gitlab.com/runner/install/">GitLab Runner 安装指南</a></p>
 <hr>
@@ -243,21 +245,23 @@
 </ul>
 <!-- - [前端持续集成部署 CI/CD - CSDN](https://blog.csdn.net) -->
 
-      
     </div>
 
     
     
     
+      
       <footer class="post-footer">
-        <div class="post-eof"></div>
+
+        
+
+
+        
       </footer>
+    
   </article>
   
   
-  
-
-
   
 
 
@@ -310,6 +314,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E7%AB%AF%E9%A1%B9%E7%9B%AE-GitLab-CI-CD-%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90%E9%83%A8%E7%BD%B2%E6%8C%87%E5%8D%97%EF%BC%88Mac-%E7%8E%AF%E5%A2%83%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">前端项目 GitLab CI&#x2F;CD 持续集成部署指南（Mac 环境）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A6%82%E8%A6%81"><span class="nav-number">1.1.</span> <span class="nav-text">概要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E5%AE%89%E8%A3%85-GitLab-Runner"><span class="nav-number">1.2.</span> <span class="nav-text">一、安装 GitLab Runner</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E6%9C%AC%E5%9C%B0%E6%B3%A8%E5%86%8C-Runner"><span class="nav-number">1.3.</span> <span class="nav-text">二、本地注册 Runner</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%A7%E8%A1%8C%E6%B3%A8%E5%86%8C%E5%91%BD%E4%BB%A4"><span class="nav-number">1.3.1.</span> <span class="nav-text">执行注册命令</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E7%BC%96%E5%86%99-gitlab-ci-yml-%E6%96%87%E4%BB%B6%E5%B9%B6%E6%8F%90%E4%BA%A4"><span class="nav-number">1.4.</span> <span class="nav-text">三、编写 .gitlab-ci.yml 文件并提交</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E9%80%9A%E8%BF%87-Docker-%E5%AE%9E%E7%8E%B0-CI%EF%BC%88%E5%8F%AF%E9%80%89%EF%BC%89"><span class="nav-number">1.5.</span> <span class="nav-text">四、通过 Docker 实现 CI（可选）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%AE%89%E8%A3%85-Docker%EF%BC%88Mac%EF%BC%89"><span class="nav-number">1.5.1.</span> <span class="nav-text">1. 安装 Docker（Mac）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E6%8B%89%E5%8F%96-GitLab-%E9%95%9C%E5%83%8F"><span class="nav-number">1.5.2.</span> <span class="nav-text">2. 拉取 GitLab 镜像</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E5%88%9B%E5%BB%BA-GitLab-%E5%AE%B9%E5%99%A8"><span class="nav-number">1.5.3.</span> <span class="nav-text">3. 创建 GitLab 容器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81Docker-%E6%A8%A1%E5%BC%8F%E4%B8%8B%E7%9A%84-gitlab-ci-yml-%E7%A4%BA%E4%BE%8B"><span class="nav-number">1.6.</span> <span class="nav-text">五、Docker 模式下的 .gitlab-ci.yml 示例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%A8%E8%8D%90"><span class="nav-number">1.7.</span> <span class="nav-text">推荐</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
