@@ -6,12 +6,7 @@
     <content><![CDATA[使用 Docker 安装 ELK Stack（ElasticSearch、Logstash、Kibana）
 建议在 Docker 上安装，资源占用少。以下安装版本统一为 8.12.2，建议保持一致避免冲突。
 
-目录
-安装 ElasticSearch
-安装 Logstash
-安装 Kibana
-参考链接
-
+目录1、安装 ElasticSearch2、安装 Logstash3、安装 Kibana推荐
 
 1、安装 ElasticSearch
 拉取镜像：
