@@ -78,6 +78,12 @@ docker exec -u 0 -it some-kibana bash
 娱乐一下
 
 ]]></content>
+      <categories>
+        <category>后端</category>
+      </categories>
+      <tags>
+        <tag>博客</tag>
+      </tags>
   </entry>
   <entry>
     <title>GitLab CI/CD</title>
@@ -139,5 +145,11 @@ http://localhost:8090/
 
 
 ]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+      <tags>
+        <tag>前端</tag>
+      </tags>
   </entry>
 </search>
