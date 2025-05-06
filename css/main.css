@@ -6,7 +6,7 @@
   --blockquote-color: #666;
   --link-color: #555;
   --link-hover-color: #fff;
-  --brand-color: #000;
+  --brand-color: #fff;
   --brand-hover-color: #fff;
   --table-row-odd-bg-color: #f9f9f9;
   --table-row-hover-bg-color: #f5f5f5;
@@ -1169,7 +1169,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #f4043b;
+  background: #e4ff65;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
