@@ -6,7 +6,7 @@
   --blockquote-color: #666;
   --link-color: #555;
   --link-hover-color: #222;
-  --brand-color: #fff;
+  --brand-color: #000;
   --brand-hover-color: #fff;
   --table-row-odd-bg-color: #f9f9f9;
   --table-row-hover-bg-color: #f5f5f5;
@@ -975,7 +975,7 @@ pre .javascript .function {
 }
 .brand {
   border-bottom: none;
-  color: var(--brand-color);
+  color: #000;
   display: inline-block;
   line-height: 1.375em;
   padding: 0 40px;
