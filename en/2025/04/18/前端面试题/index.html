@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+<style>
+    .contain {
+      position: relative;
+      width: 100%;
+      height: 50px;
+      background: #f0f0f0;
+      overflow: hidden;
+    }
+  
+    .danmaku {
+      position: absolute;
+      white-space: nowrap;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 14px;
+      color: #333;
+      animation: moveLeft 15s linear forwards;
+    }
+  
+    .danmaku.paused {
+      animation-play-state: paused;
+    }
+  
+    @keyframes moveLeft {
+      from {
+        left: 100%;
+      }
+      to {
+        left: -100%;
+      }
+    }
+  </style>
+  <link rel="apple-touch-icon" sizes="180x180" href="/en/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/en/images/favicon.svg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/en/images/favicon.svg">
+  <link rel="mask-icon" href="/en/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/en/css/main.css">
+
+
+<link rel="stylesheet" href="/en/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"lidyaqf.github.io","root":"/en/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <div class="contain" id="danmakuContainer"></div>
+  
+  <script>
+  const messages = [
+      '如果对喜欢的东西无法放弃，就来一次逆光飞翔',
+      '你以为你什么都不会，等你失去了所有的依靠，就什么都会了',
+      '世间有四种东西无法挽回：说出去的话、射出去的箭、流逝的时间，还有错过的机会',
+      '做你害怕的事，然后你会发现，不过如此',
+      '要怎么说呢，要承认生活里失望和错序是正常的，欢喜与顺遂才是意外',
+      '人不是因为年老而停止了游戏，而是因为停止了游戏才变老的',
+      '认真玩耍',
+      '这个世界上既没有侥幸，也没有童话故事，更没有坐享其成',
+      '生气的原因不在于别人做了什么，而在于我怎么看待对方及其行为',
+      '是什么曾经拯救过你，你最好就用它来更好地拯救这个世界',
+      '美国小说家海明威给“不道德”下的定义是：“事后觉得不好的任何事情',
+      '有些花注定会被吹散在天涯，但也说不定很久后就被吹落在同一处天涯',
+      '哪有那么多的久别重逢，只不过是有人用心良苦罢了',
+      '找出你最擅长的事情，然后持之以恒、乐此不疲地去把它做好',
+      '海洋是天空的玩笑，星星都在海里摇',
+      '哪里会有什么终身有效的标准答案呢',
+      '我会陪你一起老去，在你看不到的地方',
+      '如果跟我道别之后你能过得更好，那么我真心实意给你我全部的祝愿',
+      '没有跌宕起伏的人生，过着多没意思',
+      '两个人在一起最好的状态，应该是一场相互的成全和彼此的仰视，而非没有原则地迁就和将理想掐死',
+      '我慢慢地、慢慢地了解到，所谓父女母子一场，只不过意味着，你和他们的缘分就是今生今世不断地目送他的背影渐行渐远',
+      '尼采的话：“那没能杀死我的，会让我更强壮',
+      '“曾经是”也是一种“是”，甚至更为确定',
+      '你原先以为的“目的”未必是这件事真正的“目的”',
+      '生活需要一些格格不入',
+      '给你20次投资机会，用完就没有',
+      '如果你的目标是让核心概念成为自身应用知识的一部分，唯一的办法就是反复实践',
+      '不能哭，眼泪会冻住',
+      '在你看不到的角落，多的是你不知道的事',
+      '也许你不是最发光的那一个，但是也照到了该照亮的地方',
+      '谦卑和感恩是解决一切问题的万灵丹',
+      '三毛曾说：“等待和犹豫是这个世界上最无情的杀手。”',
+      '我们的思想总是在过去和未来，但我们的身体和呼吸却永远是在当下的',
+      '让人倾家荡产的旅行才是最最好的一种投资',
+      '有时想到人生尽头，若孟婆汤也是塑料饮料瓶包装的那种，拧开瓶盖，“谢谢参与”和“再来一次”，真不知道哪个更可怕',
+      '上帝让右手成为右手，就是对右手最高的奖赏；同理，上帝让善人成为善人，也就是对善人的最高奖赏',
+      '《大学》云：知止而后有定，定而后能静，静而后能安，安而后能虑，虑而后能得',
+      '这世界上缺的不是完美的人，而是从心底给出的正义、真心、无畏和同情',
+      '健忘是一种超能力，会让我们耿耿于怀的心事转眼就忘掉，才得以继续乐观地面对我们崭新的一天',
+      '世间情动，不过盛夏白瓷梅子汤，碎冰碰壁当啷响。不负对方就好，不负此生很难',
+      '同时间赛跑，与病魔较量',
+      '运动是解压的方式，好像有些人觉得炒菜解压一样',
+      '生活中不可能一直绿灯通行,得感谢红灯的警示和黄灯的缓冲',
+      '当你觉得自己不行的时候，你就去走一下人行横道线，这样你就变成了一个行人'
+  ];
+  
+  let messageQueue = [...messages];
+  const danmakuContainer = document.getElementById('danmakuContainer');
+  
+  function addDanmaku(text) {
+      const danmaku = document.createElement('div');
+      danmaku.className = 'danmaku';
+      danmaku.innerText = text;
+      danmaku.style.color = getRandomColor();
+      danmaku.style.zIndex = Math.floor(Math.random() * 10);
+  
+      danmaku.addEventListener('mouseover', () => {
+          danmaku.classList.add('paused');
+      });
+      danmaku.addEventListener('mouseout', () => {
+          danmaku.classList.remove('paused');
+      });
+  
+      danmakuContainer.appendChild(danmaku);
+  
+      // 动画结束后自动移除，避免堆积
+      danmaku.addEventListener('animationend', () => {
+          danmakuContainer.removeChild(danmaku);
+      });
+  }
+  
+let currentIndex = 0;
+
+function getNextMessage() {
+    if (messageQueue.length === 0) {
+        messageQueue = [...messages];
+    }
+    const message = messageQueue[currentIndex];
+    currentIndex++;
+    if (currentIndex >= messageQueue.length) {
+        currentIndex = 0; // 走完一遍，从头开始
+    }
+    return message;
+}
+
+  function getRandomColor() {
+      const letters = '0123456789ABCDEF';
+      let color = '#';
+      for (let i = 0; i < 6; i++) {
+          color += letters[Math.floor(Math.random() * 16)];
+      }
+      return color;
+  }
+  
+  setInterval(() => {
+      const randomMessage = getNextMessage();
+      addDanmaku(randomMessage);
+  }, 4000); // 每隔3秒一条，防止重叠
+  </script>
+  
+
+
+
+  <meta name="description" content="var、let、const 三者的区别?  ✅ 作用域 var 定义的变量没有块作用域，可以跨块访问，但不能跨函数访问。 let 定义的变量有块作用域，只能在声明的代码块中访问。 const 定义的是常量，必须初始化，只能在声明的代码块中访问，且值不可更改。  ✅ 声明规则 同一个变量名，只能用一种声明方式，否则会报错。  ✅ 结合 this 的区别   特性 var &#x2F; let">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前端面试题">
+<meta property="og:url" content="https://lidyaqf.github.io/2025/04/18/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98/index.html">
+<meta property="og:site_name" content="My English Blog">
+<meta property="og:description" content="var、let、const 三者的区别?  ✅ 作用域 var 定义的变量没有块作用域，可以跨块访问，但不能跨函数访问。 let 定义的变量有块作用域，只能在声明的代码块中访问。 const 定义的是常量，必须初始化，只能在声明的代码块中访问，且值不可更改。  ✅ 声明规则 同一个变量名，只能用一种声明方式，否则会报错。  ✅ 结合 this 的区别   特性 var &#x2F; let">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-04-18T09:31:30.000Z">
+<meta property="article:modified_time" content="2025-04-28T08:48:20.286Z">
+<meta property="article:author" content="lidya">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://lidyaqf.github.io/2025/04/18/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>前端面试题 | My English Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/en/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">My English Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/en/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/en/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-english">
+
+    <a href="/en/en" rel="section"><i class="fa fa-language fa-fw"></i>English</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/en/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://lidyaqf.github.io/2025/04/18/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/en/images/avatar.jpg">
+      <meta itemprop="name" content="lidya">
+      <meta itemprop="description" content="服人以诚不以言">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="My English Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          前端面试题
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2025-04-18 17:31:30" itemprop="dateCreated datePublished" datetime="2025-04-18T17:31:30+08:00">2025-04-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-04-28 16:48:20" itemprop="dateModified" datetime="2025-04-28T16:48:20+08:00">2025-04-28</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id=""><a href="#" class="headerlink" title=""></a></h1><details>
+  <summary><strong>var、let、const 三者的区别?</strong></summary>
+
+<h4 id="✅-作用域"><a href="#✅-作用域" class="headerlink" title="✅ 作用域"></a>✅ 作用域</h4><ol>
+<li><code>var</code> 定义的变量没有块作用域，<strong>可以跨块访问，但不能跨函数访问</strong>。</li>
+<li><code>let</code> 定义的变量有块作用域，<strong>只能在声明的代码块中访问</strong>。</li>
+<li><code>const</code> 定义的是常量，<strong>必须初始化，只能在声明的代码块中访问，且值不可更改</strong>。</li>
+</ol>
+<h4 id="✅-声明规则"><a href="#✅-声明规则" class="headerlink" title="✅ 声明规则"></a>✅ 声明规则</h4><ul>
+<li>同一个变量名，只能用一种声明方式，否则会报错。</li>
+</ul>
+<h4 id="✅-结合-this-的区别"><a href="#✅-结合-this-的区别" class="headerlink" title="✅ 结合 this 的区别"></a>✅ 结合 this 的区别</h4><table>
+<thead>
+<tr>
+<th>特性</th>
+<th>var &#x2F; let &#x2F; const</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>改变 <code>this</code> 指向</td>
+<td>✅ 可以</td>
+</tr>
+<tr>
+<td>第一个参数是 <code>this</code> 要指向的对象</td>
+<td>✅ 是</td>
+</tr>
+<tr>
+<td>没传对象或为 <code>undefined/null</code></td>
+<td>默认指向全局 <code>window</code></td>
+</tr>
+<tr>
+<td>参数传递</td>
+<td><code>apply</code> 用数组，<code>call</code> 用参数列表，<code>bind</code> 可多次传参</td>
+</tr>
+<tr>
+<td>执行方式</td>
+<td><code>apply/call</code> 立即执行，<code>bind</code> 返回新函数</td>
+</tr>
+</tbody></table>
+</details>
+
+
+<details>
+  <summary><strong>什么是事件委托?</strong></summary>
+
+<!-- 事件委托是一种事件处理机制，它将一个或多个子元素的事件监听**委托给父级或祖先元素**。 -->
+<ul>
+<li>事件委托，会把一个或者一组元素的事件委托到它的父层或者更外层元素上，真正绑定事件的是外层元素，而不是目标元素<br/></li>
+<li>当事件响应到目标元素上时，会通过事件冒泡机制从而触发它的外层元素的绑定事件上，然后在外层元素上去执行函数</li>
+</ul>
+</details>
+
+<details>
+  <summary><strong>防抖跟节流的区别是什么？</strong></summary>
+
+<!-- 事件委托是一种事件处理机制，它将一个或多个子元素的事件监听**委托给父级或祖先元素**。 -->
+<ul>
+<li>防抖：只执行最后一次。事件持续触发，但只有等事件停止触发后 n 秒后才执行函数。<br/></li>
+<li>节流：控制执行频率。持续触发，每 n 秒执行一次函数。</li>
+</ul>
+</details>
+<details>
+  <summary><strong>Web 前端预防 SQL 注入的方法有哪些？</strong></summary>
+
+<ol>
+<li>参数化查询：使用预处理语句或参数化查询来避免 SQL 注入。</li>
+<li>验证用户输入：验证用户输入的数据，确保其符合预期格式，避免非法字符等。</li>
+<li>转义特殊字符：在使用用户输入的数据构造 SQL 语句时，对特殊字符进行转义，以防止注入。</li>
+<li>限制权限：限制用户的权限，使其不能执行不安全的 SQL 操作。</li>
+<li>白名单验证：白名单验证是指确保用户输入的数据只能是允许的值，避免非法数据的输入。</li>
+<li>审核代码：定期审核代码，以确保代码的安全性，特别是对于数据库连接和查询部分的代码。</li>
+</ol>
+</details>
+
+<details>
+  <summary><strong>http 和 https 的区别</strong></summary>
+
+<ol>
+<li>https 协议需要到 ca 申请证书，一般免费证书较少，因而需要一定费用。</li>
+<li>http 是超文本传输协议，信息是明文传输，https 则是具有安全性的 ssl 加密传输协议。</li>
+<li>http 和 https 使用的是完全不同的连接方式，用的端口也不一样，前者是 80，后者是 443。</li>
+<li>http 的连接很简单，是无状态的；HTTPS 协议是由 SSL+HTTP 协议构建的可进行加密传输、身份认证的网络协议，比 http 协议安全。</li>
+</ol>
+</details>
+
+<details>
+  <summary><strong>created跟mounted的区别</strong></summary>
+
+<ul>
+<li>created发生在mounted之前，此时DOM元素还没完全渲染出来，不过跟后端联调时候的请求可以放在这里，尽早获取到数据返回给变量。</li>
+<li>mounted这时候已经可以获取页面中的DOM元素了。</li>
+</ul>
+</details>
+
+<details>
+  <summary><strong>说说事件循环机制</strong></summary>
+
+<h3 id="🔁-什么是事件循环？"><a href="#🔁-什么是事件循环？" class="headerlink" title="🔁 什么是事件循环？"></a>🔁 什么是事件循环？</h3><p>JavaScript 是单线程语言，执行代码时除了依赖<strong>调用栈</strong>，还依赖<strong>任务队列</strong>来控制异步代码的执行顺序。</p>
+<p>整个执行过程称为 <strong>事件循环（Event Loop）</strong>。</p>
+<h3 id="🧠-事件循环的核心概念："><a href="#🧠-事件循环的核心概念：" class="headerlink" title="🧠 事件循环的核心概念："></a>🧠 事件循环的核心概念：</h3><ul>
+<li>一个线程中只有一个事件循环（主循环）。</li>
+<li>可以有多个任务队列，按类型分为：<ul>
+<li><strong>宏任务（Macro Task）</strong></li>
+<li><strong>微任务（Micro Task）</strong></li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="⏱-执行顺序是怎样的？"><a href="#⏱-执行顺序是怎样的？" class="headerlink" title="⏱ 执行顺序是怎样的？"></a>⏱ 执行顺序是怎样的？</h3><div style="color: #fc6423"><strong>执行顺序：</strong></div>
+
+<blockquote>
+<p><strong>宏任务 ➝ 微任务（清空） ➝ 下一个宏任务 ➝ 微任务（清空）… 依此循环</strong></p>
+</blockquote>
+<ol>
+<li>执行一个宏任务（如 script 整体代码）</li>
+<li>在当前宏任务中执行所有产生的微任务</li>
+<li>若微任务中又产生新的微任务，继续执行，直到清空微任务队列</li>
+<li>开始下一轮宏任务循环</li>
+</ol>
+<hr>
+<h3 id="🧩-宏任务（Macro-Task）有哪些？"><a href="#🧩-宏任务（Macro-Task）有哪些？" class="headerlink" title="🧩 宏任务（Macro Task）有哪些？"></a>🧩 宏任务（Macro Task）有哪些？</h3><ul>
+<li><code>script</code>（整体代码）</li>
+<li><code>setTimeout</code></li>
+<li><code>setInterval</code></li>
+<li><code>setImmediate</code>（Node.js）</li>
+<li><code>I/O 操作</code></li>
+<li><code>UI 渲染</code></li>
+</ul>
+<h3 id="🧬-微任务（Micro-Task）有哪些？"><a href="#🧬-微任务（Micro-Task）有哪些？" class="headerlink" title="🧬 微任务（Micro Task）有哪些？"></a>🧬 微任务（Micro Task）有哪些？</h3><ul>
+<li><code>process.nextTick</code>（Node.js 专属，优先级更高）</li>
+<li><code>Promise.then / catch / finally</code></li>
+<li><code>async / await</code></li>
+<li><code>MutationObserver</code></li>
+</ul>
+</details>
+
+<details>
+  <summary><strong>说说 css 盒模型</strong></summary>
+
+<p>  css 中的盒子模型包括 IE 盒子模型和标准的 W3C 盒子模型</p>
+<p>  在标准的盒子模型中，width 指 content 部分的宽度，box-sizing:content-box(默认为content-box);</p>
+<p>  在 IE 盒子模型中，width 指的是 content+padding+border，box-sizing:border-box;</p>
+<p>  Box-sizing:padding-box 宽度包含了左右 padding+width</p>
+</details>
+
+<details>
+  <summary><strong>vue2 和 vue3 的区别</strong></summary>
+
+<ol>
+<li>双向数据绑定原理不同,vue2 使用 Es5 的 API defineProperty()对数据进行劫持, 只能监听某个属性,不能对整个对象监听;vue3 使用 ES6 的 proxy API 对数据代理, 可以监听整个对象和数组</li>
+<li>生命周期不同<br>  vue2:beforeCreate、created 、beforeMount、mounted、beforeUpdate、updated、<br>  beforeDestroy、destroyed<br>  vue3:setup 、onBeforeMount 、 onMounted 、onBeforeUpdate 、onUpdated 、<br>  onBeforeUnmount、onUnmounted</li>
+<li>vue2 必须有根标签,vue3 可以没有根标签,会默认将多个根标签包裹在 fragment虚拟标签中</li>
+<li>vue2 采用选项式 API,将函数和数据统一起来处理,将功能点切割了,当逻辑复杂时不利于代码阅读;vue3 采用组合式 API,将同一个功能的代码统一起来处理,使代码更有序,有利于代码的书写和维护</li>
+<li>vue2 和 vue3 匿名插槽不一样<br>  具名插槽使用方式不同：vue2 使用 slot&#x3D;’’,vue3 使用 v-slot:’’<br>  作用域插槽使用方式不同：vue2 中在父组件中使用 slot-scope&#x3D;”data”从子组件获取数据，vue3 中在父组件中使用 #data 或者 #default&#x3D;”{data}”获取</li>
+</ol>
+</details>
+
+
+<h2 id="推荐"><a href="#推荐" class="headerlink" title="推荐"></a>推荐</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://edunextgen1.com/">娱乐一下</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+    
+      <div>
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:24px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+      </div>
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:  </strong>lidya
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link: </strong>
+    <a href="https://lidyaqf.github.io/2025/04/18/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98/" title="前端面试题">https://lidyaqf.github.io/2025/04/18/前端面试题/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/en/2025/04/16/redis/" rel="prev" title="redis">
+      <i class="fa fa-chevron-left"></i> redis
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/en/2025/05/21/%E3%80%8A%E7%BB%88%E6%9C%89%E4%B8%80%E5%A4%A9%E4%BD%A0%E4%BC%9A%E6%87%82%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%20-%20%E7%90%A2%E7%A3%A8%E5%85%88%E7%94%9F/" rel="next" title="《终有一天你会懂》读书笔记 - 琢磨先生">
+      《终有一天你会懂》读书笔记 - 琢磨先生 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC82MDU2Mi8zNzAzMw=="></div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E2%9C%85-%E4%BD%9C%E7%94%A8%E5%9F%9F"><span class="nav-number">1.0.0.1.</span> <span class="nav-text">✅ 作用域</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E2%9C%85-%E5%A3%B0%E6%98%8E%E8%A7%84%E5%88%99"><span class="nav-number">1.0.0.2.</span> <span class="nav-text">✅ 声明规则</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E2%9C%85-%E7%BB%93%E5%90%88-this-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">1.0.0.3.</span> <span class="nav-text">✅ 结合 this 的区别</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%94%81-%E4%BB%80%E4%B9%88%E6%98%AF%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF%EF%BC%9F"><span class="nav-number">1.0.1.</span> <span class="nav-text">🔁 什么是事件循环？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%A7%A0-%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF%E7%9A%84%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5%EF%BC%9A"><span class="nav-number">1.0.2.</span> <span class="nav-text">🧠 事件循环的核心概念：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E2%8F%B1-%E6%89%A7%E8%A1%8C%E9%A1%BA%E5%BA%8F%E6%98%AF%E6%80%8E%E6%A0%B7%E7%9A%84%EF%BC%9F"><span class="nav-number">1.0.3.</span> <span class="nav-text">⏱ 执行顺序是怎样的？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%A7%A9-%E5%AE%8F%E4%BB%BB%E5%8A%A1%EF%BC%88Macro-Task%EF%BC%89%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F"><span class="nav-number">1.0.4.</span> <span class="nav-text">🧩 宏任务（Macro Task）有哪些？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%A7%AC-%E5%BE%AE%E4%BB%BB%E5%8A%A1%EF%BC%88Micro-Task%EF%BC%89%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F"><span class="nav-number">1.0.5.</span> <span class="nav-text">🧬 微任务（Micro Task）有哪些？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%A8%E8%8D%90"><span class="nav-number">1.1.</span> <span class="nav-text">推荐</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="lidya"
+      src="/en/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">lidya</p>
+  <div class="site-description" itemprop="description">服人以诚不以言</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/en/archives/">
+        
+          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/en/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">lidya</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/en/lib/anime.min.js"></script>
+  <script src="/en/lib/velocity/velocity.min.js"></script>
+  <script src="/en/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/en/js/utils.js"></script>
+
+<script src="/en/js/motion.js"></script>
+
+
+<script src="/en/js/schemes/pisces.js"></script>
+
+
+<script src="/en/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
+  window.livereOptions = {
+    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+});
+</script>
+
+</body>
+</html>
