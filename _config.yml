@@ -10,10 +10,16 @@ keywords:
 author: lidya
 language: zh-CN
 timezone: 'Asia/Shanghai'
+# languages:
+#   zh-CN:
+#     path: cn
+#   en:
+#     path: en
 
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
 url: https://lidyaqf.github.io/
+baseurl: "" 
 permalink: :year/:month/:day/:title/
 permalink_defaults:
 pretty_urls:
@@ -98,6 +104,9 @@ ignore:
 ## Themes: https://hexo.io/themes/
 theme: next
 
+
+
+
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
@@ -109,3 +118,5 @@ search:
   path: search.xml  
   field: post  
   content: true
+
+

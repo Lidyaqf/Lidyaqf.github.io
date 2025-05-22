@@ -123,6 +123,7 @@ menu:
   #about: /about/ || fa fa-user
   # tags: /tags/ || fa fa-tags
   categories: /categories/ || fa fa-th
+  English: /en || fa fa-language
   archives: /archives/ || fa fa-archive
   #schedule: /schedule/ || fa fa-calendar
   #sitemap: /sitemap.xml || fa fa-sitemap
