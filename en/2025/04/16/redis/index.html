@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+<style>
+    .contain {
+      position: relative;
+      width: 100%;
+      height: 50px;
+      background: #f0f0f0;
+      overflow: hidden;
+    }
+  
+    .danmaku {
+      position: absolute;
+      white-space: nowrap;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 14px;
+      color: #333;
+      animation: moveLeft 15s linear forwards;
+    }
+  
+    .danmaku.paused {
+      animation-play-state: paused;
+    }
+  
+    @keyframes moveLeft {
+      from {
+        left: 100%;
+      }
+      to {
+        left: -100%;
+      }
+    }
+  </style>
+  <link rel="apple-touch-icon" sizes="180x180" href="/en/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/en/images/favicon.svg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/en/images/favicon.svg">
+  <link rel="mask-icon" href="/en/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/en/css/main.css">
+
+
+<link rel="stylesheet" href="/en/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"lidyaqf.github.io","root":"/en/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <div class="contain" id="danmakuContainer"></div>
+  
+  <script>
+  const messages = [
+      '如果对喜欢的东西无法放弃，就来一次逆光飞翔',
+      '你以为你什么都不会，等你失去了所有的依靠，就什么都会了',
+      '世间有四种东西无法挽回：说出去的话、射出去的箭、流逝的时间，还有错过的机会',
+      '做你害怕的事，然后你会发现，不过如此',
+      '要怎么说呢，要承认生活里失望和错序是正常的，欢喜与顺遂才是意外',
+      '人不是因为年老而停止了游戏，而是因为停止了游戏才变老的',
+      '认真玩耍',
+      '这个世界上既没有侥幸，也没有童话故事，更没有坐享其成',
+      '生气的原因不在于别人做了什么，而在于我怎么看待对方及其行为',
+      '是什么曾经拯救过你，你最好就用它来更好地拯救这个世界',
+      '美国小说家海明威给“不道德”下的定义是：“事后觉得不好的任何事情',
+      '有些花注定会被吹散在天涯，但也说不定很久后就被吹落在同一处天涯',
+      '哪有那么多的久别重逢，只不过是有人用心良苦罢了',
+      '找出你最擅长的事情，然后持之以恒、乐此不疲地去把它做好',
+      '海洋是天空的玩笑，星星都在海里摇',
+      '哪里会有什么终身有效的标准答案呢',
+      '我会陪你一起老去，在你看不到的地方',
+      '如果跟我道别之后你能过得更好，那么我真心实意给你我全部的祝愿',
+      '没有跌宕起伏的人生，过着多没意思',
+      '两个人在一起最好的状态，应该是一场相互的成全和彼此的仰视，而非没有原则地迁就和将理想掐死',
+      '我慢慢地、慢慢地了解到，所谓父女母子一场，只不过意味着，你和他们的缘分就是今生今世不断地目送他的背影渐行渐远',
+      '尼采的话：“那没能杀死我的，会让我更强壮',
+      '“曾经是”也是一种“是”，甚至更为确定',
+      '你原先以为的“目的”未必是这件事真正的“目的”',
+      '生活需要一些格格不入',
+      '给你20次投资机会，用完就没有',
+      '如果你的目标是让核心概念成为自身应用知识的一部分，唯一的办法就是反复实践',
+      '不能哭，眼泪会冻住',
+      '在你看不到的角落，多的是你不知道的事',
+      '也许你不是最发光的那一个，但是也照到了该照亮的地方',
+      '谦卑和感恩是解决一切问题的万灵丹',
+      '三毛曾说：“等待和犹豫是这个世界上最无情的杀手。”',
+      '我们的思想总是在过去和未来，但我们的身体和呼吸却永远是在当下的',
+      '让人倾家荡产的旅行才是最最好的一种投资',
+      '有时想到人生尽头，若孟婆汤也是塑料饮料瓶包装的那种，拧开瓶盖，“谢谢参与”和“再来一次”，真不知道哪个更可怕',
+      '上帝让右手成为右手，就是对右手最高的奖赏；同理，上帝让善人成为善人，也就是对善人的最高奖赏',
+      '《大学》云：知止而后有定，定而后能静，静而后能安，安而后能虑，虑而后能得',
+      '这世界上缺的不是完美的人，而是从心底给出的正义、真心、无畏和同情',
+      '健忘是一种超能力，会让我们耿耿于怀的心事转眼就忘掉，才得以继续乐观地面对我们崭新的一天',
+      '世间情动，不过盛夏白瓷梅子汤，碎冰碰壁当啷响。不负对方就好，不负此生很难',
+      '同时间赛跑，与病魔较量',
+      '运动是解压的方式，好像有些人觉得炒菜解压一样',
+      '生活中不可能一直绿灯通行,得感谢红灯的警示和黄灯的缓冲',
+      '当你觉得自己不行的时候，你就去走一下人行横道线，这样你就变成了一个行人'
+  ];
+  
+  let messageQueue = [...messages];
+  const danmakuContainer = document.getElementById('danmakuContainer');
+  
+  function addDanmaku(text) {
+      const danmaku = document.createElement('div');
+      danmaku.className = 'danmaku';
+      danmaku.innerText = text;
+      danmaku.style.color = getRandomColor();
+      danmaku.style.zIndex = Math.floor(Math.random() * 10);
+  
+      danmaku.addEventListener('mouseover', () => {
+          danmaku.classList.add('paused');
+      });
+      danmaku.addEventListener('mouseout', () => {
+          danmaku.classList.remove('paused');
+      });
+  
+      danmakuContainer.appendChild(danmaku);
+  
+      // 动画结束后自动移除，避免堆积
+      danmaku.addEventListener('animationend', () => {
+          danmakuContainer.removeChild(danmaku);
+      });
+  }
+  
+let currentIndex = 0;
+
+function getNextMessage() {
+    if (messageQueue.length === 0) {
+        messageQueue = [...messages];
+    }
+    const message = messageQueue[currentIndex];
+    currentIndex++;
+    if (currentIndex >= messageQueue.length) {
+        currentIndex = 0; // 走完一遍，从头开始
+    }
+    return message;
+}
+
+  function getRandomColor() {
+      const letters = '0123456789ABCDEF';
+      let color = '#';
+      for (let i = 0; i < 6; i++) {
+          color += letters[Math.floor(Math.random() * 16)];
+      }
+      return color;
+  }
+  
+  setInterval(() => {
+      const randomMessage = getNextMessage();
+      addDanmaku(randomMessage);
+  }, 4000); // 每隔3秒一条，防止重叠
+  </script>
+  
+
+
+
+  <meta name="description" content="目录redis-token缓存jwt跟redis存token的区别redis相关知识推荐 redis-token缓存 redis.js创建 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697">
+<meta property="og:type" content="article">
+<meta property="og:title" content="redis">
+<meta property="og:url" content="https://lidyaqf.github.io/2025/04/16/redis/index.html">
+<meta property="og:site_name" content="My English Blog">
+<meta property="og:description" content="目录redis-token缓存jwt跟redis存token的区别redis相关知识推荐 redis-token缓存 redis.js创建 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-04-16T03:58:45.000Z">
+<meta property="article:modified_time" content="2025-05-22T02:45:38.141Z">
+<meta property="article:author" content="lidya">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://lidyaqf.github.io/2025/04/16/redis/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>redis | My English Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/en/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">My English Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/en/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/en/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-english">
+
+    <a href="/en/en" rel="section"><i class="fa fa-language fa-fw"></i>English</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/en/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://lidyaqf.github.io/2025/04/16/redis/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/en/images/avatar.jpg">
+      <meta itemprop="name" content="lidya">
+      <meta itemprop="description" content="rrr">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="My English Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          redis
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2025-04-16 11:58:45" itemprop="dateCreated datePublished" datetime="2025-04-16T11:58:45+08:00">2025-04-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-05-22 10:45:38" itemprop="dateModified" datetime="2025-05-22T10:45:38+08:00">2025-05-22</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><p><a href="#redis-token%E7%BC%93%E5%AD%98">redis-token缓存</a><br><a href="#jwt%E8%B7%9Fredis%E5%AD%98token%E7%9A%84%E5%8C%BA%E5%88%AB">jwt跟redis存token的区别</a><br><a href="#redis%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86">redis相关知识</a><br><a href="#%E6%8E%A8%E8%8D%90">推荐</a></p>
+<h2 id="redis-token缓存"><a href="#redis-token缓存" class="headerlink" title="redis-token缓存"></a>redis-token缓存</h2><ul>
+<li><p>redis.js创建</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line">const redis = require(&quot;redis&quot;);</span><br><span class="line"></span><br><span class="line">// Redis 链接的配置内容</span><br><span class="line">const client = redis.createClient(&#123;</span><br><span class="line">  socket: &#123;</span><br><span class="line">    host: &#x27;192.168.64.2&#x27;,  // Redis 服务器地址</span><br><span class="line">    port: 6379,             // Redis 端口</span><br><span class="line">  &#125;,</span><br><span class="line">  password: &#x27;123456&#x27;        // Redis 密码</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">// 连接到 Redis</span><br><span class="line">client.connect()</span><br><span class="line">  .then(() =&gt; &#123;</span><br><span class="line">    console.log(&#x27;Connected to Redis&#x27;);</span><br><span class="line">  &#125;)</span><br><span class="line">  .catch((err) =&gt; &#123;</span><br><span class="line">    console.error(&#x27;Redis connection failed:&#x27;, err);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">// 处理连接错误</span><br><span class="line">client.on(&quot;error&quot;, (err) =&gt; &#123;</span><br><span class="line">  console.error(&#x27;Redis error:&#x27;, err);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">// 定义 Redis 操作方法</span><br><span class="line">const redisOps = &#123;</span><br><span class="line">  // 创建值</span><br><span class="line">  set: async (key, value, expiration = null) =&gt; &#123;</span><br><span class="line">    try &#123;</span><br><span class="line">      value = JSON.stringify(value);</span><br><span class="line">      if (Number.isInteger(expiration) &amp;&amp; expiration &gt; 0) &#123;</span><br><span class="line">        // 如果设置了有效时间并且是整数，使用 SETEX 命令</span><br><span class="line">        await client.setEx(key, expiration, value);</span><br><span class="line">      &#125; else &#123;</span><br><span class="line">        // 否则直接使用 SET 命令</span><br><span class="line">        await client.set(key, value);</span><br><span class="line">      &#125;</span><br><span class="line">      console.log(`Key &quot;$&#123;key&#125;&quot; set successfully with expiration: $&#123;expiration || &#x27;no expiration&#x27;&#125;`);</span><br><span class="line">    &#125; catch (err) &#123;</span><br><span class="line">      console.error(&#x27;Error setting value:&#x27;, err);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  // 删除值</span><br><span class="line">  del: async (key) =&gt; &#123;</span><br><span class="line">    try &#123;</span><br><span class="line">      await client.del(key);</span><br><span class="line">      console.log(`Key &quot;$&#123;key&#125;&quot; deleted successfully`);</span><br><span class="line">    &#125; catch (err) &#123;</span><br><span class="line">      console.error(&#x27;Error deleting key:&#x27;, err);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  // 获取值</span><br><span class="line">  get: async (key) =&gt; &#123;</span><br><span class="line">    const result = await client.get(key);</span><br><span class="line">    console.log(&#x27;99999=&#x27;, result)</span><br><span class="line">    try &#123;</span><br><span class="line">      return result; // 尝试解析为 JSON</span><br><span class="line">    &#125; catch (error) &#123;</span><br><span class="line">      // 如果不是 JSON 格式，直接返回原始值</span><br><span class="line">      console.warn(`Warning: Value for key &quot;$&#123;key&#125;&quot; is not JSON formatted.`);</span><br><span class="line">      return result;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  // 获取键的 TTL</span><br><span class="line">  ttl: async (key) =&gt; &#123;</span><br><span class="line">    try &#123;</span><br><span class="line">      const timeLeft = await client.ttl(key);</span><br><span class="line">      console.log(`Key &quot;$&#123;key&#125;&quot; has TTL: $&#123;timeLeft&#125;`);</span><br><span class="line">      return timeLeft;</span><br><span class="line">    &#125; catch (err) &#123;</span><br><span class="line">      console.error(&#x27;Error getting TTL:&#x27;, err);</span><br><span class="line">      return err;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">module.exports = redisOps;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+</li>
+<li><p>redis的使用</p>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">const redisOps = require(&quot;./redis.js&quot;);</span><br><span class="line">const moment = require(&#x27;moment-timezone&#x27;);</span><br><span class="line"></span><br><span class="line">let token = jwt.sign(&#123; id: user.userid, username: user.username &#125;, secretKey, &#123; expiresIn: &#x27;1h&#x27; &#125;);</span><br><span class="line"></span><br><span class="line">await redisOps.set(user.userid.toString(), token, 60 * 60)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">//token校验</span><br><span class="line">const verifyToken = async (ctx, next) =&gt; &#123;</span><br><span class="line">    const userid = ctx.headers[&#x27;cookie&#x27;];</span><br><span class="line">    const match = userid.match(/userid=(\d+)/);</span><br><span class="line">    const userId = match ? match[1] : null;</span><br><span class="line">    </span><br><span class="line">    if (!userId) &#123;</span><br><span class="line">        ctx.status = 401;</span><br><span class="line">        console.log(&#x27;No token provided&#x27;);</span><br><span class="line">        ctx.body = &#123; message: &#x27;No token provided&#x27; &#125;;</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    try &#123;</span><br><span class="line">        const startTime = moment(); // 记录开始时间</span><br><span class="line">        const getuserid = await redisOps.get(userId)</span><br><span class="line">        const endTime = moment(); // 记录结束时间</span><br><span class="line">        const duration = moment.duration(endTime.diff(startTime)); // 计算持续时间</span><br><span class="line">      </span><br><span class="line">        console.log(`Request completed in $&#123;duration.asMilliseconds()&#125; ms`); // 以毫秒为单位输出耗时</span><br><span class="line">        if(getuserid)&#123;</span><br><span class="line">            await next();</span><br><span class="line">        &#125;else &#123;</span><br><span class="line">            throw err;</span><br><span class="line">        &#125;</span><br><span class="line">       </span><br><span class="line">    &#125; catch (err) &#123;</span><br><span class="line">        console.log(&#x27;Token verification failed:&#x27;, err.message);</span><br><span class="line">        ctx.status = 401;</span><br><span class="line">        ctx.body = &#123; message: &#x27;Failed to authenticate token&#x27; &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="jwt跟redis存token的区别"><a href="#jwt跟redis存token的区别" class="headerlink" title="jwt跟redis存token的区别"></a>jwt跟redis存token的区别</h2><table>
+<thead>
+<tr>
+<th>维度</th>
+<th><strong>JWT</strong></th>
+<th><strong>Redis</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>性能</td>
+<td>- 无需查询数据库或访问外部存储，验证速度较快<br/>- 适用于简单的身份验证场景</td>
+<td>- 需要与 Redis 服务器进行通信，可能会有网络延迟<br/>- 适用于复杂的会话管理和存储需求</td>
+</tr>
+</tbody></table>
+<h2 id="redis相关知识"><a href="#redis相关知识" class="headerlink" title="redis相关知识"></a>redis相关知识</h2><ul>
+<li><p>redis本质上是一个key-value类型的内存数据库，性能最快的key-value数据库。</p>
+</li>
+<li><p>正常情况是把数据存储在数据库 ，数据库把数据存在磁盘。但越上层的存储器存储效率越高，内存位于磁盘之上。而redis是一款基于内存的存储系统，数据都存在内存里，所以从redis读取数据会比从数据库读取要快。</p>
+</li>
+<li><p>内存有限，存储不了太多数据。出现故障时，用主从复制、哨兵法。集群就是一套完整的redis多机解决方案。他有效解决了单机redis的所有问题。当你在集群中为某个节点配置从机的时候，主从节点间同步就是主从复制。主节点挂掉之后，从节点的选取，内部逻辑与哨兵机制相似。</p>
+</li>
+<li><p>支持发布&#x2F;订阅模式，可以作为一个简单而高效的轻量级消息代理，用于实现消息队列、实时通知等。</p>
+</li>
+</ul>
+<h2 id="推荐"><a href="#推荐" class="headerlink" title="推荐"></a>推荐</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://edunextgen1.com/">娱乐一下</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+    
+      <div>
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:24px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+      </div>
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:  </strong>lidya
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link: </strong>
+    <a href="https://lidyaqf.github.io/2025/04/16/redis/" title="redis">https://lidyaqf.github.io/2025/04/16/redis/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/en/2025/04/11/ELK%E5%AE%89%E8%A3%85%E6%B5%81%E7%A8%8B/" rel="prev" title="ELK安装流程">
+      <i class="fa fa-chevron-left"></i> ELK安装流程
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/en/2025/04/18/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98/" rel="next" title="前端面试题">
+      前端面试题 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC82MDU2Mi8zNzAzMw=="></div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%AE%E5%BD%95"><span class="nav-number">1.</span> <span class="nav-text">目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#redis-token%E7%BC%93%E5%AD%98"><span class="nav-number">2.</span> <span class="nav-text">redis-token缓存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jwt%E8%B7%9Fredis%E5%AD%98token%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">3.</span> <span class="nav-text">jwt跟redis存token的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#redis%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86"><span class="nav-number">4.</span> <span class="nav-text">redis相关知识</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%A8%E8%8D%90"><span class="nav-number">5.</span> <span class="nav-text">推荐</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="lidya"
+      src="/en/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">lidya</p>
+  <div class="site-description" itemprop="description">rrr</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/en/archives/">
+        
+          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/en/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">lidya</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/en/lib/anime.min.js"></script>
+  <script src="/en/lib/velocity/velocity.min.js"></script>
+  <script src="/en/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/en/js/utils.js"></script>
+
+<script src="/en/js/motion.js"></script>
+
+
+<script src="/en/js/schemes/pisces.js"></script>
+
+
+<script src="/en/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
+  window.livereOptions = {
+    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+});
+</script>
+
+</body>
+</html>
