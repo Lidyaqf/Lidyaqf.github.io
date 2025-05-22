@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+<style>
+    .contain {
+      position: relative;
+      width: 100%;
+      height: 50px;
+      background: #f0f0f0;
+      overflow: hidden;
+    }
+  
+    .danmaku {
+      position: absolute;
+      white-space: nowrap;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 14px;
+      color: #333;
+      animation: moveLeft 15s linear forwards;
+    }
+  
+    .danmaku.paused {
+      animation-play-state: paused;
+    }
+  
+    @keyframes moveLeft {
+      from {
+        left: 100%;
+      }
+      to {
+        left: -100%;
+      }
+    }
+  </style>
+  <link rel="apple-touch-icon" sizes="180x180" href="/ening/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/ening/images/favicon.svg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/ening/images/favicon.svg">
+  <link rel="mask-icon" href="/ening/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/ening/css/main.css">
+
+
+<link rel="stylesheet" href="/ening/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"lidyaqf.github.io","root":"/ening/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <div class="contain" id="danmakuContainer"></div>
+  
+  <script>
+  const messages = [
+      '如果对喜欢的东西无法放弃，就来一次逆光飞翔',
+      '你以为你什么都不会，等你失去了所有的依靠，就什么都会了',
+      '世间有四种东西无法挽回：说出去的话、射出去的箭、流逝的时间，还有错过的机会',
+      '做你害怕的事，然后你会发现，不过如此',
+      '要怎么说呢，要承认生活里失望和错序是正常的，欢喜与顺遂才是意外',
+      '人不是因为年老而停止了游戏，而是因为停止了游戏才变老的',
+      '认真玩耍',
+      '这个世界上既没有侥幸，也没有童话故事，更没有坐享其成',
+      '生气的原因不在于别人做了什么，而在于我怎么看待对方及其行为',
+      '是什么曾经拯救过你，你最好就用它来更好地拯救这个世界',
+      '美国小说家海明威给“不道德”下的定义是：“事后觉得不好的任何事情',
+      '有些花注定会被吹散在天涯，但也说不定很久后就被吹落在同一处天涯',
+      '哪有那么多的久别重逢，只不过是有人用心良苦罢了',
+      '找出你最擅长的事情，然后持之以恒、乐此不疲地去把它做好',
+      '海洋是天空的玩笑，星星都在海里摇',
+      '哪里会有什么终身有效的标准答案呢',
+      '我会陪你一起老去，在你看不到的地方',
+      '如果跟我道别之后你能过得更好，那么我真心实意给你我全部的祝愿',
+      '没有跌宕起伏的人生，过着多没意思',
+      '两个人在一起最好的状态，应该是一场相互的成全和彼此的仰视，而非没有原则地迁就和将理想掐死',
+      '我慢慢地、慢慢地了解到，所谓父女母子一场，只不过意味着，你和他们的缘分就是今生今世不断地目送他的背影渐行渐远',
+      '尼采的话：“那没能杀死我的，会让我更强壮',
+      '“曾经是”也是一种“是”，甚至更为确定',
+      '你原先以为的“目的”未必是这件事真正的“目的”',
+      '生活需要一些格格不入',
+      '给你20次投资机会，用完就没有',
+      '如果你的目标是让核心概念成为自身应用知识的一部分，唯一的办法就是反复实践',
+      '不能哭，眼泪会冻住',
+      '在你看不到的角落，多的是你不知道的事',
+      '也许你不是最发光的那一个，但是也照到了该照亮的地方',
+      '谦卑和感恩是解决一切问题的万灵丹',
+      '三毛曾说：“等待和犹豫是这个世界上最无情的杀手。”',
+      '我们的思想总是在过去和未来，但我们的身体和呼吸却永远是在当下的',
+      '让人倾家荡产的旅行才是最最好的一种投资',
+      '有时想到人生尽头，若孟婆汤也是塑料饮料瓶包装的那种，拧开瓶盖，“谢谢参与”和“再来一次”，真不知道哪个更可怕',
+      '上帝让右手成为右手，就是对右手最高的奖赏；同理，上帝让善人成为善人，也就是对善人的最高奖赏',
+      '《大学》云：知止而后有定，定而后能静，静而后能安，安而后能虑，虑而后能得',
+      '这世界上缺的不是完美的人，而是从心底给出的正义、真心、无畏和同情',
+      '健忘是一种超能力，会让我们耿耿于怀的心事转眼就忘掉，才得以继续乐观地面对我们崭新的一天',
+      '世间情动，不过盛夏白瓷梅子汤，碎冰碰壁当啷响。不负对方就好，不负此生很难',
+      '同时间赛跑，与病魔较量',
+      '运动是解压的方式，好像有些人觉得炒菜解压一样',
+      '生活中不可能一直绿灯通行,得感谢红灯的警示和黄灯的缓冲',
+      '当你觉得自己不行的时候，你就去走一下人行横道线，这样你就变成了一个行人'
+  ];
+  
+  let messageQueue = [...messages];
+  const danmakuContainer = document.getElementById('danmakuContainer');
+  
+  function addDanmaku(text) {
+      const danmaku = document.createElement('div');
+      danmaku.className = 'danmaku';
+      danmaku.innerText = text;
+      danmaku.style.color = getRandomColor();
+      danmaku.style.zIndex = Math.floor(Math.random() * 10);
+  
+      danmaku.addEventListener('mouseover', () => {
+          danmaku.classList.add('paused');
+      });
+      danmaku.addEventListener('mouseout', () => {
+          danmaku.classList.remove('paused');
+      });
+  
+      danmakuContainer.appendChild(danmaku);
+  
+      // 动画结束后自动移除，避免堆积
+      danmaku.addEventListener('animationend', () => {
+          danmakuContainer.removeChild(danmaku);
+      });
+  }
+  
+let currentIndex = 0;
+
+function getNextMessage() {
+    if (messageQueue.length === 0) {
+        messageQueue = [...messages];
+    }
+    const message = messageQueue[currentIndex];
+    currentIndex++;
+    if (currentIndex >= messageQueue.length) {
+        currentIndex = 0; // 走完一遍，从头开始
+    }
+    return message;
+}
+
+  function getRandomColor() {
+      const letters = '0123456789ABCDEF';
+      let color = '#';
+      for (let i = 0; i < 6; i++) {
+          color += letters[Math.floor(Math.random() * 16)];
+      }
+      return color;
+  }
+  
+  setInterval(() => {
+      const randomMessage = getNextMessage();
+      addDanmaku(randomMessage);
+  }, 4000); // 每隔3秒一条，防止重叠
+  </script>
+  
+
+
+
+  <meta name="description" content="前端项目 GitLab CI&#x2F;CD 持续集成部署指南（Mac 环境）概要在日常开发过程中，我们经常需要将打包后的 dist 包手动发送给后端部署，效率低且容易出错。CI（Continuous Integration，持续集成）可以自动化这一过程，本文将介绍如何通过 GitLab CI 实现持续集成部署。  一、安装 GitLab Runner请参考官方文档：GitLab Runner 安">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GitLab CI&#x2F;CD">
+<meta property="og:url" content="https://lidyaqf.github.io/ening/2025/04/10/gitlabci/index.html">
+<meta property="og:site_name" content="My English Blog">
+<meta property="og:description" content="前端项目 GitLab CI&#x2F;CD 持续集成部署指南（Mac 环境）概要在日常开发过程中，我们经常需要将打包后的 dist 包手动发送给后端部署，效率低且容易出错。CI（Continuous Integration，持续集成）可以自动化这一过程，本文将介绍如何通过 GitLab CI 实现持续集成部署。  一、安装 GitLab Runner请参考官方文档：GitLab Runner 安">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-04-10T03:41:51.000Z">
+<meta property="article:modified_time" content="2025-04-15T07:53:41.411Z">
+<meta property="article:author" content="lidya">
+<meta property="article:tag" content="前端">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://lidyaqf.github.io/ening/2025/04/10/gitlabci/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>GitLab CI/CD | My English Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/ening/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">My English Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/ening/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/ening/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-english">
+
+    <a href="/ening/ening" rel="section"><i class="fa fa-language fa-fw"></i>English</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/ening/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://lidyaqf.github.io/ening/2025/04/10/gitlabci/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/ening/images/avatar.jpg">
+      <meta itemprop="name" content="lidya">
+      <meta itemprop="description" content="rrr">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="My English Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          GitLab CI/CD
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2025-04-10 11:41:51" itemprop="dateCreated datePublished" datetime="2025-04-10T11:41:51+08:00">2025-04-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-04-15 15:53:41" itemprop="dateModified" datetime="2025-04-15T15:53:41+08:00">2025-04-15</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/ening/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="前端项目-GitLab-CI-CD-持续集成部署指南（Mac-环境）"><a href="#前端项目-GitLab-CI-CD-持续集成部署指南（Mac-环境）" class="headerlink" title="前端项目 GitLab CI&#x2F;CD 持续集成部署指南（Mac 环境）"></a>前端项目 GitLab CI&#x2F;CD 持续集成部署指南（Mac 环境）</h1><h2 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h2><p>在日常开发过程中，我们经常需要将打包后的 <code>dist</code> 包手动发送给后端部署，效率低且容易出错。CI（Continuous Integration，持续集成）可以自动化这一过程，本文将介绍如何通过 GitLab CI 实现持续集成部署。</p>
+<hr>
+<h2 id="一、安装-GitLab-Runner"><a href="#一、安装-GitLab-Runner" class="headerlink" title="一、安装 GitLab Runner"></a>一、安装 GitLab Runner</h2><p>请参考官方文档：<a target="_blank" rel="noopener" href="https://docs.gitlab.com/runner/install/">GitLab Runner 安装指南</a></p>
+<hr>
+<h2 id="二、本地注册-Runner"><a href="#二、本地注册-Runner" class="headerlink" title="二、本地注册 Runner"></a>二、本地注册 Runner</h2><ol>
+<li>打开你的 GitLab 项目页面，进入 <strong>Settings → CI&#x2F;CD</strong>，展开 <strong>Runners</strong> 部分。</li>
+<li>记住显示的 <strong>URL</strong> 和 <strong>token</strong>，用于后续注册。</li>
+</ol>
+<h3 id="执行注册命令"><a href="#执行注册命令" class="headerlink" title="执行注册命令"></a>执行注册命令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gitlab-runner register</span><br></pre></td></tr></table></figure>
+
+<p>按照提示依次输入以下信息：</p>
+<ul>
+<li>GitLab CI Coordinator URL: <code>https://gitlab.com</code></li>
+<li>GitLab CI Token: <code>xxx</code>（从项目中复制）</li>
+<li>Tags: <code>my-tag,another-tag</code>（自定义）</li>
+<li>Description: <code>my-runner</code>（自定义）</li>
+<li>Executor: <code>shell</code>（Mac 上建议选择 shell）</li>
+</ul>
+<p>注册完成后，回到 GitLab CI&#x2F;CD 设置页面，可看到 Runner 状态为绿色，说明已成功运行。如果不是绿色，请执行以下命令启动 Runner 服务：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gitlab-runner run</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="三、编写-gitlab-ci-yml-文件并提交"><a href="#三、编写-gitlab-ci-yml-文件并提交" class="headerlink" title="三、编写 .gitlab-ci.yml 文件并提交"></a>三、编写 <code>.gitlab-ci.yml</code> 文件并提交</h2><p>将以下内容保存为 <code>.gitlab-ci.yml</code>，并 push 到 GitLab：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">stages:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">deploy</span></span><br><span class="line"></span><br><span class="line"><span class="attr">deploy_to_test:</span></span><br><span class="line">  <span class="attr">stage:</span> <span class="string">deploy</span></span><br><span class="line">  <span class="attr">script:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">yarn</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">rm</span> <span class="string">-rf</span> <span class="string">dist/</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">yarn</span> <span class="string">build</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">ls</span> <span class="string">-l</span> <span class="string">-t</span> <span class="string">./dist/</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">rsync</span> <span class="string">-avz</span> <span class="string">./dist/</span> <span class="string">root@xxx.xx.xx.xxx:/dist</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>这段 CI 脚本会自动打包项目，并使用 <code>rsync</code> 将 <code>dist</code> 目录部署到远程服务器。</li>
+</ul>
+<hr>
+<h2 id="四、通过-Docker-实现-CI（可选）"><a href="#四、通过-Docker-实现-CI（可选）" class="headerlink" title="四、通过 Docker 实现 CI（可选）"></a>四、通过 Docker 实现 CI（可选）</h2><p>如果需要通过 Docker 实现更完整的 CI&#x2F;CD 流程，继续以下步骤：</p>
+<h3 id="1-安装-Docker（Mac）"><a href="#1-安装-Docker（Mac）" class="headerlink" title="1. 安装 Docker（Mac）"></a>1. 安装 Docker（Mac）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install --cask docker</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-拉取-GitLab-镜像"><a href="#2-拉取-GitLab-镜像" class="headerlink" title="2. 拉取 GitLab 镜像"></a>2. 拉取 GitLab 镜像</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull drud/gitlab-ce:v0.29.1</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-创建-GitLab-容器"><a href="#3-创建-GitLab-容器" class="headerlink" title="3. 创建 GitLab 容器"></a>3. 创建 GitLab 容器</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d -p 8443:443 -p 8090:80 -p 8022:22 --restart always --name gitlab drud/gitlab-ce:v0.29.1</span><br></pre></td></tr></table></figure>
+
+<p>说明：</p>
+<ul>
+<li><code>-p 8443:443</code>：映射 HTTPS 端口</li>
+<li><code>-p 8090:80</code>：映射 HTTP 端口</li>
+<li><code>-p 8022:22</code>：映射 SSH 端口</li>
+<li><code>--restart always</code>：容器崩溃或主机重启时自动恢复</li>
+<li><code>--name gitlab</code>：容器命名为 <code>gitlab</code></li>
+</ul>
+<p>访问地址：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://localhost:8090/</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="五、Docker-模式下的-gitlab-ci-yml-示例"><a href="#五、Docker-模式下的-gitlab-ci-yml-示例" class="headerlink" title="五、Docker 模式下的 .gitlab-ci.yml 示例"></a>五、Docker 模式下的 <code>.gitlab-ci.yml</code> 示例</h2><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">variables:</span></span><br><span class="line">  <span class="attr">TEST_NAME:</span> <span class="string">&quot;tips&quot;</span></span><br><span class="line">  <span class="attr">OUT_PORT:</span> <span class="string">&quot;8081&quot;</span></span><br><span class="line">  <span class="attr">IN_PORT:</span> <span class="string">&quot;8081&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">stages:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">deploy</span></span><br><span class="line"></span><br><span class="line"><span class="attr">deploy_to_test:</span></span><br><span class="line">  <span class="attr">stage:</span> <span class="string">deploy</span></span><br><span class="line">  <span class="attr">before_script:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">if</span> [ <span class="string">$(docker</span> <span class="string">ps</span> <span class="string">-aq</span> <span class="string">--filter</span> <span class="string">name=$CI_PROJECT_NAME)</span> ]<span class="string">;</span> <span class="string">then</span> <span class="string">docker</span> <span class="string">rm</span> <span class="string">-f</span> <span class="string">$CI_PROJECT_NAME;</span> <span class="string">fi</span></span><br><span class="line">  <span class="attr">script:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">docker</span> <span class="string">build</span> <span class="string">-f</span> <span class="string">Dockerfile</span> <span class="string">-t</span> <span class="string">$TEST_NAME:latest</span> <span class="string">.</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">docker</span> <span class="string">run</span> <span class="string">-d</span> <span class="string">-p</span> <span class="string">$OUT_PORT:$IN_PORT</span> <span class="string">--name</span> <span class="string">$TEST_NAME</span> <span class="string">$TEST_NAME:latest</span></span><br></pre></td></tr></table></figure>
+
+<p>部署成功后，在 GitLab 的 CI&#x2F;CD Pipelines 页面可看到构建过程，在 <strong>Containers</strong> 页面会生成新容器，点击对应端口即可访问部署后的页面。</p>
+<hr>
+<h2 id="推荐"><a href="#推荐" class="headerlink" title="推荐"></a>推荐</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://edunextgen1.com/">娱乐一下</a></li>
+</ul>
+<!-- - [前端持续集成部署 CI/CD - CSDN](https://blog.csdn.net) -->
+
+    </div>
+
+    
+    
+    
+    
+      <div>
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:24px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+      </div>
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:  </strong>lidya
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link: </strong>
+    <a href="https://lidyaqf.github.io/ening/2025/04/10/gitlabci/" title="GitLab CI&#x2F;CD">https://lidyaqf.github.io/ening/2025/04/10/gitlabci/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/ening/tags/%E5%89%8D%E7%AB%AF/" rel="tag"># 前端</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/ening/2024/08/16/redis-en/" rel="prev" title="Hello English">
+      <i class="fa fa-chevron-left"></i> Hello English
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/ening/2025/04/11/ELK%E5%AE%89%E8%A3%85%E6%B5%81%E7%A8%8B/" rel="next" title="ELK安装流程">
+      ELK安装流程 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC82MDU2Mi8zNzAzMw=="></div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E7%AB%AF%E9%A1%B9%E7%9B%AE-GitLab-CI-CD-%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90%E9%83%A8%E7%BD%B2%E6%8C%87%E5%8D%97%EF%BC%88Mac-%E7%8E%AF%E5%A2%83%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">前端项目 GitLab CI&#x2F;CD 持续集成部署指南（Mac 环境）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A6%82%E8%A6%81"><span class="nav-number">1.1.</span> <span class="nav-text">概要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E5%AE%89%E8%A3%85-GitLab-Runner"><span class="nav-number">1.2.</span> <span class="nav-text">一、安装 GitLab Runner</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E6%9C%AC%E5%9C%B0%E6%B3%A8%E5%86%8C-Runner"><span class="nav-number">1.3.</span> <span class="nav-text">二、本地注册 Runner</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%A7%E8%A1%8C%E6%B3%A8%E5%86%8C%E5%91%BD%E4%BB%A4"><span class="nav-number">1.3.1.</span> <span class="nav-text">执行注册命令</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E7%BC%96%E5%86%99-gitlab-ci-yml-%E6%96%87%E4%BB%B6%E5%B9%B6%E6%8F%90%E4%BA%A4"><span class="nav-number">1.4.</span> <span class="nav-text">三、编写 .gitlab-ci.yml 文件并提交</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E9%80%9A%E8%BF%87-Docker-%E5%AE%9E%E7%8E%B0-CI%EF%BC%88%E5%8F%AF%E9%80%89%EF%BC%89"><span class="nav-number">1.5.</span> <span class="nav-text">四、通过 Docker 实现 CI（可选）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%AE%89%E8%A3%85-Docker%EF%BC%88Mac%EF%BC%89"><span class="nav-number">1.5.1.</span> <span class="nav-text">1. 安装 Docker（Mac）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E6%8B%89%E5%8F%96-GitLab-%E9%95%9C%E5%83%8F"><span class="nav-number">1.5.2.</span> <span class="nav-text">2. 拉取 GitLab 镜像</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E5%88%9B%E5%BB%BA-GitLab-%E5%AE%B9%E5%99%A8"><span class="nav-number">1.5.3.</span> <span class="nav-text">3. 创建 GitLab 容器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81Docker-%E6%A8%A1%E5%BC%8F%E4%B8%8B%E7%9A%84-gitlab-ci-yml-%E7%A4%BA%E4%BE%8B"><span class="nav-number">1.6.</span> <span class="nav-text">五、Docker 模式下的 .gitlab-ci.yml 示例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%A8%E8%8D%90"><span class="nav-number">1.7.</span> <span class="nav-text">推荐</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="lidya"
+      src="/ening/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">lidya</p>
+  <div class="site-description" itemprop="description">rrr</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/ening/archives/">
+        
+          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/ening/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">lidya</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/ening/lib/anime.min.js"></script>
+  <script src="/ening/lib/velocity/velocity.min.js"></script>
+  <script src="/ening/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/ening/js/utils.js"></script>
+
+<script src="/ening/js/motion.js"></script>
+
+
+<script src="/ening/js/schemes/pisces.js"></script>
+
+
+<script src="/ening/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
+  window.livereOptions = {
+    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+});
+</script>
+
+</body>
+</html>
