@@ -18,8 +18,8 @@
   --btn-default-hover-color: #fff;
   --btn-default-hover-border-color: #fff;
 }
-.menu-item .menu-item-english {
-  display: none;
+.menu-item-english {
+  display: none !important;
 }
 html {
   line-height: 1.15; /* 1 */
@@ -1172,7 +1172,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #ff3d0b;
+  background: #81ff7c;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
