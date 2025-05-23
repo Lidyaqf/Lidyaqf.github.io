@@ -1,88 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>ELK安装流程</title>
-    <url>/2025/04/11/ELK%E5%AE%89%E8%A3%85%E6%B5%81%E7%A8%8B/</url>
-    <content><![CDATA[使用 Docker 安装 ELK Stack（ElasticSearch、Logstash、Kibana）
-建议在 Docker 上安装，资源占用少。以下安装版本统一为 8.12.2，建议保持一致避免冲突。
-
-目录1、安装 ElasticSearch2、安装 Logstash3、安装 Kibana推荐
-
-1、安装 ElasticSearch
-拉取镜像：
-
-docker pull elasticsearch:8.12.2
-
-
-启动容器：
-
-docker run --name some-elasticsearch -p 9200:9200 -p 9300:9300 -e &quot;discovery.type=single-node&quot; -d elasticsearch:8.12.2
-
-
-进入容器内部：
-
-sudo docker exec -u 0 -it some-elasticsearch bash
-
-
-重启容器：
-
-docker restart some-elasticsearch
-
-
-2、安装 Logstash
-拉取镜像：
-
-docker pull docker.elastic.co/logstash/logstash:8.12.2
-
-
-启动容器：
-
-sudo docker run -it -p 5044:5044 -p 9600:9600 --name logstash -v /usr/share/logstash/piplines:/usr/share/logstash/config --privileged=true docker.elastic.co/logstash/logstash:8.12.2 /bin/bash
-
-
-使用 scp 命令将本机下载好的 jar 包（MySQL Connector）上传至虚拟机：
-
-scp &quot;/Users/Downloads/logstash-8.12.2/mysql-connector-j-8.4.0.jar&quot; 用户名@虚拟机IP:/home
-
-
-再将 jar 包从虚拟机移动到 logstash 容器中：
-
-docker cp ./mysql-connector-j-8.4.0.jar logstash:/usr/share/logstash
-
-
-进入容器内部：
-
-docker exec -u 0 -it logstash bash
-
-
-3、安装 Kibana
-拉取镜像：
-
-docker pull kibana:8.12.2
-
-
-启动容器：
-
-docker run --name some-kibana -p 9200:9200 -p 9300:9300 -e &quot;discovery.type=single-node&quot; -d elasticsearch:8.12.2
-
-
-进入容器：
-
-docker exec -u 0 -it some-kibana bash
-
-
-附：安装 Docker、Portainer 及相关命令sudo apt updatesudo apt install docker.io docker-composedocker -vsudo systemctl start dockersudo docker search portainerdocker pull portainer/portainersudo docker pull portainer/portainersudo docker run -d --name portainerUI -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock portainer/portainersudo docker start portainerUIsudo passwd root
-
-
-推荐
-娱乐一下
-
-]]></content>
-      <categories>
-        <category>后端</category>
-      </categories>
-  </entry>
-  <entry>
     <title>GitLab CI/CD</title>
     <url>/2025/04/10/gitlabci/</url>
     <content><![CDATA[前端项目 GitLab CI&#x2F;CD 持续集成部署指南（Mac 环境）概要在日常开发过程中，我们经常需要将打包后的 dist 包手动发送给后端部署，效率低且容易出错。CI（Continuous Integration，持续集成）可以自动化这一过程，本文将介绍如何通过 GitLab CI 实现持续集成部署。
@@ -388,5 +306,87 @@ vue2 和 vue3 匿名插槽不一样  具名插槽使用方式不同：vue2 使�
 娱乐一下
 
 ]]></content>
+  </entry>
+  <entry>
+    <title>ELK安装流程</title>
+    <url>/2025/04/11/ELK%E5%AE%89%E8%A3%85%E6%B5%81%E7%A8%8B/</url>
+    <content><![CDATA[使用 Docker 安装 ELK Stack（ElasticSearch、Logstash、Kibana）
+建议在 Docker 上安装，资源占用少。以下安装版本统一为 8.12.2，建议保持一致避免冲突。
+
+目录1、安装 ElasticSearch2、安装 Logstash3、安装 Kibana推荐
+
+1、安装 ElasticSearch
+拉取镜像：
+
+docker pull elasticsearch:8.12.2
+
+
+启动容器：
+
+docker run --name some-elasticsearch -p 9200:9200 -p 9300:9300 -e &quot;discovery.type=single-node&quot; -d elasticsearch:8.12.2
+
+
+进入容器内部：
+
+sudo docker exec -u 0 -it some-elasticsearch bash
+
+
+重启容器：
+
+docker restart some-elasticsearch
+
+
+2、安装 Logstash
+拉取镜像：
+
+docker pull docker.elastic.co/logstash/logstash:8.12.2
+
+
+启动容器：
+
+sudo docker run -it -p 5044:5044 -p 9600:9600 --name logstash -v /usr/share/logstash/piplines:/usr/share/logstash/config --privileged=true docker.elastic.co/logstash/logstash:8.12.2 /bin/bash
+
+
+使用 scp 命令将本机下载好的 jar 包（MySQL Connector）上传至虚拟机：
+
+scp &quot;/Users/Downloads/logstash-8.12.2/mysql-connector-j-8.4.0.jar&quot; 用户名@虚拟机IP:/home
+
+
+再将 jar 包从虚拟机移动到 logstash 容器中：
+
+docker cp ./mysql-connector-j-8.4.0.jar logstash:/usr/share/logstash
+
+
+进入容器内部：
+
+docker exec -u 0 -it logstash bash
+
+
+3、安装 Kibana
+拉取镜像：
+
+docker pull kibana:8.12.2
+
+
+启动容器：
+
+docker run --name some-kibana -p 9200:9200 -p 9300:9300 -e &quot;discovery.type=single-node&quot; -d elasticsearch:8.12.2
+
+
+进入容器：
+
+docker exec -u 0 -it some-kibana bash
+
+
+附：安装 Docker、Portainer 及相关命令sudo apt updatesudo apt install docker.io docker-composedocker -vsudo systemctl start dockersudo docker search portainerdocker pull portainer/portainersudo docker pull portainer/portainersudo docker run -d --name portainerUI -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock portainer/portainersudo docker start portainerUIsudo passwd root
+
+
+推荐
+娱乐一下
+
+]]></content>
+      <categories>
+        <category>后端</category>
+      </categories>
   </entry>
 </search>
