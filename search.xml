@@ -1,203 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>ELK安装流程</title>
-    <url>/2025/04/11/ELK%E5%AE%89%E8%A3%85%E6%B5%81%E7%A8%8B/</url>
-    <content><![CDATA[使用 Docker 安装 ELK Stack（ElasticSearch、Logstash、Kibana）
-建议在 Docker 上安装，资源占用少。以下安装版本统一为 8.12.2，建议保持一致避免冲突。
-
-目录1、安装 ElasticSearch2、安装 Logstash3、安装 Kibana推荐
-
-1、安装 ElasticSearch
-拉取镜像：
-
-docker pull elasticsearch:8.12.2
-
-
-启动容器：
-
-docker run --name some-elasticsearch -p 9200:9200 -p 9300:9300 -e &quot;discovery.type=single-node&quot; -d elasticsearch:8.12.2
-
-
-进入容器内部：
-
-sudo docker exec -u 0 -it some-elasticsearch bash
-
-
-重启容器：
-
-docker restart some-elasticsearch
-
-
-2、安装 Logstash
-拉取镜像：
-
-docker pull docker.elastic.co/logstash/logstash:8.12.2
-
-
-启动容器：
-
-sudo docker run -it -p 5044:5044 -p 9600:9600 --name logstash -v /usr/share/logstash/piplines:/usr/share/logstash/config --privileged=true docker.elastic.co/logstash/logstash:8.12.2 /bin/bash
-
-
-使用 scp 命令将本机下载好的 jar 包（MySQL Connector）上传至虚拟机：
-
-scp &quot;/Users/Downloads/logstash-8.12.2/mysql-connector-j-8.4.0.jar&quot; 用户名@虚拟机IP:/home
-
-
-再将 jar 包从虚拟机移动到 logstash 容器中：
-
-docker cp ./mysql-connector-j-8.4.0.jar logstash:/usr/share/logstash
-
-
-进入容器内部：
-
-docker exec -u 0 -it logstash bash
-
-
-3、安装 Kibana
-拉取镜像：
-
-docker pull kibana:8.12.2
-
-
-启动容器：
-
-docker run --name some-kibana -p 9200:9200 -p 9300:9300 -e &quot;discovery.type=single-node&quot; -d elasticsearch:8.12.2
-
-
-进入容器：
-
-docker exec -u 0 -it some-kibana bash
-
-
-附：安装 Docker、Portainer 及相关命令sudo apt updatesudo apt install docker.io docker-composedocker -vsudo systemctl start dockersudo docker search portainerdocker pull portainer/portainersudo docker pull portainer/portainersudo docker run -d --name portainerUI -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock portainer/portainersudo docker start portainerUIsudo passwd root
-
-
-推荐
-娱乐一下
-
-]]></content>
-      <categories>
-        <category>后端</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>redis</title>
-    <url>/2025/04/16/redis/</url>
-    <content><![CDATA[目录redis-token缓存jwt跟redis存token的区别redis相关知识推荐
-redis-token缓存
-redis.js创建
-const redis = require(&quot;redis&quot;);// Redis 链接的配置内容const client = redis.createClient(&#123;  socket: &#123;    host: &#x27;192.168.64.2&#x27;,  // Redis 服务器地址    port: 6379,             // Redis 端口  &#125;,  password: &#x27;123456&#x27;        // Redis 密码&#125;);// 连接到 Redisclient.connect()  .then(() =&gt; &#123;    console.log(&#x27;Connected to Redis&#x27;);  &#125;)  .catch((err) =&gt; &#123;    console.error(&#x27;Redis connection failed:&#x27;, err);  &#125;);// 处理连接错误client.on(&quot;error&quot;, (err) =&gt; &#123;  console.error(&#x27;Redis error:&#x27;, err);&#125;);// 定义 Redis 操作方法const redisOps = &#123;  // 创建值  set: async (key, value, expiration = null) =&gt; &#123;    try &#123;      value = JSON.stringify(value);      if (Number.isInteger(expiration) &amp;&amp; expiration &gt; 0) &#123;        // 如果设置了有效时间并且是整数，使用 SETEX 命令        await client.setEx(key, expiration, value);      &#125; else &#123;        // 否则直接使用 SET 命令        await client.set(key, value);      &#125;      console.log(`Key &quot;$&#123;key&#125;&quot; set successfully with expiration: $&#123;expiration || &#x27;no expiration&#x27;&#125;`);    &#125; catch (err) &#123;      console.error(&#x27;Error setting value:&#x27;, err);    &#125;  &#125;,  // 删除值  del: async (key) =&gt; &#123;    try &#123;      await client.del(key);      console.log(`Key &quot;$&#123;key&#125;&quot; deleted successfully`);    &#125; catch (err) &#123;      console.error(&#x27;Error deleting key:&#x27;, err);    &#125;  &#125;,  // 获取值  get: async (key) =&gt; &#123;    const result = await client.get(key);    console.log(&#x27;99999=&#x27;, result)    try &#123;      return result; // 尝试解析为 JSON    &#125; catch (error) &#123;      // 如果不是 JSON 格式，直接返回原始值      console.warn(`Warning: Value for key &quot;$&#123;key&#125;&quot; is not JSON formatted.`);      return result;    &#125;  &#125;,  // 获取键的 TTL  ttl: async (key) =&gt; &#123;    try &#123;      const timeLeft = await client.ttl(key);      console.log(`Key &quot;$&#123;key&#125;&quot; has TTL: $&#123;timeLeft&#125;`);      return timeLeft;    &#125; catch (err) &#123;      console.error(&#x27;Error getting TTL:&#x27;, err);      return err;    &#125;  &#125;,&#125;;module.exports = redisOps;
-
-
-
-redis的使用
-
-
-const redisOps = require(&quot;./redis.js&quot;);const moment = require(&#x27;moment-timezone&#x27;);let token = jwt.sign(&#123; id: user.userid, username: user.username &#125;, secretKey, &#123; expiresIn: &#x27;1h&#x27; &#125;);await redisOps.set(user.userid.toString(), token, 60 * 60)
-
-//token校验const verifyToken = async (ctx, next) =&gt; &#123;    const userid = ctx.headers[&#x27;cookie&#x27;];    const match = userid.match(/userid=(\d+)/);    const userId = match ? match[1] : null;        if (!userId) &#123;        ctx.status = 401;        console.log(&#x27;No token provided&#x27;);        ctx.body = &#123; message: &#x27;No token provided&#x27; &#125;;        return;    &#125;    try &#123;        const startTime = moment(); // 记录开始时间        const getuserid = await redisOps.get(userId)        const endTime = moment(); // 记录结束时间        const duration = moment.duration(endTime.diff(startTime)); // 计算持续时间              console.log(`Request completed in $&#123;duration.asMilliseconds()&#125; ms`); // 以毫秒为单位输出耗时        if(getuserid)&#123;            await next();        &#125;else &#123;            throw err;        &#125;           &#125; catch (err) &#123;        console.log(&#x27;Token verification failed:&#x27;, err.message);        ctx.status = 401;        ctx.body = &#123; message: &#x27;Failed to authenticate token&#x27; &#125;;    &#125;&#125;;
-
-
-
-jwt跟redis存token的区别
-
-
-维度
-JWT
-Redis
-
-
-
-性能
-- 无需查询数据库或访问外部存储，验证速度较快- 适用于简单的身份验证场景
-- 需要与 Redis 服务器进行通信，可能会有网络延迟- 适用于复杂的会话管理和存储需求
-
-
-redis相关知识
-redis本质上是一个key-value类型的内存数据库，性能最快的key-value数据库。
-
-正常情况是把数据存储在数据库 ，数据库把数据存在磁盘。但越上层的存储器存储效率越高，内存位于磁盘之上。而redis是一款基于内存的存储系统，数据都存在内存里，所以从redis读取数据会比从数据库读取要快。
-
-内存有限，存储不了太多数据。出现故障时，用主从复制、哨兵法。集群就是一套完整的redis多机解决方案。他有效解决了单机redis的所有问题。当你在集群中为某个节点配置从机的时候，主从节点间同步就是主从复制。主节点挂掉之后，从节点的选取，内部逻辑与哨兵机制相似。
-
-支持发布&#x2F;订阅模式，可以作为一个简单而高效的轻量级消息代理，用于实现消息队列、实时通知等。
-
-
-推荐
-娱乐一下
-
-]]></content>
-  </entry>
-  <entry>
-    <title>GitLab CI/CD</title>
-    <url>/2025/04/10/gitlabci/</url>
-    <content><![CDATA[前端项目 GitLab CI&#x2F;CD 持续集成部署指南（Mac 环境）概要在日常开发过程中，我们经常需要将打包后的 dist 包手动发送给后端部署，效率低且容易出错。CI（Continuous Integration，持续集成）可以自动化这一过程，本文将介绍如何通过 GitLab CI 实现持续集成部署。
-
-一、安装 GitLab Runner请参考官方文档：GitLab Runner 安装指南
-
-二、本地注册 Runner
-打开你的 GitLab 项目页面，进入 Settings → CI&#x2F;CD，展开 Runners 部分。
-记住显示的 URL 和 token，用于后续注册。
-
-执行注册命令gitlab-runner register
-
-按照提示依次输入以下信息：
-
-GitLab CI Coordinator URL: https://gitlab.com
-GitLab CI Token: xxx（从项目中复制）
-Tags: my-tag,another-tag（自定义）
-Description: my-runner（自定义）
-Executor: shell（Mac 上建议选择 shell）
-
-注册完成后，回到 GitLab CI&#x2F;CD 设置页面，可看到 Runner 状态为绿色，说明已成功运行。如果不是绿色，请执行以下命令启动 Runner 服务：
-gitlab-runner run
-
-
-三、编写 .gitlab-ci.yml 文件并提交将以下内容保存为 .gitlab-ci.yml，并 push 到 GitLab：
-stages:  - deploydeploy_to_test:  stage: deploy  script:    - yarn    - rm -rf dist/    - yarn build    - ls -l -t ./dist/    - rsync -avz ./dist/ root@xxx.xx.xx.xxx:/dist
-
-
-这段 CI 脚本会自动打包项目，并使用 rsync 将 dist 目录部署到远程服务器。
-
-
-四、通过 Docker 实现 CI（可选）如果需要通过 Docker 实现更完整的 CI&#x2F;CD 流程，继续以下步骤：
-1. 安装 Docker（Mac）brew install --cask docker
-
-2. 拉取 GitLab 镜像docker pull drud/gitlab-ce:v0.29.1
-
-3. 创建 GitLab 容器docker run -d -p 8443:443 -p 8090:80 -p 8022:22 --restart always --name gitlab drud/gitlab-ce:v0.29.1
-
-说明：
-
--p 8443:443：映射 HTTPS 端口
--p 8090:80：映射 HTTP 端口
--p 8022:22：映射 SSH 端口
---restart always：容器崩溃或主机重启时自动恢复
---name gitlab：容器命名为 gitlab
-
-访问地址：
-http://localhost:8090/
-
-
-五、Docker 模式下的 .gitlab-ci.yml 示例variables:  TEST_NAME: &quot;tips&quot;  OUT_PORT: &quot;8081&quot;  IN_PORT: &quot;8081&quot;stages:  - deploydeploy_to_test:  stage: deploy  before_script:    - if [ $(docker ps -aq --filter name=$CI_PROJECT_NAME) ]; then docker rm -f $CI_PROJECT_NAME; fi  script:    - docker build -f Dockerfile -t $TEST_NAME:latest .    - docker run -d -p $OUT_PORT:$IN_PORT --name $TEST_NAME $TEST_NAME:latest
-
-部署成功后，在 GitLab 的 CI&#x2F;CD Pipelines 页面可看到构建过程，在 Containers 页面会生成新容器，点击对应端口即可访问部署后的页面。
-
-推荐
-娱乐一下
-
-
-]]></content>
-      <categories>
-        <category>前端</category>
-      </categories>
-      <tags>
-        <tag>前端</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>《终有一天你会懂》读书笔记 - 琢磨先生</title>
     <url>/2025/05/21/%E3%80%8A%E7%BB%88%E6%9C%89%E4%B8%80%E5%A4%A9%E4%BD%A0%E4%BC%9A%E6%87%82%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%20-%20%E7%90%A2%E7%A3%A8%E5%85%88%E7%94%9F/</url>
     <content><![CDATA[全书的确包含了很多他自己的“偏见”，但我觉得他真实幽默，语言简单易懂，其实各个小标题就是告诉我们该做什么。
@@ -382,6 +185,203 @@ vue2 采用选项式 API,将函数和数据统一起来处理,将功能点切割
 vue2 和 vue3 匿名插槽不一样  具名插槽使用方式不同：vue2 使用 slot&#x3D;’’,vue3 使用 v-slot:’’  作用域插槽使用方式不同：vue2 中在父组件中使用 slot-scope&#x3D;”data”从子组件获取数据，vue3 中在父组件中使用 #data 或者 #default&#x3D;”{data}”获取
 
 
+
+
+推荐
+娱乐一下
+
+]]></content>
+  </entry>
+  <entry>
+    <title>GitLab CI/CD</title>
+    <url>/2025/04/10/gitlabci/</url>
+    <content><![CDATA[前端项目 GitLab CI&#x2F;CD 持续集成部署指南（Mac 环境）概要在日常开发过程中，我们经常需要将打包后的 dist 包手动发送给后端部署，效率低且容易出错。CI（Continuous Integration，持续集成）可以自动化这一过程，本文将介绍如何通过 GitLab CI 实现持续集成部署。
+
+一、安装 GitLab Runner请参考官方文档：GitLab Runner 安装指南
+
+二、本地注册 Runner
+打开你的 GitLab 项目页面，进入 Settings → CI&#x2F;CD，展开 Runners 部分。
+记住显示的 URL 和 token，用于后续注册。
+
+执行注册命令gitlab-runner register
+
+按照提示依次输入以下信息：
+
+GitLab CI Coordinator URL: https://gitlab.com
+GitLab CI Token: xxx（从项目中复制）
+Tags: my-tag,another-tag（自定义）
+Description: my-runner（自定义）
+Executor: shell（Mac 上建议选择 shell）
+
+注册完成后，回到 GitLab CI&#x2F;CD 设置页面，可看到 Runner 状态为绿色，说明已成功运行。如果不是绿色，请执行以下命令启动 Runner 服务：
+gitlab-runner run
+
+
+三、编写 .gitlab-ci.yml 文件并提交将以下内容保存为 .gitlab-ci.yml，并 push 到 GitLab：
+stages:  - deploydeploy_to_test:  stage: deploy  script:    - yarn    - rm -rf dist/    - yarn build    - ls -l -t ./dist/    - rsync -avz ./dist/ root@xxx.xx.xx.xxx:/dist
+
+
+这段 CI 脚本会自动打包项目，并使用 rsync 将 dist 目录部署到远程服务器。
+
+
+四、通过 Docker 实现 CI（可选）如果需要通过 Docker 实现更完整的 CI&#x2F;CD 流程，继续以下步骤：
+1. 安装 Docker（Mac）brew install --cask docker
+
+2. 拉取 GitLab 镜像docker pull drud/gitlab-ce:v0.29.1
+
+3. 创建 GitLab 容器docker run -d -p 8443:443 -p 8090:80 -p 8022:22 --restart always --name gitlab drud/gitlab-ce:v0.29.1
+
+说明：
+
+-p 8443:443：映射 HTTPS 端口
+-p 8090:80：映射 HTTP 端口
+-p 8022:22：映射 SSH 端口
+--restart always：容器崩溃或主机重启时自动恢复
+--name gitlab：容器命名为 gitlab
+
+访问地址：
+http://localhost:8090/
+
+
+五、Docker 模式下的 .gitlab-ci.yml 示例variables:  TEST_NAME: &quot;tips&quot;  OUT_PORT: &quot;8081&quot;  IN_PORT: &quot;8081&quot;stages:  - deploydeploy_to_test:  stage: deploy  before_script:    - if [ $(docker ps -aq --filter name=$CI_PROJECT_NAME) ]; then docker rm -f $CI_PROJECT_NAME; fi  script:    - docker build -f Dockerfile -t $TEST_NAME:latest .    - docker run -d -p $OUT_PORT:$IN_PORT --name $TEST_NAME $TEST_NAME:latest
+
+部署成功后，在 GitLab 的 CI&#x2F;CD Pipelines 页面可看到构建过程，在 Containers 页面会生成新容器，点击对应端口即可访问部署后的页面。
+
+推荐
+娱乐一下
+
+
+]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+      <tags>
+        <tag>前端</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ELK安装流程</title>
+    <url>/2025/04/11/ELK%E5%AE%89%E8%A3%85%E6%B5%81%E7%A8%8B/</url>
+    <content><![CDATA[使用 Docker 安装 ELK Stack（ElasticSearch、Logstash、Kibana）
+建议在 Docker 上安装，资源占用少。以下安装版本统一为 8.12.2，建议保持一致避免冲突。
+
+目录1、安装 ElasticSearch2、安装 Logstash3、安装 Kibana推荐
+
+1、安装 ElasticSearch
+拉取镜像：
+
+docker pull elasticsearch:8.12.2
+
+
+启动容器：
+
+docker run --name some-elasticsearch -p 9200:9200 -p 9300:9300 -e &quot;discovery.type=single-node&quot; -d elasticsearch:8.12.2
+
+
+进入容器内部：
+
+sudo docker exec -u 0 -it some-elasticsearch bash
+
+
+重启容器：
+
+docker restart some-elasticsearch
+
+
+2、安装 Logstash
+拉取镜像：
+
+docker pull docker.elastic.co/logstash/logstash:8.12.2
+
+
+启动容器：
+
+sudo docker run -it -p 5044:5044 -p 9600:9600 --name logstash -v /usr/share/logstash/piplines:/usr/share/logstash/config --privileged=true docker.elastic.co/logstash/logstash:8.12.2 /bin/bash
+
+
+使用 scp 命令将本机下载好的 jar 包（MySQL Connector）上传至虚拟机：
+
+scp &quot;/Users/Downloads/logstash-8.12.2/mysql-connector-j-8.4.0.jar&quot; 用户名@虚拟机IP:/home
+
+
+再将 jar 包从虚拟机移动到 logstash 容器中：
+
+docker cp ./mysql-connector-j-8.4.0.jar logstash:/usr/share/logstash
+
+
+进入容器内部：
+
+docker exec -u 0 -it logstash bash
+
+
+3、安装 Kibana
+拉取镜像：
+
+docker pull kibana:8.12.2
+
+
+启动容器：
+
+docker run --name some-kibana -p 9200:9200 -p 9300:9300 -e &quot;discovery.type=single-node&quot; -d elasticsearch:8.12.2
+
+
+进入容器：
+
+docker exec -u 0 -it some-kibana bash
+
+
+附：安装 Docker、Portainer 及相关命令sudo apt updatesudo apt install docker.io docker-composedocker -vsudo systemctl start dockersudo docker search portainerdocker pull portainer/portainersudo docker pull portainer/portainersudo docker run -d --name portainerUI -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock portainer/portainersudo docker start portainerUIsudo passwd root
+
+
+推荐
+娱乐一下
+
+]]></content>
+      <categories>
+        <category>后端</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>redis</title>
+    <url>/2025/04/16/redis/</url>
+    <content><![CDATA[目录redis-token缓存jwt跟redis存token的区别redis相关知识推荐
+redis-token缓存
+redis.js创建
+const redis = require(&quot;redis&quot;);// Redis 链接的配置内容const client = redis.createClient(&#123;  socket: &#123;    host: &#x27;192.168.64.2&#x27;,  // Redis 服务器地址    port: 6379,             // Redis 端口  &#125;,  password: &#x27;123456&#x27;        // Redis 密码&#125;);// 连接到 Redisclient.connect()  .then(() =&gt; &#123;    console.log(&#x27;Connected to Redis&#x27;);  &#125;)  .catch((err) =&gt; &#123;    console.error(&#x27;Redis connection failed:&#x27;, err);  &#125;);// 处理连接错误client.on(&quot;error&quot;, (err) =&gt; &#123;  console.error(&#x27;Redis error:&#x27;, err);&#125;);// 定义 Redis 操作方法const redisOps = &#123;  // 创建值  set: async (key, value, expiration = null) =&gt; &#123;    try &#123;      value = JSON.stringify(value);      if (Number.isInteger(expiration) &amp;&amp; expiration &gt; 0) &#123;        // 如果设置了有效时间并且是整数，使用 SETEX 命令        await client.setEx(key, expiration, value);      &#125; else &#123;        // 否则直接使用 SET 命令        await client.set(key, value);      &#125;      console.log(`Key &quot;$&#123;key&#125;&quot; set successfully with expiration: $&#123;expiration || &#x27;no expiration&#x27;&#125;`);    &#125; catch (err) &#123;      console.error(&#x27;Error setting value:&#x27;, err);    &#125;  &#125;,  // 删除值  del: async (key) =&gt; &#123;    try &#123;      await client.del(key);      console.log(`Key &quot;$&#123;key&#125;&quot; deleted successfully`);    &#125; catch (err) &#123;      console.error(&#x27;Error deleting key:&#x27;, err);    &#125;  &#125;,  // 获取值  get: async (key) =&gt; &#123;    const result = await client.get(key);    console.log(&#x27;99999=&#x27;, result)    try &#123;      return result; // 尝试解析为 JSON    &#125; catch (error) &#123;      // 如果不是 JSON 格式，直接返回原始值      console.warn(`Warning: Value for key &quot;$&#123;key&#125;&quot; is not JSON formatted.`);      return result;    &#125;  &#125;,  // 获取键的 TTL  ttl: async (key) =&gt; &#123;    try &#123;      const timeLeft = await client.ttl(key);      console.log(`Key &quot;$&#123;key&#125;&quot; has TTL: $&#123;timeLeft&#125;`);      return timeLeft;    &#125; catch (err) &#123;      console.error(&#x27;Error getting TTL:&#x27;, err);      return err;    &#125;  &#125;,&#125;;module.exports = redisOps;
+
+
+
+redis的使用
+
+
+const redisOps = require(&quot;./redis.js&quot;);const moment = require(&#x27;moment-timezone&#x27;);let token = jwt.sign(&#123; id: user.userid, username: user.username &#125;, secretKey, &#123; expiresIn: &#x27;1h&#x27; &#125;);await redisOps.set(user.userid.toString(), token, 60 * 60)
+
+//token校验const verifyToken = async (ctx, next) =&gt; &#123;    const userid = ctx.headers[&#x27;cookie&#x27;];    const match = userid.match(/userid=(\d+)/);    const userId = match ? match[1] : null;        if (!userId) &#123;        ctx.status = 401;        console.log(&#x27;No token provided&#x27;);        ctx.body = &#123; message: &#x27;No token provided&#x27; &#125;;        return;    &#125;    try &#123;        const startTime = moment(); // 记录开始时间        const getuserid = await redisOps.get(userId)        const endTime = moment(); // 记录结束时间        const duration = moment.duration(endTime.diff(startTime)); // 计算持续时间              console.log(`Request completed in $&#123;duration.asMilliseconds()&#125; ms`); // 以毫秒为单位输出耗时        if(getuserid)&#123;            await next();        &#125;else &#123;            throw err;        &#125;           &#125; catch (err) &#123;        console.log(&#x27;Token verification failed:&#x27;, err.message);        ctx.status = 401;        ctx.body = &#123; message: &#x27;Failed to authenticate token&#x27; &#125;;    &#125;&#125;;
+
+
+
+jwt跟redis存token的区别
+
+
+维度
+JWT
+Redis
+
+
+
+性能
+- 无需查询数据库或访问外部存储，验证速度较快- 适用于简单的身份验证场景
+- 需要与 Redis 服务器进行通信，可能会有网络延迟- 适用于复杂的会话管理和存储需求
+
+
+redis相关知识
+redis本质上是一个key-value类型的内存数据库，性能最快的key-value数据库。
+
+正常情况是把数据存储在数据库 ，数据库把数据存在磁盘。但越上层的存储器存储效率越高，内存位于磁盘之上。而redis是一款基于内存的存储系统，数据都存在内存里，所以从redis读取数据会比从数据库读取要快。
+
+内存有限，存储不了太多数据。出现故障时，用主从复制、哨兵法。集群就是一套完整的redis多机解决方案。他有效解决了单机redis的所有问题。当你在集群中为某个节点配置从机的时候，主从节点间同步就是主从复制。主节点挂掉之后，从节点的选取，内部逻辑与哨兵机制相似。
+
+支持发布&#x2F;订阅模式，可以作为一个简单而高效的轻量级消息代理，用于实现消息队列、实时通知等。
 
 
 推荐
