@@ -83,6 +83,12 @@ docker exec -u 0 -it some-kibana bash
       </categories>
   </entry>
   <entry>
+    <title>Hello English</title>
+    <url>/ening/2024/08/16/redis-en/</url>
+    <content><![CDATA[This is an English post.
+]]></content>
+  </entry>
+  <entry>
     <title>GitLab CI/CD</title>
     <url>/ening/2025/04/10/gitlabci/</url>
     <content><![CDATA[前端项目 GitLab CI&#x2F;CD 持续集成部署指南（Mac 环境）概要在日常开发过程中，我们经常需要将打包后的 dist 包手动发送给后端部署，效率低且容易出错。CI（Continuous Integration，持续集成）可以自动化这一过程，本文将介绍如何通过 GitLab CI 实现持续集成部署。
@@ -148,12 +154,6 @@ http://localhost:8090/
       <tags>
         <tag>前端</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>Hello English</title>
-    <url>/ening/2024/08/16/redis-en/</url>
-    <content><![CDATA[This is an English post.
-]]></content>
   </entry>
   <entry>
     <title>One Day You&#39;ll Understand - Reading Notes by Mr. Zhuomo</title>
