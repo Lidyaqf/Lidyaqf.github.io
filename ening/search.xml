@@ -1,6 +1,198 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>前端面试题</title>
+    <url>/2025/04/18/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98/</url>
+    <content><![CDATA[
+  var、let、const 三者的区别?
+
+✅ 作用域
+var 定义的变量没有块作用域，可以跨块访问，但不能跨函数访问。
+let 定义的变量有块作用域，只能在声明的代码块中访问。
+const 定义的是常量，必须初始化，只能在声明的代码块中访问，且值不可更改。
+
+✅ 声明规则
+同一个变量名，只能用一种声明方式，否则会报错。
+
+✅ 结合 this 的区别
+
+
+特性
+var &#x2F; let &#x2F; const
+
+
+
+改变 this 指向
+✅ 可以
+
+
+第一个参数是 this 要指向的对象
+✅ 是
+
+
+没传对象或为 undefined/null
+默认指向全局 window
+
+
+参数传递
+apply 用数组，call 用参数列表，bind 可多次传参
+
+
+执行方式
+apply/call 立即执行，bind 返回新函数
+
+
+
+
+
+
+  什么是事件委托?
+
+
+
+事件委托，会把一个或者一组元素的事件委托到它的父层或者更外层元素上，真正绑定事件的是外层元素，而不是目标元素
+当事件响应到目标元素上时，会通过事件冒泡机制从而触发它的外层元素的绑定事件上，然后在外层元素上去执行函数
+
+
+
+
+  防抖跟节流的区别是什么？
+
+
+
+防抖：只执行最后一次。事件持续触发，但只有等事件停止触发后 n 秒后才执行函数。
+节流：控制执行频率。持续触发，每 n 秒执行一次函数。
+
+
+
+  Web 前端预防 SQL 注入的方法有哪些？
+
+
+参数化查询：使用预处理语句或参数化查询来避免 SQL 注入。
+验证用户输入：验证用户输入的数据，确保其符合预期格式，避免非法字符等。
+转义特殊字符：在使用用户输入的数据构造 SQL 语句时，对特殊字符进行转义，以防止注入。
+限制权限：限制用户的权限，使其不能执行不安全的 SQL 操作。
+白名单验证：白名单验证是指确保用户输入的数据只能是允许的值，避免非法数据的输入。
+审核代码：定期审核代码，以确保代码的安全性，特别是对于数据库连接和查询部分的代码。
+
+
+
+
+  http 和 https 的区别
+
+
+https 协议需要到 ca 申请证书，一般免费证书较少，因而需要一定费用。
+http 是超文本传输协议，信息是明文传输，https 则是具有安全性的 ssl 加密传输协议。
+http 和 https 使用的是完全不同的连接方式，用的端口也不一样，前者是 80，后者是 443。
+http 的连接很简单，是无状态的；HTTPS 协议是由 SSL+HTTP 协议构建的可进行加密传输、身份认证的网络协议，比 http 协议安全。
+
+
+
+
+  created跟mounted的区别
+
+
+created发生在mounted之前，此时DOM元素还没完全渲染出来，不过跟后端联调时候的请求可以放在这里，尽早获取到数据返回给变量。
+mounted这时候已经可以获取页面中的DOM元素了。
+
+
+
+
+  说说事件循环机制
+
+🔁 什么是事件循环？JavaScript 是单线程语言，执行代码时除了依赖调用栈，还依赖任务队列来控制异步代码的执行顺序。
+整个执行过程称为 事件循环（Event Loop）。
+🧠 事件循环的核心概念：
+一个线程中只有一个事件循环（主循环）。
+可以有多个任务队列，按类型分为：
+宏任务（Macro Task）
+微任务（Micro Task）
+
+
+
+
+⏱ 执行顺序是怎样的？执行顺序：
+
+
+宏任务 ➝ 微任务（清空） ➝ 下一个宏任务 ➝ 微任务（清空）… 依此循环
+
+
+执行一个宏任务（如 script 整体代码）
+在当前宏任务中执行所有产生的微任务
+若微任务中又产生新的微任务，继续执行，直到清空微任务队列
+开始下一轮宏任务循环
+
+
+🧩 宏任务（Macro Task）有哪些？
+script（整体代码）
+setTimeout
+setInterval
+setImmediate（Node.js）
+I/O 操作
+UI 渲染
+
+🧬 微任务（Micro Task）有哪些？
+process.nextTick（Node.js 专属，优先级更高）
+Promise.then / catch / finally
+async / await
+MutationObserver
+
+
+
+
+  说说 css 盒模型
+
+  css 中的盒子模型包括 IE 盒子模型和标准的 W3C 盒子模型
+  在标准的盒子模型中，width 指 content 部分的宽度，box-sizing:content-box(默认为content-box);
+  在 IE 盒子模型中，width 指的是 content+padding+border，box-sizing:border-box;
+  Box-sizing:padding-box 宽度包含了左右 padding+width
+
+
+
+  vue2 和 vue3 的区别
+
+
+双向数据绑定原理不同,vue2 使用 Es5 的 API defineProperty()对数据进行劫持, 只能监听某个属性,不能对整个对象监听;vue3 使用 ES6 的 proxy API 对数据代理, 可以监听整个对象和数组
+生命周期不同  vue2:beforeCreate、created 、beforeMount、mounted、beforeUpdate、updated、  beforeDestroy、destroyed  vue3:setup 、onBeforeMount 、 onMounted 、onBeforeUpdate 、onUpdated 、  onBeforeUnmount、onUnmounted
+vue2 必须有根标签,vue3 可以没有根标签,会默认将多个根标签包裹在 fragment虚拟标签中
+vue2 采用选项式 API,将函数和数据统一起来处理,将功能点切割了,当逻辑复杂时不利于代码阅读;vue3 采用组合式 API,将同一个功能的代码统一起来处理,使代码更有序,有利于代码的书写和维护
+vue2 和 vue3 匿名插槽不一样  具名插槽使用方式不同：vue2 使用 slot&#x3D;’’,vue3 使用 v-slot:’’  作用域插槽使用方式不同：vue2 中在父组件中使用 slot-scope&#x3D;”data”从子组件获取数据，vue3 中在父组件中使用 #data 或者 #default&#x3D;”{data}”获取
+
+
+
+
+推荐
+娱乐一下
+
+]]></content>
+  </entry>
+  <entry>
+    <title>One Day You&#39;ll Understand - Reading Notes by Mr. Zhuomo</title>
+    <url>/2025/05/21/%E3%80%8A%E7%BB%88%E6%9C%89%E4%B8%80%E5%A4%A9%E4%BD%A0%E4%BC%9A%E6%87%82%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%20-%20%E7%90%A2%E7%A3%A8%E5%85%88%E7%94%9F/</url>
+    <content><![CDATA[The book does contain a lot of his own “biases,” but I find him authentic and humorous. His language is simple and understandable, and each subtitle essentially tells us what we should do.
+Understanding LifeLife is never about what you want it to be. It’s good to discover beauty and to view things from others’ perspectives. At the same time, one should have self-awareness.
+Understanding LoveSheldon once said: “The pursuit of another human to spend life with is something I’ve never understood. Maybe I’m too interesting to need company. So I wish you the same joy with each other as I have with myself.”One can never escape loneliness through another person; only through passion for life. Managing a relationship requires rationality. Freedom is inalienable. I once checked my ex’s phone—I realized it was wrong and won’t do it again.
+Understanding StrategyThis section mainly introduces the strategies of courting and how to maintain a good relationship—true wisdom. Never sacrifice your career for family. Don’t live with in-laws (though I think it depends). Have your own hobbies.
+Understanding MarriageEndure and stay loyal. As for non-marriage beliefs, there’s nothing more to say.
+Understanding SetbacksEvery breakup is just making way for true love. Don’t force it. I love you, so I wish you well, even if I’m not the one by your side.Do what you want regardless of others’ opinions. Only care about those who matter to you.
+Understanding ReadingWhat, Why, How. Keep reading. Don’t chase speed, but depth.
+Understanding RomanceHe shares sweet daily stories with his wife. If you don’t break up, you won’t discover how many better people there are out there. If you find one—lucky. If not—you can still live happily on your own.Live with emotional intelligence and the world becomes beautiful.
+Understanding SocializingAssociate with decent people. Different people require different approaches. Rejecting others is an art. If you don’t have the guts to ask for your money back, don’t lend it.
+Understanding Human NatureI tend to be skeptical about human nature. You can’t control others, so just manage yourself. Don’t be vulgar.
+Understanding Good and EvilSome people enter your life just to teach you a lesson. Good or evil—I prefer believing in others, as trust is given before it’s earned.Even if deceived, it’s a lesson learned—don’t fall into the same trap again. But don’t stop trusting altogether; kind people still exist.God made the right hand a right hand as a reward; same for kind people—kindness is its own reward.I recall being in a restroom without tissue once. I was going to ask a friend, but a stranger overheard and handed me tissues. Such kindness moved me deeply.Kindness must come with principles—otherwise it may hurt others or yourself.
+Understanding WealthThe poor stay poor because of narrow thinking. To get rich, don’t just invest in your body—think bigger. See the essence of problems.Time is limited—how to get rich fast? Find a subject you love, apply it, think broadly, and work in fields closely tied to society.
+Understanding SocietyHave ambition. Take one step at a time. Build an independent personality. Be accountable for your actions. Learn to transform your ability to feel happiness—then change yourself.
+Understanding Life and DeathDeath studies include concepts like: No death, no life; face death to live; understand death to be reborn. Interesting and thought-provoking.Knowing that we will die is what pushes us to live fully. When the time comes, I think I’ll embrace death.
+
+What the world lacks isn’t perfect people, but justice, sincerity, courage, and compassion from the heart. — My biggest takeaway after watching Forever Young today.We all know cause and effect—but causes and effects come from relationships. Someday, I’ll read Schopenhauer and Nietzsche properly.
+
+Understanding TravelThis part recounts Mr. Zhuomo’s experiences in Tibet. Many dream of going there—maybe because it helps people truly understand life’s struggles.The US is less disciplined than the UK. Japan has great food culture and says “sorry” a lot—avoiding bothering others.
+Understanding CareerFirst learn to endure hardship. Then understand yourself and your talents. Begin with the end in mind and stay focused.
+Understanding EducationEvery child is born pure. Without proper education, they won’t become pillars of the nation.
+Understanding Entertainment &amp; FreedomLife has two paths: one for career ambition—keep passion; the other for living warmly—keep humanity.Open your eyes each day and tell yourself: Oh yeah!
+]]></content>
+  </entry>
+  <entry>
     <title>ELK安装流程</title>
     <url>/2025/04/11/ELK%E5%AE%89%E8%A3%85%E6%B5%81%E7%A8%8B/</url>
     <content><![CDATA[使用 Docker 安装 ELK Stack（ElasticSearch、Logstash、Kibana）
@@ -190,198 +382,6 @@ redis本质上是一个key-value类型的内存数据库，性能最快的key-va
 内存有限，存储不了太多数据。出现故障时，用主从复制、哨兵法。集群就是一套完整的redis多机解决方案。他有效解决了单机redis的所有问题。当你在集群中为某个节点配置从机的时候，主从节点间同步就是主从复制。主节点挂掉之后，从节点的选取，内部逻辑与哨兵机制相似。
 
 支持发布&#x2F;订阅模式，可以作为一个简单而高效的轻量级消息代理，用于实现消息队列、实时通知等。
-
-
-推荐
-娱乐一下
-
-]]></content>
-  </entry>
-  <entry>
-    <title>One Day You&#39;ll Understand - Reading Notes by Mr. Zhuomo</title>
-    <url>/2025/05/21/%E3%80%8A%E7%BB%88%E6%9C%89%E4%B8%80%E5%A4%A9%E4%BD%A0%E4%BC%9A%E6%87%82%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%20-%20%E7%90%A2%E7%A3%A8%E5%85%88%E7%94%9F/</url>
-    <content><![CDATA[The book does contain a lot of his own “biases,” but I find him authentic and humorous. His language is simple and understandable, and each subtitle essentially tells us what we should do.
-Understanding LifeLife is never about what you want it to be. It’s good to discover beauty and to view things from others’ perspectives. At the same time, one should have self-awareness.
-Understanding LoveSheldon once said: “The pursuit of another human to spend life with is something I’ve never understood. Maybe I’m too interesting to need company. So I wish you the same joy with each other as I have with myself.”One can never escape loneliness through another person; only through passion for life. Managing a relationship requires rationality. Freedom is inalienable. I once checked my ex’s phone—I realized it was wrong and won’t do it again.
-Understanding StrategyThis section mainly introduces the strategies of courting and how to maintain a good relationship—true wisdom. Never sacrifice your career for family. Don’t live with in-laws (though I think it depends). Have your own hobbies.
-Understanding MarriageEndure and stay loyal. As for non-marriage beliefs, there’s nothing more to say.
-Understanding SetbacksEvery breakup is just making way for true love. Don’t force it. I love you, so I wish you well, even if I’m not the one by your side.Do what you want regardless of others’ opinions. Only care about those who matter to you.
-Understanding ReadingWhat, Why, How. Keep reading. Don’t chase speed, but depth.
-Understanding RomanceHe shares sweet daily stories with his wife. If you don’t break up, you won’t discover how many better people there are out there. If you find one—lucky. If not—you can still live happily on your own.Live with emotional intelligence and the world becomes beautiful.
-Understanding SocializingAssociate with decent people. Different people require different approaches. Rejecting others is an art. If you don’t have the guts to ask for your money back, don’t lend it.
-Understanding Human NatureI tend to be skeptical about human nature. You can’t control others, so just manage yourself. Don’t be vulgar.
-Understanding Good and EvilSome people enter your life just to teach you a lesson. Good or evil—I prefer believing in others, as trust is given before it’s earned.Even if deceived, it’s a lesson learned—don’t fall into the same trap again. But don’t stop trusting altogether; kind people still exist.God made the right hand a right hand as a reward; same for kind people—kindness is its own reward.I recall being in a restroom without tissue once. I was going to ask a friend, but a stranger overheard and handed me tissues. Such kindness moved me deeply.Kindness must come with principles—otherwise it may hurt others or yourself.
-Understanding WealthThe poor stay poor because of narrow thinking. To get rich, don’t just invest in your body—think bigger. See the essence of problems.Time is limited—how to get rich fast? Find a subject you love, apply it, think broadly, and work in fields closely tied to society.
-Understanding SocietyHave ambition. Take one step at a time. Build an independent personality. Be accountable for your actions. Learn to transform your ability to feel happiness—then change yourself.
-Understanding Life and DeathDeath studies include concepts like: No death, no life; face death to live; understand death to be reborn. Interesting and thought-provoking.Knowing that we will die is what pushes us to live fully. When the time comes, I think I’ll embrace death.
-
-What the world lacks isn’t perfect people, but justice, sincerity, courage, and compassion from the heart. — My biggest takeaway after watching Forever Young today.We all know cause and effect—but causes and effects come from relationships. Someday, I’ll read Schopenhauer and Nietzsche properly.
-
-Understanding TravelThis part recounts Mr. Zhuomo’s experiences in Tibet. Many dream of going there—maybe because it helps people truly understand life’s struggles.The US is less disciplined than the UK. Japan has great food culture and says “sorry” a lot—avoiding bothering others.
-Understanding CareerFirst learn to endure hardship. Then understand yourself and your talents. Begin with the end in mind and stay focused.
-Understanding EducationEvery child is born pure. Without proper education, they won’t become pillars of the nation.
-Understanding Entertainment &amp; FreedomLife has two paths: one for career ambition—keep passion; the other for living warmly—keep humanity.Open your eyes each day and tell yourself: Oh yeah!
-]]></content>
-  </entry>
-  <entry>
-    <title>前端面试题</title>
-    <url>/2025/04/18/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98/</url>
-    <content><![CDATA[
-  var、let、const 三者的区别?
-
-✅ 作用域
-var 定义的变量没有块作用域，可以跨块访问，但不能跨函数访问。
-let 定义的变量有块作用域，只能在声明的代码块中访问。
-const 定义的是常量，必须初始化，只能在声明的代码块中访问，且值不可更改。
-
-✅ 声明规则
-同一个变量名，只能用一种声明方式，否则会报错。
-
-✅ 结合 this 的区别
-
-
-特性
-var &#x2F; let &#x2F; const
-
-
-
-改变 this 指向
-✅ 可以
-
-
-第一个参数是 this 要指向的对象
-✅ 是
-
-
-没传对象或为 undefined/null
-默认指向全局 window
-
-
-参数传递
-apply 用数组，call 用参数列表，bind 可多次传参
-
-
-执行方式
-apply/call 立即执行，bind 返回新函数
-
-
-
-
-
-
-  什么是事件委托?
-
-
-
-事件委托，会把一个或者一组元素的事件委托到它的父层或者更外层元素上，真正绑定事件的是外层元素，而不是目标元素
-当事件响应到目标元素上时，会通过事件冒泡机制从而触发它的外层元素的绑定事件上，然后在外层元素上去执行函数
-
-
-
-
-  防抖跟节流的区别是什么？
-
-
-
-防抖：只执行最后一次。事件持续触发，但只有等事件停止触发后 n 秒后才执行函数。
-节流：控制执行频率。持续触发，每 n 秒执行一次函数。
-
-
-
-  Web 前端预防 SQL 注入的方法有哪些？
-
-
-参数化查询：使用预处理语句或参数化查询来避免 SQL 注入。
-验证用户输入：验证用户输入的数据，确保其符合预期格式，避免非法字符等。
-转义特殊字符：在使用用户输入的数据构造 SQL 语句时，对特殊字符进行转义，以防止注入。
-限制权限：限制用户的权限，使其不能执行不安全的 SQL 操作。
-白名单验证：白名单验证是指确保用户输入的数据只能是允许的值，避免非法数据的输入。
-审核代码：定期审核代码，以确保代码的安全性，特别是对于数据库连接和查询部分的代码。
-
-
-
-
-  http 和 https 的区别
-
-
-https 协议需要到 ca 申请证书，一般免费证书较少，因而需要一定费用。
-http 是超文本传输协议，信息是明文传输，https 则是具有安全性的 ssl 加密传输协议。
-http 和 https 使用的是完全不同的连接方式，用的端口也不一样，前者是 80，后者是 443。
-http 的连接很简单，是无状态的；HTTPS 协议是由 SSL+HTTP 协议构建的可进行加密传输、身份认证的网络协议，比 http 协议安全。
-
-
-
-
-  created跟mounted的区别
-
-
-created发生在mounted之前，此时DOM元素还没完全渲染出来，不过跟后端联调时候的请求可以放在这里，尽早获取到数据返回给变量。
-mounted这时候已经可以获取页面中的DOM元素了。
-
-
-
-
-  说说事件循环机制
-
-🔁 什么是事件循环？JavaScript 是单线程语言，执行代码时除了依赖调用栈，还依赖任务队列来控制异步代码的执行顺序。
-整个执行过程称为 事件循环（Event Loop）。
-🧠 事件循环的核心概念：
-一个线程中只有一个事件循环（主循环）。
-可以有多个任务队列，按类型分为：
-宏任务（Macro Task）
-微任务（Micro Task）
-
-
-
-
-⏱ 执行顺序是怎样的？执行顺序：
-
-
-宏任务 ➝ 微任务（清空） ➝ 下一个宏任务 ➝ 微任务（清空）… 依此循环
-
-
-执行一个宏任务（如 script 整体代码）
-在当前宏任务中执行所有产生的微任务
-若微任务中又产生新的微任务，继续执行，直到清空微任务队列
-开始下一轮宏任务循环
-
-
-🧩 宏任务（Macro Task）有哪些？
-script（整体代码）
-setTimeout
-setInterval
-setImmediate（Node.js）
-I/O 操作
-UI 渲染
-
-🧬 微任务（Micro Task）有哪些？
-process.nextTick（Node.js 专属，优先级更高）
-Promise.then / catch / finally
-async / await
-MutationObserver
-
-
-
-
-  说说 css 盒模型
-
-  css 中的盒子模型包括 IE 盒子模型和标准的 W3C 盒子模型
-  在标准的盒子模型中，width 指 content 部分的宽度，box-sizing:content-box(默认为content-box);
-  在 IE 盒子模型中，width 指的是 content+padding+border，box-sizing:border-box;
-  Box-sizing:padding-box 宽度包含了左右 padding+width
-
-
-
-  vue2 和 vue3 的区别
-
-
-双向数据绑定原理不同,vue2 使用 Es5 的 API defineProperty()对数据进行劫持, 只能监听某个属性,不能对整个对象监听;vue3 使用 ES6 的 proxy API 对数据代理, 可以监听整个对象和数组
-生命周期不同  vue2:beforeCreate、created 、beforeMount、mounted、beforeUpdate、updated、  beforeDestroy、destroyed  vue3:setup 、onBeforeMount 、 onMounted 、onBeforeUpdate 、onUpdated 、  onBeforeUnmount、onUnmounted
-vue2 必须有根标签,vue3 可以没有根标签,会默认将多个根标签包裹在 fragment虚拟标签中
-vue2 采用选项式 API,将函数和数据统一起来处理,将功能点切割了,当逻辑复杂时不利于代码阅读;vue3 采用组合式 API,将同一个功能的代码统一起来处理,使代码更有序,有利于代码的书写和维护
-vue2 和 vue3 匿名插槽不一样  具名插槽使用方式不同：vue2 使用 slot&#x3D;’’,vue3 使用 v-slot:’’  作用域插槽使用方式不同：vue2 中在父组件中使用 slot-scope&#x3D;”data”从子组件获取数据，vue3 中在父组件中使用 #data 或者 #default&#x3D;”{data}”获取
-
-
 
 
 推荐
