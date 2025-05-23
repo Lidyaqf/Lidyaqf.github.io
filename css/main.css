@@ -18,9 +18,6 @@
   --btn-default-hover-color: #fff;
   --btn-default-hover-border-color: #fff;
 }
-body[data-path^="/ening/"] .menu-item-english {
-  display: none !important;
-}
 html {
   line-height: 1.15; /* 1 */
   -webkit-text-size-adjust: 100%; /* 2 */
@@ -1172,7 +1169,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #f48cb3;
+  background: #ff6ff7;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
