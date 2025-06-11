@@ -1,350 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<search>
-  <entry>
-    <title>Hello English</title>
-    <url>/ening/2024/08/16/redis-en/</url>
-    <content><![CDATA[This is an English post.
-]]></content>
-  </entry>
-  <entry>
-    <title>ELK安装流程</title>
-    <url>/ening/2025/04/11/ELK%E5%AE%89%E8%A3%85%E6%B5%81%E7%A8%8B/</url>
-    <content><![CDATA[使用 Docker 安装 ELK Stack（ElasticSearch、Logstash、Kibana）
-建议在 Docker 上安装，资源占用少。以下安装版本统一为 8.12.2，建议保持一致避免冲突。
-
-目录1、安装 ElasticSearch2、安装 Logstash3、安装 Kibana推荐
-
-1、安装 ElasticSearch
-拉取镜像：
-
-docker pull elasticsearch:8.12.2
-
-
-启动容器：
-
-docker run --name some-elasticsearch -p 9200:9200 -p 9300:9300 -e &quot;discovery.type=single-node&quot; -d elasticsearch:8.12.2
-
-
-进入容器内部：
-
-sudo docker exec -u 0 -it some-elasticsearch bash
-
-
-重启容器：
-
-docker restart some-elasticsearch
-
-
-2、安装 Logstash
-拉取镜像：
-
-docker pull docker.elastic.co/logstash/logstash:8.12.2
-
-
-启动容器：
-
-sudo docker run -it -p 5044:5044 -p 9600:9600 --name logstash -v /usr/share/logstash/piplines:/usr/share/logstash/config --privileged=true docker.elastic.co/logstash/logstash:8.12.2 /bin/bash
-
-
-使用 scp 命令将本机下载好的 jar 包（MySQL Connector）上传至虚拟机：
-
-scp &quot;/Users/Downloads/logstash-8.12.2/mysql-connector-j-8.4.0.jar&quot; 用户名@虚拟机IP:/home
-
-
-再将 jar 包从虚拟机移动到 logstash 容器中：
-
-docker cp ./mysql-connector-j-8.4.0.jar logstash:/usr/share/logstash
-
-
-进入容器内部：
-
-docker exec -u 0 -it logstash bash
-
-
-3、安装 Kibana
-拉取镜像：
-
-docker pull kibana:8.12.2
-
-
-启动容器：
-
-docker run --name some-kibana -p 9200:9200 -p 9300:9300 -e &quot;discovery.type=single-node&quot; -d elasticsearch:8.12.2
-
-
-进入容器：
-
-docker exec -u 0 -it some-kibana bash
-
-
-附：安装 Docker、Portainer 及相关命令sudo apt updatesudo apt install docker.io docker-composedocker -vsudo systemctl start dockersudo docker search portainerdocker pull portainer/portainersudo docker pull portainer/portainersudo docker run -d --name portainerUI -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock portainer/portainersudo docker start portainerUIsudo passwd root
-
-
-推荐
-娱乐一下
-
-]]></content>
+<search> 
+  
+  
+    
+    <entry>
+      <title>One Day You&#39;ll Understand - Reading Notes by Mr. Zhuomo</title>
+      <link href="/ening/2025/05/21/%E3%80%8A%E7%BB%88%E6%9C%89%E4%B8%80%E5%A4%A9%E4%BD%A0%E4%BC%9A%E6%87%82%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%20-%20%E7%90%A2%E7%A3%A8%E5%85%88%E7%94%9F/"/>
+      <url>/ening/2025/05/21/%E3%80%8A%E7%BB%88%E6%9C%89%E4%B8%80%E5%A4%A9%E4%BD%A0%E4%BC%9A%E6%87%82%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%20-%20%E7%90%A2%E7%A3%A8%E5%85%88%E7%94%9F/</url>
+      
+        <content type="html"><![CDATA[<p>The book does contain a lot of his own “biases,” but I find him authentic and humorous. His language is simple and understandable, and each subtitle essentially tells us what we should do.</p><h2 id="Understanding-Life"><a href="#Understanding-Life" class="headerlink" title="Understanding Life"></a>Understanding Life</h2><p>Life is never about what you want it to be. It’s good to discover beauty and to view things from others’ perspectives. At the same time, one should have self-awareness.</p><h2 id="Understanding-Love"><a href="#Understanding-Love" class="headerlink" title="Understanding Love"></a>Understanding Love</h2><p>Sheldon once said: “The pursuit of another human to spend life with is something I’ve never understood. Maybe I’m too interesting to need company. So I wish you the same joy with each other as I have with myself.”<br>One can never escape loneliness through another person; only through passion for life. Managing a relationship requires rationality. Freedom is inalienable. I once checked my ex’s phone—I realized it was wrong and won’t do it again.</p><h2 id="Understanding-Strategy"><a href="#Understanding-Strategy" class="headerlink" title="Understanding Strategy"></a>Understanding Strategy</h2><p>This section mainly introduces the strategies of courting and how to maintain a good relationship—true wisdom. Never sacrifice your career for family. Don’t live with in-laws (though I think it depends). Have your own hobbies.</p><h2 id="Understanding-Marriage"><a href="#Understanding-Marriage" class="headerlink" title="Understanding Marriage"></a>Understanding Marriage</h2><p>Endure and stay loyal. As for non-marriage beliefs, there’s nothing more to say.</p><h2 id="Understanding-Setbacks"><a href="#Understanding-Setbacks" class="headerlink" title="Understanding Setbacks"></a>Understanding Setbacks</h2><p>Every breakup is just making way for true love. Don’t force it. I love you, so I wish you well, even if I’m not the one by your side.<br>Do what you want regardless of others’ opinions. Only care about those who matter to you.</p><h2 id="Understanding-Reading"><a href="#Understanding-Reading" class="headerlink" title="Understanding Reading"></a>Understanding Reading</h2><p>What, Why, How. Keep reading. Don’t chase speed, but depth.</p><h2 id="Understanding-Romance"><a href="#Understanding-Romance" class="headerlink" title="Understanding Romance"></a>Understanding Romance</h2><p>He shares sweet daily stories with his wife. If you don’t break up, you won’t discover how many better people there are out there. If you find one—lucky. If not—you can still live happily on your own.<br>Live with emotional intelligence and the world becomes beautiful.</p><h2 id="Understanding-Socializing"><a href="#Understanding-Socializing" class="headerlink" title="Understanding Socializing"></a>Understanding Socializing</h2><p>Associate with decent people. Different people require different approaches. Rejecting others is an art. If you don’t have the guts to ask for your money back, don’t lend it.</p><h2 id="Understanding-Human-Nature"><a href="#Understanding-Human-Nature" class="headerlink" title="Understanding Human Nature"></a>Understanding Human Nature</h2><p>I tend to be skeptical about human nature. You can’t control others, so just manage yourself. Don’t be vulgar.</p><h2 id="Understanding-Good-and-Evil"><a href="#Understanding-Good-and-Evil" class="headerlink" title="Understanding Good and Evil"></a>Understanding Good and Evil</h2><p>Some people enter your life just to teach you a lesson. Good or evil—I prefer believing in others, as trust is given before it’s earned.<br>Even if deceived, it’s a lesson learned—don’t fall into the same trap again. But don’t stop trusting altogether; kind people still exist.<br>God made the right hand a right hand as a reward; same for kind people—kindness is its own reward.<br>I recall being in a restroom without tissue once. I was going to ask a friend, but a stranger overheard and handed me tissues. Such kindness moved me deeply.<br>Kindness must come with principles—otherwise it may hurt others or yourself.</p><h2 id="Understanding-Wealth"><a href="#Understanding-Wealth" class="headerlink" title="Understanding Wealth"></a>Understanding Wealth</h2><p>The poor stay poor because of narrow thinking. To get rich, don’t just invest in your body—think bigger. See the essence of problems.<br>Time is limited—how to get rich fast? Find a subject you love, apply it, think broadly, and work in fields closely tied to society.</p><h2 id="Understanding-Society"><a href="#Understanding-Society" class="headerlink" title="Understanding Society"></a>Understanding Society</h2><p>Have ambition. Take one step at a time. Build an independent personality. Be accountable for your actions. Learn to transform your ability to feel happiness—then change yourself.</p><h2 id="Understanding-Life-and-Death"><a href="#Understanding-Life-and-Death" class="headerlink" title="Understanding Life and Death"></a>Understanding Life and Death</h2><p>Death studies include concepts like: No death, no life; face death to live; understand death to be reborn. Interesting and thought-provoking.<br>Knowing that we will die is what pushes us to live fully. When the time comes, I think I’ll embrace death.</p><blockquote><p>What the world lacks isn’t perfect people, but justice, sincerity, courage, and compassion from the heart. — My biggest takeaway after watching <em>Forever Young</em> today.<br>We all know cause and effect—but causes and effects come from relationships. Someday, I’ll read Schopenhauer and Nietzsche properly.</p></blockquote><h2 id="Understanding-Travel"><a href="#Understanding-Travel" class="headerlink" title="Understanding Travel"></a>Understanding Travel</h2><p>This part recounts Mr. Zhuomo’s experiences in Tibet. Many dream of going there—maybe because it helps people truly understand life’s struggles.<br>The US is less disciplined than the UK. Japan has great food culture and says “sorry” a lot—avoiding bothering others.</p><h2 id="Understanding-Career"><a href="#Understanding-Career" class="headerlink" title="Understanding Career"></a>Understanding Career</h2><p>First learn to endure hardship. Then understand yourself and your talents. Begin with the end in mind and stay focused.</p><h2 id="Understanding-Education"><a href="#Understanding-Education" class="headerlink" title="Understanding Education"></a>Understanding Education</h2><p>Every child is born pure. Without proper education, they won’t become pillars of the nation.</p><h2 id="Understanding-Entertainment-Freedom"><a href="#Understanding-Entertainment-Freedom" class="headerlink" title="Understanding Entertainment &amp; Freedom"></a>Understanding Entertainment &amp; Freedom</h2><p>Life has two paths: one for career ambition—keep passion; the other for living warmly—keep humanity.<br>Open your eyes each day and tell yourself: Oh yeah!</p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>前端面试题</title>
+      <link href="/ening/2025/04/18/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98/"/>
+      <url>/ening/2025/04/18/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98/</url>
+      
+        <content type="html"><![CDATA[<h1 id=""><a href="#" class="headerlink" title=""></a></h1><details>  <summary><strong>var、let、const 三者的区别?</strong></summary><h4 id="✅-作用域"><a href="#✅-作用域" class="headerlink" title="✅ 作用域"></a>✅ 作用域</h4><ol><li><code>var</code> 定义的变量没有块作用域，<strong>可以跨块访问，但不能跨函数访问</strong>。</li><li><code>let</code> 定义的变量有块作用域，<strong>只能在声明的代码块中访问</strong>。</li><li><code>const</code> 定义的是常量，<strong>必须初始化，只能在声明的代码块中访问，且值不可更改</strong>。</li></ol><h4 id="✅-声明规则"><a href="#✅-声明规则" class="headerlink" title="✅ 声明规则"></a>✅ 声明规则</h4><ul><li>同一个变量名，只能用一种声明方式，否则会报错。</li></ul><h4 id="✅-结合-this-的区别"><a href="#✅-结合-this-的区别" class="headerlink" title="✅ 结合 this 的区别"></a>✅ 结合 this 的区别</h4><table><thead><tr><th>特性</th><th>var &#x2F; let &#x2F; const</th></tr></thead><tbody><tr><td>改变 <code>this</code> 指向</td><td>✅ 可以</td></tr><tr><td>第一个参数是 <code>this</code> 要指向的对象</td><td>✅ 是</td></tr><tr><td>没传对象或为 <code>undefined/null</code></td><td>默认指向全局 <code>window</code></td></tr><tr><td>参数传递</td><td><code>apply</code> 用数组，<code>call</code> 用参数列表，<code>bind</code> 可多次传参</td></tr><tr><td>执行方式</td><td><code>apply/call</code> 立即执行，<code>bind</code> 返回新函数</td></tr></tbody></table></details><details>  <summary><strong>什么是事件委托?</strong></summary><!-- 事件委托是一种事件处理机制，它将一个或多个子元素的事件监听**委托给父级或祖先元素**。 --><ul><li>事件委托，会把一个或者一组元素的事件委托到它的父层或者更外层元素上，真正绑定事件的是外层元素，而不是目标元素<br/></li><li>当事件响应到目标元素上时，会通过事件冒泡机制从而触发它的外层元素的绑定事件上，然后在外层元素上去执行函数</li></ul></details><details>  <summary><strong>防抖跟节流的区别是什么？</strong></summary><!-- 事件委托是一种事件处理机制，它将一个或多个子元素的事件监听**委托给父级或祖先元素**。 --><ul><li>防抖：只执行最后一次。事件持续触发，但只有等事件停止触发后 n 秒后才执行函数。<br/></li><li>节流：控制执行频率。持续触发，每 n 秒执行一次函数。</li></ul></details><details>  <summary><strong>Web 前端预防 SQL 注入的方法有哪些？</strong></summary><ol><li>参数化查询：使用预处理语句或参数化查询来避免 SQL 注入。</li><li>验证用户输入：验证用户输入的数据，确保其符合预期格式，避免非法字符等。</li><li>转义特殊字符：在使用用户输入的数据构造 SQL 语句时，对特殊字符进行转义，以防止注入。</li><li>限制权限：限制用户的权限，使其不能执行不安全的 SQL 操作。</li><li>白名单验证：白名单验证是指确保用户输入的数据只能是允许的值，避免非法数据的输入。</li><li>审核代码：定期审核代码，以确保代码的安全性，特别是对于数据库连接和查询部分的代码。</li></ol></details><details>  <summary><strong>http 和 https 的区别</strong></summary><ol><li>https 协议需要到 ca 申请证书，一般免费证书较少，因而需要一定费用。</li><li>http 是超文本传输协议，信息是明文传输，https 则是具有安全性的 ssl 加密传输协议。</li><li>http 和 https 使用的是完全不同的连接方式，用的端口也不一样，前者是 80，后者是 443。</li><li>http 的连接很简单，是无状态的；HTTPS 协议是由 SSL+HTTP 协议构建的可进行加密传输、身份认证的网络协议，比 http 协议安全。</li></ol></details><details>  <summary><strong>created跟mounted的区别</strong></summary><ul><li>created发生在mounted之前，此时DOM元素还没完全渲染出来，不过跟后端联调时候的请求可以放在这里，尽早获取到数据返回给变量。</li><li>mounted这时候已经可以获取页面中的DOM元素了。</li></ul></details><details>  <summary><strong>说说事件循环机制</strong></summary><h3 id="🔁-什么是事件循环？"><a href="#🔁-什么是事件循环？" class="headerlink" title="🔁 什么是事件循环？"></a>🔁 什么是事件循环？</h3><p>JavaScript 是单线程语言，执行代码时除了依赖<strong>调用栈</strong>，还依赖<strong>任务队列</strong>来控制异步代码的执行顺序。</p><p>整个执行过程称为 <strong>事件循环（Event Loop）</strong>。</p><h3 id="🧠-事件循环的核心概念："><a href="#🧠-事件循环的核心概念：" class="headerlink" title="🧠 事件循环的核心概念："></a>🧠 事件循环的核心概念：</h3><ul><li>一个线程中只有一个事件循环（主循环）。</li><li>可以有多个任务队列，按类型分为：<ul><li><strong>宏任务（Macro Task）</strong></li><li><strong>微任务（Micro Task）</strong></li></ul></li></ul><hr><h3 id="⏱-执行顺序是怎样的？"><a href="#⏱-执行顺序是怎样的？" class="headerlink" title="⏱ 执行顺序是怎样的？"></a>⏱ 执行顺序是怎样的？</h3><div style="color: #fc6423"><strong>执行顺序：</strong></div><blockquote><p><strong>宏任务 ➝ 微任务（清空） ➝ 下一个宏任务 ➝ 微任务（清空）… 依此循环</strong></p></blockquote><ol><li>执行一个宏任务（如 script 整体代码）</li><li>在当前宏任务中执行所有产生的微任务</li><li>若微任务中又产生新的微任务，继续执行，直到清空微任务队列</li><li>开始下一轮宏任务循环</li></ol><hr><h3 id="🧩-宏任务（Macro-Task）有哪些？"><a href="#🧩-宏任务（Macro-Task）有哪些？" class="headerlink" title="🧩 宏任务（Macro Task）有哪些？"></a>🧩 宏任务（Macro Task）有哪些？</h3><ul><li><code>script</code>（整体代码）</li><li><code>setTimeout</code></li><li><code>setInterval</code></li><li><code>setImmediate</code>（Node.js）</li><li><code>I/O 操作</code></li><li><code>UI 渲染</code></li></ul><h3 id="🧬-微任务（Micro-Task）有哪些？"><a href="#🧬-微任务（Micro-Task）有哪些？" class="headerlink" title="🧬 微任务（Micro Task）有哪些？"></a>🧬 微任务（Micro Task）有哪些？</h3><ul><li><code>process.nextTick</code>（Node.js 专属，优先级更高）</li><li><code>Promise.then / catch / finally</code></li><li><code>async / await</code></li><li><code>MutationObserver</code></li></ul></details><details>  <summary><strong>说说 css 盒模型</strong></summary><p>  css 中的盒子模型包括 IE 盒子模型和标准的 W3C 盒子模型</p><p>  在标准的盒子模型中，width 指 content 部分的宽度，box-sizing:content-box(默认为content-box);</p><p>  在 IE 盒子模型中，width 指的是 content+padding+border，box-sizing:border-box;</p><p>  Box-sizing:padding-box 宽度包含了左右 padding+width</p></details><details>  <summary><strong>vue2 和 vue3 的区别</strong></summary><ol><li>双向数据绑定原理不同,vue2 使用 Es5 的 API defineProperty()对数据进行劫持, 只能监听某个属性,不能对整个对象监听;vue3 使用 ES6 的 proxy API 对数据代理, 可以监听整个对象和数组</li><li>生命周期不同<br>  vue2:beforeCreate、created 、beforeMount、mounted、beforeUpdate、updated、<br>  beforeDestroy、destroyed<br>  vue3:setup 、onBeforeMount 、 onMounted 、onBeforeUpdate 、onUpdated 、<br>  onBeforeUnmount、onUnmounted</li><li>vue2 必须有根标签,vue3 可以没有根标签,会默认将多个根标签包裹在 fragment虚拟标签中</li><li>vue2 采用选项式 API,将函数和数据统一起来处理,将功能点切割了,当逻辑复杂时不利于代码阅读;vue3 采用组合式 API,将同一个功能的代码统一起来处理,使代码更有序,有利于代码的书写和维护</li><li>vue2 和 vue3 匿名插槽不一样<br>  具名插槽使用方式不同：vue2 使用 slot&#x3D;’’,vue3 使用 v-slot:’’<br>  作用域插槽使用方式不同：vue2 中在父组件中使用 slot-scope&#x3D;”data”从子组件获取数据，vue3 中在父组件中使用 #data 或者 #default&#x3D;”{data}”获取</li></ol></details><h2 id="推荐"><a href="#推荐" class="headerlink" title="推荐"></a>推荐</h2><ul><li><a href="https://edunextgen1.com/">娱乐一下</a></li></ul>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>ELK安装流程</title>
+      <link href="/ening/2025/04/11/ELK%E5%AE%89%E8%A3%85%E6%B5%81%E7%A8%8B/"/>
+      <url>/ening/2025/04/11/ELK%E5%AE%89%E8%A3%85%E6%B5%81%E7%A8%8B/</url>
+      
+        <content type="html"><![CDATA[<h1 id="使用-Docker-安装-ELK-Stack（ElasticSearch、Logstash、Kibana）"><a href="#使用-Docker-安装-ELK-Stack（ElasticSearch、Logstash、Kibana）" class="headerlink" title="使用 Docker 安装 ELK Stack（ElasticSearch、Logstash、Kibana）"></a>使用 Docker 安装 ELK Stack（ElasticSearch、Logstash、Kibana）</h1><blockquote><p>建议在 Docker 上安装，资源占用少。以下安装版本统一为 <strong>8.12.2</strong>，建议保持一致避免冲突。</p></blockquote><h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><p><a href="#1%E3%80%81%E5%AE%89%E8%A3%85-ElasticSearch">1、安装 ElasticSearch</a><br><a href="#2%E3%80%81%E5%AE%89%E8%A3%85-Logstash">2、安装 Logstash</a><br><a href="#3%E3%80%81%E5%AE%89%E8%A3%85-Kibana">3、安装 Kibana</a><br><a href="#%E6%8E%A8%E8%8D%90">推荐</a></p><hr><h2 id="1、安装-ElasticSearch"><a href="#1、安装-ElasticSearch" class="headerlink" title="1、安装 ElasticSearch"></a>1、安装 ElasticSearch</h2><ul><li>拉取镜像：</li></ul><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull elasticsearch:8.12.2</span><br></pre></td></tr></table></figure><ul><li>启动容器：</li></ul><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run --name some-elasticsearch -p 9200:9200 -p 9300:9300 -e <span class="string">&quot;discovery.type=single-node&quot;</span> -d elasticsearch:8.12.2</span><br></pre></td></tr></table></figure><ul><li>进入容器内部：</li></ul><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> docker <span class="built_in">exec</span> -u 0 -it some-elasticsearch bash</span><br></pre></td></tr></table></figure><ul><li>重启容器：</li></ul><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker restart some-elasticsearch</span><br></pre></td></tr></table></figure><hr><h2 id="2、安装-Logstash"><a href="#2、安装-Logstash" class="headerlink" title="2、安装 Logstash"></a>2、安装 Logstash</h2><ul><li>拉取镜像：</li></ul><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull docker.elastic.co/logstash/logstash:8.12.2</span><br></pre></td></tr></table></figure><ul><li>启动容器：</li></ul><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> docker run -it -p 5044:5044 -p 9600:9600 --name logstash -v /usr/share/logstash/piplines:/usr/share/logstash/config --privileged=<span class="literal">true</span> docker.elastic.co/logstash/logstash:8.12.2 /bin/bash</span><br></pre></td></tr></table></figure><ul><li>使用 <code>scp</code> 命令将本机下载好的 jar 包（MySQL Connector）上传至虚拟机：</li></ul><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scp <span class="string">&quot;/Users/Downloads/logstash-8.12.2/mysql-connector-j-8.4.0.jar&quot;</span> 用户名@虚拟机IP:/home</span><br></pre></td></tr></table></figure><ul><li>再将 jar 包从虚拟机移动到 logstash 容器中：</li></ul><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="built_in">cp</span> ./mysql-connector-j-8.4.0.jar logstash:/usr/share/logstash</span><br></pre></td></tr></table></figure><ul><li>进入容器内部：</li></ul><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="built_in">exec</span> -u 0 -it logstash bash</span><br></pre></td></tr></table></figure><hr><h2 id="3、安装-Kibana"><a href="#3、安装-Kibana" class="headerlink" title="3、安装 Kibana"></a>3、安装 Kibana</h2><ul><li>拉取镜像：</li></ul><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull kibana:8.12.2</span><br></pre></td></tr></table></figure><ul><li>启动容器：</li></ul><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run --name some-kibana -p 9200:9200 -p 9300:9300 -e <span class="string">&quot;discovery.type=single-node&quot;</span> -d elasticsearch:8.12.2</span><br></pre></td></tr></table></figure><ul><li>进入容器：</li></ul><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="built_in">exec</span> -u 0 -it some-kibana bash</span><br></pre></td></tr></table></figure><hr><h2 id="附：安装-Docker、Portainer-及相关命令"><a href="#附：安装-Docker、Portainer-及相关命令" class="headerlink" title="附：安装 Docker、Portainer 及相关命令"></a>附：安装 Docker、Portainer 及相关命令</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt update</span><br><span class="line"><span class="built_in">sudo</span> apt install docker.io docker-compose</span><br><span class="line">docker -v</span><br><span class="line"><span class="built_in">sudo</span> systemctl start docker</span><br><span class="line"></span><br><span class="line"><span class="built_in">sudo</span> docker search portainer</span><br><span class="line">docker pull portainer/portainer</span><br><span class="line"><span class="built_in">sudo</span> docker pull portainer/portainer</span><br><span class="line"><span class="built_in">sudo</span> docker run -d --name portainerUI -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock portainer/portainer</span><br><span class="line"></span><br><span class="line"><span class="built_in">sudo</span> docker start portainerUI</span><br><span class="line"><span class="built_in">sudo</span> passwd root</span><br></pre></td></tr></table></figure><hr><h2 id="推荐"><a href="#推荐" class="headerlink" title="推荐"></a>推荐</h2><ul><li><a href="https://edunextgen1.com/">娱乐一下</a></li></ul>]]></content>
+      
+      
       <categories>
-        <category>后端</category>
+          
+          <category> 后端 </category>
+          
       </categories>
-  </entry>
-  <entry>
-    <title>One Day You&#39;ll Understand - Reading Notes by Mr. Zhuomo</title>
-    <url>/ening/2025/05/21/%E3%80%8A%E7%BB%88%E6%9C%89%E4%B8%80%E5%A4%A9%E4%BD%A0%E4%BC%9A%E6%87%82%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%20-%20%E7%90%A2%E7%A3%A8%E5%85%88%E7%94%9F/</url>
-    <content><![CDATA[The book does contain a lot of his own “biases,” but I find him authentic and humorous. His language is simple and understandable, and each subtitle essentially tells us what we should do.
-Understanding LifeLife is never about what you want it to be. It’s good to discover beauty and to view things from others’ perspectives. At the same time, one should have self-awareness.
-Understanding LoveSheldon once said: “The pursuit of another human to spend life with is something I’ve never understood. Maybe I’m too interesting to need company. So I wish you the same joy with each other as I have with myself.”One can never escape loneliness through another person; only through passion for life. Managing a relationship requires rationality. Freedom is inalienable. I once checked my ex’s phone—I realized it was wrong and won’t do it again.
-Understanding StrategyThis section mainly introduces the strategies of courting and how to maintain a good relationship—true wisdom. Never sacrifice your career for family. Don’t live with in-laws (though I think it depends). Have your own hobbies.
-Understanding MarriageEndure and stay loyal. As for non-marriage beliefs, there’s nothing more to say.
-Understanding SetbacksEvery breakup is just making way for true love. Don’t force it. I love you, so I wish you well, even if I’m not the one by your side.Do what you want regardless of others’ opinions. Only care about those who matter to you.
-Understanding ReadingWhat, Why, How. Keep reading. Don’t chase speed, but depth.
-Understanding RomanceHe shares sweet daily stories with his wife. If you don’t break up, you won’t discover how many better people there are out there. If you find one—lucky. If not—you can still live happily on your own.Live with emotional intelligence and the world becomes beautiful.
-Understanding SocializingAssociate with decent people. Different people require different approaches. Rejecting others is an art. If you don’t have the guts to ask for your money back, don’t lend it.
-Understanding Human NatureI tend to be skeptical about human nature. You can’t control others, so just manage yourself. Don’t be vulgar.
-Understanding Good and EvilSome people enter your life just to teach you a lesson. Good or evil—I prefer believing in others, as trust is given before it’s earned.Even if deceived, it’s a lesson learned—don’t fall into the same trap again. But don’t stop trusting altogether; kind people still exist.God made the right hand a right hand as a reward; same for kind people—kindness is its own reward.I recall being in a restroom without tissue once. I was going to ask a friend, but a stranger overheard and handed me tissues. Such kindness moved me deeply.Kindness must come with principles—otherwise it may hurt others or yourself.
-Understanding WealthThe poor stay poor because of narrow thinking. To get rich, don’t just invest in your body—think bigger. See the essence of problems.Time is limited—how to get rich fast? Find a subject you love, apply it, think broadly, and work in fields closely tied to society.
-Understanding SocietyHave ambition. Take one step at a time. Build an independent personality. Be accountable for your actions. Learn to transform your ability to feel happiness—then change yourself.
-Understanding Life and DeathDeath studies include concepts like: No death, no life; face death to live; understand death to be reborn. Interesting and thought-provoking.Knowing that we will die is what pushes us to live fully. When the time comes, I think I’ll embrace death.
-
-What the world lacks isn’t perfect people, but justice, sincerity, courage, and compassion from the heart. — My biggest takeaway after watching Forever Young today.We all know cause and effect—but causes and effects come from relationships. Someday, I’ll read Schopenhauer and Nietzsche properly.
-
-Understanding TravelThis part recounts Mr. Zhuomo’s experiences in Tibet. Many dream of going there—maybe because it helps people truly understand life’s struggles.The US is less disciplined than the UK. Japan has great food culture and says “sorry” a lot—avoiding bothering others.
-Understanding CareerFirst learn to endure hardship. Then understand yourself and your talents. Begin with the end in mind and stay focused.
-Understanding EducationEvery child is born pure. Without proper education, they won’t become pillars of the nation.
-Understanding Entertainment &amp; FreedomLife has two paths: one for career ambition—keep passion; the other for living warmly—keep humanity.Open your eyes each day and tell yourself: Oh yeah!
-]]></content>
-  </entry>
-  <entry>
-    <title>前端面试题</title>
-    <url>/ening/2025/04/18/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98/</url>
-    <content><![CDATA[
-  var、let、const 三者的区别?
-
-✅ 作用域
-var 定义的变量没有块作用域，可以跨块访问，但不能跨函数访问。
-let 定义的变量有块作用域，只能在声明的代码块中访问。
-const 定义的是常量，必须初始化，只能在声明的代码块中访问，且值不可更改。
-
-✅ 声明规则
-同一个变量名，只能用一种声明方式，否则会报错。
-
-✅ 结合 this 的区别
-
-
-特性
-var &#x2F; let &#x2F; const
-
-
-
-改变 this 指向
-✅ 可以
-
-
-第一个参数是 this 要指向的对象
-✅ 是
-
-
-没传对象或为 undefined/null
-默认指向全局 window
-
-
-参数传递
-apply 用数组，call 用参数列表，bind 可多次传参
-
-
-执行方式
-apply/call 立即执行，bind 返回新函数
-
-
-
-
-
-
-  什么是事件委托?
-
-
-
-事件委托，会把一个或者一组元素的事件委托到它的父层或者更外层元素上，真正绑定事件的是外层元素，而不是目标元素
-当事件响应到目标元素上时，会通过事件冒泡机制从而触发它的外层元素的绑定事件上，然后在外层元素上去执行函数
-
-
-
-
-  防抖跟节流的区别是什么？
-
-
-
-防抖：只执行最后一次。事件持续触发，但只有等事件停止触发后 n 秒后才执行函数。
-节流：控制执行频率。持续触发，每 n 秒执行一次函数。
-
-
-
-  Web 前端预防 SQL 注入的方法有哪些？
-
-
-参数化查询：使用预处理语句或参数化查询来避免 SQL 注入。
-验证用户输入：验证用户输入的数据，确保其符合预期格式，避免非法字符等。
-转义特殊字符：在使用用户输入的数据构造 SQL 语句时，对特殊字符进行转义，以防止注入。
-限制权限：限制用户的权限，使其不能执行不安全的 SQL 操作。
-白名单验证：白名单验证是指确保用户输入的数据只能是允许的值，避免非法数据的输入。
-审核代码：定期审核代码，以确保代码的安全性，特别是对于数据库连接和查询部分的代码。
-
-
-
-
-  http 和 https 的区别
-
-
-https 协议需要到 ca 申请证书，一般免费证书较少，因而需要一定费用。
-http 是超文本传输协议，信息是明文传输，https 则是具有安全性的 ssl 加密传输协议。
-http 和 https 使用的是完全不同的连接方式，用的端口也不一样，前者是 80，后者是 443。
-http 的连接很简单，是无状态的；HTTPS 协议是由 SSL+HTTP 协议构建的可进行加密传输、身份认证的网络协议，比 http 协议安全。
-
-
-
-
-  created跟mounted的区别
-
-
-created发生在mounted之前，此时DOM元素还没完全渲染出来，不过跟后端联调时候的请求可以放在这里，尽早获取到数据返回给变量。
-mounted这时候已经可以获取页面中的DOM元素了。
-
-
-
-
-  说说事件循环机制
-
-🔁 什么是事件循环？JavaScript 是单线程语言，执行代码时除了依赖调用栈，还依赖任务队列来控制异步代码的执行顺序。
-整个执行过程称为 事件循环（Event Loop）。
-🧠 事件循环的核心概念：
-一个线程中只有一个事件循环（主循环）。
-可以有多个任务队列，按类型分为：
-宏任务（Macro Task）
-微任务（Micro Task）
-
-
-
-
-⏱ 执行顺序是怎样的？执行顺序：
-
-
-宏任务 ➝ 微任务（清空） ➝ 下一个宏任务 ➝ 微任务（清空）… 依此循环
-
-
-执行一个宏任务（如 script 整体代码）
-在当前宏任务中执行所有产生的微任务
-若微任务中又产生新的微任务，继续执行，直到清空微任务队列
-开始下一轮宏任务循环
-
-
-🧩 宏任务（Macro Task）有哪些？
-script（整体代码）
-setTimeout
-setInterval
-setImmediate（Node.js）
-I/O 操作
-UI 渲染
-
-🧬 微任务（Micro Task）有哪些？
-process.nextTick（Node.js 专属，优先级更高）
-Promise.then / catch / finally
-async / await
-MutationObserver
-
-
-
-
-  说说 css 盒模型
-
-  css 中的盒子模型包括 IE 盒子模型和标准的 W3C 盒子模型
-  在标准的盒子模型中，width 指 content 部分的宽度，box-sizing:content-box(默认为content-box);
-  在 IE 盒子模型中，width 指的是 content+padding+border，box-sizing:border-box;
-  Box-sizing:padding-box 宽度包含了左右 padding+width
-
-
-
-  vue2 和 vue3 的区别
-
-
-双向数据绑定原理不同,vue2 使用 Es5 的 API defineProperty()对数据进行劫持, 只能监听某个属性,不能对整个对象监听;vue3 使用 ES6 的 proxy API 对数据代理, 可以监听整个对象和数组
-生命周期不同  vue2:beforeCreate、created 、beforeMount、mounted、beforeUpdate、updated、  beforeDestroy、destroyed  vue3:setup 、onBeforeMount 、 onMounted 、onBeforeUpdate 、onUpdated 、  onBeforeUnmount、onUnmounted
-vue2 必须有根标签,vue3 可以没有根标签,会默认将多个根标签包裹在 fragment虚拟标签中
-vue2 采用选项式 API,将函数和数据统一起来处理,将功能点切割了,当逻辑复杂时不利于代码阅读;vue3 采用组合式 API,将同一个功能的代码统一起来处理,使代码更有序,有利于代码的书写和维护
-vue2 和 vue3 匿名插槽不一样  具名插槽使用方式不同：vue2 使用 slot&#x3D;’’,vue3 使用 v-slot:’’  作用域插槽使用方式不同：vue2 中在父组件中使用 slot-scope&#x3D;”data”从子组件获取数据，vue3 中在父组件中使用 #data 或者 #default&#x3D;”{data}”获取
-
-
-
-
-推荐
-娱乐一下
-
-]]></content>
-  </entry>
-  <entry>
-    <title>GitLab CI/CD</title>
-    <url>/ening/2025/04/10/gitlabci/</url>
-    <content><![CDATA[前端项目 GitLab CI&#x2F;CD 持续集成部署指南（Mac 环境）概要在日常开发过程中，我们经常需要将打包后的 dist 包手动发送给后端部署，效率低且容易出错。CI（Continuous Integration，持续集成）可以自动化这一过程，本文将介绍如何通过 GitLab CI 实现持续集成部署。
-
-一、安装 GitLab Runner请参考官方文档：GitLab Runner 安装指南
-
-二、本地注册 Runner
-打开你的 GitLab 项目页面，进入 Settings → CI&#x2F;CD，展开 Runners 部分。
-记住显示的 URL 和 token，用于后续注册。
-
-执行注册命令gitlab-runner register
-
-按照提示依次输入以下信息：
-
-GitLab CI Coordinator URL: https://gitlab.com
-GitLab CI Token: xxx（从项目中复制）
-Tags: my-tag,another-tag（自定义）
-Description: my-runner（自定义）
-Executor: shell（Mac 上建议选择 shell）
-
-注册完成后，回到 GitLab CI&#x2F;CD 设置页面，可看到 Runner 状态为绿色，说明已成功运行。如果不是绿色，请执行以下命令启动 Runner 服务：
-gitlab-runner run
-
-
-三、编写 .gitlab-ci.yml 文件并提交将以下内容保存为 .gitlab-ci.yml，并 push 到 GitLab：
-stages:  - deploydeploy_to_test:  stage: deploy  script:    - yarn    - rm -rf dist/    - yarn build    - ls -l -t ./dist/    - rsync -avz ./dist/ root@xxx.xx.xx.xxx:/dist
-
-
-这段 CI 脚本会自动打包项目，并使用 rsync 将 dist 目录部署到远程服务器。
-
-
-四、通过 Docker 实现 CI（可选）如果需要通过 Docker 实现更完整的 CI&#x2F;CD 流程，继续以下步骤：
-1. 安装 Docker（Mac）brew install --cask docker
-
-2. 拉取 GitLab 镜像docker pull drud/gitlab-ce:v0.29.1
-
-3. 创建 GitLab 容器docker run -d -p 8443:443 -p 8090:80 -p 8022:22 --restart always --name gitlab drud/gitlab-ce:v0.29.1
-
-说明：
-
--p 8443:443：映射 HTTPS 端口
--p 8090:80：映射 HTTP 端口
--p 8022:22：映射 SSH 端口
---restart always：容器崩溃或主机重启时自动恢复
---name gitlab：容器命名为 gitlab
-
-访问地址：
-http://localhost:8090/
-
-
-五、Docker 模式下的 .gitlab-ci.yml 示例variables:  TEST_NAME: &quot;tips&quot;  OUT_PORT: &quot;8081&quot;  IN_PORT: &quot;8081&quot;stages:  - deploydeploy_to_test:  stage: deploy  before_script:    - if [ $(docker ps -aq --filter name=$CI_PROJECT_NAME) ]; then docker rm -f $CI_PROJECT_NAME; fi  script:    - docker build -f Dockerfile -t $TEST_NAME:latest .    - docker run -d -p $OUT_PORT:$IN_PORT --name $TEST_NAME $TEST_NAME:latest
-
-部署成功后，在 GitLab 的 CI&#x2F;CD Pipelines 页面可看到构建过程，在 Containers 页面会生成新容器，点击对应端口即可访问部署后的页面。
-
-推荐
-娱乐一下
-
-
-]]></content>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>GitLab CI/CD</title>
+      <link href="/ening/2025/04/10/gitlabci/"/>
+      <url>/ening/2025/04/10/gitlabci/</url>
+      
+        <content type="html"><![CDATA[<h1 id="前端项目-GitLab-CI-CD-持续集成部署指南（Mac-环境）"><a href="#前端项目-GitLab-CI-CD-持续集成部署指南（Mac-环境）" class="headerlink" title="前端项目 GitLab CI&#x2F;CD 持续集成部署指南（Mac 环境）"></a>前端项目 GitLab CI&#x2F;CD 持续集成部署指南（Mac 环境）</h1><h2 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h2><p>在日常开发过程中，我们经常需要将打包后的 <code>dist</code> 包手动发送给后端部署，效率低且容易出错。CI（Continuous Integration，持续集成）可以自动化这一过程，本文将介绍如何通过 GitLab CI 实现持续集成部署。</p><hr><h2 id="一、安装-GitLab-Runner"><a href="#一、安装-GitLab-Runner" class="headerlink" title="一、安装 GitLab Runner"></a>一、安装 GitLab Runner</h2><p>请参考官方文档：<a href="https://docs.gitlab.com/runner/install/">GitLab Runner 安装指南</a></p><hr><h2 id="二、本地注册-Runner"><a href="#二、本地注册-Runner" class="headerlink" title="二、本地注册 Runner"></a>二、本地注册 Runner</h2><ol><li>打开你的 GitLab 项目页面，进入 <strong>Settings → CI&#x2F;CD</strong>，展开 <strong>Runners</strong> 部分。</li><li>记住显示的 <strong>URL</strong> 和 <strong>token</strong>，用于后续注册。</li></ol><h3 id="执行注册命令"><a href="#执行注册命令" class="headerlink" title="执行注册命令"></a>执行注册命令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gitlab-runner register</span><br></pre></td></tr></table></figure><p>按照提示依次输入以下信息：</p><ul><li>GitLab CI Coordinator URL: <code>https://gitlab.com</code></li><li>GitLab CI Token: <code>xxx</code>（从项目中复制）</li><li>Tags: <code>my-tag,another-tag</code>（自定义）</li><li>Description: <code>my-runner</code>（自定义）</li><li>Executor: <code>shell</code>（Mac 上建议选择 shell）</li></ul><p>注册完成后，回到 GitLab CI&#x2F;CD 设置页面，可看到 Runner 状态为绿色，说明已成功运行。如果不是绿色，请执行以下命令启动 Runner 服务：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gitlab-runner run</span><br></pre></td></tr></table></figure><hr><h2 id="三、编写-gitlab-ci-yml-文件并提交"><a href="#三、编写-gitlab-ci-yml-文件并提交" class="headerlink" title="三、编写 .gitlab-ci.yml 文件并提交"></a>三、编写 <code>.gitlab-ci.yml</code> 文件并提交</h2><p>将以下内容保存为 <code>.gitlab-ci.yml</code>，并 push 到 GitLab：</p><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">stages:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">deploy</span></span><br><span class="line"></span><br><span class="line"><span class="attr">deploy_to_test:</span></span><br><span class="line">  <span class="attr">stage:</span> <span class="string">deploy</span></span><br><span class="line">  <span class="attr">script:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">yarn</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">rm</span> <span class="string">-rf</span> <span class="string">dist/</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">yarn</span> <span class="string">build</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">ls</span> <span class="string">-l</span> <span class="string">-t</span> <span class="string">./dist/</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">rsync</span> <span class="string">-avz</span> <span class="string">./dist/</span> <span class="string">root@xxx.xx.xx.xxx:/dist</span></span><br></pre></td></tr></table></figure><ul><li>这段 CI 脚本会自动打包项目，并使用 <code>rsync</code> 将 <code>dist</code> 目录部署到远程服务器。</li></ul><hr><h2 id="四、通过-Docker-实现-CI（可选）"><a href="#四、通过-Docker-实现-CI（可选）" class="headerlink" title="四、通过 Docker 实现 CI（可选）"></a>四、通过 Docker 实现 CI（可选）</h2><p>如果需要通过 Docker 实现更完整的 CI&#x2F;CD 流程，继续以下步骤：</p><h3 id="1-安装-Docker（Mac）"><a href="#1-安装-Docker（Mac）" class="headerlink" title="1. 安装 Docker（Mac）"></a>1. 安装 Docker（Mac）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install --cask docker</span><br></pre></td></tr></table></figure><h3 id="2-拉取-GitLab-镜像"><a href="#2-拉取-GitLab-镜像" class="headerlink" title="2. 拉取 GitLab 镜像"></a>2. 拉取 GitLab 镜像</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull drud/gitlab-ce:v0.29.1</span><br></pre></td></tr></table></figure><h3 id="3-创建-GitLab-容器"><a href="#3-创建-GitLab-容器" class="headerlink" title="3. 创建 GitLab 容器"></a>3. 创建 GitLab 容器</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d -p 8443:443 -p 8090:80 -p 8022:22 --restart always --name gitlab drud/gitlab-ce:v0.29.1</span><br></pre></td></tr></table></figure><p>说明：</p><ul><li><code>-p 8443:443</code>：映射 HTTPS 端口</li><li><code>-p 8090:80</code>：映射 HTTP 端口</li><li><code>-p 8022:22</code>：映射 SSH 端口</li><li><code>--restart always</code>：容器崩溃或主机重启时自动恢复</li><li><code>--name gitlab</code>：容器命名为 <code>gitlab</code></li></ul><p>访问地址：</p><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://localhost:8090/</span><br></pre></td></tr></table></figure><hr><h2 id="五、Docker-模式下的-gitlab-ci-yml-示例"><a href="#五、Docker-模式下的-gitlab-ci-yml-示例" class="headerlink" title="五、Docker 模式下的 .gitlab-ci.yml 示例"></a>五、Docker 模式下的 <code>.gitlab-ci.yml</code> 示例</h2><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">variables:</span></span><br><span class="line">  <span class="attr">TEST_NAME:</span> <span class="string">&quot;tips&quot;</span></span><br><span class="line">  <span class="attr">OUT_PORT:</span> <span class="string">&quot;8081&quot;</span></span><br><span class="line">  <span class="attr">IN_PORT:</span> <span class="string">&quot;8081&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">stages:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">deploy</span></span><br><span class="line"></span><br><span class="line"><span class="attr">deploy_to_test:</span></span><br><span class="line">  <span class="attr">stage:</span> <span class="string">deploy</span></span><br><span class="line">  <span class="attr">before_script:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">if</span> [ <span class="string">$(docker</span> <span class="string">ps</span> <span class="string">-aq</span> <span class="string">--filter</span> <span class="string">name=$CI_PROJECT_NAME)</span> ]<span class="string">;</span> <span class="string">then</span> <span class="string">docker</span> <span class="string">rm</span> <span class="string">-f</span> <span class="string">$CI_PROJECT_NAME;</span> <span class="string">fi</span></span><br><span class="line">  <span class="attr">script:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">docker</span> <span class="string">build</span> <span class="string">-f</span> <span class="string">Dockerfile</span> <span class="string">-t</span> <span class="string">$TEST_NAME:latest</span> <span class="string">.</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">docker</span> <span class="string">run</span> <span class="string">-d</span> <span class="string">-p</span> <span class="string">$OUT_PORT:$IN_PORT</span> <span class="string">--name</span> <span class="string">$TEST_NAME</span> <span class="string">$TEST_NAME:latest</span></span><br></pre></td></tr></table></figure><p>部署成功后，在 GitLab 的 CI&#x2F;CD Pipelines 页面可看到构建过程，在 <strong>Containers</strong> 页面会生成新容器，点击对应端口即可访问部署后的页面。</p><hr><h2 id="推荐"><a href="#推荐" class="headerlink" title="推荐"></a>推荐</h2><ul><li><a href="https://edunextgen1.com/">娱乐一下</a></li></ul><!-- - [前端持续集成部署 CI/CD - CSDN](https://blog.csdn.net) -->]]></content>
+      
+      
       <categories>
-        <category>前端</category>
+          
+          <category> 前端 </category>
+          
       </categories>
-      <tags>
-        <tag>前端</tag>
-      </tags>
-  </entry>
+      
+      
+        <tags>
+            
+            <tag> 前端 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Hello English</title>
+      <link href="/ening/2024/08/16/redis-en/"/>
+      <url>/ening/2024/08/16/redis-en/</url>
+      
+        <content type="html"><![CDATA[<p>This is an English post.</p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+  
+  
 </search>
