@@ -232,7 +232,7 @@ span.exturl {
 a:hover,
 span.exturl:hover {
   border-bottom-color: var(--link-hover-color);
-  color: var(--link-hover-color);
+  color: #000;
 }
 iframe,
 img,
@@ -1069,6 +1069,8 @@ pre .javascript .function {
   transition-duration: 0.2s;
   transition-timing-function: ease-in-out;
 }
+
+
 @media (hover: none) {
   .menu-item a:hover,
   .menu-item span.exturl:hover {

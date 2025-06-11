@@ -95,7 +95,10 @@
 
 {{ next_config() }}
 
-  <div class="contain" id="danmakuContainer"></div>
+
+
+
+{#   <div class="contain" id="danmakuContainer"></div>
   
   <script>
   const messages = [
@@ -198,6 +201,4 @@ function getNextMessage() {
       addDanmaku(randomMessage);
   }, 4000); // 每隔3秒一条，防止重叠
   </script>
-  
-
-
+  #}

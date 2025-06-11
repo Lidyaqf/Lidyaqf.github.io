@@ -123,11 +123,13 @@ menu:
   #about: /about/ || fa fa-user
   # tags: /tags/ || fa fa-tags
   categories: /categories/ || fa fa-th
-  English: /en || fa fa-language
+  # English: /ening || fa fa-language
   archives: /archives/ || fa fa-archive
+  
   #schedule: /schedule/ || fa fa-calendar
   #sitemap: /sitemap.xml || fa fa-sitemap
   #commonweal: /404/ || fa fa-heartbeat
+
 
 # Enable / Disable menu icons / item badges.
 menu_settings:
@@ -743,10 +745,10 @@ algolia_search:
 # Local Search
 # Dependencies: https://github.com/theme-next/hexo-generator-searchdb
 local_search:
-  enable: false
+  enable: true
   # If auto, trigger search by changing input.
   # If manual, trigger search by pressing enter key or search button.auto
-  trigger: auto
+  trigger: manual
   # Show top n results per article, show all results by setting to -1
   top_n_per_article: 1
   # Unescape html strings to the readable one.

@@ -3,18 +3,15 @@ public_dir: public_en
 language: en
 title: My English Blog
 theme: next
-description: 'rrr'
-menu:
-  home: / || fa fa-home
-  #about: /about/ || fa fa-user
-  # tags: /tags/ || fa fa-tags
-  categories: /categories/ || fa fa-th
-  English: /en || fa fa-language
-  archives: /archives/ || fa fa-archive
-  中文: https://lichuanyang.top || fa fa-language
-  #schedule: /schedule/ || fa fa-calendar
-  #sitemap: /sitemap.xml || fa fa-sitemap
-  #commonweal: /404/ || fa fa-heartbeat
+description: ''
 
 url: https://lidyaqf.github.io
-root: /en
+root: /ening/
+
+theme_config:
+  language: en
+  menu:
+    home: /ening/ || fa fa-home
+    categories: /ening/categories/ || fa fa-th
+    archives: /ening/archives/ || fa fa-archive
+    中文: ../ || fa fa-language
