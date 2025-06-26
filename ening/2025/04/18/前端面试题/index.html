@@ -58,15 +58,15 @@
 
 
 
-  <meta name="description" content="var、let、const 三者的区别?  ✅ 作用域 var 定义的变量没有块作用域，可以跨块访问，但不能跨函数访问。 let 定义的变量有块作用域，只能在声明的代码块中访问。 const 定义的是常量，必须初始化，只能在声明的代码块中访问，且值不可更改。  ✅ 声明规则 同一个变量名，只能用一种声明方式，否则会报错。  ✅ 结合 this 的区别   特性 var &#x2F; let">
+  <meta name="description" content="Differences between var, let, and const?  ✅ Scope Variables declared with var do not have block scope. They can be accessed outside blocks but not outside functions. Variables declared with let hav">
 <meta property="og:type" content="article">
-<meta property="og:title" content="前端面试题">
+<meta property="og:title" content="Frontend Interview Questions">
 <meta property="og:url" content="https://lidyaqf.github.io/2025/04/18/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98/index.html">
 <meta property="og:site_name" content="My English Blog">
-<meta property="og:description" content="var、let、const 三者的区别?  ✅ 作用域 var 定义的变量没有块作用域，可以跨块访问，但不能跨函数访问。 let 定义的变量有块作用域，只能在声明的代码块中访问。 const 定义的是常量，必须初始化，只能在声明的代码块中访问，且值不可更改。  ✅ 声明规则 同一个变量名，只能用一种声明方式，否则会报错。  ✅ 结合 this 的区别   特性 var &#x2F; let">
+<meta property="og:description" content="Differences between var, let, and const?  ✅ Scope Variables declared with var do not have block scope. They can be accessed outside blocks but not outside functions. Variables declared with let hav">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-04-18T09:31:30.000Z">
-<meta property="article:modified_time" content="2025-04-28T08:48:20.286Z">
+<meta property="article:modified_time" content="2025-06-26T08:00:07.925Z">
 <meta property="article:author" content="lidya">
 <meta name="twitter:card" content="summary">
 
@@ -83,7 +83,7 @@
   };
 </script>
 
-  <title>前端面试题 | My English Blog</title>
+  <title>Frontend Interview Questions | My English Blog</title>
   
 
 
@@ -244,7 +244,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          前端面试题
+          Frontend Interview Questions
         </h1>
 
         <div class="post-meta">
@@ -261,7 +261,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-04-28 16:48:20" itemprop="dateModified" datetime="2025-04-28T16:48:20+08:00">2025-04-28</time>
+                <time title="Modified: 2025-06-26 16:00:07" itemprop="dateModified" datetime="2025-06-26T16:00:07+08:00">2025-06-26</time>
               </span>
 
           
@@ -283,135 +283,131 @@
 
       
         <h1 id=""><a href="#" class="headerlink" title=""></a></h1><details>
-  <summary><strong>var、let、const 三者的区别?</strong></summary>
+  <summary><strong>Differences between var, let, and const?</strong></summary>
 
-<h4 id="✅-作用域"><a href="#✅-作用域" class="headerlink" title="✅ 作用域"></a>✅ 作用域</h4><ol>
-<li><code>var</code> 定义的变量没有块作用域，<strong>可以跨块访问，但不能跨函数访问</strong>。</li>
-<li><code>let</code> 定义的变量有块作用域，<strong>只能在声明的代码块中访问</strong>。</li>
-<li><code>const</code> 定义的是常量，<strong>必须初始化，只能在声明的代码块中访问，且值不可更改</strong>。</li>
+<h4 id="✅-Scope"><a href="#✅-Scope" class="headerlink" title="✅ Scope"></a>✅ Scope</h4><ol>
+<li>Variables declared with <code>var</code> do not have block scope. <strong>They can be accessed outside blocks but not outside functions</strong>.</li>
+<li>Variables declared with <code>let</code> have block scope, <strong>accessible only within the declared block</strong>.</li>
+<li><code>const</code> defines constants, <strong>must be initialized, accessible only in the declared block, and cannot be reassigned</strong>.</li>
 </ol>
-<h4 id="✅-声明规则"><a href="#✅-声明规则" class="headerlink" title="✅ 声明规则"></a>✅ 声明规则</h4><ul>
-<li>同一个变量名，只能用一种声明方式，否则会报错。</li>
+<h4 id="✅-Declaration-Rules"><a href="#✅-Declaration-Rules" class="headerlink" title="✅ Declaration Rules"></a>✅ Declaration Rules</h4><ul>
+<li>A variable name can only be declared once using one of these methods; otherwise, it throws an error.</li>
 </ul>
-<h4 id="✅-结合-this-的区别"><a href="#✅-结合-this-的区别" class="headerlink" title="✅ 结合 this 的区别"></a>✅ 结合 this 的区别</h4><table>
+<h4 id="✅-Difference-when-using-with-this"><a href="#✅-Difference-when-using-with-this" class="headerlink" title="✅ Difference when using with this"></a>✅ Difference when using with <code>this</code></h4><table>
 <thead>
 <tr>
-<th>特性</th>
+<th>Feature</th>
 <th>var &#x2F; let &#x2F; const</th>
 </tr>
 </thead>
 <tbody><tr>
-<td>改变 <code>this</code> 指向</td>
-<td>✅ 可以</td>
+<td>Can change <code>this</code> context</td>
+<td>✅ Yes</td>
 </tr>
 <tr>
-<td>第一个参数是 <code>this</code> 要指向的对象</td>
-<td>✅ 是</td>
+<td>First parameter is the object <code>this</code> refers to</td>
+<td>✅ Yes</td>
 </tr>
 <tr>
-<td>没传对象或为 <code>undefined/null</code></td>
-<td>默认指向全局 <code>window</code></td>
+<td>No object or <code>undefined/null</code></td>
+<td>Defaults to global <code>window</code></td>
 </tr>
 <tr>
-<td>参数传递</td>
-<td><code>apply</code> 用数组，<code>call</code> 用参数列表，<code>bind</code> 可多次传参</td>
+<td>Parameter passing</td>
+<td><code>apply</code> uses array, <code>call</code> uses parameter list, <code>bind</code> supports multiple arguments</td>
 </tr>
 <tr>
-<td>执行方式</td>
-<td><code>apply/call</code> 立即执行，<code>bind</code> 返回新函数</td>
+<td>Execution method</td>
+<td><code>apply/call</code> execute immediately, <code>bind</code> returns a new function</td>
 </tr>
 </tbody></table>
 </details>
 
-
 <details>
-  <summary><strong>什么是事件委托?</strong></summary>
+  <summary><strong>What is event delegation?</strong></summary>
 
-<!-- 事件委托是一种事件处理机制，它将一个或多个子元素的事件监听**委托给父级或祖先元素**。 -->
 <ul>
-<li>事件委托，会把一个或者一组元素的事件委托到它的父层或者更外层元素上，真正绑定事件的是外层元素，而不是目标元素<br/></li>
-<li>当事件响应到目标元素上时，会通过事件冒泡机制从而触发它的外层元素的绑定事件上，然后在外层元素上去执行函数</li>
+<li>Event delegation attaches events to a parent or ancestor element instead of individual child elements.<br/></li>
+<li>When the event reaches the target element, it bubbles up and triggers the handler on the outer element.</li>
 </ul>
 </details>
 
 <details>
-  <summary><strong>防抖跟节流的区别是什么？</strong></summary>
+  <summary><strong>Difference between debounce and throttle?</strong></summary>
 
-<!-- 事件委托是一种事件处理机制，它将一个或多个子元素的事件监听**委托给父级或祖先元素**。 -->
 <ul>
-<li>防抖：只执行最后一次。事件持续触发，但只有等事件停止触发后 n 秒后才执行函数。<br/></li>
-<li>节流：控制执行频率。持续触发，每 n 秒执行一次函数。</li>
+<li><strong>Debounce</strong>: Executes only the last trigger. Even if the event keeps firing, it waits until <code>n</code> seconds after the last event to execute.</li>
+<li><strong>Throttle</strong>: Controls the execution frequency. Fires every <code>n</code> seconds during continuous event triggers.</li>
 </ul>
 </details>
+
 <details>
-  <summary><strong>Web 前端预防 SQL 注入的方法有哪些？</strong></summary>
+  <summary><strong>How does frontend prevent SQL injection?</strong></summary>
 
 <ol>
-<li>参数化查询：使用预处理语句或参数化查询来避免 SQL 注入。</li>
-<li>验证用户输入：验证用户输入的数据，确保其符合预期格式，避免非法字符等。</li>
-<li>转义特殊字符：在使用用户输入的数据构造 SQL 语句时，对特殊字符进行转义，以防止注入。</li>
-<li>限制权限：限制用户的权限，使其不能执行不安全的 SQL 操作。</li>
-<li>白名单验证：白名单验证是指确保用户输入的数据只能是允许的值，避免非法数据的输入。</li>
-<li>审核代码：定期审核代码，以确保代码的安全性，特别是对于数据库连接和查询部分的代码。</li>
+<li><strong>Parameterized Queries</strong>: Use prepared statements or parameterized queries.</li>
+<li><strong>Input Validation</strong>: Ensure user input follows expected format.</li>
+<li><strong>Escape Special Characters</strong>: Escape characters when constructing SQL queries.</li>
+<li><strong>Limit Permissions</strong>: Restrict user privileges to prevent unsafe operations.</li>
+<li><strong>Whitelist Validation</strong>: Only allow expected values in input.</li>
+<li><strong>Code Review</strong>: Regularly review code, especially DB-related parts.</li>
 </ol>
 </details>
 
 <details>
-  <summary><strong>http 和 https 的区别</strong></summary>
+  <summary><strong>Difference between HTTP and HTTPS</strong></summary>
 
 <ol>
-<li>https 协议需要到 ca 申请证书，一般免费证书较少，因而需要一定费用。</li>
-<li>http 是超文本传输协议，信息是明文传输，https 则是具有安全性的 ssl 加密传输协议。</li>
-<li>http 和 https 使用的是完全不同的连接方式，用的端口也不一样，前者是 80，后者是 443。</li>
-<li>http 的连接很简单，是无状态的；HTTPS 协议是由 SSL+HTTP 协议构建的可进行加密传输、身份认证的网络协议，比 http 协议安全。</li>
+<li>HTTPS requires a certificate from a CA, which may cost money.</li>
+<li>HTTP transmits data in plaintext, while HTTPS uses SSL encryption.</li>
+<li>They use different connection methods and ports: HTTP uses 80, HTTPS uses 443.</li>
+<li>HTTP is stateless; HTTPS combines SSL + HTTP for encrypted, authenticated, secure communication.</li>
 </ol>
 </details>
 
 <details>
-  <summary><strong>created跟mounted的区别</strong></summary>
+  <summary><strong>Difference between created and mounted?</strong></summary>
 
 <ul>
-<li>created发生在mounted之前，此时DOM元素还没完全渲染出来，不过跟后端联调时候的请求可以放在这里，尽早获取到数据返回给变量。</li>
-<li>mounted这时候已经可以获取页面中的DOM元素了。</li>
+<li><code>created</code> runs before <code>mounted</code>. DOM is not fully rendered, but API requests can be made early here.</li>
+<li><code>mounted</code> is triggered when the DOM has been rendered, so it’s suitable for manipulating DOM elements.</li>
 </ul>
 </details>
 
 <details>
-  <summary><strong>说说事件循环机制</strong></summary>
+  <summary><strong>Explain the event loop mechanism</strong></summary>
 
-<h3 id="🔁-什么是事件循环？"><a href="#🔁-什么是事件循环？" class="headerlink" title="🔁 什么是事件循环？"></a>🔁 什么是事件循环？</h3><p>JavaScript 是单线程语言，执行代码时除了依赖<strong>调用栈</strong>，还依赖<strong>任务队列</strong>来控制异步代码的执行顺序。</p>
-<p>整个执行过程称为 <strong>事件循环（Event Loop）</strong>。</p>
-<h3 id="🧠-事件循环的核心概念："><a href="#🧠-事件循环的核心概念：" class="headerlink" title="🧠 事件循环的核心概念："></a>🧠 事件循环的核心概念：</h3><ul>
-<li>一个线程中只有一个事件循环（主循环）。</li>
-<li>可以有多个任务队列，按类型分为：<ul>
-<li><strong>宏任务（Macro Task）</strong></li>
-<li><strong>微任务（Micro Task）</strong></li>
+<h3 id="🔁-What-is-the-Event-Loop"><a href="#🔁-What-is-the-Event-Loop" class="headerlink" title="🔁 What is the Event Loop?"></a>🔁 What is the Event Loop?</h3><p>JavaScript is single-threaded. In addition to the <strong>call stack</strong>, it relies on <strong>task queues</strong> to control asynchronous code execution order.</p>
+<p>This whole process is called the <strong>Event Loop</strong>.</p>
+<h3 id="🧠-Core-Concepts"><a href="#🧠-Core-Concepts" class="headerlink" title="🧠 Core Concepts"></a>🧠 Core Concepts</h3><ul>
+<li>Only one event loop in a single thread.</li>
+<li>Multiple task queues:<ul>
+<li><strong>Macro Tasks</strong></li>
+<li><strong>Micro Tasks</strong></li>
 </ul>
 </li>
 </ul>
 <hr>
-<h3 id="⏱-执行顺序是怎样的？"><a href="#⏱-执行顺序是怎样的？" class="headerlink" title="⏱ 执行顺序是怎样的？"></a>⏱ 执行顺序是怎样的？</h3><div style="color: #fc6423"><strong>执行顺序：</strong></div>
-
-<blockquote>
-<p><strong>宏任务 ➝ 微任务（清空） ➝ 下一个宏任务 ➝ 微任务（清空）… 依此循环</strong></p>
+<h3 id="⏱-Execution-Order"><a href="#⏱-Execution-Order" class="headerlink" title="⏱ Execution Order"></a>⏱ Execution Order</h3><blockquote>
+<p><strong>Macro Task ➝ Clear all Micro Tasks ➝ Next Macro Task ➝ Clear all Micro Tasks…</strong></p>
 </blockquote>
 <ol>
-<li>执行一个宏任务（如 script 整体代码）</li>
-<li>在当前宏任务中执行所有产生的微任务</li>
-<li>若微任务中又产生新的微任务，继续执行，直到清空微任务队列</li>
-<li>开始下一轮宏任务循环</li>
+<li>Execute a macro task (like the whole script)</li>
+<li>Execute all micro tasks created during this macro task</li>
+<li>If micro tasks generate more micro tasks, execute them too</li>
+<li>Begin the next macro task loop</li>
 </ol>
 <hr>
-<h3 id="🧩-宏任务（Macro-Task）有哪些？"><a href="#🧩-宏任务（Macro-Task）有哪些？" class="headerlink" title="🧩 宏任务（Macro Task）有哪些？"></a>🧩 宏任务（Macro Task）有哪些？</h3><ul>
-<li><code>script</code>（整体代码）</li>
+<h3 id="🧩-Examples-of-Macro-Tasks"><a href="#🧩-Examples-of-Macro-Tasks" class="headerlink" title="🧩 Examples of Macro Tasks"></a>🧩 Examples of Macro Tasks</h3><ul>
+<li><code>script</code></li>
 <li><code>setTimeout</code></li>
 <li><code>setInterval</code></li>
-<li><code>setImmediate</code>（Node.js）</li>
-<li><code>I/O 操作</code></li>
-<li><code>UI 渲染</code></li>
+<li><code>setImmediate</code> (Node.js)</li>
+<li><code>I/O operations</code></li>
+<li><code>UI rendering</code></li>
 </ul>
-<h3 id="🧬-微任务（Micro-Task）有哪些？"><a href="#🧬-微任务（Micro-Task）有哪些？" class="headerlink" title="🧬 微任务（Micro Task）有哪些？"></a>🧬 微任务（Micro Task）有哪些？</h3><ul>
-<li><code>process.nextTick</code>（Node.js 专属，优先级更高）</li>
+<h3 id="🧬-Examples-of-Micro-Tasks"><a href="#🧬-Examples-of-Micro-Tasks" class="headerlink" title="🧬 Examples of Micro Tasks"></a>🧬 Examples of Micro Tasks</h3><ul>
+<li><code>process.nextTick</code> (Node.js, higher priority)</li>
 <li><code>Promise.then / catch / finally</code></li>
 <li><code>async / await</code></li>
 <li><code>MutationObserver</code></li>
@@ -419,29 +415,46 @@
 </details>
 
 <details>
-  <summary><strong>说说 css 盒模型</strong></summary>
+  <summary><strong>Explain the CSS box model</strong></summary>
 
-<p>  css 中的盒子模型包括 IE 盒子模型和标准的 W3C 盒子模型</p>
-<p>  在标准的盒子模型中，width 指 content 部分的宽度，box-sizing:content-box(默认为content-box);</p>
-<p>  在 IE 盒子模型中，width 指的是 content+padding+border，box-sizing:border-box;</p>
-<p>  Box-sizing:padding-box 宽度包含了左右 padding+width</p>
+<p>The CSS box model includes IE and standard W3C models.</p>
+<ul>
+<li>In <strong>standard W3C box model</strong>, <code>width</code> only includes content. <code>box-sizing: content-box</code> (default).</li>
+<li>In <strong>IE box model</strong>, <code>width</code> includes content + padding + border. <code>box-sizing: border-box</code>.</li>
+<li><code>box-sizing: padding-box</code> includes left&#x2F;right padding + width.</li>
+</ul>
 </details>
 
 <details>
-  <summary><strong>vue2 和 vue3 的区别</strong></summary>
+  <summary><strong>Differences between Vue 2 and Vue 3</strong></summary>
 
 <ol>
-<li>双向数据绑定原理不同,vue2 使用 Es5 的 API defineProperty()对数据进行劫持, 只能监听某个属性,不能对整个对象监听;vue3 使用 ES6 的 proxy API 对数据代理, 可以监听整个对象和数组</li>
-<li>生命周期不同<br>  vue2:beforeCreate、created 、beforeMount、mounted、beforeUpdate、updated、<br>  beforeDestroy、destroyed<br>  vue3:setup 、onBeforeMount 、 onMounted 、onBeforeUpdate 、onUpdated 、<br>  onBeforeUnmount、onUnmounted</li>
-<li>vue2 必须有根标签,vue3 可以没有根标签,会默认将多个根标签包裹在 fragment虚拟标签中</li>
-<li>vue2 采用选项式 API,将函数和数据统一起来处理,将功能点切割了,当逻辑复杂时不利于代码阅读;vue3 采用组合式 API,将同一个功能的代码统一起来处理,使代码更有序,有利于代码的书写和维护</li>
-<li>vue2 和 vue3 匿名插槽不一样<br>  具名插槽使用方式不同：vue2 使用 slot&#x3D;’’,vue3 使用 v-slot:’’<br>  作用域插槽使用方式不同：vue2 中在父组件中使用 slot-scope&#x3D;”data”从子组件获取数据，vue3 中在父组件中使用 #data 或者 #default&#x3D;”{data}”获取</li>
+<li>Two-way binding:<ul>
+<li>Vue 2: uses <code>Object.defineProperty()</code> (ES5), which only watches individual properties.</li>
+<li>Vue 3: uses <code>Proxy</code> (ES6), which can observe entire objects and arrays.</li>
+</ul>
+</li>
+<li>Lifecycle hooks:<ul>
+<li>Vue 2: <code>beforeCreate</code>, <code>created</code>, <code>beforeMount</code>, <code>mounted</code>, etc.</li>
+<li>Vue 3: <code>setup</code>, <code>onBeforeMount</code>, <code>onMounted</code>, etc.</li>
+</ul>
+</li>
+<li>Vue 2 requires a root tag; Vue 3 allows multiple root tags via Fragment.</li>
+<li>API:<ul>
+<li>Vue 2: Options API (functions and data handled separately).</li>
+<li>Vue 3: Composition API (related code grouped together).</li>
+</ul>
+</li>
+<li>Slots:<ul>
+<li>Named slot: Vue 2 uses <code>slot=&quot;&quot;</code>, Vue 3 uses <code>v-slot=&quot;&quot;</code>.</li>
+<li>Scoped slot: Vue 2 uses <code>slot-scope=&quot;data&quot;</code>, Vue 3 uses <code>#data</code> or <code>#default=&quot;&#123;data&#125;&quot;</code>.</li>
+</ul>
+</li>
 </ol>
 </details>
 
-
-<h2 id="推荐"><a href="#推荐" class="headerlink" title="推荐"></a>推荐</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://edunextgen1.com/">娱乐一下</a></li>
+<h2 id="Recommendation"><a href="#Recommendation" class="headerlink" title="Recommendation"></a>Recommendation</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://edunextgen1.com/">Just for Fun</a></li>
 </ul>
 
     </div>
@@ -467,7 +480,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>Post link: </strong>
-    <a href="https://lidyaqf.github.io/2025/04/18/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98/" title="前端面试题">https://lidyaqf.github.io/2025/04/18/前端面试题/</a>
+    <a href="https://lidyaqf.github.io/2025/04/18/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98/" title="Frontend Interview Questions">https://lidyaqf.github.io/2025/04/18/前端面试题/</a>
   </li>
   <li class="post-copyright-license">
     <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
@@ -554,7 +567,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E2%9C%85-%E4%BD%9C%E7%94%A8%E5%9F%9F"><span class="nav-number">1.0.0.1.</span> <span class="nav-text">✅ 作用域</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E2%9C%85-%E5%A3%B0%E6%98%8E%E8%A7%84%E5%88%99"><span class="nav-number">1.0.0.2.</span> <span class="nav-text">✅ 声明规则</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E2%9C%85-%E7%BB%93%E5%90%88-this-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">1.0.0.3.</span> <span class="nav-text">✅ 结合 this 的区别</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%94%81-%E4%BB%80%E4%B9%88%E6%98%AF%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF%EF%BC%9F"><span class="nav-number">1.0.1.</span> <span class="nav-text">🔁 什么是事件循环？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%A7%A0-%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF%E7%9A%84%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5%EF%BC%9A"><span class="nav-number">1.0.2.</span> <span class="nav-text">🧠 事件循环的核心概念：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E2%8F%B1-%E6%89%A7%E8%A1%8C%E9%A1%BA%E5%BA%8F%E6%98%AF%E6%80%8E%E6%A0%B7%E7%9A%84%EF%BC%9F"><span class="nav-number">1.0.3.</span> <span class="nav-text">⏱ 执行顺序是怎样的？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%A7%A9-%E5%AE%8F%E4%BB%BB%E5%8A%A1%EF%BC%88Macro-Task%EF%BC%89%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F"><span class="nav-number">1.0.4.</span> <span class="nav-text">🧩 宏任务（Macro Task）有哪些？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%A7%AC-%E5%BE%AE%E4%BB%BB%E5%8A%A1%EF%BC%88Micro-Task%EF%BC%89%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F"><span class="nav-number">1.0.5.</span> <span class="nav-text">🧬 微任务（Micro Task）有哪些？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%A8%E8%8D%90"><span class="nav-number">1.1.</span> <span class="nav-text">推荐</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E2%9C%85-Scope"><span class="nav-number">1.0.0.1.</span> <span class="nav-text">✅ Scope</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E2%9C%85-Declaration-Rules"><span class="nav-number">1.0.0.2.</span> <span class="nav-text">✅ Declaration Rules</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E2%9C%85-Difference-when-using-with-this"><span class="nav-number">1.0.0.3.</span> <span class="nav-text">✅ Difference when using with this</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%94%81-What-is-the-Event-Loop"><span class="nav-number">1.0.1.</span> <span class="nav-text">🔁 What is the Event Loop?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%A7%A0-Core-Concepts"><span class="nav-number">1.0.2.</span> <span class="nav-text">🧠 Core Concepts</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E2%8F%B1-Execution-Order"><span class="nav-number">1.0.3.</span> <span class="nav-text">⏱ Execution Order</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%A7%A9-Examples-of-Macro-Tasks"><span class="nav-number">1.0.4.</span> <span class="nav-text">🧩 Examples of Macro Tasks</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%A7%AC-Examples-of-Micro-Tasks"><span class="nav-number">1.0.5.</span> <span class="nav-text">🧬 Examples of Micro Tasks</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Recommendation"><span class="nav-number">1.1.</span> <span class="nav-text">Recommendation</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -570,7 +583,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/ening/ening/archives/">
         
-          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-count">6</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

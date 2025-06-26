@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Hello English</title>
-    <url>/ening/2024/08/16/redis-en/</url>
-    <content><![CDATA[This is an English post.
-]]></content>
-  </entry>
-  <entry>
     <title>ELK安装流程</title>
     <url>/ening/2025/04/11/ELK%E5%AE%89%E8%A3%85%E6%B5%81%E7%A8%8B/</url>
     <content><![CDATA[使用 Docker 安装 ELK Stack（ElasticSearch、Logstash、Kibana）
@@ -156,138 +150,134 @@ http://localhost:8090/
       </tags>
   </entry>
   <entry>
-    <title>前端面试题</title>
+    <title>Frontend Interview Questions</title>
     <url>/ening/2025/04/18/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98/</url>
     <content><![CDATA[
-  var、let、const 三者的区别?
+  Differences between var, let, and const?
 
-✅ 作用域
-var 定义的变量没有块作用域，可以跨块访问，但不能跨函数访问。
-let 定义的变量有块作用域，只能在声明的代码块中访问。
-const 定义的是常量，必须初始化，只能在声明的代码块中访问，且值不可更改。
+✅ Scope
+Variables declared with var do not have block scope. They can be accessed outside blocks but not outside functions.
+Variables declared with let have block scope, accessible only within the declared block.
+const defines constants, must be initialized, accessible only in the declared block, and cannot be reassigned.
 
-✅ 声明规则
-同一个变量名，只能用一种声明方式，否则会报错。
+✅ Declaration Rules
+A variable name can only be declared once using one of these methods; otherwise, it throws an error.
 
-✅ 结合 this 的区别
+✅ Difference when using with this
 
 
-特性
+Feature
 var &#x2F; let &#x2F; const
 
 
 
-改变 this 指向
-✅ 可以
+Can change this context
+✅ Yes
 
 
-第一个参数是 this 要指向的对象
-✅ 是
+First parameter is the object this refers to
+✅ Yes
 
 
-没传对象或为 undefined/null
-默认指向全局 window
+No object or undefined/null
+Defaults to global window
 
 
-参数传递
-apply 用数组，call 用参数列表，bind 可多次传参
+Parameter passing
+apply uses array, call uses parameter list, bind supports multiple arguments
 
 
-执行方式
-apply/call 立即执行，bind 返回新函数
-
-
-
-
-
-
-  什么是事件委托?
-
-
-
-事件委托，会把一个或者一组元素的事件委托到它的父层或者更外层元素上，真正绑定事件的是外层元素，而不是目标元素
-当事件响应到目标元素上时，会通过事件冒泡机制从而触发它的外层元素的绑定事件上，然后在外层元素上去执行函数
+Execution method
+apply/call execute immediately, bind returns a new function
 
 
 
 
-  防抖跟节流的区别是什么？
+
+  What is event delegation?
 
 
-
-防抖：只执行最后一次。事件持续触发，但只有等事件停止触发后 n 秒后才执行函数。
-节流：控制执行频率。持续触发，每 n 秒执行一次函数。
-
-
-
-  Web 前端预防 SQL 注入的方法有哪些？
-
-
-参数化查询：使用预处理语句或参数化查询来避免 SQL 注入。
-验证用户输入：验证用户输入的数据，确保其符合预期格式，避免非法字符等。
-转义特殊字符：在使用用户输入的数据构造 SQL 语句时，对特殊字符进行转义，以防止注入。
-限制权限：限制用户的权限，使其不能执行不安全的 SQL 操作。
-白名单验证：白名单验证是指确保用户输入的数据只能是允许的值，避免非法数据的输入。
-审核代码：定期审核代码，以确保代码的安全性，特别是对于数据库连接和查询部分的代码。
+Event delegation attaches events to a parent or ancestor element instead of individual child elements.
+When the event reaches the target element, it bubbles up and triggers the handler on the outer element.
 
 
 
 
-  http 和 https 的区别
+  Difference between debounce and throttle?
 
 
-https 协议需要到 ca 申请证书，一般免费证书较少，因而需要一定费用。
-http 是超文本传输协议，信息是明文传输，https 则是具有安全性的 ssl 加密传输协议。
-http 和 https 使用的是完全不同的连接方式，用的端口也不一样，前者是 80，后者是 443。
-http 的连接很简单，是无状态的；HTTPS 协议是由 SSL+HTTP 协议构建的可进行加密传输、身份认证的网络协议，比 http 协议安全。
-
-
-
-
-  created跟mounted的区别
-
-
-created发生在mounted之前，此时DOM元素还没完全渲染出来，不过跟后端联调时候的请求可以放在这里，尽早获取到数据返回给变量。
-mounted这时候已经可以获取页面中的DOM元素了。
+Debounce: Executes only the last trigger. Even if the event keeps firing, it waits until n seconds after the last event to execute.
+Throttle: Controls the execution frequency. Fires every n seconds during continuous event triggers.
 
 
 
 
-  说说事件循环机制
-
-🔁 什么是事件循环？JavaScript 是单线程语言，执行代码时除了依赖调用栈，还依赖任务队列来控制异步代码的执行顺序。
-整个执行过程称为 事件循环（Event Loop）。
-🧠 事件循环的核心概念：
-一个线程中只有一个事件循环（主循环）。
-可以有多个任务队列，按类型分为：
-宏任务（Macro Task）
-微任务（Micro Task）
+  How does frontend prevent SQL injection?
 
 
+Parameterized Queries: Use prepared statements or parameterized queries.
+Input Validation: Ensure user input follows expected format.
+Escape Special Characters: Escape characters when constructing SQL queries.
+Limit Permissions: Restrict user privileges to prevent unsafe operations.
+Whitelist Validation: Only allow expected values in input.
+Code Review: Regularly review code, especially DB-related parts.
 
 
-⏱ 执行顺序是怎样的？执行顺序：
 
 
-宏任务 ➝ 微任务（清空） ➝ 下一个宏任务 ➝ 微任务（清空）… 依此循环
+  Difference between HTTP and HTTPS
 
 
-执行一个宏任务（如 script 整体代码）
-在当前宏任务中执行所有产生的微任务
-若微任务中又产生新的微任务，继续执行，直到清空微任务队列
-开始下一轮宏任务循环
+HTTPS requires a certificate from a CA, which may cost money.
+HTTP transmits data in plaintext, while HTTPS uses SSL encryption.
+They use different connection methods and ports: HTTP uses 80, HTTPS uses 443.
+HTTP is stateless; HTTPS combines SSL + HTTP for encrypted, authenticated, secure communication.
 
 
-🧩 宏任务（Macro Task）有哪些？
-script（整体代码）
+
+
+  Difference between created and mounted?
+
+
+created runs before mounted. DOM is not fully rendered, but API requests can be made early here.
+mounted is triggered when the DOM has been rendered, so it’s suitable for manipulating DOM elements.
+
+
+
+
+  Explain the event loop mechanism
+
+🔁 What is the Event Loop?JavaScript is single-threaded. In addition to the call stack, it relies on task queues to control asynchronous code execution order.
+This whole process is called the Event Loop.
+🧠 Core Concepts
+Only one event loop in a single thread.
+Multiple task queues:
+Macro Tasks
+Micro Tasks
+
+
+
+
+⏱ Execution Order
+Macro Task ➝ Clear all Micro Tasks ➝ Next Macro Task ➝ Clear all Micro Tasks…
+
+
+Execute a macro task (like the whole script)
+Execute all micro tasks created during this macro task
+If micro tasks generate more micro tasks, execute them too
+Begin the next macro task loop
+
+
+🧩 Examples of Macro Tasks
+script
 setTimeout
 setInterval
-setImmediate（Node.js）
-I/O 操作
-UI 渲染
+setImmediate (Node.js)
+I/O operations
+UI rendering
 
-🧬 微任务（Micro Task）有哪些？
-process.nextTick（Node.js 专属，优先级更高）
+🧬 Examples of Micro Tasks
+process.nextTick (Node.js, higher priority)
 Promise.then / catch / finally
 async / await
 MutationObserver
@@ -295,30 +285,65 @@ MutationObserver
 
 
 
-  说说 css 盒模型
+  Explain the CSS box model
 
-  css 中的盒子模型包括 IE 盒子模型和标准的 W3C 盒子模型
-  在标准的盒子模型中，width 指 content 部分的宽度，box-sizing:content-box(默认为content-box);
-  在 IE 盒子模型中，width 指的是 content+padding+border，box-sizing:border-box;
-  Box-sizing:padding-box 宽度包含了左右 padding+width
+The CSS box model includes IE and standard W3C models.
 
-
-
-  vue2 和 vue3 的区别
-
-
-双向数据绑定原理不同,vue2 使用 Es5 的 API defineProperty()对数据进行劫持, 只能监听某个属性,不能对整个对象监听;vue3 使用 ES6 的 proxy API 对数据代理, 可以监听整个对象和数组
-生命周期不同  vue2:beforeCreate、created 、beforeMount、mounted、beforeUpdate、updated、  beforeDestroy、destroyed  vue3:setup 、onBeforeMount 、 onMounted 、onBeforeUpdate 、onUpdated 、  onBeforeUnmount、onUnmounted
-vue2 必须有根标签,vue3 可以没有根标签,会默认将多个根标签包裹在 fragment虚拟标签中
-vue2 采用选项式 API,将函数和数据统一起来处理,将功能点切割了,当逻辑复杂时不利于代码阅读;vue3 采用组合式 API,将同一个功能的代码统一起来处理,使代码更有序,有利于代码的书写和维护
-vue2 和 vue3 匿名插槽不一样  具名插槽使用方式不同：vue2 使用 slot&#x3D;’’,vue3 使用 v-slot:’’  作用域插槽使用方式不同：vue2 中在父组件中使用 slot-scope&#x3D;”data”从子组件获取数据，vue3 中在父组件中使用 #data 或者 #default&#x3D;”{data}”获取
+In standard W3C box model, width only includes content. box-sizing: content-box (default).
+In IE box model, width includes content + padding + border. box-sizing: border-box.
+box-sizing: padding-box includes left&#x2F;right padding + width.
 
 
 
 
-推荐
-娱乐一下
+  Differences between Vue 2 and Vue 3
 
+
+Two-way binding:
+Vue 2: uses Object.defineProperty() (ES5), which only watches individual properties.
+Vue 3: uses Proxy (ES6), which can observe entire objects and arrays.
+
+
+Lifecycle hooks:
+Vue 2: beforeCreate, created, beforeMount, mounted, etc.
+Vue 3: setup, onBeforeMount, onMounted, etc.
+
+
+Vue 2 requires a root tag; Vue 3 allows multiple root tags via Fragment.
+API:
+Vue 2: Options API (functions and data handled separately).
+Vue 3: Composition API (related code grouped together).
+
+
+Slots:
+Named slot: Vue 2 uses slot=&quot;&quot;, Vue 3 uses v-slot=&quot;&quot;.
+Scoped slot: Vue 2 uses slot-scope=&quot;data&quot;, Vue 3 uses #data or #default=&quot;&#123;data&#125;&quot;.
+
+
+
+
+
+Recommendation
+Just for Fun
+
+]]></content>
+  </entry>
+  <entry>
+    <title>Reflections on *Skin*</title>
+    <url>/ening/2025/06/26/%E7%9A%AE%E5%9B%8A%E6%84%9F%E6%82%9F/</url>
+    <content><![CDATA[Aunt TaiAunt Tai is strong-willed and resilient. Her optimistic attitude is something worth learning from. The greatest thing my father ever did was marrying my mother—a truly great woman. A real woman should face everything with positivity and build the future she desires with her own hands.
+Although she resorted to stealing, it was driven by hardship—survival and family. Setting aside pride to do things against her will is, in a way, a form of strength. It’s not about crying and making a scene, but staying proactive in adversity.
+Thinking about it, the author’s achievements are inseparable from his great mother.
+Ah, that lovely mother! To preserve her husband’s dignity and happiness, she insisted on completing the house. Isn’t that a form of strength too? To follow her heart courageously is truly admirable.
+In fact, the person who understands my father the most is my mother. She knows his pride. Isn’t this what love is? You don’t need to say it—I understand. I understand you, and you understand me, and that’s why we’ve been together for so long.
+Zhang MeiliGet up from where you fell. Zhang Meili seems like someone who pursued true love and worked hard for what she desired. Though she was eventually forced to liberate herself sexually, I still respect her for everything she once did.
+Public opinion is powerful, but Zhang Meili’s inner strength is even more powerful.
+]]></content>
+  </entry>
+  <entry>
+    <title>Hello English</title>
+    <url>/ening/2024/08/16/redis-en/</url>
+    <content><![CDATA[This is an English post.
 ]]></content>
   </entry>
   <entry>
