@@ -71,6 +71,7 @@
 {%- if theme.baidu_site_verification %}
   <meta name="baidu-site-verification" content="{{ theme.baidu_site_verification }}">
 {%- endif %}
+<meta name="baidu_union_verify" content="4c95743ab0ae1a7dcfbc5c20c004854b">
 
 <link rel="stylesheet" href="{{ url_for(theme.css) }}/main.css">
 
