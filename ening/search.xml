@@ -1,109 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>ELK Installation Guide</title>
-    <url>/ening/2025/04/11/ELK%E5%AE%89%E8%A3%85%E6%B5%81%E7%A8%8B/</url>
-    <content><![CDATA[Installing ELK Stack (ElasticSearch, Logstash, Kibana) with Docker
-It is recommended to install on Docker due to lower resource consumption. The installation version used below is 8.12.2. Please use the same version to avoid conflicts.
+    <title>GitLab CI/CD</title>
+    <url>/ening/2025/04/10/gitlabci/</url>
+    <content><![CDATA[GitLab CI&#x2F;CD Guide for Frontend Projects (Mac Environment)OverviewIn daily development, we often manually send the built dist package to the backend for deployment, which is inefficient and error-prone. CI (Continuous Integration) automates this process. This guide shows how to use GitLab CI to implement continuous integration and deployment.
 
-Table of Contents1. Install ElasticSearch2. Install Logstash3. Install KibanaRecommendations
+1. Install GitLab RunnerRefer to the official documentation: GitLab Runner Installation Guide
 
-1. Install ElasticSearch
-Pull the image:
+2. Register Runner Locally
+Open your GitLab project page and go to Settings → CI&#x2F;CD, expand the Runners section.
+Note the displayed URL and token for registration.
 
-docker pull elasticsearch:8.12.2````* Start the container:```bashdocker run --name some-elasticsearch -p 9200:9200 -p 9300:9300 -e &quot;discovery.type=single-node&quot; -d elasticsearch:8.12.2
+Run the registration commandgitlab-runner register
 
+Follow the prompts and enter the following information:
 
-Enter the container:
+GitLab CI Coordinator URL: https://gitlab.com
+GitLab CI Token: xxx (copy from the project)
+Tags: my-tag,another-tag (custom tags)
+Description: my-runner (custom description)
+Executor: shell (recommended on Mac)
 
-sudo docker exec -u 0 -it some-elasticsearch bash
-
-
-Restart the container:
-
-docker restart some-elasticsearch
-
-
-2. Install Logstash
-Pull the image:
-
-docker pull docker.elastic.co/logstash/logstash:8.12.2
+After registration, return to the GitLab CI&#x2F;CD settings page. If the runner status is green, it’s running successfully. If not, start the runner manually:
+gitlab-runner run
 
 
-Start the container:
-
-sudo docker run -it -p 5044:5044 -p 9600:9600 --name logstash -v /usr/share/logstash/piplines:/usr/share/logstash/config --privileged=true docker.elastic.co/logstash/logstash:8.12.2 /bin/bash
-
-
-Use scp to upload the MySQL Connector JAR file to the virtual machine:
-
-scp &quot;/Users/Downloads/logstash-8.12.2/mysql-connector-j-8.4.0.jar&quot; username@VM-IP:/home
+3. Create and Commit .gitlab-ci.ymlSave the following content as .gitlab-ci.yml and push it to GitLab:
+stages:  - deploydeploy_to_test:  stage: deploy  script:    - yarn    - rm -rf dist/    - yarn build    - ls -l -t ./dist/    - rsync -avz ./dist/ root@xxx.xx.xx.xxx:/dist
 
 
-Move the JAR file from the VM to the Logstash container:
-
-docker cp ./mysql-connector-j-8.4.0.jar logstash:/usr/share/logstash
+This CI script builds the project and uses rsync to deploy the dist folder to a remote server.
 
 
-Enter the container:
+4. CI with Docker (Optional)If you want a more comprehensive CI&#x2F;CD pipeline using Docker, follow these steps:
+1. Install Docker (Mac)brew install --cask docker
 
-docker exec -u 0 -it logstash bash
+2. Pull GitLab Imagedocker pull drud/gitlab-ce:v0.29.1
 
+3. Create GitLab Containerdocker run -d -p 8443:443 -p 8090:80 -p 8022:22 --restart always --name gitlab drud/gitlab-ce:v0.29.1
 
-3. Install Kibana
-Pull the image:
+Explanation:
 
-docker pull kibana:8.12.2
+-p 8443:443: map HTTPS port
+-p 8090:80: map HTTP port
+-p 8022:22: map SSH port
+--restart always: auto-restart on crash or reboot
+--name gitlab: container named gitlab
 
-
-Start the container:
-
-docker run --name some-kibana -p 9200:9200 -p 9300:9300 -e &quot;discovery.type=single-node&quot; -d elasticsearch:8.12.2
-
-
-Enter the container:
-
-docker exec -u 0 -it some-kibana bash
+Visit:
+http://localhost:8090/
 
 
-Additional: Install Docker, Portainer, and Related Commandssudo apt updatesudo apt install docker.io docker-composedocker -vsudo systemctl start dockersudo docker search portainerdocker pull portainer/portainersudo docker pull portainer/portainersudo docker run -d --name portainerUI -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock portainer/portainersudo docker start portainerUIsudo passwd root
+5. .gitlab-ci.yml Example for Docker Modevariables:  TEST_NAME: &quot;tips&quot;  OUT_PORT: &quot;8081&quot;  IN_PORT: &quot;8081&quot;stages:  - deploydeploy_to_test:  stage: deploy  before_script:    - if [ $(docker ps -aq --filter name=$CI_PROJECT_NAME) ]; then docker rm -f $CI_PROJECT_NAME; fi  script:    - docker build -f Dockerfile -t $TEST_NAME:latest .    - docker run -d -p $OUT_PORT:$IN_PORT --name $TEST_NAME $TEST_NAME:latest
 
+After successful deployment, you can view the build process on the GitLab CI&#x2F;CD Pipelines page. A new container will be generated under the Containers section. Click the corresponding port to access the deployed page.
 
 Recommendations
 Just for Fun
 
 ]]></content>
       <categories>
-        <category>Backend</category>
+        <category>Frontend</category>
       </categories>
+      <tags>
+        <tag>Frontend</tag>
+      </tags>
   </entry>
   <entry>
-    <title>Reflections on *What I Talk About When I Talk About Running*</title>
-    <url>/ening/2025/06/26/%E5%BD%93%E6%88%91%E8%B0%88%E8%B7%91%E6%AD%A5%E6%97%B6/</url>
-    <content><![CDATA[What I Talk About When I Talk About RunningIt was through this book that I realized there could be another version of myself out there, doing something I love. Before reading this book, I had never read anything by Murakami. I knew he was popular and had many famous books, but I hadn’t really paid attention. But when it comes to running, I felt there could be a connection.
-If I keep running, will I eventually reach the moon? Running isn’t about living longer, but about making life feel easier and lighter within the time we have.
-I was surprised by Murakami’s imagination while running—so free and boundless. I really enjoy that. I’ve imagined many things too, like suddenly recalling a lyric while running—something like “speeding up to chase happiness,” blabla… Long-distance running requires endurance, but also imagination. Of course, the premise is loving to run. If someone doesn’t like running, no matter how much you say, it won’t matter. But if someone does love it, they’ll even want to meet another version of themselves during a break in the rain. Humans are inherently lonely, but the spirit can resonate with others.
-I plan to keep running no matter how the world changes. Once, I walked 30 kilometers in one day. Despite the sunburn, I loved the spiritual fulfillment more. If you haven’t experienced it, you have no voice. Maybe I’m like Chen Kun—a pessimistic optimist. I live actively in this world, but I also see through its illusions. Neither joyful because of things, nor sorrowful because of myself.
-My pulse has dropped to just over 50 beats per minute. Seems like I’m built for jogging. After all, it’s about interest. As long as my freedom isn’t restricted, anything is acceptable.
-I hope next year I’ll join a marathon, with people cheering me on. That would be so happy.
-
-“I’m not a person, but a pure machine. So I don’t need to feel anything, just keep running forward.”
-
-What’s most similar is that we both love to run non-stop. Not the type who walks when tired or stops to enjoy the scenery. Maybe people have different views, but I think the true king is the one who can keep running without stopping.
-When reaching the finish line, I’d feel so cool, a rush of pride, like winning the lottery or getting incredibly lucky. It’s a principle—and also my pride.
-Oh, right—just like Brother Shang waiting at the finish line, and I’d smile proudly.
-]]></content>
-  </entry>
-  <entry>
-    <title>Reflections on *Skin*</title>
-    <url>/ening/2025/06/26/%E7%9A%AE%E5%9B%8A%E6%84%9F%E6%82%9F/</url>
-    <content><![CDATA[Aunt TaiAunt Tai is strong-willed and resilient. Her optimistic attitude is something worth learning from. The greatest thing my father ever did was marrying my mother—a truly great woman. A real woman should face everything with positivity and build the future she desires with her own hands.
-Although she resorted to stealing, it was driven by hardship—survival and family. Setting aside pride to do things against her will is, in a way, a form of strength. It’s not about crying and making a scene, but staying proactive in adversity.
-Thinking about it, the author’s achievements are inseparable from his great mother.
-Ah, that lovely mother! To preserve her husband’s dignity and happiness, she insisted on completing the house. Isn’t that a form of strength too? To follow her heart courageously is truly admirable.
-In fact, the person who understands my father the most is my mother. She knows his pride. Isn’t this what love is? You don’t need to say it—I understand. I understand you, and you understand me, and that’s why we’ve been together for so long.
-Zhang MeiliGet up from where you fell. Zhang Meili seems like someone who pursued true love and worked hard for what she desired. Though she was eventually forced to liberate herself sexually, I still respect her for everything she once did.
-Public opinion is powerful, but Zhang Meili’s inner strength is even more powerful.
+    <title>Hello English</title>
+    <url>/ening/2024/08/16/redis-en/</url>
+    <content><![CDATA[This is an English post.
 ]]></content>
   </entry>
   <entry>
@@ -286,6 +252,133 @@ Just for Fun
 ]]></content>
   </entry>
   <entry>
+    <title>Reflections on *Skin*</title>
+    <url>/ening/2025/06/26/%E7%9A%AE%E5%9B%8A%E6%84%9F%E6%82%9F/</url>
+    <content><![CDATA[Aunt TaiAunt Tai is strong-willed and resilient. Her optimistic attitude is something worth learning from. The greatest thing my father ever did was marrying my mother—a truly great woman. A real woman should face everything with positivity and build the future she desires with her own hands.
+Although she resorted to stealing, it was driven by hardship—survival and family. Setting aside pride to do things against her will is, in a way, a form of strength. It’s not about crying and making a scene, but staying proactive in adversity.
+Thinking about it, the author’s achievements are inseparable from his great mother.
+Ah, that lovely mother! To preserve her husband’s dignity and happiness, she insisted on completing the house. Isn’t that a form of strength too? To follow her heart courageously is truly admirable.
+In fact, the person who understands my father the most is my mother. She knows his pride. Isn’t this what love is? You don’t need to say it—I understand. I understand you, and you understand me, and that’s why we’ve been together for so long.
+Zhang MeiliGet up from where you fell. Zhang Meili seems like someone who pursued true love and worked hard for what she desired. Though she was eventually forced to liberate herself sexually, I still respect her for everything she once did.
+Public opinion is powerful, but Zhang Meili’s inner strength is even more powerful.
+]]></content>
+  </entry>
+  <entry>
+    <title>ELK Installation Guide</title>
+    <url>/ening/2025/04/11/ELK%E5%AE%89%E8%A3%85%E6%B5%81%E7%A8%8B/</url>
+    <content><![CDATA[Installing ELK Stack (ElasticSearch, Logstash, Kibana) with Docker
+It is recommended to install on Docker due to lower resource consumption. The installation version used below is 8.12.2. Please use the same version to avoid conflicts.
+
+Table of Contents1. Install ElasticSearch2. Install Logstash3. Install KibanaRecommendations
+
+1. Install ElasticSearch
+Pull the image:
+
+docker pull elasticsearch:8.12.2````* Start the container:```bashdocker run --name some-elasticsearch -p 9200:9200 -p 9300:9300 -e &quot;discovery.type=single-node&quot; -d elasticsearch:8.12.2
+
+
+Enter the container:
+
+sudo docker exec -u 0 -it some-elasticsearch bash
+
+
+Restart the container:
+
+docker restart some-elasticsearch
+
+
+2. Install Logstash
+Pull the image:
+
+docker pull docker.elastic.co/logstash/logstash:8.12.2
+
+
+Start the container:
+
+sudo docker run -it -p 5044:5044 -p 9600:9600 --name logstash -v /usr/share/logstash/piplines:/usr/share/logstash/config --privileged=true docker.elastic.co/logstash/logstash:8.12.2 /bin/bash
+
+
+Use scp to upload the MySQL Connector JAR file to the virtual machine:
+
+scp &quot;/Users/Downloads/logstash-8.12.2/mysql-connector-j-8.4.0.jar&quot; username@VM-IP:/home
+
+
+Move the JAR file from the VM to the Logstash container:
+
+docker cp ./mysql-connector-j-8.4.0.jar logstash:/usr/share/logstash
+
+
+Enter the container:
+
+docker exec -u 0 -it logstash bash
+
+
+3. Install Kibana
+Pull the image:
+
+docker pull kibana:8.12.2
+
+
+Start the container:
+
+docker run --name some-kibana -p 9200:9200 -p 9300:9300 -e &quot;discovery.type=single-node&quot; -d elasticsearch:8.12.2
+
+
+Enter the container:
+
+docker exec -u 0 -it some-kibana bash
+
+
+Additional: Install Docker, Portainer, and Related Commandssudo apt updatesudo apt install docker.io docker-composedocker -vsudo systemctl start dockersudo docker search portainerdocker pull portainer/portainersudo docker pull portainer/portainersudo docker run -d --name portainerUI -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock portainer/portainersudo docker start portainerUIsudo passwd root
+
+
+Recommendations
+Just for Fun
+
+]]></content>
+      <categories>
+        <category>Backend</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>Encountering the Unknown Self</title>
+    <url>/ening/2025/06/30/%E9%81%87%E8%A7%81%E6%9C%AA%E7%9F%A5%E7%9A%84%E8%87%AA%E5%B7%B1/</url>
+    <content><![CDATA[Notes on Encountering the Unknown SelfWhat is the “Unknown”?The “self” refers to the “true self.” From the question “Who am I?” to the concept of “from existence to non-existence,” the entire book is structured around dialogues between Ruoling and a wise elder, revealing many profound life concepts.
+
+Core Concepts
+There is no one outside—only yourself.All external situations are actually projections of your inner world.
+
+Golden Moments to Talk with the SubconsciousThe best times to imagine you’ve already achieved your goals are the moments between waking and sleeping—early morning just before fully waking up, or late at night before falling asleep. These times are when we are closest to our subconscious.
+
+Key Practices: Awareness, Surrender, Overcoming the Peptide Self (Ego)
+
+Awareness: Focus on your present self. Observe your emotions and reactions without judgment.
+Surrender: Accept reality instead of resisting it.
+Peptide Self (Ego): Represents inner voices of fear, comparison, and anxiety. Learn to recognize and transcend them.
+
+
+Meditation, Gratitude, Giving
+
+During meditation, visualize yourself already living your desired life.
+Be grateful even before your goals are achieved.
+Maintain a selfless, giving mindset.
+
+
+Care Less About Others, Care More About Yourself
+
+Bring your attention back to yourself and your inner world.
+When emotions arise, be aware of which part of your body feels uncomfortable and understand its message.
+
+
+
+
+ConclusionThis book is not only about discovering “who you are,” but also about reminding you to “become that true self.” Awakening inner strength requires continuous awareness, practice, and transcending the ego.
+]]></content>
+      <tags>
+        <tag>Personal Growth</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>One Day You&#39;ll Understand - Reading Notes by Mr. Zhuomo</title>
     <url>/ening/2025/05/21/%E3%80%8A%E7%BB%88%E6%9C%89%E4%B8%80%E5%A4%A9%E4%BD%A0%E4%BC%9A%E6%87%82%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%20-%20%E7%90%A2%E7%A3%A8%E5%85%88%E7%94%9F/</url>
     <content><![CDATA[The book does contain a lot of his own “biases,” but I find him authentic and humorous. His language is simple and understandable, and each subtitle essentially tells us what we should do.
@@ -312,76 +405,20 @@ Understanding Entertainment &amp; FreedomLife has two paths: one for career ambi
 ]]></content>
   </entry>
   <entry>
-    <title>GitLab CI/CD</title>
-    <url>/ening/2025/04/10/gitlabci/</url>
-    <content><![CDATA[前端项目 GitLab CI&#x2F;CD 持续集成部署指南（Mac 环境）概要在日常开发过程中，我们经常需要将打包后的 dist 包手动发送给后端部署，效率低且容易出错。CI（Continuous Integration，持续集成）可以自动化这一过程，本文将介绍如何通过 GitLab CI 实现持续集成部署。
+    <title>Reflections on *What I Talk About When I Talk About Running*</title>
+    <url>/ening/2025/06/26/%E5%BD%93%E6%88%91%E8%B0%88%E8%B7%91%E6%AD%A5%E6%97%B6/</url>
+    <content><![CDATA[What I Talk About When I Talk About RunningIt was through this book that I realized there could be another version of myself out there, doing something I love. Before reading this book, I had never read anything by Murakami. I knew he was popular and had many famous books, but I hadn’t really paid attention. But when it comes to running, I felt there could be a connection.
+If I keep running, will I eventually reach the moon? Running isn’t about living longer, but about making life feel easier and lighter within the time we have.
+I was surprised by Murakami’s imagination while running—so free and boundless. I really enjoy that. I’ve imagined many things too, like suddenly recalling a lyric while running—something like “speeding up to chase happiness,” blabla… Long-distance running requires endurance, but also imagination. Of course, the premise is loving to run. If someone doesn’t like running, no matter how much you say, it won’t matter. But if someone does love it, they’ll even want to meet another version of themselves during a break in the rain. Humans are inherently lonely, but the spirit can resonate with others.
+I plan to keep running no matter how the world changes. Once, I walked 30 kilometers in one day. Despite the sunburn, I loved the spiritual fulfillment more. If you haven’t experienced it, you have no voice. Maybe I’m like Chen Kun—a pessimistic optimist. I live actively in this world, but I also see through its illusions. Neither joyful because of things, nor sorrowful because of myself.
+My pulse has dropped to just over 50 beats per minute. Seems like I’m built for jogging. After all, it’s about interest. As long as my freedom isn’t restricted, anything is acceptable.
+I hope next year I’ll join a marathon, with people cheering me on. That would be so happy.
 
-一、安装 GitLab Runner请参考官方文档：GitLab Runner 安装指南
+“I’m not a person, but a pure machine. So I don’t need to feel anything, just keep running forward.”
 
-二、本地注册 Runner
-打开你的 GitLab 项目页面，进入 Settings → CI&#x2F;CD，展开 Runners 部分。
-记住显示的 URL 和 token，用于后续注册。
-
-执行注册命令gitlab-runner register
-
-按照提示依次输入以下信息：
-
-GitLab CI Coordinator URL: https://gitlab.com
-GitLab CI Token: xxx（从项目中复制）
-Tags: my-tag,another-tag（自定义）
-Description: my-runner（自定义）
-Executor: shell（Mac 上建议选择 shell）
-
-注册完成后，回到 GitLab CI&#x2F;CD 设置页面，可看到 Runner 状态为绿色，说明已成功运行。如果不是绿色，请执行以下命令启动 Runner 服务：
-gitlab-runner run
-
-
-三、编写 .gitlab-ci.yml 文件并提交将以下内容保存为 .gitlab-ci.yml，并 push 到 GitLab：
-stages:  - deploydeploy_to_test:  stage: deploy  script:    - yarn    - rm -rf dist/    - yarn build    - ls -l -t ./dist/    - rsync -avz ./dist/ root@xxx.xx.xx.xxx:/dist
-
-
-这段 CI 脚本会自动打包项目，并使用 rsync 将 dist 目录部署到远程服务器。
-
-
-四、通过 Docker 实现 CI（可选）如果需要通过 Docker 实现更完整的 CI&#x2F;CD 流程，继续以下步骤：
-1. 安装 Docker（Mac）brew install --cask docker
-
-2. 拉取 GitLab 镜像docker pull drud/gitlab-ce:v0.29.1
-
-3. 创建 GitLab 容器docker run -d -p 8443:443 -p 8090:80 -p 8022:22 --restart always --name gitlab drud/gitlab-ce:v0.29.1
-
-说明：
-
--p 8443:443：映射 HTTPS 端口
--p 8090:80：映射 HTTP 端口
--p 8022:22：映射 SSH 端口
---restart always：容器崩溃或主机重启时自动恢复
---name gitlab：容器命名为 gitlab
-
-访问地址：
-http://localhost:8090/
-
-
-五、Docker 模式下的 .gitlab-ci.yml 示例variables:  TEST_NAME: &quot;tips&quot;  OUT_PORT: &quot;8081&quot;  IN_PORT: &quot;8081&quot;stages:  - deploydeploy_to_test:  stage: deploy  before_script:    - if [ $(docker ps -aq --filter name=$CI_PROJECT_NAME) ]; then docker rm -f $CI_PROJECT_NAME; fi  script:    - docker build -f Dockerfile -t $TEST_NAME:latest .    - docker run -d -p $OUT_PORT:$IN_PORT --name $TEST_NAME $TEST_NAME:latest
-
-部署成功后，在 GitLab 的 CI&#x2F;CD Pipelines 页面可看到构建过程，在 Containers 页面会生成新容器，点击对应端口即可访问部署后的页面。
-
-推荐
-娱乐一下
-
-
-]]></content>
-      <categories>
-        <category>前端</category>
-      </categories>
-      <tags>
-        <tag>前端</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hello English</title>
-    <url>/ening/2024/08/16/redis-en/</url>
-    <content><![CDATA[This is an English post.
+What’s most similar is that we both love to run non-stop. Not the type who walks when tired or stops to enjoy the scenery. Maybe people have different views, but I think the true king is the one who can keep running without stopping.
+When reaching the finish line, I’d feel so cool, a rush of pride, like winning the lottery or getting incredibly lucky. It’s a principle—and also my pride.
+Oh, right—just like Brother Shang waiting at the finish line, and I’d smile proudly.
 ]]></content>
   </entry>
 </search>

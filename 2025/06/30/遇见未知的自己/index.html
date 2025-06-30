@@ -58,19 +58,20 @@
 
 
 
-  <meta name="description" content="使用 Docker 安装 ELK Stack（ElasticSearch、Logstash、Kibana） 建议在 Docker 上安装，资源占用少。以下安装版本统一为 8.12.2，建议保持一致避免冲突。  目录1、安装 ElasticSearch2、安装 Logstash3、安装 Kibana推荐  1、安装 ElasticSearch 拉取镜像：  1docker pull elastics">
+  <meta name="description" content="《遇见未知的自己》读书笔记何为“未知”？“自己”即指“真我”，从“我是谁”到后来的“从有到无”，整本书以若菱与一位智者老人的对话为主线，引申出许多深刻的生命观念。  核心观点 外面没有别人，只有你自己。所有的外境，其实都是内心的投射。  与潜意识对话的黄金时刻想象自己已经实现目标的最佳时刻，是清晨将醒未醒、夜晚将睡未睡之间的那段时间，因为那时我们最接近潜意识。  关键修炼：觉察、臣服、战胜胜肽（小">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ELK安装流程">
-<meta property="og:url" content="https://lidyaqf.github.io/2025/04/11/ELK%E5%AE%89%E8%A3%85%E6%B5%81%E7%A8%8B/index.html">
+<meta property="og:title" content="遇见未知的自己">
+<meta property="og:url" content="https://lidyaqf.github.io/2025/06/30/%E9%81%87%E8%A7%81%E6%9C%AA%E7%9F%A5%E7%9A%84%E8%87%AA%E5%B7%B1/index.html">
 <meta property="og:site_name" content="枫叶白">
-<meta property="og:description" content="使用 Docker 安装 ELK Stack（ElasticSearch、Logstash、Kibana） 建议在 Docker 上安装，资源占用少。以下安装版本统一为 8.12.2，建议保持一致避免冲突。  目录1、安装 ElasticSearch2、安装 Logstash3、安装 Kibana推荐  1、安装 ElasticSearch 拉取镜像：  1docker pull elastics">
+<meta property="og:description" content="《遇见未知的自己》读书笔记何为“未知”？“自己”即指“真我”，从“我是谁”到后来的“从有到无”，整本书以若菱与一位智者老人的对话为主线，引申出许多深刻的生命观念。  核心观点 外面没有别人，只有你自己。所有的外境，其实都是内心的投射。  与潜意识对话的黄金时刻想象自己已经实现目标的最佳时刻，是清晨将醒未醒、夜晚将睡未睡之间的那段时间，因为那时我们最接近潜意识。  关键修炼：觉察、臣服、战胜胜肽（小">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2025-04-11T09:16:46.000Z">
-<meta property="article:modified_time" content="2025-04-16T07:26:11.118Z">
+<meta property="article:published_time" content="2025-06-29T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-06-30T03:19:55.131Z">
 <meta property="article:author" content="lidya">
+<meta property="article:tag" content="心灵成长">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://lidyaqf.github.io/2025/04/11/ELK%E5%AE%89%E8%A3%85%E6%B5%81%E7%A8%8B/">
+<link rel="canonical" href="https://lidyaqf.github.io/2025/06/30/%E9%81%87%E8%A7%81%E6%9C%AA%E7%9F%A5%E7%9A%84%E8%87%AA%E5%B7%B1/">
 
 
 <script id="page-configurations">
@@ -83,7 +84,7 @@
   };
 </script>
 
-  <title>ELK安装流程 | 枫叶白</title>
+  <title>遇见未知的自己 | 枫叶白</title>
   
 
 
@@ -226,7 +227,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://lidyaqf.github.io/2025/04/11/ELK%E5%AE%89%E8%A3%85%E6%B5%81%E7%A8%8B/">
+    <link itemprop="mainEntityOfPage" href="https://lidyaqf.github.io/2025/06/30/%E9%81%87%E8%A7%81%E6%9C%AA%E7%9F%A5%E7%9A%84%E8%87%AA%E5%B7%B1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -239,7 +240,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          ELK安装流程
+          遇见未知的自己
         </h1>
 
         <div class="post-meta">
@@ -248,24 +249,9 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2025-04-11 17:16:46" itemprop="dateCreated datePublished" datetime="2025-04-11T17:16:46+08:00">2025-04-11</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2025-04-16 15:26:11" itemprop="dateModified" datetime="2025-04-16T15:26:11+08:00">2025-04-16</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%90%8E%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">后端</span></a>
-                </span>
+              <time title="创建时间：2025-06-30 00:00:00 / 修改时间：11:19:55" itemprop="dateCreated datePublished" datetime="2025-06-30T00:00:00+08:00">2025-06-30</time>
             </span>
 
           
@@ -286,80 +272,36 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="使用-Docker-安装-ELK-Stack（ElasticSearch、Logstash、Kibana）"><a href="#使用-Docker-安装-ELK-Stack（ElasticSearch、Logstash、Kibana）" class="headerlink" title="使用 Docker 安装 ELK Stack（ElasticSearch、Logstash、Kibana）"></a>使用 Docker 安装 ELK Stack（ElasticSearch、Logstash、Kibana）</h1><blockquote>
-<p>建议在 Docker 上安装，资源占用少。以下安装版本统一为 <strong>8.12.2</strong>，建议保持一致避免冲突。</p>
-</blockquote>
-<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><p><a href="#1%E3%80%81%E5%AE%89%E8%A3%85-ElasticSearch">1、安装 ElasticSearch</a><br><a href="#2%E3%80%81%E5%AE%89%E8%A3%85-Logstash">2、安装 Logstash</a><br><a href="#3%E3%80%81%E5%AE%89%E8%A3%85-Kibana">3、安装 Kibana</a><br><a href="#%E6%8E%A8%E8%8D%90">推荐</a></p>
+        <h1 id="《遇见未知的自己》读书笔记"><a href="#《遇见未知的自己》读书笔记" class="headerlink" title="《遇见未知的自己》读书笔记"></a>《遇见未知的自己》读书笔记</h1><h2 id="何为“未知”？"><a href="#何为“未知”？" class="headerlink" title="何为“未知”？"></a>何为“未知”？</h2><p>“自己”即指“真我”，从“我是谁”到后来的“从有到无”，整本书以若菱与一位智者老人的对话为主线，引申出许多深刻的生命观念。</p>
 <hr>
-<h2 id="1、安装-ElasticSearch"><a href="#1、安装-ElasticSearch" class="headerlink" title="1、安装 ElasticSearch"></a>1、安装 ElasticSearch</h2><ul>
-<li>拉取镜像：</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull elasticsearch:8.12.2</span><br></pre></td></tr></table></figure>
-
+<h2 id="核心观点"><a href="#核心观点" class="headerlink" title="核心观点"></a>核心观点</h2><ul>
+<li><p><strong>外面没有别人，只有你自己。</strong><br>所有的外境，其实都是内心的投射。</p>
+</li>
+<li><p><strong>与潜意识对话的黄金时刻</strong><br>想象自己已经实现目标的最佳时刻，是清晨将醒未醒、夜晚将睡未睡之间的那段时间，因为那时我们最接近潜意识。</p>
+</li>
+<li><p><strong>关键修炼：觉察、臣服、战胜胜肽（小我）</strong></p>
 <ul>
-<li>启动容器：</li>
+<li><strong>觉察</strong>：关注当下的自己，不批判地观察情绪和反应。</li>
+<li><strong>臣服</strong>：接受现实，而不是抗拒。</li>
+<li><strong>胜肽小我</strong>：代表恐惧、比较、焦虑的内在声音，要学会看见并超越它。</li>
 </ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run --name some-elasticsearch -p 9200:9200 -p 9300:9300 -e <span class="string">&quot;discovery.type=single-node&quot;</span> -d elasticsearch:8.12.2</span><br></pre></td></tr></table></figure>
-
+</li>
+<li><p><strong>冥想、感恩、付出</strong></p>
 <ul>
-<li>进入容器内部：</li>
+<li>冥想时，要设想自己已经拥有渴望的生活。</li>
+<li>在实现之前就先学会感恩。</li>
+<li>保持利他、愿意付出的心态。</li>
 </ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> docker <span class="built_in">exec</span> -u 0 -it some-elasticsearch bash</span><br></pre></td></tr></table></figure>
-
+</li>
+<li><p><strong>少关心别人，多关心自己</strong></p>
 <ul>
-<li>重启容器：</li>
+<li>注意力回到自己身上，关注内在世界。</li>
+<li>当情绪上来时，觉察身体哪个部位最不舒服，了解内在信号。</li>
 </ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker restart some-elasticsearch</span><br></pre></td></tr></table></figure>
-
+</li>
+</ul>
 <hr>
-<h2 id="2、安装-Logstash"><a href="#2、安装-Logstash" class="headerlink" title="2、安装 Logstash"></a>2、安装 Logstash</h2><ul>
-<li>拉取镜像：</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull docker.elastic.co/logstash/logstash:8.12.2</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>启动容器：</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> docker run -it -p 5044:5044 -p 9600:9600 --name logstash -v /usr/share/logstash/piplines:/usr/share/logstash/config --privileged=<span class="literal">true</span> docker.elastic.co/logstash/logstash:8.12.2 /bin/bash</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>使用 <code>scp</code> 命令将本机下载好的 jar 包（MySQL Connector）上传至虚拟机：</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scp <span class="string">&quot;/Users/Downloads/logstash-8.12.2/mysql-connector-j-8.4.0.jar&quot;</span> 用户名@虚拟机IP:/home</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>再将 jar 包从虚拟机移动到 logstash 容器中：</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="built_in">cp</span> ./mysql-connector-j-8.4.0.jar logstash:/usr/share/logstash</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>进入容器内部：</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="built_in">exec</span> -u 0 -it logstash bash</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="3、安装-Kibana"><a href="#3、安装-Kibana" class="headerlink" title="3、安装 Kibana"></a>3、安装 Kibana</h2><ul>
-<li>拉取镜像：</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull kibana:8.12.2</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>启动容器：</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run --name some-kibana -p 9200:9200 -p 9300:9300 -e <span class="string">&quot;discovery.type=single-node&quot;</span> -d elasticsearch:8.12.2</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>进入容器：</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="built_in">exec</span> -u 0 -it some-kibana bash</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="附：安装-Docker、Portainer-及相关命令"><a href="#附：安装-Docker、Portainer-及相关命令" class="headerlink" title="附：安装 Docker、Portainer 及相关命令"></a>附：安装 Docker、Portainer 及相关命令</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt update</span><br><span class="line"><span class="built_in">sudo</span> apt install docker.io docker-compose</span><br><span class="line">docker -v</span><br><span class="line"><span class="built_in">sudo</span> systemctl start docker</span><br><span class="line"></span><br><span class="line"><span class="built_in">sudo</span> docker search portainer</span><br><span class="line">docker pull portainer/portainer</span><br><span class="line"><span class="built_in">sudo</span> docker pull portainer/portainer</span><br><span class="line"><span class="built_in">sudo</span> docker run -d --name portainerUI -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock portainer/portainer</span><br><span class="line"></span><br><span class="line"><span class="built_in">sudo</span> docker start portainerUI</span><br><span class="line"><span class="built_in">sudo</span> passwd root</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="推荐"><a href="#推荐" class="headerlink" title="推荐"></a>推荐</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://edunextgen1.com/">娱乐一下</a></li>
-</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>这本书不只是关于“找到自己是谁”，更是提醒我们“成为那个自己”。内在力量的唤醒，需要持续的觉察、练习与自我超越。</p>
 
     </div>
 
@@ -384,7 +326,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://lidyaqf.github.io/2025/04/11/ELK%E5%AE%89%E8%A3%85%E6%B5%81%E7%A8%8B/" title="ELK安装流程">https://lidyaqf.github.io/2025/04/11/ELK安装流程/</a>
+    <a href="https://lidyaqf.github.io/2025/06/30/%E9%81%87%E8%A7%81%E6%9C%AA%E7%9F%A5%E7%9A%84%E8%87%AA%E5%B7%B1/" title="遇见未知的自己">https://lidyaqf.github.io/2025/06/30/遇见未知的自己/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -394,6 +336,9 @@
 
 
       <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%BF%83%E7%81%B5%E6%88%90%E9%95%BF/" rel="tag"># 心灵成长</a>
+          </div>
 
         
 
@@ -401,13 +346,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2025/04/10/gitlabci/" rel="prev" title="GitLab CI/CD">
-      <i class="fa fa-chevron-left"></i> GitLab CI/CD
+    <a href="/2025/06/26/%E5%BD%93%E6%88%91%E8%B0%88%E8%B7%91%E6%AD%A5%E6%97%B6/" rel="prev" title="《当我谈跑步时，我谈些什么》读后感">
+      <i class="fa fa-chevron-left"></i> 《当我谈跑步时，我谈些什么》读后感
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2025/04/16/redis/" rel="next" title="redis">
-      redis <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -471,7 +413,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-Docker-%E5%AE%89%E8%A3%85-ELK-Stack%EF%BC%88ElasticSearch%E3%80%81Logstash%E3%80%81Kibana%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">使用 Docker 安装 ELK Stack（ElasticSearch、Logstash、Kibana）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%AE%E5%BD%95"><span class="nav-number">1.1.</span> <span class="nav-text">目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1%E3%80%81%E5%AE%89%E8%A3%85-ElasticSearch"><span class="nav-number">1.2.</span> <span class="nav-text">1、安装 ElasticSearch</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2%E3%80%81%E5%AE%89%E8%A3%85-Logstash"><span class="nav-number">1.3.</span> <span class="nav-text">2、安装 Logstash</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3%E3%80%81%E5%AE%89%E8%A3%85-Kibana"><span class="nav-number">1.4.</span> <span class="nav-text">3、安装 Kibana</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%99%84%EF%BC%9A%E5%AE%89%E8%A3%85-Docker%E3%80%81Portainer-%E5%8F%8A%E7%9B%B8%E5%85%B3%E5%91%BD%E4%BB%A4"><span class="nav-number">1.5.</span> <span class="nav-text">附：安装 Docker、Portainer 及相关命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%A8%E8%8D%90"><span class="nav-number">1.6.</span> <span class="nav-text">推荐</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E3%80%8A%E9%81%87%E8%A7%81%E6%9C%AA%E7%9F%A5%E7%9A%84%E8%87%AA%E5%B7%B1%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0"><span class="nav-number">1.</span> <span class="nav-text">《遇见未知的自己》读书笔记</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%95%E4%B8%BA%E2%80%9C%E6%9C%AA%E7%9F%A5%E2%80%9D%EF%BC%9F"><span class="nav-number">1.1.</span> <span class="nav-text">何为“未知”？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E8%A7%82%E7%82%B9"><span class="nav-number">1.2.</span> <span class="nav-text">核心观点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">1.3.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
