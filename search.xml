@@ -1,136 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>ELK安装流程</title>
-    <url>/2025/04/11/ELK%E5%AE%89%E8%A3%85%E6%B5%81%E7%A8%8B/</url>
-    <content><![CDATA[使用 Docker 安装 ELK Stack（ElasticSearch、Logstash、Kibana）
-建议在 Docker 上安装，资源占用少。以下安装版本统一为 8.12.2，建议保持一致避免冲突。
-
-目录1、安装 ElasticSearch2、安装 Logstash3、安装 Kibana推荐
-
-1、安装 ElasticSearch
-拉取镜像：
-
-docker pull elasticsearch:8.12.2
-
-
-启动容器：
-
-docker run --name some-elasticsearch -p 9200:9200 -p 9300:9300 -e &quot;discovery.type=single-node&quot; -d elasticsearch:8.12.2
-
-
-进入容器内部：
-
-sudo docker exec -u 0 -it some-elasticsearch bash
-
-
-重启容器：
-
-docker restart some-elasticsearch
-
-
-2、安装 Logstash
-拉取镜像：
-
-docker pull docker.elastic.co/logstash/logstash:8.12.2
-
-
-启动容器：
-
-sudo docker run -it -p 5044:5044 -p 9600:9600 --name logstash -v /usr/share/logstash/piplines:/usr/share/logstash/config --privileged=true docker.elastic.co/logstash/logstash:8.12.2 /bin/bash
-
-
-使用 scp 命令将本机下载好的 jar 包（MySQL Connector）上传至虚拟机：
-
-scp &quot;/Users/Downloads/logstash-8.12.2/mysql-connector-j-8.4.0.jar&quot; 用户名@虚拟机IP:/home
-
-
-再将 jar 包从虚拟机移动到 logstash 容器中：
-
-docker cp ./mysql-connector-j-8.4.0.jar logstash:/usr/share/logstash
-
-
-进入容器内部：
-
-docker exec -u 0 -it logstash bash
-
-
-3、安装 Kibana
-拉取镜像：
-
-docker pull kibana:8.12.2
-
-
-启动容器：
-
-docker run --name some-kibana -p 9200:9200 -p 9300:9300 -e &quot;discovery.type=single-node&quot; -d elasticsearch:8.12.2
-
-
-进入容器：
-
-docker exec -u 0 -it some-kibana bash
-
-
-附：安装 Docker、Portainer 及相关命令sudo apt updatesudo apt install docker.io docker-composedocker -vsudo systemctl start dockersudo docker search portainerdocker pull portainer/portainersudo docker pull portainer/portainersudo docker run -d --name portainerUI -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock portainer/portainersudo docker start portainerUIsudo passwd root
-
-
-推荐
-娱乐一下
-
-]]></content>
-      <categories>
-        <category>后端</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>redis</title>
-    <url>/2025/04/16/redis/</url>
-    <content><![CDATA[目录redis-token缓存jwt跟redis存token的区别redis相关知识推荐
-redis-token缓存
-redis.js创建
-const redis = require(&quot;redis&quot;);// Redis 链接的配置内容const client = redis.createClient(&#123;  socket: &#123;    host: &#x27;192.168.64.2&#x27;,  // Redis 服务器地址    port: 6379,             // Redis 端口  &#125;,  password: &#x27;123456&#x27;        // Redis 密码&#125;);// 连接到 Redisclient.connect()  .then(() =&gt; &#123;    console.log(&#x27;Connected to Redis&#x27;);  &#125;)  .catch((err) =&gt; &#123;    console.error(&#x27;Redis connection failed:&#x27;, err);  &#125;);// 处理连接错误client.on(&quot;error&quot;, (err) =&gt; &#123;  console.error(&#x27;Redis error:&#x27;, err);&#125;);// 定义 Redis 操作方法const redisOps = &#123;  // 创建值  set: async (key, value, expiration = null) =&gt; &#123;    try &#123;      value = JSON.stringify(value);      if (Number.isInteger(expiration) &amp;&amp; expiration &gt; 0) &#123;        // 如果设置了有效时间并且是整数，使用 SETEX 命令        await client.setEx(key, expiration, value);      &#125; else &#123;        // 否则直接使用 SET 命令        await client.set(key, value);      &#125;      console.log(`Key &quot;$&#123;key&#125;&quot; set successfully with expiration: $&#123;expiration || &#x27;no expiration&#x27;&#125;`);    &#125; catch (err) &#123;      console.error(&#x27;Error setting value:&#x27;, err);    &#125;  &#125;,  // 删除值  del: async (key) =&gt; &#123;    try &#123;      await client.del(key);      console.log(`Key &quot;$&#123;key&#125;&quot; deleted successfully`);    &#125; catch (err) &#123;      console.error(&#x27;Error deleting key:&#x27;, err);    &#125;  &#125;,  // 获取值  get: async (key) =&gt; &#123;    const result = await client.get(key);    console.log(&#x27;99999=&#x27;, result)    try &#123;      return result; // 尝试解析为 JSON    &#125; catch (error) &#123;      // 如果不是 JSON 格式，直接返回原始值      console.warn(`Warning: Value for key &quot;$&#123;key&#125;&quot; is not JSON formatted.`);      return result;    &#125;  &#125;,  // 获取键的 TTL  ttl: async (key) =&gt; &#123;    try &#123;      const timeLeft = await client.ttl(key);      console.log(`Key &quot;$&#123;key&#125;&quot; has TTL: $&#123;timeLeft&#125;`);      return timeLeft;    &#125; catch (err) &#123;      console.error(&#x27;Error getting TTL:&#x27;, err);      return err;    &#125;  &#125;,&#125;;module.exports = redisOps;
-
-
-
-redis的使用
-
-
-const redisOps = require(&quot;./redis.js&quot;);const moment = require(&#x27;moment-timezone&#x27;);let token = jwt.sign(&#123; id: user.userid, username: user.username &#125;, secretKey, &#123; expiresIn: &#x27;1h&#x27; &#125;);await redisOps.set(user.userid.toString(), token, 60 * 60)
-
-//token校验const verifyToken = async (ctx, next) =&gt; &#123;    const userid = ctx.headers[&#x27;cookie&#x27;];    const match = userid.match(/userid=(\d+)/);    const userId = match ? match[1] : null;        if (!userId) &#123;        ctx.status = 401;        console.log(&#x27;No token provided&#x27;);        ctx.body = &#123; message: &#x27;No token provided&#x27; &#125;;        return;    &#125;    try &#123;        const startTime = moment(); // 记录开始时间        const getuserid = await redisOps.get(userId)        const endTime = moment(); // 记录结束时间        const duration = moment.duration(endTime.diff(startTime)); // 计算持续时间              console.log(`Request completed in $&#123;duration.asMilliseconds()&#125; ms`); // 以毫秒为单位输出耗时        if(getuserid)&#123;            await next();        &#125;else &#123;            throw err;        &#125;           &#125; catch (err) &#123;        console.log(&#x27;Token verification failed:&#x27;, err.message);        ctx.status = 401;        ctx.body = &#123; message: &#x27;Failed to authenticate token&#x27; &#125;;    &#125;&#125;;
-
-
-
-jwt跟redis存token的区别
-
-
-维度
-JWT
-Redis
-
-
-
-性能
-- 无需查询数据库或访问外部存储，验证速度较快- 适用于简单的身份验证场景
-- 需要与 Redis 服务器进行通信，可能会有网络延迟- 适用于复杂的会话管理和存储需求
-
-
-redis相关知识
-redis本质上是一个key-value类型的内存数据库，性能最快的key-value数据库。
-
-正常情况是把数据存储在数据库 ，数据库把数据存在磁盘。但越上层的存储器存储效率越高，内存位于磁盘之上。而redis是一款基于内存的存储系统，数据都存在内存里，所以从redis读取数据会比从数据库读取要快。
-
-内存有限，存储不了太多数据。出现故障时，用主从复制、哨兵法。集群就是一套完整的redis多机解决方案。他有效解决了单机redis的所有问题。当你在集群中为某个节点配置从机的时候，主从节点间同步就是主从复制。主节点挂掉之后，从节点的选取，内部逻辑与哨兵机制相似。
-
-支持发布&#x2F;订阅模式，可以作为一个简单而高效的轻量级消息代理，用于实现消息队列、实时通知等。
-
-
-推荐
-娱乐一下
-
-]]></content>
-  </entry>
-  <entry>
     <title>GitLab CI/CD</title>
     <url>/2025/04/10/gitlabci/</url>
     <content><![CDATA[前端项目 GitLab CI&#x2F;CD 持续集成部署指南（Mac 环境）概要在日常开发过程中，我们经常需要将打包后的 dist 包手动发送给后端部署，效率低且容易出错。CI（Continuous Integration，持续集成）可以自动化这一过程，本文将介绍如何通过 GitLab CI 实现持续集成部署。
@@ -196,34 +66,6 @@ http://localhost:8090/
       <tags>
         <tag>前端</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>《终有一天你会懂》读书笔记 - 琢磨先生</title>
-    <url>/2025/05/21/%E3%80%8A%E7%BB%88%E6%9C%89%E4%B8%80%E5%A4%A9%E4%BD%A0%E4%BC%9A%E6%87%82%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%20-%20%E7%90%A2%E7%A3%A8%E5%85%88%E7%94%9F/</url>
-    <content><![CDATA[
-
-全书的确包含了很多他自己的“偏见”，但我觉得他真实幽默，语言简单易懂，其实各个小标题就是告诉我们该做什么。
-懂生活生活从来不是你想怎样就能变成怎样的。生活中多发现美，多从他人角度看待事情，是好的。同时自己还要有自知之明。
-懂爱情谢耳朵说：人穷尽一生追寻另一个人类共度一生的事，我一直无法理解。或许我自己太有意思，无需他人陪伴。所以我祝你们在对方身上得到的快乐，与我给自己的一样多。靠另一个人永远无法让你摆脱孤独，只能靠自己对生活的热情。经营一段感情要的是理智，自由是不可剥夺的。这让我想起对前任，我曾经有查看过他的手机，我觉得挺不对，以后不会再出现这种事情了。
-懂兵法主要就是介绍女追男或男追女的技巧，以及如何经营好一段感情，就是大智慧。同时千万别因为家庭放弃自己的事业，不要跟公公婆婆住一起（但我的观点还是觉得因人而异），要有属于自己的兴趣爱好。
-懂婚姻忍，忠一。对于不婚主义，当然也没什么想多说的了。
-懂失意每一次失恋，只不过是在为真爱让路。还是那句勉强不来，我爱你，所以我祝你一生如意，即使陪着你的人，不是我。做自己想做的事，不要管他人怎么想。只关心自己在乎的人。
-懂阅读What Why How。一直阅读下去，不要求快，要求精。
-懂情趣介绍了他与妻子的日常 sweet，告诉我们不分手，就不知道世界上还有那么多人值得我们去爱。如果找到了，是我的幸运，如果找不到，我也有能力让自己快乐地活着。高情商地活着，会发觉世界是那么美好。
-懂交际跟正经人交往，跟不同人要有不同方式去与之交往，拒绝别人也是一门艺术。如果没有厚脸皮去找别人还钱，干脆别借。
-懂人性只能说我可能在人性方面持怀疑态度，管不了别人，那么就只能管好自己，别做个恶俗的人。
-懂善恶有些人在你生命中出现，就是为了给你上一课。何为善何为恶，我宁愿相信他人的话，因为人与人之间的信任本来就是有一方愿意相信，另一方才会不负此信。即使被骗，也是告诉我们下次同样的坑，别再跳了。但别因为入了一次坑，就不再相信了，善人始终存在。上帝让右手成为右手，就是对右手最高的奖赏；同理，上帝让善人成为善人，也就是对善人的最高奖赏。这让我想起，有次在外，洗手间里没有纸巾，原本是想问旁边的好朋友有没有纸巾的，结果旁边一位陌生女子听见了，立刻拿出包纸巾给我，此等善举，让我倍感荣幸。而善良还需要有原则，否则害人害己。
-懂财富穷人之所以穷，是思维的匮乏。要想富起来，不能只在自己身体上投资，而要在大局上有思维的开拓。看透问题的本质。时间是有限，在有限时间内如何快速致富？找到一门自己感兴趣的学科，学以致用，发散思维，与社会息息相关的行业，去做。
-懂社会要有抱负，一步一个脚印。要有自己独立的人格，要能为自己所做的事情负责。学会转化一种让自己幸福的能力，然后改变自己。
-懂生死生死学里几个词：无死不生，向死而生，知死而后生。颇为有趣且发人深思。人就是因为知道有一天会死去，才会争取好好地活着。我想，真到了那天，我会主动拥抱死亡。
-
-这世界上缺的不是完美的人，而是从心底给出的正义、真心、无畏和同情—这是今天看完《无问西东》后给我最感慨的话。生而为人，便要心之所向，无问西东。大家都知道有因必有果，却不只因果皆由缘而起。叔本华跟尼采，有时间必好好读佳作。
-
-懂远游这部分写了琢磨先生在西藏的经历，看过很多书，都是大家想去西藏的。也许去了那里，人真的能体会到人生的不易。美国不如英国自律，日本对美食态度极佳，常把“对不起”挂在嘴边，不喜欢给别人添麻烦。
-懂职场首先要懂得吃苦，然后要清楚自己，发掘自己的天赋所在。以终为始，聚焦所做。
-懂教育我只知道，每一个出生在这世上的小孩都是纯粹的，如果不好好教育，长大后便不可能为国之栋梁。
-懂娱乐、懂自由人生有两个方向：一个方向是往大处拼搏，保持对事业的激情；一个方向是往小处生活，保持做人的温度。每天睁开眼，对自己说声：欧耶
-]]></content>
   </entry>
   <entry>
     <title>前端面试题</title>
@@ -392,6 +234,67 @@ vue2 和 vue3 匿名插槽不一样  具名插槽使用方式不同：vue2 使�
 ]]></content>
   </entry>
   <entry>
+    <title>redis</title>
+    <url>/2025/04/16/redis/</url>
+    <content><![CDATA[目录redis-token缓存jwt跟redis存token的区别redis相关知识推荐
+redis-token缓存
+redis.js创建
+const redis = require(&quot;redis&quot;);// Redis 链接的配置内容const client = redis.createClient(&#123;  socket: &#123;    host: &#x27;192.168.64.2&#x27;,  // Redis 服务器地址    port: 6379,             // Redis 端口  &#125;,  password: &#x27;123456&#x27;        // Redis 密码&#125;);// 连接到 Redisclient.connect()  .then(() =&gt; &#123;    console.log(&#x27;Connected to Redis&#x27;);  &#125;)  .catch((err) =&gt; &#123;    console.error(&#x27;Redis connection failed:&#x27;, err);  &#125;);// 处理连接错误client.on(&quot;error&quot;, (err) =&gt; &#123;  console.error(&#x27;Redis error:&#x27;, err);&#125;);// 定义 Redis 操作方法const redisOps = &#123;  // 创建值  set: async (key, value, expiration = null) =&gt; &#123;    try &#123;      value = JSON.stringify(value);      if (Number.isInteger(expiration) &amp;&amp; expiration &gt; 0) &#123;        // 如果设置了有效时间并且是整数，使用 SETEX 命令        await client.setEx(key, expiration, value);      &#125; else &#123;        // 否则直接使用 SET 命令        await client.set(key, value);      &#125;      console.log(`Key &quot;$&#123;key&#125;&quot; set successfully with expiration: $&#123;expiration || &#x27;no expiration&#x27;&#125;`);    &#125; catch (err) &#123;      console.error(&#x27;Error setting value:&#x27;, err);    &#125;  &#125;,  // 删除值  del: async (key) =&gt; &#123;    try &#123;      await client.del(key);      console.log(`Key &quot;$&#123;key&#125;&quot; deleted successfully`);    &#125; catch (err) &#123;      console.error(&#x27;Error deleting key:&#x27;, err);    &#125;  &#125;,  // 获取值  get: async (key) =&gt; &#123;    const result = await client.get(key);    console.log(&#x27;99999=&#x27;, result)    try &#123;      return result; // 尝试解析为 JSON    &#125; catch (error) &#123;      // 如果不是 JSON 格式，直接返回原始值      console.warn(`Warning: Value for key &quot;$&#123;key&#125;&quot; is not JSON formatted.`);      return result;    &#125;  &#125;,  // 获取键的 TTL  ttl: async (key) =&gt; &#123;    try &#123;      const timeLeft = await client.ttl(key);      console.log(`Key &quot;$&#123;key&#125;&quot; has TTL: $&#123;timeLeft&#125;`);      return timeLeft;    &#125; catch (err) &#123;      console.error(&#x27;Error getting TTL:&#x27;, err);      return err;    &#125;  &#125;,&#125;;module.exports = redisOps;
+
+
+
+redis的使用
+
+
+const redisOps = require(&quot;./redis.js&quot;);const moment = require(&#x27;moment-timezone&#x27;);let token = jwt.sign(&#123; id: user.userid, username: user.username &#125;, secretKey, &#123; expiresIn: &#x27;1h&#x27; &#125;);await redisOps.set(user.userid.toString(), token, 60 * 60)
+
+//token校验const verifyToken = async (ctx, next) =&gt; &#123;    const userid = ctx.headers[&#x27;cookie&#x27;];    const match = userid.match(/userid=(\d+)/);    const userId = match ? match[1] : null;        if (!userId) &#123;        ctx.status = 401;        console.log(&#x27;No token provided&#x27;);        ctx.body = &#123; message: &#x27;No token provided&#x27; &#125;;        return;    &#125;    try &#123;        const startTime = moment(); // 记录开始时间        const getuserid = await redisOps.get(userId)        const endTime = moment(); // 记录结束时间        const duration = moment.duration(endTime.diff(startTime)); // 计算持续时间              console.log(`Request completed in $&#123;duration.asMilliseconds()&#125; ms`); // 以毫秒为单位输出耗时        if(getuserid)&#123;            await next();        &#125;else &#123;            throw err;        &#125;           &#125; catch (err) &#123;        console.log(&#x27;Token verification failed:&#x27;, err.message);        ctx.status = 401;        ctx.body = &#123; message: &#x27;Failed to authenticate token&#x27; &#125;;    &#125;&#125;;
+
+
+
+jwt跟redis存token的区别
+
+
+维度
+JWT
+Redis
+
+
+
+性能
+- 无需查询数据库或访问外部存储，验证速度较快- 适用于简单的身份验证场景
+- 需要与 Redis 服务器进行通信，可能会有网络延迟- 适用于复杂的会话管理和存储需求
+
+
+redis相关知识
+redis本质上是一个key-value类型的内存数据库，性能最快的key-value数据库。
+
+正常情况是把数据存储在数据库 ，数据库把数据存在磁盘。但越上层的存储器存储效率越高，内存位于磁盘之上。而redis是一款基于内存的存储系统，数据都存在内存里，所以从redis读取数据会比从数据库读取要快。
+
+内存有限，存储不了太多数据。出现故障时，用主从复制、哨兵法。集群就是一套完整的redis多机解决方案。他有效解决了单机redis的所有问题。当你在集群中为某个节点配置从机的时候，主从节点间同步就是主从复制。主节点挂掉之后，从节点的选取，内部逻辑与哨兵机制相似。
+
+支持发布&#x2F;订阅模式，可以作为一个简单而高效的轻量级消息代理，用于实现消息队列、实时通知等。
+
+
+推荐
+娱乐一下
+
+]]></content>
+  </entry>
+  <entry>
+    <title>《当我谈跑步时，我谈些什么》读后感</title>
+    <url>/2025/06/26/%E5%BD%93%E6%88%91%E8%B0%88%E8%B7%91%E6%AD%A5%E6%97%B6/</url>
+    <content><![CDATA[《当我谈跑步时，我谈些什么》也就是看了这本书，才知道世界上会有另一个自己在做着自己喜欢的事情。看这本书之前，从没有看过村上君写的书。知道有这么一个火人，也知道那么多火书，但就是没怎么看过。可论及跑步呀，觉得能与之有所交流。一直跑下去，会不会就到月球上了呢？跑步并非为了长命百岁，而是在有限生命里让自己活得更轻松点罢了。
+惊喜于能发现村上君跑步时的想象力，天马行空我很喜欢，我也曾幻想过很多，也会跑着跑着就突然想起一句歌词，什么现在加快速度追幸福呀 blala……长跑需要耐力，但没有想象力可不行哟。当然前提是热爱跑步，一个不喜欢跑步的人，你说再多也无动于衷；一个热爱跑步的人，即使是雨天，也想要在停雨空隙去相遇另一个自己。人本孤独，但精神却能得到共鸣。
+想着未来一定会坚持跑下去，不管世界如何变化。自从有次在外一整天走了 30 公里，除了身体上晒伤的疼痛以外，我更喜欢的是精神世界的富足。没经历过，就没有话语权。可能我跟陈坤一样，是个悲观的极乐主义者，在世上积极活着，却也看透红尘。不以物喜，不以己悲。脉搏也降到一分钟 50 多次，看来还是很适合慢跑的。说这么多，主要还是兴趣使然。只要不限制我的自由，一切好说。
+想着来年，我也会参加马拉松，然后旁边的人都在为我加油，那该有多 happy。
+“我不是人，是一架纯粹的机器，所以什么也无须感觉，唯有向前奔跑。”
+极为像的一点就是我们都喜欢不停地奔跑，不是那种觉得自己快不行了就走几步，也不是适当的时候停下来看风景。可能每个人的见解不同。但我觉得能不停跑下去的人才是真正的王者。
+当抵达终点那一刻，会觉得怎么那么酷，一股自豪感涌上来，就好比中了彩票或是走了狗屎运。这是原则，亦是我的骄傲。
+噢对，好比尚三哥在终点等着我，然后我得意地笑了。
+]]></content>
+  </entry>
+  <entry>
     <title>2022应届毕业生办理深户流程</title>
     <url>/2025/07/01/%E6%B7%B1%E6%88%B7%E5%8A%9E%E7%90%86%E6%B5%81%E7%A8%8B/</url>
     <content><![CDATA[
@@ -453,16 +356,113 @@ vue2 和 vue3 匿名插槽不一样  具名插槽使用方式不同：vue2 使�
 ]]></content>
   </entry>
   <entry>
-    <title>《当我谈跑步时，我谈些什么》读后感</title>
-    <url>/2025/06/26/%E5%BD%93%E6%88%91%E8%B0%88%E8%B7%91%E6%AD%A5%E6%97%B6/</url>
-    <content><![CDATA[《当我谈跑步时，我谈些什么》也就是看了这本书，才知道世界上会有另一个自己在做着自己喜欢的事情。看这本书之前，从没有看过村上君写的书。知道有这么一个火人，也知道那么多火书，但就是没怎么看过。可论及跑步呀，觉得能与之有所交流。一直跑下去，会不会就到月球上了呢？跑步并非为了长命百岁，而是在有限生命里让自己活得更轻松点罢了。
-惊喜于能发现村上君跑步时的想象力，天马行空我很喜欢，我也曾幻想过很多，也会跑着跑着就突然想起一句歌词，什么现在加快速度追幸福呀 blala……长跑需要耐力，但没有想象力可不行哟。当然前提是热爱跑步，一个不喜欢跑步的人，你说再多也无动于衷；一个热爱跑步的人，即使是雨天，也想要在停雨空隙去相遇另一个自己。人本孤独，但精神却能得到共鸣。
-想着未来一定会坚持跑下去，不管世界如何变化。自从有次在外一整天走了 30 公里，除了身体上晒伤的疼痛以外，我更喜欢的是精神世界的富足。没经历过，就没有话语权。可能我跟陈坤一样，是个悲观的极乐主义者，在世上积极活着，却也看透红尘。不以物喜，不以己悲。脉搏也降到一分钟 50 多次，看来还是很适合慢跑的。说这么多，主要还是兴趣使然。只要不限制我的自由，一切好说。
-想着来年，我也会参加马拉松，然后旁边的人都在为我加油，那该有多 happy。
-“我不是人，是一架纯粹的机器，所以什么也无须感觉，唯有向前奔跑。”
-极为像的一点就是我们都喜欢不停地奔跑，不是那种觉得自己快不行了就走几步，也不是适当的时候停下来看风景。可能每个人的见解不同。但我觉得能不停跑下去的人才是真正的王者。
-当抵达终点那一刻，会觉得怎么那么酷，一股自豪感涌上来，就好比中了彩票或是走了狗屎运。这是原则，亦是我的骄傲。
-噢对，好比尚三哥在终点等着我，然后我得意地笑了。
+    <title>ELK安装流程</title>
+    <url>/2025/04/11/ELK%E5%AE%89%E8%A3%85%E6%B5%81%E7%A8%8B/</url>
+    <content><![CDATA[使用 Docker 安装 ELK Stack（ElasticSearch、Logstash、Kibana）
+建议在 Docker 上安装，资源占用少。以下安装版本统一为 8.12.2，建议保持一致避免冲突。
+
+目录1、安装 ElasticSearch2、安装 Logstash3、安装 Kibana推荐
+
+1、安装 ElasticSearch
+拉取镜像：
+
+docker pull elasticsearch:8.12.2
+
+
+启动容器：
+
+docker run --name some-elasticsearch -p 9200:9200 -p 9300:9300 -e &quot;discovery.type=single-node&quot; -d elasticsearch:8.12.2
+
+
+进入容器内部：
+
+sudo docker exec -u 0 -it some-elasticsearch bash
+
+
+重启容器：
+
+docker restart some-elasticsearch
+
+
+2、安装 Logstash
+拉取镜像：
+
+docker pull docker.elastic.co/logstash/logstash:8.12.2
+
+
+启动容器：
+
+sudo docker run -it -p 5044:5044 -p 9600:9600 --name logstash -v /usr/share/logstash/piplines:/usr/share/logstash/config --privileged=true docker.elastic.co/logstash/logstash:8.12.2 /bin/bash
+
+
+使用 scp 命令将本机下载好的 jar 包（MySQL Connector）上传至虚拟机：
+
+scp &quot;/Users/Downloads/logstash-8.12.2/mysql-connector-j-8.4.0.jar&quot; 用户名@虚拟机IP:/home
+
+
+再将 jar 包从虚拟机移动到 logstash 容器中：
+
+docker cp ./mysql-connector-j-8.4.0.jar logstash:/usr/share/logstash
+
+
+进入容器内部：
+
+docker exec -u 0 -it logstash bash
+
+
+3、安装 Kibana
+拉取镜像：
+
+docker pull kibana:8.12.2
+
+
+启动容器：
+
+docker run --name some-kibana -p 9200:9200 -p 9300:9300 -e &quot;discovery.type=single-node&quot; -d elasticsearch:8.12.2
+
+
+进入容器：
+
+docker exec -u 0 -it some-kibana bash
+
+
+附：安装 Docker、Portainer 及相关命令sudo apt updatesudo apt install docker.io docker-composedocker -vsudo systemctl start dockersudo docker search portainerdocker pull portainer/portainersudo docker pull portainer/portainersudo docker run -d --name portainerUI -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock portainer/portainersudo docker start portainerUIsudo passwd root
+
+
+推荐
+娱乐一下
+
+]]></content>
+      <categories>
+        <category>后端</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>《终有一天你会懂》读书笔记 - 琢磨先生</title>
+    <url>/2025/05/21/%E3%80%8A%E7%BB%88%E6%9C%89%E4%B8%80%E5%A4%A9%E4%BD%A0%E4%BC%9A%E6%87%82%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%20-%20%E7%90%A2%E7%A3%A8%E5%85%88%E7%94%9F/</url>
+    <content><![CDATA[
+
+全书的确包含了很多他自己的“偏见”，但我觉得他真实幽默，语言简单易懂，其实各个小标题就是告诉我们该做什么。
+懂生活生活从来不是你想怎样就能变成怎样的。生活中多发现美，多从他人角度看待事情，是好的。同时自己还要有自知之明。
+懂爱情谢耳朵说：人穷尽一生追寻另一个人类共度一生的事，我一直无法理解。或许我自己太有意思，无需他人陪伴。所以我祝你们在对方身上得到的快乐，与我给自己的一样多。靠另一个人永远无法让你摆脱孤独，只能靠自己对生活的热情。经营一段感情要的是理智，自由是不可剥夺的。这让我想起对前任，我曾经有查看过他的手机，我觉得挺不对，以后不会再出现这种事情了。
+懂兵法主要就是介绍女追男或男追女的技巧，以及如何经营好一段感情，就是大智慧。同时千万别因为家庭放弃自己的事业，不要跟公公婆婆住一起（但我的观点还是觉得因人而异），要有属于自己的兴趣爱好。
+懂婚姻忍，忠一。对于不婚主义，当然也没什么想多说的了。
+懂失意每一次失恋，只不过是在为真爱让路。还是那句勉强不来，我爱你，所以我祝你一生如意，即使陪着你的人，不是我。做自己想做的事，不要管他人怎么想。只关心自己在乎的人。
+懂阅读What Why How。一直阅读下去，不要求快，要求精。
+懂情趣介绍了他与妻子的日常 sweet，告诉我们不分手，就不知道世界上还有那么多人值得我们去爱。如果找到了，是我的幸运，如果找不到，我也有能力让自己快乐地活着。高情商地活着，会发觉世界是那么美好。
+懂交际跟正经人交往，跟不同人要有不同方式去与之交往，拒绝别人也是一门艺术。如果没有厚脸皮去找别人还钱，干脆别借。
+懂人性只能说我可能在人性方面持怀疑态度，管不了别人，那么就只能管好自己，别做个恶俗的人。
+懂善恶有些人在你生命中出现，就是为了给你上一课。何为善何为恶，我宁愿相信他人的话，因为人与人之间的信任本来就是有一方愿意相信，另一方才会不负此信。即使被骗，也是告诉我们下次同样的坑，别再跳了。但别因为入了一次坑，就不再相信了，善人始终存在。上帝让右手成为右手，就是对右手最高的奖赏；同理，上帝让善人成为善人，也就是对善人的最高奖赏。这让我想起，有次在外，洗手间里没有纸巾，原本是想问旁边的好朋友有没有纸巾的，结果旁边一位陌生女子听见了，立刻拿出包纸巾给我，此等善举，让我倍感荣幸。而善良还需要有原则，否则害人害己。
+懂财富穷人之所以穷，是思维的匮乏。要想富起来，不能只在自己身体上投资，而要在大局上有思维的开拓。看透问题的本质。时间是有限，在有限时间内如何快速致富？找到一门自己感兴趣的学科，学以致用，发散思维，与社会息息相关的行业，去做。
+懂社会要有抱负，一步一个脚印。要有自己独立的人格，要能为自己所做的事情负责。学会转化一种让自己幸福的能力，然后改变自己。
+懂生死生死学里几个词：无死不生，向死而生，知死而后生。颇为有趣且发人深思。人就是因为知道有一天会死去，才会争取好好地活着。我想，真到了那天，我会主动拥抱死亡。
+
+这世界上缺的不是完美的人，而是从心底给出的正义、真心、无畏和同情—这是今天看完《无问西东》后给我最感慨的话。生而为人，便要心之所向，无问西东。大家都知道有因必有果，却不只因果皆由缘而起。叔本华跟尼采，有时间必好好读佳作。
+
+懂远游这部分写了琢磨先生在西藏的经历，看过很多书，都是大家想去西藏的。也许去了那里，人真的能体会到人生的不易。美国不如英国自律，日本对美食态度极佳，常把“对不起”挂在嘴边，不喜欢给别人添麻烦。
+懂职场首先要懂得吃苦，然后要清楚自己，发掘自己的天赋所在。以终为始，聚焦所做。
+懂教育我只知道，每一个出生在这世上的小孩都是纯粹的，如果不好好教育，长大后便不可能为国之栋梁。
+懂娱乐、懂自由人生有两个方向：一个方向是往大处拼搏，保持对事业的激情；一个方向是往小处生活，保持做人的温度。每天睁开眼，对自己说声：欧耶
 ]]></content>
   </entry>
   <entry>
