@@ -1,6 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>GitLab CI/CD</title>
+    <url>/ening/2025/04/10/gitlabci/</url>
+    <content><![CDATA[GitLab CI&#x2F;CD Guide for Frontend Projects (Mac Environment)OverviewIn daily development, we often manually send the built dist package to the backend for deployment, which is inefficient and error-prone. CI (Continuous Integration) automates this process. This guide shows how to use GitLab CI to implement continuous integration and deployment.
+
+1. Install GitLab RunnerRefer to the official documentation: GitLab Runner Installation Guide
+
+2. Register Runner Locally
+Open your GitLab project page and go to Settings → CI&#x2F;CD, expand the Runners section.
+Note the displayed URL and token for registration.
+
+Run the registration commandgitlab-runner register
+
+Follow the prompts and enter the following information:
+
+GitLab CI Coordinator URL: https://gitlab.com
+GitLab CI Token: xxx (copy from the project)
+Tags: my-tag,another-tag (custom tags)
+Description: my-runner (custom description)
+Executor: shell (recommended on Mac)
+
+After registration, return to the GitLab CI&#x2F;CD settings page. If the runner status is green, it’s running successfully. If not, start the runner manually:
+gitlab-runner run
+
+
+3. Create and Commit .gitlab-ci.ymlSave the following content as .gitlab-ci.yml and push it to GitLab:
+stages:  - deploydeploy_to_test:  stage: deploy  script:    - yarn    - rm -rf dist/    - yarn build    - ls -l -t ./dist/    - rsync -avz ./dist/ root@xxx.xx.xx.xxx:/dist
+
+
+This CI script builds the project and uses rsync to deploy the dist folder to a remote server.
+
+
+4. CI with Docker (Optional)If you want a more comprehensive CI&#x2F;CD pipeline using Docker, follow these steps:
+1. Install Docker (Mac)brew install --cask docker
+
+2. Pull GitLab Imagedocker pull drud/gitlab-ce:v0.29.1
+
+3. Create GitLab Containerdocker run -d -p 8443:443 -p 8090:80 -p 8022:22 --restart always --name gitlab drud/gitlab-ce:v0.29.1
+
+Explanation:
+
+-p 8443:443: map HTTPS port
+-p 8090:80: map HTTP port
+-p 8022:22: map SSH port
+--restart always: auto-restart on crash or reboot
+--name gitlab: container named gitlab
+
+Visit:
+http://localhost:8090/
+
+
+5. .gitlab-ci.yml Example for Docker Modevariables:  TEST_NAME: &quot;tips&quot;  OUT_PORT: &quot;8081&quot;  IN_PORT: &quot;8081&quot;stages:  - deploydeploy_to_test:  stage: deploy  before_script:    - if [ $(docker ps -aq --filter name=$CI_PROJECT_NAME) ]; then docker rm -f $CI_PROJECT_NAME; fi  script:    - docker build -f Dockerfile -t $TEST_NAME:latest .    - docker run -d -p $OUT_PORT:$IN_PORT --name $TEST_NAME $TEST_NAME:latest
+
+After successful deployment, you can view the build process on the GitLab CI&#x2F;CD Pipelines page. A new container will be generated under the Containers section. Click the corresponding port to access the deployed page.
+
+Recommendations
+Just for Fun
+
+]]></content>
+      <categories>
+        <category>Frontend</category>
+      </categories>
+      <tags>
+        <tag>Frontend</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Hello English</title>
     <url>/ening/2024/08/16/redis-en/</url>
     <content><![CDATA[This is an English post.
@@ -263,110 +329,6 @@ Just for Fun
 ]]></content>
   </entry>
   <entry>
-    <title>One Day You&#39;ll Understand - Reading Notes by Mr. Zhuomo</title>
-    <url>/ening/2025/05/21/%E3%80%8A%E7%BB%88%E6%9C%89%E4%B8%80%E5%A4%A9%E4%BD%A0%E4%BC%9A%E6%87%82%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%20-%20%E7%90%A2%E7%A3%A8%E5%85%88%E7%94%9F/</url>
-    <content><![CDATA[The book does contain a lot of his own “biases,” but I find him authentic and humorous. His language is simple and understandable, and each subtitle essentially tells us what we should do.
-Understanding LifeLife is never about what you want it to be. It’s good to discover beauty and to view things from others’ perspectives. At the same time, one should have self-awareness.
-Understanding LoveSheldon once said: “The pursuit of another human to spend life with is something I’ve never understood. Maybe I’m too interesting to need company. So I wish you the same joy with each other as I have with myself.”One can never escape loneliness through another person; only through passion for life. Managing a relationship requires rationality. Freedom is inalienable. I once checked my ex’s phone—I realized it was wrong and won’t do it again.
-Understanding StrategyThis section mainly introduces the strategies of courting and how to maintain a good relationship—true wisdom. Never sacrifice your career for family. Don’t live with in-laws (though I think it depends). Have your own hobbies.
-Understanding MarriageEndure and stay loyal. As for non-marriage beliefs, there’s nothing more to say.
-Understanding SetbacksEvery breakup is just making way for true love. Don’t force it. I love you, so I wish you well, even if I’m not the one by your side.Do what you want regardless of others’ opinions. Only care about those who matter to you.
-Understanding ReadingWhat, Why, How. Keep reading. Don’t chase speed, but depth.
-Understanding RomanceHe shares sweet daily stories with his wife. If you don’t break up, you won’t discover how many better people there are out there. If you find one—lucky. If not—you can still live happily on your own.Live with emotional intelligence and the world becomes beautiful.
-Understanding SocializingAssociate with decent people. Different people require different approaches. Rejecting others is an art. If you don’t have the guts to ask for your money back, don’t lend it.
-Understanding Human NatureI tend to be skeptical about human nature. You can’t control others, so just manage yourself. Don’t be vulgar.
-Understanding Good and EvilSome people enter your life just to teach you a lesson. Good or evil—I prefer believing in others, as trust is given before it’s earned.Even if deceived, it’s a lesson learned—don’t fall into the same trap again. But don’t stop trusting altogether; kind people still exist.God made the right hand a right hand as a reward; same for kind people—kindness is its own reward.I recall being in a restroom without tissue once. I was going to ask a friend, but a stranger overheard and handed me tissues. Such kindness moved me deeply.Kindness must come with principles—otherwise it may hurt others or yourself.
-Understanding WealthThe poor stay poor because of narrow thinking. To get rich, don’t just invest in your body—think bigger. See the essence of problems.Time is limited—how to get rich fast? Find a subject you love, apply it, think broadly, and work in fields closely tied to society.
-Understanding SocietyHave ambition. Take one step at a time. Build an independent personality. Be accountable for your actions. Learn to transform your ability to feel happiness—then change yourself.
-Understanding Life and DeathDeath studies include concepts like: No death, no life; face death to live; understand death to be reborn. Interesting and thought-provoking.Knowing that we will die is what pushes us to live fully. When the time comes, I think I’ll embrace death.
-
-What the world lacks isn’t perfect people, but justice, sincerity, courage, and compassion from the heart. — My biggest takeaway after watching Forever Young today.We all know cause and effect—but causes and effects come from relationships. Someday, I’ll read Schopenhauer and Nietzsche properly.
-
-Understanding TravelThis part recounts Mr. Zhuomo’s experiences in Tibet. Many dream of going there—maybe because it helps people truly understand life’s struggles.The US is less disciplined than the UK. Japan has great food culture and says “sorry” a lot—avoiding bothering others.
-Understanding CareerFirst learn to endure hardship. Then understand yourself and your talents. Begin with the end in mind and stay focused.
-Understanding EducationEvery child is born pure. Without proper education, they won’t become pillars of the nation.
-Understanding Entertainment &amp; FreedomLife has two paths: one for career ambition—keep passion; the other for living warmly—keep humanity.Open your eyes each day and tell yourself: Oh yeah!
-]]></content>
-  </entry>
-  <entry>
-    <title>Reflections on *Skin*</title>
-    <url>/ening/2025/06/26/%E7%9A%AE%E5%9B%8A%E6%84%9F%E6%82%9F/</url>
-    <content><![CDATA[Aunt TaiAunt Tai is strong-willed and resilient. Her optimistic attitude is something worth learning from. The greatest thing my father ever did was marrying my mother—a truly great woman. A real woman should face everything with positivity and build the future she desires with her own hands.
-Although she resorted to stealing, it was driven by hardship—survival and family. Setting aside pride to do things against her will is, in a way, a form of strength. It’s not about crying and making a scene, but staying proactive in adversity.
-Thinking about it, the author’s achievements are inseparable from his great mother.
-Ah, that lovely mother! To preserve her husband’s dignity and happiness, she insisted on completing the house. Isn’t that a form of strength too? To follow her heart courageously is truly admirable.
-In fact, the person who understands my father the most is my mother. She knows his pride. Isn’t this what love is? You don’t need to say it—I understand. I understand you, and you understand me, and that’s why we’ve been together for so long.
-Zhang MeiliGet up from where you fell. Zhang Meili seems like someone who pursued true love and worked hard for what she desired. Though she was eventually forced to liberate herself sexually, I still respect her for everything she once did.
-Public opinion is powerful, but Zhang Meili’s inner strength is even more powerful.
-]]></content>
-  </entry>
-  <entry>
-    <title>GitLab CI/CD</title>
-    <url>/ening/2025/04/10/gitlabci/</url>
-    <content><![CDATA[GitLab CI&#x2F;CD Guide for Frontend Projects (Mac Environment)OverviewIn daily development, we often manually send the built dist package to the backend for deployment, which is inefficient and error-prone. CI (Continuous Integration) automates this process. This guide shows how to use GitLab CI to implement continuous integration and deployment.
-
-1. Install GitLab RunnerRefer to the official documentation: GitLab Runner Installation Guide
-
-2. Register Runner Locally
-Open your GitLab project page and go to Settings → CI&#x2F;CD, expand the Runners section.
-Note the displayed URL and token for registration.
-
-Run the registration commandgitlab-runner register
-
-Follow the prompts and enter the following information:
-
-GitLab CI Coordinator URL: https://gitlab.com
-GitLab CI Token: xxx (copy from the project)
-Tags: my-tag,another-tag (custom tags)
-Description: my-runner (custom description)
-Executor: shell (recommended on Mac)
-
-After registration, return to the GitLab CI&#x2F;CD settings page. If the runner status is green, it’s running successfully. If not, start the runner manually:
-gitlab-runner run
-
-
-3. Create and Commit .gitlab-ci.ymlSave the following content as .gitlab-ci.yml and push it to GitLab:
-stages:  - deploydeploy_to_test:  stage: deploy  script:    - yarn    - rm -rf dist/    - yarn build    - ls -l -t ./dist/    - rsync -avz ./dist/ root@xxx.xx.xx.xxx:/dist
-
-
-This CI script builds the project and uses rsync to deploy the dist folder to a remote server.
-
-
-4. CI with Docker (Optional)If you want a more comprehensive CI&#x2F;CD pipeline using Docker, follow these steps:
-1. Install Docker (Mac)brew install --cask docker
-
-2. Pull GitLab Imagedocker pull drud/gitlab-ce:v0.29.1
-
-3. Create GitLab Containerdocker run -d -p 8443:443 -p 8090:80 -p 8022:22 --restart always --name gitlab drud/gitlab-ce:v0.29.1
-
-Explanation:
-
--p 8443:443: map HTTPS port
--p 8090:80: map HTTP port
--p 8022:22: map SSH port
---restart always: auto-restart on crash or reboot
---name gitlab: container named gitlab
-
-Visit:
-http://localhost:8090/
-
-
-5. .gitlab-ci.yml Example for Docker Modevariables:  TEST_NAME: &quot;tips&quot;  OUT_PORT: &quot;8081&quot;  IN_PORT: &quot;8081&quot;stages:  - deploydeploy_to_test:  stage: deploy  before_script:    - if [ $(docker ps -aq --filter name=$CI_PROJECT_NAME) ]; then docker rm -f $CI_PROJECT_NAME; fi  script:    - docker build -f Dockerfile -t $TEST_NAME:latest .    - docker run -d -p $OUT_PORT:$IN_PORT --name $TEST_NAME $TEST_NAME:latest
-
-After successful deployment, you can view the build process on the GitLab CI&#x2F;CD Pipelines page. A new container will be generated under the Containers section. Click the corresponding port to access the deployed page.
-
-Recommendations
-Just for Fun
-
-]]></content>
-      <categories>
-        <category>Frontend</category>
-      </categories>
-      <tags>
-        <tag>Frontend</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Reflections on *What I Talk About When I Talk About Running*</title>
     <url>/ening/2025/06/26/%E5%BD%93%E6%88%91%E8%B0%88%E8%B7%91%E6%AD%A5%E6%97%B6/</url>
     <content><![CDATA[What I Talk About When I Talk About RunningIt was through this book that I realized there could be another version of myself out there, doing something I love. Before reading this book, I had never read anything by Murakami. I knew he was popular and had many famous books, but I hadn’t really paid attention. But when it comes to running, I felt there could be a connection.
@@ -381,6 +343,18 @@ I hope next year I’ll join a marathon, with people cheering me on. That would 
 What’s most similar is that we both love to run non-stop. Not the type who walks when tired or stops to enjoy the scenery. Maybe people have different views, but I think the true king is the one who can keep running without stopping.
 When reaching the finish line, I’d feel so cool, a rush of pride, like winning the lottery or getting incredibly lucky. It’s a principle—and also my pride.
 Oh, right—just like Brother Shang waiting at the finish line, and I’d smile proudly.
+]]></content>
+  </entry>
+  <entry>
+    <title>Reflections on *Skin*</title>
+    <url>/ening/2025/06/26/%E7%9A%AE%E5%9B%8A%E6%84%9F%E6%82%9F/</url>
+    <content><![CDATA[Aunt TaiAunt Tai is strong-willed and resilient. Her optimistic attitude is something worth learning from. The greatest thing my father ever did was marrying my mother—a truly great woman. A real woman should face everything with positivity and build the future she desires with her own hands.
+Although she resorted to stealing, it was driven by hardship—survival and family. Setting aside pride to do things against her will is, in a way, a form of strength. It’s not about crying and making a scene, but staying proactive in adversity.
+Thinking about it, the author’s achievements are inseparable from his great mother.
+Ah, that lovely mother! To preserve her husband’s dignity and happiness, she insisted on completing the house. Isn’t that a form of strength too? To follow her heart courageously is truly admirable.
+In fact, the person who understands my father the most is my mother. She knows his pride. Isn’t this what love is? You don’t need to say it—I understand. I understand you, and you understand me, and that’s why we’ve been together for so long.
+Zhang MeiliGet up from where you fell. Zhang Meili seems like someone who pursued true love and worked hard for what she desired. Though she was eventually forced to liberate herself sexually, I still respect her for everything she once did.
+Public opinion is powerful, but Zhang Meili’s inner strength is even more powerful.
 ]]></content>
   </entry>
   <entry>
@@ -420,5 +394,31 @@ ConclusionThis book is not only about discovering “who you are,” but also ab
       <tags>
         <tag>Personal Growth</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>One Day You&#39;ll Understand - Reading Notes by Mr. Zhuomo</title>
+    <url>/ening/2025/05/21/%E3%80%8A%E7%BB%88%E6%9C%89%E4%B8%80%E5%A4%A9%E4%BD%A0%E4%BC%9A%E6%87%82%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%20-%20%E7%90%A2%E7%A3%A8%E5%85%88%E7%94%9F/</url>
+    <content><![CDATA[The book does contain a lot of his own “biases,” but I find him authentic and humorous. His language is simple and understandable, and each subtitle essentially tells us what we should do.
+Understanding LifeLife is never about what you want it to be. It’s good to discover beauty and to view things from others’ perspectives. At the same time, one should have self-awareness.
+Understanding LoveSheldon once said: “The pursuit of another human to spend life with is something I’ve never understood. Maybe I’m too interesting to need company. So I wish you the same joy with each other as I have with myself.”One can never escape loneliness through another person; only through passion for life. Managing a relationship requires rationality. Freedom is inalienable. I once checked my ex’s phone—I realized it was wrong and won’t do it again.
+Understanding StrategyThis section mainly introduces the strategies of courting and how to maintain a good relationship—true wisdom. Never sacrifice your career for family. Don’t live with in-laws (though I think it depends). Have your own hobbies.
+Understanding MarriageEndure and stay loyal. As for non-marriage beliefs, there’s nothing more to say.
+Understanding SetbacksEvery breakup is just making way for true love. Don’t force it. I love you, so I wish you well, even if I’m not the one by your side.Do what you want regardless of others’ opinions. Only care about those who matter to you.
+Understanding ReadingWhat, Why, How. Keep reading. Don’t chase speed, but depth.
+Understanding RomanceHe shares sweet daily stories with his wife. If you don’t break up, you won’t discover how many better people there are out there. If you find one—lucky. If not—you can still live happily on your own.Live with emotional intelligence and the world becomes beautiful.
+Understanding SocializingAssociate with decent people. Different people require different approaches. Rejecting others is an art. If you don’t have the guts to ask for your money back, don’t lend it.
+Understanding Human NatureI tend to be skeptical about human nature. You can’t control others, so just manage yourself. Don’t be vulgar.
+Understanding Good and EvilSome people enter your life just to teach you a lesson. Good or evil—I prefer believing in others, as trust is given before it’s earned.Even if deceived, it’s a lesson learned—don’t fall into the same trap again. But don’t stop trusting altogether; kind people still exist.God made the right hand a right hand as a reward; same for kind people—kindness is its own reward.I recall being in a restroom without tissue once. I was going to ask a friend, but a stranger overheard and handed me tissues. Such kindness moved me deeply.Kindness must come with principles—otherwise it may hurt others or yourself.
+Understanding WealthThe poor stay poor because of narrow thinking. To get rich, don’t just invest in your body—think bigger. See the essence of problems.Time is limited—how to get rich fast? Find a subject you love, apply it, think broadly, and work in fields closely tied to society.
+Understanding SocietyHave ambition. Take one step at a time. Build an independent personality. Be accountable for your actions. Learn to transform your ability to feel happiness—then change yourself.
+Understanding Life and DeathDeath studies include concepts like: No death, no life; face death to live; understand death to be reborn. Interesting and thought-provoking.Knowing that we will die is what pushes us to live fully. When the time comes, I think I’ll embrace death.
+
+What the world lacks isn’t perfect people, but justice, sincerity, courage, and compassion from the heart. — My biggest takeaway after watching Forever Young today.We all know cause and effect—but causes and effects come from relationships. Someday, I’ll read Schopenhauer and Nietzsche properly.
+
+Understanding TravelThis part recounts Mr. Zhuomo’s experiences in Tibet. Many dream of going there—maybe because it helps people truly understand life’s struggles.The US is less disciplined than the UK. Japan has great food culture and says “sorry” a lot—avoiding bothering others.
+Understanding CareerFirst learn to endure hardship. Then understand yourself and your talents. Begin with the end in mind and stay focused.
+Understanding EducationEvery child is born pure. Without proper education, they won’t become pillars of the nation.
+Understanding Entertainment &amp; FreedomLife has two paths: one for career ambition—keep passion; the other for living warmly—keep humanity.Open your eyes each day and tell yourself: Oh yeah!
+]]></content>
   </entry>
 </search>
