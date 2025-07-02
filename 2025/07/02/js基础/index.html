@@ -58,19 +58,19 @@
 
 
 
-  <meta name="description" content="全书的确包含了很多他自己的“偏见”，但我觉得他真实幽默，语言简单易懂，其实各个小标题就是告诉我们该做什么。 懂生活生活从来不是你想怎样就能变成怎样的。生活中多发现美，多从他人角度看待事情，是好的。同时自己还要有自知之明。 懂爱情谢耳朵说：人穷尽一生追寻另一个人类共度一生的事，我一直无法理解。或许我自己太有意思，无需他人陪伴。所以我祝你们在对方身上得到的快乐，与我给自己的一样多。靠另一个人永远无">
+  <meta name="description" content="JavaScript 基础总结（变量提升、严格模式） 📌 变量与函数提升规则 变量提升：按顺序执行，变量声明提升但赋值不会提升。 函数提升：整个函数体提升到全局作用域顶部。 优先级：函数提升 &gt; 变量提升。  1234567console.log(a); &#x2F;&#x2F; undefinedvar a &#x3D; 2;foo(); &#x2F;&#x2F; 正常调用function foo() &#123;  console.l">
 <meta property="og:type" content="article">
-<meta property="og:title" content="《终有一天你会懂》琢磨先生 - 读书笔记">
-<meta property="og:url" content="https://lidyaqf.github.io/2025/05/21/%E3%80%8A%E7%BB%88%E6%9C%89%E4%B8%80%E5%A4%A9%E4%BD%A0%E4%BC%9A%E6%87%82%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%20-%20%E7%90%A2%E7%A3%A8%E5%85%88%E7%94%9F/index.html">
+<meta property="og:title" content="JavaScript 基础">
+<meta property="og:url" content="https://lidyaqf.github.io/2025/07/02/js%E5%9F%BA%E7%A1%80/index.html">
 <meta property="og:site_name" content="枫叶白">
-<meta property="og:description" content="全书的确包含了很多他自己的“偏见”，但我觉得他真实幽默，语言简单易懂，其实各个小标题就是告诉我们该做什么。 懂生活生活从来不是你想怎样就能变成怎样的。生活中多发现美，多从他人角度看待事情，是好的。同时自己还要有自知之明。 懂爱情谢耳朵说：人穷尽一生追寻另一个人类共度一生的事，我一直无法理解。或许我自己太有意思，无需他人陪伴。所以我祝你们在对方身上得到的快乐，与我给自己的一样多。靠另一个人永远无">
+<meta property="og:description" content="JavaScript 基础总结（变量提升、严格模式） 📌 变量与函数提升规则 变量提升：按顺序执行，变量声明提升但赋值不会提升。 函数提升：整个函数体提升到全局作用域顶部。 优先级：函数提升 &gt; 变量提升。  1234567console.log(a); &#x2F;&#x2F; undefinedvar a &#x3D; 2;foo(); &#x2F;&#x2F; 正常调用function foo() &#123;  console.l">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2025-05-21T02:12:41.000Z">
-<meta property="article:modified_time" content="2025-07-01T06:06:42.913Z">
+<meta property="article:published_time" content="2025-07-02T00:20:00.000Z">
+<meta property="article:modified_time" content="2025-07-02T02:29:48.269Z">
 <meta property="article:author" content="lidya">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://lidyaqf.github.io/2025/05/21/%E3%80%8A%E7%BB%88%E6%9C%89%E4%B8%80%E5%A4%A9%E4%BD%A0%E4%BC%9A%E6%87%82%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%20-%20%E7%90%A2%E7%A3%A8%E5%85%88%E7%94%9F/">
+<link rel="canonical" href="https://lidyaqf.github.io/2025/07/02/js%E5%9F%BA%E7%A1%80/">
 
 
 <script id="page-configurations">
@@ -83,7 +83,7 @@
   };
 </script>
 
-  <title>《终有一天你会懂》琢磨先生 - 读书笔记 | 枫叶白</title>
+  <title>JavaScript 基础 | 枫叶白</title>
   
 
 
@@ -226,7 +226,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://lidyaqf.github.io/2025/05/21/%E3%80%8A%E7%BB%88%E6%9C%89%E4%B8%80%E5%A4%A9%E4%BD%A0%E4%BC%9A%E6%87%82%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%20-%20%E7%90%A2%E7%A3%A8%E5%85%88%E7%94%9F/">
+    <link itemprop="mainEntityOfPage" href="https://lidyaqf.github.io/2025/07/02/js%E5%9F%BA%E7%A1%80/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -239,7 +239,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          《终有一天你会懂》琢磨先生 - 读书笔记
+          JavaScript 基础
         </h1>
 
         <div class="post-meta">
@@ -248,16 +248,10 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2025-05-21 10:12:41" itemprop="dateCreated datePublished" datetime="2025-05-21T10:12:41+08:00">2025-05-21</time>
+              <time title="创建时间：2025-07-02 08:20:00 / 修改时间：10:29:48" itemprop="dateCreated datePublished" datetime="2025-07-02T08:20:00+08:00">2025-07-02</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2025-07-01 14:06:42" itemprop="dateModified" datetime="2025-07-01T14:06:42+08:00">2025-07-01</time>
-              </span>
 
           
             <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
@@ -277,29 +271,26 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <!-- ![示例图片](images/logo.svg) -->
+        <h1 id="JavaScript-基础总结（变量提升、严格模式）"><a href="#JavaScript-基础总结（变量提升、严格模式）" class="headerlink" title="JavaScript 基础总结（变量提升、严格模式）"></a>JavaScript 基础总结（变量提升、严格模式）</h1><hr>
+<h2 id="📌-变量与函数提升规则"><a href="#📌-变量与函数提升规则" class="headerlink" title="📌 变量与函数提升规则"></a>📌 变量与函数提升规则</h2><ul>
+<li><strong>变量提升</strong>：按顺序执行，变量声明提升但赋值不会提升。</li>
+<li><strong>函数提升</strong>：整个函数体提升到全局作用域顶部。</li>
+<li><strong>优先级</strong>：函数提升 &gt; 变量提升。</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(a); <span class="comment">// undefined</span></span><br><span class="line"><span class="keyword">var</span> a = <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line"><span class="title function_">foo</span>(); <span class="comment">// 正常调用</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">foo</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;函数提升成功&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>全书的确包含了很多他自己的“偏见”，但我觉得他真实幽默，语言简单易懂，其实各个小标题就是告诉我们该做什么。</p>
-<h2 id="懂生活"><a href="#懂生活" class="headerlink" title="懂生活"></a>懂生活</h2><p>生活从来不是你想怎样就能变成怎样的。生活中多发现美，多从他人角度看待事情，是好的。同时自己还要有自知之明。</p>
-<h2 id="懂爱情"><a href="#懂爱情" class="headerlink" title="懂爱情"></a>懂爱情</h2><p>谢耳朵说：人穷尽一生追寻另一个人类共度一生的事，我一直无法理解。或许我自己太有意思，无需他人陪伴。所以我祝你们在对方身上得到的快乐，与我给自己的一样多。<br>靠另一个人永远无法让你摆脱孤独，只能靠自己对生活的热情。经营一段感情要的是理智，自由是不可剥夺的。这让我想起对前任，我曾经有查看过他的手机，我觉得挺不对，以后不会再出现这种事情了。</p>
-<h2 id="懂兵法"><a href="#懂兵法" class="headerlink" title="懂兵法"></a>懂兵法</h2><p>主要就是介绍女追男或男追女的技巧，以及如何经营好一段感情，就是大智慧。同时千万别因为家庭放弃自己的事业，不要跟公公婆婆住一起（但我的观点还是觉得因人而异），要有属于自己的兴趣爱好。</p>
-<h2 id="懂婚姻"><a href="#懂婚姻" class="headerlink" title="懂婚姻"></a>懂婚姻</h2><p>忍，忠一。对于不婚主义，当然也没什么想多说的了。</p>
-<h2 id="懂失意"><a href="#懂失意" class="headerlink" title="懂失意"></a>懂失意</h2><p>每一次失恋，只不过是在为真爱让路。还是那句勉强不来，我爱你，所以我祝你一生如意，即使陪着你的人，不是我。<br>做自己想做的事，不要管他人怎么想。只关心自己在乎的人。</p>
-<h2 id="懂阅读"><a href="#懂阅读" class="headerlink" title="懂阅读"></a>懂阅读</h2><p>What Why How。一直阅读下去，不要求快，要求精。</p>
-<h2 id="懂情趣"><a href="#懂情趣" class="headerlink" title="懂情趣"></a>懂情趣</h2><p>介绍了他与妻子的日常 sweet，告诉我们不分手，就不知道世界上还有那么多人值得我们去爱。如果找到了，是我的幸运，如果找不到，我也有能力让自己快乐地活着。<br>高情商地活着，会发觉世界是那么美好。</p>
-<h2 id="懂交际"><a href="#懂交际" class="headerlink" title="懂交际"></a>懂交际</h2><p>跟正经人交往，跟不同人要有不同方式去与之交往，拒绝别人也是一门艺术。如果没有厚脸皮去找别人还钱，干脆别借。</p>
-<h2 id="懂人性"><a href="#懂人性" class="headerlink" title="懂人性"></a>懂人性</h2><p>只能说我可能在人性方面持怀疑态度，管不了别人，那么就只能管好自己，别做个恶俗的人。</p>
-<h2 id="懂善恶"><a href="#懂善恶" class="headerlink" title="懂善恶"></a>懂善恶</h2><p>有些人在你生命中出现，就是为了给你上一课。何为善何为恶，我宁愿相信他人的话，因为人与人之间的信任本来就是有一方愿意相信，另一方才会不负此信。<br>即使被骗，也是告诉我们下次同样的坑，别再跳了。但别因为入了一次坑，就不再相信了，善人始终存在。<br>上帝让右手成为右手，就是对右手最高的奖赏；同理，上帝让善人成为善人，也就是对善人的最高奖赏。<br>这让我想起，有次在外，洗手间里没有纸巾，原本是想问旁边的好朋友有没有纸巾的，结果旁边一位陌生女子听见了，立刻拿出包纸巾给我，此等善举，让我倍感荣幸。<br>而善良还需要有原则，否则害人害己。</p>
-<h2 id="懂财富"><a href="#懂财富" class="headerlink" title="懂财富"></a>懂财富</h2><p>穷人之所以穷，是思维的匮乏。要想富起来，不能只在自己身体上投资，而要在大局上有思维的开拓。看透问题的本质。<br>时间是有限，在有限时间内如何快速致富？找到一门自己感兴趣的学科，学以致用，发散思维，与社会息息相关的行业，去做。</p>
-<h2 id="懂社会"><a href="#懂社会" class="headerlink" title="懂社会"></a>懂社会</h2><p>要有抱负，一步一个脚印。要有自己独立的人格，要能为自己所做的事情负责。学会转化一种让自己幸福的能力，然后改变自己。</p>
-<h2 id="懂生死"><a href="#懂生死" class="headerlink" title="懂生死"></a>懂生死</h2><p>生死学里几个词：无死不生，向死而生，知死而后生。颇为有趣且发人深思。人就是因为知道有一天会死去，才会争取好好地活着。<br>我想，真到了那天，我会主动拥抱死亡。</p>
-<blockquote>
-<p>这世界上缺的不是完美的人，而是从心底给出的正义、真心、无畏和同情—这是今天看完《无问西东》后给我最感慨的话。生而为人，便要心之所向，无问西东。<br>大家都知道有因必有果，却不只因果皆由缘而起。叔本华跟尼采，有时间必好好读佳作。</p>
-</blockquote>
-<h2 id="懂远游"><a href="#懂远游" class="headerlink" title="懂远游"></a>懂远游</h2><p>这部分写了琢磨先生在西藏的经历，看过很多书，都是大家想去西藏的。也许去了那里，人真的能体会到人生的不易。<br>美国不如英国自律，日本对美食态度极佳，常把“对不起”挂在嘴边，不喜欢给别人添麻烦。</p>
-<h2 id="懂职场"><a href="#懂职场" class="headerlink" title="懂职场"></a>懂职场</h2><p>首先要懂得吃苦，然后要清楚自己，发掘自己的天赋所在。以终为始，聚焦所做。</p>
-<h2 id="懂教育"><a href="#懂教育" class="headerlink" title="懂教育"></a>懂教育</h2><p>我只知道，每一个出生在这世上的小孩都是纯粹的，如果不好好教育，长大后便不可能为国之栋梁。</p>
-<h2 id="懂娱乐、懂自由"><a href="#懂娱乐、懂自由" class="headerlink" title="懂娱乐、懂自由"></a>懂娱乐、懂自由</h2><p>人生有两个方向：一个方向是往大处拼搏，保持对事业的激情；一个方向是往小处生活，保持做人的温度。<br>每天睁开眼，对自己说声：欧耶</p>
+<hr>
+<h2 id="🚫-使用-use-strict-严格模式"><a href="#🚫-使用-use-strict-严格模式" class="headerlink" title="🚫 使用 use strict 严格模式"></a>🚫 使用 <code>use strict</code> 严格模式</h2><h3 id="作用："><a href="#作用：" class="headerlink" title="作用："></a>作用：</h3><ul>
+<li>避免创建<strong>意外的全局变量</strong>；</li>
+<li>禁止使用未声明变量，防止内存泄漏；</li>
+<li><code>this</code> 默认绑定到 <code>undefined</code> 而非 <code>window</code>。</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">foo</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="string">&quot;use strict&quot;</span>;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>.<span class="property">a</span>); <span class="comment">// ❌ TypeError</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> a = <span class="number">2</span>;</span><br><span class="line"><span class="title function_">foo</span>(); <span class="comment">// 严格模式下 this 是 undefined，无法读取 this.a</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">(<span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="string">&quot;use strict&quot;</span>;</span><br><span class="line">  <span class="title function_">foo</span>(); <span class="comment">// 严格模式下调用函数则不影响默认绑定</span></span><br><span class="line">&#125;)();</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">foo</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>.<span class="property">a</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> a = <span class="number">2</span>;</span><br></pre></td></tr></table></figure>
+
+
 
     </div>
 
@@ -324,7 +315,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://lidyaqf.github.io/2025/05/21/%E3%80%8A%E7%BB%88%E6%9C%89%E4%B8%80%E5%A4%A9%E4%BD%A0%E4%BC%9A%E6%87%82%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%20-%20%E7%90%A2%E7%A3%A8%E5%85%88%E7%94%9F/" title="《终有一天你会懂》琢磨先生 - 读书笔记">https://lidyaqf.github.io/2025/05/21/《终有一天你会懂》读书笔记 - 琢磨先生/</a>
+    <a href="https://lidyaqf.github.io/2025/07/02/js%E5%9F%BA%E7%A1%80/" title="JavaScript 基础">https://lidyaqf.github.io/2025/07/02/js基础/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -341,13 +332,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2025/04/18/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98/" rel="prev" title="前端面试题">
-      <i class="fa fa-chevron-left"></i> 前端面试题
+    <a href="/2025/07/01/%E6%B7%B1%E6%88%B7%E5%8A%9E%E7%90%86%E6%B5%81%E7%A8%8B/" rel="prev" title="2022应届毕业生办理深户流程">
+      <i class="fa fa-chevron-left"></i> 2022应届毕业生办理深户流程
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2025/06/26/%E7%9A%AE%E5%9B%8A%E6%84%9F%E6%82%9F/" rel="next" title="《皮囊》感悟">
-      《皮囊》感悟 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -411,7 +399,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%87%82%E7%94%9F%E6%B4%BB"><span class="nav-number">1.</span> <span class="nav-text">懂生活</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%87%82%E7%88%B1%E6%83%85"><span class="nav-number">2.</span> <span class="nav-text">懂爱情</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%87%82%E5%85%B5%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text">懂兵法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%87%82%E5%A9%9A%E5%A7%BB"><span class="nav-number">4.</span> <span class="nav-text">懂婚姻</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%87%82%E5%A4%B1%E6%84%8F"><span class="nav-number">5.</span> <span class="nav-text">懂失意</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%87%82%E9%98%85%E8%AF%BB"><span class="nav-number">6.</span> <span class="nav-text">懂阅读</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%87%82%E6%83%85%E8%B6%A3"><span class="nav-number">7.</span> <span class="nav-text">懂情趣</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%87%82%E4%BA%A4%E9%99%85"><span class="nav-number">8.</span> <span class="nav-text">懂交际</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%87%82%E4%BA%BA%E6%80%A7"><span class="nav-number">9.</span> <span class="nav-text">懂人性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%87%82%E5%96%84%E6%81%B6"><span class="nav-number">10.</span> <span class="nav-text">懂善恶</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%87%82%E8%B4%A2%E5%AF%8C"><span class="nav-number">11.</span> <span class="nav-text">懂财富</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%87%82%E7%A4%BE%E4%BC%9A"><span class="nav-number">12.</span> <span class="nav-text">懂社会</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%87%82%E7%94%9F%E6%AD%BB"><span class="nav-number">13.</span> <span class="nav-text">懂生死</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%87%82%E8%BF%9C%E6%B8%B8"><span class="nav-number">14.</span> <span class="nav-text">懂远游</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%87%82%E8%81%8C%E5%9C%BA"><span class="nav-number">15.</span> <span class="nav-text">懂职场</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%87%82%E6%95%99%E8%82%B2"><span class="nav-number">16.</span> <span class="nav-text">懂教育</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%87%82%E5%A8%B1%E4%B9%90%E3%80%81%E6%87%82%E8%87%AA%E7%94%B1"><span class="nav-number">17.</span> <span class="nav-text">懂娱乐、懂自由</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#JavaScript-%E5%9F%BA%E7%A1%80%E6%80%BB%E7%BB%93%EF%BC%88%E5%8F%98%E9%87%8F%E6%8F%90%E5%8D%87%E3%80%81%E4%B8%A5%E6%A0%BC%E6%A8%A1%E5%BC%8F%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">JavaScript 基础总结（变量提升、严格模式）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%93%8C-%E5%8F%98%E9%87%8F%E4%B8%8E%E5%87%BD%E6%95%B0%E6%8F%90%E5%8D%87%E8%A7%84%E5%88%99"><span class="nav-number">1.1.</span> <span class="nav-text">📌 变量与函数提升规则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%9A%AB-%E4%BD%BF%E7%94%A8-use-strict-%E4%B8%A5%E6%A0%BC%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.2.</span> <span class="nav-text">🚫 使用 use strict 严格模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%9C%E7%94%A8%EF%BC%9A"><span class="nav-number">1.2.1.</span> <span class="nav-text">作用：</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
