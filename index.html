@@ -223,6 +223,72 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://lidyaqf.github.io/2025/07/04/H5%E4%B8%8E%E5%8E%9F%E7%94%9F%E4%BA%A4%E4%BA%92/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="lidya">
+      <meta itemprop="description" content="服人以诚不以言">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="枫叶白">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2025/07/04/H5%E4%B8%8E%E5%8E%9F%E7%94%9F%E4%BA%A4%E4%BA%92/" class="post-title-link" itemprop="url">H5与原生交互</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2025-07-04 09:44:17 / 修改时间：10:10:46" itemprop="dateCreated datePublished" datetime="2025-07-04T09:44:17+08:00">2025-07-04</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="H5手机端日志工具-vconsole手机端-："><a href="#H5手机端日志工具-vconsole手机端-：" class="headerlink" title="H5手机端日志工具(vconsole手机端)："></a>H5手机端日志工具(vconsole手机端)：</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://cdn.bootcdn.net/ajax/libs/vConsole/3.15.1/vconsole.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">  <span class="comment">// 初始化 vConsole</span></span></span><br><span class="line"><span class="language-javascript">  <span class="keyword">var</span> vConsole = <span class="keyword">new</span> <span class="title class_">VConsole</span>();</span></span><br><span class="line"><span class="language-javascript">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;vConsole is ready.&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="第一种情况：传数据给原生端"><a href="#第一种情况：传数据给原生端" class="headerlink" title="第一种情况：传数据给原生端"></a>第一种情况：传数据给原生端</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="variable language_">window</span>.<span class="property">webkit</span> != <span class="literal">undefined</span>) &#123;</span><br><span class="line">  <span class="comment">//这是ios端定义的</span></span><br><span class="line">  <span class="variable language_">window</span>.<span class="property">webkit</span>.<span class="property">messageHandlers</span>.<span class="property">getUserInfo</span>.<span class="title function_">postMessage</span>(<span class="literal">null</span>);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  <span class="comment">//这是android端定义的feedback</span></span><br><span class="line">  feedback.<span class="title function_">getUserInfo</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (<span class="variable language_">window</span>.<span class="property">webkit</span> != <span class="literal">undefined</span>) &#123;</span><br><span class="line">  <span class="variable language_">window</span>.<span class="property">webkit</span>.<span class="property">messageHandlers</span>.<span class="property">feedback</span>.<span class="title function_">postMessage</span>(&#123;</span><br><span class="line">    <span class="attr">title</span>: <span class="string">&quot;测试分享的标题&quot;</span>,</span><br><span class="line">    <span class="attr">content</span>: <span class="string">&quot;测试分享的内容&quot;</span>,</span><br><span class="line">    <span class="attr">url</span>: <span class="string">&quot;https://github.com/maying1992&quot;</span>,</span><br><span class="line">  &#125;);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  <span class="comment">// try &#123;</span></span><br><span class="line">  <span class="comment">//   result = feedback.getUserInfo();</span></span><br><span class="line">  <span class="comment">// &#125; catch(err)&#123;</span></span><br><span class="line">  <span class="comment">// &#125;</span></span><br><span class="line">  feedback.<span class="title function_">postMessage</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="第二种情况：获取原生端的数据"><a href="#第二种情况：获取原生端的数据" class="headerlink" title="第二种情况：获取原生端的数据"></a>第二种情况：获取原生端的数据</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">created</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="comment">//window挂载</span></span><br><span class="line">  <span class="variable language_">window</span>.<span class="property">setUserInfo</span> = <span class="variable language_">this</span>.<span class="property">setUserInfo</span>;</span><br><span class="line">&#125;,</span><br><span class="line"></span><br><span class="line"><span class="title function_">setUserInfo</span>(<span class="params">param</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> u = navigator.<span class="property">userAgent</span>;</span><br><span class="line">  <span class="keyword">const</span> isiOS = !!u.<span class="title function_">match</span>(<span class="regexp">/\(i[^;]+;( U;)? CPU.+Mac OS X/</span>); <span class="comment">//ios终端</span></span><br><span class="line">  <span class="keyword">const</span> result = <span class="title class_">JSON</span>.<span class="title function_">parse</span>(param);</span><br><span class="line">  <span class="keyword">if</span> (isiOS) &#123;</span><br><span class="line"></span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">queryParams</span> = result.<span class="property">userInfo</span>.<span class="property">token</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//兼容原生端那边传过来的不统一值</span></span><br><span class="line">    <span class="keyword">if</span> (</span><br><span class="line">      result.<span class="property">userInfo</span>.<span class="property">userId</span> == <span class="literal">undefined</span> ||</span><br><span class="line">      result.<span class="property">userInfo</span>.<span class="property">userId</span> == <span class="number">0</span></span><br><span class="line">    ) &#123;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">usrIdd</span> = <span class="number">0</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">usrIdd</span> = result.<span class="property">userInfo</span>.<span class="property">userId</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="variable language_">window</span>.<span class="property">localStorage</span>.<span class="title function_">setItem</span>(<span class="string">&quot;lang&quot;</span>, result.<span class="property">userInfo</span>.<span class="property">language</span>);</span><br><span class="line"></span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">queryParams</span> = result;</span><br><span class="line">    <span class="keyword">if</span> (result.<span class="property">userId</span> == <span class="literal">undefined</span> || result.<span class="property">userId</span> == <span class="number">0</span>) &#123;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">usrIdd</span> = <span class="number">0</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">usrIdd</span> = result.<span class="property">userId</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="variable language_">window</span>.<span class="property">localStorage</span>.<span class="title function_">setItem</span>(<span class="string">&quot;lang&quot;</span>, result.<span class="property">language</span>);</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">$i18n</span>.<span class="property">locale</span> = <span class="variable language_">localStorage</span>.<span class="title function_">getItem</span>(<span class="string">&quot;lang&quot;</span>);</span><br><span class="line">  <span class="comment">// let data = &#123;</span></span><br><span class="line">  <span class="comment">//   &#x27;name&#x27; : &#x27;xiaoming&#x27;</span></span><br><span class="line">  <span class="comment">// &#125;;</span></span><br><span class="line">  <span class="keyword">return</span> <span class="variable language_">localStorage</span>.<span class="title function_">getItem</span>(<span class="string">&quot;lang&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="当需要通过按钮跳转到app时："><a href="#当需要通过按钮跳转到app时：" class="headerlink" title="当需要通过按钮跳转到app时："></a>当需要通过按钮跳转到app时：</h2><p>直接用 <code>a</code> 标签的 <code>href</code> 跳转，前提是原生应用定义了 <code>myapp://***</code> 作为触发特定功能的URL，可参考 Instagram 的 H5 跳转 app 的竞品例子，<code>instagram://**</code>。<br>一般跳不过去就是原生端不支持。</p>
+
+      
+    </div>
+
+    
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://lidyaqf.github.io/2025/07/02/js%E5%9F%BA%E7%A1%80/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -248,7 +314,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2025-07-02 08:20:00 / 修改时间：10:29:48" itemprop="dateCreated datePublished" datetime="2025-07-02T08:20:00+08:00">2025-07-02</time>
+              <time title="创建时间：2025-07-02 08:20:00 / 修改时间：10:42:09" itemprop="dateCreated datePublished" datetime="2025-07-02T08:20:00+08:00">2025-07-02</time>
             </span>
 
           
@@ -263,7 +329,7 @@
 
       
           <h1 id="JavaScript-基础总结（变量提升、严格模式）"><a href="#JavaScript-基础总结（变量提升、严格模式）" class="headerlink" title="JavaScript 基础总结（变量提升、严格模式）"></a>JavaScript 基础总结（变量提升、严格模式）</h1><hr>
-<h2 id="📌-变量与函数提升规则"><a href="#📌-变量与函数提升规则" class="headerlink" title="📌 变量与函数提升规则"></a>📌 变量与函数提升规则</h2><ul>
+<h2 id="变量与函数提升规则"><a href="#变量与函数提升规则" class="headerlink" title="变量与函数提升规则"></a>变量与函数提升规则</h2><ul>
 <li><strong>变量提升</strong>：按顺序执行，变量声明提升但赋值不会提升。</li>
 <li><strong>函数提升</strong>：整个函数体提升到全局作用域顶部。</li>
 <li><strong>优先级</strong>：函数提升 &gt; 变量提升。</li>
@@ -271,7 +337,7 @@
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(a); <span class="comment">// undefined</span></span><br><span class="line"><span class="keyword">var</span> a = <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line"><span class="title function_">foo</span>(); <span class="comment">// 正常调用</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">foo</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;函数提升成功&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <hr>
-<h2 id="🚫-使用-use-strict-严格模式"><a href="#🚫-使用-use-strict-严格模式" class="headerlink" title="🚫 使用 use strict 严格模式"></a>🚫 使用 <code>use strict</code> 严格模式</h2><h3 id="作用："><a href="#作用：" class="headerlink" title="作用："></a>作用：</h3><ul>
+<h2 id="使用-use-strict-严格模式"><a href="#使用-use-strict-严格模式" class="headerlink" title="使用 use strict 严格模式"></a>使用 <code>use strict</code> 严格模式</h2><h3 id="作用："><a href="#作用：" class="headerlink" title="作用："></a>作用：</h3><ul>
 <li>避免创建<strong>意外的全局变量</strong>；</li>
 <li>禁止使用未声明变量，防止内存泄漏；</li>
 <li><code>this</code> 默认绑定到 <code>undefined</code> 而非 <code>window</code>。</li>
@@ -538,7 +604,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2025-06-27 15:21:42" itemprop="dateModified" datetime="2025-06-27T15:21:42+08:00">2025-06-27</time>
+                <time title="修改时间：2025-07-04 09:43:48" itemprop="dateModified" datetime="2025-07-04T09:43:48+08:00">2025-07-04</time>
               </span>
 
           
@@ -765,7 +831,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2025-04-28 16:48:20" itemprop="dateModified" datetime="2025-04-28T16:48:20+08:00">2025-04-28</time>
+                <time title="修改时间：2025-07-02 16:36:17" itemprop="dateModified" datetime="2025-07-02T16:36:17+08:00">2025-07-02</time>
               </span>
 
           
@@ -937,9 +1003,12 @@
 </details>
 
 
-<h2 id="推荐"><a href="#推荐" class="headerlink" title="推荐"></a>推荐</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://edunextgen1.com/">娱乐一下</a></li>
-</ul>
+<!-- ## 推荐 -->
+
+<!-- - [娱乐一下](https://edunextgen1.com) -->
+
+
+
 
       
     </div>
@@ -991,7 +1060,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2025-05-22 10:45:38" itemprop="dateModified" datetime="2025-05-22T10:45:38+08:00">2025-05-22</time>
+                <time title="修改时间：2025-07-02 16:35:43" itemprop="dateModified" datetime="2025-07-02T16:35:43+08:00">2025-07-02</time>
               </span>
 
           
@@ -1045,10 +1114,9 @@
 <li><p>支持发布&#x2F;订阅模式，可以作为一个简单而高效的轻量级消息代理，用于实现消息队列、实时通知等。</p>
 </li>
 </ul>
-<h2 id="推荐"><a href="#推荐" class="headerlink" title="推荐"></a>推荐</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://edunextgen1.com/">娱乐一下</a></li>
-</ul>
+<!-- ## 推荐 -->
 
+<!-- - [娱乐一下](https://edunextgen1.com) -->
       
     </div>
 
@@ -1099,7 +1167,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2025-04-16 15:26:11" itemprop="dateModified" datetime="2025-04-16T15:26:11+08:00">2025-04-16</time>
+                <time title="修改时间：2025-07-02 16:36:03" itemprop="dateModified" datetime="2025-07-02T16:36:03+08:00">2025-07-02</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1193,139 +1261,10 @@
 <h2 id="附：安装-Docker、Portainer-及相关命令"><a href="#附：安装-Docker、Portainer-及相关命令" class="headerlink" title="附：安装 Docker、Portainer 及相关命令"></a>附：安装 Docker、Portainer 及相关命令</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt update</span><br><span class="line"><span class="built_in">sudo</span> apt install docker.io docker-compose</span><br><span class="line">docker -v</span><br><span class="line"><span class="built_in">sudo</span> systemctl start docker</span><br><span class="line"></span><br><span class="line"><span class="built_in">sudo</span> docker search portainer</span><br><span class="line">docker pull portainer/portainer</span><br><span class="line"><span class="built_in">sudo</span> docker pull portainer/portainer</span><br><span class="line"><span class="built_in">sudo</span> docker run -d --name portainerUI -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock portainer/portainer</span><br><span class="line"></span><br><span class="line"><span class="built_in">sudo</span> docker start portainerUI</span><br><span class="line"><span class="built_in">sudo</span> passwd root</span><br></pre></td></tr></table></figure>
 
 <hr>
-<h2 id="推荐"><a href="#推荐" class="headerlink" title="推荐"></a>推荐</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://edunextgen1.com/">娱乐一下</a></li>
-</ul>
+<!-- ## 推荐 -->
 
-      
-    </div>
+<!-- - [娱乐一下](https://edunextgen1.com) -->
 
-    
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://lidyaqf.github.io/2025/04/10/gitlabci/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="lidya">
-      <meta itemprop="description" content="服人以诚不以言">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="枫叶白">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2025/04/10/gitlabci/" class="post-title-link" itemprop="url">GitLab CI/CD</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2025-04-10 11:41:51" itemprop="dateCreated datePublished" datetime="2025-04-10T11:41:51+08:00">2025-04-10</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2025-04-15 15:53:41" itemprop="dateModified" datetime="2025-04-15T15:53:41+08:00">2025-04-15</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="前端项目-GitLab-CI-CD-持续集成部署指南（Mac-环境）"><a href="#前端项目-GitLab-CI-CD-持续集成部署指南（Mac-环境）" class="headerlink" title="前端项目 GitLab CI&#x2F;CD 持续集成部署指南（Mac 环境）"></a>前端项目 GitLab CI&#x2F;CD 持续集成部署指南（Mac 环境）</h1><h2 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h2><p>在日常开发过程中，我们经常需要将打包后的 <code>dist</code> 包手动发送给后端部署，效率低且容易出错。CI（Continuous Integration，持续集成）可以自动化这一过程，本文将介绍如何通过 GitLab CI 实现持续集成部署。</p>
-<hr>
-<h2 id="一、安装-GitLab-Runner"><a href="#一、安装-GitLab-Runner" class="headerlink" title="一、安装 GitLab Runner"></a>一、安装 GitLab Runner</h2><p>请参考官方文档：<a target="_blank" rel="noopener" href="https://docs.gitlab.com/runner/install/">GitLab Runner 安装指南</a></p>
-<hr>
-<h2 id="二、本地注册-Runner"><a href="#二、本地注册-Runner" class="headerlink" title="二、本地注册 Runner"></a>二、本地注册 Runner</h2><ol>
-<li>打开你的 GitLab 项目页面，进入 <strong>Settings → CI&#x2F;CD</strong>，展开 <strong>Runners</strong> 部分。</li>
-<li>记住显示的 <strong>URL</strong> 和 <strong>token</strong>，用于后续注册。</li>
-</ol>
-<h3 id="执行注册命令"><a href="#执行注册命令" class="headerlink" title="执行注册命令"></a>执行注册命令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gitlab-runner register</span><br></pre></td></tr></table></figure>
-
-<p>按照提示依次输入以下信息：</p>
-<ul>
-<li>GitLab CI Coordinator URL: <code>https://gitlab.com</code></li>
-<li>GitLab CI Token: <code>xxx</code>（从项目中复制）</li>
-<li>Tags: <code>my-tag,another-tag</code>（自定义）</li>
-<li>Description: <code>my-runner</code>（自定义）</li>
-<li>Executor: <code>shell</code>（Mac 上建议选择 shell）</li>
-</ul>
-<p>注册完成后，回到 GitLab CI&#x2F;CD 设置页面，可看到 Runner 状态为绿色，说明已成功运行。如果不是绿色，请执行以下命令启动 Runner 服务：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gitlab-runner run</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="三、编写-gitlab-ci-yml-文件并提交"><a href="#三、编写-gitlab-ci-yml-文件并提交" class="headerlink" title="三、编写 .gitlab-ci.yml 文件并提交"></a>三、编写 <code>.gitlab-ci.yml</code> 文件并提交</h2><p>将以下内容保存为 <code>.gitlab-ci.yml</code>，并 push 到 GitLab：</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">stages:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">deploy</span></span><br><span class="line"></span><br><span class="line"><span class="attr">deploy_to_test:</span></span><br><span class="line">  <span class="attr">stage:</span> <span class="string">deploy</span></span><br><span class="line">  <span class="attr">script:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">yarn</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">rm</span> <span class="string">-rf</span> <span class="string">dist/</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">yarn</span> <span class="string">build</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">ls</span> <span class="string">-l</span> <span class="string">-t</span> <span class="string">./dist/</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">rsync</span> <span class="string">-avz</span> <span class="string">./dist/</span> <span class="string">root@xxx.xx.xx.xxx:/dist</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>这段 CI 脚本会自动打包项目，并使用 <code>rsync</code> 将 <code>dist</code> 目录部署到远程服务器。</li>
-</ul>
-<hr>
-<h2 id="四、通过-Docker-实现-CI（可选）"><a href="#四、通过-Docker-实现-CI（可选）" class="headerlink" title="四、通过 Docker 实现 CI（可选）"></a>四、通过 Docker 实现 CI（可选）</h2><p>如果需要通过 Docker 实现更完整的 CI&#x2F;CD 流程，继续以下步骤：</p>
-<h3 id="1-安装-Docker（Mac）"><a href="#1-安装-Docker（Mac）" class="headerlink" title="1. 安装 Docker（Mac）"></a>1. 安装 Docker（Mac）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install --cask docker</span><br></pre></td></tr></table></figure>
-
-<h3 id="2-拉取-GitLab-镜像"><a href="#2-拉取-GitLab-镜像" class="headerlink" title="2. 拉取 GitLab 镜像"></a>2. 拉取 GitLab 镜像</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull drud/gitlab-ce:v0.29.1</span><br></pre></td></tr></table></figure>
-
-<h3 id="3-创建-GitLab-容器"><a href="#3-创建-GitLab-容器" class="headerlink" title="3. 创建 GitLab 容器"></a>3. 创建 GitLab 容器</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d -p 8443:443 -p 8090:80 -p 8022:22 --restart always --name gitlab drud/gitlab-ce:v0.29.1</span><br></pre></td></tr></table></figure>
-
-<p>说明：</p>
-<ul>
-<li><code>-p 8443:443</code>：映射 HTTPS 端口</li>
-<li><code>-p 8090:80</code>：映射 HTTP 端口</li>
-<li><code>-p 8022:22</code>：映射 SSH 端口</li>
-<li><code>--restart always</code>：容器崩溃或主机重启时自动恢复</li>
-<li><code>--name gitlab</code>：容器命名为 <code>gitlab</code></li>
-</ul>
-<p>访问地址：</p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://localhost:8090/</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="五、Docker-模式下的-gitlab-ci-yml-示例"><a href="#五、Docker-模式下的-gitlab-ci-yml-示例" class="headerlink" title="五、Docker 模式下的 .gitlab-ci.yml 示例"></a>五、Docker 模式下的 <code>.gitlab-ci.yml</code> 示例</h2><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">variables:</span></span><br><span class="line">  <span class="attr">TEST_NAME:</span> <span class="string">&quot;tips&quot;</span></span><br><span class="line">  <span class="attr">OUT_PORT:</span> <span class="string">&quot;8081&quot;</span></span><br><span class="line">  <span class="attr">IN_PORT:</span> <span class="string">&quot;8081&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">stages:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">deploy</span></span><br><span class="line"></span><br><span class="line"><span class="attr">deploy_to_test:</span></span><br><span class="line">  <span class="attr">stage:</span> <span class="string">deploy</span></span><br><span class="line">  <span class="attr">before_script:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">if</span> [ <span class="string">$(docker</span> <span class="string">ps</span> <span class="string">-aq</span> <span class="string">--filter</span> <span class="string">name=$CI_PROJECT_NAME)</span> ]<span class="string">;</span> <span class="string">then</span> <span class="string">docker</span> <span class="string">rm</span> <span class="string">-f</span> <span class="string">$CI_PROJECT_NAME;</span> <span class="string">fi</span></span><br><span class="line">  <span class="attr">script:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">docker</span> <span class="string">build</span> <span class="string">-f</span> <span class="string">Dockerfile</span> <span class="string">-t</span> <span class="string">$TEST_NAME:latest</span> <span class="string">.</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">docker</span> <span class="string">run</span> <span class="string">-d</span> <span class="string">-p</span> <span class="string">$OUT_PORT:$IN_PORT</span> <span class="string">--name</span> <span class="string">$TEST_NAME</span> <span class="string">$TEST_NAME:latest</span></span><br></pre></td></tr></table></figure>
-
-<p>部署成功后，在 GitLab 的 CI&#x2F;CD Pipelines 页面可看到构建过程，在 <strong>Containers</strong> 页面会生成新容器，点击对应端口即可访问部署后的页面。</p>
-<hr>
-<h2 id="推荐"><a href="#推荐" class="headerlink" title="推荐"></a>推荐</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://edunextgen1.com/">娱乐一下</a></li>
-</ul>
-<!-- - [前端持续集成部署 CI/CD - CSDN](https://blog.csdn.net) -->
 
       
     </div>
@@ -1344,6 +1283,9 @@
 
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+  </nav>
 
 
 
@@ -1410,7 +1352,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/ening/archives/">
         
-          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-count">11</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

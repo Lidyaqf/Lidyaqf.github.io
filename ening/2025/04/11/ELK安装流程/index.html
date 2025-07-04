@@ -66,7 +66,7 @@
 <meta property="og:description" content="Installing ELK Stack (ElasticSearch, Logstash, Kibana) with Docker It is recommended to install on Docker due to lower resource consumption. The installation version used below is 8.12.2. Please use t">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-04-11T09:16:46.000Z">
-<meta property="article:modified_time" content="2025-06-27T07:43:16.894Z">
+<meta property="article:modified_time" content="2025-07-02T08:51:37.689Z">
 <meta property="article:author" content="lidya">
 <meta name="twitter:card" content="summary">
 
@@ -261,7 +261,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-06-27 15:43:16" itemprop="dateModified" datetime="2025-06-27T15:43:16+08:00">2025-06-27</time>
+                <time title="Modified: 2025-07-02 16:51:37" itemprop="dateModified" datetime="2025-07-02T16:51:37+08:00">2025-07-02</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -357,9 +357,11 @@
 <h2 id="Additional-Install-Docker-Portainer-and-Related-Commands"><a href="#Additional-Install-Docker-Portainer-and-Related-Commands" class="headerlink" title="Additional: Install Docker, Portainer, and Related Commands"></a>Additional: Install Docker, Portainer, and Related Commands</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt update</span><br><span class="line"><span class="built_in">sudo</span> apt install docker.io docker-compose</span><br><span class="line">docker -v</span><br><span class="line"><span class="built_in">sudo</span> systemctl start docker</span><br><span class="line"></span><br><span class="line"><span class="built_in">sudo</span> docker search portainer</span><br><span class="line">docker pull portainer/portainer</span><br><span class="line"><span class="built_in">sudo</span> docker pull portainer/portainer</span><br><span class="line"><span class="built_in">sudo</span> docker run -d --name portainerUI -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock portainer/portainer</span><br><span class="line"></span><br><span class="line"><span class="built_in">sudo</span> docker start portainerUI</span><br><span class="line"><span class="built_in">sudo</span> passwd root</span><br></pre></td></tr></table></figure>
 
 <hr>
-<h2 id="Recommendations"><a href="#Recommendations" class="headerlink" title="Recommendations"></a>Recommendations</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://edunextgen1.com/">Just for Fun</a></li>
-</ul>
+<!-- ## Recommendations -->
+
+<!-- * [Just for Fun](https://edunextgen1.com) -->
+
+
 
     </div>
 
@@ -471,7 +473,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Installing-ELK-Stack-ElasticSearch-Logstash-Kibana-with-Docker"><span class="nav-number">1.</span> <span class="nav-text">Installing ELK Stack (ElasticSearch, Logstash, Kibana) with Docker</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Table-of-Contents"><span class="nav-number">1.1.</span> <span class="nav-text">Table of Contents</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Install-ElasticSearch"><span class="nav-number">1.2.</span> <span class="nav-text">1. Install ElasticSearch</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Install-Logstash"><span class="nav-number">1.3.</span> <span class="nav-text">2. Install Logstash</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Install-Kibana"><span class="nav-number">1.4.</span> <span class="nav-text">3. Install Kibana</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Additional-Install-Docker-Portainer-and-Related-Commands"><span class="nav-number">1.5.</span> <span class="nav-text">Additional: Install Docker, Portainer, and Related Commands</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Recommendations"><span class="nav-number">1.6.</span> <span class="nav-text">Recommendations</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Installing-ELK-Stack-ElasticSearch-Logstash-Kibana-with-Docker"><span class="nav-number">1.</span> <span class="nav-text">Installing ELK Stack (ElasticSearch, Logstash, Kibana) with Docker</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Table-of-Contents"><span class="nav-number">1.1.</span> <span class="nav-text">Table of Contents</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Install-ElasticSearch"><span class="nav-number">1.2.</span> <span class="nav-text">1. Install ElasticSearch</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Install-Logstash"><span class="nav-number">1.3.</span> <span class="nav-text">2. Install Logstash</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Install-Kibana"><span class="nav-number">1.4.</span> <span class="nav-text">3. Install Kibana</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Additional-Install-Docker-Portainer-and-Related-Commands"><span class="nav-number">1.5.</span> <span class="nav-text">Additional: Install Docker, Portainer, and Related Commands</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 

@@ -1,79 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>JavaScript 基础</title>
-    <url>/2025/07/02/js%E5%9F%BA%E7%A1%80/</url>
-    <content><![CDATA[JavaScript 基础总结（变量提升、严格模式）
-📌 变量与函数提升规则
-变量提升：按顺序执行，变量声明提升但赋值不会提升。
-函数提升：整个函数体提升到全局作用域顶部。
-优先级：函数提升 &gt; 变量提升。
-
-console.log(a); // undefinedvar a = 2;foo(); // 正常调用function foo() &#123;  console.log(&quot;函数提升成功&quot;);&#125;
-
-
-🚫 使用 use strict 严格模式作用：
-避免创建意外的全局变量；
-禁止使用未声明变量，防止内存泄漏；
-this 默认绑定到 undefined 而非 window。
-
-function foo() &#123;  &quot;use strict&quot;;  console.log(this.a); // ❌ TypeError&#125;var a = 2;foo(); // 严格模式下 this 是 undefined，无法读取 this.a
-
-
-(function() &#123;  &quot;use strict&quot;;  foo(); // 严格模式下调用函数则不影响默认绑定&#125;)();function foo() &#123;  console.log(this.a);&#125;var a = 2;
-
-
-]]></content>
-  </entry>
-  <entry>
-    <title>redis</title>
-    <url>/2025/04/16/redis/</url>
-    <content><![CDATA[目录redis-token缓存jwt跟redis存token的区别redis相关知识推荐
-redis-token缓存
-redis.js创建
-const redis = require(&quot;redis&quot;);// Redis 链接的配置内容const client = redis.createClient(&#123;  socket: &#123;    host: &#x27;192.168.64.2&#x27;,  // Redis 服务器地址    port: 6379,             // Redis 端口  &#125;,  password: &#x27;123456&#x27;        // Redis 密码&#125;);// 连接到 Redisclient.connect()  .then(() =&gt; &#123;    console.log(&#x27;Connected to Redis&#x27;);  &#125;)  .catch((err) =&gt; &#123;    console.error(&#x27;Redis connection failed:&#x27;, err);  &#125;);// 处理连接错误client.on(&quot;error&quot;, (err) =&gt; &#123;  console.error(&#x27;Redis error:&#x27;, err);&#125;);// 定义 Redis 操作方法const redisOps = &#123;  // 创建值  set: async (key, value, expiration = null) =&gt; &#123;    try &#123;      value = JSON.stringify(value);      if (Number.isInteger(expiration) &amp;&amp; expiration &gt; 0) &#123;        // 如果设置了有效时间并且是整数，使用 SETEX 命令        await client.setEx(key, expiration, value);      &#125; else &#123;        // 否则直接使用 SET 命令        await client.set(key, value);      &#125;      console.log(`Key &quot;$&#123;key&#125;&quot; set successfully with expiration: $&#123;expiration || &#x27;no expiration&#x27;&#125;`);    &#125; catch (err) &#123;      console.error(&#x27;Error setting value:&#x27;, err);    &#125;  &#125;,  // 删除值  del: async (key) =&gt; &#123;    try &#123;      await client.del(key);      console.log(`Key &quot;$&#123;key&#125;&quot; deleted successfully`);    &#125; catch (err) &#123;      console.error(&#x27;Error deleting key:&#x27;, err);    &#125;  &#125;,  // 获取值  get: async (key) =&gt; &#123;    const result = await client.get(key);    console.log(&#x27;99999=&#x27;, result)    try &#123;      return result; // 尝试解析为 JSON    &#125; catch (error) &#123;      // 如果不是 JSON 格式，直接返回原始值      console.warn(`Warning: Value for key &quot;$&#123;key&#125;&quot; is not JSON formatted.`);      return result;    &#125;  &#125;,  // 获取键的 TTL  ttl: async (key) =&gt; &#123;    try &#123;      const timeLeft = await client.ttl(key);      console.log(`Key &quot;$&#123;key&#125;&quot; has TTL: $&#123;timeLeft&#125;`);      return timeLeft;    &#125; catch (err) &#123;      console.error(&#x27;Error getting TTL:&#x27;, err);      return err;    &#125;  &#125;,&#125;;module.exports = redisOps;
-
-
-
-redis的使用
-
-
-const redisOps = require(&quot;./redis.js&quot;);const moment = require(&#x27;moment-timezone&#x27;);let token = jwt.sign(&#123; id: user.userid, username: user.username &#125;, secretKey, &#123; expiresIn: &#x27;1h&#x27; &#125;);await redisOps.set(user.userid.toString(), token, 60 * 60)
-
-//token校验const verifyToken = async (ctx, next) =&gt; &#123;    const userid = ctx.headers[&#x27;cookie&#x27;];    const match = userid.match(/userid=(\d+)/);    const userId = match ? match[1] : null;        if (!userId) &#123;        ctx.status = 401;        console.log(&#x27;No token provided&#x27;);        ctx.body = &#123; message: &#x27;No token provided&#x27; &#125;;        return;    &#125;    try &#123;        const startTime = moment(); // 记录开始时间        const getuserid = await redisOps.get(userId)        const endTime = moment(); // 记录结束时间        const duration = moment.duration(endTime.diff(startTime)); // 计算持续时间              console.log(`Request completed in $&#123;duration.asMilliseconds()&#125; ms`); // 以毫秒为单位输出耗时        if(getuserid)&#123;            await next();        &#125;else &#123;            throw err;        &#125;           &#125; catch (err) &#123;        console.log(&#x27;Token verification failed:&#x27;, err.message);        ctx.status = 401;        ctx.body = &#123; message: &#x27;Failed to authenticate token&#x27; &#125;;    &#125;&#125;;
-
-
-
-jwt跟redis存token的区别
-
-
-维度
-JWT
-Redis
-
-
-
-性能
-- 无需查询数据库或访问外部存储，验证速度较快- 适用于简单的身份验证场景
-- 需要与 Redis 服务器进行通信，可能会有网络延迟- 适用于复杂的会话管理和存储需求
-
-
-redis相关知识
-redis本质上是一个key-value类型的内存数据库，性能最快的key-value数据库。
-
-正常情况是把数据存储在数据库 ，数据库把数据存在磁盘。但越上层的存储器存储效率越高，内存位于磁盘之上。而redis是一款基于内存的存储系统，数据都存在内存里，所以从redis读取数据会比从数据库读取要快。
-
-内存有限，存储不了太多数据。出现故障时，用主从复制、哨兵法。集群就是一套完整的redis多机解决方案。他有效解决了单机redis的所有问题。当你在集群中为某个节点配置从机的时候，主从节点间同步就是主从复制。主节点挂掉之后，从节点的选取，内部逻辑与哨兵机制相似。
-
-支持发布&#x2F;订阅模式，可以作为一个简单而高效的轻量级消息代理，用于实现消息队列、实时通知等。
-
-
-推荐
-娱乐一下
-
-]]></content>
-  </entry>
-  <entry>
     <title>ELK安装流程</title>
     <url>/2025/04/11/ELK%E5%AE%89%E8%A3%85%E6%B5%81%E7%A8%8B/</url>
     <content><![CDATA[使用 Docker 安装 ELK Stack（ElasticSearch、Logstash、Kibana）
@@ -147,13 +74,51 @@ docker exec -u 0 -it some-kibana bash
 附：安装 Docker、Portainer 及相关命令sudo apt updatesudo apt install docker.io docker-composedocker -vsudo systemctl start dockersudo docker search portainerdocker pull portainer/portainersudo docker pull portainer/portainersudo docker run -d --name portainerUI -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock portainer/portainersudo docker start portainerUIsudo passwd root
 
 
-推荐
-娱乐一下
+
+
+
 
 ]]></content>
       <categories>
         <category>后端</category>
       </categories>
+  </entry>
+  <entry>
+    <title>H5与原生交互</title>
+    <url>/2025/07/04/H5%E4%B8%8E%E5%8E%9F%E7%94%9F%E4%BA%A4%E4%BA%92/</url>
+    <content><![CDATA[H5手机端日志工具(vconsole手机端)：&lt;script src=&quot;https://cdn.bootcdn.net/ajax/libs/vConsole/3.15.1/vconsole.min.js&quot;&gt;&lt;/script&gt;&lt;script&gt;  // 初始化 vConsole  var vConsole = new VConsole();  console.log(&#x27;vConsole is ready.&#x27;);&lt;/script&gt;
+
+第一种情况：传数据给原生端if (window.webkit != undefined) &#123;  //这是ios端定义的  window.webkit.messageHandlers.getUserInfo.postMessage(null);&#125; else &#123;  //这是android端定义的feedback  feedback.getUserInfo();&#125;if (window.webkit != undefined) &#123;  window.webkit.messageHandlers.feedback.postMessage(&#123;    title: &quot;测试分享的标题&quot;,    content: &quot;测试分享的内容&quot;,    url: &quot;https://github.com/maying1992&quot;,  &#125;);&#125; else &#123;  // try &#123;  //   result = feedback.getUserInfo();  // &#125; catch(err)&#123;  // &#125;  feedback.postMessage();&#125;
+
+第二种情况：获取原生端的数据created() &#123;  //window挂载  window.setUserInfo = this.setUserInfo;&#125;,setUserInfo(param) &#123;  const u = navigator.userAgent;  const isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端  const result = JSON.parse(param);  if (isiOS) &#123;    this.queryParams = result.userInfo.token;    //兼容原生端那边传过来的不统一值    if (      result.userInfo.userId == undefined ||      result.userInfo.userId == 0    ) &#123;      this.usrIdd = 0;    &#125; else &#123;      this.usrIdd = result.userInfo.userId;    &#125;    window.localStorage.setItem(&quot;lang&quot;, result.userInfo.language);  &#125; else &#123;    this.queryParams = result;    if (result.userId == undefined || result.userId == 0) &#123;      this.usrIdd = 0;    &#125; else &#123;      this.usrIdd = result.userId;    &#125;    window.localStorage.setItem(&quot;lang&quot;, result.language);  &#125;  this.$i18n.locale = localStorage.getItem(&quot;lang&quot;);  // let data = &#123;  //   &#x27;name&#x27; : &#x27;xiaoming&#x27;  // &#125;;  return localStorage.getItem(&quot;lang&quot;);&#125;
+
+当需要通过按钮跳转到app时：直接用 a 标签的 href 跳转，前提是原生应用定义了 myapp://*** 作为触发特定功能的URL，可参考 Instagram 的 H5 跳转 app 的竞品例子，instagram://**。一般跳不过去就是原生端不支持。
+]]></content>
+  </entry>
+  <entry>
+    <title>JavaScript 基础</title>
+    <url>/2025/07/02/js%E5%9F%BA%E7%A1%80/</url>
+    <content><![CDATA[JavaScript 基础总结（变量提升、严格模式）
+变量与函数提升规则
+变量提升：按顺序执行，变量声明提升但赋值不会提升。
+函数提升：整个函数体提升到全局作用域顶部。
+优先级：函数提升 &gt; 变量提升。
+
+console.log(a); // undefinedvar a = 2;foo(); // 正常调用function foo() &#123;  console.log(&quot;函数提升成功&quot;);&#125;
+
+
+使用 use strict 严格模式作用：
+避免创建意外的全局变量；
+禁止使用未声明变量，防止内存泄漏；
+this 默认绑定到 undefined 而非 window。
+
+function foo() &#123;  &quot;use strict&quot;;  console.log(this.a); // ❌ TypeError&#125;var a = 2;foo(); // 严格模式下 this 是 undefined，无法读取 this.a
+
+
+(function() &#123;  &quot;use strict&quot;;  foo(); // 严格模式下调用函数则不影响默认绑定&#125;)();function foo() &#123;  console.log(this.a);&#125;var a = 2;
+
+
+]]></content>
   </entry>
   <entry>
     <title>GitLab CI/CD</title>
@@ -210,8 +175,8 @@ http://localhost:8090/
 
 部署成功后，在 GitLab 的 CI&#x2F;CD Pipelines 页面可看到构建过程，在 Containers 页面会生成新容器，点击对应端口即可访问部署后的页面。
 
-推荐
-娱乐一下
+
+
 
 
 ]]></content>
@@ -272,6 +237,53 @@ http://localhost:8090/
 ]]></content>
   </entry>
   <entry>
+    <title>redis</title>
+    <url>/2025/04/16/redis/</url>
+    <content><![CDATA[目录redis-token缓存jwt跟redis存token的区别redis相关知识推荐
+redis-token缓存
+redis.js创建
+const redis = require(&quot;redis&quot;);// Redis 链接的配置内容const client = redis.createClient(&#123;  socket: &#123;    host: &#x27;192.168.64.2&#x27;,  // Redis 服务器地址    port: 6379,             // Redis 端口  &#125;,  password: &#x27;123456&#x27;        // Redis 密码&#125;);// 连接到 Redisclient.connect()  .then(() =&gt; &#123;    console.log(&#x27;Connected to Redis&#x27;);  &#125;)  .catch((err) =&gt; &#123;    console.error(&#x27;Redis connection failed:&#x27;, err);  &#125;);// 处理连接错误client.on(&quot;error&quot;, (err) =&gt; &#123;  console.error(&#x27;Redis error:&#x27;, err);&#125;);// 定义 Redis 操作方法const redisOps = &#123;  // 创建值  set: async (key, value, expiration = null) =&gt; &#123;    try &#123;      value = JSON.stringify(value);      if (Number.isInteger(expiration) &amp;&amp; expiration &gt; 0) &#123;        // 如果设置了有效时间并且是整数，使用 SETEX 命令        await client.setEx(key, expiration, value);      &#125; else &#123;        // 否则直接使用 SET 命令        await client.set(key, value);      &#125;      console.log(`Key &quot;$&#123;key&#125;&quot; set successfully with expiration: $&#123;expiration || &#x27;no expiration&#x27;&#125;`);    &#125; catch (err) &#123;      console.error(&#x27;Error setting value:&#x27;, err);    &#125;  &#125;,  // 删除值  del: async (key) =&gt; &#123;    try &#123;      await client.del(key);      console.log(`Key &quot;$&#123;key&#125;&quot; deleted successfully`);    &#125; catch (err) &#123;      console.error(&#x27;Error deleting key:&#x27;, err);    &#125;  &#125;,  // 获取值  get: async (key) =&gt; &#123;    const result = await client.get(key);    console.log(&#x27;99999=&#x27;, result)    try &#123;      return result; // 尝试解析为 JSON    &#125; catch (error) &#123;      // 如果不是 JSON 格式，直接返回原始值      console.warn(`Warning: Value for key &quot;$&#123;key&#125;&quot; is not JSON formatted.`);      return result;    &#125;  &#125;,  // 获取键的 TTL  ttl: async (key) =&gt; &#123;    try &#123;      const timeLeft = await client.ttl(key);      console.log(`Key &quot;$&#123;key&#125;&quot; has TTL: $&#123;timeLeft&#125;`);      return timeLeft;    &#125; catch (err) &#123;      console.error(&#x27;Error getting TTL:&#x27;, err);      return err;    &#125;  &#125;,&#125;;module.exports = redisOps;
+
+
+
+redis的使用
+
+
+const redisOps = require(&quot;./redis.js&quot;);const moment = require(&#x27;moment-timezone&#x27;);let token = jwt.sign(&#123; id: user.userid, username: user.username &#125;, secretKey, &#123; expiresIn: &#x27;1h&#x27; &#125;);await redisOps.set(user.userid.toString(), token, 60 * 60)
+
+//token校验const verifyToken = async (ctx, next) =&gt; &#123;    const userid = ctx.headers[&#x27;cookie&#x27;];    const match = userid.match(/userid=(\d+)/);    const userId = match ? match[1] : null;        if (!userId) &#123;        ctx.status = 401;        console.log(&#x27;No token provided&#x27;);        ctx.body = &#123; message: &#x27;No token provided&#x27; &#125;;        return;    &#125;    try &#123;        const startTime = moment(); // 记录开始时间        const getuserid = await redisOps.get(userId)        const endTime = moment(); // 记录结束时间        const duration = moment.duration(endTime.diff(startTime)); // 计算持续时间              console.log(`Request completed in $&#123;duration.asMilliseconds()&#125; ms`); // 以毫秒为单位输出耗时        if(getuserid)&#123;            await next();        &#125;else &#123;            throw err;        &#125;           &#125; catch (err) &#123;        console.log(&#x27;Token verification failed:&#x27;, err.message);        ctx.status = 401;        ctx.body = &#123; message: &#x27;Failed to authenticate token&#x27; &#125;;    &#125;&#125;;
+
+
+
+jwt跟redis存token的区别
+
+
+维度
+JWT
+Redis
+
+
+
+性能
+- 无需查询数据库或访问外部存储，验证速度较快- 适用于简单的身份验证场景
+- 需要与 Redis 服务器进行通信，可能会有网络延迟- 适用于复杂的会话管理和存储需求
+
+
+redis相关知识
+redis本质上是一个key-value类型的内存数据库，性能最快的key-value数据库。
+
+正常情况是把数据存储在数据库 ，数据库把数据存在磁盘。但越上层的存储器存储效率越高，内存位于磁盘之上。而redis是一款基于内存的存储系统，数据都存在内存里，所以从redis读取数据会比从数据库读取要快。
+
+内存有限，存储不了太多数据。出现故障时，用主从复制、哨兵法。集群就是一套完整的redis多机解决方案。他有效解决了单机redis的所有问题。当你在集群中为某个节点配置从机的时候，主从节点间同步就是主从复制。主节点挂掉之后，从节点的选取，内部逻辑与哨兵机制相似。
+
+支持发布&#x2F;订阅模式，可以作为一个简单而高效的轻量级消息代理，用于实现消息队列、实时通知等。
+
+
+
+
+]]></content>
+  </entry>
+  <entry>
     <title>《皮囊》感悟</title>
     <url>/2025/06/26/%E7%9A%AE%E5%9B%8A%E6%84%9F%E6%82%9F/</url>
     <content><![CDATA[阿太阿太倔强坚强，豁达的心态值得人学习。父亲最强大的地方就是娶了我的母亲。一个伟大的女人。真正的女人就是应该要积极乐观面对一切，用自己的双手打造自己想要的未来。
@@ -281,19 +293,6 @@ http://localhost:8090/
 其实最了解父亲的人是母亲，母亲知道父亲好面子，爱情不就是这样吗？你不用说，我懂，我懂你懂我，所以我们才会在一起这么久。
 张美丽从哪里跌倒，就从哪里爬起来。仿佛看见一个追求真爱，为爱为自己想要的东西不懈努力的人，虽说最终还是被迫性解放了自己，但她曾经的所作所为仍让我敬佩。
 舆论的力量是强大的，但比其而言，张美丽的内心力量更强大。
-]]></content>
-  </entry>
-  <entry>
-    <title>《当我谈跑步时，我谈些什么》读后感</title>
-    <url>/2025/06/26/%E5%BD%93%E6%88%91%E8%B0%88%E8%B7%91%E6%AD%A5%E6%97%B6/</url>
-    <content><![CDATA[《当我谈跑步时，我谈些什么》也就是看了这本书，才知道世界上会有另一个自己在做着自己喜欢的事情。看这本书之前，从没有看过村上君写的书。知道有这么一个火人，也知道那么多火书，但就是没怎么看过。可论及跑步呀，觉得能与之有所交流。一直跑下去，会不会就到月球上了呢？跑步并非为了长命百岁，而是在有限生命里让自己活得更轻松点罢了。
-惊喜于能发现村上君跑步时的想象力，天马行空我很喜欢，我也曾幻想过很多，也会跑着跑着就突然想起一句歌词，什么现在加快速度追幸福呀 blala……长跑需要耐力，但没有想象力可不行哟。当然前提是热爱跑步，一个不喜欢跑步的人，你说再多也无动于衷；一个热爱跑步的人，即使是雨天，也想要在停雨空隙去相遇另一个自己。人本孤独，但精神却能得到共鸣。
-想着未来一定会坚持跑下去，不管世界如何变化。自从有次在外一整天走了 30 公里，除了身体上晒伤的疼痛以外，我更喜欢的是精神世界的富足。没经历过，就没有话语权。可能我跟陈坤一样，是个悲观的极乐主义者，在世上积极活着，却也看透红尘。不以物喜，不以己悲。脉搏也降到一分钟 50 多次，看来还是很适合慢跑的。说这么多，主要还是兴趣使然。只要不限制我的自由，一切好说。
-想着来年，我也会参加马拉松，然后旁边的人都在为我加油，那该有多 happy。
-“我不是人，是一架纯粹的机器，所以什么也无须感觉，唯有向前奔跑。”
-极为像的一点就是我们都喜欢不停地奔跑，不是那种觉得自己快不行了就走几步，也不是适当的时候停下来看风景。可能每个人的见解不同。但我觉得能不停跑下去的人才是真正的王者。
-当抵达终点那一刻，会觉得怎么那么酷，一股自豪感涌上来，就好比中了彩票或是走了狗屎运。这是原则，亦是我的骄傲。
-噢对，好比尚三哥在终点等着我，然后我得意地笑了。
 ]]></content>
   </entry>
   <entry>
@@ -508,9 +507,25 @@ vue2 和 vue3 匿名插槽不一样  具名插槽使用方式不同：vue2 使�
 
 
 
-推荐
-娱乐一下
 
+
+
+
+
+
+]]></content>
+  </entry>
+  <entry>
+    <title>《当我谈跑步时，我谈些什么》读后感</title>
+    <url>/2025/06/26/%E5%BD%93%E6%88%91%E8%B0%88%E8%B7%91%E6%AD%A5%E6%97%B6/</url>
+    <content><![CDATA[《当我谈跑步时，我谈些什么》也就是看了这本书，才知道世界上会有另一个自己在做着自己喜欢的事情。看这本书之前，从没有看过村上君写的书。知道有这么一个火人，也知道那么多火书，但就是没怎么看过。可论及跑步呀，觉得能与之有所交流。一直跑下去，会不会就到月球上了呢？跑步并非为了长命百岁，而是在有限生命里让自己活得更轻松点罢了。
+惊喜于能发现村上君跑步时的想象力，天马行空我很喜欢，我也曾幻想过很多，也会跑着跑着就突然想起一句歌词，什么现在加快速度追幸福呀 blala……长跑需要耐力，但没有想象力可不行哟。当然前提是热爱跑步，一个不喜欢跑步的人，你说再多也无动于衷；一个热爱跑步的人，即使是雨天，也想要在停雨空隙去相遇另一个自己。人本孤独，但精神却能得到共鸣。
+想着未来一定会坚持跑下去，不管世界如何变化。自从有次在外一整天走了 30 公里，除了身体上晒伤的疼痛以外，我更喜欢的是精神世界的富足。没经历过，就没有话语权。可能我跟陈坤一样，是个悲观的极乐主义者，在世上积极活着，却也看透红尘。不以物喜，不以己悲。脉搏也降到一分钟 50 多次，看来还是很适合慢跑的。说这么多，主要还是兴趣使然。只要不限制我的自由，一切好说。
+想着来年，我也会参加马拉松，然后旁边的人都在为我加油，那该有多 happy。
+“我不是人，是一架纯粹的机器，所以什么也无须感觉，唯有向前奔跑。”
+极为像的一点就是我们都喜欢不停地奔跑，不是那种觉得自己快不行了就走几步，也不是适当的时候停下来看风景。可能每个人的见解不同。但我觉得能不停跑下去的人才是真正的王者。
+当抵达终点那一刻，会觉得怎么那么酷，一股自豪感涌上来，就好比中了彩票或是走了狗屎运。这是原则，亦是我的骄傲。
+噢对，好比尚三哥在终点等着我，然后我得意地笑了。
 ]]></content>
   </entry>
   <entry>
