@@ -1,6 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>ELK安装流程</title>
+    <url>/2025/04/11/ELK%E5%AE%89%E8%A3%85%E6%B5%81%E7%A8%8B/</url>
+    <content><![CDATA[使用 Docker 安装 ELK Stack（ElasticSearch、Logstash、Kibana）
+建议在 Docker 上安装，资源占用少。以下安装版本统一为 8.12.2，建议保持一致避免冲突。
+
+目录1、安装 ElasticSearch2、安装 Logstash3、安装 Kibana推荐
+
+1、安装 ElasticSearch
+拉取镜像：
+
+docker pull elasticsearch:8.12.2
+
+
+启动容器：
+
+docker run --name some-elasticsearch -p 9200:9200 -p 9300:9300 -e &quot;discovery.type=single-node&quot; -d elasticsearch:8.12.2
+
+
+进入容器内部：
+
+sudo docker exec -u 0 -it some-elasticsearch bash
+
+
+重启容器：
+
+docker restart some-elasticsearch
+
+
+2、安装 Logstash
+拉取镜像：
+
+docker pull docker.elastic.co/logstash/logstash:8.12.2
+
+
+启动容器：
+
+sudo docker run -it -p 5044:5044 -p 9600:9600 --name logstash -v /usr/share/logstash/piplines:/usr/share/logstash/config --privileged=true docker.elastic.co/logstash/logstash:8.12.2 /bin/bash
+
+
+使用 scp 命令将本机下载好的 jar 包（MySQL Connector）上传至虚拟机：
+
+scp &quot;/Users/Downloads/logstash-8.12.2/mysql-connector-j-8.4.0.jar&quot; 用户名@虚拟机IP:/home
+
+
+再将 jar 包从虚拟机移动到 logstash 容器中：
+
+docker cp ./mysql-connector-j-8.4.0.jar logstash:/usr/share/logstash
+
+
+进入容器内部：
+
+docker exec -u 0 -it logstash bash
+
+
+3、安装 Kibana
+拉取镜像：
+
+docker pull kibana:8.12.2
+
+
+启动容器：
+
+docker run --name some-kibana -p 9200:9200 -p 9300:9300 -e &quot;discovery.type=single-node&quot; -d elasticsearch:8.12.2
+
+
+进入容器：
+
+docker exec -u 0 -it some-kibana bash
+
+
+附：安装 Docker、Portainer 及相关命令sudo apt updatesudo apt install docker.io docker-composedocker -vsudo systemctl start dockersudo docker search portainerdocker pull portainer/portainersudo docker pull portainer/portainersudo docker run -d --name portainerUI -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock portainer/portainersudo docker start portainerUIsudo passwd root
+
+
+
+
+
+
+]]></content>
+      <categories>
+        <category>后端</category>
+      </categories>
+  </entry>
+  <entry>
     <title>H5与原生交互</title>
     <url>/2025/07/04/H5%E4%B8%8E%E5%8E%9F%E7%94%9F%E4%BA%A4%E4%BA%92/</url>
     <content><![CDATA[H5手机端日志工具(vconsole手机端)：&lt;script src=&quot;https://cdn.bootcdn.net/ajax/libs/vConsole/3.15.1/vconsole.min.js&quot;&gt;&lt;/script&gt;&lt;script&gt;  // 初始化 vConsole  var vConsole = new VConsole();  console.log(&#x27;vConsole is ready.&#x27;);&lt;/script&gt;
@@ -105,102 +188,6 @@ function foo() &#123;  &quot;use strict&quot;;  console.log(this.a); // ❌ Type
 ]]></content>
   </entry>
   <entry>
-    <title>ELK安装流程</title>
-    <url>/2025/04/11/ELK%E5%AE%89%E8%A3%85%E6%B5%81%E7%A8%8B/</url>
-    <content><![CDATA[使用 Docker 安装 ELK Stack（ElasticSearch、Logstash、Kibana）
-建议在 Docker 上安装，资源占用少。以下安装版本统一为 8.12.2，建议保持一致避免冲突。
-
-目录1、安装 ElasticSearch2、安装 Logstash3、安装 Kibana推荐
-
-1、安装 ElasticSearch
-拉取镜像：
-
-docker pull elasticsearch:8.12.2
-
-
-启动容器：
-
-docker run --name some-elasticsearch -p 9200:9200 -p 9300:9300 -e &quot;discovery.type=single-node&quot; -d elasticsearch:8.12.2
-
-
-进入容器内部：
-
-sudo docker exec -u 0 -it some-elasticsearch bash
-
-
-重启容器：
-
-docker restart some-elasticsearch
-
-
-2、安装 Logstash
-拉取镜像：
-
-docker pull docker.elastic.co/logstash/logstash:8.12.2
-
-
-启动容器：
-
-sudo docker run -it -p 5044:5044 -p 9600:9600 --name logstash -v /usr/share/logstash/piplines:/usr/share/logstash/config --privileged=true docker.elastic.co/logstash/logstash:8.12.2 /bin/bash
-
-
-使用 scp 命令将本机下载好的 jar 包（MySQL Connector）上传至虚拟机：
-
-scp &quot;/Users/Downloads/logstash-8.12.2/mysql-connector-j-8.4.0.jar&quot; 用户名@虚拟机IP:/home
-
-
-再将 jar 包从虚拟机移动到 logstash 容器中：
-
-docker cp ./mysql-connector-j-8.4.0.jar logstash:/usr/share/logstash
-
-
-进入容器内部：
-
-docker exec -u 0 -it logstash bash
-
-
-3、安装 Kibana
-拉取镜像：
-
-docker pull kibana:8.12.2
-
-
-启动容器：
-
-docker run --name some-kibana -p 9200:9200 -p 9300:9300 -e &quot;discovery.type=single-node&quot; -d elasticsearch:8.12.2
-
-
-进入容器：
-
-docker exec -u 0 -it some-kibana bash
-
-
-附：安装 Docker、Portainer 及相关命令sudo apt updatesudo apt install docker.io docker-composedocker -vsudo systemctl start dockersudo docker search portainerdocker pull portainer/portainersudo docker pull portainer/portainersudo docker run -d --name portainerUI -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock portainer/portainersudo docker start portainerUIsudo passwd root
-
-
-
-
-
-
-]]></content>
-      <categories>
-        <category>后端</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>初中英语教师资格作文课模版</title>
-    <url>/2025/07/14/%E5%88%9D%E4%B8%AD%E8%8B%B1%E8%AF%AD%E6%95%99%E8%B5%84%E4%BD%9C%E6%96%87%E6%A8%A1%E7%89%88/</url>
-    <content><![CDATA[开场问候Dear Judges, Now I’ll start the lesson. Good morning, Boys and girls. How are you today? Good? Fine? I’m fine, too. Before the class, Let’s sing a song together. If you can sing, sing along with me . “You are my sunshine, my only sunshine, you make me happy.” Do you feel better? Great, let’s start the lesson.At the beginning, I’ll show you a video, and you should try to answer the question: What can you see in the video? Who would like to try? Blair, please. You saw the girl had much fun. She had dinner and went shopping with friends. Thank you, Blair, you set a good example for us. You know so much about this topic. Do you want to learn more? Today, let’s learn a new lesson — How was your day off.
-导入OK, everyone, here is a passage. I’ll read it for you. You should listen carefully and tell me the main idea, OK? Here we go! …….OK, Please share your ideas. Jenny, you please. It talks about the Bermuda Triangle, where a number of planes and ships disappeared.Do you agree? I totally agree with her.
-PreBoys and girls, since we already know the content of the letter, Let’s look at the structure of the letter.There are 4 parts of it, right?The first one is to whom. We call it salutation&#x2F;ˌsalyəˈtāSH(ə)n&#x2F;, such as Hi Henry, Dear Lucy and so on. The second part is body part. You can write whatever you want. The third part, we often add complementary close&#x2F;wishes, such as ‘yours’, ‘sincerely’. The last part is from whom, we call it signature. Am I clear? So when we write a letter, we can imitate it. Brilliant!
-the first part is introduction. It’s a fun day last Saturday. The second part is main body, it’s about what they did in the morning, afternoon and so on. The third part is conclusion. So if we want to write out our everyday life, we can imitate this structure, OK?
-写前Before writing, let’s have a brainstorm. As Tom, what information can you write to reply to Nick’s letter? You can have a discussion in groups. 3 minutes for you. Stop! Who can try, this boy? You will write some activities during camping. Your ideas are wonderful. Bravo! Thank you.OK，I can see you all have many ideas. How about writing down your ideas with the structure we just learned. You have 2 minutes to design your outline.OK, time is up. Finished? I see all of you nod your heads. Very good!It’s time to finish the whole letter. While writing, you should pay attention to the grammar.We should use simple past tense to talk about the experience in the past.And for the signature, you should write”Tom”. If you have any problems, just raise your hands, and I will help you. Are you ready? Let’s do it.
-写后Have you finished your writing? Show me your hands. Well done. Next, go over your writing one more time and then exchange it with your group members.Try to check and correct the mistakes, got it? You have 2 minutes.Stop here.Who wants to share your writing? Cindy, please. Wow, good pronunciation. You state the story vividly. The logic is clear! OK, anyone else? Tony. Please. Oh, you want to present Tina’s article.Can you read it? Very good. Thank you, Tony. Guys, Let’s look at Tina’s work together. “Tom” went to a mountain for camping. I think her article is perfect. We can learn a lot from it. Boys and girls, you all did a good job!
-总结How time files! The class is almost over. Before ending our class, let’s have a summary. Who can summarize what we have learned this class? Fiona please. Very good. I hope you can apply what we have learned in your daily life so that we can improve our reading and speaking ability, right?Our homework is as follows: You should finish the exercise book and search for more information about ask your parents about their day off. Next class, we will share them together.
-Class is over, see you next time.
-]]></content>
-  </entry>
-  <entry>
     <title>redis</title>
     <url>/2025/04/16/redis/</url>
     <content><![CDATA[目录redis-token缓存jwt跟redis存token的区别redis相关知识推荐
@@ -276,38 +263,43 @@ redis本质上是一个key-value类型的内存数据库，性能最快的key-va
 ]]></content>
   </entry>
   <entry>
-    <title>初中英语教师资格语法课模版</title>
-    <url>/2025/07/11/%E5%88%9D%E4%B8%AD%E8%8B%B1%E8%AF%AD%E6%95%99%E8%B5%84%E8%AF%AD%E6%B3%95%E8%AF%BE%E6%A8%A1%E6%9D%BF/</url>
-    <content><![CDATA[Grammer开场问候Dear Judges, Now I’ll start the lesson. Good morning, Boys and girls. How are you today? Good? Fine? I’m fine, too. Before the class, Let’s sing a song together. If you can sing, sing along with me . “You are my sunshine, my only sunshine, you make me happy.” Do you feel better? Great, let’s start the lesson.
-导入基本跟上一篇一样，只是换了问题，根据材料的主题来问问题。比如：little prince and harry porter. Today, we’re going to learn a new grammar about it , the present perfect tense.
-PreNow boys and girls, let’s have a prediction according to the title and the conversation on your book. I will read for you.When you listen, think about this question: What’s the material mainly about? Try to think out as many answers as you can.(let’s begin,…..)OK, who wants to have a try?Justin, you please. The passage is about some books they have read. Nice try! Do you agree? OK, maybe you are right. You got the correct answer.
-WhileNow boys and girls, let’s have a prediction according to the title and the pictures on your book. Take a guess:What’s the passage mainly about? Try to think out as many answers as you can. OK, who wants to have a try?Justin, you please. The passage is about a cartoon Mickey Mouse. Nice try! Do you agree? OK, maybe you are right.Next, Let’s find out the truth in this passage.
-语法教学All right guys, it’s time to learn something new. Here are some sentences. (板书)Let’s look at the first one. Can you read it together? Yes,1……2…3….   Wonderful! It’s not difficult for you, right?Now, boys and girls, please try to find the similarity among these sentences? You can work in groups and share your ideas with each other. Here we go.So, did you find something in common? OK, who would like to try? Amanda, please. You have sharp eyes.Yes, they have the word “have&#x2F;has” and these are “yes&#x2F;no” questions.Yes, exactly!Now, let’s put all your views&#x2F;points together. Boys and girls, This is what we will learn today, the present perfect tense.We use it to talk about things that happened in the past but have a connection to the present in some way.As we can see, the main structure of this grammar is “has&#x2F;have done”, right? We often use “yet” in this grammar. But we should remind that normally the rules of past participle form are the same as the past form, such as live&#x2F;lived. However, there are some irregular verbs, such as, put&#x2F;put&#x2F;put, read&#x2F;read&#x2F;read. We make the negative sentences like this:”has&#x2F;have not done”.Clear? You are so smart!
-巩固practice makes perfect, so let’s do some exercises. Let’s “Fill in the blanks”. Now look at the Power Point. Please finish it as quickly as you can and we will check the answers later. Here we go.Have you finished? What’s your answer, Cindy? Have you found your pen yet?-No, I haven’t. Do you agree with Cindy? Good, next one? Mike? He has turned off the light! All right, I think you have mastered it.
+    <title>初中英语教师资格作文课模版</title>
+    <url>/2025/07/14/%E5%88%9D%E4%B8%AD%E8%8B%B1%E8%AF%AD%E6%95%99%E8%B5%84%E4%BD%9C%E6%96%87%E6%A8%A1%E7%89%88/</url>
+    <content><![CDATA[开场问候Dear Judges, Now I’ll start the lesson. Good morning, Boys and girls. How are you today? Good? Fine? I’m fine, too. Before the class, Let’s sing a song together. If you can sing, sing along with me . “You are my sunshine, my only sunshine, you make me happy.” Do you feel better? Great, let’s start the lesson.At the beginning, I’ll show you a video, and you should try to answer the question: What can you see in the video? Who would like to try? Blair, please. You saw the girl had much fun. She had dinner and went shopping with friends. Thank you, Blair, you set a good example for us. You know so much about this topic. Do you want to learn more? Today, let’s learn a new lesson — How was your day off.
+导入OK, everyone, here is a passage. I’ll read it for you. You should listen carefully and tell me the main idea, OK? Here we go! …….OK, Please share your ideas. Jenny, you please. It talks about the Bermuda Triangle, where a number of planes and ships disappeared.Do you agree? I totally agree with her.
+PreBoys and girls, since we already know the content of the letter, Let’s look at the structure of the letter.There are 4 parts of it, right?The first one is to whom. We call it salutation&#x2F;ˌsalyəˈtāSH(ə)n&#x2F;, such as Hi Henry, Dear Lucy and so on. The second part is body part. You can write whatever you want. The third part, we often add complementary close&#x2F;wishes, such as ‘yours’, ‘sincerely’. The last part is from whom, we call it signature. Am I clear? So when we write a letter, we can imitate it. Brilliant!
+the first part is introduction. It’s a fun day last Saturday. The second part is main body, it’s about what they did in the morning, afternoon and so on. The third part is conclusion. So if we want to write out our everyday life, we can imitate this structure, OK?
+写前Before writing, let’s have a brainstorm. As Tom, what information can you write to reply to Nick’s letter? You can have a discussion in groups. 3 minutes for you. Stop! Who can try, this boy? You will write some activities during camping. Your ideas are wonderful. Bravo! Thank you.OK，I can see you all have many ideas. How about writing down your ideas with the structure we just learned. You have 2 minutes to design your outline.OK, time is up. Finished? I see all of you nod your heads. Very good!It’s time to finish the whole letter. While writing, you should pay attention to the grammar.We should use simple past tense to talk about the experience in the past.And for the signature, you should write”Tom”. If you have any problems, just raise your hands, and I will help you. Are you ready? Let’s do it.
+写后Have you finished your writing? Show me your hands. Well done. Next, go over your writing one more time and then exchange it with your group members.Try to check and correct the mistakes, got it? You have 2 minutes.Stop here.Who wants to share your writing? Cindy, please. Wow, good pronunciation. You state the story vividly. The logic is clear! OK, anyone else? Tony. Please. Oh, you want to present Tina’s article.Can you read it? Very good. Thank you, Tony. Guys, Let’s look at Tina’s work together. “Tom” went to a mountain for camping. I think her article is perfect. We can learn a lot from it. Boys and girls, you all did a good job!
+总结How time files! The class is almost over. Before ending our class, let’s have a summary. Who can summarize what we have learned this class? Fiona please. Very good. I hope you can apply what we have learned in your daily life so that we can improve our reading and speaking ability, right?Our homework is as follows: You should finish the exercise book and search for more information about ask your parents about their day off. Next class, we will share them together.
+Class is over, see you next time.
+]]></content>
+  </entry>
+  <entry>
+    <title>初中英语教师资格语篇课模版</title>
+    <url>/2025/07/15/%E5%88%9D%E4%B8%AD%E8%8B%B1%E8%AF%AD%E6%95%99%E8%B5%84%E8%AF%AD%E7%AF%87%E8%AF%BE%E6%A8%A1%E6%9D%BF/</url>
+    <content><![CDATA[The intonation.（语调）Express the different feelings of the speaker.We often use the falling tone when we read a statement, a special question, an exclamatory or imperative sentence(祈使句、感叹句). We often use rising tone when we ask a Yes&#x2F;No question. We often use rising-falling tone to read an alternative question and a coordinate clause（选择疑问句、并列句）. There are two parts in a tag question（反义疑问句）. The first part is often in a falling tone and for second part, there are two cases. If we are not sure about the question, we often use a rising tone. If we are sure about that, we offen use a falling tone.We choose different intonations to express different feelings and moods.
+The word stress(单词重音)Read words more exactlyWhen we say a word with more than one syllable, some of the syllables need to be stressed.When we read two-syllable words, normally we stress the first syllable for nouns, and stress the second syllable for verbs. As for the multi-syllable words, we stress the third from the bottom.
+The sentence stress（句子重读）Draw attention to certain information.We usually stress the lexical words such as nouns, verbs, adjectives, adverbs and numbers. We don’t stress the function words such as a, the, is, of and so on. Besides, you can stress some information you want to emphasis.We should change it according to the situation and feelings of the speaker.
+The liaison&#x2F;ˈlēəˌzän,lēˈāˌzän&#x2F;&#x2F;Word linking.(连读)Speak English more fluently and naturally.In one sense group, we can read the two words together if the former word ends with a consonant&#x2F;ˈkänsənənt&#x2F;, a vowel or “r” sound, and the following word begins with a vowel. If the two words finish and start with the same consonant, we only read one of the consonants.The two words must be in one sense group.
+incomplete plosion&#x2F;‘pləʊʒ(ə)n&#x2F;（不完全爆破）Speak English more fluently and naturally.There are six plosive sounds &#x2F;t&#x2F; &#x2F;d&#x2F; &#x2F;p&#x2F; &#x2F;b&#x2F; &#x2F;k&#x2F; &#x2F;g&#x2F; in English.When two consonants of them are next to each other, we read the former sound silently.The two words must be in one sense group.
+Weak form(弱读)speak English more fluently and naturally.Some words often appear in a weak form such as function words, articles, auxiliary verbs and modal verbs.there are mainly three ways to change function words to weak forms. They are shortening, elision[ i’liʒən ] and vowel changed to schwa  [ʃwɑ:] sound.
+Assimilation(同化)We use it to speak English more fluently and naturally.As we can see, Two different sounds affect each other and become more alike.&#x2F;s+ j&#x2F; -&gt; &#x2F;F&#x2F;this year,&#x2F;d+j&#x2F; -&gt; &#x2F;d3&#x2F; would you
+Sense group(意群)We use it to make our expression more easily to understand.As we can see, a sentence may consists of several groups according to meaning or structure. Each group is called a sense group. It can be a word, a phrase, a clause. After a sense group, there should be a short pause.We should remind that we should change it according to the situation and feelings of the speaker.
+The pause(停顿)We use to speak English more fluently and naturally.As we can see, in a long sentence, we should pause several times according to the sense group. Normally, we pause based on meaning and grammatical structure.We should remind that there should be no pause in a sense group. Where to pause also depends on the situation and the feelings of the speaker.
+]]></content>
+  </entry>
+  <entry>
+    <title>初中英语教师资格面试模板（Reading）</title>
+    <url>/2025/07/09/%E5%88%9D%E4%B8%AD%E8%8B%B1%E8%AF%AD%E6%95%99%E8%B5%84%E9%9D%A2%E8%AF%95%E6%A8%A1%E6%9D%BF/</url>
+    <content><![CDATA[Reading&#x2F;Listening开场问候Dear Judges, Now I’ll start the lesson. Good morning, Boys and girls. How are you today? Good? Fine? I’m fine, too. Before the class, Let’s sing a song together. If you can sing, sing along with me . “You are my sunshine, my only sunshine, you make me happy.” Do you feel better? Great, let’s start the lesson.
+导入At the beginning, I’ll show you a video, and you should try to answer the question: What can you see in the video? Who would like to try? Blair, please. You see different cartoons, such as Snow White and Tom and Jerry.Thank you, Blair, you set a good example for us. You know so much about cartoons.Do you want to learn more? Today, let’s learn a new lesson — Cartoon.
+读前Before reading, To help you understand the passage better, let’s learn some words. Now, Look at the first one. Smart.Form example, Zhu Geliang is very smart and he can solve many problems. Can you understand now? Great! The next one cute. Look at the picture. What’s that? A cat. So cats are very cute and it’s very lovely. So cute means lovely. You are so cute. Cats are so cute. Birds are so cute, okay, wonderful How about the last one? Ivory. Here is a picture about ivory. It forms long teeth of elephants. Read after me, ivory, ivory. Well done! All of you did a good job.
+读中Now boys and girls, let’s have a prediction according to the title and the pictures on your book. Take a guess:What’s the passage mainly about? Try to think out as many answers as you can. OK, who wants to have a try?Justin, you please. The passage is about a cartoon Mickey Mouse. Nice try! Do you agree? OK, maybe you are right.Next, Let’s find out the truth in this passage.
+读后Let’s read it together.When you read, think about this question:What’s the passage mainly about? You should read quickly and check your prediction.Let’s begin.OK, guys, are you right? Wow, I heard John said he had the correct prediction.The passage tells us some information about Mickey Mouse. Oh, most of you are right! I am so proud of you.For the second time, you should read it carefully and catch some detail informations. After that, you should answer some true or false question. Okay? Let’s start. Time is up. The first one, It’s easy, right? Answer me together. It’s true. Then the second question. Lily, what’s your answer? It ’s false. Can you correct it ? Great. Thank you. The last one, boys come on. Eric please. It’s true.perfect.
+巩固We have done so many exercises.It’s time for fun. Let’s have a group discussion. Think about the topic: Introducing your favorite cartoon characters to group members. Work in group of 4 and discuss with your partners. Then show your work on the stage. You have 5 minutes to prepare.Are you ready? Go!  Time  is up. Which group goes first? Christina and your partners, please. Wow, your ideas are very creative and Your pronunciation is perfect.Let’s give them a big hand.
 总结How time files! The class is almost over. Before ending our class, let’s have a summary. Who can summarize what we have learned this class? Fiona please. Very good. I hope you can apply what we have learned in your daily life so that we can improve our reading and speaking ability, right?Our homework is as follows: You should finish the exercise book and search for more information about famous cartoons on the Internet. Next class, we will share them together.
 Class is over, see you next time.
-其他语法模版The simple present tense(一般现在时)the things or actions that happen regularly.“Verb to be” has three forms: am&#x2F;is&#x2F;are. “Verb to do” has two forms: do&#x2F;does.If the subject(主语) is first person or plural form, we should use do, if not, we use does.For the third singular form, normally we add s to the end, such as help&#x2F;helps. The second type is to add es, such as guess&#x2F;guesses. And the last type is to change y to i and add es, such as study&#x2F;studies.
- the simple past tense.(一般过去时)We use it to talk about the past events. (When)As we can see, “verb to be” has two forms:was&#x2F;were, and we have to the change the“verb to do” into past form, right? (Details)We should remind that normally we add ed&#x2F;d to the end, such as look&#x2F;looked,live&#x2F;lived. The second type is to double write the last letter and add ed, such asstop&#x2F;stopped. And the last type is to change y to i and add ed, such as study&#x2F;studied.There are also some irregular verbs, such as, put&#x2F;put, catch&#x2F;caught. 
-the simple future tense.(一般将来时中的will&#x2F;shall + do)We use it to talk about our intentions or make predictions. (When)As we can see, the main structure of this grammar is “will+do” , right?(Details)We should remind that We should use the original form of the verbs. We make thenegative sentence like this: “will not do”. If the subject is the first person, we canalso use ‘shall’ instead of ‘will’.
-the simple future tense.(一般将来时中的be going to + do)We use it to talk about things that happen in the future. (When)As we can see, the main structure of this grammar is “be going to do” , right?(Details)We should remind that We should use the original form of the verbs. We make thenegative sentence like this: “be not going to do”.
-the present progressive tense(现在进行时)We use it to talk about what people are doing or what’s going on. (When)As we can see, the main structure of this grammar is “be doing” , right? (Details)We should remind that “verb to be” has three forms: am&#x2F;is&#x2F;are.We make the negativesentences like this: “be not doing”.And we should change the verbs into ‘-ing’ form.Normally we add -ing to the end, such as look&#x2F;looking. The second type is to remove eand add -ing, such as write&#x2F;writing. And the last type is to double write the last letterand add -ing, such as get&#x2F;getting.
-the past progressive tense.(过去进行时)We use it to talk about the past events in certain time. (When)As we can see, the main structure of this grammar is “was&#x2F;were doing”, right? (Details)We should remind that we should change the verbs into -ing form. Normally we adding to the end, such as look&#x2F;looking. The second type is to remove ‘e’ and add “ing” ,such as write&#x2F;writing. And the last type is to double write the last letter and add ing,such as get&#x2F;getting. We make the negative sentences like this: “was&#x2F;were not doing”.
-the present perfect tense.（现在完成时）We use it to talk about things that happened in the past but have a connection to the present in some way.As we can see, the main structure of this grammar is “has&#x2F;have done”, right? We often use “yet” in this grammar. But we should remind that normally the rules of past participle form are the same as the past form, such as live&#x2F;lived. However, there are some irregular verbs, such as, put&#x2F;put&#x2F;put, read&#x2F;read&#x2F;read. We make the negative sentences like this:”has&#x2F;have not done”.
-the present passive voice.(一般现在时的被动语态)We use it to talk about the passive relationships between the subject and the object.(When)As we can see, the main structure of this grammar is “be+done”, right? (Details)We should remind that “verb to be” has three forms: am&#x2F;is&#x2F;are. We should use thepast participle form of transitive verbs. And there are some irregular verbs, such as,put&#x2F;put&#x2F;put, catch&#x2F;caught&#x2F;caught.We make the negative sentences like this: “be notdone”.
-the past passive voice.(一般过去时的被动语态)We use it to talk about the passive relationships between the subject and the object.(When)As we can see, the main structure of this grammar is “was&#x2F;were+done”, right? (Details)We should remind that we should use the past participle form of transitive verbs. Andthere are some irregular verbs, such as, put&#x2F;put&#x2F;put, catch&#x2F;caught&#x2F;caught.We make thenegative sentences like this: “w as&#x2F;were not done”.
-the attributive clause. （定语从句-名词之后出现）Describe the nouns more exactly.the relative pronouns(代词) should be used to link the main clause and the clause.They are ‘that&#x2F;which&#x2F;who&#x2F;whom&#x2F;whose’.’that&#x2F;which&#x2F;who’ can be used as subject(主语) or object(宾语) of a clause, ‘whom’ can be as object, whose can be as attributive(定语). ’That’ can be used to refer to the things or people, ‘which’ for things, ‘who&#x2F;whom’ for people.
-the objective clause.（宾语从句-谓语动词后面出现）express our thoughts more exactly.There are three kinds of objective clauses. The first one is with ‘that’, the second one is with ‘if&#x2F;whether’, the last one is with ‘wh-words’.The order of words in the objective clauses should be written in statements and the tense should be changed according to the main clause.
-The first conditional if.Talk about the things happen in certain condition.The main structure of this grammar is “First conditional if+will”(板书例句)The main clause is in the future tense. The clause is in the present tense.(主将从现) And the first conditional if can be put before or after the main clause.
-the imperative sentence.（祈使句）Ask for permission, order or warn sb (not) to do sth.The imperatives begin with the original form of the verbThe subject of the imperative is ‘you’ which is omitted. We make the negative sentences like this. “Don’t do sth”.
-There be sentences.we use it to Describe things or people.As we can see, The main structure of this grammar is There be something&#x2F;somebody in someplace&#x2F;sometime, right?But we should remind that “verb to be” has two forms: is&#x2F;are. We should change it according to the nouns after it. We make the negative sentences like this: “There is&#x2F; are not.”
-the nouns.(名词)Describe things or people.There are countable nouns and uncountable nouns, right?Countable nouns have two forms: the singular and the plural. Normally, we add s to the end, such as book&#x2F;books. The second type is to add es, such as class&#x2F;classes. And the last type is to change y to i and add es, such as family&#x2F;families. There are also some irregular nouns, such as man&#x2F;men, sheep&#x2F;sheep, child&#x2F;children.
-the comparatives.（比较级）Compare different objects or people.We usually add ‘er&#x2F;r’ to the end of adjectives or adverbs,  such as tall&#x2F;taller, slow&#x2F;slower, late&#x2F;later. And add ‘more’ before the multi-syllable words, such as ‘more beautiful’.There are some irregular changes, such as good&#x2F;better, bad&#x2F;worse.
-The superlatives.(最高级)Compare different objects or people.We usually add est&#x2F;st to the end of the adjectives or adverbs, such as tall&#x2F;tallest, slow&#x2F;slowest, late&#x2F;latest.And add ‘most’ before the words, such as most beautiful.There are some irregular changes, such as good&#x2F;best, bad&#x2F;worst. And we should add ‘the’ before the superlatives.
-Adverbs of frequency.(频率副词)Talk about how often we do things.There are always, usually, often, sometimes, hardly ever(seldom), never.If we put them in order, it will be like that always&gt;usually&gt;often&gt;sometimes&gt;hardly ever(seldom)&gt;never.
-The indefinite pronouns some and any.(普通不定代词)Refer to people or things.Normally some is used in statements(肯定句), any is used in negative statements or questions, right? They can both replace or modify the plural nouns and uncountable nouns.（可数名词复数以及不可数名词）If we want the answer to the question is yes, we can also use some in questions. For example, would you like some tea?
-The indefinite pronouns many and much.Refer to people or things.Many can replace or modify plural nouns, and much can replace or modify the uncountable nouns, right?We use “How many…” questions to ask about the plural nouns, and “How much…” question to ask about the uncountable nouns.
-the compound indefinite pronouns something, anything, nothing(复合不定代词)Refer to people or things.If the subject is something, anything… it is seen as singular(单数形式), right?We should put the adjectives after the indefinite pronouns. For example, something important.
-the modal verbs.(情态动词)Make inferences.(作出推断)The main structure of this grammar is “modal verbs + be”, right?Some modal verbs can be used for making inferences. They are must, can’t, could, may, might. We use must to show that we think something is probably true. And use may, might and could to show that we think something is possibly true. Use can’t to show that you are almost sure something is not true. 
 ]]></content>
   </entry>
   <entry>
@@ -491,6 +483,19 @@ vue2 和 vue3 匿名插槽不一样  具名插槽使用方式不同：vue2 使�
 ]]></content>
   </entry>
   <entry>
+    <title>《当我谈跑步时，我谈些什么》读后感</title>
+    <url>/2025/06/26/%E5%BD%93%E6%88%91%E8%B0%88%E8%B7%91%E6%AD%A5%E6%97%B6/</url>
+    <content><![CDATA[《当我谈跑步时，我谈些什么》也就是看了这本书，才知道世界上会有另一个自己在做着自己喜欢的事情。看这本书之前，从没有看过村上君写的书。知道有这么一个火人，也知道那么多火书，但就是没怎么看过。可论及跑步呀，觉得能与之有所交流。一直跑下去，会不会就到月球上了呢？跑步并非为了长命百岁，而是在有限生命里让自己活得更轻松点罢了。
+惊喜于能发现村上君跑步时的想象力，天马行空我很喜欢，我也曾幻想过很多，也会跑着跑着就突然想起一句歌词，什么现在加快速度追幸福呀 blala……长跑需要耐力，但没有想象力可不行哟。当然前提是热爱跑步，一个不喜欢跑步的人，你说再多也无动于衷；一个热爱跑步的人，即使是雨天，也想要在停雨空隙去相遇另一个自己。人本孤独，但精神却能得到共鸣。
+想着未来一定会坚持跑下去，不管世界如何变化。自从有次在外一整天走了 30 公里，除了身体上晒伤的疼痛以外，我更喜欢的是精神世界的富足。没经历过，就没有话语权。可能我跟陈坤一样，是个悲观的极乐主义者，在世上积极活着，却也看透红尘。不以物喜，不以己悲。脉搏也降到一分钟 50 多次，看来还是很适合慢跑的。说这么多，主要还是兴趣使然。只要不限制我的自由，一切好说。
+想着来年，我也会参加马拉松，然后旁边的人都在为我加油，那该有多 happy。
+“我不是人，是一架纯粹的机器，所以什么也无须感觉，唯有向前奔跑。”
+极为像的一点就是我们都喜欢不停地奔跑，不是那种觉得自己快不行了就走几步，也不是适当的时候停下来看风景。可能每个人的见解不同。但我觉得能不停跑下去的人才是真正的王者。
+当抵达终点那一刻，会觉得怎么那么酷，一股自豪感涌上来，就好比中了彩票或是走了狗屎运。这是原则，亦是我的骄傲。
+噢对，好比尚三哥在终点等着我，然后我得意地笑了。
+]]></content>
+  </entry>
+  <entry>
     <title>2022应届毕业生办理深户流程</title>
     <url>/2025/07/01/%E6%B7%B1%E6%88%B7%E5%8A%9E%E7%90%86%E6%B5%81%E7%A8%8B/</url>
     <content><![CDATA[
@@ -552,19 +557,6 @@ vue2 和 vue3 匿名插槽不一样  具名插槽使用方式不同：vue2 使�
 ]]></content>
   </entry>
   <entry>
-    <title>初中英语教师资格面试模板（Reading）</title>
-    <url>/2025/07/09/%E5%88%9D%E4%B8%AD%E8%8B%B1%E8%AF%AD%E6%95%99%E8%B5%84%E9%9D%A2%E8%AF%95%E6%A8%A1%E6%9D%BF/</url>
-    <content><![CDATA[Reading&#x2F;Listening开场问候Dear Judges, Now I’ll start the lesson. Good morning, Boys and girls. How are you today? Good? Fine? I’m fine, too. Before the class, Let’s sing a song together. If you can sing, sing along with me . “You are my sunshine, my only sunshine, you make me happy.” Do you feel better? Great, let’s start the lesson.
-导入At the beginning, I’ll show you a video, and you should try to answer the question: What can you see in the video? Who would like to try? Blair, please. You see different cartoons, such as Snow White and Tom and Jerry.Thank you, Blair, you set a good example for us. You know so much about cartoons.Do you want to learn more? Today, let’s learn a new lesson — Cartoon.
-读前Before reading, To help you understand the passage better, let’s learn some words. Now, Look at the first one. Smart.Form example, Zhu Geliang is very smart and he can solve many problems. Can you understand now? Great! The next one cute. Look at the picture. What’s that? A cat. So cats are very cute and it’s very lovely. So cute means lovely. You are so cute. Cats are so cute. Birds are so cute, okay, wonderful How about the last one? Ivory. Here is a picture about ivory. It forms long teeth of elephants. Read after me, ivory, ivory. Well done! All of you did a good job.
-读中Now boys and girls, let’s have a prediction according to the title and the pictures on your book. Take a guess:What’s the passage mainly about? Try to think out as many answers as you can. OK, who wants to have a try?Justin, you please. The passage is about a cartoon Mickey Mouse. Nice try! Do you agree? OK, maybe you are right.Next, Let’s find out the truth in this passage.
-读后Let’s read it together.When you read, think about this question:What’s the passage mainly about? You should read quickly and check your prediction.Let’s begin.OK, guys, are you right? Wow, I heard John said he had the correct prediction.The passage tells us some information about Mickey Mouse. Oh, most of you are right! I am so proud of you.For the second time, you should read it carefully and catch some detail informations. After that, you should answer some true or false question. Okay? Let’s start. Time is up. The first one, It’s easy, right? Answer me together. It’s true. Then the second question. Lily, what’s your answer? It ’s false. Can you correct it ? Great. Thank you. The last one, boys come on. Eric please. It’s true.perfect.
-巩固We have done so many exercises.It’s time for fun. Let’s have a group discussion. Think about the topic: Introducing your favorite cartoon characters to group members. Work in group of 4 and discuss with your partners. Then show your work on the stage. You have 5 minutes to prepare.Are you ready? Go!  Time  is up. Which group goes first? Christina and your partners, please. Wow, your ideas are very creative and Your pronunciation is perfect.Let’s give them a big hand.
-总结How time files! The class is almost over. Before ending our class, let’s have a summary. Who can summarize what we have learned this class? Fiona please. Very good. I hope you can apply what we have learned in your daily life so that we can improve our reading and speaking ability, right?Our homework is as follows: You should finish the exercise book and search for more information about famous cartoons on the Internet. Next class, we will share them together.
-Class is over, see you next time.
-]]></content>
-  </entry>
-  <entry>
     <title>遇见未知的自己</title>
     <url>/2025/06/30/%E9%81%87%E8%A7%81%E6%9C%AA%E7%9F%A5%E7%9A%84%E8%87%AA%E5%B7%B1/</url>
     <content><![CDATA[《遇见未知的自己》读书笔记何为“未知”？“自己”即指“真我”，从“我是谁”到后来的“从有到无”，整本书以若菱与一位智者老人的对话为主线，引申出许多深刻的生命观念。
@@ -616,16 +608,38 @@ Class is over, see you next time.
       </tags>
   </entry>
   <entry>
-    <title>《当我谈跑步时，我谈些什么》读后感</title>
-    <url>/2025/06/26/%E5%BD%93%E6%88%91%E8%B0%88%E8%B7%91%E6%AD%A5%E6%97%B6/</url>
-    <content><![CDATA[《当我谈跑步时，我谈些什么》也就是看了这本书，才知道世界上会有另一个自己在做着自己喜欢的事情。看这本书之前，从没有看过村上君写的书。知道有这么一个火人，也知道那么多火书，但就是没怎么看过。可论及跑步呀，觉得能与之有所交流。一直跑下去，会不会就到月球上了呢？跑步并非为了长命百岁，而是在有限生命里让自己活得更轻松点罢了。
-惊喜于能发现村上君跑步时的想象力，天马行空我很喜欢，我也曾幻想过很多，也会跑着跑着就突然想起一句歌词，什么现在加快速度追幸福呀 blala……长跑需要耐力，但没有想象力可不行哟。当然前提是热爱跑步，一个不喜欢跑步的人，你说再多也无动于衷；一个热爱跑步的人，即使是雨天，也想要在停雨空隙去相遇另一个自己。人本孤独，但精神却能得到共鸣。
-想着未来一定会坚持跑下去，不管世界如何变化。自从有次在外一整天走了 30 公里，除了身体上晒伤的疼痛以外，我更喜欢的是精神世界的富足。没经历过，就没有话语权。可能我跟陈坤一样，是个悲观的极乐主义者，在世上积极活着，却也看透红尘。不以物喜，不以己悲。脉搏也降到一分钟 50 多次，看来还是很适合慢跑的。说这么多，主要还是兴趣使然。只要不限制我的自由，一切好说。
-想着来年，我也会参加马拉松，然后旁边的人都在为我加油，那该有多 happy。
-“我不是人，是一架纯粹的机器，所以什么也无须感觉，唯有向前奔跑。”
-极为像的一点就是我们都喜欢不停地奔跑，不是那种觉得自己快不行了就走几步，也不是适当的时候停下来看风景。可能每个人的见解不同。但我觉得能不停跑下去的人才是真正的王者。
-当抵达终点那一刻，会觉得怎么那么酷，一股自豪感涌上来，就好比中了彩票或是走了狗屎运。这是原则，亦是我的骄傲。
-噢对，好比尚三哥在终点等着我，然后我得意地笑了。
+    <title>初中英语教师资格语法课模版</title>
+    <url>/2025/07/11/%E5%88%9D%E4%B8%AD%E8%8B%B1%E8%AF%AD%E6%95%99%E8%B5%84%E8%AF%AD%E6%B3%95%E8%AF%BE%E6%A8%A1%E6%9D%BF/</url>
+    <content><![CDATA[Grammer开场问候Dear Judges, Now I’ll start the lesson. Good morning, Boys and girls. How are you today? Good? Fine? I’m fine, too. Before the class, Let’s sing a song together. If you can sing, sing along with me . “You are my sunshine, my only sunshine, you make me happy.” Do you feel better? Great, let’s start the lesson.
+导入基本跟上一篇一样，只是换了问题，根据材料的主题来问问题。比如：little prince and harry porter. Today, we’re going to learn a new grammar about it , the present perfect tense.
+PreNow boys and girls, let’s have a prediction according to the title and the conversation on your book. I will read for you.When you listen, think about this question: What’s the material mainly about? Try to think out as many answers as you can.(let’s begin,…..)OK, who wants to have a try?Justin, you please. The passage is about some books they have read. Nice try! Do you agree? OK, maybe you are right. You got the correct answer.
+WhileNow boys and girls, let’s have a prediction according to the title and the pictures on your book. Take a guess:What’s the passage mainly about? Try to think out as many answers as you can. OK, who wants to have a try?Justin, you please. The passage is about a cartoon Mickey Mouse. Nice try! Do you agree? OK, maybe you are right.Next, Let’s find out the truth in this passage.
+语法教学All right guys, it’s time to learn something new. Here are some sentences. (板书)Let’s look at the first one. Can you read it together? Yes,1……2…3….   Wonderful! It’s not difficult for you, right?Now, boys and girls, please try to find the similarity among these sentences? You can work in groups and share your ideas with each other. Here we go.So, did you find something in common? OK, who would like to try? Amanda, please. You have sharp eyes.Yes, they have the word “have&#x2F;has” and these are “yes&#x2F;no” questions.Yes, exactly!Now, let’s put all your views&#x2F;points together. Boys and girls, This is what we will learn today, the present perfect tense.We use it to talk about things that happened in the past but have a connection to the present in some way.As we can see, the main structure of this grammar is “has&#x2F;have done”, right? We often use “yet” in this grammar. But we should remind that normally the rules of past participle form are the same as the past form, such as live&#x2F;lived. However, there are some irregular verbs, such as, put&#x2F;put&#x2F;put, read&#x2F;read&#x2F;read. We make the negative sentences like this:”has&#x2F;have not done”.Clear? You are so smart!
+巩固practice makes perfect, so let’s do some exercises. Let’s “Fill in the blanks”. Now look at the Power Point. Please finish it as quickly as you can and we will check the answers later. Here we go.Have you finished? What’s your answer, Cindy? Have you found your pen yet?-No, I haven’t. Do you agree with Cindy? Good, next one? Mike? He has turned off the light! All right, I think you have mastered it.
+总结How time files! The class is almost over. Before ending our class, let’s have a summary. Who can summarize what we have learned this class? Fiona please. Very good. I hope you can apply what we have learned in your daily life so that we can improve our reading and speaking ability, right?Our homework is as follows: You should finish the exercise book and search for more information about famous cartoons on the Internet. Next class, we will share them together.
+Class is over, see you next time.
+其他语法模版The simple present tense(一般现在时)the things or actions that happen regularly.“Verb to be” has three forms: am&#x2F;is&#x2F;are. “Verb to do” has two forms: do&#x2F;does.If the subject(主语) is first person or plural form, we should use do, if not, we use does.For the third singular form, normally we add s to the end, such as help&#x2F;helps. The second type is to add es, such as guess&#x2F;guesses. And the last type is to change y to i and add es, such as study&#x2F;studies.
+ the simple past tense.(一般过去时)We use it to talk about the past events. (When)As we can see, “verb to be” has two forms:was&#x2F;were, and we have to the change the“verb to do” into past form, right? (Details)We should remind that normally we add ed&#x2F;d to the end, such as look&#x2F;looked,live&#x2F;lived. The second type is to double write the last letter and add ed, such asstop&#x2F;stopped. And the last type is to change y to i and add ed, such as study&#x2F;studied.There are also some irregular verbs, such as, put&#x2F;put, catch&#x2F;caught. 
+the simple future tense.(一般将来时中的will&#x2F;shall + do)We use it to talk about our intentions or make predictions. (When)As we can see, the main structure of this grammar is “will+do” , right?(Details)We should remind that We should use the original form of the verbs. We make thenegative sentence like this: “will not do”. If the subject is the first person, we canalso use ‘shall’ instead of ‘will’.
+the simple future tense.(一般将来时中的be going to + do)We use it to talk about things that happen in the future. (When)As we can see, the main structure of this grammar is “be going to do” , right?(Details)We should remind that We should use the original form of the verbs. We make thenegative sentence like this: “be not going to do”.
+the present progressive tense(现在进行时)We use it to talk about what people are doing or what’s going on. (When)As we can see, the main structure of this grammar is “be doing” , right? (Details)We should remind that “verb to be” has three forms: am&#x2F;is&#x2F;are.We make the negativesentences like this: “be not doing”.And we should change the verbs into ‘-ing’ form.Normally we add -ing to the end, such as look&#x2F;looking. The second type is to remove eand add -ing, such as write&#x2F;writing. And the last type is to double write the last letterand add -ing, such as get&#x2F;getting.
+the past progressive tense.(过去进行时)We use it to talk about the past events in certain time. (When)As we can see, the main structure of this grammar is “was&#x2F;were doing”, right? (Details)We should remind that we should change the verbs into -ing form. Normally we adding to the end, such as look&#x2F;looking. The second type is to remove ‘e’ and add “ing” ,such as write&#x2F;writing. And the last type is to double write the last letter and add ing,such as get&#x2F;getting. We make the negative sentences like this: “was&#x2F;were not doing”.
+the present perfect tense.（现在完成时）We use it to talk about things that happened in the past but have a connection to the present in some way.As we can see, the main structure of this grammar is “has&#x2F;have done”, right? We often use “yet” in this grammar. But we should remind that normally the rules of past participle form are the same as the past form, such as live&#x2F;lived. However, there are some irregular verbs, such as, put&#x2F;put&#x2F;put, read&#x2F;read&#x2F;read. We make the negative sentences like this:”has&#x2F;have not done”.
+the present passive voice.(一般现在时的被动语态)We use it to talk about the passive relationships between the subject and the object.(When)As we can see, the main structure of this grammar is “be+done”, right? (Details)We should remind that “verb to be” has three forms: am&#x2F;is&#x2F;are. We should use thepast participle form of transitive verbs. And there are some irregular verbs, such as,put&#x2F;put&#x2F;put, catch&#x2F;caught&#x2F;caught.We make the negative sentences like this: “be notdone”.
+the past passive voice.(一般过去时的被动语态)We use it to talk about the passive relationships between the subject and the object.(When)As we can see, the main structure of this grammar is “was&#x2F;were+done”, right? (Details)We should remind that we should use the past participle form of transitive verbs. Andthere are some irregular verbs, such as, put&#x2F;put&#x2F;put, catch&#x2F;caught&#x2F;caught.We make thenegative sentences like this: “w as&#x2F;were not done”.
+the attributive clause. （定语从句-名词之后出现）Describe the nouns more exactly.the relative pronouns(代词) should be used to link the main clause and the clause.They are ‘that&#x2F;which&#x2F;who&#x2F;whom&#x2F;whose’.’that&#x2F;which&#x2F;who’ can be used as subject(主语) or object(宾语) of a clause, ‘whom’ can be as object, whose can be as attributive(定语). ’That’ can be used to refer to the things or people, ‘which’ for things, ‘who&#x2F;whom’ for people.
+the objective clause.（宾语从句-谓语动词后面出现）express our thoughts more exactly.There are three kinds of objective clauses. The first one is with ‘that’, the second one is with ‘if&#x2F;whether’, the last one is with ‘wh-words’.The order of words in the objective clauses should be written in statements and the tense should be changed according to the main clause.
+The first conditional if.Talk about the things happen in certain condition.The main structure of this grammar is “First conditional if+will”(板书例句)The main clause is in the future tense. The clause is in the present tense.(主将从现) And the first conditional if can be put before or after the main clause.
+the imperative sentence.（祈使句）Ask for permission, order or warn sb (not) to do sth.The imperatives begin with the original form of the verbThe subject of the imperative is ‘you’ which is omitted. We make the negative sentences like this. “Don’t do sth”.
+There be sentences.we use it to Describe things or people.As we can see, The main structure of this grammar is There be something&#x2F;somebody in someplace&#x2F;sometime, right?But we should remind that “verb to be” has two forms: is&#x2F;are. We should change it according to the nouns after it. We make the negative sentences like this: “There is&#x2F; are not.”
+the nouns.(名词)Describe things or people.There are countable nouns and uncountable nouns, right?Countable nouns have two forms: the singular and the plural. Normally, we add s to the end, such as book&#x2F;books. The second type is to add es, such as class&#x2F;classes. And the last type is to change y to i and add es, such as family&#x2F;families. There are also some irregular nouns, such as man&#x2F;men, sheep&#x2F;sheep, child&#x2F;children.
+the comparatives.（比较级）Compare different objects or people.We usually add ‘er&#x2F;r’ to the end of adjectives or adverbs,  such as tall&#x2F;taller, slow&#x2F;slower, late&#x2F;later. And add ‘more’ before the multi-syllable words, such as ‘more beautiful’.There are some irregular changes, such as good&#x2F;better, bad&#x2F;worse.
+The superlatives.(最高级)Compare different objects or people.We usually add est&#x2F;st to the end of the adjectives or adverbs, such as tall&#x2F;tallest, slow&#x2F;slowest, late&#x2F;latest.And add ‘most’ before the words, such as most beautiful.There are some irregular changes, such as good&#x2F;best, bad&#x2F;worst. And we should add ‘the’ before the superlatives.
+Adverbs of frequency.(频率副词)Talk about how often we do things.There are always, usually, often, sometimes, hardly ever(seldom), never.If we put them in order, it will be like that always&gt;usually&gt;often&gt;sometimes&gt;hardly ever(seldom)&gt;never.
+The indefinite pronouns some and any.(普通不定代词)Refer to people or things.Normally some is used in statements(肯定句), any is used in negative statements or questions, right? They can both replace or modify the plural nouns and uncountable nouns.（可数名词复数以及不可数名词）If we want the answer to the question is yes, we can also use some in questions. For example, would you like some tea?
+The indefinite pronouns many and much.Refer to people or things.Many can replace or modify plural nouns, and much can replace or modify the uncountable nouns, right?We use “How many…” questions to ask about the plural nouns, and “How much…” question to ask about the uncountable nouns.
+the compound indefinite pronouns something, anything, nothing(复合不定代词)Refer to people or things.If the subject is something, anything… it is seen as singular(单数形式), right?We should put the adjectives after the indefinite pronouns. For example, something important.
+the modal verbs.(情态动词)Make inferences.(作出推断)The main structure of this grammar is “modal verbs + be”, right?Some modal verbs can be used for making inferences. They are must, can’t, could, may, might. We use must to show that we think something is probably true. And use may, might and could to show that we think something is possibly true. Use can’t to show that you are almost sure something is not true. 
 ]]></content>
   </entry>
 </search>
