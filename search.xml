@@ -151,31 +151,14 @@ http://localhost:8090/
       </tags>
   </entry>
   <entry>
-    <title>JavaScript 基础</title>
-    <url>/2025/07/02/js%E5%9F%BA%E7%A1%80/</url>
-    <content><![CDATA[JavaScript 基础总结（变量提升、严格模式）
-变量与函数提升规则
-变量提升：按顺序执行，变量声明提升但赋值不会提升。
-函数提升：整个函数体提升到全局作用域顶部。
-优先级：函数提升 &gt; 变量提升。
-
-console.log(a); // undefinedvar a = 2;foo(); // 正常调用function foo() &#123;  console.log(&quot;函数提升成功&quot;);&#125;
-
-
-使用 use strict 严格模式作用：
-避免创建意外的全局变量；
-禁止使用未声明变量，防止内存泄漏；
-this 默认绑定到 undefined 而非 window。
-
-function foo() &#123;  &quot;use strict&quot;;  console.log(this.a); // ❌ TypeError&#125;var a = 2;foo(); // 严格模式下 this 是 undefined，无法读取 this.a
-
-
-(function() &#123;  &quot;use strict&quot;;  foo(); // 严格模式下调用函数则不影响默认绑定&#125;)();function foo() &#123;  console.log(this.a);&#125;var a = 2;
-
-
+    <title>聊聊Node RPC</title>
+    <url>/2025/07/16/node%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%E7%82%B9/</url>
+    <content><![CDATA[什么是序列化在 TCP 通道里传输的数据只能是二进制形式的，所以将数据结构或对象转化成二进制的形式就叫序列化。反过来就叫反序列化，他们之间的规则就叫协议。
+RPC是什么全称是Remote Procedure Call， 中文名字叫远程过程调用。大部份的 RPC 是基于TCP的。具体实现流程如下：
+1、前端通过 Proxy 代理调用相应的接口, Proxy 将 RPC 的服务名，方法名，参数等信息转换成 RPC Request 对象，交给 RPC 框架2、RPC 框架通过 RPC 协议将 RPC Request 对象序列化成二进制形式3、RPC 通过 TCP 通道把二进制数据传递给后端4、后端将二进制数据反序列化成 RPC Request 对象5、后端将反序列化后的数据对应到自己写的方法内，传入参数，获取数据，将获取后的数据进行封装，封装成 RPC Response 交给 RPC 框架6、RPC 框架通过 RPC 协议将 RPC Response 对象序列化成二进制形式, 通过 TCP 通道传递给前端6、前端将收到的二进制数据反序列化成 RPC response 对象，将结果通过 Proxy 返回给业务代码
 ]]></content>
       <categories>
-        <category>前端</category>
+        <category>后端</category>
       </categories>
   </entry>
   <entry>
@@ -275,34 +258,6 @@ redis本质上是一个key-value类型的内存数据库，性能最快的key-va
       </categories>
   </entry>
   <entry>
-    <title>聊聊Node RPC</title>
-    <url>/2025/07/16/node%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%E7%82%B9/</url>
-    <content><![CDATA[什么是序列化在 TCP 通道里传输的数据只能是二进制形式的，所以将数据结构或对象转化成二进制的形式就叫序列化。反过来就叫反序列化，他们之间的规则就叫协议。
-RPC是什么全称是Remote Procedure Call， 中文名字叫远程过程调用。大部份的 RPC 是基于TCP的。具体实现流程如下：
-1、前端通过 Proxy 代理调用相应的接口, Proxy 将 RPC 的服务名，方法名，参数等信息转换成 RPC Request 对象，交给 RPC 框架2、RPC 框架通过 RPC 协议将 RPC Request 对象序列化成二进制形式3、RPC 通过 TCP 通道把二进制数据传递给后端4、后端将二进制数据反序列化成 RPC Request 对象5、后端将反序列化后的数据对应到自己写的方法内，传入参数，获取数据，将获取后的数据进行封装，封装成 RPC Response 交给 RPC 框架6、RPC 框架通过 RPC 协议将 RPC Response 对象序列化成二进制形式, 通过 TCP 通道传递给前端6、前端将收到的二进制数据反序列化成 RPC response 对象，将结果通过 Proxy 返回给业务代码
-]]></content>
-      <categories>
-        <category>后端</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>初中英语教师资格语篇课模版</title>
-    <url>/2025/07/15/%E5%88%9D%E4%B8%AD%E8%8B%B1%E8%AF%AD%E6%95%99%E8%B5%84%E8%AF%AD%E7%AF%87%E8%AF%BE%E6%A8%A1%E6%9D%BF/</url>
-    <content><![CDATA[The intonation.（语调）Express the different feelings of the speaker.We often use the falling tone when we read a statement, a special question, an exclamatory or imperative sentence(祈使句、感叹句). We often use rising tone when we ask a Yes&#x2F;No question. We often use rising-falling tone to read an alternative question and a coordinate clause（选择疑问句、并列句）. There are two parts in a tag question（反义疑问句）. The first part is often in a falling tone and for second part, there are two cases. If we are not sure about the question, we often use a rising tone. If we are sure about that, we offen use a falling tone.We choose different intonations to express different feelings and moods.
-The word stress(单词重音)Read words more exactlyWhen we say a word with more than one syllable, some of the syllables need to be stressed.When we read two-syllable words, normally we stress the first syllable for nouns, and stress the second syllable for verbs. As for the multi-syllable words, we stress the third from the bottom.
-The sentence stress（句子重读）Draw attention to certain information.We usually stress the lexical words such as nouns, verbs, adjectives, adverbs and numbers. We don’t stress the function words such as a, the, is, of and so on. Besides, you can stress some information you want to emphasis.We should change it according to the situation and feelings of the speaker.
-The liaison&#x2F;ˈlēəˌzän,lēˈāˌzän&#x2F;&#x2F;Word linking.(连读)Speak English more fluently and naturally.In one sense group, we can read the two words together if the former word ends with a consonant&#x2F;ˈkänsənənt&#x2F;, a vowel or “r” sound, and the following word begins with a vowel. If the two words finish and start with the same consonant, we only read one of the consonants.The two words must be in one sense group.
-incomplete plosion&#x2F;‘pləʊʒ(ə)n&#x2F;（不完全爆破）Speak English more fluently and naturally.There are six plosive sounds &#x2F;t&#x2F; &#x2F;d&#x2F; &#x2F;p&#x2F; &#x2F;b&#x2F; &#x2F;k&#x2F; &#x2F;g&#x2F; in English.When two consonants of them are next to each other, we read the former sound silently.The two words must be in one sense group.
-Weak form(弱读)speak English more fluently and naturally.Some words often appear in a weak form such as function words, articles, auxiliary verbs and modal verbs.there are mainly three ways to change function words to weak forms. They are shortening, elision[ i’liʒən ] and vowel changed to schwa  [ʃwɑ:] sound.
-Assimilation(同化)We use it to speak English more fluently and naturally.As we can see, Two different sounds affect each other and become more alike.&#x2F;s+ j&#x2F; -&gt; &#x2F;F&#x2F;this year,&#x2F;d+j&#x2F; -&gt; &#x2F;d3&#x2F; would you
-Sense group(意群)We use it to make our expression more easily to understand.As we can see, a sentence may consists of several groups according to meaning or structure. Each group is called a sense group. It can be a word, a phrase, a clause. After a sense group, there should be a short pause.We should remind that we should change it according to the situation and feelings of the speaker.
-The pause(停顿)We use to speak English more fluently and naturally.As we can see, in a long sentence, we should pause several times according to the sense group. Normally, we pause based on meaning and grammatical structure.We should remind that there should be no pause in a sense group. Where to pause also depends on the situation and the feelings of the speaker.
-]]></content>
-      <categories>
-        <category>教资</category>
-      </categories>
-  </entry>
-  <entry>
     <title>ReactNative自定义滑动条</title>
     <url>/2025/07/22/ReactNative%E8%87%AA%E5%AE%9A%E4%B9%89%E6%BB%91%E5%8A%A8%E6%9D%A1/</url>
     <content><![CDATA[测试、UI要求的会比较高，比如滑动图标改成自定义图片等，所以传统的@react-native-community&#x2F;slider已经不能满足所需，所以采取自定义形式，在网上找了很久才发现的一个宝藏依赖：https://github.com/miblanchard/react-native-slider
@@ -316,6 +271,50 @@ The pause(停顿)We use to speak English more fluently and naturally.As we can s
 ]]></content>
       <categories>
         <category>前端</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>JavaScript 基础</title>
+    <url>/2025/07/02/js%E5%9F%BA%E7%A1%80/</url>
+    <content><![CDATA[JavaScript 基础总结（变量提升、严格模式）
+变量与函数提升规则
+变量提升：按顺序执行，变量声明提升但赋值不会提升。
+函数提升：整个函数体提升到全局作用域顶部。
+优先级：函数提升 &gt; 变量提升。
+
+console.log(a); // undefinedvar a = 2;foo(); // 正常调用function foo() &#123;  console.log(&quot;函数提升成功&quot;);&#125;
+
+
+使用 use strict 严格模式作用：
+避免创建意外的全局变量；
+禁止使用未声明变量，防止内存泄漏；
+this 默认绑定到 undefined 而非 window。
+
+function foo() &#123;  &quot;use strict&quot;;  console.log(this.a); // ❌ TypeError&#125;var a = 2;foo(); // 严格模式下 this 是 undefined，无法读取 this.a
+
+
+(function() &#123;  &quot;use strict&quot;;  foo(); // 严格模式下调用函数则不影响默认绑定&#125;)();function foo() &#123;  console.log(this.a);&#125;var a = 2;
+
+
+]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>初中英语教师资格作文课模版</title>
+    <url>/2025/07/14/%E5%88%9D%E4%B8%AD%E8%8B%B1%E8%AF%AD%E6%95%99%E8%B5%84%E4%BD%9C%E6%96%87%E6%A8%A1%E7%89%88/</url>
+    <content><![CDATA[开场问候Dear Judges, Now I’ll start the lesson. Good morning, Boys and girls. How are you today? Good? Fine? I’m fine, too. Before the class, Let’s sing a song together. If you can sing, sing along with me . “You are my sunshine, my only sunshine, you make me happy.” Do you feel better? Great, let’s start the lesson.At the beginning, I’ll show you a video, and you should try to answer the question: What can you see in the video? Who would like to try? Blair, please. You saw the girl had much fun. She had dinner and went shopping with friends. Thank you, Blair, you set a good example for us. You know so much about this topic. Do you want to learn more? Today, let’s learn a new lesson — How was your day off.
+导入OK, everyone, here is a passage. I’ll read it for you. You should listen carefully and tell me the main idea, OK? Here we go! …….OK, Please share your ideas. Jenny, you please. It talks about the Bermuda Triangle, where a number of planes and ships disappeared.Do you agree? I totally agree with her.
+PreBoys and girls, since we already know the content of the letter, Let’s look at the structure of the letter.There are 4 parts of it, right?The first one is to whom. We call it salutation&#x2F;ˌsalyəˈtāSH(ə)n&#x2F;, such as Hi Henry, Dear Lucy and so on. The second part is body part. You can write whatever you want. The third part, we often add complementary close&#x2F;wishes, such as ‘yours’, ‘sincerely’. The last part is from whom, we call it signature. Am I clear? So when we write a letter, we can imitate it. Brilliant!
+the first part is introduction. It’s a fun day last Saturday. The second part is main body, it’s about what they did in the morning, afternoon and so on. The third part is conclusion. So if we want to write out our everyday life, we can imitate this structure, OK?
+写前Before writing, let’s have a brainstorm. As Tom, what information can you write to reply to Nick’s letter? You can have a discussion in groups. 3 minutes for you. Stop! Who can try, this boy? You will write some activities during camping. Your ideas are wonderful. Bravo! Thank you.OK，I can see you all have many ideas. How about writing down your ideas with the structure we just learned. You have 2 minutes to design your outline.OK, time is up. Finished? I see all of you nod your heads. Very good!It’s time to finish the whole letter. While writing, you should pay attention to the grammar.We should use simple past tense to talk about the experience in the past.And for the signature, you should write”Tom”. If you have any problems, just raise your hands, and I will help you. Are you ready? Let’s do it.
+写后Have you finished your writing? Show me your hands. Well done. Next, go over your writing one more time and then exchange it with your group members.Try to check and correct the mistakes, got it? You have 2 minutes.Stop here.Who wants to share your writing? Cindy, please. Wow, good pronunciation. You state the story vividly. The logic is clear! OK, anyone else? Tony. Please. Oh, you want to present Tina’s article.Can you read it? Very good. Thank you, Tony. Guys, Let’s look at Tina’s work together. “Tom” went to a mountain for camping. I think her article is perfect. We can learn a lot from it. Boys and girls, you all did a good job!
+总结How time files! The class is almost over. Before ending our class, let’s have a summary. Who can summarize what we have learned this class? Fiona please. Very good. I hope you can apply what we have learned in your daily life so that we can improve our reading and speaking ability, right?Our homework is as follows: You should finish the exercise book and search for more information about ask your parents about their day off. Next class, we will share them together.
+Class is over, see you next time.
+]]></content>
+      <categories>
+        <category>教资</category>
       </categories>
   </entry>
   <entry>
@@ -491,16 +490,17 @@ vue2 和 vue3 匿名插槽不一样  具名插槽使用方式不同：vue2 使�
       </categories>
   </entry>
   <entry>
-    <title>初中英语教师资格作文课模版</title>
-    <url>/2025/07/14/%E5%88%9D%E4%B8%AD%E8%8B%B1%E8%AF%AD%E6%95%99%E8%B5%84%E4%BD%9C%E6%96%87%E6%A8%A1%E7%89%88/</url>
-    <content><![CDATA[开场问候Dear Judges, Now I’ll start the lesson. Good morning, Boys and girls. How are you today? Good? Fine? I’m fine, too. Before the class, Let’s sing a song together. If you can sing, sing along with me . “You are my sunshine, my only sunshine, you make me happy.” Do you feel better? Great, let’s start the lesson.At the beginning, I’ll show you a video, and you should try to answer the question: What can you see in the video? Who would like to try? Blair, please. You saw the girl had much fun. She had dinner and went shopping with friends. Thank you, Blair, you set a good example for us. You know so much about this topic. Do you want to learn more? Today, let’s learn a new lesson — How was your day off.
-导入OK, everyone, here is a passage. I’ll read it for you. You should listen carefully and tell me the main idea, OK? Here we go! …….OK, Please share your ideas. Jenny, you please. It talks about the Bermuda Triangle, where a number of planes and ships disappeared.Do you agree? I totally agree with her.
-PreBoys and girls, since we already know the content of the letter, Let’s look at the structure of the letter.There are 4 parts of it, right?The first one is to whom. We call it salutation&#x2F;ˌsalyəˈtāSH(ə)n&#x2F;, such as Hi Henry, Dear Lucy and so on. The second part is body part. You can write whatever you want. The third part, we often add complementary close&#x2F;wishes, such as ‘yours’, ‘sincerely’. The last part is from whom, we call it signature. Am I clear? So when we write a letter, we can imitate it. Brilliant!
-the first part is introduction. It’s a fun day last Saturday. The second part is main body, it’s about what they did in the morning, afternoon and so on. The third part is conclusion. So if we want to write out our everyday life, we can imitate this structure, OK?
-写前Before writing, let’s have a brainstorm. As Tom, what information can you write to reply to Nick’s letter? You can have a discussion in groups. 3 minutes for you. Stop! Who can try, this boy? You will write some activities during camping. Your ideas are wonderful. Bravo! Thank you.OK，I can see you all have many ideas. How about writing down your ideas with the structure we just learned. You have 2 minutes to design your outline.OK, time is up. Finished? I see all of you nod your heads. Very good!It’s time to finish the whole letter. While writing, you should pay attention to the grammar.We should use simple past tense to talk about the experience in the past.And for the signature, you should write”Tom”. If you have any problems, just raise your hands, and I will help you. Are you ready? Let’s do it.
-写后Have you finished your writing? Show me your hands. Well done. Next, go over your writing one more time and then exchange it with your group members.Try to check and correct the mistakes, got it? You have 2 minutes.Stop here.Who wants to share your writing? Cindy, please. Wow, good pronunciation. You state the story vividly. The logic is clear! OK, anyone else? Tony. Please. Oh, you want to present Tina’s article.Can you read it? Very good. Thank you, Tony. Guys, Let’s look at Tina’s work together. “Tom” went to a mountain for camping. I think her article is perfect. We can learn a lot from it. Boys and girls, you all did a good job!
-总结How time files! The class is almost over. Before ending our class, let’s have a summary. Who can summarize what we have learned this class? Fiona please. Very good. I hope you can apply what we have learned in your daily life so that we can improve our reading and speaking ability, right?Our homework is as follows: You should finish the exercise book and search for more information about ask your parents about their day off. Next class, we will share them together.
-Class is over, see you next time.
+    <title>初中英语教师资格语篇课模版</title>
+    <url>/2025/07/15/%E5%88%9D%E4%B8%AD%E8%8B%B1%E8%AF%AD%E6%95%99%E8%B5%84%E8%AF%AD%E7%AF%87%E8%AF%BE%E6%A8%A1%E6%9D%BF/</url>
+    <content><![CDATA[The intonation.（语调）Express the different feelings of the speaker.We often use the falling tone when we read a statement, a special question, an exclamatory or imperative sentence(祈使句、感叹句). We often use rising tone when we ask a Yes&#x2F;No question. We often use rising-falling tone to read an alternative question and a coordinate clause（选择疑问句、并列句）. There are two parts in a tag question（反义疑问句）. The first part is often in a falling tone and for second part, there are two cases. If we are not sure about the question, we often use a rising tone. If we are sure about that, we offen use a falling tone.We choose different intonations to express different feelings and moods.
+The word stress(单词重音)Read words more exactlyWhen we say a word with more than one syllable, some of the syllables need to be stressed.When we read two-syllable words, normally we stress the first syllable for nouns, and stress the second syllable for verbs. As for the multi-syllable words, we stress the third from the bottom.
+The sentence stress（句子重读）Draw attention to certain information.We usually stress the lexical words such as nouns, verbs, adjectives, adverbs and numbers. We don’t stress the function words such as a, the, is, of and so on. Besides, you can stress some information you want to emphasis.We should change it according to the situation and feelings of the speaker.
+The liaison&#x2F;ˈlēəˌzän,lēˈāˌzän&#x2F;&#x2F;Word linking.(连读)Speak English more fluently and naturally.In one sense group, we can read the two words together if the former word ends with a consonant&#x2F;ˈkänsənənt&#x2F;, a vowel or “r” sound, and the following word begins with a vowel. If the two words finish and start with the same consonant, we only read one of the consonants.The two words must be in one sense group.
+incomplete plosion&#x2F;‘pləʊʒ(ə)n&#x2F;（不完全爆破）Speak English more fluently and naturally.There are six plosive sounds &#x2F;t&#x2F; &#x2F;d&#x2F; &#x2F;p&#x2F; &#x2F;b&#x2F; &#x2F;k&#x2F; &#x2F;g&#x2F; in English.When two consonants of them are next to each other, we read the former sound silently.The two words must be in one sense group.
+Weak form(弱读)speak English more fluently and naturally.Some words often appear in a weak form such as function words, articles, auxiliary verbs and modal verbs.there are mainly three ways to change function words to weak forms. They are shortening, elision[ i’liʒən ] and vowel changed to schwa  [ʃwɑ:] sound.
+Assimilation(同化)We use it to speak English more fluently and naturally.As we can see, Two different sounds affect each other and become more alike.&#x2F;s+ j&#x2F; -&gt; &#x2F;F&#x2F;this year,&#x2F;d+j&#x2F; -&gt; &#x2F;d3&#x2F; would you
+Sense group(意群)We use it to make our expression more easily to understand.As we can see, a sentence may consists of several groups according to meaning or structure. Each group is called a sense group. It can be a word, a phrase, a clause. After a sense group, there should be a short pause.We should remind that we should change it according to the situation and feelings of the speaker.
+The pause(停顿)We use to speak English more fluently and naturally.As we can see, in a long sentence, we should pause several times according to the sense group. Normally, we pause based on meaning and grammatical structure.We should remind that there should be no pause in a sense group. Where to pause also depends on the situation and the feelings of the speaker.
 ]]></content>
       <categories>
         <category>教资</category>
@@ -561,20 +561,6 @@ the modal verbs.(情态动词)Make inferences.(作出推断)The main structure o
       </categories>
   </entry>
   <entry>
-    <title>前端骨架屏</title>
-    <url>/2025/07/07/%E5%89%8D%E7%AB%AF%E9%AA%A8%E6%9E%B6%E5%B1%8F/</url>
-    <content><![CDATA[Dps.config.js 中文说明文档本配置文件用以生成 Vue 应用的骨架屏。
-
-基本配置字段说明    const dpsConfig = &#123;    url: &#x27;file:///Users/myname/Desktop/project/pro/scaleTips/dist/index.html#/&#x27;,          // 待生成骨架屏页面的地址，用百度（https://baidu.com）试试也可以    output: &#123;        filepath: &#x27;/Users/myname/Desktop/project/pro&#x27;,        // 生成骨架屏的存放页面，一般为项目的入口页面        injectSelector: &#x27;#app&#x27;          // 生成的骨架屏插入页面的节点    &#125;,    // header: &#123;    //  height: 40,    //  background: &#x27;#1b9af4&#x27;    // &#125;,    // background: &#x27;#eee&#x27;,    // animation: &#x27;opacity 1s linear infinite;&#x27;,    //用于定制或排除某些节点的绘制行为    includeElement: function(node, draw) &#123;        // 定制某个节点画出来的样子，带上return false        if(node.id == &#x27;ui-alert&#x27;) &#123;            //跳过该节点及其子节点            return false;        &#125;        if(node.tagName.toLowerCase() === &#x27;img&#x27;) &#123;            // 对该图片生成宽100%，高8%，颜色为红色的色块            draw(&#123;                width: 100,                height: 8,                left: 0,                top: 0,                zIndex: 99999999,                background: &#x27;red&#x27;            &#125;);            return false;        &#125;     &#125;,    // writePageStructure: function(html) &#123;        // 自己处理生成的骨架屏        // fs.writeFileSync(filepath, html);        // console.log(html)    // &#125;,    init: function() &#123;        // 生成骨架屏之前的操作，比如删除干扰节点    &#125;&#125;module.exports = dpsConfig;
-
-
-
-]]></content>
-      <categories>
-        <category>前端</category>
-      </categories>
-  </entry>
-  <entry>
     <title>《皮囊》感悟</title>
     <url>/2025/06/26/%E7%9A%AE%E5%9B%8A%E6%84%9F%E6%82%9F/</url>
     <content><![CDATA[阿太阿太倔强坚强，豁达的心态值得人学习。父亲最强大的地方就是娶了我的母亲。一个伟大的女人。真正的女人就是应该要积极乐观面对一切，用自己的双手打造自己想要的未来。
@@ -606,16 +592,66 @@ Class is over, see you next time.
       </categories>
   </entry>
   <entry>
-    <title>小程序验证码输入框自动聚焦下个输入框</title>
-    <url>/2025/07/21/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E9%AA%8C%E8%AF%81%E7%A0%81%E8%BE%93%E5%85%A5%E6%A1%86%E8%87%AA%E5%8A%A8%E8%81%9A%E7%84%A6%E4%B8%8B%E4%B8%AA%E8%BE%93%E5%85%A5%E6%A1%86/</url>
-    <content><![CDATA[最开始我想的是有多少个输入框，就放多少个input，做完会发现有各种bug。比如键盘突然消失、没聚焦下个输入框、操作不丝滑等。正确思路是一个输入框就够了，然后通过改变样式（间隔、高亮）来实现，就是表面看起来是六个输入框，本质上只有一个input
-正确解法：&lt;view class=&quot;w-80 h-100 rad-10 b-a-9 tc f-50&quot; v-for=&quot;(item,index)  in 6&quot;&gt;	&lt;input class=&quot;w-80 h-100 &quot; maxlength=&quot;1&quot; type=&quot;text&quot;    @input=&quot;inputListener(index)&quot;   :focus=&quot;focus &amp;&amp; (focusIndex == index)&quot;/&gt;&lt;/view&gt; 
+    <title>2022应届毕业生办理深户流程</title>
+    <url>/2025/07/01/%E6%B7%B1%E6%88%B7%E5%8A%9E%E7%90%86%E6%B5%81%E7%A8%8B/</url>
+    <content><![CDATA[
+
+1. 登录广东政务服务网申请毕业生接收
+打开 广东政务服务网
+搜索“人才引进” → 选择“接收毕业生”
+填写个人资料后，下载电子版《申请书》
+
+2. 报到证改派
+每个地区流程略有不同，建议致电报到证抬头地区的人社局咨询
+示例：汕尾市城区 → 在广东政务服务网搜索“档案转出” → 点击在线办理
+上传报到证、申请表等资料到“调函”栏目
+不久后，工作人员会联系确认是否需要电子版“同意改派”文件（推荐选择电子版）, 她会把电子版的“同意改派”发到我们填的邮箱里。
+
+其他地区如潮州市：可直接在广东政务服务网搜索“报到证改派”在线办理
+3. 上传材料至“广东就业创业”小程序
+打开小程序，选择应届生接收模块
+上传材料：电子版“同意改派”的报到证、申请表、三方协议等
+等待校方审核通过
+
+4. 返回广东政务服务网上传最终材料
+上传审核通过后的报到证等资料
+审核通过后会收到含有“指标卡”的短信通知
+
+5. 在“深圳本地宝”预约现场办理
+打开“深圳本地宝”微信公众号，搜索“大学生”
+进入现场办理流程 → 点击“户政预约” → 选择“普通户政预约”
+预约业务选择“接收应届生户籍迁入”
+选择时间和地点并预约成功后，带好上述资料和以下材料前往办理：
+户口本
+身份证及二代回执
+一寸白底照片
 
 
-data()&#123;    return&#123;        focus: true,		code:[&#x27;&#x27;,&#x27;&#x27;,&#x27;&#x27;,&#x27;&#x27;,&#x27;&#x27;,&#x27;&#x27;],// 需要获取焦点的序号		focusIndex: 0    &#125;&#125;method:&#123;      // 输入时事件	inputListener(e) &#123;		if (this.focusIndex != e)this.focusIndex=e		if (e &lt; 6) &#123;					this.focus=true,					this.focusIndex=e + 1		&#125;else &#123;					this.focus=false		&#125;	&#125;,&#125;
+
+6. 第一次现场办理后领取档案袋
+办理后工作人员会发放档案袋
+需在五个工作日后再次前往办理
+
+7. 第二次预约并完成迁户手续
+提前预约，带齐上次材料再次前往办理
+办理成功后可选择身份证邮寄
 
 
-完整版可参考链接：https://blog.csdn.net/u011423258/article/details/106683068?spm=1001.2014.3001.5506
+备注： 整个流程较为繁琐，建议提前准备资料并留意预约时间。
+]]></content>
+      <categories>
+        <category>其他</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>前端骨架屏</title>
+    <url>/2025/07/07/%E5%89%8D%E7%AB%AF%E9%AA%A8%E6%9E%B6%E5%B1%8F/</url>
+    <content><![CDATA[Dps.config.js 中文说明文档本配置文件用以生成 Vue 应用的骨架屏。
+
+基本配置字段说明    const dpsConfig = &#123;    url: &#x27;file:///Users/myname/Desktop/project/pro/scaleTips/dist/index.html#/&#x27;,          // 待生成骨架屏页面的地址，用百度（https://baidu.com）试试也可以    output: &#123;        filepath: &#x27;/Users/myname/Desktop/project/pro&#x27;,        // 生成骨架屏的存放页面，一般为项目的入口页面        injectSelector: &#x27;#app&#x27;          // 生成的骨架屏插入页面的节点    &#125;,    // header: &#123;    //  height: 40,    //  background: &#x27;#1b9af4&#x27;    // &#125;,    // background: &#x27;#eee&#x27;,    // animation: &#x27;opacity 1s linear infinite;&#x27;,    //用于定制或排除某些节点的绘制行为    includeElement: function(node, draw) &#123;        // 定制某个节点画出来的样子，带上return false        if(node.id == &#x27;ui-alert&#x27;) &#123;            //跳过该节点及其子节点            return false;        &#125;        if(node.tagName.toLowerCase() === &#x27;img&#x27;) &#123;            // 对该图片生成宽100%，高8%，颜色为红色的色块            draw(&#123;                width: 100,                height: 8,                left: 0,                top: 0,                zIndex: 99999999,                background: &#x27;red&#x27;            &#125;);            return false;        &#125;     &#125;,    // writePageStructure: function(html) &#123;        // 自己处理生成的骨架屏        // fs.writeFileSync(filepath, html);        // console.log(html)    // &#125;,    init: function() &#123;        // 生成骨架屏之前的操作，比如删除干扰节点    &#125;&#125;module.exports = dpsConfig;
+
+
+
 ]]></content>
       <categories>
         <category>前端</category>
@@ -673,55 +709,19 @@ data()&#123;    return&#123;        focus: true,		code:[&#x27;&#x27;,&#x27;&#x27
       </categories>
   </entry>
   <entry>
-    <title>2022应届毕业生办理深户流程</title>
-    <url>/2025/07/01/%E6%B7%B1%E6%88%B7%E5%8A%9E%E7%90%86%E6%B5%81%E7%A8%8B/</url>
-    <content><![CDATA[
-
-1. 登录广东政务服务网申请毕业生接收
-打开 广东政务服务网
-搜索“人才引进” → 选择“接收毕业生”
-填写个人资料后，下载电子版《申请书》
-
-2. 报到证改派
-每个地区流程略有不同，建议致电报到证抬头地区的人社局咨询
-示例：汕尾市城区 → 在广东政务服务网搜索“档案转出” → 点击在线办理
-上传报到证、申请表等资料到“调函”栏目
-不久后，工作人员会联系确认是否需要电子版“同意改派”文件（推荐选择电子版）, 她会把电子版的“同意改派”发到我们填的邮箱里。
-
-其他地区如潮州市：可直接在广东政务服务网搜索“报到证改派”在线办理
-3. 上传材料至“广东就业创业”小程序
-打开小程序，选择应届生接收模块
-上传材料：电子版“同意改派”的报到证、申请表、三方协议等
-等待校方审核通过
-
-4. 返回广东政务服务网上传最终材料
-上传审核通过后的报到证等资料
-审核通过后会收到含有“指标卡”的短信通知
-
-5. 在“深圳本地宝”预约现场办理
-打开“深圳本地宝”微信公众号，搜索“大学生”
-进入现场办理流程 → 点击“户政预约” → 选择“普通户政预约”
-预约业务选择“接收应届生户籍迁入”
-选择时间和地点并预约成功后，带好上述资料和以下材料前往办理：
-户口本
-身份证及二代回执
-一寸白底照片
+    <title>小程序验证码输入框自动聚焦下个输入框</title>
+    <url>/2025/07/21/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E9%AA%8C%E8%AF%81%E7%A0%81%E8%BE%93%E5%85%A5%E6%A1%86%E8%87%AA%E5%8A%A8%E8%81%9A%E7%84%A6%E4%B8%8B%E4%B8%AA%E8%BE%93%E5%85%A5%E6%A1%86/</url>
+    <content><![CDATA[最开始我想的是有多少个输入框，就放多少个input，做完会发现有各种bug。比如键盘突然消失、没聚焦下个输入框、操作不丝滑等。正确思路是一个输入框就够了，然后通过改变样式（间隔、高亮）来实现，就是表面看起来是六个输入框，本质上只有一个input
+正确解法：&lt;view class=&quot;w-80 h-100 rad-10 b-a-9 tc f-50&quot; v-for=&quot;(item,index)  in 6&quot;&gt;	&lt;input class=&quot;w-80 h-100 &quot; maxlength=&quot;1&quot; type=&quot;text&quot;    @input=&quot;inputListener(index)&quot;   :focus=&quot;focus &amp;&amp; (focusIndex == index)&quot;/&gt;&lt;/view&gt; 
 
 
-
-6. 第一次现场办理后领取档案袋
-办理后工作人员会发放档案袋
-需在五个工作日后再次前往办理
-
-7. 第二次预约并完成迁户手续
-提前预约，带齐上次材料再次前往办理
-办理成功后可选择身份证邮寄
+data()&#123;    return&#123;        focus: true,		code:[&#x27;&#x27;,&#x27;&#x27;,&#x27;&#x27;,&#x27;&#x27;,&#x27;&#x27;,&#x27;&#x27;],// 需要获取焦点的序号		focusIndex: 0    &#125;&#125;method:&#123;      // 输入时事件	inputListener(e) &#123;		if (this.focusIndex != e)this.focusIndex=e		if (e &lt; 6) &#123;					this.focus=true,					this.focusIndex=e + 1		&#125;else &#123;					this.focus=false		&#125;	&#125;,&#125;
 
 
-备注： 整个流程较为繁琐，建议提前准备资料并留意预约时间。
+完整版可参考链接：https://blog.csdn.net/u011423258/article/details/106683068?spm=1001.2014.3001.5506
 ]]></content>
       <categories>
-        <category>其他</category>
+        <category>前端</category>
       </categories>
   </entry>
   <entry>
