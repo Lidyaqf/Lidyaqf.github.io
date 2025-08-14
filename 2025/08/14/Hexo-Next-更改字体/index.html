@@ -60,19 +60,19 @@
 
 
 
-  <meta name="description" content="JavaScript 基础总结（变量提升、严格模式） 变量与函数提升规则 变量提升：按顺序执行，变量声明提升但赋值不会提升。 函数提升：整个函数体提升到全局作用域顶部。 优先级：函数提升 &gt; 变量提升。  1234567console.log(a); &#x2F;&#x2F; undefinedvar a &#x3D; 2;foo(); &#x2F;&#x2F; 正常调用function foo() &#123;  console.log(">
+  <meta name="description" content="Next版本为7.8.0，找到 &#x2F;themes&#x2F;next&#x2F;_config.yml 文件，搜索 font 关键词，这里注意一定要将 font 里面的 enable 设置为true, 因为默认为false，然后设置 family 为自己想要的，如果family在其他平台找的，就需要修改host。(只是修改了family， 没修改enable就会不生效，所以一定一定要记得)">
 <meta property="og:type" content="article">
-<meta property="og:title" content="JavaScript 基础">
-<meta property="og:url" content="https://lidyaqf.github.io/2025/07/02/js%E5%9F%BA%E7%A1%80/index.html">
+<meta property="og:title" content="Hexo-Next-更改字体、代码可复制">
+<meta property="og:url" content="https://lidyaqf.github.io/2025/08/14/Hexo-Next-%E6%9B%B4%E6%94%B9%E5%AD%97%E4%BD%93/index.html">
 <meta property="og:site_name" content="枫叶白">
-<meta property="og:description" content="JavaScript 基础总结（变量提升、严格模式） 变量与函数提升规则 变量提升：按顺序执行，变量声明提升但赋值不会提升。 函数提升：整个函数体提升到全局作用域顶部。 优先级：函数提升 &gt; 变量提升。  1234567console.log(a); &#x2F;&#x2F; undefinedvar a &#x3D; 2;foo(); &#x2F;&#x2F; 正常调用function foo() &#123;  console.log(">
+<meta property="og:description" content="Next版本为7.8.0，找到 &#x2F;themes&#x2F;next&#x2F;_config.yml 文件，搜索 font 关键词，这里注意一定要将 font 里面的 enable 设置为true, 因为默认为false，然后设置 family 为自己想要的，如果family在其他平台找的，就需要修改host。(只是修改了family， 没修改enable就会不生效，所以一定一定要记得)">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2025-07-02T00:20:00.000Z">
-<meta property="article:modified_time" content="2025-07-17T06:14:38.090Z">
+<meta property="article:published_time" content="2025-08-13T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-08-14T02:30:41.070Z">
 <meta property="article:author" content="lidya">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://lidyaqf.github.io/2025/07/02/js%E5%9F%BA%E7%A1%80/">
+<link rel="canonical" href="https://lidyaqf.github.io/2025/08/14/Hexo-Next-%E6%9B%B4%E6%94%B9%E5%AD%97%E4%BD%93/">
 
 
 <script id="page-configurations">
@@ -85,7 +85,7 @@
   };
 </script>
 
-  <title>JavaScript 基础 | 枫叶白</title>
+  <title>Hexo-Next-更改字体、代码可复制 | 枫叶白</title>
   
 
 
@@ -228,7 +228,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://lidyaqf.github.io/2025/07/02/js%E5%9F%BA%E7%A1%80/">
+    <link itemprop="mainEntityOfPage" href="https://lidyaqf.github.io/2025/08/14/Hexo-Next-%E6%9B%B4%E6%94%B9%E5%AD%97%E4%BD%93/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -241,7 +241,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          JavaScript 基础
+          Hexo-Next-更改字体、代码可复制
         </h1>
 
         <div class="post-meta">
@@ -250,16 +250,10 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2025-07-02 08:20:00" itemprop="dateCreated datePublished" datetime="2025-07-02T08:20:00+08:00">2025-07-02</time>
+              <time title="创建时间：2025-08-14 00:00:00 / 修改时间：10:30:41" itemprop="dateCreated datePublished" datetime="2025-08-14T00:00:00+08:00">2025-08-14</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2025-07-17 14:14:38" itemprop="dateModified" datetime="2025-07-17T14:14:38+08:00">2025-07-17</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -288,27 +282,11 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="JavaScript-基础总结（变量提升、严格模式）"><a href="#JavaScript-基础总结（变量提升、严格模式）" class="headerlink" title="JavaScript 基础总结（变量提升、严格模式）"></a>JavaScript 基础总结（变量提升、严格模式）</h1><hr>
-<h2 id="变量与函数提升规则"><a href="#变量与函数提升规则" class="headerlink" title="变量与函数提升规则"></a>变量与函数提升规则</h2><ul>
-<li><strong>变量提升</strong>：按顺序执行，变量声明提升但赋值不会提升。</li>
-<li><strong>函数提升</strong>：整个函数体提升到全局作用域顶部。</li>
-<li><strong>优先级</strong>：函数提升 &gt; 变量提升。</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(a); <span class="comment">// undefined</span></span><br><span class="line"><span class="keyword">var</span> a = <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line"><span class="title function_">foo</span>(); <span class="comment">// 正常调用</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">foo</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;函数提升成功&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <p>Next版本为7.8.0，找到 &#x2F;themes&#x2F;next&#x2F;_config.yml 文件，搜索 font 关键词，这里注意一定要将 font 里面的 enable 设置为true, 因为默认为false，然后设置 family 为自己想要的，如果family在其他平台找的，就需要修改host。(只是修改了family， 没修改enable就会不生效，所以一定一定要记得)</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">font</span>:</span><br><span class="line">  <span class="attr">enable</span>: <span class="literal">true</span></span><br><span class="line"></span><br><span class="line">  # <span class="title class_">Uri</span> <span class="keyword">of</span> fonts host, e.<span class="property">g</span>. <span class="attr">https</span>:<span class="comment">//fonts.googleapis.com (Default).</span></span><br><span class="line">  <span class="attr">host</span>: </span><br><span class="line"></span><br><span class="line">  # <span class="title class_">Font</span> <span class="attr">options</span>:</span><br><span class="line">  # <span class="string">`external: true`</span> will load <span class="variable language_">this</span> font family <span class="keyword">from</span> <span class="string">`host`</span> above.</span><br><span class="line">  # <span class="string">`family: Times New Roman`</span>. <span class="title class_">Without</span> any quotes.</span><br><span class="line">  # <span class="string">`size: x.x`</span>. <span class="title class_">Use</span> <span class="string">`em`</span> <span class="keyword">as</span> unit. <span class="title class_">Default</span>: <span class="number">1</span> (16px)</span><br><span class="line"></span><br><span class="line">  # <span class="title class_">Global</span> font settings used <span class="keyword">for</span> all elements inside &lt;body&gt;.</span><br><span class="line">  <span class="attr">global</span>:</span><br><span class="line">    <span class="attr">external</span>: <span class="literal">true</span></span><br><span class="line">    <span class="attr">family</span>: <span class="title class_">Noto</span> <span class="title class_">Serif</span> <span class="variable constant_">SC</span></span><br><span class="line">    <span class="attr">size</span>:</span><br><span class="line"></span><br><span class="line">  # <span class="title class_">Font</span> settings <span class="keyword">for</span> site <span class="title function_">title</span> (.<span class="property">site</span>-title).</span><br><span class="line">  <span class="attr">title</span>:</span><br><span class="line">    <span class="attr">external</span>: <span class="literal">true</span></span><br><span class="line">    <span class="attr">family</span>: <span class="title class_">Noto</span> <span class="title class_">Serif</span> <span class="variable constant_">SC</span></span><br><span class="line">    <span class="attr">size</span>:</span><br><span class="line"></span><br><span class="line">  # <span class="title class_">Font</span> settings <span class="keyword">for</span> <span class="title function_">headlines</span> (&lt;h1&gt; to &lt;h6&gt;).</span><br><span class="line">  <span class="attr">headings</span>:</span><br><span class="line">    <span class="attr">external</span>: <span class="literal">true</span></span><br><span class="line">    <span class="attr">family</span>: <span class="title class_">Noto</span> <span class="title class_">Serif</span> <span class="variable constant_">SC</span></span><br><span class="line">    <span class="attr">size</span>:</span><br><span class="line"></span><br><span class="line">  # <span class="title class_">Font</span> settings <span class="keyword">for</span> <span class="title function_">posts</span> (.<span class="property">post</span>-body).</span><br><span class="line">  <span class="attr">posts</span>:</span><br><span class="line">    <span class="attr">external</span>: <span class="literal">true</span></span><br><span class="line">    <span class="attr">family</span>:  <span class="title class_">Noto</span> <span class="title class_">Serif</span> <span class="variable constant_">SC</span></span><br><span class="line"></span><br><span class="line">  # <span class="title class_">Font</span> settings <span class="keyword">for</span> &lt;code&gt; and code blocks.</span><br><span class="line">  <span class="attr">codes</span>:</span><br><span class="line">    <span class="attr">external</span>: <span class="literal">true</span></span><br><span class="line">    <span class="attr">family</span>: <span class="title class_">Source</span> <span class="title class_">Code</span> <span class="title class_">Pro</span></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-<hr>
-<h2 id="使用-use-strict-严格模式"><a href="#使用-use-strict-严格模式" class="headerlink" title="使用 use strict 严格模式"></a>使用 <code>use strict</code> 严格模式</h2><h3 id="作用："><a href="#作用：" class="headerlink" title="作用："></a>作用：</h3><ul>
-<li>避免创建<strong>意外的全局变量</strong>；</li>
-<li>禁止使用未声明变量，防止内存泄漏；</li>
-<li><code>this</code> 默认绑定到 <code>undefined</code> 而非 <code>window</code>。</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">foo</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="string">&quot;use strict&quot;</span>;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>.<span class="property">a</span>); <span class="comment">// ❌ TypeError</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> a = <span class="number">2</span>;</span><br><span class="line"><span class="title function_">foo</span>(); <span class="comment">// 严格模式下 this 是 undefined，无法读取 this.a</span></span><br></pre></td></tr></table></figure>
-
-<hr>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">(<span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="string">&quot;use strict&quot;</span>;</span><br><span class="line">  <span class="title function_">foo</span>(); <span class="comment">// 严格模式下调用函数则不影响默认绑定</span></span><br><span class="line">&#125;)();</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">foo</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>.<span class="property">a</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> a = <span class="number">2</span>;</span><br></pre></td></tr></table></figure>
-
-
-
+<p>代码可复制，还是上面同一个文件，找到以下代码段，将copy_button的enable设置为true，启用就可以啦。show_result设置true后，复制完会显示一个勾。style对应的copy_button不同的样式，看个人喜好来～</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">codeblock</span>:</span><br><span class="line">  # <span class="title class_">Code</span> <span class="title class_">Highlight</span> theme</span><br><span class="line">  # <span class="title class_">Available</span> <span class="attr">values</span>: normal | night | night eighties | night blue | night bright | solarized | solarized dark | galactic</span><br><span class="line">  # <span class="title class_">See</span>: <span class="attr">https</span>:<span class="comment">//github.com/chriskempson/tomorrow-theme</span></span><br><span class="line">  <span class="attr">highlight_theme</span>: night eighties</span><br><span class="line">  # <span class="title class_">Add</span> copy button on codeblock</span><br><span class="line">  <span class="attr">copy_button</span>:</span><br><span class="line">    <span class="attr">enable</span>: <span class="literal">true</span></span><br><span class="line">    # <span class="title class_">Show</span> text copy result.</span><br><span class="line">    <span class="attr">show_result</span>: <span class="literal">true</span></span><br><span class="line">    # <span class="title class_">Available</span> <span class="attr">values</span>: <span class="keyword">default</span> | flat | mac</span><br><span class="line">    <span class="attr">style</span>: mac</span><br></pre></td></tr></table></figure>
     </div>
 
     
@@ -332,7 +310,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://lidyaqf.github.io/2025/07/02/js%E5%9F%BA%E7%A1%80/" title="JavaScript 基础">https://lidyaqf.github.io/2025/07/02/js基础/</a>
+    <a href="https://lidyaqf.github.io/2025/08/14/Hexo-Next-%E6%9B%B4%E6%94%B9%E5%AD%97%E4%BD%93/" title="Hexo-Next-更改字体、代码可复制">https://lidyaqf.github.io/2025/08/14/Hexo-Next-更改字体/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -349,13 +327,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2025/07/01/%E6%B7%B1%E6%88%B7%E5%8A%9E%E7%90%86%E6%B5%81%E7%A8%8B/" rel="prev" title="2022应届毕业生办理深户流程">
-      <i class="fa fa-chevron-left"></i> 2022应届毕业生办理深户流程
+    <a href="/2025/08/13/%E5%A6%82%E4%BD%95%E8%84%B1%E7%A6%BB%E6%A1%86%E6%9E%B6%E5%BC%80%E5%8F%91/" rel="prev" title="脱离框架开发">
+      <i class="fa fa-chevron-left"></i> 脱离框架开发
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2025/07/04/H5%E4%B8%8E%E5%8E%9F%E7%94%9F%E4%BA%A4%E4%BA%92/" rel="next" title="H5与原生交互">
-      H5与原生交互 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -419,7 +394,6 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#JavaScript-%E5%9F%BA%E7%A1%80%E6%80%BB%E7%BB%93%EF%BC%88%E5%8F%98%E9%87%8F%E6%8F%90%E5%8D%87%E3%80%81%E4%B8%A5%E6%A0%BC%E6%A8%A1%E5%BC%8F%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">JavaScript 基础总结（变量提升、严格模式）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%98%E9%87%8F%E4%B8%8E%E5%87%BD%E6%95%B0%E6%8F%90%E5%8D%87%E8%A7%84%E5%88%99"><span class="nav-number">1.1.</span> <span class="nav-text">变量与函数提升规则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-use-strict-%E4%B8%A5%E6%A0%BC%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.2.</span> <span class="nav-text">使用 use strict 严格模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%9C%E7%94%A8%EF%BC%9A"><span class="nav-number">1.2.1.</span> <span class="nav-text">作用：</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
