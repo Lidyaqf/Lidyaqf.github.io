@@ -80,12 +80,6 @@ Additional: Install Docker, Portainer, and Related Commandssudo apt updatesudo a
       </categories>
   </entry>
   <entry>
-    <title>Hello English</title>
-    <url>/2024/08/16/redis-en/</url>
-    <content><![CDATA[This is an English post.
-]]></content>
-  </entry>
-  <entry>
     <title>GitLab CI/CD</title>
     <url>/2025/04/10/gitlabci/</url>
     <content><![CDATA[GitLab CI&#x2F;CD Guide for Frontend Projects (Mac Environment)OverviewIn daily development, we often manually send the built dist package to the backend for deployment, which is inefficient and error-prone. CI (Continuous Integration) automates this process. This guide shows how to use GitLab CI to implement continuous integration and deployment.
@@ -152,6 +146,12 @@ After successful deployment, you can view the build process on the GitLab CI&#x2
       </tags>
   </entry>
   <entry>
+    <title>Hello English</title>
+    <url>/2024/08/16/redis-en/</url>
+    <content><![CDATA[This is an English post.
+]]></content>
+  </entry>
+  <entry>
     <title>One Day You&#39;ll Understand - Reading Notes by Mr. Zhuomo</title>
     <url>/2025/05/21/%E3%80%8A%E7%BB%88%E6%9C%89%E4%B8%80%E5%A4%A9%E4%BD%A0%E4%BC%9A%E6%87%82%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%20-%20%E7%90%A2%E7%A3%A8%E5%85%88%E7%94%9F/</url>
     <content><![CDATA[The book does contain a lot of his own “biases,” but I find him authentic and humorous. His language is simple and understandable, and each subtitle essentially tells us what we should do.
@@ -175,35 +175,6 @@ Understanding TravelThis part recounts Mr. Zhuomo’s experiences in Tibet. Many
 Understanding CareerFirst learn to endure hardship. Then understand yourself and your talents. Begin with the end in mind and stay focused.
 Understanding EducationEvery child is born pure. Without proper education, they won’t become pillars of the nation.
 Understanding Entertainment &amp; FreedomLife has two paths: one for career ambition—keep passion; the other for living warmly—keep humanity.Open your eyes each day and tell yourself: Oh yeah!
-]]></content>
-  </entry>
-  <entry>
-    <title>Reflections on *What I Talk About When I Talk About Running*</title>
-    <url>/2025/06/26/%E5%BD%93%E6%88%91%E8%B0%88%E8%B7%91%E6%AD%A5%E6%97%B6/</url>
-    <content><![CDATA[What I Talk About When I Talk About RunningIt was through this book that I realized there could be another version of myself out there, doing something I love. Before reading this book, I had never read anything by Murakami. I knew he was popular and had many famous books, but I hadn’t really paid attention. But when it comes to running, I felt there could be a connection.
-If I keep running, will I eventually reach the moon? Running isn’t about living longer, but about making life feel easier and lighter within the time we have.
-I was surprised by Murakami’s imagination while running—so free and boundless. I really enjoy that. I’ve imagined many things too, like suddenly recalling a lyric while running—something like “speeding up to chase happiness,” blabla… Long-distance running requires endurance, but also imagination. Of course, the premise is loving to run. If someone doesn’t like running, no matter how much you say, it won’t matter. But if someone does love it, they’ll even want to meet another version of themselves during a break in the rain. Humans are inherently lonely, but the spirit can resonate with others.
-I plan to keep running no matter how the world changes. Once, I walked 30 kilometers in one day. Despite the sunburn, I loved the spiritual fulfillment more. If you haven’t experienced it, you have no voice. Maybe I’m like Chen Kun—a pessimistic optimist. I live actively in this world, but I also see through its illusions. Neither joyful because of things, nor sorrowful because of myself.
-My pulse has dropped to just over 50 beats per minute. Seems like I’m built for jogging. After all, it’s about interest. As long as my freedom isn’t restricted, anything is acceptable.
-I hope next year I’ll join a marathon, with people cheering me on. That would be so happy.
-
-“I’m not a person, but a pure machine. So I don’t need to feel anything, just keep running forward.”
-
-What’s most similar is that we both love to run non-stop. Not the type who walks when tired or stops to enjoy the scenery. Maybe people have different views, but I think the true king is the one who can keep running without stopping.
-When reaching the finish line, I’d feel so cool, a rush of pride, like winning the lottery or getting incredibly lucky. It’s a principle—and also my pride.
-Oh, right—just like Brother Shang waiting at the finish line, and I’d smile proudly.
-]]></content>
-  </entry>
-  <entry>
-    <title>Reflections on *Skin*</title>
-    <url>/2025/06/26/%E7%9A%AE%E5%9B%8A%E6%84%9F%E6%82%9F/</url>
-    <content><![CDATA[Aunt TaiAunt Tai is strong-willed and resilient. Her optimistic attitude is something worth learning from. The greatest thing my father ever did was marrying my mother—a truly great woman. A real woman should face everything with positivity and build the future she desires with her own hands.
-Although she resorted to stealing, it was driven by hardship—survival and family. Setting aside pride to do things against her will is, in a way, a form of strength. It’s not about crying and making a scene, but staying proactive in adversity.
-Thinking about it, the author’s achievements are inseparable from his great mother.
-Ah, that lovely mother! To preserve her husband’s dignity and happiness, she insisted on completing the house. Isn’t that a form of strength too? To follow her heart courageously is truly admirable.
-In fact, the person who understands my father the most is my mother. She knows his pride. Isn’t this what love is? You don’t need to say it—I understand. I understand you, and you understand me, and that’s why we’ve been together for so long.
-Zhang MeiliGet up from where you fell. Zhang Meili seems like someone who pursued true love and worked hard for what she desired. Though she was eventually forced to liberate herself sexually, I still respect her for everything she once did.
-Public opinion is powerful, but Zhang Meili’s inner strength is even more powerful.
 ]]></content>
   </entry>
   <entry>
@@ -386,6 +357,23 @@ Scoped slot: Vue 2 uses slot-scope=&quot;data&quot;, Vue 3 uses #data or #defaul
 ]]></content>
   </entry>
   <entry>
+    <title>Reflections on *What I Talk About When I Talk About Running*</title>
+    <url>/2025/06/26/%E5%BD%93%E6%88%91%E8%B0%88%E8%B7%91%E6%AD%A5%E6%97%B6/</url>
+    <content><![CDATA[What I Talk About When I Talk About RunningIt was through this book that I realized there could be another version of myself out there, doing something I love. Before reading this book, I had never read anything by Murakami. I knew he was popular and had many famous books, but I hadn’t really paid attention. But when it comes to running, I felt there could be a connection.
+If I keep running, will I eventually reach the moon? Running isn’t about living longer, but about making life feel easier and lighter within the time we have.
+I was surprised by Murakami’s imagination while running—so free and boundless. I really enjoy that. I’ve imagined many things too, like suddenly recalling a lyric while running—something like “speeding up to chase happiness,” blabla… Long-distance running requires endurance, but also imagination. Of course, the premise is loving to run. If someone doesn’t like running, no matter how much you say, it won’t matter. But if someone does love it, they’ll even want to meet another version of themselves during a break in the rain. Humans are inherently lonely, but the spirit can resonate with others.
+I plan to keep running no matter how the world changes. Once, I walked 30 kilometers in one day. Despite the sunburn, I loved the spiritual fulfillment more. If you haven’t experienced it, you have no voice. Maybe I’m like Chen Kun—a pessimistic optimist. I live actively in this world, but I also see through its illusions. Neither joyful because of things, nor sorrowful because of myself.
+My pulse has dropped to just over 50 beats per minute. Seems like I’m built for jogging. After all, it’s about interest. As long as my freedom isn’t restricted, anything is acceptable.
+I hope next year I’ll join a marathon, with people cheering me on. That would be so happy.
+
+“I’m not a person, but a pure machine. So I don’t need to feel anything, just keep running forward.”
+
+What’s most similar is that we both love to run non-stop. Not the type who walks when tired or stops to enjoy the scenery. Maybe people have different views, but I think the true king is the one who can keep running without stopping.
+When reaching the finish line, I’d feel so cool, a rush of pride, like winning the lottery or getting incredibly lucky. It’s a principle—and also my pride.
+Oh, right—just like Brother Shang waiting at the finish line, and I’d smile proudly.
+]]></content>
+  </entry>
+  <entry>
     <title>Encountering the Unknown Self</title>
     <url>/2025/06/30/%E9%81%87%E8%A7%81%E6%9C%AA%E7%9F%A5%E7%9A%84%E8%87%AA%E5%B7%B1/</url>
     <content><![CDATA[Notes on Encountering the Unknown SelfWhat is the “Unknown”?The “self” refers to the “true self.” From the question “Who am I?” to the concept of “from existence to non-existence,” the entire book is structured around dialogues between Ruoling and a wise elder, revealing many profound life concepts.
@@ -422,5 +410,17 @@ ConclusionThis book is not only about discovering “who you are,” but also ab
       <tags>
         <tag>Personal Growth</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>Reflections on *Skin*</title>
+    <url>/2025/06/26/%E7%9A%AE%E5%9B%8A%E6%84%9F%E6%82%9F/</url>
+    <content><![CDATA[Aunt TaiAunt Tai is strong-willed and resilient. Her optimistic attitude is something worth learning from. The greatest thing my father ever did was marrying my mother—a truly great woman. A real woman should face everything with positivity and build the future she desires with her own hands.
+Although she resorted to stealing, it was driven by hardship—survival and family. Setting aside pride to do things against her will is, in a way, a form of strength. It’s not about crying and making a scene, but staying proactive in adversity.
+Thinking about it, the author’s achievements are inseparable from his great mother.
+Ah, that lovely mother! To preserve her husband’s dignity and happiness, she insisted on completing the house. Isn’t that a form of strength too? To follow her heart courageously is truly admirable.
+In fact, the person who understands my father the most is my mother. She knows his pride. Isn’t this what love is? You don’t need to say it—I understand. I understand you, and you understand me, and that’s why we’ve been together for so long.
+Zhang MeiliGet up from where you fell. Zhang Meili seems like someone who pursued true love and worked hard for what she desired. Though she was eventually forced to liberate herself sexually, I still respect her for everything she once did.
+Public opinion is powerful, but Zhang Meili’s inner strength is even more powerful.
+]]></content>
   </entry>
 </search>
