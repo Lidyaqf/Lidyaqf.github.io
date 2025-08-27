@@ -225,6 +225,88 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://lidyaqf.github.io/2025/08/27/react+vite%E5%A6%82%E4%BD%95%E6%89%93%E5%8C%85%E6%88%90apk/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="lidya">
+      <meta itemprop="description" content="服人以诚不以言">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="枫叶白">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2025/08/27/react+vite%E5%A6%82%E4%BD%95%E6%89%93%E5%8C%85%E6%88%90apk/" class="post-title-link" itemprop="url">react+vite如何打包成apk</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2025-08-27 00:00:00 / 修改时间：14:05:40" itemprop="dateCreated datePublished" datetime="2025-08-27T00:00:00+08:00">2025-08-27</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>最近遇到一个问题，如何把已经弄好的react移动端项目打包成apk呢？可以使用capacitor。<br>首先，可以先将依赖全部添加进去项目里面。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm add @capacitor/core @capacitor/cli</span><br><span class="line">npm install  @capacitor/android</span><br></pre></td></tr></table></figure>
+
+<p>接着，可以先把自己的app初始化</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npx cap init <span class="title class_">MyApp</span> com.<span class="property">example</span>.<span class="property">myapp</span>   #<span class="title class_">MyApp</span>是app名字，com.<span class="property">example</span>.<span class="property">myapp</span>是包名</span><br><span class="line">npx cap add android    #这条命令会生成android文件夹</span><br></pre></td></tr></table></figure>
+
+<p>然后把项目进行打包，再通过npx cap copy命令让打包后的产物放进去android目录里面</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm run build</span><br><span class="line">npx cap copy</span><br></pre></td></tr></table></figure>
+
+<p>紧接着可以通过命令去android平台啦</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npx cap open android</span><br></pre></td></tr></table></figure>
+
+<p>默认自动打开android studio后，通过File -&gt; Sync Project with Gradle Files, 或者熟悉android studio的人可以通过右上角的按钮去同步。<br>如果发现Gradle失败，有可能是拉取gradle版本的包失败了，可以找到gradle-wrapper.properties文件，然后把distributionUrl的路径改为distributionUrl&#x3D;https:&#x2F;&#x2F;mirrors.cloud.tencent.com&#x2F;gradle&#x2F;gradle-8.11.1-all.zip，然后重新点击sync按钮就可以啦。</p>
+<p>等sync 成功后，可以自己运行起来看效果，也可以直接用Build -&gt; Generate APP Bundles or APKs,选择 Generate APKs,就能成功打包apk包了。</p>
+
+      
+    </div>
+
+    
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://lidyaqf.github.io/2025/08/25/react%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -248,10 +330,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2025-08-25 00:00:00 / 修改时间：16:09:19" itemprop="dateCreated datePublished" datetime="2025-08-25T00:00:00+08:00">2025-08-25</time>
+              <time title="创建时间：2025-08-25 00:00:00" itemprop="dateCreated datePublished" datetime="2025-08-25T00:00:00+08:00">2025-08-25</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-08-27 11:39:38" itemprop="dateModified" datetime="2025-08-27T11:39:38+08:00">2025-08-27</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -277,6 +365,7 @@
 <li>通过Props和Props回调：用于父子组件的通信，子组件通过props接收父的数据，父组件将回调函数传给子组件，子组件调用这个回调函数，传数据给父组件。</li>
 <li>通过Context API：可以共享状态的API，不需要按层级去传递。</li>
 <li>Redux或Mobx：对于复杂的应用，可以用状态库来实现组件通信。</li>
+<li>事件订阅模式：使用EventEmitter或者第三方库来实现跨组件的事件发布订阅。</li>
 </ul>
 
       
@@ -902,82 +991,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://lidyaqf.github.io/2025/07/21/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E9%AA%8C%E8%AF%81%E7%A0%81%E8%BE%93%E5%85%A5%E6%A1%86%E8%87%AA%E5%8A%A8%E8%81%9A%E7%84%A6%E4%B8%8B%E4%B8%AA%E8%BE%93%E5%85%A5%E6%A1%86/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="lidya">
-      <meta itemprop="description" content="服人以诚不以言">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="枫叶白">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2025/07/21/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E9%AA%8C%E8%AF%81%E7%A0%81%E8%BE%93%E5%85%A5%E6%A1%86%E8%87%AA%E5%8A%A8%E8%81%9A%E7%84%A6%E4%B8%8B%E4%B8%AA%E8%BE%93%E5%85%A5%E6%A1%86/" class="post-title-link" itemprop="url">小程序验证码输入框自动聚焦下个输入框</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2025-07-21 09:44:17 / 修改时间：11:54:13" itemprop="dateCreated datePublished" datetime="2025-07-21T09:44:17+08:00">2025-07-21</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>最开始我想的是有多少个输入框，就放多少个input，做完会发现有各种bug。比如键盘突然消失、没聚焦下个输入框、操作不丝滑等。<br>正确思路是一个输入框就够了，然后通过改变样式（间隔、高亮）来实现，就是表面看起来是六个输入框，本质上只有一个input</p>
-<h2 id="正确解法："><a href="#正确解法：" class="headerlink" title="正确解法："></a>正确解法：</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">view</span> <span class="attr">class</span>=<span class="string">&quot;w-80 h-100 rad-10 b-a-9 tc f-50&quot;</span> <span class="attr">v-for</span>=<span class="string">&quot;(item,index)  in 6&quot;</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">input</span> <span class="attr">class</span>=<span class="string">&quot;w-80 h-100 &quot;</span> <span class="attr">maxlength</span>=<span class="string">&quot;1&quot;</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span>    @<span class="attr">input</span>=<span class="string">&quot;inputListener(index)&quot;</span>   <span class="attr">:focus</span>=<span class="string">&quot;focus &amp;&amp; (focusIndex == index)&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">view</span>&gt;</span> </span><br></pre></td></tr></table></figure>
-
-
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">data</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="keyword">return</span>&#123;</span><br><span class="line">        <span class="attr">focus</span>: <span class="literal">true</span>,</span><br><span class="line">		<span class="attr">code</span>:[<span class="string">&#x27;&#x27;</span>,<span class="string">&#x27;&#x27;</span>,<span class="string">&#x27;&#x27;</span>,<span class="string">&#x27;&#x27;</span>,<span class="string">&#x27;&#x27;</span>,<span class="string">&#x27;&#x27;</span>],<span class="comment">// 需要获取焦点的序号</span></span><br><span class="line">		<span class="attr">focusIndex</span>: <span class="number">0</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="attr">method</span>:&#123;</span><br><span class="line">      <span class="comment">// 输入时事件</span></span><br><span class="line">	<span class="title function_">inputListener</span>(<span class="params">e</span>) &#123;</span><br><span class="line">		<span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">focusIndex</span> != e)<span class="variable language_">this</span>.<span class="property">focusIndex</span>=e</span><br><span class="line">		<span class="keyword">if</span> (e &lt; <span class="number">6</span>) &#123;</span><br><span class="line">					<span class="variable language_">this</span>.<span class="property">focus</span>=<span class="literal">true</span>,</span><br><span class="line">					<span class="variable language_">this</span>.<span class="property">focusIndex</span>=e + <span class="number">1</span></span><br><span class="line">		&#125;<span class="keyword">else</span> &#123;</span><br><span class="line">					<span class="variable language_">this</span>.<span class="property">focus</span>=<span class="literal">false</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-<h3 id="完整版可参考链接："><a href="#完整版可参考链接：" class="headerlink" title="完整版可参考链接："></a>完整版可参考链接：</h3><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/u011423258/article/details/106683068?spm=1001.2014.3001.5506">https://blog.csdn.net/u011423258/article/details/106683068?spm=1001.2014.3001.5506</a></p>
-
-      
-    </div>
-
-    
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1049,7 +1062,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">27</span>
+          <span class="site-state-item-count">28</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

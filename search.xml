@@ -1,168 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>H5与原生交互</title>
-    <url>/2025/07/04/H5%E4%B8%8E%E5%8E%9F%E7%94%9F%E4%BA%A4%E4%BA%92/</url>
-    <content><![CDATA[H5手机端日志工具(vconsole手机端)：&lt;script src=&quot;https://cdn.bootcdn.net/ajax/libs/vConsole/3.15.1/vconsole.min.js&quot;&gt;&lt;/script&gt;&lt;script&gt;  // 初始化 vConsole  var vConsole = new VConsole();  console.log(&#x27;vConsole is ready.&#x27;);&lt;/script&gt;
-
-第一种情况：传数据给原生端if (window.webkit != undefined) &#123;  //这是ios端定义的  window.webkit.messageHandlers.getUserInfo.postMessage(null);&#125; else &#123;  //这是android端定义的feedback  feedback.getUserInfo();&#125;if (window.webkit != undefined) &#123;  window.webkit.messageHandlers.feedback.postMessage(&#123;    title: &quot;测试分享的标题&quot;,    content: &quot;测试分享的内容&quot;,    url: &quot;https://github.com/maying1992&quot;,  &#125;);&#125; else &#123;  // try &#123;  //   result = feedback.getUserInfo();  // &#125; catch(err)&#123;  // &#125;  feedback.postMessage();&#125;
-
-第二种情况：获取原生端的数据created() &#123;  //window挂载  window.setUserInfo = this.setUserInfo;&#125;,setUserInfo(param) &#123;  const u = navigator.userAgent;  const isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端  const result = JSON.parse(param);  if (isiOS) &#123;    this.queryParams = result.userInfo.token;    //兼容原生端那边传过来的不统一值    if (      result.userInfo.userId == undefined ||      result.userInfo.userId == 0    ) &#123;      this.usrIdd = 0;    &#125; else &#123;      this.usrIdd = result.userInfo.userId;    &#125;    window.localStorage.setItem(&quot;lang&quot;, result.userInfo.language);  &#125; else &#123;    this.queryParams = result;    if (result.userId == undefined || result.userId == 0) &#123;      this.usrIdd = 0;    &#125; else &#123;      this.usrIdd = result.userId;    &#125;    window.localStorage.setItem(&quot;lang&quot;, result.language);  &#125;  this.$i18n.locale = localStorage.getItem(&quot;lang&quot;);  // let data = &#123;  //   &#x27;name&#x27; : &#x27;xiaoming&#x27;  // &#125;;  return localStorage.getItem(&quot;lang&quot;);&#125;
-
-当需要通过按钮跳转到app时：直接用 a 标签的 href 跳转，前提是原生应用定义了 myapp://*** 作为触发特定功能的URL，可参考 Instagram 的 H5 跳转 app 的竞品例子，instagram://**。一般跳不过去就是原生端不支持。
-]]></content>
-      <categories>
-        <category>前端</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>Hexo-Next-更改字体、代码可复制</title>
-    <url>/2025/08/18/Hexo-Next-%E6%9B%B4%E6%94%B9%E5%AD%97%E4%BD%93/</url>
-    <content><![CDATA[Next版本为7.8.0，找到 &#x2F;themes&#x2F;next&#x2F;_config.yml 文件，搜索 font 关键词，这里注意一定要将 font 里面的 enable 设置为true, 因为默认为false，然后设置 family 为自己想要的，如果family在其他平台找的，就需要修改host。(只是修改了family， 没修改enable就会不生效，所以一定一定要记得)
-font:  enable: true  # Uri of fonts host, e.g. https://fonts.googleapis.com (Default).  host:   # Font options:  # `external: true` will load this font family from `host` above.  # `family: Times New Roman`. Without any quotes.  # `size: x.x`. Use `em` as unit. Default: 1 (16px)  # Global font settings used for all elements inside &lt;body&gt;.  global:    external: true    family: Noto Serif SC    size:  # Font settings for site title (.site-title).  title:    external: true    family: Noto Serif SC    size:  # Font settings for headlines (&lt;h1&gt; to &lt;h6&gt;).  headings:    external: true    family: Noto Serif SC    size:  # Font settings for posts (.post-body).  posts:    external: true    family:  Noto Serif SC  # Font settings for &lt;code&gt; and code blocks.  codes:    external: true    family: Source Code Pro
-
-代码可复制，还是上面同一个文件，找到以下代码段，将copy_button的enable设置为true，启用就可以啦。show_result设置true后，复制完会显示一个勾。style对应的copy_button不同的样式，看个人喜好来～
-codeblock:  # Code Highlight theme  # Available values: normal | night | night eighties | night blue | night bright | solarized | solarized dark | galactic  # See: https://github.com/chriskempson/tomorrow-theme  highlight_theme: night eighties  # Add copy button on codeblock  copy_button:    enable: true    # Show text copy result.    show_result: true    # Available values: default | flat | mac    style: mac]]></content>
-      <categories>
-        <category>前端</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>ReactNative新架构</title>
-    <url>/2025/08/19/ReactNative%E6%96%B0%E6%9E%B6%E6%9E%84/</url>
-    <content><![CDATA[
-Fabric：同步渲染 UI，消除 Bridge 通信瓶颈
-TurboModules：按需加载原生模块，提升启动速度
-JSI（JavaScript Interface）：直接调用原生代码，替代异步 Bridge, Bridge是异步的、单线程的，会带来额外的开销；而JSI是同步的，更低开销、并发的。
-
-]]></content>
-      <categories>
-        <category>前端</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>GitLab CI/CD</title>
-    <url>/2025/04/10/gitlabci/</url>
-    <content><![CDATA[前端项目 GitLab CI&#x2F;CD 持续集成部署指南（Mac 环境）概要在日常开发过程中，我们经常需要将打包后的 dist 包手动发送给后端部署，效率低且容易出错。CI（Continuous Integration，持续集成）可以自动化这一过程，本文将介绍如何通过 GitLab CI 实现持续集成部署。
-
-一、安装 GitLab Runner请参考官方文档：GitLab Runner 安装指南
-
-二、本地注册 Runner
-打开你的 GitLab 项目页面，进入 Settings → CI&#x2F;CD，展开 Runners 部分。
-记住显示的 URL 和 token，用于后续注册。
-
-执行注册命令gitlab-runner register
-
-按照提示依次输入以下信息：
-
-GitLab CI Coordinator URL: https://gitlab.com
-GitLab CI Token: xxx（从项目中复制）
-Tags: my-tag,another-tag（自定义）
-Description: my-runner（自定义）
-Executor: shell（Mac 上建议选择 shell）
-
-注册完成后，回到 GitLab CI&#x2F;CD 设置页面，可看到 Runner 状态为绿色，说明已成功运行。如果不是绿色，请执行以下命令启动 Runner 服务：
-gitlab-runner run
-
-
-三、编写 .gitlab-ci.yml 文件并提交将以下内容保存为 .gitlab-ci.yml，并 push 到 GitLab：
-stages:  - deploydeploy_to_test:  stage: deploy  script:    - yarn    - rm -rf dist/    - yarn build    - ls -l -t ./dist/    - rsync -avz ./dist/ root@xxx.xx.xx.xxx:/dist
-
-
-这段 CI 脚本会自动打包项目，并使用 rsync 将 dist 目录部署到远程服务器。
-
-
-四、通过 Docker 实现 CI（可选）如果需要通过 Docker 实现更完整的 CI&#x2F;CD 流程，继续以下步骤：
-1. 安装 Docker（Mac）brew install --cask docker
-
-2. 拉取 GitLab 镜像docker pull drud/gitlab-ce:v0.29.1
-
-3. 创建 GitLab 容器docker run -d -p 8443:443 -p 8090:80 -p 8022:22 --restart always --name gitlab drud/gitlab-ce:v0.29.1
-
-说明：
-
--p 8443:443：映射 HTTPS 端口
--p 8090:80：映射 HTTP 端口
--p 8022:22：映射 SSH 端口
---restart always：容器崩溃或主机重启时自动恢复
---name gitlab：容器命名为 gitlab
-
-访问地址：
-http://localhost:8090/
-
-
-五、Docker 模式下的 .gitlab-ci.yml 示例variables:  TEST_NAME: &quot;tips&quot;  OUT_PORT: &quot;8081&quot;  IN_PORT: &quot;8081&quot;stages:  - deploydeploy_to_test:  stage: deploy  before_script:    - if [ $(docker ps -aq --filter name=$CI_PROJECT_NAME) ]; then docker rm -f $CI_PROJECT_NAME; fi  script:    - docker build -f Dockerfile -t $TEST_NAME:latest .    - docker run -d -p $OUT_PORT:$IN_PORT --name $TEST_NAME $TEST_NAME:latest
-
-部署成功后，在 GitLab 的 CI&#x2F;CD Pipelines 页面可看到构建过程，在 Containers 页面会生成新容器，点击对应端口即可访问部署后的页面。
-
-
-
-
-
-]]></content>
-      <categories>
-        <category>前端</category>
-      </categories>
-      <tags>
-        <tag>前端</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>JavaScript 基础</title>
-    <url>/2025/07/02/js%E5%9F%BA%E7%A1%80/</url>
-    <content><![CDATA[JavaScript 基础总结（变量提升、严格模式）
-变量与函数提升规则
-变量提升：按顺序执行，变量声明提升但赋值不会提升。
-函数提升：整个函数体提升到全局作用域顶部。
-优先级：函数提升 &gt; 变量提升。
-
-console.log(a); // undefinedvar a = 2;foo(); // 正常调用function foo() &#123;  console.log(&quot;函数提升成功&quot;);&#125;
-
-
-使用 use strict 严格模式作用：
-避免创建意外的全局变量；
-禁止使用未声明变量，防止内存泄漏；
-this 默认绑定到 undefined 而非 window。
-
-function foo() &#123;  &quot;use strict&quot;;  console.log(this.a); // ❌ TypeError&#125;var a = 2;foo(); // 严格模式下 this 是 undefined，无法读取 this.a
-
-
-(function() &#123;  &quot;use strict&quot;;  foo(); // 严格模式下调用函数则不影响默认绑定&#125;)();function foo() &#123;  console.log(this.a);&#125;var a = 2;
-
-
-]]></content>
-      <categories>
-        <category>前端</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>ReactNative自定义滑动条</title>
-    <url>/2025/07/22/ReactNative%E8%87%AA%E5%AE%9A%E4%B9%89%E6%BB%91%E5%8A%A8%E6%9D%A1/</url>
-    <content><![CDATA[测试、UI要求的会比较高，比如滑动图标改成自定义图片等，所以传统的@react-native-community&#x2F;slider已经不能满足所需，所以采取自定义形式，在网上找了很久才发现的一个宝藏依赖：https://github.com/miblanchard/react-native-slider
-组件代码如下：import React, &#123; PureComponent &#125; from &#x27;react&#x27;;import &#123;    Animated,    Easing,    I18nManager,    Image,    ImageSourcePropType,    LayoutChangeEvent,    PanResponder,    PanResponderInstance,    View,    ViewStyle,&#125; from &#x27;react-native&#x27;;// stylesimport &#123; defaultStyles as styles &#125; from &#x27;./styles&#x27;;import type &#123; Dimensions, SliderProps, SliderState &#125; from &#x27;./types&#x27;;type RectReturn = &#123;    containsPoint: (nativeX: number, nativeY: number) =&gt; boolean;    height: number;    trackDistanceToPoint: (nativeX: number) =&gt; number;    width: number;    x: number;    y: number;&#125;;const Rect = (&#123;    height,    width,    x,    y,&#125;: &#123;    height: number;    width: number;    x: number;    y: number;&#125;) =&gt; (&#123;    containsPoint: (nativeX: number, nativeY: number) =&gt;        nativeX &gt;= x &amp;&amp;        nativeY &gt;= y &amp;&amp;        nativeX &lt;= x + width &amp;&amp;        nativeY &lt;= y + height,    height,    trackDistanceToPoint: (nativeX: number) =&gt; &#123;        if (nativeX &lt; x) &#123;            return x - nativeX;        &#125;        if (nativeX &gt; x + width) &#123;            return nativeX - (x + width);        &#125;        return 0;    &#125;,    width,    x,    y,&#125;);const DEFAULT_ANIMATION_CONFIGS = &#123;    spring: &#123;        friction: 7,        tension: 100,    &#125;,    timing: &#123;        duration: 150,        easing: Easing.inOut(Easing.ease),        delay: 0,    &#125;,&#125;;const normalizeValue = (    props: SliderProps,    value?: number | Array&lt;number&gt;,): Array&lt;number&gt; =&gt; &#123;    if (!value || (Array.isArray(value) &amp;&amp; value.length === 0)) &#123;        return [0];    &#125;    const &#123;maximumValue, minimumValue&#125; = props;    const getBetweenValue = (inputValue: number) =&gt;        Math.max(Math.min(inputValue, maximumValue), minimumValue);    if (!Array.isArray(value)) &#123;        return [getBetweenValue(value)];    &#125;    return value.map(getBetweenValue).sort((a, b) =&gt; a - b);&#125;;const updateValues = (&#123;    values,    newValues = values,&#125;: &#123;    values: number | Array&lt;number&gt; | Animated.Value | Array&lt;Animated.Value&gt;;    newValues?: number | Array&lt;number&gt; | Animated.Value | Array&lt;Animated.Value&gt;;&#125;): Animated.Value[] =&gt; &#123;    if (        Array.isArray(newValues) &amp;&amp;        Array.isArray(values) &amp;&amp;        newValues.length !== values.length    ) &#123;        return updateValues(&#123;values: newValues&#125;);    &#125;    if (Array.isArray(values) &amp;&amp; Array.isArray(newValues)) &#123;        return values?.map((value: number | Animated.Value, index: number) =&gt; &#123;            let valueToSet = newValues[index];            if (value instanceof Animated.Value) &#123;                if (valueToSet instanceof Animated.Value) &#123;                    valueToSet = valueToSet.__getValue();                &#125;                value.setValue(valueToSet);                return value;            &#125;            if (valueToSet instanceof Animated.Value) &#123;                return valueToSet;            &#125;            return new Animated.Value(valueToSet);        &#125;);    &#125;    return [new Animated.Value(0)];&#125;;const indexOfLowest = (values: Array&lt;number&gt;): number =&gt; &#123;    let lowestIndex = 0;    values.forEach((value, index, array) =&gt; &#123;        if (value &lt; array[lowestIndex]) &#123;            lowestIndex = index;        &#125;    &#125;);    return lowestIndex;&#125;;export class Slider extends PureComponent&lt;SliderProps, SliderState&gt; &#123;    constructor(props: SliderProps) &#123;        super(props);        this._panResponder = PanResponder.create(&#123;            onStartShouldSetPanResponder:                this._handleStartShouldSetPanResponder,            onMoveShouldSetPanResponder: this._handleMoveShouldSetPanResponder,            onPanResponderGrant: this._handlePanResponderGrant,            onPanResponderMove: this._handlePanResponderMove,            onPanResponderRelease: this._handlePanResponderEnd,            onPanResponderTerminationRequest:                this._handlePanResponderRequestEnd,            onPanResponderTerminate: this._handlePanResponderEnd,        &#125;);        this.state = &#123;            allMeasured: false,            containerSize: &#123;                width: 0,                height: 0,            &#125;,            thumbSize: &#123;                width: 0,                height: 0,            &#125;,            trackMarksValues: updateValues(&#123;                values: normalizeValue(this.props, this.props.trackMarks),            &#125;),            values: updateValues(&#123;                values: normalizeValue(                    this.props,                    this.props.value instanceof Animated.Value                        ? this.props.value.__getValue()                        : this.props.value,                ),            &#125;),        &#125;;    &#125;    static defaultProps = &#123;        animationType: &#x27;timing&#x27;,        debugTouchArea: false,        trackMarks: [],        maximumTrackTintColor: &#x27;#b3b3b3&#x27;,        maximumValue: 1,        minimumTrackTintColor: &#x27;#3f3f3f&#x27;,        minimumValue: 0,        step: 0,        thumbTintColor: &#x27;#343434&#x27;,        trackClickable: true,        value: 0,        vertical: false,    &#125;;    static getDerivedStateFromProps(props: SliderProps, state: SliderState) &#123;        if (            props.trackMarks &amp;&amp;            !!state.trackMarksValues &amp;&amp;            state.trackMarksValues.length &gt; 0        ) &#123;            const newTrackMarkValues = normalizeValue(props, props.trackMarks);            const statePatch = &#123;&#125; as SliderState;            if (                state.trackMarksValues            ) &#123;                statePatch.trackMarksValues = updateValues(&#123;                    values: state.trackMarksValues,                    newValues: newTrackMarkValues,                &#125;);            &#125;            return statePatch;        &#125;    &#125;    componentDidUpdate() &#123;        const newValues = normalizeValue(            this.props,            this.props.value instanceof Animated.Value                ? this.props.value.__getValue()                : this.props.value,        );        newValues.forEach((value, i) =&gt; &#123;            if (!this.state.values[i]) &#123;                this._setCurrentValue(value, i);            &#125; else if (value !== this.state.values[i].__getValue()) &#123;                if (this.props.animateTransitions) &#123;                    this._setCurrentValueAnimated(value, i);                &#125; else &#123;                    this._setCurrentValue(value, i);                &#125;            &#125;        &#125;);    &#125;    _getRawValues(        values: Array&lt;Animated.Value&gt; | Array&lt;Animated.AnimatedInterpolation&gt;,    ) &#123;        return values.map((value) =&gt; value.__getValue());    &#125;    _handleStartShouldSetPanResponder = (        e: any,    ): /* gestureState: GestureState */    boolean =&gt; this._thumbHitTest(e); // Should we become active when the user presses down on the thumb?    _handleMoveShouldSetPanResponder(): /* e, gestureState: GestureState */    boolean &#123;        // Should we become active when the user moves a touch over the thumb?        return false;    &#125;    _handlePanResponderGrant = (e: &#123;nativeEvent: any&#125;) =&gt; &#123;        const &#123;thumbSize&#125; = this.state;        const &#123;nativeEvent&#125; = e;        this._previousLeft = this.props.trackClickable            ? nativeEvent.locationX - thumbSize.width            : this._getThumbLeft(this._getCurrentValue(this._activeThumbIndex));        this.props?.onSlidingStart?.(this._getRawValues(this.state.values));    &#125;;    _handlePanResponderMove = (_e: any, gestureState: any) =&gt; &#123;        if (this.props.disabled) &#123;            return;        &#125;        this._setCurrentValue(            this._getValue(gestureState),            this._activeThumbIndex,            () =&gt; &#123;                this.props?.onValueChange?.(                    this._getRawValues(this.state.values),                );            &#125;,        );    &#125;;    _handlePanResponderRequestEnd = () =&gt;        /* e, gestureState: GestureState */        &#123;            // Should we allow another component to take over this pan?            return false;        &#125;;    _handlePanResponderEnd = (_e: any, gestureState: any) =&gt; &#123;        if (this.props.disabled) &#123;            return;        &#125;        this._setCurrentValue(            this._getValue(gestureState),            this._activeThumbIndex,            () =&gt; &#123;                if (this.props.trackClickable) &#123;                    this.props?.onValueChange?.(                        this._getRawValues(this.state.values),                    );                &#125;                this.props?.onSlidingComplete?.(                    this._getRawValues(this.state.values),                );            &#125;,        );        this._activeThumbIndex = 0;    &#125;;    _measureContainer = (e: LayoutChangeEvent) =&gt; &#123;        this._handleMeasure(&#x27;_containerSize&#x27;, e);    &#125;;    _measureTrack = (e: LayoutChangeEvent) =&gt; &#123;        this._handleMeasure(&#x27;_trackSize&#x27;, e);    &#125;;    _measureThumb = (e: LayoutChangeEvent) =&gt; &#123;        this._handleMeasure(&#x27;_thumbSize&#x27;, e);    &#125;;    _handleMeasure = (        name: &#x27;_containerSize&#x27; | &#x27;_trackSize&#x27; | &#x27;_thumbSize&#x27;,        e: LayoutChangeEvent,    ) =&gt; &#123;        const &#123;width, height&#125; = e.nativeEvent.layout;        const size = &#123;            width,            height,        &#125;;        const currentSize = this[name];        if (            currentSize &amp;&amp;            width === currentSize.width &amp;&amp;            height === currentSize.height        ) &#123;            return;        &#125;        this[name] = size;        if (this._containerSize &amp;&amp; this._thumbSize) &#123;            this.setState(&#123;                containerSize: this._containerSize,                thumbSize: this._thumbSize,                allMeasured: true,            &#125;);        &#125;    &#125;;    _getRatio = (value: number) =&gt; &#123;        const &#123;maximumValue, minimumValue&#125; = this.props;        return (value - minimumValue) / (maximumValue - minimumValue);    &#125;;    _getThumbLeft = (value: number) =&gt; &#123;        const &#123;containerSize, thumbSize&#125; = this.state;        const &#123;vertical&#125; = this.props;        const standardRatio = this._getRatio(value);        const ratio = I18nManager.isRTL ? 1 - standardRatio : standardRatio;        return ratio * ((vertical ? containerSize.height : containerSize.width) - thumbSize.width);    &#125;;    _getValue = (gestureState: &#123;dx: number, dy: number&#125;) =&gt; &#123;        const &#123;containerSize, thumbSize, values&#125; = this.state;        const &#123;maximumValue, minimumValue, step, vertical&#125; = this.props;        const length = containerSize.width - thumbSize.width;        const thumbLeft = vertical ? this._previousLeft + (gestureState.dy * -1) : this._previousLeft + gestureState.dx;        const nonRtlRatio = thumbLeft / length;        const ratio = I18nManager.isRTL ? 1 - nonRtlRatio : nonRtlRatio;        let minValue = minimumValue;        let maxValue = maximumValue;        const rawValues = this._getRawValues(values);        const buffer = step ? step : 0.1;        if (values.length === 2) &#123;            if (this._activeThumbIndex === 1) &#123;                minValue = rawValues[0] + buffer;            &#125; else &#123;                maxValue = rawValues[1] - buffer;            &#125;        &#125;        if (step) &#123;            return Math.max(                minValue,                Math.min(                    maxValue,                    minimumValue +                        Math.round(                            (ratio * (maximumValue - minimumValue)) / step,                        ) *                            step,                ),            );        &#125;        return Math.max(            minValue,            Math.min(                maxValue,                ratio * (maximumValue - minimumValue) + minimumValue,            ),        );    &#125;;    _getCurrentValue = (thumbIndex: number = 0) =&gt;        this.state.values[thumbIndex].__getValue();    _setCurrentValue = (        value: number,        thumbIndex: number | null | undefined,        callback?: () =&gt; void,    ) =&gt; &#123;        const safeIndex = thumbIndex ?? 0;        const animatedValue = this.state.values[safeIndex];        if (animatedValue) &#123;            animatedValue.setValue(value);            if (callback) &#123;                callback();            &#125;        &#125; else &#123;            this.setState((prevState: SliderState) =&gt; &#123;                const newValues = [...prevState.values];                newValues[safeIndex] = new Animated.Value(value);                return &#123;                    values: newValues,                &#125;;            &#125;, callback);        &#125;    &#125;;    _setCurrentValueAnimated = (value: number, thumbIndex: number = 0) =&gt; &#123;        const &#123;animationType&#125; = this.props;        const animationConfig = &#123;            ...DEFAULT_ANIMATION_CONFIGS[animationType],            ...this.props.animationConfig,            toValue: value,            useNativeDriver: false,        &#125;;        Animated[animationType](            this.state.values[thumbIndex],            animationConfig,        ).start();    &#125;;    _getTouchOverflowSize = (): &#123;        width: number;        height: number;    &#125; =&gt; &#123;        const &#123;allMeasured, containerSize, thumbSize&#125; = this.state;        const &#123;thumbTouchSize&#125; = this.props;        const size = &#123;            width: 40,            height: 40,        &#125;;        if (allMeasured) &#123;            size.width = Math.max(                0,                thumbTouchSize?.width || 0 - thumbSize.width,            );            size.height = Math.max(                0,                thumbTouchSize?.height || 0 - containerSize.height,            );        &#125;        return size;    &#125;;    _getTouchOverflowStyle = () =&gt; &#123;        const &#123;width, height&#125; = this._getTouchOverflowSize();        const touchOverflowStyle = &#123;&#125; as ViewStyle;        if (width !== undefined &amp;&amp; height !== undefined) &#123;            const verticalMargin = -height / 2;            touchOverflowStyle.marginTop = verticalMargin;            touchOverflowStyle.marginBottom = verticalMargin;            const horizontalMargin = -width / 2;            touchOverflowStyle.marginLeft = horizontalMargin;            touchOverflowStyle.marginRight = horizontalMargin;        &#125;        if (this.props.debugTouchArea === true) &#123;            touchOverflowStyle.backgroundColor = &#x27;orange&#x27;;            touchOverflowStyle.opacity = 0.5;        &#125;        return touchOverflowStyle;    &#125;;    _thumbHitTest = (e: &#123;nativeEvent: any&#125;) =&gt; &#123;        const &#123;nativeEvent&#125; = e;        const &#123;trackClickable&#125; = this.props;        const &#123;values&#125; = this.state;        const hitThumb = values.find((_, i) =&gt; &#123;            const thumbTouchRect = this._getThumbTouchRect(i);            const containsPoint = thumbTouchRect.containsPoint(                nativeEvent.locationX,                nativeEvent.locationY,            );            if (containsPoint) &#123;                this._activeThumbIndex = i;            &#125;            return containsPoint;        &#125;);        if (hitThumb) &#123;            return true;        &#125;        if (trackClickable) &#123;            // set the active thumb index            if (values.length === 1) &#123;                this._activeThumbIndex = 0;            &#125; else &#123;                // we will find the closest thumb and that will be the active thumb                const thumbDistances = values.map((_value, index) =&gt; &#123;                    const thumbTouchRect = this._getThumbTouchRect(index);                    return thumbTouchRect.trackDistanceToPoint(                        nativeEvent.locationX,                    );                &#125;);                this._activeThumbIndex = indexOfLowest(thumbDistances);            &#125;            return true;        &#125;        return false;    &#125;;    _getThumbTouchRect = (thumbIndex: number = 0): RectReturn =&gt; &#123;        const &#123;containerSize, thumbSize&#125; = this.state;        const &#123;thumbTouchSize&#125; = this.props;        const &#123;height, width&#125; = thumbTouchSize || &#123;height: 40, width: 40&#125;;        const touchOverflowSize = this._getTouchOverflowSize();        return Rect(&#123;            height,            width,            x:                touchOverflowSize.width / 2 +                this._getThumbLeft(this._getCurrentValue(thumbIndex)) +                (thumbSize.width - width) / 2,            y:                touchOverflowSize.height / 2 +                (containerSize.height - height) / 2,        &#125;);    &#125;;    _activeThumbIndex: number = 0;    _containerSize: Dimensions | null | undefined;    _panResponder: PanResponderInstance;    _previousLeft: number = 0;    _thumbSize: Dimensions | null | undefined;    _trackSize: Dimensions | null | undefined;    _renderDebugThumbTouchRect = (        thumbLeft: Animated.AnimatedInterpolation,        index: number,    ) =&gt; &#123;        const &#123;height, y, width&#125; = this._getThumbTouchRect() || &#123;&#125;;        const positionStyle = &#123;            height,            left: thumbLeft,            top: y,            width,        &#125;;        return (            &lt;Animated.View                key=&#123;`debug-thumb-$&#123;index&#125;`&#125;                pointerEvents=&quot;none&quot;                style=&#123;[styles.debugThumbTouchArea, positionStyle]&#125;            /&gt;        );    &#125;;    _renderThumbImage = (thumbIndex: number = 0) =&gt; &#123;        const &#123;thumbImage&#125; = this.props;        if (!thumbImage) &#123;            return null;        &#125;        return (            &lt;Image                source=&#123;                    (Array.isArray(thumbImage)                        ? thumbImage[thumbIndex]                        : thumbImage) as ImageSourcePropType                &#125;            /&gt;        );    &#125;;    render() &#123;        const &#123;            containerStyle,            debugTouchArea,            maximumTrackTintColor,            maximumValue,            minimumTrackTintColor,            minimumValue,            renderAboveThumbComponent,            renderTrackMarkComponent,            renderThumbComponent,            thumbStyle,            thumbTintColor,            trackStyle,            vertical,            ...other        &#125; = this.props;        const &#123;            allMeasured,            containerSize,            thumbSize,            trackMarksValues,            values,        &#125; = this.state;        const interpolatedThumbValues = values.map((value) =&gt;            value.interpolate(&#123;                inputRange: [minimumValue, maximumValue],                outputRange: I18nManager.isRTL                    ? [0, -(containerSize.width - thumbSize.width)]                    : [0, containerSize.width - thumbSize.width],            &#125;),        );        const interpolatedTrackValues = values.map((value) =&gt;            value.interpolate(&#123;                inputRange: [minimumValue, maximumValue],                outputRange: [0, containerSize.width - thumbSize.width],            &#125;),        );        const interpolatedTrackMarksValues =            trackMarksValues &amp;&amp;            trackMarksValues.map((v) =&gt;                v.interpolate(&#123;                    inputRange: [minimumValue, maximumValue],                    outputRange: I18nManager.isRTL                        ? [0, -(containerSize.width - thumbSize.width)]                        : [0, containerSize.width - thumbSize.width],                &#125;),            );        const valueVisibleStyle = &#123;&#125; as ViewStyle;        if (!allMeasured) &#123;            valueVisibleStyle.opacity = 0;        &#125;        const interpolatedRawValues = this._getRawValues(            interpolatedTrackValues,        );        const minThumbValue = new Animated.Value(            Math.min(...interpolatedRawValues),        );        const maxThumbValue = new Animated.Value(            Math.max(...interpolatedRawValues),        );        const minimumTrackStyle = &#123;            position: &#x27;absolute&#x27;,            left:                interpolatedTrackValues.length === 1                    ? new Animated.Value(0)                    : Animated.add(minThumbValue, thumbSize.width / 2),            width:                interpolatedTrackValues.length === 1                    ? Animated.add(                          interpolatedTrackValues[0],                          thumbSize.width / 2,                      )                    : Animated.add(                          Animated.multiply(minThumbValue, -1),                          maxThumbValue,                      ),            backgroundColor: minimumTrackTintColor,            ...valueVisibleStyle,        &#125; as ViewStyle;        const touchOverflowStyle = this._getTouchOverflowStyle();        return (            &lt;&gt;                &#123;renderAboveThumbComponent &amp;&amp; (                    &lt;View style=&#123;styles.aboveThumbComponentsContainer&#125;&gt;                        &#123;interpolatedThumbValues.map((value, i) =&gt; (                            &lt;Animated.View                                key=&#123;`slider-above-thumb-$&#123;i&#125;`&#125;                                style=&#123;[                                    styles.renderThumbComponent, // eslint-disable-next-line react-native/no-inline-styles                                    &#123;                                        bottom: 0,                                        transform: [                                            &#123;                                                translateX: value,                                            &#125;,                                            &#123;                                                translateY: 0,                                            &#125;,                                        ],                                        ...valueVisibleStyle,                                    &#125;,                                ]&#125;&gt;                                &#123;renderAboveThumbComponent(i)&#125;                            &lt;/Animated.View&gt;                        ))&#125;                    &lt;/View&gt;                )&#125;                &lt;View                    &#123;...other&#125;                    style=&#123;[styles.container, vertical ? &#123;transform: [&#123;rotate: &#x27;-90deg&#x27; &#125;]&#125; : &#123;&#125;, containerStyle]&#125;                    onLayout=&#123;this._measureContainer&#125;&gt;                    &lt;View                        renderToHardwareTextureAndroid                        style=&#123;[                            styles.track,                            &#123;                                backgroundColor: maximumTrackTintColor,                            &#125;,                            trackStyle,                        ]&#125;                        onLayout=&#123;this._measureTrack&#125;                    /&gt;                    &lt;Animated.View                        renderToHardwareTextureAndroid                        style=&#123;[styles.track, trackStyle, minimumTrackStyle]&#125;                    /&gt;                    &#123;renderTrackMarkComponent &amp;&amp;                        interpolatedTrackMarksValues &amp;&amp;                        interpolatedTrackMarksValues.map((value, i) =&gt; (                            &lt;Animated.View                                key=&#123;`track-mark-$&#123;i&#125;`&#125;                                style=&#123;[                                    styles.renderThumbComponent,                                    &#123;                                        transform: [                                            &#123;                                                translateX: value,                                            &#125;,                                            &#123;                                                translateY: 0,                                            &#125;,                                        ],                                        ...valueVisibleStyle,                                    &#125;,                                ]&#125;&gt;                                &#123;renderTrackMarkComponent(i)&#125;                            &lt;/Animated.View&gt;                        ))&#125;                    &#123;interpolatedThumbValues.map((value, i) =&gt; (                        &lt;Animated.View                            key=&#123;`slider-thumb-$&#123;i&#125;`&#125;                            style=&#123;[                                renderThumbComponent                                    ? styles.renderThumbComponent                                    : styles.thumb,                                renderThumbComponent                                    ? &#123;&#125;                                    : &#123;                                          backgroundColor: thumbTintColor,                                          ...thumbStyle,                                      &#125;,                                &#123;                                    transform: [                                        &#123;                                            translateX: value,                                        &#125;,                                        &#123;                                            translateY: 0,                                        &#125;,                                    ],                                    ...valueVisibleStyle,                                &#125;,                            ]&#125;                            onLayout=&#123;this._measureThumb&#125;&gt;                            &#123;renderThumbComponent                                ? renderThumbComponent()                                : this._renderThumbImage(i)&#125;                        &lt;/Animated.View&gt;                    ))&#125;                    &lt;View                        style=&#123;[styles.touchArea, touchOverflowStyle]&#125;                        &#123;...this._panResponder.panHandlers&#125;&gt;                        &#123;!!debugTouchArea &amp;&amp;                            interpolatedThumbValues.map((value, i) =&gt;                                this._renderDebugThumbTouchRect(value, i),                            )&#125;                    &lt;/View&gt;                &lt;/View&gt;            &lt;/&gt;        );    &#125;&#125;
-
-
-导入部分：import &#123; Slider &#125; from &#x27;所放的上述组件路径&#x27;&lt;SliderminimumValue=&#123;1&#125;maximumValue=&#123;7&#125;  //可滑动范围为1到7minimumTrackTintColor=&quot;#0A79C3&quot; maximumTrackTintColor=&quot;#F3F3F3&quot;step=&#123;1&#125; //步长value=&#123;targetDay&#125; //默认值，例如4onValueChange=&#123;targetDays =&gt; dispatch(&#123;	type: &#x27;SetupWeekTarget/updateState&#x27;,	payload: &#123; targetDay: targetDays &#125;&#125;)&#125;  //滑动触发的事件trackStyle=&#123;&#123; height: 10, borderRadius: 12 &#125;&#125;  containerStyle=&#123;&#123; width: SCREEN_WIDTH - 90 &#125;&#125;thumbTintColor=&quot;transparent&quot;thumbImage=&#123;require(&#x27;图片路径&#x27;)&#125;/&gt;
-
-
-详细参数可参考链接：https://github.com/miblanchard/react-native-slider
-]]></content>
-      <categories>
-        <category>前端</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>聊聊Node RPC</title>
-    <url>/2025/07/16/node%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%E7%82%B9/</url>
-    <content><![CDATA[什么是序列化在 TCP 通道里传输的数据只能是二进制形式的，所以将数据结构或对象转化成二进制的形式就叫序列化。反过来就叫反序列化，他们之间的规则就叫协议。
-RPC是什么全称是Remote Procedure Call， 中文名字叫远程过程调用。大部份的 RPC 是基于TCP的。具体实现流程如下：
-1、前端通过 Proxy 代理调用相应的接口, Proxy 将 RPC 的服务名，方法名，参数等信息转换成 RPC Request 对象，交给 RPC 框架2、RPC 框架通过 RPC 协议将 RPC Request 对象序列化成二进制形式3、RPC 通过 TCP 通道把二进制数据传递给后端4、后端将二进制数据反序列化成 RPC Request 对象5、后端将反序列化后的数据对应到自己写的方法内，传入参数，获取数据，将获取后的数据进行封装，封装成 RPC Response 交给 RPC 框架6、RPC 框架通过 RPC 协议将 RPC Response 对象序列化成二进制形式, 通过 TCP 通道传递给前端6、前端将收到的二进制数据反序列化成 RPC response 对象，将结果通过 Proxy 返回给业务代码
-]]></content>
-      <categories>
-        <category>后端</category>
-      </categories>
-  </entry>
-  <entry>
     <title>ELK安装流程</title>
     <url>/2025/04/11/ELK%E5%AE%89%E8%A3%85%E6%B5%81%E7%A8%8B/</url>
     <content><![CDATA[使用 Docker 安装 ELK Stack（ElasticSearch、Logstash、Kibana）
@@ -246,10 +84,163 @@ docker exec -u 0 -it some-kibana bash
       </categories>
   </entry>
   <entry>
-    <title>Vue中插入脚本</title>
-    <url>/2025/08/12/vue%E5%AE%9E%E7%8E%B0%E6%8F%92%E5%85%A5%E8%84%9A%E6%9C%AC/</url>
-    <content><![CDATA[当你拿到的广告代码是包含script标签时，则需要通过一定的转换，才能正常渲染到页面上。
-//当你拿到的广告代码如下：&lt;script type=&quot;text/javascript&quot;&gt; atOptions = &#123;  &#x27;key&#x27; : &#x27;1523b7ddb936e560aadef64a851d500c&#x27;,  &#x27;format&#x27; : &#x27;iframe&#x27;,  &#x27;height&#x27; : 250,  &#x27;width&#x27; : 300,  &#x27;params&#x27; : &#123;&#125; &#125;;&lt;/script&gt;&lt;script type=&quot;text/javascript&quot; src=&quot;//www.highperformanceformat.com/1523b7ddb936e560aadef64a851d500c/invoke.js&quot;&gt;&lt;/script&gt;//转换后：const targetDiv = document.getElementById(&quot;de_v&quot;);if (!targetDiv) return;// 创建第一个 script 设置 atOptionsconst script1 = document.createElement(&quot;script&quot;);script1.type = &quot;text/javascript&quot;;script1.innerHTML = `  atOptions = &#123;&#x27;key&#x27; : &#x27;1523b7ddb936e560aadef64a851d500c&#x27;,&#x27;format&#x27; : &#x27;iframe&#x27;,&#x27;height&#x27; : 250,&#x27;width&#x27; : 300,&#x27;params&#x27; : &#123;&#125;&#125;;`;// 创建第二个 script 负责加载外部 JSconst script2 = document.createElement(&quot;script&quot;);script2.type = &quot;text/javascript&quot;;script2.src = &quot;//www.highperformanceformat.com/1523b7ddb936e560aadef64a851d500c/invoke.js&quot;;// 插入到 #de_v 容器内targetDiv.appendChild(script1);targetDiv.appendChild(script2);
+    <title>H5与原生交互</title>
+    <url>/2025/07/04/H5%E4%B8%8E%E5%8E%9F%E7%94%9F%E4%BA%A4%E4%BA%92/</url>
+    <content><![CDATA[H5手机端日志工具(vconsole手机端)：&lt;script src=&quot;https://cdn.bootcdn.net/ajax/libs/vConsole/3.15.1/vconsole.min.js&quot;&gt;&lt;/script&gt;&lt;script&gt;  // 初始化 vConsole  var vConsole = new VConsole();  console.log(&#x27;vConsole is ready.&#x27;);&lt;/script&gt;
+
+第一种情况：传数据给原生端if (window.webkit != undefined) &#123;  //这是ios端定义的  window.webkit.messageHandlers.getUserInfo.postMessage(null);&#125; else &#123;  //这是android端定义的feedback  feedback.getUserInfo();&#125;if (window.webkit != undefined) &#123;  window.webkit.messageHandlers.feedback.postMessage(&#123;    title: &quot;测试分享的标题&quot;,    content: &quot;测试分享的内容&quot;,    url: &quot;https://github.com/maying1992&quot;,  &#125;);&#125; else &#123;  // try &#123;  //   result = feedback.getUserInfo();  // &#125; catch(err)&#123;  // &#125;  feedback.postMessage();&#125;
+
+第二种情况：获取原生端的数据created() &#123;  //window挂载  window.setUserInfo = this.setUserInfo;&#125;,setUserInfo(param) &#123;  const u = navigator.userAgent;  const isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端  const result = JSON.parse(param);  if (isiOS) &#123;    this.queryParams = result.userInfo.token;    //兼容原生端那边传过来的不统一值    if (      result.userInfo.userId == undefined ||      result.userInfo.userId == 0    ) &#123;      this.usrIdd = 0;    &#125; else &#123;      this.usrIdd = result.userInfo.userId;    &#125;    window.localStorage.setItem(&quot;lang&quot;, result.userInfo.language);  &#125; else &#123;    this.queryParams = result;    if (result.userId == undefined || result.userId == 0) &#123;      this.usrIdd = 0;    &#125; else &#123;      this.usrIdd = result.userId;    &#125;    window.localStorage.setItem(&quot;lang&quot;, result.language);  &#125;  this.$i18n.locale = localStorage.getItem(&quot;lang&quot;);  // let data = &#123;  //   &#x27;name&#x27; : &#x27;xiaoming&#x27;  // &#125;;  return localStorage.getItem(&quot;lang&quot;);&#125;
+
+当需要通过按钮跳转到app时：直接用 a 标签的 href 跳转，前提是原生应用定义了 myapp://*** 作为触发特定功能的URL，可参考 Instagram 的 H5 跳转 app 的竞品例子，instagram://**。一般跳不过去就是原生端不支持。
+]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>ReactNative新架构</title>
+    <url>/2025/08/19/ReactNative%E6%96%B0%E6%9E%B6%E6%9E%84/</url>
+    <content><![CDATA[
+Fabric：同步渲染 UI，消除 Bridge 通信瓶颈
+TurboModules：按需加载原生模块，提升启动速度
+JSI（JavaScript Interface）：直接调用原生代码，替代异步 Bridge, Bridge是异步的、单线程的，会带来额外的开销；而JSI是同步的，更低开销、并发的。
+
+]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>ReactNative自定义滑动条</title>
+    <url>/2025/07/22/ReactNative%E8%87%AA%E5%AE%9A%E4%B9%89%E6%BB%91%E5%8A%A8%E6%9D%A1/</url>
+    <content><![CDATA[测试、UI要求的会比较高，比如滑动图标改成自定义图片等，所以传统的@react-native-community&#x2F;slider已经不能满足所需，所以采取自定义形式，在网上找了很久才发现的一个宝藏依赖：https://github.com/miblanchard/react-native-slider
+组件代码如下：import React, &#123; PureComponent &#125; from &#x27;react&#x27;;import &#123;    Animated,    Easing,    I18nManager,    Image,    ImageSourcePropType,    LayoutChangeEvent,    PanResponder,    PanResponderInstance,    View,    ViewStyle,&#125; from &#x27;react-native&#x27;;// stylesimport &#123; defaultStyles as styles &#125; from &#x27;./styles&#x27;;import type &#123; Dimensions, SliderProps, SliderState &#125; from &#x27;./types&#x27;;type RectReturn = &#123;    containsPoint: (nativeX: number, nativeY: number) =&gt; boolean;    height: number;    trackDistanceToPoint: (nativeX: number) =&gt; number;    width: number;    x: number;    y: number;&#125;;const Rect = (&#123;    height,    width,    x,    y,&#125;: &#123;    height: number;    width: number;    x: number;    y: number;&#125;) =&gt; (&#123;    containsPoint: (nativeX: number, nativeY: number) =&gt;        nativeX &gt;= x &amp;&amp;        nativeY &gt;= y &amp;&amp;        nativeX &lt;= x + width &amp;&amp;        nativeY &lt;= y + height,    height,    trackDistanceToPoint: (nativeX: number) =&gt; &#123;        if (nativeX &lt; x) &#123;            return x - nativeX;        &#125;        if (nativeX &gt; x + width) &#123;            return nativeX - (x + width);        &#125;        return 0;    &#125;,    width,    x,    y,&#125;);const DEFAULT_ANIMATION_CONFIGS = &#123;    spring: &#123;        friction: 7,        tension: 100,    &#125;,    timing: &#123;        duration: 150,        easing: Easing.inOut(Easing.ease),        delay: 0,    &#125;,&#125;;const normalizeValue = (    props: SliderProps,    value?: number | Array&lt;number&gt;,): Array&lt;number&gt; =&gt; &#123;    if (!value || (Array.isArray(value) &amp;&amp; value.length === 0)) &#123;        return [0];    &#125;    const &#123;maximumValue, minimumValue&#125; = props;    const getBetweenValue = (inputValue: number) =&gt;        Math.max(Math.min(inputValue, maximumValue), minimumValue);    if (!Array.isArray(value)) &#123;        return [getBetweenValue(value)];    &#125;    return value.map(getBetweenValue).sort((a, b) =&gt; a - b);&#125;;const updateValues = (&#123;    values,    newValues = values,&#125;: &#123;    values: number | Array&lt;number&gt; | Animated.Value | Array&lt;Animated.Value&gt;;    newValues?: number | Array&lt;number&gt; | Animated.Value | Array&lt;Animated.Value&gt;;&#125;): Animated.Value[] =&gt; &#123;    if (        Array.isArray(newValues) &amp;&amp;        Array.isArray(values) &amp;&amp;        newValues.length !== values.length    ) &#123;        return updateValues(&#123;values: newValues&#125;);    &#125;    if (Array.isArray(values) &amp;&amp; Array.isArray(newValues)) &#123;        return values?.map((value: number | Animated.Value, index: number) =&gt; &#123;            let valueToSet = newValues[index];            if (value instanceof Animated.Value) &#123;                if (valueToSet instanceof Animated.Value) &#123;                    valueToSet = valueToSet.__getValue();                &#125;                value.setValue(valueToSet);                return value;            &#125;            if (valueToSet instanceof Animated.Value) &#123;                return valueToSet;            &#125;            return new Animated.Value(valueToSet);        &#125;);    &#125;    return [new Animated.Value(0)];&#125;;const indexOfLowest = (values: Array&lt;number&gt;): number =&gt; &#123;    let lowestIndex = 0;    values.forEach((value, index, array) =&gt; &#123;        if (value &lt; array[lowestIndex]) &#123;            lowestIndex = index;        &#125;    &#125;);    return lowestIndex;&#125;;export class Slider extends PureComponent&lt;SliderProps, SliderState&gt; &#123;    constructor(props: SliderProps) &#123;        super(props);        this._panResponder = PanResponder.create(&#123;            onStartShouldSetPanResponder:                this._handleStartShouldSetPanResponder,            onMoveShouldSetPanResponder: this._handleMoveShouldSetPanResponder,            onPanResponderGrant: this._handlePanResponderGrant,            onPanResponderMove: this._handlePanResponderMove,            onPanResponderRelease: this._handlePanResponderEnd,            onPanResponderTerminationRequest:                this._handlePanResponderRequestEnd,            onPanResponderTerminate: this._handlePanResponderEnd,        &#125;);        this.state = &#123;            allMeasured: false,            containerSize: &#123;                width: 0,                height: 0,            &#125;,            thumbSize: &#123;                width: 0,                height: 0,            &#125;,            trackMarksValues: updateValues(&#123;                values: normalizeValue(this.props, this.props.trackMarks),            &#125;),            values: updateValues(&#123;                values: normalizeValue(                    this.props,                    this.props.value instanceof Animated.Value                        ? this.props.value.__getValue()                        : this.props.value,                ),            &#125;),        &#125;;    &#125;    static defaultProps = &#123;        animationType: &#x27;timing&#x27;,        debugTouchArea: false,        trackMarks: [],        maximumTrackTintColor: &#x27;#b3b3b3&#x27;,        maximumValue: 1,        minimumTrackTintColor: &#x27;#3f3f3f&#x27;,        minimumValue: 0,        step: 0,        thumbTintColor: &#x27;#343434&#x27;,        trackClickable: true,        value: 0,        vertical: false,    &#125;;    static getDerivedStateFromProps(props: SliderProps, state: SliderState) &#123;        if (            props.trackMarks &amp;&amp;            !!state.trackMarksValues &amp;&amp;            state.trackMarksValues.length &gt; 0        ) &#123;            const newTrackMarkValues = normalizeValue(props, props.trackMarks);            const statePatch = &#123;&#125; as SliderState;            if (                state.trackMarksValues            ) &#123;                statePatch.trackMarksValues = updateValues(&#123;                    values: state.trackMarksValues,                    newValues: newTrackMarkValues,                &#125;);            &#125;            return statePatch;        &#125;    &#125;    componentDidUpdate() &#123;        const newValues = normalizeValue(            this.props,            this.props.value instanceof Animated.Value                ? this.props.value.__getValue()                : this.props.value,        );        newValues.forEach((value, i) =&gt; &#123;            if (!this.state.values[i]) &#123;                this._setCurrentValue(value, i);            &#125; else if (value !== this.state.values[i].__getValue()) &#123;                if (this.props.animateTransitions) &#123;                    this._setCurrentValueAnimated(value, i);                &#125; else &#123;                    this._setCurrentValue(value, i);                &#125;            &#125;        &#125;);    &#125;    _getRawValues(        values: Array&lt;Animated.Value&gt; | Array&lt;Animated.AnimatedInterpolation&gt;,    ) &#123;        return values.map((value) =&gt; value.__getValue());    &#125;    _handleStartShouldSetPanResponder = (        e: any,    ): /* gestureState: GestureState */    boolean =&gt; this._thumbHitTest(e); // Should we become active when the user presses down on the thumb?    _handleMoveShouldSetPanResponder(): /* e, gestureState: GestureState */    boolean &#123;        // Should we become active when the user moves a touch over the thumb?        return false;    &#125;    _handlePanResponderGrant = (e: &#123;nativeEvent: any&#125;) =&gt; &#123;        const &#123;thumbSize&#125; = this.state;        const &#123;nativeEvent&#125; = e;        this._previousLeft = this.props.trackClickable            ? nativeEvent.locationX - thumbSize.width            : this._getThumbLeft(this._getCurrentValue(this._activeThumbIndex));        this.props?.onSlidingStart?.(this._getRawValues(this.state.values));    &#125;;    _handlePanResponderMove = (_e: any, gestureState: any) =&gt; &#123;        if (this.props.disabled) &#123;            return;        &#125;        this._setCurrentValue(            this._getValue(gestureState),            this._activeThumbIndex,            () =&gt; &#123;                this.props?.onValueChange?.(                    this._getRawValues(this.state.values),                );            &#125;,        );    &#125;;    _handlePanResponderRequestEnd = () =&gt;        /* e, gestureState: GestureState */        &#123;            // Should we allow another component to take over this pan?            return false;        &#125;;    _handlePanResponderEnd = (_e: any, gestureState: any) =&gt; &#123;        if (this.props.disabled) &#123;            return;        &#125;        this._setCurrentValue(            this._getValue(gestureState),            this._activeThumbIndex,            () =&gt; &#123;                if (this.props.trackClickable) &#123;                    this.props?.onValueChange?.(                        this._getRawValues(this.state.values),                    );                &#125;                this.props?.onSlidingComplete?.(                    this._getRawValues(this.state.values),                );            &#125;,        );        this._activeThumbIndex = 0;    &#125;;    _measureContainer = (e: LayoutChangeEvent) =&gt; &#123;        this._handleMeasure(&#x27;_containerSize&#x27;, e);    &#125;;    _measureTrack = (e: LayoutChangeEvent) =&gt; &#123;        this._handleMeasure(&#x27;_trackSize&#x27;, e);    &#125;;    _measureThumb = (e: LayoutChangeEvent) =&gt; &#123;        this._handleMeasure(&#x27;_thumbSize&#x27;, e);    &#125;;    _handleMeasure = (        name: &#x27;_containerSize&#x27; | &#x27;_trackSize&#x27; | &#x27;_thumbSize&#x27;,        e: LayoutChangeEvent,    ) =&gt; &#123;        const &#123;width, height&#125; = e.nativeEvent.layout;        const size = &#123;            width,            height,        &#125;;        const currentSize = this[name];        if (            currentSize &amp;&amp;            width === currentSize.width &amp;&amp;            height === currentSize.height        ) &#123;            return;        &#125;        this[name] = size;        if (this._containerSize &amp;&amp; this._thumbSize) &#123;            this.setState(&#123;                containerSize: this._containerSize,                thumbSize: this._thumbSize,                allMeasured: true,            &#125;);        &#125;    &#125;;    _getRatio = (value: number) =&gt; &#123;        const &#123;maximumValue, minimumValue&#125; = this.props;        return (value - minimumValue) / (maximumValue - minimumValue);    &#125;;    _getThumbLeft = (value: number) =&gt; &#123;        const &#123;containerSize, thumbSize&#125; = this.state;        const &#123;vertical&#125; = this.props;        const standardRatio = this._getRatio(value);        const ratio = I18nManager.isRTL ? 1 - standardRatio : standardRatio;        return ratio * ((vertical ? containerSize.height : containerSize.width) - thumbSize.width);    &#125;;    _getValue = (gestureState: &#123;dx: number, dy: number&#125;) =&gt; &#123;        const &#123;containerSize, thumbSize, values&#125; = this.state;        const &#123;maximumValue, minimumValue, step, vertical&#125; = this.props;        const length = containerSize.width - thumbSize.width;        const thumbLeft = vertical ? this._previousLeft + (gestureState.dy * -1) : this._previousLeft + gestureState.dx;        const nonRtlRatio = thumbLeft / length;        const ratio = I18nManager.isRTL ? 1 - nonRtlRatio : nonRtlRatio;        let minValue = minimumValue;        let maxValue = maximumValue;        const rawValues = this._getRawValues(values);        const buffer = step ? step : 0.1;        if (values.length === 2) &#123;            if (this._activeThumbIndex === 1) &#123;                minValue = rawValues[0] + buffer;            &#125; else &#123;                maxValue = rawValues[1] - buffer;            &#125;        &#125;        if (step) &#123;            return Math.max(                minValue,                Math.min(                    maxValue,                    minimumValue +                        Math.round(                            (ratio * (maximumValue - minimumValue)) / step,                        ) *                            step,                ),            );        &#125;        return Math.max(            minValue,            Math.min(                maxValue,                ratio * (maximumValue - minimumValue) + minimumValue,            ),        );    &#125;;    _getCurrentValue = (thumbIndex: number = 0) =&gt;        this.state.values[thumbIndex].__getValue();    _setCurrentValue = (        value: number,        thumbIndex: number | null | undefined,        callback?: () =&gt; void,    ) =&gt; &#123;        const safeIndex = thumbIndex ?? 0;        const animatedValue = this.state.values[safeIndex];        if (animatedValue) &#123;            animatedValue.setValue(value);            if (callback) &#123;                callback();            &#125;        &#125; else &#123;            this.setState((prevState: SliderState) =&gt; &#123;                const newValues = [...prevState.values];                newValues[safeIndex] = new Animated.Value(value);                return &#123;                    values: newValues,                &#125;;            &#125;, callback);        &#125;    &#125;;    _setCurrentValueAnimated = (value: number, thumbIndex: number = 0) =&gt; &#123;        const &#123;animationType&#125; = this.props;        const animationConfig = &#123;            ...DEFAULT_ANIMATION_CONFIGS[animationType],            ...this.props.animationConfig,            toValue: value,            useNativeDriver: false,        &#125;;        Animated[animationType](            this.state.values[thumbIndex],            animationConfig,        ).start();    &#125;;    _getTouchOverflowSize = (): &#123;        width: number;        height: number;    &#125; =&gt; &#123;        const &#123;allMeasured, containerSize, thumbSize&#125; = this.state;        const &#123;thumbTouchSize&#125; = this.props;        const size = &#123;            width: 40,            height: 40,        &#125;;        if (allMeasured) &#123;            size.width = Math.max(                0,                thumbTouchSize?.width || 0 - thumbSize.width,            );            size.height = Math.max(                0,                thumbTouchSize?.height || 0 - containerSize.height,            );        &#125;        return size;    &#125;;    _getTouchOverflowStyle = () =&gt; &#123;        const &#123;width, height&#125; = this._getTouchOverflowSize();        const touchOverflowStyle = &#123;&#125; as ViewStyle;        if (width !== undefined &amp;&amp; height !== undefined) &#123;            const verticalMargin = -height / 2;            touchOverflowStyle.marginTop = verticalMargin;            touchOverflowStyle.marginBottom = verticalMargin;            const horizontalMargin = -width / 2;            touchOverflowStyle.marginLeft = horizontalMargin;            touchOverflowStyle.marginRight = horizontalMargin;        &#125;        if (this.props.debugTouchArea === true) &#123;            touchOverflowStyle.backgroundColor = &#x27;orange&#x27;;            touchOverflowStyle.opacity = 0.5;        &#125;        return touchOverflowStyle;    &#125;;    _thumbHitTest = (e: &#123;nativeEvent: any&#125;) =&gt; &#123;        const &#123;nativeEvent&#125; = e;        const &#123;trackClickable&#125; = this.props;        const &#123;values&#125; = this.state;        const hitThumb = values.find((_, i) =&gt; &#123;            const thumbTouchRect = this._getThumbTouchRect(i);            const containsPoint = thumbTouchRect.containsPoint(                nativeEvent.locationX,                nativeEvent.locationY,            );            if (containsPoint) &#123;                this._activeThumbIndex = i;            &#125;            return containsPoint;        &#125;);        if (hitThumb) &#123;            return true;        &#125;        if (trackClickable) &#123;            // set the active thumb index            if (values.length === 1) &#123;                this._activeThumbIndex = 0;            &#125; else &#123;                // we will find the closest thumb and that will be the active thumb                const thumbDistances = values.map((_value, index) =&gt; &#123;                    const thumbTouchRect = this._getThumbTouchRect(index);                    return thumbTouchRect.trackDistanceToPoint(                        nativeEvent.locationX,                    );                &#125;);                this._activeThumbIndex = indexOfLowest(thumbDistances);            &#125;            return true;        &#125;        return false;    &#125;;    _getThumbTouchRect = (thumbIndex: number = 0): RectReturn =&gt; &#123;        const &#123;containerSize, thumbSize&#125; = this.state;        const &#123;thumbTouchSize&#125; = this.props;        const &#123;height, width&#125; = thumbTouchSize || &#123;height: 40, width: 40&#125;;        const touchOverflowSize = this._getTouchOverflowSize();        return Rect(&#123;            height,            width,            x:                touchOverflowSize.width / 2 +                this._getThumbLeft(this._getCurrentValue(thumbIndex)) +                (thumbSize.width - width) / 2,            y:                touchOverflowSize.height / 2 +                (containerSize.height - height) / 2,        &#125;);    &#125;;    _activeThumbIndex: number = 0;    _containerSize: Dimensions | null | undefined;    _panResponder: PanResponderInstance;    _previousLeft: number = 0;    _thumbSize: Dimensions | null | undefined;    _trackSize: Dimensions | null | undefined;    _renderDebugThumbTouchRect = (        thumbLeft: Animated.AnimatedInterpolation,        index: number,    ) =&gt; &#123;        const &#123;height, y, width&#125; = this._getThumbTouchRect() || &#123;&#125;;        const positionStyle = &#123;            height,            left: thumbLeft,            top: y,            width,        &#125;;        return (            &lt;Animated.View                key=&#123;`debug-thumb-$&#123;index&#125;`&#125;                pointerEvents=&quot;none&quot;                style=&#123;[styles.debugThumbTouchArea, positionStyle]&#125;            /&gt;        );    &#125;;    _renderThumbImage = (thumbIndex: number = 0) =&gt; &#123;        const &#123;thumbImage&#125; = this.props;        if (!thumbImage) &#123;            return null;        &#125;        return (            &lt;Image                source=&#123;                    (Array.isArray(thumbImage)                        ? thumbImage[thumbIndex]                        : thumbImage) as ImageSourcePropType                &#125;            /&gt;        );    &#125;;    render() &#123;        const &#123;            containerStyle,            debugTouchArea,            maximumTrackTintColor,            maximumValue,            minimumTrackTintColor,            minimumValue,            renderAboveThumbComponent,            renderTrackMarkComponent,            renderThumbComponent,            thumbStyle,            thumbTintColor,            trackStyle,            vertical,            ...other        &#125; = this.props;        const &#123;            allMeasured,            containerSize,            thumbSize,            trackMarksValues,            values,        &#125; = this.state;        const interpolatedThumbValues = values.map((value) =&gt;            value.interpolate(&#123;                inputRange: [minimumValue, maximumValue],                outputRange: I18nManager.isRTL                    ? [0, -(containerSize.width - thumbSize.width)]                    : [0, containerSize.width - thumbSize.width],            &#125;),        );        const interpolatedTrackValues = values.map((value) =&gt;            value.interpolate(&#123;                inputRange: [minimumValue, maximumValue],                outputRange: [0, containerSize.width - thumbSize.width],            &#125;),        );        const interpolatedTrackMarksValues =            trackMarksValues &amp;&amp;            trackMarksValues.map((v) =&gt;                v.interpolate(&#123;                    inputRange: [minimumValue, maximumValue],                    outputRange: I18nManager.isRTL                        ? [0, -(containerSize.width - thumbSize.width)]                        : [0, containerSize.width - thumbSize.width],                &#125;),            );        const valueVisibleStyle = &#123;&#125; as ViewStyle;        if (!allMeasured) &#123;            valueVisibleStyle.opacity = 0;        &#125;        const interpolatedRawValues = this._getRawValues(            interpolatedTrackValues,        );        const minThumbValue = new Animated.Value(            Math.min(...interpolatedRawValues),        );        const maxThumbValue = new Animated.Value(            Math.max(...interpolatedRawValues),        );        const minimumTrackStyle = &#123;            position: &#x27;absolute&#x27;,            left:                interpolatedTrackValues.length === 1                    ? new Animated.Value(0)                    : Animated.add(minThumbValue, thumbSize.width / 2),            width:                interpolatedTrackValues.length === 1                    ? Animated.add(                          interpolatedTrackValues[0],                          thumbSize.width / 2,                      )                    : Animated.add(                          Animated.multiply(minThumbValue, -1),                          maxThumbValue,                      ),            backgroundColor: minimumTrackTintColor,            ...valueVisibleStyle,        &#125; as ViewStyle;        const touchOverflowStyle = this._getTouchOverflowStyle();        return (            &lt;&gt;                &#123;renderAboveThumbComponent &amp;&amp; (                    &lt;View style=&#123;styles.aboveThumbComponentsContainer&#125;&gt;                        &#123;interpolatedThumbValues.map((value, i) =&gt; (                            &lt;Animated.View                                key=&#123;`slider-above-thumb-$&#123;i&#125;`&#125;                                style=&#123;[                                    styles.renderThumbComponent, // eslint-disable-next-line react-native/no-inline-styles                                    &#123;                                        bottom: 0,                                        transform: [                                            &#123;                                                translateX: value,                                            &#125;,                                            &#123;                                                translateY: 0,                                            &#125;,                                        ],                                        ...valueVisibleStyle,                                    &#125;,                                ]&#125;&gt;                                &#123;renderAboveThumbComponent(i)&#125;                            &lt;/Animated.View&gt;                        ))&#125;                    &lt;/View&gt;                )&#125;                &lt;View                    &#123;...other&#125;                    style=&#123;[styles.container, vertical ? &#123;transform: [&#123;rotate: &#x27;-90deg&#x27; &#125;]&#125; : &#123;&#125;, containerStyle]&#125;                    onLayout=&#123;this._measureContainer&#125;&gt;                    &lt;View                        renderToHardwareTextureAndroid                        style=&#123;[                            styles.track,                            &#123;                                backgroundColor: maximumTrackTintColor,                            &#125;,                            trackStyle,                        ]&#125;                        onLayout=&#123;this._measureTrack&#125;                    /&gt;                    &lt;Animated.View                        renderToHardwareTextureAndroid                        style=&#123;[styles.track, trackStyle, minimumTrackStyle]&#125;                    /&gt;                    &#123;renderTrackMarkComponent &amp;&amp;                        interpolatedTrackMarksValues &amp;&amp;                        interpolatedTrackMarksValues.map((value, i) =&gt; (                            &lt;Animated.View                                key=&#123;`track-mark-$&#123;i&#125;`&#125;                                style=&#123;[                                    styles.renderThumbComponent,                                    &#123;                                        transform: [                                            &#123;                                                translateX: value,                                            &#125;,                                            &#123;                                                translateY: 0,                                            &#125;,                                        ],                                        ...valueVisibleStyle,                                    &#125;,                                ]&#125;&gt;                                &#123;renderTrackMarkComponent(i)&#125;                            &lt;/Animated.View&gt;                        ))&#125;                    &#123;interpolatedThumbValues.map((value, i) =&gt; (                        &lt;Animated.View                            key=&#123;`slider-thumb-$&#123;i&#125;`&#125;                            style=&#123;[                                renderThumbComponent                                    ? styles.renderThumbComponent                                    : styles.thumb,                                renderThumbComponent                                    ? &#123;&#125;                                    : &#123;                                          backgroundColor: thumbTintColor,                                          ...thumbStyle,                                      &#125;,                                &#123;                                    transform: [                                        &#123;                                            translateX: value,                                        &#125;,                                        &#123;                                            translateY: 0,                                        &#125;,                                    ],                                    ...valueVisibleStyle,                                &#125;,                            ]&#125;                            onLayout=&#123;this._measureThumb&#125;&gt;                            &#123;renderThumbComponent                                ? renderThumbComponent()                                : this._renderThumbImage(i)&#125;                        &lt;/Animated.View&gt;                    ))&#125;                    &lt;View                        style=&#123;[styles.touchArea, touchOverflowStyle]&#125;                        &#123;...this._panResponder.panHandlers&#125;&gt;                        &#123;!!debugTouchArea &amp;&amp;                            interpolatedThumbValues.map((value, i) =&gt;                                this._renderDebugThumbTouchRect(value, i),                            )&#125;                    &lt;/View&gt;                &lt;/View&gt;            &lt;/&gt;        );    &#125;&#125;
+
+
+导入部分：import &#123; Slider &#125; from &#x27;所放的上述组件路径&#x27;&lt;SliderminimumValue=&#123;1&#125;maximumValue=&#123;7&#125;  //可滑动范围为1到7minimumTrackTintColor=&quot;#0A79C3&quot; maximumTrackTintColor=&quot;#F3F3F3&quot;step=&#123;1&#125; //步长value=&#123;targetDay&#125; //默认值，例如4onValueChange=&#123;targetDays =&gt; dispatch(&#123;	type: &#x27;SetupWeekTarget/updateState&#x27;,	payload: &#123; targetDay: targetDays &#125;&#125;)&#125;  //滑动触发的事件trackStyle=&#123;&#123; height: 10, borderRadius: 12 &#125;&#125;  containerStyle=&#123;&#123; width: SCREEN_WIDTH - 90 &#125;&#125;thumbTintColor=&quot;transparent&quot;thumbImage=&#123;require(&#x27;图片路径&#x27;)&#125;/&gt;
+
+
+详细参数可参考链接：https://github.com/miblanchard/react-native-slider
+]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>JavaScript 基础</title>
+    <url>/2025/07/02/js%E5%9F%BA%E7%A1%80/</url>
+    <content><![CDATA[JavaScript 基础总结（变量提升、严格模式）
+变量与函数提升规则
+变量提升：按顺序执行，变量声明提升但赋值不会提升。
+函数提升：整个函数体提升到全局作用域顶部。
+优先级：函数提升 &gt; 变量提升。
+
+console.log(a); // undefinedvar a = 2;foo(); // 正常调用function foo() &#123;  console.log(&quot;函数提升成功&quot;);&#125;
+
+
+使用 use strict 严格模式作用：
+避免创建意外的全局变量；
+禁止使用未声明变量，防止内存泄漏；
+this 默认绑定到 undefined 而非 window。
+
+function foo() &#123;  &quot;use strict&quot;;  console.log(this.a); // ❌ TypeError&#125;var a = 2;foo(); // 严格模式下 this 是 undefined，无法读取 this.a
+
+
+(function() &#123;  &quot;use strict&quot;;  foo(); // 严格模式下调用函数则不影响默认绑定&#125;)();function foo() &#123;  console.log(this.a);&#125;var a = 2;
+
+
+]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>GitLab CI/CD</title>
+    <url>/2025/04/10/gitlabci/</url>
+    <content><![CDATA[前端项目 GitLab CI&#x2F;CD 持续集成部署指南（Mac 环境）概要在日常开发过程中，我们经常需要将打包后的 dist 包手动发送给后端部署，效率低且容易出错。CI（Continuous Integration，持续集成）可以自动化这一过程，本文将介绍如何通过 GitLab CI 实现持续集成部署。
+
+一、安装 GitLab Runner请参考官方文档：GitLab Runner 安装指南
+
+二、本地注册 Runner
+打开你的 GitLab 项目页面，进入 Settings → CI&#x2F;CD，展开 Runners 部分。
+记住显示的 URL 和 token，用于后续注册。
+
+执行注册命令gitlab-runner register
+
+按照提示依次输入以下信息：
+
+GitLab CI Coordinator URL: https://gitlab.com
+GitLab CI Token: xxx（从项目中复制）
+Tags: my-tag,another-tag（自定义）
+Description: my-runner（自定义）
+Executor: shell（Mac 上建议选择 shell）
+
+注册完成后，回到 GitLab CI&#x2F;CD 设置页面，可看到 Runner 状态为绿色，说明已成功运行。如果不是绿色，请执行以下命令启动 Runner 服务：
+gitlab-runner run
+
+
+三、编写 .gitlab-ci.yml 文件并提交将以下内容保存为 .gitlab-ci.yml，并 push 到 GitLab：
+stages:  - deploydeploy_to_test:  stage: deploy  script:    - yarn    - rm -rf dist/    - yarn build    - ls -l -t ./dist/    - rsync -avz ./dist/ root@xxx.xx.xx.xxx:/dist
+
+
+这段 CI 脚本会自动打包项目，并使用 rsync 将 dist 目录部署到远程服务器。
+
+
+四、通过 Docker 实现 CI（可选）如果需要通过 Docker 实现更完整的 CI&#x2F;CD 流程，继续以下步骤：
+1. 安装 Docker（Mac）brew install --cask docker
+
+2. 拉取 GitLab 镜像docker pull drud/gitlab-ce:v0.29.1
+
+3. 创建 GitLab 容器docker run -d -p 8443:443 -p 8090:80 -p 8022:22 --restart always --name gitlab drud/gitlab-ce:v0.29.1
+
+说明：
+
+-p 8443:443：映射 HTTPS 端口
+-p 8090:80：映射 HTTP 端口
+-p 8022:22：映射 SSH 端口
+--restart always：容器崩溃或主机重启时自动恢复
+--name gitlab：容器命名为 gitlab
+
+访问地址：
+http://localhost:8090/
+
+
+五、Docker 模式下的 .gitlab-ci.yml 示例variables:  TEST_NAME: &quot;tips&quot;  OUT_PORT: &quot;8081&quot;  IN_PORT: &quot;8081&quot;stages:  - deploydeploy_to_test:  stage: deploy  before_script:    - if [ $(docker ps -aq --filter name=$CI_PROJECT_NAME) ]; then docker rm -f $CI_PROJECT_NAME; fi  script:    - docker build -f Dockerfile -t $TEST_NAME:latest .    - docker run -d -p $OUT_PORT:$IN_PORT --name $TEST_NAME $TEST_NAME:latest
+
+部署成功后，在 GitLab 的 CI&#x2F;CD Pipelines 页面可看到构建过程，在 Containers 页面会生成新容器，点击对应端口即可访问部署后的页面。
+
+
+
+
+
+]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+      <tags>
+        <tag>前端</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>聊聊Node RPC</title>
+    <url>/2025/07/16/node%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%E7%82%B9/</url>
+    <content><![CDATA[什么是序列化在 TCP 通道里传输的数据只能是二进制形式的，所以将数据结构或对象转化成二进制的形式就叫序列化。反过来就叫反序列化，他们之间的规则就叫协议。
+RPC是什么全称是Remote Procedure Call， 中文名字叫远程过程调用。大部份的 RPC 是基于TCP的。具体实现流程如下：
+1、前端通过 Proxy 代理调用相应的接口, Proxy 将 RPC 的服务名，方法名，参数等信息转换成 RPC Request 对象，交给 RPC 框架2、RPC 框架通过 RPC 协议将 RPC Request 对象序列化成二进制形式3、RPC 通过 TCP 通道把二进制数据传递给后端4、后端将二进制数据反序列化成 RPC Request 对象5、后端将反序列化后的数据对应到自己写的方法内，传入参数，获取数据，将获取后的数据进行封装，封装成 RPC Response 交给 RPC 框架6、RPC 框架通过 RPC 协议将 RPC Response 对象序列化成二进制形式, 通过 TCP 通道传递给前端6、前端将收到的二进制数据反序列化成 RPC response 对象，将结果通过 Proxy 返回给业务代码
+]]></content>
+      <categories>
+        <category>后端</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>react组件通信方式</title>
+    <url>/2025/08/25/react%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F/</url>
+    <content><![CDATA[
+通过Props和Props回调：用于父子组件的通信，子组件通过props接收父的数据，父组件将回调函数传给子组件，子组件调用这个回调函数，传数据给父组件。
+通过Context API：可以共享状态的API，不需要按层级去传递。
+Redux或Mobx：对于复杂的应用，可以用状态库来实现组件通信。
+事件订阅模式：使用EventEmitter或者第三方库来实现跨组件的事件发布订阅。
 
 ]]></content>
       <categories>
@@ -304,6 +295,57 @@ redis本质上是一个key-value类型的内存数据库，性能最快的key-va
 ]]></content>
       <categories>
         <category>后端</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>Vue中插入脚本</title>
+    <url>/2025/08/12/vue%E5%AE%9E%E7%8E%B0%E6%8F%92%E5%85%A5%E8%84%9A%E6%9C%AC/</url>
+    <content><![CDATA[当你拿到的广告代码是包含script标签时，则需要通过一定的转换，才能正常渲染到页面上。
+//当你拿到的广告代码如下：&lt;script type=&quot;text/javascript&quot;&gt; atOptions = &#123;  &#x27;key&#x27; : &#x27;1523b7ddb936e560aadef64a851d500c&#x27;,  &#x27;format&#x27; : &#x27;iframe&#x27;,  &#x27;height&#x27; : 250,  &#x27;width&#x27; : 300,  &#x27;params&#x27; : &#123;&#125; &#125;;&lt;/script&gt;&lt;script type=&quot;text/javascript&quot; src=&quot;//www.highperformanceformat.com/1523b7ddb936e560aadef64a851d500c/invoke.js&quot;&gt;&lt;/script&gt;//转换后：const targetDiv = document.getElementById(&quot;de_v&quot;);if (!targetDiv) return;// 创建第一个 script 设置 atOptionsconst script1 = document.createElement(&quot;script&quot;);script1.type = &quot;text/javascript&quot;;script1.innerHTML = `  atOptions = &#123;&#x27;key&#x27; : &#x27;1523b7ddb936e560aadef64a851d500c&#x27;,&#x27;format&#x27; : &#x27;iframe&#x27;,&#x27;height&#x27; : 250,&#x27;width&#x27; : 300,&#x27;params&#x27; : &#123;&#125;&#125;;`;// 创建第二个 script 负责加载外部 JSconst script2 = document.createElement(&quot;script&quot;);script2.type = &quot;text/javascript&quot;;script2.src = &quot;//www.highperformanceformat.com/1523b7ddb936e560aadef64a851d500c/invoke.js&quot;;// 插入到 #de_v 容器内targetDiv.appendChild(script1);targetDiv.appendChild(script2);
+
+]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>《终有一天你会懂》琢磨先生 - 读书笔记</title>
+    <url>/2025/05/21/%E3%80%8A%E7%BB%88%E6%9C%89%E4%B8%80%E5%A4%A9%E4%BD%A0%E4%BC%9A%E6%87%82%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%20-%20%E7%90%A2%E7%A3%A8%E5%85%88%E7%94%9F/</url>
+    <content><![CDATA[
+
+全书的确包含了很多他自己的“偏见”，但我觉得他真实幽默，语言简单易懂，其实各个小标题就是告诉我们该做什么。
+懂生活生活从来不是你想怎样就能变成怎样的。生活中多发现美，多从他人角度看待事情，是好的。同时自己还要有自知之明。
+懂爱情谢耳朵说：人穷尽一生追寻另一个人类共度一生的事，我一直无法理解。或许我自己太有意思，无需他人陪伴。所以我祝你们在对方身上得到的快乐，与我给自己的一样多。靠另一个人永远无法让你摆脱孤独，只能靠自己对生活的热情。经营一段感情要的是理智，自由是不可剥夺的。这让我想起对前任，我曾经有查看过他的手机，我觉得挺不对，以后不会再出现这种事情了。
+懂兵法主要就是介绍女追男或男追女的技巧，以及如何经营好一段感情，就是大智慧。同时千万别因为家庭放弃自己的事业，不要跟公公婆婆住一起（但我的观点还是觉得因人而异），要有属于自己的兴趣爱好。
+懂婚姻忍，忠一。对于不婚主义，当然也没什么想多说的了。
+懂失意每一次失恋，只不过是在为真爱让路。还是那句勉强不来，我爱你，所以我祝你一生如意，即使陪着你的人，不是我。做自己想做的事，不要管他人怎么想。只关心自己在乎的人。
+懂阅读What Why How。一直阅读下去，不要求快，要求精。
+懂情趣介绍了他与妻子的日常 sweet，告诉我们不分手，就不知道世界上还有那么多人值得我们去爱。如果找到了，是我的幸运，如果找不到，我也有能力让自己快乐地活着。高情商地活着，会发觉世界是那么美好。
+懂交际跟正经人交往，跟不同人要有不同方式去与之交往，拒绝别人也是一门艺术。如果没有厚脸皮去找别人还钱，干脆别借。
+懂人性只能说我可能在人性方面持怀疑态度，管不了别人，那么就只能管好自己，别做个恶俗的人。
+懂善恶有些人在你生命中出现，就是为了给你上一课。何为善何为恶，我宁愿相信他人的话，因为人与人之间的信任本来就是有一方愿意相信，另一方才会不负此信。即使被骗，也是告诉我们下次同样的坑，别再跳了。但别因为入了一次坑，就不再相信了，善人始终存在。上帝让右手成为右手，就是对右手最高的奖赏；同理，上帝让善人成为善人，也就是对善人的最高奖赏。这让我想起，有次在外，洗手间里没有纸巾，原本是想问旁边的好朋友有没有纸巾的，结果旁边一位陌生女子听见了，立刻拿出包纸巾给我，此等善举，让我倍感荣幸。而善良还需要有原则，否则害人害己。
+懂财富穷人之所以穷，是思维的匮乏。要想富起来，不能只在自己身体上投资，而要在大局上有思维的开拓。看透问题的本质。时间是有限，在有限时间内如何快速致富？找到一门自己感兴趣的学科，学以致用，发散思维，与社会息息相关的行业，去做。
+懂社会要有抱负，一步一个脚印。要有自己独立的人格，要能为自己所做的事情负责。学会转化一种让自己幸福的能力，然后改变自己。
+懂生死生死学里几个词：无死不生，向死而生，知死而后生。颇为有趣且发人深思。人就是因为知道有一天会死去，才会争取好好地活着。我想，真到了那天，我会主动拥抱死亡。
+
+这世界上缺的不是完美的人，而是从心底给出的正义、真心、无畏和同情—这是今天看完《无问西东》后给我最感慨的话。生而为人，便要心之所向，无问西东。大家都知道有因必有果，却不只因果皆由缘而起。叔本华跟尼采，有时间必好好读佳作。
+
+懂远游这部分写了琢磨先生在西藏的经历，看过很多书，都是大家想去西藏的。也许去了那里，人真的能体会到人生的不易。美国不如英国自律，日本对美食态度极佳，常把“对不起”挂在嘴边，不喜欢给别人添麻烦。
+懂职场首先要懂得吃苦，然后要清楚自己，发掘自己的天赋所在。以终为始，聚焦所做。
+懂教育我只知道，每一个出生在这世上的小孩都是纯粹的，如果不好好教育，长大后便不可能为国之栋梁。
+懂娱乐、懂自由人生有两个方向：一个方向是往大处拼搏，保持对事业的激情；一个方向是往小处生活，保持做人的温度。每天睁开眼，对自己说声：欧耶
+]]></content>
+      <categories>
+        <category>读书感悟</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>中小学信息技术教学模版</title>
+    <url>/2025/08/21/%E4%B8%AD%E5%B0%8F%E5%AD%A6%E4%BF%A1%E6%81%AF%E6%8A%80%E6%9C%AF%E6%95%99%E5%AD%A6%E6%A8%A1%E7%89%88/</url>
+    <content><![CDATA[《if-elif条件语句》逐字稿  &emsp;&emsp;同学们，老师刚才留意到班级上的值日表，周一到周五有好多勤劳的小蜜蜂呀。老师想问下周一值日的同学有哪些举下手？诶，老师看见了。那么同学们记住这些周一值日的同学了吗？是的，总共有六位。那如果以三个班为单位，给你一个名字，你能快速给出这名同学是星期几值日吗？你们有什么好办法吗？请你，对了，可以自己用绕口令等方式背下来。还有更好的办法吗？请你，对了，可以利用程序的方式输出出来。那该使用什么语句来表示多个条件呢？今天我们就一起来学习python中的另一种条件语句if-elif-else&emsp;&emsp;现在请大家同桌两人为一小组，先来分析if-elif-else怎么实现同学名字对应星期几值日的问题，时间是8分钟。开始吧，时间到了，刚才在巡视的过程中，大家都在认真的讨论，那哪个小组代表想来分享你们的成果，你来说，你说想要判断同学是哪天值日的，只要输入他的名字，根据名字找到对应星期几输出就行了。还有补充的吗？第五小组，你们来说，他说可以弄五个数组对应星期一到星期五，把每个人的名字放进去对应的数组里，然后判断输出。你补充的非常关键。请坐。非常好，请坐，大家分析的很正确，说明大家有充分预习本节课的内容。 &emsp;&emsp;接下来我们就综合大家的分析，请同学们自主思考，并画出流程图，时间是5分钟，开始吧，时间到了，请这位同学来展示你的流程图，你说首先输入学生的名字，假如小花在星期一的数组里，那么输出星期一，依次类推。现在请大家尝试写出多分支结构的语句，老师提示一下，条件子句的如果需要用elif来表示。我们请这位同学将他的答案写到黑板上，请同学们来看跟你写的一样吗？哪些地方需要修改？你说将最后一个elif应该写成else，是表达都不满足条件的话，执行else后面的语句。你说要注意缩进和冒号。大家观察的很仔细，希望同学们写的时候一定要认真。请大家利用学到的if-elif语句去编写刚才你们设计的算法。我看到大家都能准确的写出来了，并且都避免了刚才的问题。&emsp;&emsp;语句我们已经写出来了，那他的执行过程是什么呢？现在请同学们以同桌两人为一小组，进行讨论，一会我们请一名小组代表展示讲解，时间是7分钟，开始吧，我看到有同学在小声的讨论，时间到了，第二小组，请你们讲一讲执行过程，他结合流程图告诉我们，执行过程是依次判断输入的同学姓名符合哪个条件，如符合则输出，若都不符合则输出错误。他用图文的形式讲解，非常的直观。那现在我们就可以就着大屏幕上的流程图，总结出if-elif语句的执行过程是从if行开始依次对条件进行判断，如果正确则执行改条件下面的语句块，然后跳出if语句，如果不正确则对下一个条件进行判断，如果所有条件都不成立，则执行else下面的语句块。&emsp;&emsp;新知识我们已经学完了，现在请大家编写完整程序，实现上述的执行过程，学有余力的同学，请自己思考生活中有哪些需要对多个条件进行检测的事情，自主进行编写。我们请这些同学来进行展示，他们中有的从数学出发，编写了比较三个数，求最大数问题，还有的是从生活出发，编写了出租车计费的问题。大家编写的语句和格式都很规范。&emsp;&emsp;这堂课已经接近尾声了，这节课你都有哪些收获呢？大家说学会了if-elif的格式和执行过程，看来这节课的知识同学们都掌握了。其实编程离咱们的生活和学习很近，并且也没有想象中的那么难，老师希望同学们以后都可以像今天一样在课堂上积极思考，表达想法。&emsp;&emsp;最后布置一个小作业，请同学们对比三种if语句特点，整理成表格。&emsp;&emsp;这节课就上到这里，同学们再见。
+]]></content>
+      <categories>
+        <category>教资</category>
       </categories>
   </entry>
   <entry>
@@ -391,62 +433,6 @@ Class is over, see you next time.
 ]]></content>
       <categories>
         <category>教资</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>前端骨架屏</title>
-    <url>/2025/07/07/%E5%89%8D%E7%AB%AF%E9%AA%A8%E6%9E%B6%E5%B1%8F/</url>
-    <content><![CDATA[Dps.config.js 中文说明文档本配置文件用以生成 Vue 应用的骨架屏。
-
-基本配置字段说明    const dpsConfig = &#123;    url: &#x27;file:///Users/myname/Desktop/project/pro/scaleTips/dist/index.html#/&#x27;,          // 待生成骨架屏页面的地址，用百度（https://baidu.com）试试也可以    output: &#123;        filepath: &#x27;/Users/myname/Desktop/project/pro&#x27;,        // 生成骨架屏的存放页面，一般为项目的入口页面        injectSelector: &#x27;#app&#x27;          // 生成的骨架屏插入页面的节点    &#125;,    // header: &#123;    //  height: 40,    //  background: &#x27;#1b9af4&#x27;    // &#125;,    // background: &#x27;#eee&#x27;,    // animation: &#x27;opacity 1s linear infinite;&#x27;,    //用于定制或排除某些节点的绘制行为    includeElement: function(node, draw) &#123;        // 定制某个节点画出来的样子，带上return false        if(node.id == &#x27;ui-alert&#x27;) &#123;            //跳过该节点及其子节点            return false;        &#125;        if(node.tagName.toLowerCase() === &#x27;img&#x27;) &#123;            // 对该图片生成宽100%，高8%，颜色为红色的色块            draw(&#123;                width: 100,                height: 8,                left: 0,                top: 0,                zIndex: 99999999,                background: &#x27;red&#x27;            &#125;);            return false;        &#125;     &#125;,    // writePageStructure: function(html) &#123;        // 自己处理生成的骨架屏        // fs.writeFileSync(filepath, html);        // console.log(html)    // &#125;,    init: function() &#123;        // 生成骨架屏之前的操作，比如删除干扰节点    &#125;&#125;module.exports = dpsConfig;
-
-
-
-]]></content>
-      <categories>
-        <category>前端</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>《终有一天你会懂》琢磨先生 - 读书笔记</title>
-    <url>/2025/05/21/%E3%80%8A%E7%BB%88%E6%9C%89%E4%B8%80%E5%A4%A9%E4%BD%A0%E4%BC%9A%E6%87%82%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%20-%20%E7%90%A2%E7%A3%A8%E5%85%88%E7%94%9F/</url>
-    <content><![CDATA[
-
-全书的确包含了很多他自己的“偏见”，但我觉得他真实幽默，语言简单易懂，其实各个小标题就是告诉我们该做什么。
-懂生活生活从来不是你想怎样就能变成怎样的。生活中多发现美，多从他人角度看待事情，是好的。同时自己还要有自知之明。
-懂爱情谢耳朵说：人穷尽一生追寻另一个人类共度一生的事，我一直无法理解。或许我自己太有意思，无需他人陪伴。所以我祝你们在对方身上得到的快乐，与我给自己的一样多。靠另一个人永远无法让你摆脱孤独，只能靠自己对生活的热情。经营一段感情要的是理智，自由是不可剥夺的。这让我想起对前任，我曾经有查看过他的手机，我觉得挺不对，以后不会再出现这种事情了。
-懂兵法主要就是介绍女追男或男追女的技巧，以及如何经营好一段感情，就是大智慧。同时千万别因为家庭放弃自己的事业，不要跟公公婆婆住一起（但我的观点还是觉得因人而异），要有属于自己的兴趣爱好。
-懂婚姻忍，忠一。对于不婚主义，当然也没什么想多说的了。
-懂失意每一次失恋，只不过是在为真爱让路。还是那句勉强不来，我爱你，所以我祝你一生如意，即使陪着你的人，不是我。做自己想做的事，不要管他人怎么想。只关心自己在乎的人。
-懂阅读What Why How。一直阅读下去，不要求快，要求精。
-懂情趣介绍了他与妻子的日常 sweet，告诉我们不分手，就不知道世界上还有那么多人值得我们去爱。如果找到了，是我的幸运，如果找不到，我也有能力让自己快乐地活着。高情商地活着，会发觉世界是那么美好。
-懂交际跟正经人交往，跟不同人要有不同方式去与之交往，拒绝别人也是一门艺术。如果没有厚脸皮去找别人还钱，干脆别借。
-懂人性只能说我可能在人性方面持怀疑态度，管不了别人，那么就只能管好自己，别做个恶俗的人。
-懂善恶有些人在你生命中出现，就是为了给你上一课。何为善何为恶，我宁愿相信他人的话，因为人与人之间的信任本来就是有一方愿意相信，另一方才会不负此信。即使被骗，也是告诉我们下次同样的坑，别再跳了。但别因为入了一次坑，就不再相信了，善人始终存在。上帝让右手成为右手，就是对右手最高的奖赏；同理，上帝让善人成为善人，也就是对善人的最高奖赏。这让我想起，有次在外，洗手间里没有纸巾，原本是想问旁边的好朋友有没有纸巾的，结果旁边一位陌生女子听见了，立刻拿出包纸巾给我，此等善举，让我倍感荣幸。而善良还需要有原则，否则害人害己。
-懂财富穷人之所以穷，是思维的匮乏。要想富起来，不能只在自己身体上投资，而要在大局上有思维的开拓。看透问题的本质。时间是有限，在有限时间内如何快速致富？找到一门自己感兴趣的学科，学以致用，发散思维，与社会息息相关的行业，去做。
-懂社会要有抱负，一步一个脚印。要有自己独立的人格，要能为自己所做的事情负责。学会转化一种让自己幸福的能力，然后改变自己。
-懂生死生死学里几个词：无死不生，向死而生，知死而后生。颇为有趣且发人深思。人就是因为知道有一天会死去，才会争取好好地活着。我想，真到了那天，我会主动拥抱死亡。
-
-这世界上缺的不是完美的人，而是从心底给出的正义、真心、无畏和同情—这是今天看完《无问西东》后给我最感慨的话。生而为人，便要心之所向，无问西东。大家都知道有因必有果，却不只因果皆由缘而起。叔本华跟尼采，有时间必好好读佳作。
-
-懂远游这部分写了琢磨先生在西藏的经历，看过很多书，都是大家想去西藏的。也许去了那里，人真的能体会到人生的不易。美国不如英国自律，日本对美食态度极佳，常把“对不起”挂在嘴边，不喜欢给别人添麻烦。
-懂职场首先要懂得吃苦，然后要清楚自己，发掘自己的天赋所在。以终为始，聚焦所做。
-懂教育我只知道，每一个出生在这世上的小孩都是纯粹的，如果不好好教育，长大后便不可能为国之栋梁。
-懂娱乐、懂自由人生有两个方向：一个方向是往大处拼搏，保持对事业的激情；一个方向是往小处生活，保持做人的温度。每天睁开眼，对自己说声：欧耶
-]]></content>
-      <categories>
-        <category>读书感悟</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>脱离框架开发</title>
-    <url>/2025/08/13/%E5%A6%82%E4%BD%95%E8%84%B1%E7%A6%BB%E6%A1%86%E6%9E%B6%E5%BC%80%E5%8F%91/</url>
-    <content><![CDATA[前端脱离框架去开发，就是不使用任何前端框架（Vue、React等）的情况下，直接用js、html和css去开发web。这意味更能深入了解前端底层原理和机制，避免依赖框架。
-在面对静态且不做过多功能的低项目下，其实脱离框架就已经足够了。框架编写的代码必须要进行编译才能在浏览器中渲染，所以便有了webpack。像Vue的出现就是为了解决一些痛点问题，比如双向数据流、自动响应式更新等，但我们又不得不遵守他们框架内的一些语法，随着vue的升级，我们也要不停学习更新的框架内容。框架本身是有利于开发的，但面对一些简单的问题时，不用框架反而是明智的。根据需求而决定去不去用框架进行下一步的开发。
-当开发多个类似的网站，没有打包过的代码放上服务器，能直接在服务器改源代码。而使用框架后打包的源码放在服务器中，要修改却只能本地修改，反而更浪费时间。当熟悉纯js开发后，还能开发一些工具以及框架出来。
-]]></content>
-      <categories>
-        <category>前端</category>
       </categories>
   </entry>
   <entry>
@@ -622,6 +608,31 @@ vue2 和 vue3 匿名插槽不一样  具名插槽使用方式不同：vue2 使�
       </categories>
   </entry>
   <entry>
+    <title>前端骨架屏</title>
+    <url>/2025/07/07/%E5%89%8D%E7%AB%AF%E9%AA%A8%E6%9E%B6%E5%B1%8F/</url>
+    <content><![CDATA[Dps.config.js 中文说明文档本配置文件用以生成 Vue 应用的骨架屏。
+
+基本配置字段说明    const dpsConfig = &#123;    url: &#x27;file:///Users/myname/Desktop/project/pro/scaleTips/dist/index.html#/&#x27;,          // 待生成骨架屏页面的地址，用百度（https://baidu.com）试试也可以    output: &#123;        filepath: &#x27;/Users/myname/Desktop/project/pro&#x27;,        // 生成骨架屏的存放页面，一般为项目的入口页面        injectSelector: &#x27;#app&#x27;          // 生成的骨架屏插入页面的节点    &#125;,    // header: &#123;    //  height: 40,    //  background: &#x27;#1b9af4&#x27;    // &#125;,    // background: &#x27;#eee&#x27;,    // animation: &#x27;opacity 1s linear infinite;&#x27;,    //用于定制或排除某些节点的绘制行为    includeElement: function(node, draw) &#123;        // 定制某个节点画出来的样子，带上return false        if(node.id == &#x27;ui-alert&#x27;) &#123;            //跳过该节点及其子节点            return false;        &#125;        if(node.tagName.toLowerCase() === &#x27;img&#x27;) &#123;            // 对该图片生成宽100%，高8%，颜色为红色的色块            draw(&#123;                width: 100,                height: 8,                left: 0,                top: 0,                zIndex: 99999999,                background: &#x27;red&#x27;            &#125;);            return false;        &#125;     &#125;,    // writePageStructure: function(html) &#123;        // 自己处理生成的骨架屏        // fs.writeFileSync(filepath, html);        // console.log(html)    // &#125;,    init: function() &#123;        // 生成骨架屏之前的操作，比如删除干扰节点    &#125;&#125;module.exports = dpsConfig;
+
+
+
+]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>脱离框架开发</title>
+    <url>/2025/08/13/%E5%A6%82%E4%BD%95%E8%84%B1%E7%A6%BB%E6%A1%86%E6%9E%B6%E5%BC%80%E5%8F%91/</url>
+    <content><![CDATA[前端脱离框架去开发，就是不使用任何前端框架（Vue、React等）的情况下，直接用js、html和css去开发web。这意味更能深入了解前端底层原理和机制，避免依赖框架。
+在面对静态且不做过多功能的低项目下，其实脱离框架就已经足够了。框架编写的代码必须要进行编译才能在浏览器中渲染，所以便有了webpack。像Vue的出现就是为了解决一些痛点问题，比如双向数据流、自动响应式更新等，但我们又不得不遵守他们框架内的一些语法，随着vue的升级，我们也要不停学习更新的框架内容。框架本身是有利于开发的，但面对一些简单的问题时，不用框架反而是明智的。根据需求而决定去不去用框架进行下一步的开发。
+当开发多个类似的网站，没有打包过的代码放上服务器，能直接在服务器改源代码。而使用框架后打包的源码放在服务器中，要修改却只能本地修改，反而更浪费时间。当熟悉纯js开发后，还能开发一些工具以及框架出来。
+]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+  </entry>
+  <entry>
     <title>《当我谈跑步时，我谈些什么》读后感</title>
     <url>/2025/06/26/%E5%BD%93%E6%88%91%E8%B0%88%E8%B7%91%E6%AD%A5%E6%97%B6/</url>
     <content><![CDATA[《当我谈跑步时，我谈些什么》也就是看了这本书，才知道世界上会有另一个自己在做着自己喜欢的事情。看这本书之前，从没有看过村上君写的书。知道有这么一个火人，也知道那么多火书，但就是没怎么看过。可论及跑步呀，觉得能与之有所交流。一直跑下去，会不会就到月球上了呢？跑步并非为了长命百岁，而是在有限生命里让自己活得更轻松点罢了。
@@ -638,32 +649,6 @@ vue2 和 vue3 匿名插槽不一样  具名插槽使用方式不同：vue2 使�
       </categories>
   </entry>
   <entry>
-    <title>《皮囊》感悟</title>
-    <url>/2025/06/26/%E7%9A%AE%E5%9B%8A%E6%84%9F%E6%82%9F/</url>
-    <content><![CDATA[阿太阿太倔强坚强，豁达的心态值得人学习。父亲最强大的地方就是娶了我的母亲。一个伟大的女人。真正的女人就是应该要积极乐观面对一切，用自己的双手打造自己想要的未来。
-虽然有偷窃，但也是生活所迫，为了生存，为了家人，放下面子干一些违心事，又何尝不是一种积极的心态呢？而不是一哭二闹三上吊。
-想来作者能有如此作为，跟他伟大的母亲脱不了干系。
-那可爱的母亲呀！为了父亲的面子，为了父亲开心，都坚持要把房子建完，这何尝不是一种力量，向往心之所向，佩服这种勇气。
-其实最了解父亲的人是母亲，母亲知道父亲好面子，爱情不就是这样吗？你不用说，我懂，我懂你懂我，所以我们才会在一起这么久。
-张美丽从哪里跌倒，就从哪里爬起来。仿佛看见一个追求真爱，为爱为自己想要的东西不懈努力的人，虽说最终还是被迫性解放了自己，但她曾经的所作所为仍让我敬佩。
-舆论的力量是强大的，但比其而言，张美丽的内心力量更强大。
-]]></content>
-      <categories>
-        <category>读书感悟</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>获取到的csv保存数据库</title>
-    <url>/2025/07/29/%E8%8E%B7%E5%8F%96%E5%88%B0%E7%9A%84csv%E4%BF%9D%E5%AD%98%E6%95%B0%E6%8D%AE%E5%BA%93/</url>
-    <content><![CDATA[如果第三方接口获取到的数据，返回为csv文档时，可以先把csv文档保存到本地某路径，再通过fs的createReadStream读取数据，保存到本地数据库。
-const processConversations = async (dateObj) =&gt; &#123;  const username = &#x27;你的帐户名&#x27;;  const password = &#x27;密码&#x27;;  const year = dateObj.format(&#x27;YYYY&#x27;);  const month = dateObj.format(&#x27;MM&#x27;);  const day = dateObj.format(&#x27;DD&#x27;);  const hour = dateObj.format(&#x27;HH&#x27;);  const dateStr = `$&#123;year&#125;-$&#123;month&#125;-$&#123;day&#125;-$&#123;hour&#125;`;  const fileName = `路径后半部份`;  const url = `https://api/$&#123;fileName&#125;`;  const outputPath = `/tmp/conversations`;  const tableName = &#x27;test&#x27;;  try &#123;    // 下载 CSV    const response = await axios.get(url, &#123;      responseType: &#x27;stream&#x27;,      headers: &#123;        Authorization: `Basic $&#123;Buffer.from(`$&#123;username&#125;:$&#123;password&#125;`).toString(&#x27;base64&#x27;)&#125;`      &#125;    &#125;);    const writer = fs.createWriteStream(outputPath);    response.data.pipe(writer);    await new Promise((resolve, reject) =&gt; &#123;      writer.on(&#x27;finish&#x27;, resolve);      writer.on(&#x27;error&#x27;, reject);    &#125;);    console.log(&#x27; CSV 文件下载成功:&#x27;, fileName);    const rows = [];    await new Promise((resolve, reject) =&gt; &#123;      fs.createReadStream(outputPath)        .pipe(csv())        .on(&#x27;data&#x27;, (row) =&gt; &#123;          rows.push([            row[&#x27;DATE_TIME&#x27;] ? dayjs(row[&#x27;DATE_TIME&#x27;]).format(&#x27;YYYY-MM-DD HH:mm:ss&#x27;) : null,            row[&#x27;CLID&#x27;] || null,            row[&#x27;CLID_SOURCE&#x27;] || null          ]);        &#125;)        .on(&#x27;end&#x27;, resolve)        .on(&#x27;error&#x27;, reject);    &#125;);    if (rows.length === 0) &#123;      console.warn(`CSV 中没有数据: $&#123;fileName&#125;`);      return;    &#125;    const insertSQL = `      INSERT INTO \`$&#123;tableName&#125;\` (        date_time, clid, clid_source      ) VALUES ?    `;    await query(insertSQL, [rows]);    console.log(`成功插入 $&#123;rows.length&#125; 条记录: $&#123;fileName&#125;`);  &#125; catch (error) &#123;    console.error(`报错 ($&#123;fileName&#125;):`, error.message);  &#125;&#125;;
-
-]]></content>
-      <categories>
-        <category>后端</category>
-      </categories>
-  </entry>
-  <entry>
     <title>小程序验证码输入框自动聚焦下个输入框</title>
     <url>/2025/07/21/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E9%AA%8C%E8%AF%81%E7%A0%81%E8%BE%93%E5%85%A5%E6%A1%86%E8%87%AA%E5%8A%A8%E8%81%9A%E7%84%A6%E4%B8%8B%E4%B8%AA%E8%BE%93%E5%85%A5%E6%A1%86/</url>
     <content><![CDATA[最开始我想的是有多少个输入框，就放多少个input，做完会发现有各种bug。比如键盘突然消失、没聚焦下个输入框、操作不丝滑等。正确思路是一个输入框就够了，然后通过改变样式（间隔、高亮）来实现，就是表面看起来是六个输入框，本质上只有一个input
@@ -677,6 +662,21 @@ data()&#123;    return&#123;        focus: true,		code:[&#x27;&#x27;,&#x27;&#x27
 ]]></content>
       <categories>
         <category>前端</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>《皮囊》感悟</title>
+    <url>/2025/06/26/%E7%9A%AE%E5%9B%8A%E6%84%9F%E6%82%9F/</url>
+    <content><![CDATA[阿太阿太倔强坚强，豁达的心态值得人学习。父亲最强大的地方就是娶了我的母亲。一个伟大的女人。真正的女人就是应该要积极乐观面对一切，用自己的双手打造自己想要的未来。
+虽然有偷窃，但也是生活所迫，为了生存，为了家人，放下面子干一些违心事，又何尝不是一种积极的心态呢？而不是一哭二闹三上吊。
+想来作者能有如此作为，跟他伟大的母亲脱不了干系。
+那可爱的母亲呀！为了父亲的面子，为了父亲开心，都坚持要把房子建完，这何尝不是一种力量，向往心之所向，佩服这种勇气。
+其实最了解父亲的人是母亲，母亲知道父亲好面子，爱情不就是这样吗？你不用说，我懂，我懂你懂我，所以我们才会在一起这么久。
+张美丽从哪里跌倒，就从哪里爬起来。仿佛看见一个追求真爱，为爱为自己想要的东西不懈努力的人，虽说最终还是被迫性解放了自己，但她曾经的所作所为仍让我敬佩。
+舆论的力量是强大的，但比其而言，张美丽的内心力量更强大。
+]]></content>
+      <categories>
+        <category>读书感悟</category>
       </categories>
   </entry>
   <entry>
@@ -759,6 +759,17 @@ ALTER TABLE table_name ADD INDEX index_name (column);
       </categories>
   </entry>
   <entry>
+    <title>获取到的csv保存数据库</title>
+    <url>/2025/07/29/%E8%8E%B7%E5%8F%96%E5%88%B0%E7%9A%84csv%E4%BF%9D%E5%AD%98%E6%95%B0%E6%8D%AE%E5%BA%93/</url>
+    <content><![CDATA[如果第三方接口获取到的数据，返回为csv文档时，可以先把csv文档保存到本地某路径，再通过fs的createReadStream读取数据，保存到本地数据库。
+const processConversations = async (dateObj) =&gt; &#123;  const username = &#x27;你的帐户名&#x27;;  const password = &#x27;密码&#x27;;  const year = dateObj.format(&#x27;YYYY&#x27;);  const month = dateObj.format(&#x27;MM&#x27;);  const day = dateObj.format(&#x27;DD&#x27;);  const hour = dateObj.format(&#x27;HH&#x27;);  const dateStr = `$&#123;year&#125;-$&#123;month&#125;-$&#123;day&#125;-$&#123;hour&#125;`;  const fileName = `路径后半部份`;  const url = `https://api/$&#123;fileName&#125;`;  const outputPath = `/tmp/conversations`;  const tableName = &#x27;test&#x27;;  try &#123;    // 下载 CSV    const response = await axios.get(url, &#123;      responseType: &#x27;stream&#x27;,      headers: &#123;        Authorization: `Basic $&#123;Buffer.from(`$&#123;username&#125;:$&#123;password&#125;`).toString(&#x27;base64&#x27;)&#125;`      &#125;    &#125;);    const writer = fs.createWriteStream(outputPath);    response.data.pipe(writer);    await new Promise((resolve, reject) =&gt; &#123;      writer.on(&#x27;finish&#x27;, resolve);      writer.on(&#x27;error&#x27;, reject);    &#125;);    console.log(&#x27; CSV 文件下载成功:&#x27;, fileName);    const rows = [];    await new Promise((resolve, reject) =&gt; &#123;      fs.createReadStream(outputPath)        .pipe(csv())        .on(&#x27;data&#x27;, (row) =&gt; &#123;          rows.push([            row[&#x27;DATE_TIME&#x27;] ? dayjs(row[&#x27;DATE_TIME&#x27;]).format(&#x27;YYYY-MM-DD HH:mm:ss&#x27;) : null,            row[&#x27;CLID&#x27;] || null,            row[&#x27;CLID_SOURCE&#x27;] || null          ]);        &#125;)        .on(&#x27;end&#x27;, resolve)        .on(&#x27;error&#x27;, reject);    &#125;);    if (rows.length === 0) &#123;      console.warn(`CSV 中没有数据: $&#123;fileName&#125;`);      return;    &#125;    const insertSQL = `      INSERT INTO \`$&#123;tableName&#125;\` (        date_time, clid, clid_source      ) VALUES ?    `;    await query(insertSQL, [rows]);    console.log(`成功插入 $&#123;rows.length&#125; 条记录: $&#123;fileName&#125;`);  &#125; catch (error) &#123;    console.error(`报错 ($&#123;fileName&#125;):`, error.message);  &#125;&#125;;
+
+]]></content>
+      <categories>
+        <category>后端</category>
+      </categories>
+  </entry>
+  <entry>
     <title>遇见未知的自己</title>
     <url>/2025/06/30/%E9%81%87%E8%A7%81%E6%9C%AA%E7%9F%A5%E7%9A%84%E8%87%AA%E5%B7%B1/</url>
     <content><![CDATA[《遇见未知的自己》读书笔记何为“未知”？“自己”即指“真我”，从“我是谁”到后来的“从有到无”，整本书以若菱与一位智者老人的对话为主线，引申出许多深刻的生命观念。
@@ -810,25 +821,37 @@ ALTER TABLE table_name ADD INDEX index_name (column);
       </categories>
   </entry>
   <entry>
-    <title>react组件通信方式</title>
-    <url>/2025/08/25/react%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F/</url>
-    <content><![CDATA[
-通过Props和Props回调：用于父子组件的通信，子组件通过props接收父的数据，父组件将回调函数传给子组件，子组件调用这个回调函数，传数据给父组件。
-通过Context API：可以共享状态的API，不需要按层级去传递。
-Redux或Mobx：对于复杂的应用，可以用状态库来实现组件通信。
+    <title>react+vite如何打包成apk</title>
+    <url>/2025/08/27/react+vite%E5%A6%82%E4%BD%95%E6%89%93%E5%8C%85%E6%88%90apk/</url>
+    <content><![CDATA[最近遇到一个问题，如何把已经弄好的react移动端项目打包成apk呢？可以使用capacitor。首先，可以先将依赖全部添加进去项目里面。
+npm add @capacitor/core @capacitor/clinpm install  @capacitor/android
 
+接着，可以先把自己的app初始化
+npx cap init MyApp com.example.myapp   #MyApp是app名字，com.example.myapp是包名npx cap add android    #这条命令会生成android文件夹
+
+然后把项目进行打包，再通过npx cap copy命令让打包后的产物放进去android目录里面
+npm run buildnpx cap copy
+
+紧接着可以通过命令去android平台啦
+npx cap open android
+
+默认自动打开android studio后，通过File -&gt; Sync Project with Gradle Files, 或者熟悉android studio的人可以通过右上角的按钮去同步。如果发现Gradle失败，有可能是拉取gradle版本的包失败了，可以找到gradle-wrapper.properties文件，然后把distributionUrl的路径改为distributionUrl&#x3D;https:&#x2F;&#x2F;mirrors.cloud.tencent.com&#x2F;gradle&#x2F;gradle-8.11.1-all.zip，然后重新点击sync按钮就可以啦。
+等sync 成功后，可以自己运行起来看效果，也可以直接用Build -&gt; Generate APP Bundles or APKs,选择 Generate APKs,就能成功打包apk包了。
 ]]></content>
       <categories>
         <category>前端</category>
       </categories>
   </entry>
   <entry>
-    <title>中小学信息技术教学模版</title>
-    <url>/2025/08/21/%E4%B8%AD%E5%B0%8F%E5%AD%A6%E4%BF%A1%E6%81%AF%E6%8A%80%E6%9C%AF%E6%95%99%E5%AD%A6%E6%A8%A1%E7%89%88/</url>
-    <content><![CDATA[《if-elif条件语句》逐字稿  &emsp;&emsp;同学们，老师刚才留意到班级上的值日表，周一到周五有好多勤劳的小蜜蜂呀。老师想问下周一值日的同学有哪些举下手？诶，老师看见了。那么同学们记住这些周一值日的同学了吗？是的，总共有六位。那如果以三个班为单位，给你一个名字，你能快速给出这名同学是星期几值日吗？你们有什么好办法吗？请你，对了，可以自己用绕口令等方式背下来。还有更好的办法吗？请你，对了，可以利用程序的方式输出出来。那该使用什么语句来表示多个条件呢？今天我们就一起来学习python中的另一种条件语句if-elif-else&emsp;&emsp;现在请大家同桌两人为一小组，先来分析if-elif-else怎么实现同学名字对应星期几值日的问题，时间是8分钟。开始吧，时间到了，刚才在巡视的过程中，大家都在认真的讨论，那哪个小组代表想来分享你们的成果，你来说，你说想要判断同学是哪天值日的，只要输入他的名字，根据名字找到对应星期几输出就行了。还有补充的吗？第五小组，你们来说，他说可以弄五个数组对应星期一到星期五，把每个人的名字放进去对应的数组里，然后判断输出。你补充的非常关键。请坐。非常好，请坐，大家分析的很正确，说明大家有充分预习本节课的内容。 &emsp;&emsp;接下来我们就综合大家的分析，请同学们自主思考，并画出流程图，时间是5分钟，开始吧，时间到了，请这位同学来展示你的流程图，你说首先输入学生的名字，假如小花在星期一的数组里，那么输出星期一，依次类推。现在请大家尝试写出多分支结构的语句，老师提示一下，条件子句的如果需要用elif来表示。我们请这位同学将他的答案写到黑板上，请同学们来看跟你写的一样吗？哪些地方需要修改？你说将最后一个elif应该写成else，是表达都不满足条件的话，执行else后面的语句。你说要注意缩进和冒号。大家观察的很仔细，希望同学们写的时候一定要认真。请大家利用学到的if-elif语句去编写刚才你们设计的算法。我看到大家都能准确的写出来了，并且都避免了刚才的问题。&emsp;&emsp;语句我们已经写出来了，那他的执行过程是什么呢？现在请同学们以同桌两人为一小组，进行讨论，一会我们请一名小组代表展示讲解，时间是7分钟，开始吧，我看到有同学在小声的讨论，时间到了，第二小组，请你们讲一讲执行过程，他结合流程图告诉我们，执行过程是依次判断输入的同学姓名符合哪个条件，如符合则输出，若都不符合则输出错误。他用图文的形式讲解，非常的直观。那现在我们就可以就着大屏幕上的流程图，总结出if-elif语句的执行过程是从if行开始依次对条件进行判断，如果正确则执行改条件下面的语句块，然后跳出if语句，如果不正确则对下一个条件进行判断，如果所有条件都不成立，则执行else下面的语句块。&emsp;&emsp;新知识我们已经学完了，现在请大家编写完整程序，实现上述的执行过程，学有余力的同学，请自己思考生活中有哪些需要对多个条件进行检测的事情，自主进行编写。我们请这些同学来进行展示，他们中有的从数学出发，编写了比较三个数，求最大数问题，还有的是从生活出发，编写了出租车计费的问题。大家编写的语句和格式都很规范。&emsp;&emsp;这堂课已经接近尾声了，这节课你都有哪些收获呢？大家说学会了if-elif的格式和执行过程，看来这节课的知识同学们都掌握了。其实编程离咱们的生活和学习很近，并且也没有想象中的那么难，老师希望同学们以后都可以像今天一样在课堂上积极思考，表达想法。&emsp;&emsp;最后布置一个小作业，请同学们对比三种if语句特点，整理成表格。&emsp;&emsp;这节课就上到这里，同学们再见。
-]]></content>
+    <title>Hexo-Next-更改字体、代码可复制</title>
+    <url>/2025/08/18/Hexo-Next-%E6%9B%B4%E6%94%B9%E5%AD%97%E4%BD%93/</url>
+    <content><![CDATA[Next版本为7.8.0，找到 &#x2F;themes&#x2F;next&#x2F;_config.yml 文件，搜索 font 关键词，这里注意一定要将 font 里面的 enable 设置为true, 因为默认为false，然后设置 family 为自己想要的，如果family在其他平台找的，就需要修改host。(只是修改了family， 没修改enable就会不生效，所以一定一定要记得)
+font:  enable: true  # Uri of fonts host, e.g. https://fonts.googleapis.com (Default).  host:   # Font options:  # `external: true` will load this font family from `host` above.  # `family: Times New Roman`. Without any quotes.  # `size: x.x`. Use `em` as unit. Default: 1 (16px)  # Global font settings used for all elements inside &lt;body&gt;.  global:    external: true    family: Noto Serif SC    size:  # Font settings for site title (.site-title).  title:    external: true    family: Noto Serif SC    size:  # Font settings for headlines (&lt;h1&gt; to &lt;h6&gt;).  headings:    external: true    family: Noto Serif SC    size:  # Font settings for posts (.post-body).  posts:    external: true    family:  Noto Serif SC  # Font settings for &lt;code&gt; and code blocks.  codes:    external: true    family: Source Code Pro
+
+代码可复制，还是上面同一个文件，找到以下代码段，将copy_button的enable设置为true，启用就可以啦。show_result设置true后，复制完会显示一个勾。style对应的copy_button不同的样式，看个人喜好来～
+codeblock:  # Code Highlight theme  # Available values: normal | night | night eighties | night blue | night bright | solarized | solarized dark | galactic  # See: https://github.com/chriskempson/tomorrow-theme  highlight_theme: night eighties  # Add copy button on codeblock  copy_button:    enable: true    # Show text copy result.    show_result: true    # Available values: default | flat | mac    style: mac]]></content>
       <categories>
-        <category>教资</category>
+        <category>前端</category>
       </categories>
   </entry>
 </search>
