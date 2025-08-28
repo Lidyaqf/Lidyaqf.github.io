@@ -1,85 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>ELK Installation Guide</title>
-    <url>/2025/04/11/ELK%E5%AE%89%E8%A3%85%E6%B5%81%E7%A8%8B/</url>
-    <content><![CDATA[Installing ELK Stack (ElasticSearch, Logstash, Kibana) with Docker
-It is recommended to install on Docker due to lower resource consumption. The installation version used below is 8.12.2. Please use the same version to avoid conflicts.
-
-Table of Contents1. Install ElasticSearch2. Install Logstash3. Install KibanaRecommendations
-
-1. Install ElasticSearch
-Pull the image:
-
-docker pull elasticsearch:8.12.2````* Start the container:```bashdocker run --name some-elasticsearch -p 9200:9200 -p 9300:9300 -e &quot;discovery.type=single-node&quot; -d elasticsearch:8.12.2
-
-
-Enter the container:
-
-sudo docker exec -u 0 -it some-elasticsearch bash
-
-
-Restart the container:
-
-docker restart some-elasticsearch
-
-
-2. Install Logstash
-Pull the image:
-
-docker pull docker.elastic.co/logstash/logstash:8.12.2
-
-
-Start the container:
-
-sudo docker run -it -p 5044:5044 -p 9600:9600 --name logstash -v /usr/share/logstash/piplines:/usr/share/logstash/config --privileged=true docker.elastic.co/logstash/logstash:8.12.2 /bin/bash
-
-
-Use scp to upload the MySQL Connector JAR file to the virtual machine:
-
-scp &quot;/Users/Downloads/logstash-8.12.2/mysql-connector-j-8.4.0.jar&quot; username@VM-IP:/home
-
-
-Move the JAR file from the VM to the Logstash container:
-
-docker cp ./mysql-connector-j-8.4.0.jar logstash:/usr/share/logstash
-
-
-Enter the container:
-
-docker exec -u 0 -it logstash bash
-
-
-3. Install Kibana
-Pull the image:
-
-docker pull kibana:8.12.2
-
-
-Start the container:
-
-docker run --name some-kibana -p 9200:9200 -p 9300:9300 -e &quot;discovery.type=single-node&quot; -d elasticsearch:8.12.2
-
-
-Enter the container:
-
-docker exec -u 0 -it some-kibana bash
-
-
-Additional: Install Docker, Portainer, and Related Commandssudo apt updatesudo apt install docker.io docker-composedocker -vsudo systemctl start dockersudo docker search portainerdocker pull portainer/portainersudo docker pull portainer/portainersudo docker run -d --name portainerUI -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock portainer/portainersudo docker start portainerUIsudo passwd root
-
-
-
-
-
-
-
-]]></content>
-      <categories>
-        <category>Backend</category>
-      </categories>
-  </entry>
-  <entry>
     <title>GitLab CI/CD</title>
     <url>/2025/04/10/gitlabci/</url>
     <content><![CDATA[GitLab CI&#x2F;CD Guide for Frontend Projects (Mac Environment)OverviewIn daily development, we often manually send the built dist package to the backend for deployment, which is inefficient and error-prone. CI (Continuous Integration) automates this process. This guide shows how to use GitLab CI to implement continuous integration and deployment.
@@ -176,6 +97,85 @@ Understanding CareerFirst learn to endure hardship. Then understand yourself and
 Understanding EducationEvery child is born pure. Without proper education, they won’t become pillars of the nation.
 Understanding Entertainment &amp; FreedomLife has two paths: one for career ambition—keep passion; the other for living warmly—keep humanity.Open your eyes each day and tell yourself: Oh yeah!
 ]]></content>
+  </entry>
+  <entry>
+    <title>ELK Installation Guide</title>
+    <url>/2025/04/11/ELK%E5%AE%89%E8%A3%85%E6%B5%81%E7%A8%8B/</url>
+    <content><![CDATA[Installing ELK Stack (ElasticSearch, Logstash, Kibana) with Docker
+It is recommended to install on Docker due to lower resource consumption. The installation version used below is 8.12.2. Please use the same version to avoid conflicts.
+
+Table of Contents1. Install ElasticSearch2. Install Logstash3. Install KibanaRecommendations
+
+1. Install ElasticSearch
+Pull the image:
+
+docker pull elasticsearch:8.12.2````* Start the container:```bashdocker run --name some-elasticsearch -p 9200:9200 -p 9300:9300 -e &quot;discovery.type=single-node&quot; -d elasticsearch:8.12.2
+
+
+Enter the container:
+
+sudo docker exec -u 0 -it some-elasticsearch bash
+
+
+Restart the container:
+
+docker restart some-elasticsearch
+
+
+2. Install Logstash
+Pull the image:
+
+docker pull docker.elastic.co/logstash/logstash:8.12.2
+
+
+Start the container:
+
+sudo docker run -it -p 5044:5044 -p 9600:9600 --name logstash -v /usr/share/logstash/piplines:/usr/share/logstash/config --privileged=true docker.elastic.co/logstash/logstash:8.12.2 /bin/bash
+
+
+Use scp to upload the MySQL Connector JAR file to the virtual machine:
+
+scp &quot;/Users/Downloads/logstash-8.12.2/mysql-connector-j-8.4.0.jar&quot; username@VM-IP:/home
+
+
+Move the JAR file from the VM to the Logstash container:
+
+docker cp ./mysql-connector-j-8.4.0.jar logstash:/usr/share/logstash
+
+
+Enter the container:
+
+docker exec -u 0 -it logstash bash
+
+
+3. Install Kibana
+Pull the image:
+
+docker pull kibana:8.12.2
+
+
+Start the container:
+
+docker run --name some-kibana -p 9200:9200 -p 9300:9300 -e &quot;discovery.type=single-node&quot; -d elasticsearch:8.12.2
+
+
+Enter the container:
+
+docker exec -u 0 -it some-kibana bash
+
+
+Additional: Install Docker, Portainer, and Related Commandssudo apt updatesudo apt install docker.io docker-composedocker -vsudo systemctl start dockersudo docker search portainerdocker pull portainer/portainersudo docker pull portainer/portainersudo docker run -d --name portainerUI -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock portainer/portainersudo docker start portainerUIsudo passwd root
+
+
+
+
+
+
+
+]]></content>
+      <categories>
+        <category>Backend</category>
+      </categories>
   </entry>
   <entry>
     <title>Frontend Interview Questions</title>
@@ -357,6 +357,18 @@ Scoped slot: Vue 2 uses slot-scope=&quot;data&quot;, Vue 3 uses #data or #defaul
 ]]></content>
   </entry>
   <entry>
+    <title>Reflections on *Skin*</title>
+    <url>/2025/06/26/%E7%9A%AE%E5%9B%8A%E6%84%9F%E6%82%9F/</url>
+    <content><![CDATA[Aunt TaiAunt Tai is strong-willed and resilient. Her optimistic attitude is something worth learning from. The greatest thing my father ever did was marrying my mother—a truly great woman. A real woman should face everything with positivity and build the future she desires with her own hands.
+Although she resorted to stealing, it was driven by hardship—survival and family. Setting aside pride to do things against her will is, in a way, a form of strength. It’s not about crying and making a scene, but staying proactive in adversity.
+Thinking about it, the author’s achievements are inseparable from his great mother.
+Ah, that lovely mother! To preserve her husband’s dignity and happiness, she insisted on completing the house. Isn’t that a form of strength too? To follow her heart courageously is truly admirable.
+In fact, the person who understands my father the most is my mother. She knows his pride. Isn’t this what love is? You don’t need to say it—I understand. I understand you, and you understand me, and that’s why we’ve been together for so long.
+Zhang MeiliGet up from where you fell. Zhang Meili seems like someone who pursued true love and worked hard for what she desired. Though she was eventually forced to liberate herself sexually, I still respect her for everything she once did.
+Public opinion is powerful, but Zhang Meili’s inner strength is even more powerful.
+]]></content>
+  </entry>
+  <entry>
     <title>Reflections on *What I Talk About When I Talk About Running*</title>
     <url>/2025/06/26/%E5%BD%93%E6%88%91%E8%B0%88%E8%B7%91%E6%AD%A5%E6%97%B6/</url>
     <content><![CDATA[What I Talk About When I Talk About RunningIt was through this book that I realized there could be another version of myself out there, doing something I love. Before reading this book, I had never read anything by Murakami. I knew he was popular and had many famous books, but I hadn’t really paid attention. But when it comes to running, I felt there could be a connection.
@@ -410,17 +422,5 @@ ConclusionThis book is not only about discovering “who you are,” but also ab
       <tags>
         <tag>Personal Growth</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>Reflections on *Skin*</title>
-    <url>/2025/06/26/%E7%9A%AE%E5%9B%8A%E6%84%9F%E6%82%9F/</url>
-    <content><![CDATA[Aunt TaiAunt Tai is strong-willed and resilient. Her optimistic attitude is something worth learning from. The greatest thing my father ever did was marrying my mother—a truly great woman. A real woman should face everything with positivity and build the future she desires with her own hands.
-Although she resorted to stealing, it was driven by hardship—survival and family. Setting aside pride to do things against her will is, in a way, a form of strength. It’s not about crying and making a scene, but staying proactive in adversity.
-Thinking about it, the author’s achievements are inseparable from his great mother.
-Ah, that lovely mother! To preserve her husband’s dignity and happiness, she insisted on completing the house. Isn’t that a form of strength too? To follow her heart courageously is truly admirable.
-In fact, the person who understands my father the most is my mother. She knows his pride. Isn’t this what love is? You don’t need to say it—I understand. I understand you, and you understand me, and that’s why we’ve been together for so long.
-Zhang MeiliGet up from where you fell. Zhang Meili seems like someone who pursued true love and worked hard for what she desired. Though she was eventually forced to liberate herself sexually, I still respect her for everything she once did.
-Public opinion is powerful, but Zhang Meili’s inner strength is even more powerful.
-]]></content>
   </entry>
 </search>
