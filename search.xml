@@ -1,34 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>H5与原生交互</title>
-    <url>/2025/07/04/H5%E4%B8%8E%E5%8E%9F%E7%94%9F%E4%BA%A4%E4%BA%92/</url>
-    <content><![CDATA[H5手机端日志工具(vconsole手机端)：&lt;script src=&quot;https://cdn.bootcdn.net/ajax/libs/vConsole/3.15.1/vconsole.min.js&quot;&gt;&lt;/script&gt;&lt;script&gt;  // 初始化 vConsole  var vConsole = new VConsole();  console.log(&#x27;vConsole is ready.&#x27;);&lt;/script&gt;
-
-第一种情况：传数据给原生端if (window.webkit != undefined) &#123;  //这是ios端定义的  window.webkit.messageHandlers.getUserInfo.postMessage(null);&#125; else &#123;  //这是android端定义的feedback  feedback.getUserInfo();&#125;if (window.webkit != undefined) &#123;  window.webkit.messageHandlers.feedback.postMessage(&#123;    title: &quot;测试分享的标题&quot;,    content: &quot;测试分享的内容&quot;,    url: &quot;https://github.com/maying1992&quot;,  &#125;);&#125; else &#123;  // try &#123;  //   result = feedback.getUserInfo();  // &#125; catch(err)&#123;  // &#125;  feedback.postMessage();&#125;
-
-第二种情况：获取原生端的数据created() &#123;  //window挂载  window.setUserInfo = this.setUserInfo;&#125;,setUserInfo(param) &#123;  const u = navigator.userAgent;  const isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端  const result = JSON.parse(param);  if (isiOS) &#123;    this.queryParams = result.userInfo.token;    //兼容原生端那边传过来的不统一值    if (      result.userInfo.userId == undefined ||      result.userInfo.userId == 0    ) &#123;      this.usrIdd = 0;    &#125; else &#123;      this.usrIdd = result.userInfo.userId;    &#125;    window.localStorage.setItem(&quot;lang&quot;, result.userInfo.language);  &#125; else &#123;    this.queryParams = result;    if (result.userId == undefined || result.userId == 0) &#123;      this.usrIdd = 0;    &#125; else &#123;      this.usrIdd = result.userId;    &#125;    window.localStorage.setItem(&quot;lang&quot;, result.language);  &#125;  this.$i18n.locale = localStorage.getItem(&quot;lang&quot;);  // let data = &#123;  //   &#x27;name&#x27; : &#x27;xiaoming&#x27;  // &#125;;  return localStorage.getItem(&quot;lang&quot;);&#125;
-
-当需要通过按钮跳转到app时：直接用 a 标签的 href 跳转，前提是原生应用定义了 myapp://*** 作为触发特定功能的URL，可参考 Instagram 的 H5 跳转 app 的竞品例子，instagram://**。一般跳不过去就是原生端不支持。
-]]></content>
-      <categories>
-        <category>前端</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>ReactNative新架构</title>
-    <url>/2025/08/19/ReactNative%E6%96%B0%E6%9E%B6%E6%9E%84/</url>
-    <content><![CDATA[
-Fabric：同步渲染 UI，消除 Bridge 通信瓶颈
-TurboModules：按需加载原生模块，提升启动速度
-JSI（JavaScript Interface）：直接调用原生代码，替代异步 Bridge, Bridge是异步的、单线程的，会带来额外的开销；而JSI是同步的，更低开销、并发的。
-
-]]></content>
-      <categories>
-        <category>前端</category>
-      </categories>
-  </entry>
-  <entry>
     <title>ELK安装流程</title>
     <url>/2025/04/11/ELK%E5%AE%89%E8%A3%85%E6%B5%81%E7%A8%8B/</url>
     <content><![CDATA[使用 Docker 安装 ELK Stack（ElasticSearch、Logstash、Kibana）
@@ -109,6 +81,34 @@ docker exec -u 0 -it some-kibana bash
 ]]></content>
       <categories>
         <category>后端</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>H5与原生交互</title>
+    <url>/2025/07/04/H5%E4%B8%8E%E5%8E%9F%E7%94%9F%E4%BA%A4%E4%BA%92/</url>
+    <content><![CDATA[H5手机端日志工具(vconsole手机端)：&lt;script src=&quot;https://cdn.bootcdn.net/ajax/libs/vConsole/3.15.1/vconsole.min.js&quot;&gt;&lt;/script&gt;&lt;script&gt;  // 初始化 vConsole  var vConsole = new VConsole();  console.log(&#x27;vConsole is ready.&#x27;);&lt;/script&gt;
+
+第一种情况：传数据给原生端if (window.webkit != undefined) &#123;  //这是ios端定义的  window.webkit.messageHandlers.getUserInfo.postMessage(null);&#125; else &#123;  //这是android端定义的feedback  feedback.getUserInfo();&#125;if (window.webkit != undefined) &#123;  window.webkit.messageHandlers.feedback.postMessage(&#123;    title: &quot;测试分享的标题&quot;,    content: &quot;测试分享的内容&quot;,    url: &quot;https://github.com/maying1992&quot;,  &#125;);&#125; else &#123;  // try &#123;  //   result = feedback.getUserInfo();  // &#125; catch(err)&#123;  // &#125;  feedback.postMessage();&#125;
+
+第二种情况：获取原生端的数据created() &#123;  //window挂载  window.setUserInfo = this.setUserInfo;&#125;,setUserInfo(param) &#123;  const u = navigator.userAgent;  const isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端  const result = JSON.parse(param);  if (isiOS) &#123;    this.queryParams = result.userInfo.token;    //兼容原生端那边传过来的不统一值    if (      result.userInfo.userId == undefined ||      result.userInfo.userId == 0    ) &#123;      this.usrIdd = 0;    &#125; else &#123;      this.usrIdd = result.userInfo.userId;    &#125;    window.localStorage.setItem(&quot;lang&quot;, result.userInfo.language);  &#125; else &#123;    this.queryParams = result;    if (result.userId == undefined || result.userId == 0) &#123;      this.usrIdd = 0;    &#125; else &#123;      this.usrIdd = result.userId;    &#125;    window.localStorage.setItem(&quot;lang&quot;, result.language);  &#125;  this.$i18n.locale = localStorage.getItem(&quot;lang&quot;);  // let data = &#123;  //   &#x27;name&#x27; : &#x27;xiaoming&#x27;  // &#125;;  return localStorage.getItem(&quot;lang&quot;);&#125;
+
+当需要通过按钮跳转到app时：直接用 a 标签的 href 跳转，前提是原生应用定义了 myapp://*** 作为触发特定功能的URL，可参考 Instagram 的 H5 跳转 app 的竞品例子，instagram://**。一般跳不过去就是原生端不支持。
+]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>ReactNative新架构</title>
+    <url>/2025/08/19/ReactNative%E6%96%B0%E6%9E%B6%E6%9E%84/</url>
+    <content><![CDATA[
+Fabric：同步渲染 UI，消除 Bridge 通信瓶颈
+TurboModules：按需加载原生模块，提升启动速度
+JSI（JavaScript Interface）：直接调用原生代码，替代异步 Bridge, Bridge是异步的、单线程的，会带来额外的开销；而JSI是同步的，更低开销、并发的。
+
+]]></content>
+      <categories>
+        <category>前端</category>
       </categories>
   </entry>
   <entry>
@@ -234,37 +234,6 @@ RPC是什么全称是Remote Procedure Call， 中文名字叫远程过程调用�
       </categories>
   </entry>
   <entry>
-    <title>google sheet同步表格数据</title>
-    <url>/2025/08/28/google%20sheet%E5%90%8C%E6%AD%A5%E8%A1%A8%E6%A0%BC%E6%95%B0%E6%8D%AE/</url>
-    <content><![CDATA[有个需求是根据一个表格的所有子表，同步到另个表格（包含子表）的数据，用google sheets里面的扩展程序里的apps 脚本功能，编写脚本。为什么要同步呢？因为原表默认是不可编辑的，打算同步过来后再进行编辑。sourceSpreadsheetId跟targetSpreadsheetId为google sheet 表格地址栏d后面的一串字符。
-function synchronizeSheetsToAnotherFile() &#123;  const sourceSpreadsheetId = &quot;id1&quot;;  const targetSpreadsheetId = &quot;id2&quot;; # 比如：1NOtSSvDwXrca8vqyZW6OqQJwGaCICMVguSz1-i72oqg  const sourceSpreadsheet = SpreadsheetApp.openById(sourceSpreadsheetId);  const targetSpreadsheet = SpreadsheetApp.openById(targetSpreadsheetId);  const sourceSheets = sourceSpreadsheet.getSheets();  sourceSheets.forEach(sheet =&gt; &#123;    const sheetName = sheet.getName();    let targetSheet = targetSpreadsheet.getSheetByName(sheetName);    if (!targetSheet) &#123;      targetSheet = targetSpreadsheet.insertSheet(sheetName);    &#125; else &#123;      targetSheet.clear();     &#125;    const range = sheet.getDataRange();    const displayValues = range.getDisplayValues();     const formats = range.getBackgrounds();            const fontWeights = range.getFontWeights();        const targetRange = targetSheet.getRange(1, 1, displayValues.length, displayValues[0].length);    targetRange.setValues(displayValues);     targetRange.setBackgrounds(formats);     targetRange.setFontWeights(fontWeights);    &#125;);&#125;]]></content>
-      <categories>
-        <category>前端</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>react+vite如何打包成apk</title>
-    <url>/2025/08/27/react+vite%E5%A6%82%E4%BD%95%E6%89%93%E5%8C%85%E6%88%90apk/</url>
-    <content><![CDATA[最近遇到一个问题，如何把已经弄好的react移动端项目打包成apk呢？可以使用capacitor。首先，可以先将依赖全部添加进去项目里面。
-npm add @capacitor/core @capacitor/clinpm install  @capacitor/android
-
-接着，可以先把自己的app初始化
-npx cap init MyApp com.example.myapp   #MyApp是app名字，com.example.myapp是包名npx cap add android    #这条命令会生成android文件夹
-
-然后把项目进行打包，再通过npx cap copy命令让打包后的产物放进去android目录里面
-npm run buildnpx cap copy
-
-紧接着可以通过命令去android平台啦
-npx cap open android
-
-默认自动打开android studio后，通过File -&gt; Sync Project with Gradle Files, 或者熟悉android studio的人可以通过右上角的按钮去同步。如果发现Gradle失败，有可能是拉取gradle版本的包失败了，可以找到gradle-wrapper.properties文件，然后把distributionUrl的路径改为distributionUrl&#x3D;https:&#x2F;&#x2F;mirrors.cloud.tencent.com&#x2F;gradle&#x2F;gradle-8.11.1-all.zip，然后重新点击sync按钮就可以啦。
-等sync 成功后，可以自己运行起来看效果，也可以直接用Build -&gt; Generate APP Bundles or APKs,选择 Generate APKs,就能成功打包apk包了。
-]]></content>
-      <categories>
-        <category>前端</category>
-      </categories>
-  </entry>
-  <entry>
     <title>react组件通信方式</title>
     <url>/2025/08/25/react%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F/</url>
     <content><![CDATA[
@@ -273,6 +242,67 @@ npx cap open android
 Redux或Mobx：对于复杂的应用，可以用状态库来实现组件通信。
 事件订阅模式：使用EventEmitter或者第三方库来实现跨组件的事件发布订阅。
 Hooks：React的一些Hooks，比如useState，能实现不同组件的共享逻辑跟状态。
+
+]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>redis</title>
+    <url>/2025/04/16/redis/</url>
+    <content><![CDATA[目录redis-token缓存jwt跟redis存token的区别redis相关知识推荐
+redis-token缓存
+redis.js创建
+const redis = require(&quot;redis&quot;);// Redis 链接的配置内容const client = redis.createClient(&#123;  socket: &#123;    host: &#x27;192.168.64.2&#x27;,  // Redis 服务器地址    port: 6379,             // Redis 端口  &#125;,  password: &#x27;123456&#x27;        // Redis 密码&#125;);// 连接到 Redisclient.connect()  .then(() =&gt; &#123;    console.log(&#x27;Connected to Redis&#x27;);  &#125;)  .catch((err) =&gt; &#123;    console.error(&#x27;Redis connection failed:&#x27;, err);  &#125;);// 处理连接错误client.on(&quot;error&quot;, (err) =&gt; &#123;  console.error(&#x27;Redis error:&#x27;, err);&#125;);// 定义 Redis 操作方法const redisOps = &#123;  // 创建值  set: async (key, value, expiration = null) =&gt; &#123;    try &#123;      value = JSON.stringify(value);      if (Number.isInteger(expiration) &amp;&amp; expiration &gt; 0) &#123;        // 如果设置了有效时间并且是整数，使用 SETEX 命令        await client.setEx(key, expiration, value);      &#125; else &#123;        // 否则直接使用 SET 命令        await client.set(key, value);      &#125;      console.log(`Key &quot;$&#123;key&#125;&quot; set successfully with expiration: $&#123;expiration || &#x27;no expiration&#x27;&#125;`);    &#125; catch (err) &#123;      console.error(&#x27;Error setting value:&#x27;, err);    &#125;  &#125;,  // 删除值  del: async (key) =&gt; &#123;    try &#123;      await client.del(key);      console.log(`Key &quot;$&#123;key&#125;&quot; deleted successfully`);    &#125; catch (err) &#123;      console.error(&#x27;Error deleting key:&#x27;, err);    &#125;  &#125;,  // 获取值  get: async (key) =&gt; &#123;    const result = await client.get(key);    console.log(&#x27;99999=&#x27;, result)    try &#123;      return result; // 尝试解析为 JSON    &#125; catch (error) &#123;      // 如果不是 JSON 格式，直接返回原始值      console.warn(`Warning: Value for key &quot;$&#123;key&#125;&quot; is not JSON formatted.`);      return result;    &#125;  &#125;,  // 获取键的 TTL  ttl: async (key) =&gt; &#123;    try &#123;      const timeLeft = await client.ttl(key);      console.log(`Key &quot;$&#123;key&#125;&quot; has TTL: $&#123;timeLeft&#125;`);      return timeLeft;    &#125; catch (err) &#123;      console.error(&#x27;Error getting TTL:&#x27;, err);      return err;    &#125;  &#125;,&#125;;module.exports = redisOps;
+
+
+
+redis的使用
+
+
+const redisOps = require(&quot;./redis.js&quot;);const moment = require(&#x27;moment-timezone&#x27;);let token = jwt.sign(&#123; id: user.userid, username: user.username &#125;, secretKey, &#123; expiresIn: &#x27;1h&#x27; &#125;);await redisOps.set(user.userid.toString(), token, 60 * 60)
+
+//token校验const verifyToken = async (ctx, next) =&gt; &#123;    const userid = ctx.headers[&#x27;cookie&#x27;];    const match = userid.match(/userid=(\d+)/);    const userId = match ? match[1] : null;        if (!userId) &#123;        ctx.status = 401;        console.log(&#x27;No token provided&#x27;);        ctx.body = &#123; message: &#x27;No token provided&#x27; &#125;;        return;    &#125;    try &#123;        const startTime = moment(); // 记录开始时间        const getuserid = await redisOps.get(userId)        const endTime = moment(); // 记录结束时间        const duration = moment.duration(endTime.diff(startTime)); // 计算持续时间              console.log(`Request completed in $&#123;duration.asMilliseconds()&#125; ms`); // 以毫秒为单位输出耗时        if(getuserid)&#123;            await next();        &#125;else &#123;            throw err;        &#125;           &#125; catch (err) &#123;        console.log(&#x27;Token verification failed:&#x27;, err.message);        ctx.status = 401;        ctx.body = &#123; message: &#x27;Failed to authenticate token&#x27; &#125;;    &#125;&#125;;
+
+
+
+jwt跟redis存token的区别
+
+
+维度
+JWT
+Redis
+
+
+
+性能
+- 无需查询数据库或访问外部存储，验证速度较快- 适用于简单的身份验证场景
+- 需要与 Redis 服务器进行通信，可能会有网络延迟- 适用于复杂的会话管理和存储需求
+
+
+redis相关知识
+redis本质上是一个key-value类型的内存数据库，性能最快的key-value数据库。
+
+正常情况是把数据存储在数据库 ，数据库把数据存在磁盘。但越上层的存储器存储效率越高，内存位于磁盘之上。而redis是一款基于内存的存储系统，数据都存在内存里，所以从redis读取数据会比从数据库读取要快。
+
+内存有限，存储不了太多数据。出现故障时，用主从复制、哨兵法。集群就是一套完整的redis多机解决方案。他有效解决了单机redis的所有问题。当你在集群中为某个节点配置从机的时候，主从节点间同步就是主从复制。主节点挂掉之后，从节点的选取，内部逻辑与哨兵机制相似。
+
+支持发布&#x2F;订阅模式，可以作为一个简单而高效的轻量级消息代理，用于实现消息队列、实时通知等。
+
+
+
+
+]]></content>
+      <categories>
+        <category>后端</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>Vue中插入脚本</title>
+    <url>/2025/08/12/vue%E5%AE%9E%E7%8E%B0%E6%8F%92%E5%85%A5%E8%84%9A%E6%9C%AC/</url>
+    <content><![CDATA[当你拿到的广告代码是包含script标签时，则需要通过一定的转换，才能正常渲染到页面上。
+//当你拿到的广告代码如下：&lt;script type=&quot;text/javascript&quot;&gt; atOptions = &#123;  &#x27;key&#x27; : &#x27;1523b7ddb936e560aadef64a851d500c&#x27;,  &#x27;format&#x27; : &#x27;iframe&#x27;,  &#x27;height&#x27; : 250,  &#x27;width&#x27; : 300,  &#x27;params&#x27; : &#123;&#125; &#125;;&lt;/script&gt;&lt;script type=&quot;text/javascript&quot; src=&quot;//www.highperformanceformat.com/1523b7ddb936e560aadef64a851d500c/invoke.js&quot;&gt;&lt;/script&gt;//转换后：const targetDiv = document.getElementById(&quot;de_v&quot;);if (!targetDiv) return;// 创建第一个 script 设置 atOptionsconst script1 = document.createElement(&quot;script&quot;);script1.type = &quot;text/javascript&quot;;script1.innerHTML = `  atOptions = &#123;&#x27;key&#x27; : &#x27;1523b7ddb936e560aadef64a851d500c&#x27;,&#x27;format&#x27; : &#x27;iframe&#x27;,&#x27;height&#x27; : 250,&#x27;width&#x27; : 300,&#x27;params&#x27; : &#123;&#125;&#125;;`;// 创建第二个 script 负责加载外部 JSconst script2 = document.createElement(&quot;script&quot;);script2.type = &quot;text/javascript&quot;;script2.src = &quot;//www.highperformanceformat.com/1523b7ddb936e560aadef64a851d500c/invoke.js&quot;;// 插入到 #de_v 容器内targetDiv.appendChild(script1);targetDiv.appendChild(script2);
 
 ]]></content>
       <categories>
@@ -317,17 +347,6 @@ Hooks：React的一些Hooks，比如useState，能实现不同组件的共享逻
 ]]></content>
       <categories>
         <category>教资</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>Vue中插入脚本</title>
-    <url>/2025/08/12/vue%E5%AE%9E%E7%8E%B0%E6%8F%92%E5%85%A5%E8%84%9A%E6%9C%AC/</url>
-    <content><![CDATA[当你拿到的广告代码是包含script标签时，则需要通过一定的转换，才能正常渲染到页面上。
-//当你拿到的广告代码如下：&lt;script type=&quot;text/javascript&quot;&gt; atOptions = &#123;  &#x27;key&#x27; : &#x27;1523b7ddb936e560aadef64a851d500c&#x27;,  &#x27;format&#x27; : &#x27;iframe&#x27;,  &#x27;height&#x27; : 250,  &#x27;width&#x27; : 300,  &#x27;params&#x27; : &#123;&#125; &#125;;&lt;/script&gt;&lt;script type=&quot;text/javascript&quot; src=&quot;//www.highperformanceformat.com/1523b7ddb936e560aadef64a851d500c/invoke.js&quot;&gt;&lt;/script&gt;//转换后：const targetDiv = document.getElementById(&quot;de_v&quot;);if (!targetDiv) return;// 创建第一个 script 设置 atOptionsconst script1 = document.createElement(&quot;script&quot;);script1.type = &quot;text/javascript&quot;;script1.innerHTML = `  atOptions = &#123;&#x27;key&#x27; : &#x27;1523b7ddb936e560aadef64a851d500c&#x27;,&#x27;format&#x27; : &#x27;iframe&#x27;,&#x27;height&#x27; : 250,&#x27;width&#x27; : 300,&#x27;params&#x27; : &#123;&#125;&#125;;`;// 创建第二个 script 负责加载外部 JSconst script2 = document.createElement(&quot;script&quot;);script2.type = &quot;text/javascript&quot;;script2.src = &quot;//www.highperformanceformat.com/1523b7ddb936e560aadef64a851d500c/invoke.js&quot;;// 插入到 #de_v 容器内targetDiv.appendChild(script1);targetDiv.appendChild(script2);
-
-]]></content>
-      <categories>
-        <category>前端</category>
       </categories>
   </entry>
   <entry>
@@ -379,6 +398,23 @@ The indefinite pronouns some and any.(普通不定代词)Refer to people or thin
 The indefinite pronouns many and much.Refer to people or things.Many can replace or modify plural nouns, and much can replace or modify the uncountable nouns, right?We use “How many…” questions to ask about the plural nouns, and “How much…” question to ask about the uncountable nouns.
 the compound indefinite pronouns something, anything, nothing(复合不定代词)Refer to people or things.If the subject is something, anything… it is seen as singular(单数形式), right?We should put the adjectives after the indefinite pronouns. For example, something important.
 the modal verbs.(情态动词)Make inferences.(作出推断)The main structure of this grammar is “modal verbs + be”, right?Some modal verbs can be used for making inferences. They are must, can’t, could, may, might. We use must to show that we think something is probably true. And use may, might and could to show that we think something is possibly true. Use can’t to show that you are almost sure something is not true. 
+]]></content>
+      <categories>
+        <category>教资</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>初中英语教师资格语篇课模版</title>
+    <url>/2025/07/15/%E5%88%9D%E4%B8%AD%E8%8B%B1%E8%AF%AD%E6%95%99%E8%B5%84%E8%AF%AD%E7%AF%87%E8%AF%BE%E6%A8%A1%E6%9D%BF/</url>
+    <content><![CDATA[The intonation.（语调）Express the different feelings of the speaker.We often use the falling tone when we read a statement, a special question, an exclamatory or imperative sentence(祈使句、感叹句). We often use rising tone when we ask a Yes&#x2F;No question. We often use rising-falling tone to read an alternative question and a coordinate clause（选择疑问句、并列句）. There are two parts in a tag question（反义疑问句）. The first part is often in a falling tone and for second part, there are two cases. If we are not sure about the question, we often use a rising tone. If we are sure about that, we offen use a falling tone.We choose different intonations to express different feelings and moods.
+The word stress(单词重音)Read words more exactlyWhen we say a word with more than one syllable, some of the syllables need to be stressed.When we read two-syllable words, normally we stress the first syllable for nouns, and stress the second syllable for verbs. As for the multi-syllable words, we stress the third from the bottom.
+The sentence stress（句子重读）Draw attention to certain information.We usually stress the lexical words such as nouns, verbs, adjectives, adverbs and numbers. We don’t stress the function words such as a, the, is, of and so on. Besides, you can stress some information you want to emphasis.We should change it according to the situation and feelings of the speaker.
+The liaison&#x2F;ˈlēəˌzän,lēˈāˌzän&#x2F;&#x2F;Word linking.(连读)Speak English more fluently and naturally.In one sense group, we can read the two words together if the former word ends with a consonant&#x2F;ˈkänsənənt&#x2F;, a vowel or “r” sound, and the following word begins with a vowel. If the two words finish and start with the same consonant, we only read one of the consonants.The two words must be in one sense group.
+incomplete plosion&#x2F;‘pləʊʒ(ə)n&#x2F;（不完全爆破）Speak English more fluently and naturally.There are six plosive sounds &#x2F;t&#x2F; &#x2F;d&#x2F; &#x2F;p&#x2F; &#x2F;b&#x2F; &#x2F;k&#x2F; &#x2F;g&#x2F; in English.When two consonants of them are next to each other, we read the former sound silently.The two words must be in one sense group.
+Weak form(弱读)speak English more fluently and naturally.Some words often appear in a weak form such as function words, articles, auxiliary verbs and modal verbs.there are mainly three ways to change function words to weak forms. They are shortening, elision[ i’liʒən ] and vowel changed to schwa  [ʃwɑ:] sound.
+Assimilation(同化)We use it to speak English more fluently and naturally.As we can see, Two different sounds affect each other and become more alike.&#x2F;s+ j&#x2F; -&gt; &#x2F;F&#x2F;this year,&#x2F;d+j&#x2F; -&gt; &#x2F;d3&#x2F; would you
+Sense group(意群)We use it to make our expression more easily to understand.As we can see, a sentence may consists of several groups according to meaning or structure. Each group is called a sense group. It can be a word, a phrase, a clause. After a sense group, there should be a short pause.We should remind that we should change it according to the situation and feelings of the speaker.
+The pause(停顿)We use to speak English more fluently and naturally.As we can see, in a long sentence, we should pause several times according to the sense group. Normally, we pause based on meaning and grammatical structure.We should remind that there should be no pause in a sense group. Where to pause also depends on the situation and the feelings of the speaker.
 ]]></content>
       <categories>
         <category>教资</category>
@@ -614,70 +650,99 @@ data()&#123;    return&#123;        focus: true,		code:[&#x27;&#x27;,&#x27;&#x27
       </categories>
   </entry>
   <entry>
-    <title>初中英语教师资格语篇课模版</title>
-    <url>/2025/07/15/%E5%88%9D%E4%B8%AD%E8%8B%B1%E8%AF%AD%E6%95%99%E8%B5%84%E8%AF%AD%E7%AF%87%E8%AF%BE%E6%A8%A1%E6%9D%BF/</url>
-    <content><![CDATA[The intonation.（语调）Express the different feelings of the speaker.We often use the falling tone when we read a statement, a special question, an exclamatory or imperative sentence(祈使句、感叹句). We often use rising tone when we ask a Yes&#x2F;No question. We often use rising-falling tone to read an alternative question and a coordinate clause（选择疑问句、并列句）. There are two parts in a tag question（反义疑问句）. The first part is often in a falling tone and for second part, there are two cases. If we are not sure about the question, we often use a rising tone. If we are sure about that, we offen use a falling tone.We choose different intonations to express different feelings and moods.
-The word stress(单词重音)Read words more exactlyWhen we say a word with more than one syllable, some of the syllables need to be stressed.When we read two-syllable words, normally we stress the first syllable for nouns, and stress the second syllable for verbs. As for the multi-syllable words, we stress the third from the bottom.
-The sentence stress（句子重读）Draw attention to certain information.We usually stress the lexical words such as nouns, verbs, adjectives, adverbs and numbers. We don’t stress the function words such as a, the, is, of and so on. Besides, you can stress some information you want to emphasis.We should change it according to the situation and feelings of the speaker.
-The liaison&#x2F;ˈlēəˌzän,lēˈāˌzän&#x2F;&#x2F;Word linking.(连读)Speak English more fluently and naturally.In one sense group, we can read the two words together if the former word ends with a consonant&#x2F;ˈkänsənənt&#x2F;, a vowel or “r” sound, and the following word begins with a vowel. If the two words finish and start with the same consonant, we only read one of the consonants.The two words must be in one sense group.
-incomplete plosion&#x2F;‘pləʊʒ(ə)n&#x2F;（不完全爆破）Speak English more fluently and naturally.There are six plosive sounds &#x2F;t&#x2F; &#x2F;d&#x2F; &#x2F;p&#x2F; &#x2F;b&#x2F; &#x2F;k&#x2F; &#x2F;g&#x2F; in English.When two consonants of them are next to each other, we read the former sound silently.The two words must be in one sense group.
-Weak form(弱读)speak English more fluently and naturally.Some words often appear in a weak form such as function words, articles, auxiliary verbs and modal verbs.there are mainly three ways to change function words to weak forms. They are shortening, elision[ i’liʒən ] and vowel changed to schwa  [ʃwɑ:] sound.
-Assimilation(同化)We use it to speak English more fluently and naturally.As we can see, Two different sounds affect each other and become more alike.&#x2F;s+ j&#x2F; -&gt; &#x2F;F&#x2F;this year,&#x2F;d+j&#x2F; -&gt; &#x2F;d3&#x2F; would you
-Sense group(意群)We use it to make our expression more easily to understand.As we can see, a sentence may consists of several groups according to meaning or structure. Each group is called a sense group. It can be a word, a phrase, a clause. After a sense group, there should be a short pause.We should remind that we should change it according to the situation and feelings of the speaker.
-The pause(停顿)We use to speak English more fluently and naturally.As we can see, in a long sentence, we should pause several times according to the sense group. Normally, we pause based on meaning and grammatical structure.We should remind that there should be no pause in a sense group. Where to pause also depends on the situation and the feelings of the speaker.
-]]></content>
+    <title>宝塔安装puppeteer</title>
+    <url>/2025/09/02/%E5%AE%9D%E5%A1%94%E5%AE%89%E8%A3%85puppeteer/</url>
+    <content><![CDATA[centos8使用yum失败，切换镜像源，更改镜像源文件，尝试清除缓存并重新建立
+wget -O /etc/yum.repos.d/CentOS-Base.repo https://mirrors.aliyun.com/repo/Centos-8.reposudo yum clean allsudo yum makecache
+
+Centos8已不维护，只能找
+puppeteer报错下载依赖 参考链接：https://www.cnblogs.com/ilizhu/p/14504049.html报错sandbox：
+#添加启动参数const browser = await puppeteer.launch(&#123;args: [&#x27;--no-sandbox&#x27;, &#x27;--disable-setuid-sandbox&#x27;]&#125;);]]></content>
       <categories>
-        <category>教资</category>
+        <category>前端</category>
       </categories>
   </entry>
   <entry>
-    <title>redis</title>
-    <url>/2025/04/16/redis/</url>
-    <content><![CDATA[目录redis-token缓存jwt跟redis存token的区别redis相关知识推荐
-redis-token缓存
-redis.js创建
-const redis = require(&quot;redis&quot;);// Redis 链接的配置内容const client = redis.createClient(&#123;  socket: &#123;    host: &#x27;192.168.64.2&#x27;,  // Redis 服务器地址    port: 6379,             // Redis 端口  &#125;,  password: &#x27;123456&#x27;        // Redis 密码&#125;);// 连接到 Redisclient.connect()  .then(() =&gt; &#123;    console.log(&#x27;Connected to Redis&#x27;);  &#125;)  .catch((err) =&gt; &#123;    console.error(&#x27;Redis connection failed:&#x27;, err);  &#125;);// 处理连接错误client.on(&quot;error&quot;, (err) =&gt; &#123;  console.error(&#x27;Redis error:&#x27;, err);&#125;);// 定义 Redis 操作方法const redisOps = &#123;  // 创建值  set: async (key, value, expiration = null) =&gt; &#123;    try &#123;      value = JSON.stringify(value);      if (Number.isInteger(expiration) &amp;&amp; expiration &gt; 0) &#123;        // 如果设置了有效时间并且是整数，使用 SETEX 命令        await client.setEx(key, expiration, value);      &#125; else &#123;        // 否则直接使用 SET 命令        await client.set(key, value);      &#125;      console.log(`Key &quot;$&#123;key&#125;&quot; set successfully with expiration: $&#123;expiration || &#x27;no expiration&#x27;&#125;`);    &#125; catch (err) &#123;      console.error(&#x27;Error setting value:&#x27;, err);    &#125;  &#125;,  // 删除值  del: async (key) =&gt; &#123;    try &#123;      await client.del(key);      console.log(`Key &quot;$&#123;key&#125;&quot; deleted successfully`);    &#125; catch (err) &#123;      console.error(&#x27;Error deleting key:&#x27;, err);    &#125;  &#125;,  // 获取值  get: async (key) =&gt; &#123;    const result = await client.get(key);    console.log(&#x27;99999=&#x27;, result)    try &#123;      return result; // 尝试解析为 JSON    &#125; catch (error) &#123;      // 如果不是 JSON 格式，直接返回原始值      console.warn(`Warning: Value for key &quot;$&#123;key&#125;&quot; is not JSON formatted.`);      return result;    &#125;  &#125;,  // 获取键的 TTL  ttl: async (key) =&gt; &#123;    try &#123;      const timeLeft = await client.ttl(key);      console.log(`Key &quot;$&#123;key&#125;&quot; has TTL: $&#123;timeLeft&#125;`);      return timeLeft;    &#125; catch (err) &#123;      console.error(&#x27;Error getting TTL:&#x27;, err);      return err;    &#125;  &#125;,&#125;;module.exports = redisOps;
-
-
-
-redis的使用
-
-
-const redisOps = require(&quot;./redis.js&quot;);const moment = require(&#x27;moment-timezone&#x27;);let token = jwt.sign(&#123; id: user.userid, username: user.username &#125;, secretKey, &#123; expiresIn: &#x27;1h&#x27; &#125;);await redisOps.set(user.userid.toString(), token, 60 * 60)
-
-//token校验const verifyToken = async (ctx, next) =&gt; &#123;    const userid = ctx.headers[&#x27;cookie&#x27;];    const match = userid.match(/userid=(\d+)/);    const userId = match ? match[1] : null;        if (!userId) &#123;        ctx.status = 401;        console.log(&#x27;No token provided&#x27;);        ctx.body = &#123; message: &#x27;No token provided&#x27; &#125;;        return;    &#125;    try &#123;        const startTime = moment(); // 记录开始时间        const getuserid = await redisOps.get(userId)        const endTime = moment(); // 记录结束时间        const duration = moment.duration(endTime.diff(startTime)); // 计算持续时间              console.log(`Request completed in $&#123;duration.asMilliseconds()&#125; ms`); // 以毫秒为单位输出耗时        if(getuserid)&#123;            await next();        &#125;else &#123;            throw err;        &#125;           &#125; catch (err) &#123;        console.log(&#x27;Token verification failed:&#x27;, err.message);        ctx.status = 401;        ctx.body = &#123; message: &#x27;Failed to authenticate token&#x27; &#125;;    &#125;&#125;;
-
-
-
-jwt跟redis存token的区别
-
-
-维度
-JWT
-Redis
-
-
-
-性能
-- 无需查询数据库或访问外部存储，验证速度较快- 适用于简单的身份验证场景
-- 需要与 Redis 服务器进行通信，可能会有网络延迟- 适用于复杂的会话管理和存储需求
-
-
-redis相关知识
-redis本质上是一个key-value类型的内存数据库，性能最快的key-value数据库。
-
-正常情况是把数据存储在数据库 ，数据库把数据存在磁盘。但越上层的存储器存储效率越高，内存位于磁盘之上。而redis是一款基于内存的存储系统，数据都存在内存里，所以从redis读取数据会比从数据库读取要快。
-
-内存有限，存储不了太多数据。出现故障时，用主从复制、哨兵法。集群就是一套完整的redis多机解决方案。他有效解决了单机redis的所有问题。当你在集群中为某个节点配置从机的时候，主从节点间同步就是主从复制。主节点挂掉之后，从节点的选取，内部逻辑与哨兵机制相似。
-
-支持发布&#x2F;订阅模式，可以作为一个简单而高效的轻量级消息代理，用于实现消息队列、实时通知等。
-
-
-
-
+    <title>《当我谈跑步时，我谈些什么》读后感</title>
+    <url>/2025/06/26/%E5%BD%93%E6%88%91%E8%B0%88%E8%B7%91%E6%AD%A5%E6%97%B6/</url>
+    <content><![CDATA[《当我谈跑步时，我谈些什么》也就是看了这本书，才知道世界上会有另一个自己在做着自己喜欢的事情。看这本书之前，从没有看过村上君写的书。知道有这么一个火人，也知道那么多火书，但就是没怎么看过。可论及跑步呀，觉得能与之有所交流。一直跑下去，会不会就到月球上了呢？跑步并非为了长命百岁，而是在有限生命里让自己活得更轻松点罢了。
+惊喜于能发现村上君跑步时的想象力，天马行空我很喜欢，我也曾幻想过很多，也会跑着跑着就突然想起一句歌词，什么现在加快速度追幸福呀 blala……长跑需要耐力，但没有想象力可不行哟。当然前提是热爱跑步，一个不喜欢跑步的人，你说再多也无动于衷；一个热爱跑步的人，即使是雨天，也想要在停雨空隙去相遇另一个自己。人本孤独，但精神却能得到共鸣。
+想着未来一定会坚持跑下去，不管世界如何变化。自从有次在外一整天走了 30 公里，除了身体上晒伤的疼痛以外，我更喜欢的是精神世界的富足。没经历过，就没有话语权。可能我跟陈坤一样，是个悲观的极乐主义者，在世上积极活着，却也看透红尘。不以物喜，不以己悲。脉搏也降到一分钟 50 多次，看来还是很适合慢跑的。说这么多，主要还是兴趣使然。只要不限制我的自由，一切好说。
+想着来年，我也会参加马拉松，然后旁边的人都在为我加油，那该有多 happy。
+“我不是人，是一架纯粹的机器，所以什么也无须感觉，唯有向前奔跑。”
+极为像的一点就是我们都喜欢不停地奔跑，不是那种觉得自己快不行了就走几步，也不是适当的时候停下来看风景。可能每个人的见解不同。但我觉得能不停跑下去的人才是真正的王者。
+当抵达终点那一刻，会觉得怎么那么酷，一股自豪感涌上来，就好比中了彩票或是走了狗屎运。这是原则，亦是我的骄傲。
+噢对，好比尚三哥在终点等着我，然后我得意地笑了。
 ]]></content>
       <categories>
-        <category>后端</category>
+        <category>读书感悟</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>2022应届毕业生办理深户流程</title>
+    <url>/2025/07/01/%E6%B7%B1%E6%88%B7%E5%8A%9E%E7%90%86%E6%B5%81%E7%A8%8B/</url>
+    <content><![CDATA[
+
+1. 登录广东政务服务网申请毕业生接收
+打开 广东政务服务网
+搜索“人才引进” → 选择“接收毕业生”
+填写个人资料后，下载电子版《申请书》
+
+2. 报到证改派
+每个地区流程略有不同，建议致电报到证抬头地区的人社局咨询
+示例：汕尾市城区 → 在广东政务服务网搜索“档案转出” → 点击在线办理
+上传报到证、申请表等资料到“调函”栏目
+不久后，工作人员会联系确认是否需要电子版“同意改派”文件（推荐选择电子版）, 她会把电子版的“同意改派”发到我们填的邮箱里。
+
+其他地区如潮州市：可直接在广东政务服务网搜索“报到证改派”在线办理
+3. 上传材料至“广东就业创业”小程序
+打开小程序，选择应届生接收模块
+上传材料：电子版“同意改派”的报到证、申请表、三方协议等
+等待校方审核通过
+
+4. 返回广东政务服务网上传最终材料
+上传审核通过后的报到证等资料
+审核通过后会收到含有“指标卡”的短信通知
+
+5. 在“深圳本地宝”预约现场办理
+打开“深圳本地宝”微信公众号，搜索“大学生”
+进入现场办理流程 → 点击“户政预约” → 选择“普通户政预约”
+预约业务选择“接收应届生户籍迁入”
+选择时间和地点并预约成功后，带好上述资料和以下材料前往办理：
+户口本
+身份证及二代回执
+一寸白底照片
+
+
+
+6. 第一次现场办理后领取档案袋
+办理后工作人员会发放档案袋
+需在五个工作日后再次前往办理
+
+7. 第二次预约并完成迁户手续
+提前预约，带齐上次材料再次前往办理
+办理成功后可选择身份证邮寄
+
+
+备注： 整个流程较为繁琐，建议提前准备资料并留意预约时间。
+]]></content>
+      <categories>
+        <category>其他</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>《皮囊》感悟</title>
+    <url>/2025/06/26/%E7%9A%AE%E5%9B%8A%E6%84%9F%E6%82%9F/</url>
+    <content><![CDATA[阿太阿太倔强坚强，豁达的心态值得人学习。父亲最强大的地方就是娶了我的母亲。一个伟大的女人。真正的女人就是应该要积极乐观面对一切，用自己的双手打造自己想要的未来。
+虽然有偷窃，但也是生活所迫，为了生存，为了家人，放下面子干一些违心事，又何尝不是一种积极的心态呢？而不是一哭二闹三上吊。
+想来作者能有如此作为，跟他伟大的母亲脱不了干系。
+那可爱的母亲呀！为了父亲的面子，为了父亲开心，都坚持要把房子建完，这何尝不是一种力量，向往心之所向，佩服这种勇气。
+其实最了解父亲的人是母亲，母亲知道父亲好面子，爱情不就是这样吗？你不用说，我懂，我懂你懂我，所以我们才会在一起这么久。
+张美丽从哪里跌倒，就从哪里爬起来。仿佛看见一个追求真爱，为爱为自己想要的东西不懈努力的人，虽说最终还是被迫性解放了自己，但她曾经的所作所为仍让我敬佩。
+舆论的力量是强大的，但比其而言，张美丽的内心力量更强大。
+]]></content>
+      <categories>
+        <category>读书感悟</category>
       </categories>
   </entry>
   <entry>
@@ -770,6 +835,37 @@ const processConversations = async (dateObj) =&gt; &#123;  const username = &#x2
       </categories>
   </entry>
   <entry>
+    <title>react+vite如何打包成apk</title>
+    <url>/2025/08/27/react+vite%E5%A6%82%E4%BD%95%E6%89%93%E5%8C%85%E6%88%90apk/</url>
+    <content><![CDATA[最近遇到一个问题，如何把已经弄好的react移动端项目打包成apk呢？可以使用capacitor。首先，可以先将依赖全部添加进去项目里面。
+npm add @capacitor/core @capacitor/clinpm install  @capacitor/android
+
+接着，可以先把自己的app初始化
+npx cap init MyApp com.example.myapp   #MyApp是app名字，com.example.myapp是包名npx cap add android    #这条命令会生成android文件夹
+
+然后把项目进行打包，再通过npx cap copy命令让打包后的产物放进去android目录里面
+npm run buildnpx cap copy
+
+紧接着可以通过命令去android平台啦
+npx cap open android
+
+默认自动打开android studio后，通过File -&gt; Sync Project with Gradle Files, 或者熟悉android studio的人可以通过右上角的按钮去同步。如果发现Gradle失败，有可能是拉取gradle版本的包失败了，可以找到gradle-wrapper.properties文件，然后把distributionUrl的路径改为distributionUrl&#x3D;https:&#x2F;&#x2F;mirrors.cloud.tencent.com&#x2F;gradle&#x2F;gradle-8.11.1-all.zip，然后重新点击sync按钮就可以啦。
+等sync 成功后，可以自己运行起来看效果，也可以直接用Build -&gt; Generate APP Bundles or APKs,选择 Generate APKs,就能成功打包apk包了。
+]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>google sheet同步表格数据</title>
+    <url>/2025/08/28/google%20sheet%E5%90%8C%E6%AD%A5%E8%A1%A8%E6%A0%BC%E6%95%B0%E6%8D%AE/</url>
+    <content><![CDATA[有个需求是根据一个表格的所有子表，同步到另个表格（包含子表）的数据，用google sheets里面的扩展程序里的apps 脚本功能，编写脚本。为什么要同步呢？因为原表默认是不可编辑的，打算同步过来后再进行编辑。sourceSpreadsheetId跟targetSpreadsheetId为google sheet 表格地址栏d后面的一串字符。
+function synchronizeSheetsToAnotherFile() &#123;  const sourceSpreadsheetId = &quot;id1&quot;;  const targetSpreadsheetId = &quot;id2&quot;; # 比如：1NOtSSvDwXrca8vqyZW6OqQJwGaCICMVguSz1-i72oqg  const sourceSpreadsheet = SpreadsheetApp.openById(sourceSpreadsheetId);  const targetSpreadsheet = SpreadsheetApp.openById(targetSpreadsheetId);  const sourceSheets = sourceSpreadsheet.getSheets();  sourceSheets.forEach(sheet =&gt; &#123;    const sheetName = sheet.getName();    let targetSheet = targetSpreadsheet.getSheetByName(sheetName);    if (!targetSheet) &#123;      targetSheet = targetSpreadsheet.insertSheet(sheetName);    &#125; else &#123;      targetSheet.clear();     &#125;    const range = sheet.getDataRange();    const displayValues = range.getDisplayValues();     const formats = range.getBackgrounds();            const fontWeights = range.getFontWeights();        const targetRange = targetSheet.getRange(1, 1, displayValues.length, displayValues[0].length);    targetRange.setValues(displayValues);     targetRange.setBackgrounds(formats);     targetRange.setFontWeights(fontWeights);    &#125;);&#125;]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+  </entry>
+  <entry>
     <title>Hexo-Next-更改字体、代码可复制</title>
     <url>/2025/08/18/Hexo-Next-%E6%9B%B4%E6%94%B9%E5%AD%97%E4%BD%93/</url>
     <content><![CDATA[Next版本为7.8.0，找到 &#x2F;themes&#x2F;next&#x2F;_config.yml 文件，搜索 font 关键词，这里注意一定要将 font 里面的 enable 设置为true, 因为默认为false，然后设置 family 为自己想要的，如果family在其他平台找的，就需要修改host。(只是修改了family， 没修改enable就会不生效，所以一定一定要记得)
@@ -779,89 +875,6 @@ font:  enable: true  # Uri of fonts host, e.g. https://fonts.googleapis.com (Def
 codeblock:  # Code Highlight theme  # Available values: normal | night | night eighties | night blue | night bright | solarized | solarized dark | galactic  # See: https://github.com/chriskempson/tomorrow-theme  highlight_theme: night eighties  # Add copy button on codeblock  copy_button:    enable: true    # Show text copy result.    show_result: true    # Available values: default | flat | mac    style: mac]]></content>
       <categories>
         <category>前端</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>2022应届毕业生办理深户流程</title>
-    <url>/2025/07/01/%E6%B7%B1%E6%88%B7%E5%8A%9E%E7%90%86%E6%B5%81%E7%A8%8B/</url>
-    <content><![CDATA[
-
-1. 登录广东政务服务网申请毕业生接收
-打开 广东政务服务网
-搜索“人才引进” → 选择“接收毕业生”
-填写个人资料后，下载电子版《申请书》
-
-2. 报到证改派
-每个地区流程略有不同，建议致电报到证抬头地区的人社局咨询
-示例：汕尾市城区 → 在广东政务服务网搜索“档案转出” → 点击在线办理
-上传报到证、申请表等资料到“调函”栏目
-不久后，工作人员会联系确认是否需要电子版“同意改派”文件（推荐选择电子版）, 她会把电子版的“同意改派”发到我们填的邮箱里。
-
-其他地区如潮州市：可直接在广东政务服务网搜索“报到证改派”在线办理
-3. 上传材料至“广东就业创业”小程序
-打开小程序，选择应届生接收模块
-上传材料：电子版“同意改派”的报到证、申请表、三方协议等
-等待校方审核通过
-
-4. 返回广东政务服务网上传最终材料
-上传审核通过后的报到证等资料
-审核通过后会收到含有“指标卡”的短信通知
-
-5. 在“深圳本地宝”预约现场办理
-打开“深圳本地宝”微信公众号，搜索“大学生”
-进入现场办理流程 → 点击“户政预约” → 选择“普通户政预约”
-预约业务选择“接收应届生户籍迁入”
-选择时间和地点并预约成功后，带好上述资料和以下材料前往办理：
-户口本
-身份证及二代回执
-一寸白底照片
-
-
-
-6. 第一次现场办理后领取档案袋
-办理后工作人员会发放档案袋
-需在五个工作日后再次前往办理
-
-7. 第二次预约并完成迁户手续
-提前预约，带齐上次材料再次前往办理
-办理成功后可选择身份证邮寄
-
-
-备注： 整个流程较为繁琐，建议提前准备资料并留意预约时间。
-]]></content>
-      <categories>
-        <category>其他</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>《皮囊》感悟</title>
-    <url>/2025/06/26/%E7%9A%AE%E5%9B%8A%E6%84%9F%E6%82%9F/</url>
-    <content><![CDATA[阿太阿太倔强坚强，豁达的心态值得人学习。父亲最强大的地方就是娶了我的母亲。一个伟大的女人。真正的女人就是应该要积极乐观面对一切，用自己的双手打造自己想要的未来。
-虽然有偷窃，但也是生活所迫，为了生存，为了家人，放下面子干一些违心事，又何尝不是一种积极的心态呢？而不是一哭二闹三上吊。
-想来作者能有如此作为，跟他伟大的母亲脱不了干系。
-那可爱的母亲呀！为了父亲的面子，为了父亲开心，都坚持要把房子建完，这何尝不是一种力量，向往心之所向，佩服这种勇气。
-其实最了解父亲的人是母亲，母亲知道父亲好面子，爱情不就是这样吗？你不用说，我懂，我懂你懂我，所以我们才会在一起这么久。
-张美丽从哪里跌倒，就从哪里爬起来。仿佛看见一个追求真爱，为爱为自己想要的东西不懈努力的人，虽说最终还是被迫性解放了自己，但她曾经的所作所为仍让我敬佩。
-舆论的力量是强大的，但比其而言，张美丽的内心力量更强大。
-]]></content>
-      <categories>
-        <category>读书感悟</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>《当我谈跑步时，我谈些什么》读后感</title>
-    <url>/2025/06/26/%E5%BD%93%E6%88%91%E8%B0%88%E8%B7%91%E6%AD%A5%E6%97%B6/</url>
-    <content><![CDATA[《当我谈跑步时，我谈些什么》也就是看了这本书，才知道世界上会有另一个自己在做着自己喜欢的事情。看这本书之前，从没有看过村上君写的书。知道有这么一个火人，也知道那么多火书，但就是没怎么看过。可论及跑步呀，觉得能与之有所交流。一直跑下去，会不会就到月球上了呢？跑步并非为了长命百岁，而是在有限生命里让自己活得更轻松点罢了。
-惊喜于能发现村上君跑步时的想象力，天马行空我很喜欢，我也曾幻想过很多，也会跑着跑着就突然想起一句歌词，什么现在加快速度追幸福呀 blala……长跑需要耐力，但没有想象力可不行哟。当然前提是热爱跑步，一个不喜欢跑步的人，你说再多也无动于衷；一个热爱跑步的人，即使是雨天，也想要在停雨空隙去相遇另一个自己。人本孤独，但精神却能得到共鸣。
-想着未来一定会坚持跑下去，不管世界如何变化。自从有次在外一整天走了 30 公里，除了身体上晒伤的疼痛以外，我更喜欢的是精神世界的富足。没经历过，就没有话语权。可能我跟陈坤一样，是个悲观的极乐主义者，在世上积极活着，却也看透红尘。不以物喜，不以己悲。脉搏也降到一分钟 50 多次，看来还是很适合慢跑的。说这么多，主要还是兴趣使然。只要不限制我的自由，一切好说。
-想着来年，我也会参加马拉松，然后旁边的人都在为我加油，那该有多 happy。
-“我不是人，是一架纯粹的机器，所以什么也无须感觉，唯有向前奔跑。”
-极为像的一点就是我们都喜欢不停地奔跑，不是那种觉得自己快不行了就走几步，也不是适当的时候停下来看风景。可能每个人的见解不同。但我觉得能不停跑下去的人才是真正的王者。
-当抵达终点那一刻，会觉得怎么那么酷，一股自豪感涌上来，就好比中了彩票或是走了狗屎运。这是原则，亦是我的骄傲。
-噢对，好比尚三哥在终点等着我，然后我得意地笑了。
-]]></content>
-      <categories>
-        <category>读书感悟</category>
       </categories>
   </entry>
 </search>
