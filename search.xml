@@ -84,6 +84,21 @@ docker exec -u 0 -it some-kibana bash
       </categories>
   </entry>
   <entry>
+    <title>H5与原生交互</title>
+    <url>/2025/07/04/H5%E4%B8%8E%E5%8E%9F%E7%94%9F%E4%BA%A4%E4%BA%92/</url>
+    <content><![CDATA[H5手机端日志工具(vconsole手机端)：&lt;script src=&quot;https://cdn.bootcdn.net/ajax/libs/vConsole/3.15.1/vconsole.min.js&quot;&gt;&lt;/script&gt;&lt;script&gt;  // 初始化 vConsole  var vConsole = new VConsole();  console.log(&#x27;vConsole is ready.&#x27;);&lt;/script&gt;
+
+第一种情况：传数据给原生端if (window.webkit != undefined) &#123;  //这是ios端定义的  window.webkit.messageHandlers.getUserInfo.postMessage(null);&#125; else &#123;  //这是android端定义的feedback  feedback.getUserInfo();&#125;if (window.webkit != undefined) &#123;  window.webkit.messageHandlers.feedback.postMessage(&#123;    title: &quot;测试分享的标题&quot;,    content: &quot;测试分享的内容&quot;,    url: &quot;https://github.com/maying1992&quot;,  &#125;);&#125; else &#123;  // try &#123;  //   result = feedback.getUserInfo();  // &#125; catch(err)&#123;  // &#125;  feedback.postMessage();&#125;
+
+第二种情况：获取原生端的数据created() &#123;  //window挂载  window.setUserInfo = this.setUserInfo;&#125;,setUserInfo(param) &#123;  const u = navigator.userAgent;  const isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端  const result = JSON.parse(param);  if (isiOS) &#123;    this.queryParams = result.userInfo.token;    //兼容原生端那边传过来的不统一值    if (      result.userInfo.userId == undefined ||      result.userInfo.userId == 0    ) &#123;      this.usrIdd = 0;    &#125; else &#123;      this.usrIdd = result.userInfo.userId;    &#125;    window.localStorage.setItem(&quot;lang&quot;, result.userInfo.language);  &#125; else &#123;    this.queryParams = result;    if (result.userId == undefined || result.userId == 0) &#123;      this.usrIdd = 0;    &#125; else &#123;      this.usrIdd = result.userId;    &#125;    window.localStorage.setItem(&quot;lang&quot;, result.language);  &#125;  this.$i18n.locale = localStorage.getItem(&quot;lang&quot;);  // let data = &#123;  //   &#x27;name&#x27; : &#x27;xiaoming&#x27;  // &#125;;  return localStorage.getItem(&quot;lang&quot;);&#125;
+
+当需要通过按钮跳转到app时：直接用 a 标签的 href 跳转，前提是原生应用定义了 myapp://*** 作为触发特定功能的URL，可参考 Instagram 的 H5 跳转 app 的竞品例子，instagram://**。一般跳不过去就是原生端不支持。
+]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+  </entry>
+  <entry>
     <title>ReactNative新架构</title>
     <url>/2025/08/19/ReactNative%E6%96%B0%E6%9E%B6%E6%9E%84/</url>
     <content><![CDATA[
@@ -97,15 +112,39 @@ JSI（JavaScript Interface）：直接调用原生代码，替代异步 Bridge, 
       </categories>
   </entry>
   <entry>
-    <title>H5与原生交互</title>
-    <url>/2025/07/04/H5%E4%B8%8E%E5%8E%9F%E7%94%9F%E4%BA%A4%E4%BA%92/</url>
-    <content><![CDATA[H5手机端日志工具(vconsole手机端)：&lt;script src=&quot;https://cdn.bootcdn.net/ajax/libs/vConsole/3.15.1/vconsole.min.js&quot;&gt;&lt;/script&gt;&lt;script&gt;  // 初始化 vConsole  var vConsole = new VConsole();  console.log(&#x27;vConsole is ready.&#x27;);&lt;/script&gt;
+    <title>聊聊Node RPC</title>
+    <url>/2025/07/16/node%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%E7%82%B9/</url>
+    <content><![CDATA[什么是序列化在 TCP 通道里传输的数据只能是二进制形式的，所以将数据结构或对象转化成二进制的形式就叫序列化。反过来就叫反序列化，他们之间的规则就叫协议。
+RPC是什么全称是Remote Procedure Call， 中文名字叫远程过程调用。大部份的 RPC 是基于TCP的。具体实现流程如下：
+1、前端通过 Proxy 代理调用相应的接口, Proxy 将 RPC 的服务名，方法名，参数等信息转换成 RPC Request 对象，交给 RPC 框架2、RPC 框架通过 RPC 协议将 RPC Request 对象序列化成二进制形式3、RPC 通过 TCP 通道把二进制数据传递给后端4、后端将二进制数据反序列化成 RPC Request 对象5、后端将反序列化后的数据对应到自己写的方法内，传入参数，获取数据，将获取后的数据进行封装，封装成 RPC Response 交给 RPC 框架6、RPC 框架通过 RPC 协议将 RPC Response 对象序列化成二进制形式, 通过 TCP 通道传递给前端6、前端将收到的二进制数据反序列化成 RPC response 对象，将结果通过 Proxy 返回给业务代码
+]]></content>
+      <categories>
+        <category>后端</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>JavaScript 基础</title>
+    <url>/2025/07/02/js%E5%9F%BA%E7%A1%80/</url>
+    <content><![CDATA[JavaScript 基础总结（变量提升、严格模式）
+变量与函数提升规则
+变量提升：按顺序执行，变量声明提升但赋值不会提升。
+函数提升：整个函数体提升到全局作用域顶部。
+优先级：函数提升 &gt; 变量提升。
 
-第一种情况：传数据给原生端if (window.webkit != undefined) &#123;  //这是ios端定义的  window.webkit.messageHandlers.getUserInfo.postMessage(null);&#125; else &#123;  //这是android端定义的feedback  feedback.getUserInfo();&#125;if (window.webkit != undefined) &#123;  window.webkit.messageHandlers.feedback.postMessage(&#123;    title: &quot;测试分享的标题&quot;,    content: &quot;测试分享的内容&quot;,    url: &quot;https://github.com/maying1992&quot;,  &#125;);&#125; else &#123;  // try &#123;  //   result = feedback.getUserInfo();  // &#125; catch(err)&#123;  // &#125;  feedback.postMessage();&#125;
+console.log(a); // undefinedvar a = 2;foo(); // 正常调用function foo() &#123;  console.log(&quot;函数提升成功&quot;);&#125;
 
-第二种情况：获取原生端的数据created() &#123;  //window挂载  window.setUserInfo = this.setUserInfo;&#125;,setUserInfo(param) &#123;  const u = navigator.userAgent;  const isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端  const result = JSON.parse(param);  if (isiOS) &#123;    this.queryParams = result.userInfo.token;    //兼容原生端那边传过来的不统一值    if (      result.userInfo.userId == undefined ||      result.userInfo.userId == 0    ) &#123;      this.usrIdd = 0;    &#125; else &#123;      this.usrIdd = result.userInfo.userId;    &#125;    window.localStorage.setItem(&quot;lang&quot;, result.userInfo.language);  &#125; else &#123;    this.queryParams = result;    if (result.userId == undefined || result.userId == 0) &#123;      this.usrIdd = 0;    &#125; else &#123;      this.usrIdd = result.userId;    &#125;    window.localStorage.setItem(&quot;lang&quot;, result.language);  &#125;  this.$i18n.locale = localStorage.getItem(&quot;lang&quot;);  // let data = &#123;  //   &#x27;name&#x27; : &#x27;xiaoming&#x27;  // &#125;;  return localStorage.getItem(&quot;lang&quot;);&#125;
 
-当需要通过按钮跳转到app时：直接用 a 标签的 href 跳转，前提是原生应用定义了 myapp://*** 作为触发特定功能的URL，可参考 Instagram 的 H5 跳转 app 的竞品例子，instagram://**。一般跳不过去就是原生端不支持。
+使用 use strict 严格模式作用：
+避免创建意外的全局变量；
+禁止使用未声明变量，防止内存泄漏；
+this 默认绑定到 undefined 而非 window。
+
+function foo() &#123;  &quot;use strict&quot;;  console.log(this.a); // ❌ TypeError&#125;var a = 2;foo(); // 严格模式下 this 是 undefined，无法读取 this.a
+
+
+(function() &#123;  &quot;use strict&quot;;  foo(); // 严格模式下调用函数则不影响默认绑定&#125;)();function foo() &#123;  console.log(this.a);&#125;var a = 2;
+
+
 ]]></content>
       <categories>
         <category>前端</category>
@@ -195,60 +234,6 @@ http://localhost:8090/
       </tags>
   </entry>
   <entry>
-    <title>JavaScript 基础</title>
-    <url>/2025/07/02/js%E5%9F%BA%E7%A1%80/</url>
-    <content><![CDATA[JavaScript 基础总结（变量提升、严格模式）
-变量与函数提升规则
-变量提升：按顺序执行，变量声明提升但赋值不会提升。
-函数提升：整个函数体提升到全局作用域顶部。
-优先级：函数提升 &gt; 变量提升。
-
-console.log(a); // undefinedvar a = 2;foo(); // 正常调用function foo() &#123;  console.log(&quot;函数提升成功&quot;);&#125;
-
-
-使用 use strict 严格模式作用：
-避免创建意外的全局变量；
-禁止使用未声明变量，防止内存泄漏；
-this 默认绑定到 undefined 而非 window。
-
-function foo() &#123;  &quot;use strict&quot;;  console.log(this.a); // ❌ TypeError&#125;var a = 2;foo(); // 严格模式下 this 是 undefined，无法读取 this.a
-
-
-(function() &#123;  &quot;use strict&quot;;  foo(); // 严格模式下调用函数则不影响默认绑定&#125;)();function foo() &#123;  console.log(this.a);&#125;var a = 2;
-
-
-]]></content>
-      <categories>
-        <category>前端</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>聊聊Node RPC</title>
-    <url>/2025/07/16/node%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%E7%82%B9/</url>
-    <content><![CDATA[什么是序列化在 TCP 通道里传输的数据只能是二进制形式的，所以将数据结构或对象转化成二进制的形式就叫序列化。反过来就叫反序列化，他们之间的规则就叫协议。
-RPC是什么全称是Remote Procedure Call， 中文名字叫远程过程调用。大部份的 RPC 是基于TCP的。具体实现流程如下：
-1、前端通过 Proxy 代理调用相应的接口, Proxy 将 RPC 的服务名，方法名，参数等信息转换成 RPC Request 对象，交给 RPC 框架2、RPC 框架通过 RPC 协议将 RPC Request 对象序列化成二进制形式3、RPC 通过 TCP 通道把二进制数据传递给后端4、后端将二进制数据反序列化成 RPC Request 对象5、后端将反序列化后的数据对应到自己写的方法内，传入参数，获取数据，将获取后的数据进行封装，封装成 RPC Response 交给 RPC 框架6、RPC 框架通过 RPC 协议将 RPC Response 对象序列化成二进制形式, 通过 TCP 通道传递给前端6、前端将收到的二进制数据反序列化成 RPC response 对象，将结果通过 Proxy 返回给业务代码
-]]></content>
-      <categories>
-        <category>后端</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>react组件通信方式</title>
-    <url>/2025/08/25/react%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F/</url>
-    <content><![CDATA[
-通过Props和Props回调：用于父子组件的通信，子组件通过props接收父的数据，父组件将回调函数传给子组件，子组件调用这个回调函数，传数据给父组件。
-通过Context API：可以共享状态的API，不需要按层级去传递。
-Redux或Mobx：对于复杂的应用，可以用状态库来实现组件通信。
-事件订阅模式：使用EventEmitter或者第三方库来实现跨组件的事件发布订阅。
-Hooks：React的一些Hooks，比如useState，能实现不同组件的共享逻辑跟状态。
-
-]]></content>
-      <categories>
-        <category>前端</category>
-      </categories>
-  </entry>
-  <entry>
     <title>redis</title>
     <url>/2025/04/16/redis/</url>
     <content><![CDATA[目录redis-token缓存jwt跟redis存token的区别redis相关知识推荐
@@ -296,6 +281,21 @@ redis本质上是一个key-value类型的内存数据库，性能最快的key-va
 ]]></content>
       <categories>
         <category>后端</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>react组件通信方式</title>
+    <url>/2025/08/25/react%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F/</url>
+    <content><![CDATA[
+通过Props和Props回调：用于父子组件的通信，子组件通过props接收父的数据，父组件将回调函数传给子组件，子组件调用这个回调函数，传数据给父组件。
+通过Context API：可以共享状态的API，不需要按层级去传递。
+Redux或Mobx：对于复杂的应用，可以用状态库来实现组件通信。
+事件订阅模式：使用EventEmitter或者第三方库来实现跨组件的事件发布订阅。
+Hooks：React的一些Hooks，比如useState，能实现不同组件的共享逻辑跟状态。
+
+]]></content>
+      <categories>
+        <category>前端</category>
       </categories>
   </entry>
   <entry>
@@ -366,74 +366,40 @@ Class is over, see you next time.
       </categories>
   </entry>
   <entry>
-    <title>初中英语教师资格语法课模版</title>
-    <url>/2025/07/11/%E5%88%9D%E4%B8%AD%E8%8B%B1%E8%AF%AD%E6%95%99%E8%B5%84%E8%AF%AD%E6%B3%95%E8%AF%BE%E6%A8%A1%E6%9D%BF/</url>
-    <content><![CDATA[Grammer开场问候Dear Judges, Now I’ll start the lesson. Good morning, Boys and girls. How are you today? Good? Fine? I’m fine, too. Before the class, Let’s sing a song together. If you can sing, sing along with me . “You are my sunshine, my only sunshine, you make me happy.” Do you feel better? Great, let’s start the lesson.
-导入基本跟上一篇一样，只是换了问题，根据材料的主题来问问题。比如：little prince and harry porter. Today, we’re going to learn a new grammar about it , the present perfect tense.
-PreNow boys and girls, let’s have a prediction according to the title and the conversation on your book. I will read for you.When you listen, think about this question: What’s the material mainly about? Try to think out as many answers as you can.(let’s begin,…..)OK, who wants to have a try?Justin, you please. The passage is about some books they have read. Nice try! Do you agree? OK, maybe you are right. You got the correct answer.
-WhileNow boys and girls, let’s have a prediction according to the title and the pictures on your book. Take a guess:What’s the passage mainly about? Try to think out as many answers as you can. OK, who wants to have a try?Justin, you please. The passage is about a cartoon Mickey Mouse. Nice try! Do you agree? OK, maybe you are right.Next, Let’s find out the truth in this passage.
-语法教学All right guys, it’s time to learn something new. Here are some sentences. (板书)Let’s look at the first one. Can you read it together? Yes,1……2…3….   Wonderful! It’s not difficult for you, right?Now, boys and girls, please try to find the similarity among these sentences? You can work in groups and share your ideas with each other. Here we go.So, did you find something in common? OK, who would like to try? Amanda, please. You have sharp eyes.Yes, they have the word “have&#x2F;has” and these are “yes&#x2F;no” questions.Yes, exactly!Now, let’s put all your views&#x2F;points together. Boys and girls, This is what we will learn today, the present perfect tense.We use it to talk about things that happened in the past but have a connection to the present in some way.As we can see, the main structure of this grammar is “has&#x2F;have done”, right? We often use “yet” in this grammar. But we should remind that normally the rules of past participle form are the same as the past form, such as live&#x2F;lived. However, there are some irregular verbs, such as, put&#x2F;put&#x2F;put, read&#x2F;read&#x2F;read. We make the negative sentences like this:”has&#x2F;have not done”.Clear? You are so smart!
-巩固practice makes perfect, so let’s do some exercises. Let’s “Fill in the blanks”. Now look at the Power Point. Please finish it as quickly as you can and we will check the answers later. Here we go.Have you finished? What’s your answer, Cindy? Have you found your pen yet?-No, I haven’t. Do you agree with Cindy? Good, next one? Mike? He has turned off the light! All right, I think you have mastered it.
-总结How time files! The class is almost over. Before ending our class, let’s have a summary. Who can summarize what we have learned this class? Fiona please. Very good. I hope you can apply what we have learned in your daily life so that we can improve our reading and speaking ability, right?Our homework is as follows: You should finish the exercise book and search for more information about famous cartoons on the Internet. Next class, we will share them together.
-Class is over, see you next time.
-其他语法模版The simple present tense(一般现在时)the things or actions that happen regularly.“Verb to be” has three forms: am&#x2F;is&#x2F;are. “Verb to do” has two forms: do&#x2F;does.If the subject(主语) is first person or plural form, we should use do, if not, we use does.For the third singular form, normally we add s to the end, such as help&#x2F;helps. The second type is to add es, such as guess&#x2F;guesses. And the last type is to change y to i and add es, such as study&#x2F;studies.
- the simple past tense.(一般过去时)We use it to talk about the past events. (When)As we can see, “verb to be” has two forms:was&#x2F;were, and we have to the change the“verb to do” into past form, right? (Details)We should remind that normally we add ed&#x2F;d to the end, such as look&#x2F;looked,live&#x2F;lived. The second type is to double write the last letter and add ed, such asstop&#x2F;stopped. And the last type is to change y to i and add ed, such as study&#x2F;studied.There are also some irregular verbs, such as, put&#x2F;put, catch&#x2F;caught. 
-the simple future tense.(一般将来时中的will&#x2F;shall + do)We use it to talk about our intentions or make predictions. (When)As we can see, the main structure of this grammar is “will+do” , right?(Details)We should remind that We should use the original form of the verbs. We make thenegative sentence like this: “will not do”. If the subject is the first person, we canalso use ‘shall’ instead of ‘will’.
-the simple future tense.(一般将来时中的be going to + do)We use it to talk about things that happen in the future. (When)As we can see, the main structure of this grammar is “be going to do” , right?(Details)We should remind that We should use the original form of the verbs. We make thenegative sentence like this: “be not going to do”.
-the present progressive tense(现在进行时)We use it to talk about what people are doing or what’s going on. (When)As we can see, the main structure of this grammar is “be doing” , right? (Details)We should remind that “verb to be” has three forms: am&#x2F;is&#x2F;are.We make the negativesentences like this: “be not doing”.And we should change the verbs into ‘-ing’ form.Normally we add -ing to the end, such as look&#x2F;looking. The second type is to remove eand add -ing, such as write&#x2F;writing. And the last type is to double write the last letterand add -ing, such as get&#x2F;getting.
-the past progressive tense.(过去进行时)We use it to talk about the past events in certain time. (When)As we can see, the main structure of this grammar is “was&#x2F;were doing”, right? (Details)We should remind that we should change the verbs into -ing form. Normally we adding to the end, such as look&#x2F;looking. The second type is to remove ‘e’ and add “ing” ,such as write&#x2F;writing. And the last type is to double write the last letter and add ing,such as get&#x2F;getting. We make the negative sentences like this: “was&#x2F;were not doing”.
-the present perfect tense.（现在完成时）We use it to talk about things that happened in the past but have a connection to the present in some way.As we can see, the main structure of this grammar is “has&#x2F;have done”, right? We often use “yet” in this grammar. But we should remind that normally the rules of past participle form are the same as the past form, such as live&#x2F;lived. However, there are some irregular verbs, such as, put&#x2F;put&#x2F;put, read&#x2F;read&#x2F;read. We make the negative sentences like this:”has&#x2F;have not done”.
-the present passive voice.(一般现在时的被动语态)We use it to talk about the passive relationships between the subject and the object.(When)As we can see, the main structure of this grammar is “be+done”, right? (Details)We should remind that “verb to be” has three forms: am&#x2F;is&#x2F;are. We should use thepast participle form of transitive verbs. And there are some irregular verbs, such as,put&#x2F;put&#x2F;put, catch&#x2F;caught&#x2F;caught.We make the negative sentences like this: “be notdone”.
-the past passive voice.(一般过去时的被动语态)We use it to talk about the passive relationships between the subject and the object.(When)As we can see, the main structure of this grammar is “was&#x2F;were+done”, right? (Details)We should remind that we should use the past participle form of transitive verbs. Andthere are some irregular verbs, such as, put&#x2F;put&#x2F;put, catch&#x2F;caught&#x2F;caught.We make thenegative sentences like this: “w as&#x2F;were not done”.
-the attributive clause. （定语从句-名词之后出现）Describe the nouns more exactly.the relative pronouns(代词) should be used to link the main clause and the clause.They are ‘that&#x2F;which&#x2F;who&#x2F;whom&#x2F;whose’.’that&#x2F;which&#x2F;who’ can be used as subject(主语) or object(宾语) of a clause, ‘whom’ can be as object, whose can be as attributive(定语). ’That’ can be used to refer to the things or people, ‘which’ for things, ‘who&#x2F;whom’ for people.
-the objective clause.（宾语从句-谓语动词后面出现）express our thoughts more exactly.There are three kinds of objective clauses. The first one is with ‘that’, the second one is with ‘if&#x2F;whether’, the last one is with ‘wh-words’.The order of words in the objective clauses should be written in statements and the tense should be changed according to the main clause.
-The first conditional if.Talk about the things happen in certain condition.The main structure of this grammar is “First conditional if+will”(板书例句)The main clause is in the future tense. The clause is in the present tense.(主将从现) And the first conditional if can be put before or after the main clause.
-the imperative sentence.（祈使句）Ask for permission, order or warn sb (not) to do sth.The imperatives begin with the original form of the verbThe subject of the imperative is ‘you’ which is omitted. We make the negative sentences like this. “Don’t do sth”.
-There be sentences.we use it to Describe things or people.As we can see, The main structure of this grammar is There be something&#x2F;somebody in someplace&#x2F;sometime, right?But we should remind that “verb to be” has two forms: is&#x2F;are. We should change it according to the nouns after it. We make the negative sentences like this: “There is&#x2F; are not.”
-the nouns.(名词)Describe things or people.There are countable nouns and uncountable nouns, right?Countable nouns have two forms: the singular and the plural. Normally, we add s to the end, such as book&#x2F;books. The second type is to add es, such as class&#x2F;classes. And the last type is to change y to i and add es, such as family&#x2F;families. There are also some irregular nouns, such as man&#x2F;men, sheep&#x2F;sheep, child&#x2F;children.
-the comparatives.（比较级）Compare different objects or people.We usually add ‘er&#x2F;r’ to the end of adjectives or adverbs,  such as tall&#x2F;taller, slow&#x2F;slower, late&#x2F;later. And add ‘more’ before the multi-syllable words, such as ‘more beautiful’.There are some irregular changes, such as good&#x2F;better, bad&#x2F;worse.
-The superlatives.(最高级)Compare different objects or people.We usually add est&#x2F;st to the end of the adjectives or adverbs, such as tall&#x2F;tallest, slow&#x2F;slowest, late&#x2F;latest.And add ‘most’ before the words, such as most beautiful.There are some irregular changes, such as good&#x2F;best, bad&#x2F;worst. And we should add ‘the’ before the superlatives.
-Adverbs of frequency.(频率副词)Talk about how often we do things.There are always, usually, often, sometimes, hardly ever(seldom), never.If we put them in order, it will be like that always&gt;usually&gt;often&gt;sometimes&gt;hardly ever(seldom)&gt;never.
-The indefinite pronouns some and any.(普通不定代词)Refer to people or things.Normally some is used in statements(肯定句), any is used in negative statements or questions, right? They can both replace or modify the plural nouns and uncountable nouns.（可数名词复数以及不可数名词）If we want the answer to the question is yes, we can also use some in questions. For example, would you like some tea?
-The indefinite pronouns many and much.Refer to people or things.Many can replace or modify plural nouns, and much can replace or modify the uncountable nouns, right?We use “How many…” questions to ask about the plural nouns, and “How much…” question to ask about the uncountable nouns.
-the compound indefinite pronouns something, anything, nothing(复合不定代词)Refer to people or things.If the subject is something, anything… it is seen as singular(单数形式), right?We should put the adjectives after the indefinite pronouns. For example, something important.
-the modal verbs.(情态动词)Make inferences.(作出推断)The main structure of this grammar is “modal verbs + be”, right?Some modal verbs can be used for making inferences. They are must, can’t, could, may, might. We use must to show that we think something is probably true. And use may, might and could to show that we think something is possibly true. Use can’t to show that you are almost sure something is not true. 
+    <title>前端骨架屏</title>
+    <url>/2025/07/07/%E5%89%8D%E7%AB%AF%E9%AA%A8%E6%9E%B6%E5%B1%8F/</url>
+    <content><![CDATA[Dps.config.js 中文说明文档本配置文件用以生成 Vue 应用的骨架屏。
+
+基本配置字段说明    const dpsConfig = &#123;    url: &#x27;file:///Users/myname/Desktop/project/pro/scaleTips/dist/index.html#/&#x27;,          // 待生成骨架屏页面的地址，用百度（https://baidu.com）试试也可以    output: &#123;        filepath: &#x27;/Users/myname/Desktop/project/pro&#x27;,        // 生成骨架屏的存放页面，一般为项目的入口页面        injectSelector: &#x27;#app&#x27;          // 生成的骨架屏插入页面的节点    &#125;,    // header: &#123;    //  height: 40,    //  background: &#x27;#1b9af4&#x27;    // &#125;,    // background: &#x27;#eee&#x27;,    // animation: &#x27;opacity 1s linear infinite;&#x27;,    //用于定制或排除某些节点的绘制行为    includeElement: function(node, draw) &#123;        // 定制某个节点画出来的样子，带上return false        if(node.id == &#x27;ui-alert&#x27;) &#123;            //跳过该节点及其子节点            return false;        &#125;        if(node.tagName.toLowerCase() === &#x27;img&#x27;) &#123;            // 对该图片生成宽100%，高8%，颜色为红色的色块            draw(&#123;                width: 100,                height: 8,                left: 0,                top: 0,                zIndex: 99999999,                background: &#x27;red&#x27;            &#125;);            return false;        &#125;     &#125;,    // writePageStructure: function(html) &#123;        // 自己处理生成的骨架屏        // fs.writeFileSync(filepath, html);        // console.log(html)    // &#125;,    init: function() &#123;        // 生成骨架屏之前的操作，比如删除干扰节点    &#125;&#125;module.exports = dpsConfig;
+
+
+
 ]]></content>
       <categories>
-        <category>教资</category>
+        <category>前端</category>
       </categories>
   </entry>
   <entry>
-    <title>初中英语教师资格语篇课模版</title>
-    <url>/2025/07/15/%E5%88%9D%E4%B8%AD%E8%8B%B1%E8%AF%AD%E6%95%99%E8%B5%84%E8%AF%AD%E7%AF%87%E8%AF%BE%E6%A8%A1%E6%9D%BF/</url>
-    <content><![CDATA[The intonation.（语调）Express the different feelings of the speaker.We often use the falling tone when we read a statement, a special question, an exclamatory or imperative sentence(祈使句、感叹句). We often use rising tone when we ask a Yes&#x2F;No question. We often use rising-falling tone to read an alternative question and a coordinate clause（选择疑问句、并列句）. There are two parts in a tag question（反义疑问句）. The first part is often in a falling tone and for second part, there are two cases. If we are not sure about the question, we often use a rising tone. If we are sure about that, we offen use a falling tone.We choose different intonations to express different feelings and moods.
-The word stress(单词重音)Read words more exactlyWhen we say a word with more than one syllable, some of the syllables need to be stressed.When we read two-syllable words, normally we stress the first syllable for nouns, and stress the second syllable for verbs. As for the multi-syllable words, we stress the third from the bottom.
-The sentence stress（句子重读）Draw attention to certain information.We usually stress the lexical words such as nouns, verbs, adjectives, adverbs and numbers. We don’t stress the function words such as a, the, is, of and so on. Besides, you can stress some information you want to emphasis.We should change it according to the situation and feelings of the speaker.
-The liaison&#x2F;ˈlēəˌzän,lēˈāˌzän&#x2F;&#x2F;Word linking.(连读)Speak English more fluently and naturally.In one sense group, we can read the two words together if the former word ends with a consonant&#x2F;ˈkänsənənt&#x2F;, a vowel or “r” sound, and the following word begins with a vowel. If the two words finish and start with the same consonant, we only read one of the consonants.The two words must be in one sense group.
-incomplete plosion&#x2F;‘pləʊʒ(ə)n&#x2F;（不完全爆破）Speak English more fluently and naturally.There are six plosive sounds &#x2F;t&#x2F; &#x2F;d&#x2F; &#x2F;p&#x2F; &#x2F;b&#x2F; &#x2F;k&#x2F; &#x2F;g&#x2F; in English.When two consonants of them are next to each other, we read the former sound silently.The two words must be in one sense group.
-Weak form(弱读)speak English more fluently and naturally.Some words often appear in a weak form such as function words, articles, auxiliary verbs and modal verbs.there are mainly three ways to change function words to weak forms. They are shortening, elision[ i’liʒən ] and vowel changed to schwa  [ʃwɑ:] sound.
-Assimilation(同化)We use it to speak English more fluently and naturally.As we can see, Two different sounds affect each other and become more alike.&#x2F;s+ j&#x2F; -&gt; &#x2F;F&#x2F;this year,&#x2F;d+j&#x2F; -&gt; &#x2F;d3&#x2F; would you
-Sense group(意群)We use it to make our expression more easily to understand.As we can see, a sentence may consists of several groups according to meaning or structure. Each group is called a sense group. It can be a word, a phrase, a clause. After a sense group, there should be a short pause.We should remind that we should change it according to the situation and feelings of the speaker.
-The pause(停顿)We use to speak English more fluently and naturally.As we can see, in a long sentence, we should pause several times according to the sense group. Normally, we pause based on meaning and grammatical structure.We should remind that there should be no pause in a sense group. Where to pause also depends on the situation and the feelings of the speaker.
+    <title>脱离框架开发</title>
+    <url>/2025/08/13/%E5%A6%82%E4%BD%95%E8%84%B1%E7%A6%BB%E6%A1%86%E6%9E%B6%E5%BC%80%E5%8F%91/</url>
+    <content><![CDATA[前端脱离框架去开发，就是不使用任何前端框架（Vue、React等）的情况下，直接用js、html和css去开发web。这意味更能深入了解前端底层原理和机制，避免依赖框架。
+在面对静态且不做过多功能的低项目下，其实脱离框架就已经足够了。框架编写的代码必须要进行编译才能在浏览器中渲染，所以便有了webpack。像Vue的出现就是为了解决一些痛点问题，比如双向数据流、自动响应式更新等，但我们又不得不遵守他们框架内的一些语法，随着vue的升级，我们也要不停学习更新的框架内容。框架本身是有利于开发的，但面对一些简单的问题时，不用框架反而是明智的。根据需求而决定去不去用框架进行下一步的开发。
+当开发多个类似的网站，没有打包过的代码放上服务器，能直接在服务器改源代码。而使用框架后打包的源码放在服务器中，要修改却只能本地修改，反而更浪费时间。当熟悉纯js开发后，还能开发一些工具以及框架出来。
 ]]></content>
       <categories>
-        <category>教资</category>
+        <category>前端</category>
       </categories>
   </entry>
   <entry>
-    <title>初中英语教师资格面试模板（Reading）</title>
-    <url>/2025/07/09/%E5%88%9D%E4%B8%AD%E8%8B%B1%E8%AF%AD%E6%95%99%E8%B5%84%E9%9D%A2%E8%AF%95%E6%A8%A1%E6%9D%BF/</url>
-    <content><![CDATA[Reading&#x2F;Listening开场问候Dear Judges, Now I’ll start the lesson. Good morning, Boys and girls. How are you today? Good? Fine? I’m fine, too. Before the class, Let’s sing a song together. If you can sing, sing along with me . “You are my sunshine, my only sunshine, you make me happy.” Do you feel better? Great, let’s start the lesson.
-导入At the beginning, I’ll show you a video, and you should try to answer the question: What can you see in the video? Who would like to try? Blair, please. You see different cartoons, such as Snow White and Tom and Jerry.Thank you, Blair, you set a good example for us. You know so much about cartoons.Do you want to learn more? Today, let’s learn a new lesson — Cartoon.
-读前Before reading, To help you understand the passage better, let’s learn some words. Now, Look at the first one. Smart.Form example, Zhu Geliang is very smart and he can solve many problems. Can you understand now? Great! The next one cute. Look at the picture. What’s that? A cat. So cats are very cute and it’s very lovely. So cute means lovely. You are so cute. Cats are so cute. Birds are so cute, okay, wonderful How about the last one? Ivory. Here is a picture about ivory. It forms long teeth of elephants. Read after me, ivory, ivory. Well done! All of you did a good job.
-读中Now boys and girls, let’s have a prediction according to the title and the pictures on your book. Take a guess:What’s the passage mainly about? Try to think out as many answers as you can. OK, who wants to have a try?Justin, you please. The passage is about a cartoon Mickey Mouse. Nice try! Do you agree? OK, maybe you are right.Next, Let’s find out the truth in this passage.
-读后Let’s read it together.When you read, think about this question:What’s the passage mainly about? You should read quickly and check your prediction.Let’s begin.OK, guys, are you right? Wow, I heard John said he had the correct prediction.The passage tells us some information about Mickey Mouse. Oh, most of you are right! I am so proud of you.For the second time, you should read it carefully and catch some detail informations. After that, you should answer some true or false question. Okay? Let’s start. Time is up. The first one, It’s easy, right? Answer me together. It’s true. Then the second question. Lily, what’s your answer? It ’s false. Can you correct it ? Great. Thank you. The last one, boys come on. Eric please. It’s true.perfect.
-巩固We have done so many exercises.It’s time for fun. Let’s have a group discussion. Think about the topic: Introducing your favorite cartoon characters to group members. Work in group of 4 and discuss with your partners. Then show your work on the stage. You have 5 minutes to prepare.Are you ready? Go!  Time  is up. Which group goes first? Christina and your partners, please. Wow, your ideas are very creative and Your pronunciation is perfect.Let’s give them a big hand.
-总结How time files! The class is almost over. Before ending our class, let’s have a summary. Who can summarize what we have learned this class? Fiona please. Very good. I hope you can apply what we have learned in your daily life so that we can improve our reading and speaking ability, right?Our homework is as follows: You should finish the exercise book and search for more information about famous cartoons on the Internet. Next class, we will share them together.
-Class is over, see you next time.
-]]></content>
+    <title>Hexo-Next-更改字体、代码可复制</title>
+    <url>/2025/08/18/Hexo-Next-%E6%9B%B4%E6%94%B9%E5%AD%97%E4%BD%93/</url>
+    <content><![CDATA[Next版本为7.8.0，找到 &#x2F;themes&#x2F;next&#x2F;_config.yml 文件，搜索 font 关键词，这里注意一定要将 font 里面的 enable 设置为true, 因为默认为false，然后设置 family 为自己想要的，如果family在其他平台找的，就需要修改host。(只是修改了family， 没修改enable就会不生效，所以一定一定要记得)
+font:  enable: true  # Uri of fonts host, e.g. https://fonts.googleapis.com (Default).  host:   # Font options:  # `external: true` will load this font family from `host` above.  # `family: Times New Roman`. Without any quotes.  # `size: x.x`. Use `em` as unit. Default: 1 (16px)  # Global font settings used for all elements inside &lt;body&gt;.  global:    external: true    family: Noto Serif SC    size:  # Font settings for site title (.site-title).  title:    external: true    family: Noto Serif SC    size:  # Font settings for headlines (&lt;h1&gt; to &lt;h6&gt;).  headings:    external: true    family: Noto Serif SC    size:  # Font settings for posts (.post-body).  posts:    external: true    family:  Noto Serif SC  # Font settings for &lt;code&gt; and code blocks.  codes:    external: true    family: Source Code Pro
+
+代码可复制，还是上面同一个文件，找到以下代码段，将copy_button的enable设置为true，启用就可以啦。show_result设置true后，复制完会显示一个勾。style对应的copy_button不同的样式，看个人喜好来～
+codeblock:  # Code Highlight theme  # Available values: normal | night | night eighties | night blue | night bright | solarized | solarized dark | galactic  # See: https://github.com/chriskempson/tomorrow-theme  highlight_theme: night eighties  # Add copy button on codeblock  copy_button:    enable: true    # Show text copy result.    show_result: true    # Available values: default | flat | mac    style: mac]]></content>
       <categories>
-        <category>教资</category>
+        <category>前端</category>
       </categories>
   </entry>
   <entry>
@@ -609,31 +575,6 @@ vue2 和 vue3 匿名插槽不一样  具名插槽使用方式不同：vue2 使�
       </categories>
   </entry>
   <entry>
-    <title>前端骨架屏</title>
-    <url>/2025/07/07/%E5%89%8D%E7%AB%AF%E9%AA%A8%E6%9E%B6%E5%B1%8F/</url>
-    <content><![CDATA[Dps.config.js 中文说明文档本配置文件用以生成 Vue 应用的骨架屏。
-
-基本配置字段说明    const dpsConfig = &#123;    url: &#x27;file:///Users/myname/Desktop/project/pro/scaleTips/dist/index.html#/&#x27;,          // 待生成骨架屏页面的地址，用百度（https://baidu.com）试试也可以    output: &#123;        filepath: &#x27;/Users/myname/Desktop/project/pro&#x27;,        // 生成骨架屏的存放页面，一般为项目的入口页面        injectSelector: &#x27;#app&#x27;          // 生成的骨架屏插入页面的节点    &#125;,    // header: &#123;    //  height: 40,    //  background: &#x27;#1b9af4&#x27;    // &#125;,    // background: &#x27;#eee&#x27;,    // animation: &#x27;opacity 1s linear infinite;&#x27;,    //用于定制或排除某些节点的绘制行为    includeElement: function(node, draw) &#123;        // 定制某个节点画出来的样子，带上return false        if(node.id == &#x27;ui-alert&#x27;) &#123;            //跳过该节点及其子节点            return false;        &#125;        if(node.tagName.toLowerCase() === &#x27;img&#x27;) &#123;            // 对该图片生成宽100%，高8%，颜色为红色的色块            draw(&#123;                width: 100,                height: 8,                left: 0,                top: 0,                zIndex: 99999999,                background: &#x27;red&#x27;            &#125;);            return false;        &#125;     &#125;,    // writePageStructure: function(html) &#123;        // 自己处理生成的骨架屏        // fs.writeFileSync(filepath, html);        // console.log(html)    // &#125;,    init: function() &#123;        // 生成骨架屏之前的操作，比如删除干扰节点    &#125;&#125;module.exports = dpsConfig;
-
-
-
-]]></content>
-      <categories>
-        <category>前端</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>脱离框架开发</title>
-    <url>/2025/08/13/%E5%A6%82%E4%BD%95%E8%84%B1%E7%A6%BB%E6%A1%86%E6%9E%B6%E5%BC%80%E5%8F%91/</url>
-    <content><![CDATA[前端脱离框架去开发，就是不使用任何前端框架（Vue、React等）的情况下，直接用js、html和css去开发web。这意味更能深入了解前端底层原理和机制，避免依赖框架。
-在面对静态且不做过多功能的低项目下，其实脱离框架就已经足够了。框架编写的代码必须要进行编译才能在浏览器中渲染，所以便有了webpack。像Vue的出现就是为了解决一些痛点问题，比如双向数据流、自动响应式更新等，但我们又不得不遵守他们框架内的一些语法，随着vue的升级，我们也要不停学习更新的框架内容。框架本身是有利于开发的，但面对一些简单的问题时，不用框架反而是明智的。根据需求而决定去不去用框架进行下一步的开发。
-当开发多个类似的网站，没有打包过的代码放上服务器，能直接在服务器改源代码。而使用框架后打包的源码放在服务器中，要修改却只能本地修改，反而更浪费时间。当熟悉纯js开发后，还能开发一些工具以及框架出来。
-]]></content>
-      <categories>
-        <category>前端</category>
-      </categories>
-  </entry>
-  <entry>
     <title>小程序验证码输入框自动聚焦下个输入框</title>
     <url>/2025/07/21/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E9%AA%8C%E8%AF%81%E7%A0%81%E8%BE%93%E5%85%A5%E6%A1%86%E8%87%AA%E5%8A%A8%E8%81%9A%E7%84%A6%E4%B8%8B%E4%B8%AA%E8%BE%93%E5%85%A5%E6%A1%86/</url>
     <content><![CDATA[最开始我想的是有多少个输入框，就放多少个input，做完会发现有各种bug。比如键盘突然消失、没聚焦下个输入框、操作不丝滑等。正确思路是一个输入框就够了，然后通过改变样式（间隔、高亮）来实现，就是表面看起来是六个输入框，本质上只有一个input
@@ -647,6 +588,61 @@ data()&#123;    return&#123;        focus: true,		code:[&#x27;&#x27;,&#x27;&#x27
 ]]></content>
       <categories>
         <category>前端</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>初中英语教师资格语法课模版</title>
+    <url>/2025/07/11/%E5%88%9D%E4%B8%AD%E8%8B%B1%E8%AF%AD%E6%95%99%E8%B5%84%E8%AF%AD%E6%B3%95%E8%AF%BE%E6%A8%A1%E6%9D%BF/</url>
+    <content><![CDATA[Grammer开场问候Dear Judges, Now I’ll start the lesson. Good morning, Boys and girls. How are you today? Good? Fine? I’m fine, too. Before the class, Let’s sing a song together. If you can sing, sing along with me . “You are my sunshine, my only sunshine, you make me happy.” Do you feel better? Great, let’s start the lesson.
+导入基本跟上一篇一样，只是换了问题，根据材料的主题来问问题。比如：little prince and harry porter. Today, we’re going to learn a new grammar about it , the present perfect tense.
+PreNow boys and girls, let’s have a prediction according to the title and the conversation on your book. I will read for you.When you listen, think about this question: What’s the material mainly about? Try to think out as many answers as you can.(let’s begin,…..)OK, who wants to have a try?Justin, you please. The passage is about some books they have read. Nice try! Do you agree? OK, maybe you are right. You got the correct answer.
+WhileNow boys and girls, let’s have a prediction according to the title and the pictures on your book. Take a guess:What’s the passage mainly about? Try to think out as many answers as you can. OK, who wants to have a try?Justin, you please. The passage is about a cartoon Mickey Mouse. Nice try! Do you agree? OK, maybe you are right.Next, Let’s find out the truth in this passage.
+语法教学All right guys, it’s time to learn something new. Here are some sentences. (板书)Let’s look at the first one. Can you read it together? Yes,1……2…3….   Wonderful! It’s not difficult for you, right?Now, boys and girls, please try to find the similarity among these sentences? You can work in groups and share your ideas with each other. Here we go.So, did you find something in common? OK, who would like to try? Amanda, please. You have sharp eyes.Yes, they have the word “have&#x2F;has” and these are “yes&#x2F;no” questions.Yes, exactly!Now, let’s put all your views&#x2F;points together. Boys and girls, This is what we will learn today, the present perfect tense.We use it to talk about things that happened in the past but have a connection to the present in some way.As we can see, the main structure of this grammar is “has&#x2F;have done”, right? We often use “yet” in this grammar. But we should remind that normally the rules of past participle form are the same as the past form, such as live&#x2F;lived. However, there are some irregular verbs, such as, put&#x2F;put&#x2F;put, read&#x2F;read&#x2F;read. We make the negative sentences like this:”has&#x2F;have not done”.Clear? You are so smart!
+巩固practice makes perfect, so let’s do some exercises. Let’s “Fill in the blanks”. Now look at the Power Point. Please finish it as quickly as you can and we will check the answers later. Here we go.Have you finished? What’s your answer, Cindy? Have you found your pen yet?-No, I haven’t. Do you agree with Cindy? Good, next one? Mike? He has turned off the light! All right, I think you have mastered it.
+总结How time files! The class is almost over. Before ending our class, let’s have a summary. Who can summarize what we have learned this class? Fiona please. Very good. I hope you can apply what we have learned in your daily life so that we can improve our reading and speaking ability, right?Our homework is as follows: You should finish the exercise book and search for more information about famous cartoons on the Internet. Next class, we will share them together.
+Class is over, see you next time.
+其他语法模版The simple present tense(一般现在时)the things or actions that happen regularly.“Verb to be” has three forms: am&#x2F;is&#x2F;are. “Verb to do” has two forms: do&#x2F;does.If the subject(主语) is first person or plural form, we should use do, if not, we use does.For the third singular form, normally we add s to the end, such as help&#x2F;helps. The second type is to add es, such as guess&#x2F;guesses. And the last type is to change y to i and add es, such as study&#x2F;studies.
+ the simple past tense.(一般过去时)We use it to talk about the past events. (When)As we can see, “verb to be” has two forms:was&#x2F;were, and we have to the change the“verb to do” into past form, right? (Details)We should remind that normally we add ed&#x2F;d to the end, such as look&#x2F;looked,live&#x2F;lived. The second type is to double write the last letter and add ed, such asstop&#x2F;stopped. And the last type is to change y to i and add ed, such as study&#x2F;studied.There are also some irregular verbs, such as, put&#x2F;put, catch&#x2F;caught. 
+the simple future tense.(一般将来时中的will&#x2F;shall + do)We use it to talk about our intentions or make predictions. (When)As we can see, the main structure of this grammar is “will+do” , right?(Details)We should remind that We should use the original form of the verbs. We make thenegative sentence like this: “will not do”. If the subject is the first person, we canalso use ‘shall’ instead of ‘will’.
+the simple future tense.(一般将来时中的be going to + do)We use it to talk about things that happen in the future. (When)As we can see, the main structure of this grammar is “be going to do” , right?(Details)We should remind that We should use the original form of the verbs. We make thenegative sentence like this: “be not going to do”.
+the present progressive tense(现在进行时)We use it to talk about what people are doing or what’s going on. (When)As we can see, the main structure of this grammar is “be doing” , right? (Details)We should remind that “verb to be” has three forms: am&#x2F;is&#x2F;are.We make the negativesentences like this: “be not doing”.And we should change the verbs into ‘-ing’ form.Normally we add -ing to the end, such as look&#x2F;looking. The second type is to remove eand add -ing, such as write&#x2F;writing. And the last type is to double write the last letterand add -ing, such as get&#x2F;getting.
+the past progressive tense.(过去进行时)We use it to talk about the past events in certain time. (When)As we can see, the main structure of this grammar is “was&#x2F;were doing”, right? (Details)We should remind that we should change the verbs into -ing form. Normally we adding to the end, such as look&#x2F;looking. The second type is to remove ‘e’ and add “ing” ,such as write&#x2F;writing. And the last type is to double write the last letter and add ing,such as get&#x2F;getting. We make the negative sentences like this: “was&#x2F;were not doing”.
+the present perfect tense.（现在完成时）We use it to talk about things that happened in the past but have a connection to the present in some way.As we can see, the main structure of this grammar is “has&#x2F;have done”, right? We often use “yet” in this grammar. But we should remind that normally the rules of past participle form are the same as the past form, such as live&#x2F;lived. However, there are some irregular verbs, such as, put&#x2F;put&#x2F;put, read&#x2F;read&#x2F;read. We make the negative sentences like this:”has&#x2F;have not done”.
+the present passive voice.(一般现在时的被动语态)We use it to talk about the passive relationships between the subject and the object.(When)As we can see, the main structure of this grammar is “be+done”, right? (Details)We should remind that “verb to be” has three forms: am&#x2F;is&#x2F;are. We should use thepast participle form of transitive verbs. And there are some irregular verbs, such as,put&#x2F;put&#x2F;put, catch&#x2F;caught&#x2F;caught.We make the negative sentences like this: “be notdone”.
+the past passive voice.(一般过去时的被动语态)We use it to talk about the passive relationships between the subject and the object.(When)As we can see, the main structure of this grammar is “was&#x2F;were+done”, right? (Details)We should remind that we should use the past participle form of transitive verbs. Andthere are some irregular verbs, such as, put&#x2F;put&#x2F;put, catch&#x2F;caught&#x2F;caught.We make thenegative sentences like this: “w as&#x2F;were not done”.
+the attributive clause. （定语从句-名词之后出现）Describe the nouns more exactly.the relative pronouns(代词) should be used to link the main clause and the clause.They are ‘that&#x2F;which&#x2F;who&#x2F;whom&#x2F;whose’.’that&#x2F;which&#x2F;who’ can be used as subject(主语) or object(宾语) of a clause, ‘whom’ can be as object, whose can be as attributive(定语). ’That’ can be used to refer to the things or people, ‘which’ for things, ‘who&#x2F;whom’ for people.
+the objective clause.（宾语从句-谓语动词后面出现）express our thoughts more exactly.There are three kinds of objective clauses. The first one is with ‘that’, the second one is with ‘if&#x2F;whether’, the last one is with ‘wh-words’.The order of words in the objective clauses should be written in statements and the tense should be changed according to the main clause.
+The first conditional if.Talk about the things happen in certain condition.The main structure of this grammar is “First conditional if+will”(板书例句)The main clause is in the future tense. The clause is in the present tense.(主将从现) And the first conditional if can be put before or after the main clause.
+the imperative sentence.（祈使句）Ask for permission, order or warn sb (not) to do sth.The imperatives begin with the original form of the verbThe subject of the imperative is ‘you’ which is omitted. We make the negative sentences like this. “Don’t do sth”.
+There be sentences.we use it to Describe things or people.As we can see, The main structure of this grammar is There be something&#x2F;somebody in someplace&#x2F;sometime, right?But we should remind that “verb to be” has two forms: is&#x2F;are. We should change it according to the nouns after it. We make the negative sentences like this: “There is&#x2F; are not.”
+the nouns.(名词)Describe things or people.There are countable nouns and uncountable nouns, right?Countable nouns have two forms: the singular and the plural. Normally, we add s to the end, such as book&#x2F;books. The second type is to add es, such as class&#x2F;classes. And the last type is to change y to i and add es, such as family&#x2F;families. There are also some irregular nouns, such as man&#x2F;men, sheep&#x2F;sheep, child&#x2F;children.
+the comparatives.（比较级）Compare different objects or people.We usually add ‘er&#x2F;r’ to the end of adjectives or adverbs,  such as tall&#x2F;taller, slow&#x2F;slower, late&#x2F;later. And add ‘more’ before the multi-syllable words, such as ‘more beautiful’.There are some irregular changes, such as good&#x2F;better, bad&#x2F;worse.
+The superlatives.(最高级)Compare different objects or people.We usually add est&#x2F;st to the end of the adjectives or adverbs, such as tall&#x2F;tallest, slow&#x2F;slowest, late&#x2F;latest.And add ‘most’ before the words, such as most beautiful.There are some irregular changes, such as good&#x2F;best, bad&#x2F;worst. And we should add ‘the’ before the superlatives.
+Adverbs of frequency.(频率副词)Talk about how often we do things.There are always, usually, often, sometimes, hardly ever(seldom), never.If we put them in order, it will be like that always&gt;usually&gt;often&gt;sometimes&gt;hardly ever(seldom)&gt;never.
+The indefinite pronouns some and any.(普通不定代词)Refer to people or things.Normally some is used in statements(肯定句), any is used in negative statements or questions, right? They can both replace or modify the plural nouns and uncountable nouns.（可数名词复数以及不可数名词）If we want the answer to the question is yes, we can also use some in questions. For example, would you like some tea?
+The indefinite pronouns many and much.Refer to people or things.Many can replace or modify plural nouns, and much can replace or modify the uncountable nouns, right?We use “How many…” questions to ask about the plural nouns, and “How much…” question to ask about the uncountable nouns.
+the compound indefinite pronouns something, anything, nothing(复合不定代词)Refer to people or things.If the subject is something, anything… it is seen as singular(单数形式), right?We should put the adjectives after the indefinite pronouns. For example, something important.
+the modal verbs.(情态动词)Make inferences.(作出推断)The main structure of this grammar is “modal verbs + be”, right?Some modal verbs can be used for making inferences. They are must, can’t, could, may, might. We use must to show that we think something is probably true. And use may, might and could to show that we think something is possibly true. Use can’t to show that you are almost sure something is not true. 
+]]></content>
+      <categories>
+        <category>教资</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>初中英语教师资格语篇课模版</title>
+    <url>/2025/07/15/%E5%88%9D%E4%B8%AD%E8%8B%B1%E8%AF%AD%E6%95%99%E8%B5%84%E8%AF%AD%E7%AF%87%E8%AF%BE%E6%A8%A1%E6%9D%BF/</url>
+    <content><![CDATA[The intonation.（语调）Express the different feelings of the speaker.We often use the falling tone when we read a statement, a special question, an exclamatory or imperative sentence(祈使句、感叹句). We often use rising tone when we ask a Yes&#x2F;No question. We often use rising-falling tone to read an alternative question and a coordinate clause（选择疑问句、并列句）. There are two parts in a tag question（反义疑问句）. The first part is often in a falling tone and for second part, there are two cases. If we are not sure about the question, we often use a rising tone. If we are sure about that, we offen use a falling tone.We choose different intonations to express different feelings and moods.
+The word stress(单词重音)Read words more exactlyWhen we say a word with more than one syllable, some of the syllables need to be stressed.When we read two-syllable words, normally we stress the first syllable for nouns, and stress the second syllable for verbs. As for the multi-syllable words, we stress the third from the bottom.
+The sentence stress（句子重读）Draw attention to certain information.We usually stress the lexical words such as nouns, verbs, adjectives, adverbs and numbers. We don’t stress the function words such as a, the, is, of and so on. Besides, you can stress some information you want to emphasis.We should change it according to the situation and feelings of the speaker.
+The liaison&#x2F;ˈlēəˌzän,lēˈāˌzän&#x2F;&#x2F;Word linking.(连读)Speak English more fluently and naturally.In one sense group, we can read the two words together if the former word ends with a consonant&#x2F;ˈkänsənənt&#x2F;, a vowel or “r” sound, and the following word begins with a vowel. If the two words finish and start with the same consonant, we only read one of the consonants.The two words must be in one sense group.
+incomplete plosion&#x2F;‘pləʊʒ(ə)n&#x2F;（不完全爆破）Speak English more fluently and naturally.There are six plosive sounds &#x2F;t&#x2F; &#x2F;d&#x2F; &#x2F;p&#x2F; &#x2F;b&#x2F; &#x2F;k&#x2F; &#x2F;g&#x2F; in English.When two consonants of them are next to each other, we read the former sound silently.The two words must be in one sense group.
+Weak form(弱读)speak English more fluently and naturally.Some words often appear in a weak form such as function words, articles, auxiliary verbs and modal verbs.there are mainly three ways to change function words to weak forms. They are shortening, elision[ i’liʒən ] and vowel changed to schwa  [ʃwɑ:] sound.
+Assimilation(同化)We use it to speak English more fluently and naturally.As we can see, Two different sounds affect each other and become more alike.&#x2F;s+ j&#x2F; -&gt; &#x2F;F&#x2F;this year,&#x2F;d+j&#x2F; -&gt; &#x2F;d3&#x2F; would you
+Sense group(意群)We use it to make our expression more easily to understand.As we can see, a sentence may consists of several groups according to meaning or structure. Each group is called a sense group. It can be a word, a phrase, a clause. After a sense group, there should be a short pause.We should remind that we should change it according to the situation and feelings of the speaker.
+The pause(停顿)We use to speak English more fluently and naturally.As we can see, in a long sentence, we should pause several times according to the sense group. Normally, we pause based on meaning and grammatical structure.We should remind that there should be no pause in a sense group. Where to pause also depends on the situation and the feelings of the speaker.
+]]></content>
+      <categories>
+        <category>教资</category>
       </categories>
   </entry>
   <entry>
@@ -715,21 +711,6 @@ data()&#123;    return&#123;        focus: true,		code:[&#x27;&#x27;,&#x27;&#x27
 ]]></content>
       <categories>
         <category>其他</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>《皮囊》感悟</title>
-    <url>/2025/06/26/%E7%9A%AE%E5%9B%8A%E6%84%9F%E6%82%9F/</url>
-    <content><![CDATA[阿太阿太倔强坚强，豁达的心态值得人学习。父亲最强大的地方就是娶了我的母亲。一个伟大的女人。真正的女人就是应该要积极乐观面对一切，用自己的双手打造自己想要的未来。
-虽然有偷窃，但也是生活所迫，为了生存，为了家人，放下面子干一些违心事，又何尝不是一种积极的心态呢？而不是一哭二闹三上吊。
-想来作者能有如此作为，跟他伟大的母亲脱不了干系。
-那可爱的母亲呀！为了父亲的面子，为了父亲开心，都坚持要把房子建完，这何尝不是一种力量，向往心之所向，佩服这种勇气。
-其实最了解父亲的人是母亲，母亲知道父亲好面子，爱情不就是这样吗？你不用说，我懂，我懂你懂我，所以我们才会在一起这么久。
-张美丽从哪里跌倒，就从哪里爬起来。仿佛看见一个追求真爱，为爱为自己想要的东西不懈努力的人，虽说最终还是被迫性解放了自己，但她曾经的所作所为仍让我敬佩。
-舆论的力量是强大的，但比其而言，张美丽的内心力量更强大。
-]]></content>
-      <categories>
-        <category>读书感悟</category>
       </categories>
   </entry>
   <entry>
@@ -822,13 +803,32 @@ const processConversations = async (dateObj) =&gt; &#123;  const username = &#x2
       </categories>
   </entry>
   <entry>
-    <title>Hexo-Next-更改字体、代码可复制</title>
-    <url>/2025/08/18/Hexo-Next-%E6%9B%B4%E6%94%B9%E5%AD%97%E4%BD%93/</url>
-    <content><![CDATA[Next版本为7.8.0，找到 &#x2F;themes&#x2F;next&#x2F;_config.yml 文件，搜索 font 关键词，这里注意一定要将 font 里面的 enable 设置为true, 因为默认为false，然后设置 family 为自己想要的，如果family在其他平台找的，就需要修改host。(只是修改了family， 没修改enable就会不生效，所以一定一定要记得)
-font:  enable: true  # Uri of fonts host, e.g. https://fonts.googleapis.com (Default).  host:   # Font options:  # `external: true` will load this font family from `host` above.  # `family: Times New Roman`. Without any quotes.  # `size: x.x`. Use `em` as unit. Default: 1 (16px)  # Global font settings used for all elements inside &lt;body&gt;.  global:    external: true    family: Noto Serif SC    size:  # Font settings for site title (.site-title).  title:    external: true    family: Noto Serif SC    size:  # Font settings for headlines (&lt;h1&gt; to &lt;h6&gt;).  headings:    external: true    family: Noto Serif SC    size:  # Font settings for posts (.post-body).  posts:    external: true    family:  Noto Serif SC  # Font settings for &lt;code&gt; and code blocks.  codes:    external: true    family: Source Code Pro
+    <title>google sheet同步表格数据</title>
+    <url>/2025/08/28/google%20sheet%E5%90%8C%E6%AD%A5%E8%A1%A8%E6%A0%BC%E6%95%B0%E6%8D%AE/</url>
+    <content><![CDATA[有个需求是根据一个表格的所有子表，同步到另个表格（包含子表）的数据，用google sheets里面的扩展程序里的apps 脚本功能，编写脚本。为什么要同步呢？因为原表默认是不可编辑的，打算同步过来后再进行编辑。sourceSpreadsheetId跟targetSpreadsheetId为google sheet 表格地址栏d后面的一串字符。
+function synchronizeSheetsToAnotherFile() &#123;  const sourceSpreadsheetId = &quot;id1&quot;;  const targetSpreadsheetId = &quot;id2&quot;; # 比如：1NOtSSvDwXrca8vqyZW6OqQJwGaCICMVguSz1-i72oqg  const sourceSpreadsheet = SpreadsheetApp.openById(sourceSpreadsheetId);  const targetSpreadsheet = SpreadsheetApp.openById(targetSpreadsheetId);  const sourceSheets = sourceSpreadsheet.getSheets();  sourceSheets.forEach(sheet =&gt; &#123;    const sheetName = sheet.getName();    let targetSheet = targetSpreadsheet.getSheetByName(sheetName);    if (!targetSheet) &#123;      targetSheet = targetSpreadsheet.insertSheet(sheetName);    &#125; else &#123;      targetSheet.clear();     &#125;    const range = sheet.getDataRange();    const displayValues = range.getDisplayValues();     const formats = range.getBackgrounds();            const fontWeights = range.getFontWeights();        const targetRange = targetSheet.getRange(1, 1, displayValues.length, displayValues[0].length);    targetRange.setValues(displayValues);     targetRange.setBackgrounds(formats);     targetRange.setFontWeights(fontWeights);    &#125;);&#125;]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>react+vite如何打包成apk</title>
+    <url>/2025/10/16/react+vite%E5%A6%82%E4%BD%95%E6%89%93%E5%8C%85%E6%88%90apk/</url>
+    <content><![CDATA[最近遇到一个问题，如何把已经弄好的react移动端项目打包成apk呢？可以使用capacitor。首先，可以先将依赖全部添加进去项目里面。
+npm add @capacitor/core @capacitor/clinpm install  @capacitor/androidnpm install @capacitor/ios
 
-代码可复制，还是上面同一个文件，找到以下代码段，将copy_button的enable设置为true，启用就可以啦。show_result设置true后，复制完会显示一个勾。style对应的copy_button不同的样式，看个人喜好来～
-codeblock:  # Code Highlight theme  # Available values: normal | night | night eighties | night blue | night bright | solarized | solarized dark | galactic  # See: https://github.com/chriskempson/tomorrow-theme  highlight_theme: night eighties  # Add copy button on codeblock  copy_button:    enable: true    # Show text copy result.    show_result: true    # Available values: default | flat | mac    style: mac]]></content>
+接着，可以先把自己的app初始化
+npx cap init MyApp com.example.myapp   #MyApp是app名字，com.example.myapp是包名npx cap add android    #这条命令会生成android文件夹npx cap sync ios
+
+然后把项目进行打包，再通过npx cap copy命令让打包后的产物放进去android目录里面
+npm run buildnpx cap copy
+
+紧接着可以通过命令去android平台啦
+npx cap open android
+
+默认自动打开android studio后，通过File -&gt; Sync Project with Gradle Files, 或者熟悉android studio的人可以通过右上角的按钮去同步。如果发现Gradle失败，有可能是拉取gradle版本的包失败了，可以找到gradle-wrapper.properties文件，然后把distributionUrl的路径改为distributionUrl&#x3D;https:&#x2F;&#x2F;mirrors.cloud.tencent.com&#x2F;gradle&#x2F;gradle-8.11.1-all.zip，然后重新点击sync按钮就可以啦。
+等sync 成功后，可以自己运行起来看效果，也可以直接用Build -&gt; Generate APP Bundles or APKs,选择 Generate APKs,就能成功打包apk包了。
+]]></content>
       <categories>
         <category>前端</category>
       </categories>
@@ -847,12 +847,34 @@ puppeteer报错下载依赖 参考链接：https://www.cnblogs.com/ilizhu/p/1450
       </categories>
   </entry>
   <entry>
-    <title>google sheet同步表格数据</title>
-    <url>/2025/08/28/google%20sheet%E5%90%8C%E6%AD%A5%E8%A1%A8%E6%A0%BC%E6%95%B0%E6%8D%AE/</url>
-    <content><![CDATA[有个需求是根据一个表格的所有子表，同步到另个表格（包含子表）的数据，用google sheets里面的扩展程序里的apps 脚本功能，编写脚本。为什么要同步呢？因为原表默认是不可编辑的，打算同步过来后再进行编辑。sourceSpreadsheetId跟targetSpreadsheetId为google sheet 表格地址栏d后面的一串字符。
-function synchronizeSheetsToAnotherFile() &#123;  const sourceSpreadsheetId = &quot;id1&quot;;  const targetSpreadsheetId = &quot;id2&quot;; # 比如：1NOtSSvDwXrca8vqyZW6OqQJwGaCICMVguSz1-i72oqg  const sourceSpreadsheet = SpreadsheetApp.openById(sourceSpreadsheetId);  const targetSpreadsheet = SpreadsheetApp.openById(targetSpreadsheetId);  const sourceSheets = sourceSpreadsheet.getSheets();  sourceSheets.forEach(sheet =&gt; &#123;    const sheetName = sheet.getName();    let targetSheet = targetSpreadsheet.getSheetByName(sheetName);    if (!targetSheet) &#123;      targetSheet = targetSpreadsheet.insertSheet(sheetName);    &#125; else &#123;      targetSheet.clear();     &#125;    const range = sheet.getDataRange();    const displayValues = range.getDisplayValues();     const formats = range.getBackgrounds();            const fontWeights = range.getFontWeights();        const targetRange = targetSheet.getRange(1, 1, displayValues.length, displayValues[0].length);    targetRange.setValues(displayValues);     targetRange.setBackgrounds(formats);     targetRange.setFontWeights(fontWeights);    &#125;);&#125;]]></content>
+    <title>《皮囊》感悟</title>
+    <url>/2025/06/26/%E7%9A%AE%E5%9B%8A%E6%84%9F%E6%82%9F/</url>
+    <content><![CDATA[阿太阿太倔强坚强，豁达的心态值得人学习。父亲最强大的地方就是娶了我的母亲。一个伟大的女人。真正的女人就是应该要积极乐观面对一切，用自己的双手打造自己想要的未来。
+虽然有偷窃，但也是生活所迫，为了生存，为了家人，放下面子干一些违心事，又何尝不是一种积极的心态呢？而不是一哭二闹三上吊。
+想来作者能有如此作为，跟他伟大的母亲脱不了干系。
+那可爱的母亲呀！为了父亲的面子，为了父亲开心，都坚持要把房子建完，这何尝不是一种力量，向往心之所向，佩服这种勇气。
+其实最了解父亲的人是母亲，母亲知道父亲好面子，爱情不就是这样吗？你不用说，我懂，我懂你懂我，所以我们才会在一起这么久。
+张美丽从哪里跌倒，就从哪里爬起来。仿佛看见一个追求真爱，为爱为自己想要的东西不懈努力的人，虽说最终还是被迫性解放了自己，但她曾经的所作所为仍让我敬佩。
+舆论的力量是强大的，但比其而言，张美丽的内心力量更强大。
+]]></content>
       <categories>
-        <category>前端</category>
+        <category>读书感悟</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>初中英语教师资格面试模板（Reading）</title>
+    <url>/2025/07/09/%E5%88%9D%E4%B8%AD%E8%8B%B1%E8%AF%AD%E6%95%99%E8%B5%84%E9%9D%A2%E8%AF%95%E6%A8%A1%E6%9D%BF/</url>
+    <content><![CDATA[Reading&#x2F;Listening开场问候Dear Judges, Now I’ll start the lesson. Good morning, Boys and girls. How are you today? Good? Fine? I’m fine, too. Before the class, Let’s sing a song together. If you can sing, sing along with me . “You are my sunshine, my only sunshine, you make me happy.” Do you feel better? Great, let’s start the lesson.
+导入At the beginning, I’ll show you a video, and you should try to answer the question: What can you see in the video? Who would like to try? Blair, please. You see different cartoons, such as Snow White and Tom and Jerry.Thank you, Blair, you set a good example for us. You know so much about cartoons.Do you want to learn more? Today, let’s learn a new lesson — Cartoon.
+读前Before reading, To help you understand the passage better, let’s learn some words. Now, Look at the first one. Smart.Form example, Zhu Geliang is very smart and he can solve many problems. Can you understand now? Great! The next one cute. Look at the picture. What’s that? A cat. So cats are very cute and it’s very lovely. So cute means lovely. You are so cute. Cats are so cute. Birds are so cute, okay, wonderful How about the last one? Ivory. Here is a picture about ivory. It forms long teeth of elephants. Read after me, ivory, ivory. Well done! All of you did a good job.
+读中Now boys and girls, let’s have a prediction according to the title and the pictures on your book. Take a guess:What’s the passage mainly about? Try to think out as many answers as you can. OK, who wants to have a try?Justin, you please. The passage is about a cartoon Mickey Mouse. Nice try! Do you agree? OK, maybe you are right.Next, Let’s find out the truth in this passage.
+读后Let’s read it together.When you read, think about this question:What’s the passage mainly about? You should read quickly and check your prediction.Let’s begin.OK, guys, are you right? Wow, I heard John said he had the correct prediction.The passage tells us some information about Mickey Mouse. Oh, most of you are right! I am so proud of you.For the second time, you should read it carefully and catch some detail informations. After that, you should answer some true or false question. Okay? Let’s start. Time is up. The first one, It’s easy, right? Answer me together. It’s true. Then the second question. Lily, what’s your answer? It ’s false. Can you correct it ? Great. Thank you. The last one, boys come on. Eric please. It’s true.perfect.
+巩固We have done so many exercises.It’s time for fun. Let’s have a group discussion. Think about the topic: Introducing your favorite cartoon characters to group members. Work in group of 4 and discuss with your partners. Then show your work on the stage. You have 5 minutes to prepare.Are you ready? Go!  Time  is up. Which group goes first? Christina and your partners, please. Wow, your ideas are very creative and Your pronunciation is perfect.Let’s give them a big hand.
+总结How time files! The class is almost over. Before ending our class, let’s have a summary. Who can summarize what we have learned this class? Fiona please. Very good. I hope you can apply what we have learned in your daily life so that we can improve our reading and speaking ability, right?Our homework is as follows: You should finish the exercise book and search for more information about famous cartoons on the Internet. Next class, we will share them together.
+Class is over, see you next time.
+]]></content>
+      <categories>
+        <category>教资</category>
       </categories>
   </entry>
 </search>
