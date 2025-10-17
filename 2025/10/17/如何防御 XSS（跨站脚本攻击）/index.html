@@ -60,21 +60,19 @@
 
 
 
-  <meta name="description" content="《遇见未知的自己》读书笔记何为“未知”？“自己”即指“真我”，从“我是谁”到后来的“从有到无”，整本书以若菱与一位智者老人的对话为主线，引申出许多深刻的生命观念。          核心观点 外面没有别人，只有你自己。所有的外境，其实都是内心的投射。  与潜意识对话的黄金时刻想象自己已经实现目标的最佳时刻，是清晨将醒未醒、夜晚将睡未睡之间的那段时间，因为那时我们最接近潜意识。  关键修炼：觉察、臣">
+  <meta name="description" content="输入验证和过滤：对用户输入的数据进行严格验证和过滤，确保用户输入的内容不包含恶意脚本。可以使用正则表达式、HTML编码等方式来过滤用户输入。  使用安全的API：避免直接在前端代码中操作敏感数据，尽量使用后端API来处理用户输入和返回数据，以减少XSS攻击的可能性。  使用内容安全策略（CSP）：通过在网页中添加CSP头部，限制浏览器加载外部资源的方式，可以有效减少XSS攻击的风险。CSP可以限">
 <meta property="og:type" content="article">
-<meta property="og:title" content="遇见未知的自己">
-<meta property="og:url" content="https://lidyaqf.github.io/2025/06/30/%E9%81%87%E8%A7%81%E6%9C%AA%E7%9F%A5%E7%9A%84%E8%87%AA%E5%B7%B1/index.html">
+<meta property="og:title" content="如何防御 XSS（跨站脚本攻击）">
+<meta property="og:url" content="https://lidyaqf.github.io/2025/10/17/%E5%A6%82%E4%BD%95%E9%98%B2%E5%BE%A1%20XSS%EF%BC%88%E8%B7%A8%E7%AB%99%E8%84%9A%E6%9C%AC%E6%94%BB%E5%87%BB%EF%BC%89/index.html">
 <meta property="og:site_name" content="枫叶白">
-<meta property="og:description" content="《遇见未知的自己》读书笔记何为“未知”？“自己”即指“真我”，从“我是谁”到后来的“从有到无”，整本书以若菱与一位智者老人的对话为主线，引申出许多深刻的生命观念。          核心观点 外面没有别人，只有你自己。所有的外境，其实都是内心的投射。  与潜意识对话的黄金时刻想象自己已经实现目标的最佳时刻，是清晨将醒未醒、夜晚将睡未睡之间的那段时间，因为那时我们最接近潜意识。  关键修炼：觉察、臣">
+<meta property="og:description" content="输入验证和过滤：对用户输入的数据进行严格验证和过滤，确保用户输入的内容不包含恶意脚本。可以使用正则表达式、HTML编码等方式来过滤用户输入。  使用安全的API：避免直接在前端代码中操作敏感数据，尽量使用后端API来处理用户输入和返回数据，以减少XSS攻击的可能性。  使用内容安全策略（CSP）：通过在网页中添加CSP头部，限制浏览器加载外部资源的方式，可以有效减少XSS攻击的风险。CSP可以限">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://lidyaqf.github.io/images/jc.jpeg">
-<meta property="article:published_time" content="2025-06-29T16:00:00.000Z">
-<meta property="article:modified_time" content="2025-07-17T06:13:09.697Z">
+<meta property="article:published_time" content="2025-10-16T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-10-17T02:10:53.142Z">
 <meta property="article:author" content="lidya">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://lidyaqf.github.io/images/jc.jpeg">
 
-<link rel="canonical" href="https://lidyaqf.github.io/2025/06/30/%E9%81%87%E8%A7%81%E6%9C%AA%E7%9F%A5%E7%9A%84%E8%87%AA%E5%B7%B1/">
+<link rel="canonical" href="https://lidyaqf.github.io/2025/10/17/%E5%A6%82%E4%BD%95%E9%98%B2%E5%BE%A1%20XSS%EF%BC%88%E8%B7%A8%E7%AB%99%E8%84%9A%E6%9C%AC%E6%94%BB%E5%87%BB%EF%BC%89/">
 
 
 <script id="page-configurations">
@@ -87,7 +85,7 @@
   };
 </script>
 
-  <title>遇见未知的自己 | 枫叶白</title>
+  <title>如何防御 XSS（跨站脚本攻击） | 枫叶白</title>
   
 
 
@@ -230,7 +228,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://lidyaqf.github.io/2025/06/30/%E9%81%87%E8%A7%81%E6%9C%AA%E7%9F%A5%E7%9A%84%E8%87%AA%E5%B7%B1/">
+    <link itemprop="mainEntityOfPage" href="https://lidyaqf.github.io/2025/10/17/%E5%A6%82%E4%BD%95%E9%98%B2%E5%BE%A1%20XSS%EF%BC%88%E8%B7%A8%E7%AB%99%E8%84%9A%E6%9C%AC%E6%94%BB%E5%87%BB%EF%BC%89/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -243,7 +241,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          遇见未知的自己
+          如何防御 XSS（跨站脚本攻击）
         </h1>
 
         <div class="post-meta">
@@ -252,23 +250,17 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2025-06-30 00:00:00" itemprop="dateCreated datePublished" datetime="2025-06-30T00:00:00+08:00">2025-06-30</time>
+              <time title="创建时间：2025-10-17 00:00:00 / 修改时间：10:10:53" itemprop="dateCreated datePublished" datetime="2025-10-17T00:00:00+08:00">2025-10-17</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2025-07-17 14:13:09" itemprop="dateModified" datetime="2025-07-17T14:13:09+08:00">2025-07-17</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E8%AF%BB%E4%B9%A6%E6%84%9F%E6%82%9F/" itemprop="url" rel="index"><span itemprop="name">读书感悟</span></a>
+                  <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
                 </span>
             </span>
 
@@ -290,49 +282,20 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="《遇见未知的自己》读书笔记"><a href="#《遇见未知的自己》读书笔记" class="headerlink" title="《遇见未知的自己》读书笔记"></a>《遇见未知的自己》读书笔记</h1><h2 id="何为“未知”？"><a href="#何为“未知”？" class="headerlink" title="何为“未知”？"></a>何为“未知”？</h2><p>“自己”即指“真我”，从“我是谁”到后来的“从有到无”，整本书以若菱与一位智者老人的对话为主线，引申出许多深刻的生命观念。</p>
-<hr>
-<!-- ![](/images/jc.jpeg =100x100) -->
-<div style="    display: flow-root;">
-<img src="/images/jc.jpeg"  width="400" align = "left"/>
-</div>
-
-
-
-
-<h2 id="核心观点"><a href="#核心观点" class="headerlink" title="核心观点"></a>核心观点</h2><ul>
-<li><p><strong>外面没有别人，只有你自己。</strong><br>所有的外境，其实都是内心的投射。</p>
+        <ol>
+<li><p>输入验证和过滤：对用户输入的数据进行严格验证和过滤，确保用户输入的内容不包含恶意脚本。可以使用正则表达式、HTML编码等方式来过滤用户输入。</p>
 </li>
-<li><p><strong>与潜意识对话的黄金时刻</strong><br>想象自己已经实现目标的最佳时刻，是清晨将醒未醒、夜晚将睡未睡之间的那段时间，因为那时我们最接近潜意识。</p>
+<li><p>使用安全的API：避免直接在前端代码中操作敏感数据，尽量使用后端API来处理用户输入和返回数据，以减少XSS攻击的可能性。</p>
 </li>
-<li><p><strong>关键修炼：觉察、臣服、战胜胜肽（小我）</strong></p>
-<ul>
-<li><strong>觉察</strong>：关注当下的自己，不批判地观察情绪和反应。</li>
-<li><strong>臣服</strong>：接受现实，而不是抗拒。</li>
-<li><strong>胜肽小我</strong>：代表恐惧、比较、焦虑的内在声音，要学会看见并超越它。</li>
-</ul>
-<br/>
-
+<li><p>使用内容安全策略（CSP）：通过在网页中添加CSP头部，限制浏览器加载外部资源的方式，可以有效减少XSS攻击的风险。CSP可以限制哪些资源可以被加载，从而减少恶意脚本的注入。</p>
 </li>
-<li><p><strong>冥想、感恩、付出</strong></p>
-<ul>
-<li>冥想时，要设想自己已经拥有渴望的生活。</li>
-<li>在实现之前就先学会感恩。</li>
-<li>保持利他、愿意付出的心态。</li>
-</ul>
-<br/>
-
-
+<li><p>使用HttpOnly标记：在设置Cookie时，使用HttpOnly标记可以防止JavaScript访问Cookie，从而减少XSS攻击对Cookie的窃取。</p>
 </li>
-<li><p><strong>少关心别人，多关心自己</strong></p>
-<ul>
-<li>注意力回到自己身上，关注内在世界。</li>
-<li>当情绪上来时，觉察身体哪个部位最不舒服，了解内在信号。</li>
-</ul>
+<li><p>定期更新和维护第三方库：确保使用的第三方库和插件没有已知的安全漏洞，及时更新到最新版本，以减少XSS攻击的风险。</p>
 </li>
-</ul>
-<hr>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>这本书不只是关于“找到自己是谁”，更是提醒我们“成为那个自己”。内在力量的唤醒，需要持续的觉察、练习与自我超越。</p>
+<li><p>安全编程实践：避免在前端代码中直接拼接用户输入到HTML标签中，使用安全的方法来动态生成DOM元素，如使用createElement()等方法。</p>
+</li>
+</ol>
 
     </div>
 
@@ -357,7 +320,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://lidyaqf.github.io/2025/06/30/%E9%81%87%E8%A7%81%E6%9C%AA%E7%9F%A5%E7%9A%84%E8%87%AA%E5%B7%B1/" title="遇见未知的自己">https://lidyaqf.github.io/2025/06/30/遇见未知的自己/</a>
+    <a href="https://lidyaqf.github.io/2025/10/17/%E5%A6%82%E4%BD%95%E9%98%B2%E5%BE%A1%20XSS%EF%BC%88%E8%B7%A8%E7%AB%99%E8%84%9A%E6%9C%AC%E6%94%BB%E5%87%BB%EF%BC%89/" title="如何防御 XSS（跨站脚本攻击）">https://lidyaqf.github.io/2025/10/17/如何防御 XSS（跨站脚本攻击）/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -374,13 +337,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2025/06/26/%E5%BD%93%E6%88%91%E8%B0%88%E8%B7%91%E6%AD%A5%E6%97%B6/" rel="prev" title="《当我谈跑步时，我谈些什么》读后感">
-      <i class="fa fa-chevron-left"></i> 《当我谈跑步时，我谈些什么》读后感
+    <a href="/2025/10/16/react+vite%E5%A6%82%E4%BD%95%E6%89%93%E5%8C%85%E6%88%90apk/" rel="prev" title="react+vite如何打包成apk">
+      <i class="fa fa-chevron-left"></i> react+vite如何打包成apk
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2025/07/01/%E6%B7%B1%E6%88%B7%E5%8A%9E%E7%90%86%E6%B5%81%E7%A8%8B/" rel="next" title="2022应届毕业生办理深户流程">
-      2022应届毕业生办理深户流程 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -444,7 +404,6 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E3%80%8A%E9%81%87%E8%A7%81%E6%9C%AA%E7%9F%A5%E7%9A%84%E8%87%AA%E5%B7%B1%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0"><span class="nav-number">1.</span> <span class="nav-text">《遇见未知的自己》读书笔记</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%95%E4%B8%BA%E2%80%9C%E6%9C%AA%E7%9F%A5%E2%80%9D%EF%BC%9F"><span class="nav-number">1.1.</span> <span class="nav-text">何为“未知”？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E8%A7%82%E7%82%B9"><span class="nav-number">1.2.</span> <span class="nav-text">核心观点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">1.3.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
