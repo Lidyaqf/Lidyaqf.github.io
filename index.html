@@ -225,7 +225,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://lidyaqf.github.io/2025/10/20/vue%E5%AE%9E%E7%8E%B0%E6%8F%92%E5%85%A5%E8%84%9A%E6%9C%AC_%E5%89%AF%E6%9C%AC/">
+    <link itemprop="mainEntityOfPage" href="https://lidyaqf.github.io/2025/10/21/%E6%89%8B%E5%86%99Promise/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -239,7 +239,77 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2025/10/20/vue%E5%AE%9E%E7%8E%B0%E6%8F%92%E5%85%A5%E8%84%9A%E6%9C%AC_%E5%89%AF%E6%9C%AC/" class="post-title-link" itemprop="url">手写New</a>
+            <a href="/2025/10/21/%E6%89%8B%E5%86%99Promise/" class="post-title-link" itemprop="url">手写Promise</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2025-10-21 00:00:00 / 修改时间：09:55:39" itemprop="dateCreated datePublished" datetime="2025-10-21T00:00:00+08:00">2025-10-21</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">myPromiseRace</span>(<span class="params">promises</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 检查输入是否为可迭代对象</span></span><br><span class="line">    <span class="keyword">if</span> (!promises || <span class="keyword">typeof</span> promises[<span class="title class_">Symbol</span>.<span class="property">iterator</span>] !== <span class="string">&#x27;function&#x27;</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="title function_">reject</span>(<span class="keyword">new</span> <span class="title class_">TypeError</span>(<span class="string">&#x27;Argument is not iterable&#x27;</span>));</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 遍历每个Promise</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">const</span> promise <span class="keyword">of</span> promises) &#123;</span><br><span class="line">      <span class="comment">// 用Promise.resolve包装，确保处理的是Promise</span></span><br><span class="line">      <span class="title class_">Promise</span>.<span class="title function_">resolve</span>(promise)</span><br><span class="line">        .<span class="title function_">then</span>(resolve)  <span class="comment">// 任何一个Promise解决，立即解决</span></span><br><span class="line">        .<span class="title function_">catch</span>(reject); <span class="comment">// 任何一个Promise拒绝，立即拒绝</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 测试</span></span><br><span class="line"><span class="keyword">const</span> p1 = <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function"><span class="params">res</span> =&gt;</span> <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> <span class="title function_">res</span>(<span class="string">&#x27;p1&#x27;</span>), <span class="number">1000</span>));</span><br><span class="line"><span class="keyword">const</span> p2 = <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function"><span class="params">res</span> =&gt;</span> <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> <span class="title function_">res</span>(<span class="string">&#x27;p2&#x27;</span>), <span class="number">500</span>));</span><br><span class="line"><span class="keyword">const</span> p3 = <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">res, rej</span>) =&gt;</span> <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> <span class="title function_">rej</span>(<span class="string">&#x27;p3 error&#x27;</span>), <span class="number">300</span>));</span><br><span class="line"></span><br><span class="line"><span class="title function_">myPromiseRace</span>([p1, p2, p3])</span><br><span class="line">  .<span class="title function_">then</span>(<span class="variable language_">console</span>.<span class="property">log</span>)  <span class="comment">// 不会执行，因为p3会先拒绝</span></span><br><span class="line">  .<span class="title function_">catch</span>(<span class="variable language_">console</span>.<span class="property">error</span>); <span class="comment">// 输出: p3 error</span></span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://lidyaqf.github.io/2025/10/20/%E6%89%8B%E5%86%99New/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="lidya">
+      <meta itemprop="description" content="服人以诚不以言">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="枫叶白">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2025/10/20/%E6%89%8B%E5%86%99New/" class="post-title-link" itemprop="url">手写New</a>
         </h2>
 
         <div class="post-meta">
@@ -898,83 +968,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://lidyaqf.github.io/2025/08/13/%E5%A6%82%E4%BD%95%E8%84%B1%E7%A6%BB%E6%A1%86%E6%9E%B6%E5%BC%80%E5%8F%91/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="lidya">
-      <meta itemprop="description" content="服人以诚不以言">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="枫叶白">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2025/08/13/%E5%A6%82%E4%BD%95%E8%84%B1%E7%A6%BB%E6%A1%86%E6%9E%B6%E5%BC%80%E5%8F%91/" class="post-title-link" itemprop="url">脱离框架开发</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2025-08-13 00:00:00" itemprop="dateCreated datePublished" datetime="2025-08-13T00:00:00+08:00">2025-08-13</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2025-08-12 16:19:08" itemprop="dateModified" datetime="2025-08-12T16:19:08+08:00">2025-08-12</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>前端脱离框架去开发，就是不使用任何前端框架（Vue、React等）的情况下，直接用js、html和css去开发web。这意味更能深入了解前端底层原理和机制，避免依赖框架。</p>
-<p>在面对静态且不做过多功能的低项目下，其实脱离框架就已经足够了。框架编写的代码必须要进行编译才能在浏览器中渲染，所以便有了webpack。像Vue的出现就是为了解决一些痛点问题，比如双向数据流、自动响应式更新等，但我们又不得不遵守他们框架内的一些语法，随着vue的升级，我们也要不停学习更新的框架内容。框架本身是有利于开发的，但面对一些简单的问题时，不用框架反而是明智的。根据需求而决定去不去用框架进行下一步的开发。</p>
-<p>当开发多个类似的网站，没有打包过的代码放上服务器，能直接在服务器改源代码。而使用框架后打包的源码放在服务器中，要修改却只能本地修改，反而更浪费时间。当熟悉纯js开发后，还能开发一些工具以及框架出来。</p>
-
-      
-    </div>
-
-    
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1046,7 +1039,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-count">33</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
