@@ -60,19 +60,19 @@
 
 
 
-  <meta name="description" content="What Is SerializationData transmitted over a TCP channel can only be in binary form. So converting a data structure or an object into binary form is called serialization. The reverse process is calle">
+  <meta name="description" content="JavaScript Basics Summary (Hoisting, Strict Mode) Rules for Variable and Function Hoisting Variable hoisting: Execution still happens in order; variable declarations are hoisted but assignments are no">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Talking About Node RPC">
-<meta property="og:url" content="https://lidyaqf.github.io/2025/07/16/node-rpc/index.html">
+<meta property="og:title" content="JavaScript Basics">
+<meta property="og:url" content="https://lidyaqf.github.io/2025/12/02/js%E5%9F%BA%E7%A1%80/index.html">
 <meta property="og:site_name" content="My English Blog">
-<meta property="og:description" content="What Is SerializationData transmitted over a TCP channel can only be in binary form. So converting a data structure or an object into binary form is called serialization. The reverse process is calle">
+<meta property="og:description" content="JavaScript Basics Summary (Hoisting, Strict Mode) Rules for Variable and Function Hoisting Variable hoisting: Execution still happens in order; variable declarations are hoisted but assignments are no">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2025-07-15T16:00:00.000Z">
-<meta property="article:modified_time" content="2025-12-03T06:36:43.175Z">
+<meta property="article:published_time" content="2025-12-01T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-12-04T09:54:05.454Z">
 <meta property="article:author" content="lidya">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://lidyaqf.github.io/2025/07/16/node-rpc/">
+<link rel="canonical" href="https://lidyaqf.github.io/2025/12/02/js%E5%9F%BA%E7%A1%80/">
 
 
 <script id="page-configurations">
@@ -85,7 +85,7 @@
   };
 </script>
 
-  <title>Talking About Node RPC | My English Blog</title>
+  <title>JavaScript Basics | My English Blog</title>
   
 
 
@@ -233,7 +233,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en-US">
-    <link itemprop="mainEntityOfPage" href="https://lidyaqf.github.io/2025/07/16/node-rpc/">
+    <link itemprop="mainEntityOfPage" href="https://lidyaqf.github.io/2025/12/02/js%E5%9F%BA%E7%A1%80/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -246,7 +246,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Talking About Node RPC
+          JavaScript Basics
         </h1>
 
         <div class="post-meta">
@@ -256,14 +256,14 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2025-07-16 00:00:00" itemprop="dateCreated datePublished" datetime="2025-07-16T00:00:00+08:00">2025-07-16</time>
+              <time title="Created: 2025-12-02 00:00:00" itemprop="dateCreated datePublished" datetime="2025-12-02T00:00:00+08:00">2025-12-02</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-12-03 14:36:43" itemprop="dateModified" datetime="2025-12-03T14:36:43+08:00">2025-12-03</time>
+                <time title="Modified: 2025-12-04 17:54:05" itemprop="dateModified" datetime="2025-12-04T17:54:05+08:00">2025-12-04</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -271,7 +271,7 @@
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Backend/" itemprop="url" rel="index"><span itemprop="name">Backend</span></a>
+                  <a href="/categories/Frontend/" itemprop="url" rel="index"><span itemprop="name">Frontend</span></a>
                 </span>
             </span>
 
@@ -293,19 +293,24 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <hr>
-<h2 id="What-Is-Serialization"><a href="#What-Is-Serialization" class="headerlink" title="What Is Serialization"></a>What Is Serialization</h2><p>Data transmitted over a TCP channel can only be in binary form. So converting a data structure or an object into binary form is called <strong>serialization</strong>. The reverse process is called <strong>deserialization</strong>. The rules that define how they convert back and forth are called a <strong>protocol</strong>.</p>
+        <h1 id="JavaScript-Basics-Summary-Hoisting-Strict-Mode"><a href="#JavaScript-Basics-Summary-Hoisting-Strict-Mode" class="headerlink" title="JavaScript Basics Summary (Hoisting, Strict Mode)"></a>JavaScript Basics Summary (Hoisting, Strict Mode)</h1><hr>
+<h2 id="Rules-for-Variable-and-Function-Hoisting"><a href="#Rules-for-Variable-and-Function-Hoisting" class="headerlink" title="Rules for Variable and Function Hoisting"></a>Rules for Variable and Function Hoisting</h2><ul>
+<li><strong>Variable hoisting</strong>: Execution still happens in order; variable <strong>declarations</strong> are hoisted but <strong>assignments are not</strong>.</li>
+<li><strong>Function hoisting</strong>: The <strong>entire function body</strong> is hoisted to the top of its scope.</li>
+<li><strong>Priority</strong>: Function hoisting &gt; Variable hoisting.</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(a); <span class="comment">// undefined</span></span><br><span class="line"><span class="keyword">var</span> a = <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line"><span class="title function_">foo</span>(); <span class="comment">// works normally</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">foo</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;Function hoisting succeeded&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <hr>
-<h2 id="What-Is-RPC"><a href="#What-Is-RPC" class="headerlink" title="What Is RPC"></a>What Is RPC</h2><p>RPC stands for <strong>Remote Procedure Call</strong>. Most RPC systems are based on TCP. The general implementation flow is as follows:</p>
-<ol>
-<li>The frontend calls the corresponding interface through a Proxy. The Proxy converts information such as the RPC service name, method name, and parameters into an RPC Request object and passes it to the RPC framework.</li>
-<li>The RPC framework serializes the RPC Request object into binary form according to the RPC protocol.</li>
-<li>The RPC framework sends the binary data to the backend through a TCP channel.</li>
-<li>The backend deserializes the binary data back into an RPC Request object.</li>
-<li>The backend maps the deserialized data to the actual method it implements, passes in the parameters, obtains the result, and then packages it into an RPC Response object for the RPC framework.</li>
-<li>The RPC framework serializes the RPC Response object into binary form according to the RPC protocol and sends it back to the frontend through the TCP channel.</li>
-<li>After receiving the binary data, the frontend deserializes it into an RPC Response object, and the Proxy returns the result to the business code.</li>
-</ol>
+<h2 id="Using-Strict-Mode-with-use-strict"><a href="#Using-Strict-Mode-with-use-strict" class="headerlink" title="Using Strict Mode with use strict"></a>Using Strict Mode with <code>use strict</code></h2><h3 id="What-it-does"><a href="#What-it-does" class="headerlink" title="What it does:"></a>What it does:</h3><ul>
+<li>Prevents creating <strong>accidental global variables</strong>;</li>
+<li>Disallows using undeclared variables, helping avoid memory leaks;</li>
+<li>Binds <code>this</code> to <code>undefined</code> by default instead of <code>window</code>.</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">foo</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="string">&quot;use strict&quot;</span>;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>.<span class="property">a</span>); <span class="comment">// ❌ TypeError</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> a = <span class="number">2</span>;</span><br><span class="line"><span class="title function_">foo</span>(); <span class="comment">// in strict mode, this is undefined, so this.a cannot be read</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">(<span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="string">&quot;use strict&quot;</span>;</span><br><span class="line">  <span class="title function_">foo</span>(); <span class="comment">// calling foo here doesn&#x27;t change its default binding</span></span><br><span class="line">&#125;)();</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">foo</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>.<span class="property">a</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> a = <span class="number">2</span>;</span><br></pre></td></tr></table></figure>
 
     </div>
 
@@ -330,7 +335,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>Post link: </strong>
-    <a href="https://lidyaqf.github.io/2025/07/16/node-rpc/" title="Talking About Node RPC">https://lidyaqf.github.io/2025/07/16/node-rpc/</a>
+    <a href="https://lidyaqf.github.io/2025/12/02/js%E5%9F%BA%E7%A1%80/" title="JavaScript Basics">https://lidyaqf.github.io/2025/12/02/js基础/</a>
   </li>
   <li class="post-copyright-license">
     <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
@@ -347,13 +352,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2025/06/30/%E9%81%87%E8%A7%81%E6%9C%AA%E7%9F%A5%E7%9A%84%E8%87%AA%E5%B7%B1/" rel="prev" title="Encountering the Unknown Self">
-      <i class="fa fa-chevron-left"></i> Encountering the Unknown Self
+    <a href="/2025/07/16/node-rpc/" rel="prev" title="Talking About Node RPC">
+      <i class="fa fa-chevron-left"></i> Talking About Node RPC
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2025/12/02/js%E5%9F%BA%E7%A1%80/" rel="next" title="JavaScript Basics">
-      JavaScript Basics <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -417,7 +419,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#What-Is-Serialization"><span class="nav-number">1.</span> <span class="nav-text">What Is Serialization</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#What-Is-RPC"><span class="nav-number">2.</span> <span class="nav-text">What Is RPC</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#JavaScript-Basics-Summary-Hoisting-Strict-Mode"><span class="nav-number">1.</span> <span class="nav-text">JavaScript Basics Summary (Hoisting, Strict Mode)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Rules-for-Variable-and-Function-Hoisting"><span class="nav-number">1.1.</span> <span class="nav-text">Rules for Variable and Function Hoisting</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Using-Strict-Mode-with-use-strict"><span class="nav-number">1.2.</span> <span class="nav-text">Using Strict Mode with use strict</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#What-it-does"><span class="nav-number">1.2.1.</span> <span class="nav-text">What it does:</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
