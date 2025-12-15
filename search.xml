@@ -140,6 +140,15 @@ JSI（JavaScript Interface）：直接调用原生代码，替代异步 Bridge, 
       </categories>
   </entry>
   <entry>
+    <title>google sheet同步表格数据</title>
+    <url>/2025/08/28/google%20sheet%E5%90%8C%E6%AD%A5%E8%A1%A8%E6%A0%BC%E6%95%B0%E6%8D%AE/</url>
+    <content><![CDATA[有个需求是根据一个表格的所有子表，同步到另个表格（包含子表）的数据，用google sheets里面的扩展程序里的apps 脚本功能，编写脚本。为什么要同步呢？因为原表默认是不可编辑的，打算同步过来后再进行编辑。sourceSpreadsheetId跟targetSpreadsheetId为google sheet 表格地址栏d后面的一串字符。
+function synchronizeSheetsToAnotherFile() &#123;  const sourceSpreadsheetId = &quot;id1&quot;;  const targetSpreadsheetId = &quot;id2&quot;; # 比如：1NOtSSvDwXrca8vqyZW6OqQJwGaCICMVguSz1-i72oqg  const sourceSpreadsheet = SpreadsheetApp.openById(sourceSpreadsheetId);  const targetSpreadsheet = SpreadsheetApp.openById(targetSpreadsheetId);  const sourceSheets = sourceSpreadsheet.getSheets();  sourceSheets.forEach(sheet =&gt; &#123;    const sheetName = sheet.getName();    let targetSheet = targetSpreadsheet.getSheetByName(sheetName);    if (!targetSheet) &#123;      targetSheet = targetSpreadsheet.insertSheet(sheetName);    &#125; else &#123;      targetSheet.clear();     &#125;    const range = sheet.getDataRange();    const displayValues = range.getDisplayValues();     const formats = range.getBackgrounds();            const fontWeights = range.getFontWeights();        const targetRange = targetSheet.getRange(1, 1, displayValues.length, displayValues[0].length);    targetRange.setValues(displayValues);     targetRange.setBackgrounds(formats);     targetRange.setFontWeights(fontWeights);    &#125;);&#125;]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+  </entry>
+  <entry>
     <title>GitLab CI/CD</title>
     <url>/2025/04/10/gitlabci/</url>
     <content><![CDATA[前端项目 GitLab CI&#x2F;CD 持续集成部署指南（Mac 环境）概要在日常开发过程中，我们经常需要将打包后的 dist 包手动发送给后端部署，效率低且容易出错。CI（Continuous Integration，持续集成）可以自动化这一过程，本文将介绍如何通过 GitLab CI 实现持续集成部署。
@@ -217,15 +226,6 @@ Redux或Mobx：对于复杂的应用，可以用状态库来实现组件通信�
 Hooks：React的一些Hooks，比如useState，能实现不同组件的共享逻辑跟状态。
 
 ]]></content>
-      <categories>
-        <category>前端</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>google sheet同步表格数据</title>
-    <url>/2025/08/28/google%20sheet%E5%90%8C%E6%AD%A5%E8%A1%A8%E6%A0%BC%E6%95%B0%E6%8D%AE/</url>
-    <content><![CDATA[有个需求是根据一个表格的所有子表，同步到另个表格（包含子表）的数据，用google sheets里面的扩展程序里的apps 脚本功能，编写脚本。为什么要同步呢？因为原表默认是不可编辑的，打算同步过来后再进行编辑。sourceSpreadsheetId跟targetSpreadsheetId为google sheet 表格地址栏d后面的一串字符。
-function synchronizeSheetsToAnotherFile() &#123;  const sourceSpreadsheetId = &quot;id1&quot;;  const targetSpreadsheetId = &quot;id2&quot;; # 比如：1NOtSSvDwXrca8vqyZW6OqQJwGaCICMVguSz1-i72oqg  const sourceSpreadsheet = SpreadsheetApp.openById(sourceSpreadsheetId);  const targetSpreadsheet = SpreadsheetApp.openById(targetSpreadsheetId);  const sourceSheets = sourceSpreadsheet.getSheets();  sourceSheets.forEach(sheet =&gt; &#123;    const sheetName = sheet.getName();    let targetSheet = targetSpreadsheet.getSheetByName(sheetName);    if (!targetSheet) &#123;      targetSheet = targetSpreadsheet.insertSheet(sheetName);    &#125; else &#123;      targetSheet.clear();     &#125;    const range = sheet.getDataRange();    const displayValues = range.getDisplayValues();     const formats = range.getBackgrounds();            const fontWeights = range.getFontWeights();        const targetRange = targetSheet.getRange(1, 1, displayValues.length, displayValues[0].length);    targetRange.setValues(displayValues);     targetRange.setBackgrounds(formats);     targetRange.setFontWeights(fontWeights);    &#125;);&#125;]]></content>
       <categories>
         <category>前端</category>
       </categories>
@@ -341,6 +341,15 @@ Vue 模板中不能直接写 &lt;script&gt;，否则脚本不会执行
       </categories>
   </entry>
   <entry>
+    <title>中小学信息技术教学模版</title>
+    <url>/2025/08/21/%E4%B8%AD%E5%B0%8F%E5%AD%A6%E4%BF%A1%E6%81%AF%E6%8A%80%E6%9C%AF%E6%95%99%E5%AD%A6%E6%A8%A1%E7%89%88/</url>
+    <content><![CDATA[《if-elif条件语句》逐字稿  &emsp;&emsp;同学们，老师刚才留意到班级上的值日表，周一到周五有好多勤劳的小蜜蜂呀。老师想问下周一值日的同学有哪些举下手？诶，老师看见了。那么同学们记住这些周一值日的同学了吗？是的，总共有六位。那如果以三个班为单位，给你一个名字，你能快速给出这名同学是星期几值日吗？你们有什么好办法吗？请你，对了，可以自己用绕口令等方式背下来。还有更好的办法吗？请你，对了，可以利用程序的方式输出出来。那该使用什么语句来表示多个条件呢？今天我们就一起来学习python中的另一种条件语句if-elif-else&emsp;&emsp;现在请大家同桌两人为一小组，先来分析if-elif-else怎么实现同学名字对应星期几值日的问题，时间是8分钟。开始吧，时间到了，刚才在巡视的过程中，大家都在认真的讨论，那哪个小组代表想来分享你们的成果，你来说，你说想要判断同学是哪天值日的，只要输入他的名字，根据名字找到对应星期几输出就行了。还有补充的吗？第五小组，你们来说，他说可以弄五个数组对应星期一到星期五，把每个人的名字放进去对应的数组里，然后判断输出。你补充的非常关键。请坐。非常好，请坐，大家分析的很正确，说明大家有充分预习本节课的内容。 &emsp;&emsp;接下来我们就综合大家的分析，请同学们自主思考，并画出流程图，时间是5分钟，开始吧，时间到了，请这位同学来展示你的流程图，你说首先输入学生的名字，假如小花在星期一的数组里，那么输出星期一，依次类推。现在请大家尝试写出多分支结构的语句，老师提示一下，条件子句的如果需要用elif来表示。我们请这位同学将他的答案写到黑板上，请同学们来看跟你写的一样吗？哪些地方需要修改？你说将最后一个elif应该写成else，是表达都不满足条件的话，执行else后面的语句。你说要注意缩进和冒号。大家观察的很仔细，希望同学们写的时候一定要认真。请大家利用学到的if-elif语句去编写刚才你们设计的算法。我看到大家都能准确的写出来了，并且都避免了刚才的问题。&emsp;&emsp;语句我们已经写出来了，那他的执行过程是什么呢？现在请同学们以同桌两人为一小组，进行讨论，一会我们请一名小组代表展示讲解，时间是7分钟，开始吧，我看到有同学在小声的讨论，时间到了，第二小组，请你们讲一讲执行过程，他结合流程图告诉我们，执行过程是依次判断输入的同学姓名符合哪个条件，如符合则输出，若都不符合则输出错误。他用图文的形式讲解，非常的直观。那现在我们就可以就着大屏幕上的流程图，总结出if-elif语句的执行过程是从if行开始依次对条件进行判断，如果正确则执行改条件下面的语句块，然后跳出if语句，如果不正确则对下一个条件进行判断，如果所有条件都不成立，则执行else下面的语句块。&emsp;&emsp;新知识我们已经学完了，现在请大家编写完整程序，实现上述的执行过程，学有余力的同学，请自己思考生活中有哪些需要对多个条件进行检测的事情，自主进行编写。我们请这些同学来进行展示，他们中有的从数学出发，编写了比较三个数，求最大数问题，还有的是从生活出发，编写了出租车计费的问题。大家编写的语句和格式都很规范。&emsp;&emsp;这堂课已经接近尾声了，这节课你都有哪些收获呢？大家说学会了if-elif的格式和执行过程，看来这节课的知识同学们都掌握了。其实编程离咱们的生活和学习很近，并且也没有想象中的那么难，老师希望同学们以后都可以像今天一样在课堂上积极思考，表达想法。&emsp;&emsp;最后布置一个小作业，请同学们对比三种if语句特点，整理成表格。&emsp;&emsp;这节课就上到这里，同学们再见。
+]]></content>
+      <categories>
+        <category>教资</category>
+      </categories>
+  </entry>
+  <entry>
     <title>《终有一天你会懂》琢磨先生 - 读书笔记</title>
     <url>/2025/05/21/%E3%80%8A%E7%BB%88%E6%9C%89%E4%B8%80%E5%A4%A9%E4%BD%A0%E4%BC%9A%E6%87%82%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%20-%20%E7%90%A2%E7%A3%A8%E5%85%88%E7%94%9F/</url>
     <content><![CDATA[
@@ -372,15 +381,6 @@ Vue 模板中不能直接写 &lt;script&gt;，否则脚本不会执行
       </categories>
   </entry>
   <entry>
-    <title>中小学信息技术教学模版</title>
-    <url>/2025/08/21/%E4%B8%AD%E5%B0%8F%E5%AD%A6%E4%BF%A1%E6%81%AF%E6%8A%80%E6%9C%AF%E6%95%99%E5%AD%A6%E6%A8%A1%E7%89%88/</url>
-    <content><![CDATA[《if-elif条件语句》逐字稿  &emsp;&emsp;同学们，老师刚才留意到班级上的值日表，周一到周五有好多勤劳的小蜜蜂呀。老师想问下周一值日的同学有哪些举下手？诶，老师看见了。那么同学们记住这些周一值日的同学了吗？是的，总共有六位。那如果以三个班为单位，给你一个名字，你能快速给出这名同学是星期几值日吗？你们有什么好办法吗？请你，对了，可以自己用绕口令等方式背下来。还有更好的办法吗？请你，对了，可以利用程序的方式输出出来。那该使用什么语句来表示多个条件呢？今天我们就一起来学习python中的另一种条件语句if-elif-else&emsp;&emsp;现在请大家同桌两人为一小组，先来分析if-elif-else怎么实现同学名字对应星期几值日的问题，时间是8分钟。开始吧，时间到了，刚才在巡视的过程中，大家都在认真的讨论，那哪个小组代表想来分享你们的成果，你来说，你说想要判断同学是哪天值日的，只要输入他的名字，根据名字找到对应星期几输出就行了。还有补充的吗？第五小组，你们来说，他说可以弄五个数组对应星期一到星期五，把每个人的名字放进去对应的数组里，然后判断输出。你补充的非常关键。请坐。非常好，请坐，大家分析的很正确，说明大家有充分预习本节课的内容。 &emsp;&emsp;接下来我们就综合大家的分析，请同学们自主思考，并画出流程图，时间是5分钟，开始吧，时间到了，请这位同学来展示你的流程图，你说首先输入学生的名字，假如小花在星期一的数组里，那么输出星期一，依次类推。现在请大家尝试写出多分支结构的语句，老师提示一下，条件子句的如果需要用elif来表示。我们请这位同学将他的答案写到黑板上，请同学们来看跟你写的一样吗？哪些地方需要修改？你说将最后一个elif应该写成else，是表达都不满足条件的话，执行else后面的语句。你说要注意缩进和冒号。大家观察的很仔细，希望同学们写的时候一定要认真。请大家利用学到的if-elif语句去编写刚才你们设计的算法。我看到大家都能准确的写出来了，并且都避免了刚才的问题。&emsp;&emsp;语句我们已经写出来了，那他的执行过程是什么呢？现在请同学们以同桌两人为一小组，进行讨论，一会我们请一名小组代表展示讲解，时间是7分钟，开始吧，我看到有同学在小声的讨论，时间到了，第二小组，请你们讲一讲执行过程，他结合流程图告诉我们，执行过程是依次判断输入的同学姓名符合哪个条件，如符合则输出，若都不符合则输出错误。他用图文的形式讲解，非常的直观。那现在我们就可以就着大屏幕上的流程图，总结出if-elif语句的执行过程是从if行开始依次对条件进行判断，如果正确则执行改条件下面的语句块，然后跳出if语句，如果不正确则对下一个条件进行判断，如果所有条件都不成立，则执行else下面的语句块。&emsp;&emsp;新知识我们已经学完了，现在请大家编写完整程序，实现上述的执行过程，学有余力的同学，请自己思考生活中有哪些需要对多个条件进行检测的事情，自主进行编写。我们请这些同学来进行展示，他们中有的从数学出发，编写了比较三个数，求最大数问题，还有的是从生活出发，编写了出租车计费的问题。大家编写的语句和格式都很规范。&emsp;&emsp;这堂课已经接近尾声了，这节课你都有哪些收获呢？大家说学会了if-elif的格式和执行过程，看来这节课的知识同学们都掌握了。其实编程离咱们的生活和学习很近，并且也没有想象中的那么难，老师希望同学们以后都可以像今天一样在课堂上积极思考，表达想法。&emsp;&emsp;最后布置一个小作业，请同学们对比三种if语句特点，整理成表格。&emsp;&emsp;这节课就上到这里，同学们再见。
-]]></content>
-      <categories>
-        <category>教资</category>
-      </categories>
-  </entry>
-  <entry>
     <title>初中英语教师资格作文课模版</title>
     <url>/2025/07/14/%E5%88%9D%E4%B8%AD%E8%8B%B1%E8%AF%AD%E6%95%99%E8%B5%84%E4%BD%9C%E6%96%87%E6%A8%A1%E7%89%88/</url>
     <content><![CDATA[开场问候Dear Judges, Now I’ll start the lesson. Good morning, Boys and girls. How are you today? Good? Fine? I’m fine, too. Before the class, Let’s sing a song together. If you can sing, sing along with me . “You are my sunshine, my only sunshine, you make me happy.” Do you feel better? Great, let’s start the lesson.At the beginning, I’ll show you a video, and you should try to answer the question: What can you see in the video? Who would like to try? Blair, please. You saw the girl had much fun. She had dinner and went shopping with friends. Thank you, Blair, you set a good example for us. You know so much about this topic. Do you want to learn more? Today, let’s learn a new lesson — How was your day off.
@@ -390,39 +390,6 @@ the first part is introduction. It’s a fun day last Saturday. The second part 
 写前Before writing, let’s have a brainstorm. As Tom, what information can you write to reply to Nick’s letter? You can have a discussion in groups. 3 minutes for you. Stop! Who can try, this boy? You will write some activities during camping. Your ideas are wonderful. Bravo! Thank you.OK，I can see you all have many ideas. How about writing down your ideas with the structure we just learned. You have 2 minutes to design your outline.OK, time is up. Finished? I see all of you nod your heads. Very good!It’s time to finish the whole letter. While writing, you should pay attention to the grammar.We should use simple past tense to talk about the experience in the past.And for the signature, you should write”Tom”. If you have any problems, just raise your hands, and I will help you. Are you ready? Let’s do it.
 写后Have you finished your writing? Show me your hands. Well done. Next, go over your writing one more time and then exchange it with your group members.Try to check and correct the mistakes, got it? You have 2 minutes.Stop here.Who wants to share your writing? Cindy, please. Wow, good pronunciation. You state the story vividly. The logic is clear! OK, anyone else? Tony. Please. Oh, you want to present Tina’s article.Can you read it? Very good. Thank you, Tony. Guys, Let’s look at Tina’s work together. “Tom” went to a mountain for camping. I think her article is perfect. We can learn a lot from it. Boys and girls, you all did a good job!
 总结How time files! The class is almost over. Before ending our class, let’s have a summary. Who can summarize what we have learned this class? Fiona please. Very good. I hope you can apply what we have learned in your daily life so that we can improve our reading and speaking ability, right?Our homework is as follows: You should finish the exercise book and search for more information about ask your parents about their day off. Next class, we will share them together.
-Class is over, see you next time.
-]]></content>
-      <categories>
-        <category>教资</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>初中英语教师资格语篇课模版</title>
-    <url>/2025/07/15/%E5%88%9D%E4%B8%AD%E8%8B%B1%E8%AF%AD%E6%95%99%E8%B5%84%E8%AF%AD%E7%AF%87%E8%AF%BE%E6%A8%A1%E6%9D%BF/</url>
-    <content><![CDATA[The intonation.（语调）Express the different feelings of the speaker.We often use the falling tone when we read a statement, a special question, an exclamatory or imperative sentence(祈使句、感叹句). We often use rising tone when we ask a Yes&#x2F;No question. We often use rising-falling tone to read an alternative question and a coordinate clause（选择疑问句、并列句）. There are two parts in a tag question（反义疑问句）. The first part is often in a falling tone and for second part, there are two cases. If we are not sure about the question, we often use a rising tone. If we are sure about that, we offen use a falling tone.We choose different intonations to express different feelings and moods.
-The word stress(单词重音)Read words more exactlyWhen we say a word with more than one syllable, some of the syllables need to be stressed.When we read two-syllable words, normally we stress the first syllable for nouns, and stress the second syllable for verbs. As for the multi-syllable words, we stress the third from the bottom.
-The sentence stress（句子重读）Draw attention to certain information.We usually stress the lexical words such as nouns, verbs, adjectives, adverbs and numbers. We don’t stress the function words such as a, the, is, of and so on. Besides, you can stress some information you want to emphasis.We should change it according to the situation and feelings of the speaker.
-The liaison&#x2F;ˈlēəˌzän,lēˈāˌzän&#x2F;&#x2F;Word linking.(连读)Speak English more fluently and naturally.In one sense group, we can read the two words together if the former word ends with a consonant&#x2F;ˈkänsənənt&#x2F;, a vowel or “r” sound, and the following word begins with a vowel. If the two words finish and start with the same consonant, we only read one of the consonants.The two words must be in one sense group.
-incomplete plosion&#x2F;‘pləʊʒ(ə)n&#x2F;（不完全爆破）Speak English more fluently and naturally.There are six plosive sounds &#x2F;t&#x2F; &#x2F;d&#x2F; &#x2F;p&#x2F; &#x2F;b&#x2F; &#x2F;k&#x2F; &#x2F;g&#x2F; in English.When two consonants of them are next to each other, we read the former sound silently.The two words must be in one sense group.
-Weak form(弱读)speak English more fluently and naturally.Some words often appear in a weak form such as function words, articles, auxiliary verbs and modal verbs.there are mainly three ways to change function words to weak forms. They are shortening, elision[ i’liʒən ] and vowel changed to schwa  [ʃwɑ:] sound.
-Assimilation(同化)We use it to speak English more fluently and naturally.As we can see, Two different sounds affect each other and become more alike.&#x2F;s+ j&#x2F; -&gt; &#x2F;F&#x2F;this year,&#x2F;d+j&#x2F; -&gt; &#x2F;d3&#x2F; would you
-Sense group(意群)We use it to make our expression more easily to understand.As we can see, a sentence may consists of several groups according to meaning or structure. Each group is called a sense group. It can be a word, a phrase, a clause. After a sense group, there should be a short pause.We should remind that we should change it according to the situation and feelings of the speaker.
-The pause(停顿)We use to speak English more fluently and naturally.As we can see, in a long sentence, we should pause several times according to the sense group. Normally, we pause based on meaning and grammatical structure.We should remind that there should be no pause in a sense group. Where to pause also depends on the situation and the feelings of the speaker.
-]]></content>
-      <categories>
-        <category>教资</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>初中英语教师资格面试模板（Reading）</title>
-    <url>/2025/07/09/%E5%88%9D%E4%B8%AD%E8%8B%B1%E8%AF%AD%E6%95%99%E8%B5%84%E9%9D%A2%E8%AF%95%E6%A8%A1%E6%9D%BF/</url>
-    <content><![CDATA[Reading&#x2F;Listening开场问候Dear Judges, Now I’ll start the lesson. Good morning, Boys and girls. How are you today? Good? Fine? I’m fine, too. Before the class, Let’s sing a song together. If you can sing, sing along with me . “You are my sunshine, my only sunshine, you make me happy.” Do you feel better? Great, let’s start the lesson.
-导入At the beginning, I’ll show you a video, and you should try to answer the question: What can you see in the video? Who would like to try? Blair, please. You see different cartoons, such as Snow White and Tom and Jerry.Thank you, Blair, you set a good example for us. You know so much about cartoons.Do you want to learn more? Today, let’s learn a new lesson — Cartoon.
-读前Before reading, To help you understand the passage better, let’s learn some words. Now, Look at the first one. Smart.Form example, Zhu Geliang is very smart and he can solve many problems. Can you understand now? Great! The next one cute. Look at the picture. What’s that? A cat. So cats are very cute and it’s very lovely. So cute means lovely. You are so cute. Cats are so cute. Birds are so cute, okay, wonderful How about the last one? Ivory. Here is a picture about ivory. It forms long teeth of elephants. Read after me, ivory, ivory. Well done! All of you did a good job.
-读中Now boys and girls, let’s have a prediction according to the title and the pictures on your book. Take a guess:What’s the passage mainly about? Try to think out as many answers as you can. OK, who wants to have a try?Justin, you please. The passage is about a cartoon Mickey Mouse. Nice try! Do you agree? OK, maybe you are right.Next, Let’s find out the truth in this passage.
-读后Let’s read it together.When you read, think about this question:What’s the passage mainly about? You should read quickly and check your prediction.Let’s begin.OK, guys, are you right? Wow, I heard John said he had the correct prediction.The passage tells us some information about Mickey Mouse. Oh, most of you are right! I am so proud of you.For the second time, you should read it carefully and catch some detail informations. After that, you should answer some true or false question. Okay? Let’s start. Time is up. The first one, It’s easy, right? Answer me together. It’s true. Then the second question. Lily, what’s your answer? It ’s false. Can you correct it ? Great. Thank you. The last one, boys come on. Eric please. It’s true.perfect.
-巩固We have done so many exercises.It’s time for fun. Let’s have a group discussion. Think about the topic: Introducing your favorite cartoon characters to group members. Work in group of 4 and discuss with your partners. Then show your work on the stage. You have 5 minutes to prepare.Are you ready? Go!  Time  is up. Which group goes first? Christina and your partners, please. Wow, your ideas are very creative and Your pronunciation is perfect.Let’s give them a big hand.
-总结How time files! The class is almost over. Before ending our class, let’s have a summary. Who can summarize what we have learned this class? Fiona please. Very good. I hope you can apply what we have learned in your daily life so that we can improve our reading and speaking ability, right?Our homework is as follows: You should finish the exercise book and search for more information about famous cartoons on the Internet. Next class, we will share them together.
 Class is over, see you next time.
 ]]></content>
       <categories>
@@ -462,6 +429,39 @@ The indefinite pronouns some and any.(普通不定代词)Refer to people or thin
 The indefinite pronouns many and much.Refer to people or things.Many can replace or modify plural nouns, and much can replace or modify the uncountable nouns, right?We use “How many…” questions to ask about the plural nouns, and “How much…” question to ask about the uncountable nouns.
 the compound indefinite pronouns something, anything, nothing(复合不定代词)Refer to people or things.If the subject is something, anything… it is seen as singular(单数形式), right?We should put the adjectives after the indefinite pronouns. For example, something important.
 the modal verbs.(情态动词)Make inferences.(作出推断)The main structure of this grammar is “modal verbs + be”, right?Some modal verbs can be used for making inferences. They are must, can’t, could, may, might. We use must to show that we think something is probably true. And use may, might and could to show that we think something is possibly true. Use can’t to show that you are almost sure something is not true. 
+]]></content>
+      <categories>
+        <category>教资</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>初中英语教师资格语篇课模版</title>
+    <url>/2025/07/15/%E5%88%9D%E4%B8%AD%E8%8B%B1%E8%AF%AD%E6%95%99%E8%B5%84%E8%AF%AD%E7%AF%87%E8%AF%BE%E6%A8%A1%E6%9D%BF/</url>
+    <content><![CDATA[The intonation.（语调）Express the different feelings of the speaker.We often use the falling tone when we read a statement, a special question, an exclamatory or imperative sentence(祈使句、感叹句). We often use rising tone when we ask a Yes&#x2F;No question. We often use rising-falling tone to read an alternative question and a coordinate clause（选择疑问句、并列句）. There are two parts in a tag question（反义疑问句）. The first part is often in a falling tone and for second part, there are two cases. If we are not sure about the question, we often use a rising tone. If we are sure about that, we offen use a falling tone.We choose different intonations to express different feelings and moods.
+The word stress(单词重音)Read words more exactlyWhen we say a word with more than one syllable, some of the syllables need to be stressed.When we read two-syllable words, normally we stress the first syllable for nouns, and stress the second syllable for verbs. As for the multi-syllable words, we stress the third from the bottom.
+The sentence stress（句子重读）Draw attention to certain information.We usually stress the lexical words such as nouns, verbs, adjectives, adverbs and numbers. We don’t stress the function words such as a, the, is, of and so on. Besides, you can stress some information you want to emphasis.We should change it according to the situation and feelings of the speaker.
+The liaison&#x2F;ˈlēəˌzän,lēˈāˌzän&#x2F;&#x2F;Word linking.(连读)Speak English more fluently and naturally.In one sense group, we can read the two words together if the former word ends with a consonant&#x2F;ˈkänsənənt&#x2F;, a vowel or “r” sound, and the following word begins with a vowel. If the two words finish and start with the same consonant, we only read one of the consonants.The two words must be in one sense group.
+incomplete plosion&#x2F;‘pləʊʒ(ə)n&#x2F;（不完全爆破）Speak English more fluently and naturally.There are six plosive sounds &#x2F;t&#x2F; &#x2F;d&#x2F; &#x2F;p&#x2F; &#x2F;b&#x2F; &#x2F;k&#x2F; &#x2F;g&#x2F; in English.When two consonants of them are next to each other, we read the former sound silently.The two words must be in one sense group.
+Weak form(弱读)speak English more fluently and naturally.Some words often appear in a weak form such as function words, articles, auxiliary verbs and modal verbs.there are mainly three ways to change function words to weak forms. They are shortening, elision[ i’liʒən ] and vowel changed to schwa  [ʃwɑ:] sound.
+Assimilation(同化)We use it to speak English more fluently and naturally.As we can see, Two different sounds affect each other and become more alike.&#x2F;s+ j&#x2F; -&gt; &#x2F;F&#x2F;this year,&#x2F;d+j&#x2F; -&gt; &#x2F;d3&#x2F; would you
+Sense group(意群)We use it to make our expression more easily to understand.As we can see, a sentence may consists of several groups according to meaning or structure. Each group is called a sense group. It can be a word, a phrase, a clause. After a sense group, there should be a short pause.We should remind that we should change it according to the situation and feelings of the speaker.
+The pause(停顿)We use to speak English more fluently and naturally.As we can see, in a long sentence, we should pause several times according to the sense group. Normally, we pause based on meaning and grammatical structure.We should remind that there should be no pause in a sense group. Where to pause also depends on the situation and the feelings of the speaker.
+]]></content>
+      <categories>
+        <category>教资</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>初中英语教师资格面试模板（Reading）</title>
+    <url>/2025/07/09/%E5%88%9D%E4%B8%AD%E8%8B%B1%E8%AF%AD%E6%95%99%E8%B5%84%E9%9D%A2%E8%AF%95%E6%A8%A1%E6%9D%BF/</url>
+    <content><![CDATA[Reading&#x2F;Listening开场问候Dear Judges, Now I’ll start the lesson. Good morning, Boys and girls. How are you today? Good? Fine? I’m fine, too. Before the class, Let’s sing a song together. If you can sing, sing along with me . “You are my sunshine, my only sunshine, you make me happy.” Do you feel better? Great, let’s start the lesson.
+导入At the beginning, I’ll show you a video, and you should try to answer the question: What can you see in the video? Who would like to try? Blair, please. You see different cartoons, such as Snow White and Tom and Jerry.Thank you, Blair, you set a good example for us. You know so much about cartoons.Do you want to learn more? Today, let’s learn a new lesson — Cartoon.
+读前Before reading, To help you understand the passage better, let’s learn some words. Now, Look at the first one. Smart.Form example, Zhu Geliang is very smart and he can solve many problems. Can you understand now? Great! The next one cute. Look at the picture. What’s that? A cat. So cats are very cute and it’s very lovely. So cute means lovely. You are so cute. Cats are so cute. Birds are so cute, okay, wonderful How about the last one? Ivory. Here is a picture about ivory. It forms long teeth of elephants. Read after me, ivory, ivory. Well done! All of you did a good job.
+读中Now boys and girls, let’s have a prediction according to the title and the pictures on your book. Take a guess:What’s the passage mainly about? Try to think out as many answers as you can. OK, who wants to have a try?Justin, you please. The passage is about a cartoon Mickey Mouse. Nice try! Do you agree? OK, maybe you are right.Next, Let’s find out the truth in this passage.
+读后Let’s read it together.When you read, think about this question:What’s the passage mainly about? You should read quickly and check your prediction.Let’s begin.OK, guys, are you right? Wow, I heard John said he had the correct prediction.The passage tells us some information about Mickey Mouse. Oh, most of you are right! I am so proud of you.For the second time, you should read it carefully and catch some detail informations. After that, you should answer some true or false question. Okay? Let’s start. Time is up. The first one, It’s easy, right? Answer me together. It’s true. Then the second question. Lily, what’s your answer? It ’s false. Can you correct it ? Great. Thank you. The last one, boys come on. Eric please. It’s true.perfect.
+巩固We have done so many exercises.It’s time for fun. Let’s have a group discussion. Think about the topic: Introducing your favorite cartoon characters to group members. Work in group of 4 and discuss with your partners. Then show your work on the stage. You have 5 minutes to prepare.Are you ready? Go!  Time  is up. Which group goes first? Christina and your partners, please. Wow, your ideas are very creative and Your pronunciation is perfect.Let’s give them a big hand.
+总结How time files! The class is almost over. Before ending our class, let’s have a summary. Who can summarize what we have learned this class? Fiona please. Very good. I hope you can apply what we have learned in your daily life so that we can improve our reading and speaking ability, right?Our homework is as follows: You should finish the exercise book and search for more information about famous cartoons on the Internet. Next class, we will share them together.
+Class is over, see you next time.
 ]]></content>
       <categories>
         <category>教资</category>
@@ -665,28 +665,6 @@ vue2 和 vue3 匿名插槽不一样  具名插槽使用方式不同：vue2 使�
       </categories>
   </entry>
   <entry>
-    <title>如何防御 XSS（跨站脚本攻击）</title>
-    <url>/2025/10/17/%E5%A6%82%E4%BD%95%E9%98%B2%E5%BE%A1%20XSS%EF%BC%88%E8%B7%A8%E7%AB%99%E8%84%9A%E6%9C%AC%E6%94%BB%E5%87%BB%EF%BC%89/</url>
-    <content><![CDATA[
-输入验证和过滤：对用户输入的数据进行严格验证和过滤，确保用户输入的内容不包含恶意脚本。可以使用正则表达式、HTML编码等方式来过滤用户输入。
-
-使用安全的API：避免直接在前端代码中操作敏感数据，尽量使用后端API来处理用户输入和返回数据，以减少XSS攻击的可能性。
-
-使用内容安全策略（CSP）：通过在网页中添加CSP头部，限制浏览器加载外部资源的方式，可以有效减少XSS攻击的风险。CSP可以限制哪些资源可以被加载，从而减少恶意脚本的注入。
-
-使用HttpOnly标记：在设置Cookie时，使用HttpOnly标记可以防止JavaScript访问Cookie，从而减少XSS攻击对Cookie的窃取。
-
-定期更新和维护第三方库：确保使用的第三方库和插件没有已知的安全漏洞，及时更新到最新版本，以减少XSS攻击的风险。
-
-安全编程实践：避免在前端代码中直接拼接用户输入到HTML标签中，使用安全的方法来动态生成DOM元素，如使用createElement()等方法。
-
-
-]]></content>
-      <categories>
-        <category>前端</category>
-      </categories>
-  </entry>
-  <entry>
     <title>宝塔安装puppeteer</title>
     <url>/2025/09/02/%E5%AE%9D%E5%A1%94%E5%AE%89%E8%A3%85puppeteer/</url>
     <content><![CDATA[centos8使用yum失败，切换镜像源，更改镜像源文件，尝试清除缓存并重新建立
@@ -735,6 +713,28 @@ data()&#123;    return&#123;        focus: true,		code:[&#x27;&#x27;,&#x27;&#x27
     <title>手写New</title>
     <url>/2025/10/20/%E6%89%8B%E5%86%99New/</url>
     <content><![CDATA[function myNew(constructor, ...args) &#123;  // 1. 创建一个新对象，并将其原型指向构造函数的原型  const obj = Object.create(constructor.prototype);    // 2. 执行构造函数，并将this绑定到新创建的对象  const result = constructor.apply(obj, args);    // 3. 如果构造函数返回了一个对象，则返回该对象，否则返回新创建的对象  return result instanceof Object ? result : obj;&#125;// 测试function Person(name, age) &#123;  this.name = name;  this.age = age;&#125;const p1 = myNew(Person, &#x27;Alice&#x27;, 25);console.log(p1.name); // 输出: Aliceconsole.log(p1.age); // 输出: 25
+
+]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>如何防御 XSS（跨站脚本攻击）</title>
+    <url>/2025/10/17/%E5%A6%82%E4%BD%95%E9%98%B2%E5%BE%A1%20XSS%EF%BC%88%E8%B7%A8%E7%AB%99%E8%84%9A%E6%9C%AC%E6%94%BB%E5%87%BB%EF%BC%89/</url>
+    <content><![CDATA[
+输入验证和过滤：对用户输入的数据进行严格验证和过滤，确保用户输入的内容不包含恶意脚本。可以使用正则表达式、HTML编码等方式来过滤用户输入。
+
+使用安全的API：避免直接在前端代码中操作敏感数据，尽量使用后端API来处理用户输入和返回数据，以减少XSS攻击的可能性。
+
+使用内容安全策略（CSP）：通过在网页中添加CSP头部，限制浏览器加载外部资源的方式，可以有效减少XSS攻击的风险。CSP可以限制哪些资源可以被加载，从而减少恶意脚本的注入。
+
+使用HttpOnly标记：在设置Cookie时，使用HttpOnly标记可以防止JavaScript访问Cookie，从而减少XSS攻击对Cookie的窃取。
+
+定期更新和维护第三方库：确保使用的第三方库和插件没有已知的安全漏洞，及时更新到最新版本，以减少XSS攻击的风险。
+
+安全编程实践：避免在前端代码中直接拼接用户输入到HTML标签中，使用安全的方法来动态生成DOM元素，如使用createElement()等方法。
+
 
 ]]></content>
       <categories>
@@ -809,6 +809,33 @@ data()&#123;    return&#123;        focus: true,		code:[&#x27;&#x27;,&#x27;&#x27
       </categories>
   </entry>
   <entry>
+    <title>索引</title>
+    <url>/2025/07/27/%E7%B4%A2%E5%BC%95/</url>
+    <content><![CDATA[索引的作用当想要快速查找到自己想要的数据时，可以用索引。通过索引，可以在检索数据时直接定位到，省去时间，就好比一本书前面的目录，能让你快速找到自己想看的内容。如果索引包含多列，那么按照从左到右的顺序，即最左前缀列来进行。
+索引的类型
+唯一索引：对某些列（比如身份证）添加唯一索引，不能出现两条身份证相同的记录，通过 UNIQUE 关键字我们就添加了一个唯一索引。
+
+ADD UNIQUE INDEX uni_sf (sf);
+
+也可以给列添加唯一约束，而不创建唯一索引，列具有唯一性。
+ADD CONSTRAINT uni_name UNIQUE (name);
+
+
+主键索引： 主键一旦创建，就会自动带上索引。这也是为什么主键搜索数据会更快的原因。一个表只能有一个主键，一个主键可以包含多列，即联合主键。
+
+ALTER TABLE table_name ADD PRIMARY KEY (column);
+
+
+普通索引： 任何一列都可以创建索引，建议只在自己经常想要检索的列上加索引，不要全部加，会耗性能。
+
+ALTER TABLE table_name ADD INDEX index_name (column);
+
+]]></content>
+      <categories>
+        <category>后端</category>
+      </categories>
+  </entry>
+  <entry>
     <title>获取到的csv保存数据库</title>
     <url>/2025/07/29/%E8%8E%B7%E5%8F%96%E5%88%B0%E7%9A%84csv%E4%BF%9D%E5%AD%98%E6%95%B0%E6%8D%AE%E5%BA%93/</url>
     <content><![CDATA[如果第三方接口获取到的数据，返回为csv文档时，可以先把csv文档保存到本地某路径，再通过fs的createReadStream读取数据，保存到本地数据库。
@@ -871,44 +898,6 @@ const processConversations = async (dateObj) =&gt; &#123;  const username = &#x2
       </categories>
   </entry>
   <entry>
-    <title>索引</title>
-    <url>/2025/07/27/%E7%B4%A2%E5%BC%95/</url>
-    <content><![CDATA[索引的作用当想要快速查找到自己想要的数据时，可以用索引。通过索引，可以在检索数据时直接定位到，省去时间，就好比一本书前面的目录，能让你快速找到自己想看的内容。如果索引包含多列，那么按照从左到右的顺序，即最左前缀列来进行。
-索引的类型
-唯一索引：对某些列（比如身份证）添加唯一索引，不能出现两条身份证相同的记录，通过 UNIQUE 关键字我们就添加了一个唯一索引。
-
-ADD UNIQUE INDEX uni_sf (sf);
-
-也可以给列添加唯一约束，而不创建唯一索引，列具有唯一性。
-ADD CONSTRAINT uni_name UNIQUE (name);
-
-
-主键索引： 主键一旦创建，就会自动带上索引。这也是为什么主键搜索数据会更快的原因。一个表只能有一个主键，一个主键可以包含多列，即联合主键。
-
-ALTER TABLE table_name ADD PRIMARY KEY (column);
-
-
-普通索引： 任何一列都可以创建索引，建议只在自己经常想要检索的列上加索引，不要全部加，会耗性能。
-
-ALTER TABLE table_name ADD INDEX index_name (column);
-
-]]></content>
-      <categories>
-        <category>后端</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>聊聊Node RPC</title>
-    <url>/2025/07/16/node%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%E7%82%B9/</url>
-    <content><![CDATA[什么是序列化在 TCP 通道里传输的数据只能是二进制形式的，所以将数据结构或对象转化成二进制的形式就叫序列化。反过来就叫反序列化，他们之间的规则就叫协议。
-RPC是什么全称是Remote Procedure Call， 中文名字叫远程过程调用。大部份的 RPC 是基于TCP的。具体实现流程如下：
-1、前端通过 Proxy 代理调用相应的接口, Proxy 将 RPC 的服务名，方法名，参数等信息转换成 RPC Request 对象，交给 RPC 框架2、RPC 框架通过 RPC 协议将 RPC Request 对象序列化成二进制形式3、RPC 通过 TCP 通道把二进制数据传递给后端4、后端将二进制数据反序列化成 RPC Request 对象5、后端将反序列化后的数据对应到自己写的方法内，传入参数，获取数据，将获取后的数据进行封装，封装成 RPC Response 交给 RPC 框架6、RPC 框架通过 RPC 协议将 RPC Response 对象序列化成二进制形式, 通过 TCP 通道传递给前端6、前端将收到的二进制数据反序列化成 RPC response 对象，将结果通过 Proxy 返回给业务代码
-]]></content>
-      <categories>
-        <category>后端</category>
-      </categories>
-  </entry>
-  <entry>
     <title>JavaScript 基础</title>
     <url>/2025/07/02/js%E5%9F%BA%E7%A1%80/</url>
     <content><![CDATA[JavaScript 基础总结（变量提升、严格模式）
@@ -934,6 +923,17 @@ function foo() &#123;  &quot;use strict&quot;;  console.log(this.a); // ❌ Type
 ]]></content>
       <categories>
         <category>前端</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>聊聊Node RPC</title>
+    <url>/2025/07/16/node%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%E7%82%B9/</url>
+    <content><![CDATA[什么是序列化在 TCP 通道里传输的数据只能是二进制形式的，所以将数据结构或对象转化成二进制的形式就叫序列化。反过来就叫反序列化，他们之间的规则就叫协议。
+RPC是什么全称是Remote Procedure Call， 中文名字叫远程过程调用。大部份的 RPC 是基于TCP的。具体实现流程如下：
+1、前端通过 Proxy 代理调用相应的接口, Proxy 将 RPC 的服务名，方法名，参数等信息转换成 RPC Request 对象，交给 RPC 框架2、RPC 框架通过 RPC 协议将 RPC Request 对象序列化成二进制形式3、RPC 通过 TCP 通道把二进制数据传递给后端4、后端将二进制数据反序列化成 RPC Request 对象5、后端将反序列化后的数据对应到自己写的方法内，传入参数，获取数据，将获取后的数据进行封装，封装成 RPC Response 交给 RPC 框架6、RPC 框架通过 RPC 协议将 RPC Response 对象序列化成二进制形式, 通过 TCP 通道传递给前端6、前端将收到的二进制数据反序列化成 RPC response 对象，将结果通过 Proxy 返回给业务代码
+]]></content>
+      <categories>
+        <category>后端</category>
       </categories>
   </entry>
   <entry>

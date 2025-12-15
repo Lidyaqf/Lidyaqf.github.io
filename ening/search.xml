@@ -412,6 +412,32 @@ ConclusionThis book is not only about discovering “who you are,” but also ab
       </tags>
   </entry>
   <entry>
+    <title>JavaScript Basics</title>
+    <url>/2025/12/02/js%E5%9F%BA%E7%A1%80/</url>
+    <content><![CDATA[JavaScript Basics Summary (Hoisting, Strict Mode)
+Rules for Variable and Function Hoisting
+Variable hoisting: Execution still happens in order; variable declarations are hoisted but assignments are not.
+Function hoisting: The entire function body is hoisted to the top of its scope.
+Priority: Function hoisting &gt; Variable hoisting.
+
+console.log(a); // undefinedvar a = 2;foo(); // works normallyfunction foo() &#123;  console.log(&quot;Function hoisting succeeded&quot;);&#125;
+
+
+Using Strict Mode with use strictWhat it does:
+Prevents creating accidental global variables;
+Disallows using undeclared variables, helping avoid memory leaks;
+Binds this to undefined by default instead of window.
+
+function foo() &#123;  &quot;use strict&quot;;  console.log(this.a); // ❌ TypeError&#125;var a = 2;foo(); // in strict mode, this is undefined, so this.a cannot be read
+
+
+(function() &#123;  &quot;use strict&quot;;  foo(); // calling foo here doesn&#x27;t change its default binding&#125;)();function foo() &#123;  console.log(this.a);&#125;var a = 2;
+]]></content>
+      <categories>
+        <category>Frontend</category>
+      </categories>
+  </entry>
+  <entry>
     <title>Reflections on *Skin*</title>
     <url>/2025/06/26/%E7%9A%AE%E5%9B%8A%E6%84%9F%E6%82%9F/</url>
     <content><![CDATA[Aunt TaiAunt Tai is strong-willed and resilient. Her optimistic attitude is something worth learning from. The greatest thing my father ever did was marrying my mother—a truly great woman. A real woman should face everything with positivity and build the future she desires with her own hands.
@@ -442,32 +468,6 @@ After receiving the binary data, the frontend deserializes it into an RPC Respon
 ]]></content>
       <categories>
         <category>Backend</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>JavaScript Basics</title>
-    <url>/2025/12/02/js%E5%9F%BA%E7%A1%80/</url>
-    <content><![CDATA[JavaScript Basics Summary (Hoisting, Strict Mode)
-Rules for Variable and Function Hoisting
-Variable hoisting: Execution still happens in order; variable declarations are hoisted but assignments are not.
-Function hoisting: The entire function body is hoisted to the top of its scope.
-Priority: Function hoisting &gt; Variable hoisting.
-
-console.log(a); // undefinedvar a = 2;foo(); // works normallyfunction foo() &#123;  console.log(&quot;Function hoisting succeeded&quot;);&#125;
-
-
-Using Strict Mode with use strictWhat it does:
-Prevents creating accidental global variables;
-Disallows using undeclared variables, helping avoid memory leaks;
-Binds this to undefined by default instead of window.
-
-function foo() &#123;  &quot;use strict&quot;;  console.log(this.a); // ❌ TypeError&#125;var a = 2;foo(); // in strict mode, this is undefined, so this.a cannot be read
-
-
-(function() &#123;  &quot;use strict&quot;;  foo(); // calling foo here doesn&#x27;t change its default binding&#125;)();function foo() &#123;  console.log(this.a);&#125;var a = 2;
-]]></content>
-      <categories>
-        <category>Frontend</category>
       </categories>
   </entry>
 </search>
