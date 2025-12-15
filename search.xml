@@ -207,15 +207,6 @@ http://localhost:8090/
       </tags>
   </entry>
   <entry>
-    <title>google sheet同步表格数据</title>
-    <url>/2025/08/28/google%20sheet%E5%90%8C%E6%AD%A5%E8%A1%A8%E6%A0%BC%E6%95%B0%E6%8D%AE/</url>
-    <content><![CDATA[有个需求是根据一个表格的所有子表，同步到另个表格（包含子表）的数据，用google sheets里面的扩展程序里的apps 脚本功能，编写脚本。为什么要同步呢？因为原表默认是不可编辑的，打算同步过来后再进行编辑。sourceSpreadsheetId跟targetSpreadsheetId为google sheet 表格地址栏d后面的一串字符。
-function synchronizeSheetsToAnotherFile() &#123;  const sourceSpreadsheetId = &quot;id1&quot;;  const targetSpreadsheetId = &quot;id2&quot;; # 比如：1NOtSSvDwXrca8vqyZW6OqQJwGaCICMVguSz1-i72oqg  const sourceSpreadsheet = SpreadsheetApp.openById(sourceSpreadsheetId);  const targetSpreadsheet = SpreadsheetApp.openById(targetSpreadsheetId);  const sourceSheets = sourceSpreadsheet.getSheets();  sourceSheets.forEach(sheet =&gt; &#123;    const sheetName = sheet.getName();    let targetSheet = targetSpreadsheet.getSheetByName(sheetName);    if (!targetSheet) &#123;      targetSheet = targetSpreadsheet.insertSheet(sheetName);    &#125; else &#123;      targetSheet.clear();     &#125;    const range = sheet.getDataRange();    const displayValues = range.getDisplayValues();     const formats = range.getBackgrounds();            const fontWeights = range.getFontWeights();        const targetRange = targetSheet.getRange(1, 1, displayValues.length, displayValues[0].length);    targetRange.setValues(displayValues);     targetRange.setBackgrounds(formats);     targetRange.setFontWeights(fontWeights);    &#125;);&#125;]]></content>
-      <categories>
-        <category>前端</category>
-      </categories>
-  </entry>
-  <entry>
     <title>react组件通信方式</title>
     <url>/2025/08/25/react%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F/</url>
     <content><![CDATA[
@@ -226,6 +217,15 @@ Redux或Mobx：对于复杂的应用，可以用状态库来实现组件通信�
 Hooks：React的一些Hooks，比如useState，能实现不同组件的共享逻辑跟状态。
 
 ]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>google sheet同步表格数据</title>
+    <url>/2025/08/28/google%20sheet%E5%90%8C%E6%AD%A5%E8%A1%A8%E6%A0%BC%E6%95%B0%E6%8D%AE/</url>
+    <content><![CDATA[有个需求是根据一个表格的所有子表，同步到另个表格（包含子表）的数据，用google sheets里面的扩展程序里的apps 脚本功能，编写脚本。为什么要同步呢？因为原表默认是不可编辑的，打算同步过来后再进行编辑。sourceSpreadsheetId跟targetSpreadsheetId为google sheet 表格地址栏d后面的一串字符。
+function synchronizeSheetsToAnotherFile() &#123;  const sourceSpreadsheetId = &quot;id1&quot;;  const targetSpreadsheetId = &quot;id2&quot;; # 比如：1NOtSSvDwXrca8vqyZW6OqQJwGaCICMVguSz1-i72oqg  const sourceSpreadsheet = SpreadsheetApp.openById(sourceSpreadsheetId);  const targetSpreadsheet = SpreadsheetApp.openById(targetSpreadsheetId);  const sourceSheets = sourceSpreadsheet.getSheets();  sourceSheets.forEach(sheet =&gt; &#123;    const sheetName = sheet.getName();    let targetSheet = targetSpreadsheet.getSheetByName(sheetName);    if (!targetSheet) &#123;      targetSheet = targetSpreadsheet.insertSheet(sheetName);    &#125; else &#123;      targetSheet.clear();     &#125;    const range = sheet.getDataRange();    const displayValues = range.getDisplayValues();     const formats = range.getBackgrounds();            const fontWeights = range.getFontWeights();        const targetRange = targetSheet.getRange(1, 1, displayValues.length, displayValues[0].length);    targetRange.setValues(displayValues);     targetRange.setBackgrounds(formats);     targetRange.setFontWeights(fontWeights);    &#125;);&#125;]]></content>
       <categories>
         <category>前端</category>
       </categories>
@@ -275,17 +275,6 @@ redis本质上是一个key-value类型的内存数据库，性能最快的key-va
 
 
 
-]]></content>
-      <categories>
-        <category>后端</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>聊聊Node RPC</title>
-    <url>/2025/07/16/node%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%E7%82%B9/</url>
-    <content><![CDATA[什么是序列化在 TCP 通道里传输的数据只能是二进制形式的，所以将数据结构或对象转化成二进制的形式就叫序列化。反过来就叫反序列化，他们之间的规则就叫协议。
-RPC是什么全称是Remote Procedure Call， 中文名字叫远程过程调用。大部份的 RPC 是基于TCP的。具体实现流程如下：
-1、前端通过 Proxy 代理调用相应的接口, Proxy 将 RPC 的服务名，方法名，参数等信息转换成 RPC Request 对象，交给 RPC 框架2、RPC 框架通过 RPC 协议将 RPC Request 对象序列化成二进制形式3、RPC 通过 TCP 通道把二进制数据传递给后端4、后端将二进制数据反序列化成 RPC Request 对象5、后端将反序列化后的数据对应到自己写的方法内，传入参数，获取数据，将获取后的数据进行封装，封装成 RPC Response 交给 RPC 框架6、RPC 框架通过 RPC 协议将 RPC Response 对象序列化成二进制形式, 通过 TCP 通道传递给前端6、前端将收到的二进制数据反序列化成 RPC response 对象，将结果通过 Proxy 返回给业务代码
 ]]></content>
       <categories>
         <category>后端</category>
@@ -408,6 +397,39 @@ Class is over, see you next time.
       </categories>
   </entry>
   <entry>
+    <title>初中英语教师资格语篇课模版</title>
+    <url>/2025/07/15/%E5%88%9D%E4%B8%AD%E8%8B%B1%E8%AF%AD%E6%95%99%E8%B5%84%E8%AF%AD%E7%AF%87%E8%AF%BE%E6%A8%A1%E6%9D%BF/</url>
+    <content><![CDATA[The intonation.（语调）Express the different feelings of the speaker.We often use the falling tone when we read a statement, a special question, an exclamatory or imperative sentence(祈使句、感叹句). We often use rising tone when we ask a Yes&#x2F;No question. We often use rising-falling tone to read an alternative question and a coordinate clause（选择疑问句、并列句）. There are two parts in a tag question（反义疑问句）. The first part is often in a falling tone and for second part, there are two cases. If we are not sure about the question, we often use a rising tone. If we are sure about that, we offen use a falling tone.We choose different intonations to express different feelings and moods.
+The word stress(单词重音)Read words more exactlyWhen we say a word with more than one syllable, some of the syllables need to be stressed.When we read two-syllable words, normally we stress the first syllable for nouns, and stress the second syllable for verbs. As for the multi-syllable words, we stress the third from the bottom.
+The sentence stress（句子重读）Draw attention to certain information.We usually stress the lexical words such as nouns, verbs, adjectives, adverbs and numbers. We don’t stress the function words such as a, the, is, of and so on. Besides, you can stress some information you want to emphasis.We should change it according to the situation and feelings of the speaker.
+The liaison&#x2F;ˈlēəˌzän,lēˈāˌzän&#x2F;&#x2F;Word linking.(连读)Speak English more fluently and naturally.In one sense group, we can read the two words together if the former word ends with a consonant&#x2F;ˈkänsənənt&#x2F;, a vowel or “r” sound, and the following word begins with a vowel. If the two words finish and start with the same consonant, we only read one of the consonants.The two words must be in one sense group.
+incomplete plosion&#x2F;‘pləʊʒ(ə)n&#x2F;（不完全爆破）Speak English more fluently and naturally.There are six plosive sounds &#x2F;t&#x2F; &#x2F;d&#x2F; &#x2F;p&#x2F; &#x2F;b&#x2F; &#x2F;k&#x2F; &#x2F;g&#x2F; in English.When two consonants of them are next to each other, we read the former sound silently.The two words must be in one sense group.
+Weak form(弱读)speak English more fluently and naturally.Some words often appear in a weak form such as function words, articles, auxiliary verbs and modal verbs.there are mainly three ways to change function words to weak forms. They are shortening, elision[ i’liʒən ] and vowel changed to schwa  [ʃwɑ:] sound.
+Assimilation(同化)We use it to speak English more fluently and naturally.As we can see, Two different sounds affect each other and become more alike.&#x2F;s+ j&#x2F; -&gt; &#x2F;F&#x2F;this year,&#x2F;d+j&#x2F; -&gt; &#x2F;d3&#x2F; would you
+Sense group(意群)We use it to make our expression more easily to understand.As we can see, a sentence may consists of several groups according to meaning or structure. Each group is called a sense group. It can be a word, a phrase, a clause. After a sense group, there should be a short pause.We should remind that we should change it according to the situation and feelings of the speaker.
+The pause(停顿)We use to speak English more fluently and naturally.As we can see, in a long sentence, we should pause several times according to the sense group. Normally, we pause based on meaning and grammatical structure.We should remind that there should be no pause in a sense group. Where to pause also depends on the situation and the feelings of the speaker.
+]]></content>
+      <categories>
+        <category>教资</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>初中英语教师资格面试模板（Reading）</title>
+    <url>/2025/07/09/%E5%88%9D%E4%B8%AD%E8%8B%B1%E8%AF%AD%E6%95%99%E8%B5%84%E9%9D%A2%E8%AF%95%E6%A8%A1%E6%9D%BF/</url>
+    <content><![CDATA[Reading&#x2F;Listening开场问候Dear Judges, Now I’ll start the lesson. Good morning, Boys and girls. How are you today? Good? Fine? I’m fine, too. Before the class, Let’s sing a song together. If you can sing, sing along with me . “You are my sunshine, my only sunshine, you make me happy.” Do you feel better? Great, let’s start the lesson.
+导入At the beginning, I’ll show you a video, and you should try to answer the question: What can you see in the video? Who would like to try? Blair, please. You see different cartoons, such as Snow White and Tom and Jerry.Thank you, Blair, you set a good example for us. You know so much about cartoons.Do you want to learn more? Today, let’s learn a new lesson — Cartoon.
+读前Before reading, To help you understand the passage better, let’s learn some words. Now, Look at the first one. Smart.Form example, Zhu Geliang is very smart and he can solve many problems. Can you understand now? Great! The next one cute. Look at the picture. What’s that? A cat. So cats are very cute and it’s very lovely. So cute means lovely. You are so cute. Cats are so cute. Birds are so cute, okay, wonderful How about the last one? Ivory. Here is a picture about ivory. It forms long teeth of elephants. Read after me, ivory, ivory. Well done! All of you did a good job.
+读中Now boys and girls, let’s have a prediction according to the title and the pictures on your book. Take a guess:What’s the passage mainly about? Try to think out as many answers as you can. OK, who wants to have a try?Justin, you please. The passage is about a cartoon Mickey Mouse. Nice try! Do you agree? OK, maybe you are right.Next, Let’s find out the truth in this passage.
+读后Let’s read it together.When you read, think about this question:What’s the passage mainly about? You should read quickly and check your prediction.Let’s begin.OK, guys, are you right? Wow, I heard John said he had the correct prediction.The passage tells us some information about Mickey Mouse. Oh, most of you are right! I am so proud of you.For the second time, you should read it carefully and catch some detail informations. After that, you should answer some true or false question. Okay? Let’s start. Time is up. The first one, It’s easy, right? Answer me together. It’s true. Then the second question. Lily, what’s your answer? It ’s false. Can you correct it ? Great. Thank you. The last one, boys come on. Eric please. It’s true.perfect.
+巩固We have done so many exercises.It’s time for fun. Let’s have a group discussion. Think about the topic: Introducing your favorite cartoon characters to group members. Work in group of 4 and discuss with your partners. Then show your work on the stage. You have 5 minutes to prepare.Are you ready? Go!  Time  is up. Which group goes first? Christina and your partners, please. Wow, your ideas are very creative and Your pronunciation is perfect.Let’s give them a big hand.
+总结How time files! The class is almost over. Before ending our class, let’s have a summary. Who can summarize what we have learned this class? Fiona please. Very good. I hope you can apply what we have learned in your daily life so that we can improve our reading and speaking ability, right?Our homework is as follows: You should finish the exercise book and search for more information about famous cartoons on the Internet. Next class, we will share them together.
+Class is over, see you next time.
+]]></content>
+      <categories>
+        <category>教资</category>
+      </categories>
+  </entry>
+  <entry>
     <title>初中英语教师资格语法课模版</title>
     <url>/2025/07/11/%E5%88%9D%E4%B8%AD%E8%8B%B1%E8%AF%AD%E6%95%99%E8%B5%84%E8%AF%AD%E6%B3%95%E8%AF%BE%E6%A8%A1%E6%9D%BF/</url>
     <content><![CDATA[Grammer开场问候Dear Judges, Now I’ll start the lesson. Good morning, Boys and girls. How are you today? Good? Fine? I’m fine, too. Before the class, Let’s sing a song together. If you can sing, sing along with me . “You are my sunshine, my only sunshine, you make me happy.” Do you feel better? Great, let’s start the lesson.
@@ -440,39 +462,6 @@ The indefinite pronouns some and any.(普通不定代词)Refer to people or thin
 The indefinite pronouns many and much.Refer to people or things.Many can replace or modify plural nouns, and much can replace or modify the uncountable nouns, right?We use “How many…” questions to ask about the plural nouns, and “How much…” question to ask about the uncountable nouns.
 the compound indefinite pronouns something, anything, nothing(复合不定代词)Refer to people or things.If the subject is something, anything… it is seen as singular(单数形式), right?We should put the adjectives after the indefinite pronouns. For example, something important.
 the modal verbs.(情态动词)Make inferences.(作出推断)The main structure of this grammar is “modal verbs + be”, right?Some modal verbs can be used for making inferences. They are must, can’t, could, may, might. We use must to show that we think something is probably true. And use may, might and could to show that we think something is possibly true. Use can’t to show that you are almost sure something is not true. 
-]]></content>
-      <categories>
-        <category>教资</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>初中英语教师资格语篇课模版</title>
-    <url>/2025/07/15/%E5%88%9D%E4%B8%AD%E8%8B%B1%E8%AF%AD%E6%95%99%E8%B5%84%E8%AF%AD%E7%AF%87%E8%AF%BE%E6%A8%A1%E6%9D%BF/</url>
-    <content><![CDATA[The intonation.（语调）Express the different feelings of the speaker.We often use the falling tone when we read a statement, a special question, an exclamatory or imperative sentence(祈使句、感叹句). We often use rising tone when we ask a Yes&#x2F;No question. We often use rising-falling tone to read an alternative question and a coordinate clause（选择疑问句、并列句）. There are two parts in a tag question（反义疑问句）. The first part is often in a falling tone and for second part, there are two cases. If we are not sure about the question, we often use a rising tone. If we are sure about that, we offen use a falling tone.We choose different intonations to express different feelings and moods.
-The word stress(单词重音)Read words more exactlyWhen we say a word with more than one syllable, some of the syllables need to be stressed.When we read two-syllable words, normally we stress the first syllable for nouns, and stress the second syllable for verbs. As for the multi-syllable words, we stress the third from the bottom.
-The sentence stress（句子重读）Draw attention to certain information.We usually stress the lexical words such as nouns, verbs, adjectives, adverbs and numbers. We don’t stress the function words such as a, the, is, of and so on. Besides, you can stress some information you want to emphasis.We should change it according to the situation and feelings of the speaker.
-The liaison&#x2F;ˈlēəˌzän,lēˈāˌzän&#x2F;&#x2F;Word linking.(连读)Speak English more fluently and naturally.In one sense group, we can read the two words together if the former word ends with a consonant&#x2F;ˈkänsənənt&#x2F;, a vowel or “r” sound, and the following word begins with a vowel. If the two words finish and start with the same consonant, we only read one of the consonants.The two words must be in one sense group.
-incomplete plosion&#x2F;‘pləʊʒ(ə)n&#x2F;（不完全爆破）Speak English more fluently and naturally.There are six plosive sounds &#x2F;t&#x2F; &#x2F;d&#x2F; &#x2F;p&#x2F; &#x2F;b&#x2F; &#x2F;k&#x2F; &#x2F;g&#x2F; in English.When two consonants of them are next to each other, we read the former sound silently.The two words must be in one sense group.
-Weak form(弱读)speak English more fluently and naturally.Some words often appear in a weak form such as function words, articles, auxiliary verbs and modal verbs.there are mainly three ways to change function words to weak forms. They are shortening, elision[ i’liʒən ] and vowel changed to schwa  [ʃwɑ:] sound.
-Assimilation(同化)We use it to speak English more fluently and naturally.As we can see, Two different sounds affect each other and become more alike.&#x2F;s+ j&#x2F; -&gt; &#x2F;F&#x2F;this year,&#x2F;d+j&#x2F; -&gt; &#x2F;d3&#x2F; would you
-Sense group(意群)We use it to make our expression more easily to understand.As we can see, a sentence may consists of several groups according to meaning or structure. Each group is called a sense group. It can be a word, a phrase, a clause. After a sense group, there should be a short pause.We should remind that we should change it according to the situation and feelings of the speaker.
-The pause(停顿)We use to speak English more fluently and naturally.As we can see, in a long sentence, we should pause several times according to the sense group. Normally, we pause based on meaning and grammatical structure.We should remind that there should be no pause in a sense group. Where to pause also depends on the situation and the feelings of the speaker.
-]]></content>
-      <categories>
-        <category>教资</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>初中英语教师资格面试模板（Reading）</title>
-    <url>/2025/07/09/%E5%88%9D%E4%B8%AD%E8%8B%B1%E8%AF%AD%E6%95%99%E8%B5%84%E9%9D%A2%E8%AF%95%E6%A8%A1%E6%9D%BF/</url>
-    <content><![CDATA[Reading&#x2F;Listening开场问候Dear Judges, Now I’ll start the lesson. Good morning, Boys and girls. How are you today? Good? Fine? I’m fine, too. Before the class, Let’s sing a song together. If you can sing, sing along with me . “You are my sunshine, my only sunshine, you make me happy.” Do you feel better? Great, let’s start the lesson.
-导入At the beginning, I’ll show you a video, and you should try to answer the question: What can you see in the video? Who would like to try? Blair, please. You see different cartoons, such as Snow White and Tom and Jerry.Thank you, Blair, you set a good example for us. You know so much about cartoons.Do you want to learn more? Today, let’s learn a new lesson — Cartoon.
-读前Before reading, To help you understand the passage better, let’s learn some words. Now, Look at the first one. Smart.Form example, Zhu Geliang is very smart and he can solve many problems. Can you understand now? Great! The next one cute. Look at the picture. What’s that? A cat. So cats are very cute and it’s very lovely. So cute means lovely. You are so cute. Cats are so cute. Birds are so cute, okay, wonderful How about the last one? Ivory. Here is a picture about ivory. It forms long teeth of elephants. Read after me, ivory, ivory. Well done! All of you did a good job.
-读中Now boys and girls, let’s have a prediction according to the title and the pictures on your book. Take a guess:What’s the passage mainly about? Try to think out as many answers as you can. OK, who wants to have a try?Justin, you please. The passage is about a cartoon Mickey Mouse. Nice try! Do you agree? OK, maybe you are right.Next, Let’s find out the truth in this passage.
-读后Let’s read it together.When you read, think about this question:What’s the passage mainly about? You should read quickly and check your prediction.Let’s begin.OK, guys, are you right? Wow, I heard John said he had the correct prediction.The passage tells us some information about Mickey Mouse. Oh, most of you are right! I am so proud of you.For the second time, you should read it carefully and catch some detail informations. After that, you should answer some true or false question. Okay? Let’s start. Time is up. The first one, It’s easy, right? Answer me together. It’s true. Then the second question. Lily, what’s your answer? It ’s false. Can you correct it ? Great. Thank you. The last one, boys come on. Eric please. It’s true.perfect.
-巩固We have done so many exercises.It’s time for fun. Let’s have a group discussion. Think about the topic: Introducing your favorite cartoon characters to group members. Work in group of 4 and discuss with your partners. Then show your work on the stage. You have 5 minutes to prepare.Are you ready? Go!  Time  is up. Which group goes first? Christina and your partners, please. Wow, your ideas are very creative and Your pronunciation is perfect.Let’s give them a big hand.
-总结How time files! The class is almost over. Before ending our class, let’s have a summary. Who can summarize what we have learned this class? Fiona please. Very good. I hope you can apply what we have learned in your daily life so that we can improve our reading and speaking ability, right?Our homework is as follows: You should finish the exercise book and search for more information about famous cartoons on the Internet. Next class, we will share them together.
-Class is over, see you next time.
 ]]></content>
       <categories>
         <category>教资</category>
@@ -805,34 +794,6 @@ data()&#123;    return&#123;        focus: true,		code:[&#x27;&#x27;,&#x27;&#x27
       </categories>
   </entry>
   <entry>
-    <title>JavaScript 基础</title>
-    <url>/2025/07/02/js%E5%9F%BA%E7%A1%80/</url>
-    <content><![CDATA[JavaScript 基础总结（变量提升、严格模式）
-变量与函数提升规则
-变量提升：按顺序执行，变量声明提升但赋值不会提升。
-函数提升：整个函数体提升到全局作用域顶部。
-优先级：函数提升 &gt; 变量提升。
-
-console.log(a); // undefinedvar a = 2;foo(); // 正常调用function foo() &#123;  console.log(&quot;函数提升成功&quot;);&#125;
-
-
-使用 use strict 严格模式作用：
-避免创建意外的全局变量；
-禁止使用未声明变量，防止内存泄漏；
-this 默认绑定到 undefined 而非 window。
-
-function foo() &#123;  &quot;use strict&quot;;  console.log(this.a); // ❌ TypeError&#125;var a = 2;foo(); // 严格模式下 this 是 undefined，无法读取 this.a
-
-
-(function() &#123;  &quot;use strict&quot;;  foo(); // 严格模式下调用函数则不影响默认绑定&#125;)();function foo() &#123;  console.log(this.a);&#125;var a = 2;
-
-
-]]></content>
-      <categories>
-        <category>前端</category>
-      </categories>
-  </entry>
-  <entry>
     <title>《皮囊》感悟</title>
     <url>/2025/06/26/%E7%9A%AE%E5%9B%8A%E6%84%9F%E6%82%9F/</url>
     <content><![CDATA[阿太阿太倔强坚强，豁达的心态值得人学习。父亲最强大的地方就是娶了我的母亲。一个伟大的女人。真正的女人就是应该要积极乐观面对一切，用自己的双手打造自己想要的未来。
@@ -845,33 +806,6 @@ function foo() &#123;  &quot;use strict&quot;;  console.log(this.a); // ❌ Type
 ]]></content>
       <categories>
         <category>读书感悟</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>索引</title>
-    <url>/2025/07/27/%E7%B4%A2%E5%BC%95/</url>
-    <content><![CDATA[索引的作用当想要快速查找到自己想要的数据时，可以用索引。通过索引，可以在检索数据时直接定位到，省去时间，就好比一本书前面的目录，能让你快速找到自己想看的内容。如果索引包含多列，那么按照从左到右的顺序，即最左前缀列来进行。
-索引的类型
-唯一索引：对某些列（比如身份证）添加唯一索引，不能出现两条身份证相同的记录，通过 UNIQUE 关键字我们就添加了一个唯一索引。
-
-ADD UNIQUE INDEX uni_sf (sf);
-
-也可以给列添加唯一约束，而不创建唯一索引，列具有唯一性。
-ADD CONSTRAINT uni_name UNIQUE (name);
-
-
-主键索引： 主键一旦创建，就会自动带上索引。这也是为什么主键搜索数据会更快的原因。一个表只能有一个主键，一个主键可以包含多列，即联合主键。
-
-ALTER TABLE table_name ADD PRIMARY KEY (column);
-
-
-普通索引： 任何一列都可以创建索引，建议只在自己经常想要检索的列上加索引，不要全部加，会耗性能。
-
-ALTER TABLE table_name ADD INDEX index_name (column);
-
-]]></content>
-      <categories>
-        <category>后端</category>
       </categories>
   </entry>
   <entry>
@@ -934,6 +868,72 @@ const processConversations = async (dateObj) =&gt; &#123;  const username = &#x2
 ]]></content>
       <categories>
         <category>读书感悟</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>索引</title>
+    <url>/2025/07/27/%E7%B4%A2%E5%BC%95/</url>
+    <content><![CDATA[索引的作用当想要快速查找到自己想要的数据时，可以用索引。通过索引，可以在检索数据时直接定位到，省去时间，就好比一本书前面的目录，能让你快速找到自己想看的内容。如果索引包含多列，那么按照从左到右的顺序，即最左前缀列来进行。
+索引的类型
+唯一索引：对某些列（比如身份证）添加唯一索引，不能出现两条身份证相同的记录，通过 UNIQUE 关键字我们就添加了一个唯一索引。
+
+ADD UNIQUE INDEX uni_sf (sf);
+
+也可以给列添加唯一约束，而不创建唯一索引，列具有唯一性。
+ADD CONSTRAINT uni_name UNIQUE (name);
+
+
+主键索引： 主键一旦创建，就会自动带上索引。这也是为什么主键搜索数据会更快的原因。一个表只能有一个主键，一个主键可以包含多列，即联合主键。
+
+ALTER TABLE table_name ADD PRIMARY KEY (column);
+
+
+普通索引： 任何一列都可以创建索引，建议只在自己经常想要检索的列上加索引，不要全部加，会耗性能。
+
+ALTER TABLE table_name ADD INDEX index_name (column);
+
+]]></content>
+      <categories>
+        <category>后端</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>聊聊Node RPC</title>
+    <url>/2025/07/16/node%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%E7%82%B9/</url>
+    <content><![CDATA[什么是序列化在 TCP 通道里传输的数据只能是二进制形式的，所以将数据结构或对象转化成二进制的形式就叫序列化。反过来就叫反序列化，他们之间的规则就叫协议。
+RPC是什么全称是Remote Procedure Call， 中文名字叫远程过程调用。大部份的 RPC 是基于TCP的。具体实现流程如下：
+1、前端通过 Proxy 代理调用相应的接口, Proxy 将 RPC 的服务名，方法名，参数等信息转换成 RPC Request 对象，交给 RPC 框架2、RPC 框架通过 RPC 协议将 RPC Request 对象序列化成二进制形式3、RPC 通过 TCP 通道把二进制数据传递给后端4、后端将二进制数据反序列化成 RPC Request 对象5、后端将反序列化后的数据对应到自己写的方法内，传入参数，获取数据，将获取后的数据进行封装，封装成 RPC Response 交给 RPC 框架6、RPC 框架通过 RPC 协议将 RPC Response 对象序列化成二进制形式, 通过 TCP 通道传递给前端6、前端将收到的二进制数据反序列化成 RPC response 对象，将结果通过 Proxy 返回给业务代码
+]]></content>
+      <categories>
+        <category>后端</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>JavaScript 基础</title>
+    <url>/2025/07/02/js%E5%9F%BA%E7%A1%80/</url>
+    <content><![CDATA[JavaScript 基础总结（变量提升、严格模式）
+变量与函数提升规则
+变量提升：按顺序执行，变量声明提升但赋值不会提升。
+函数提升：整个函数体提升到全局作用域顶部。
+优先级：函数提升 &gt; 变量提升。
+
+console.log(a); // undefinedvar a = 2;foo(); // 正常调用function foo() &#123;  console.log(&quot;函数提升成功&quot;);&#125;
+
+
+使用 use strict 严格模式作用：
+避免创建意外的全局变量；
+禁止使用未声明变量，防止内存泄漏；
+this 默认绑定到 undefined 而非 window。
+
+function foo() &#123;  &quot;use strict&quot;;  console.log(this.a); // ❌ TypeError&#125;var a = 2;foo(); // 严格模式下 this 是 undefined，无法读取 this.a
+
+
+(function() &#123;  &quot;use strict&quot;;  foo(); // 严格模式下调用函数则不影响默认绑定&#125;)();function foo() &#123;  console.log(this.a);&#125;var a = 2;
+
+
+]]></content>
+      <categories>
+        <category>前端</category>
       </categories>
   </entry>
   <entry>
