@@ -1,8 +1,0 @@
-# 声明主域名
-domain=lidyaqf.club
-
-# 声明子域名
-subdomain=www.lidyaqf.club
-
-
-google.com, pub-5759478238863308, DIRECT, f08c47fec0942fa0
