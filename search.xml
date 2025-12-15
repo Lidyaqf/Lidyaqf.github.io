@@ -140,15 +140,6 @@ JSI（JavaScript Interface）：直接调用原生代码，替代异步 Bridge, 
       </categories>
   </entry>
   <entry>
-    <title>google sheet同步表格数据</title>
-    <url>/2025/08/28/google%20sheet%E5%90%8C%E6%AD%A5%E8%A1%A8%E6%A0%BC%E6%95%B0%E6%8D%AE/</url>
-    <content><![CDATA[有个需求是根据一个表格的所有子表，同步到另个表格（包含子表）的数据，用google sheets里面的扩展程序里的apps 脚本功能，编写脚本。为什么要同步呢？因为原表默认是不可编辑的，打算同步过来后再进行编辑。sourceSpreadsheetId跟targetSpreadsheetId为google sheet 表格地址栏d后面的一串字符。
-function synchronizeSheetsToAnotherFile() &#123;  const sourceSpreadsheetId = &quot;id1&quot;;  const targetSpreadsheetId = &quot;id2&quot;; # 比如：1NOtSSvDwXrca8vqyZW6OqQJwGaCICMVguSz1-i72oqg  const sourceSpreadsheet = SpreadsheetApp.openById(sourceSpreadsheetId);  const targetSpreadsheet = SpreadsheetApp.openById(targetSpreadsheetId);  const sourceSheets = sourceSpreadsheet.getSheets();  sourceSheets.forEach(sheet =&gt; &#123;    const sheetName = sheet.getName();    let targetSheet = targetSpreadsheet.getSheetByName(sheetName);    if (!targetSheet) &#123;      targetSheet = targetSpreadsheet.insertSheet(sheetName);    &#125; else &#123;      targetSheet.clear();     &#125;    const range = sheet.getDataRange();    const displayValues = range.getDisplayValues();     const formats = range.getBackgrounds();            const fontWeights = range.getFontWeights();        const targetRange = targetSheet.getRange(1, 1, displayValues.length, displayValues[0].length);    targetRange.setValues(displayValues);     targetRange.setBackgrounds(formats);     targetRange.setFontWeights(fontWeights);    &#125;);&#125;]]></content>
-      <categories>
-        <category>前端</category>
-      </categories>
-  </entry>
-  <entry>
     <title>GitLab CI/CD</title>
     <url>/2025/04/10/gitlabci/</url>
     <content><![CDATA[前端项目 GitLab CI&#x2F;CD 持续集成部署指南（Mac 环境）概要在日常开发过程中，我们经常需要将打包后的 dist 包手动发送给后端部署，效率低且容易出错。CI（Continuous Integration，持续集成）可以自动化这一过程，本文将介绍如何通过 GitLab CI 实现持续集成部署。
@@ -214,6 +205,15 @@ http://localhost:8090/
       <tags>
         <tag>前端</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>google sheet同步表格数据</title>
+    <url>/2025/08/28/google%20sheet%E5%90%8C%E6%AD%A5%E8%A1%A8%E6%A0%BC%E6%95%B0%E6%8D%AE/</url>
+    <content><![CDATA[有个需求是根据一个表格的所有子表，同步到另个表格（包含子表）的数据，用google sheets里面的扩展程序里的apps 脚本功能，编写脚本。为什么要同步呢？因为原表默认是不可编辑的，打算同步过来后再进行编辑。sourceSpreadsheetId跟targetSpreadsheetId为google sheet 表格地址栏d后面的一串字符。
+function synchronizeSheetsToAnotherFile() &#123;  const sourceSpreadsheetId = &quot;id1&quot;;  const targetSpreadsheetId = &quot;id2&quot;; # 比如：1NOtSSvDwXrca8vqyZW6OqQJwGaCICMVguSz1-i72oqg  const sourceSpreadsheet = SpreadsheetApp.openById(sourceSpreadsheetId);  const targetSpreadsheet = SpreadsheetApp.openById(targetSpreadsheetId);  const sourceSheets = sourceSpreadsheet.getSheets();  sourceSheets.forEach(sheet =&gt; &#123;    const sheetName = sheet.getName();    let targetSheet = targetSpreadsheet.getSheetByName(sheetName);    if (!targetSheet) &#123;      targetSheet = targetSpreadsheet.insertSheet(sheetName);    &#125; else &#123;      targetSheet.clear();     &#125;    const range = sheet.getDataRange();    const displayValues = range.getDisplayValues();     const formats = range.getBackgrounds();            const fontWeights = range.getFontWeights();        const targetRange = targetSheet.getRange(1, 1, displayValues.length, displayValues[0].length);    targetRange.setValues(displayValues);     targetRange.setBackgrounds(formats);     targetRange.setFontWeights(fontWeights);    &#125;);&#125;]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
   </entry>
   <entry>
     <title>react组件通信方式</title>
@@ -339,15 +339,14 @@ Vue 模板中不能直接写 &lt;script&gt;，否则脚本不会执行
       <categories>
         <category>前端</category>
       </categories>
-  </entry>
-  <entry>
-    <title>中小学信息技术教学模版</title>
-    <url>/2025/08/21/%E4%B8%AD%E5%B0%8F%E5%AD%A6%E4%BF%A1%E6%81%AF%E6%8A%80%E6%9C%AF%E6%95%99%E5%AD%A6%E6%A8%A1%E7%89%88/</url>
-    <content><![CDATA[《if-elif条件语句》逐字稿  &emsp;&emsp;同学们，老师刚才留意到班级上的值日表，周一到周五有好多勤劳的小蜜蜂呀。老师想问下周一值日的同学有哪些举下手？诶，老师看见了。那么同学们记住这些周一值日的同学了吗？是的，总共有六位。那如果以三个班为单位，给你一个名字，你能快速给出这名同学是星期几值日吗？你们有什么好办法吗？请你，对了，可以自己用绕口令等方式背下来。还有更好的办法吗？请你，对了，可以利用程序的方式输出出来。那该使用什么语句来表示多个条件呢？今天我们就一起来学习python中的另一种条件语句if-elif-else&emsp;&emsp;现在请大家同桌两人为一小组，先来分析if-elif-else怎么实现同学名字对应星期几值日的问题，时间是8分钟。开始吧，时间到了，刚才在巡视的过程中，大家都在认真的讨论，那哪个小组代表想来分享你们的成果，你来说，你说想要判断同学是哪天值日的，只要输入他的名字，根据名字找到对应星期几输出就行了。还有补充的吗？第五小组，你们来说，他说可以弄五个数组对应星期一到星期五，把每个人的名字放进去对应的数组里，然后判断输出。你补充的非常关键。请坐。非常好，请坐，大家分析的很正确，说明大家有充分预习本节课的内容。 &emsp;&emsp;接下来我们就综合大家的分析，请同学们自主思考，并画出流程图，时间是5分钟，开始吧，时间到了，请这位同学来展示你的流程图，你说首先输入学生的名字，假如小花在星期一的数组里，那么输出星期一，依次类推。现在请大家尝试写出多分支结构的语句，老师提示一下，条件子句的如果需要用elif来表示。我们请这位同学将他的答案写到黑板上，请同学们来看跟你写的一样吗？哪些地方需要修改？你说将最后一个elif应该写成else，是表达都不满足条件的话，执行else后面的语句。你说要注意缩进和冒号。大家观察的很仔细，希望同学们写的时候一定要认真。请大家利用学到的if-elif语句去编写刚才你们设计的算法。我看到大家都能准确的写出来了，并且都避免了刚才的问题。&emsp;&emsp;语句我们已经写出来了，那他的执行过程是什么呢？现在请同学们以同桌两人为一小组，进行讨论，一会我们请一名小组代表展示讲解，时间是7分钟，开始吧，我看到有同学在小声的讨论，时间到了，第二小组，请你们讲一讲执行过程，他结合流程图告诉我们，执行过程是依次判断输入的同学姓名符合哪个条件，如符合则输出，若都不符合则输出错误。他用图文的形式讲解，非常的直观。那现在我们就可以就着大屏幕上的流程图，总结出if-elif语句的执行过程是从if行开始依次对条件进行判断，如果正确则执行改条件下面的语句块，然后跳出if语句，如果不正确则对下一个条件进行判断，如果所有条件都不成立，则执行else下面的语句块。&emsp;&emsp;新知识我们已经学完了，现在请大家编写完整程序，实现上述的执行过程，学有余力的同学，请自己思考生活中有哪些需要对多个条件进行检测的事情，自主进行编写。我们请这些同学来进行展示，他们中有的从数学出发，编写了比较三个数，求最大数问题，还有的是从生活出发，编写了出租车计费的问题。大家编写的语句和格式都很规范。&emsp;&emsp;这堂课已经接近尾声了，这节课你都有哪些收获呢？大家说学会了if-elif的格式和执行过程，看来这节课的知识同学们都掌握了。其实编程离咱们的生活和学习很近，并且也没有想象中的那么难，老师希望同学们以后都可以像今天一样在课堂上积极思考，表达想法。&emsp;&emsp;最后布置一个小作业，请同学们对比三种if语句特点，整理成表格。&emsp;&emsp;这节课就上到这里，同学们再见。
-]]></content>
-      <categories>
-        <category>教资</category>
-      </categories>
+      <tags>
+        <tag>Vue</tag>
+        <tag>script</tag>
+        <tag>广告代码</tag>
+        <tag>动态插入脚本</tag>
+        <tag>DOM 操作</tag>
+        <tag>第三方广告</tag>
+      </tags>
   </entry>
   <entry>
     <title>《终有一天你会懂》琢磨先生 - 读书笔记</title>
@@ -381,16 +380,9 @@ Vue 模板中不能直接写 &lt;script&gt;，否则脚本不会执行
       </categories>
   </entry>
   <entry>
-    <title>初中英语教师资格作文课模版</title>
-    <url>/2025/07/14/%E5%88%9D%E4%B8%AD%E8%8B%B1%E8%AF%AD%E6%95%99%E8%B5%84%E4%BD%9C%E6%96%87%E6%A8%A1%E7%89%88/</url>
-    <content><![CDATA[开场问候Dear Judges, Now I’ll start the lesson. Good morning, Boys and girls. How are you today? Good? Fine? I’m fine, too. Before the class, Let’s sing a song together. If you can sing, sing along with me . “You are my sunshine, my only sunshine, you make me happy.” Do you feel better? Great, let’s start the lesson.At the beginning, I’ll show you a video, and you should try to answer the question: What can you see in the video? Who would like to try? Blair, please. You saw the girl had much fun. She had dinner and went shopping with friends. Thank you, Blair, you set a good example for us. You know so much about this topic. Do you want to learn more? Today, let’s learn a new lesson — How was your day off.
-导入OK, everyone, here is a passage. I’ll read it for you. You should listen carefully and tell me the main idea, OK? Here we go! …….OK, Please share your ideas. Jenny, you please. It talks about the Bermuda Triangle, where a number of planes and ships disappeared.Do you agree? I totally agree with her.
-PreBoys and girls, since we already know the content of the letter, Let’s look at the structure of the letter.There are 4 parts of it, right?The first one is to whom. We call it salutation&#x2F;ˌsalyəˈtāSH(ə)n&#x2F;, such as Hi Henry, Dear Lucy and so on. The second part is body part. You can write whatever you want. The third part, we often add complementary close&#x2F;wishes, such as ‘yours’, ‘sincerely’. The last part is from whom, we call it signature. Am I clear? So when we write a letter, we can imitate it. Brilliant!
-the first part is introduction. It’s a fun day last Saturday. The second part is main body, it’s about what they did in the morning, afternoon and so on. The third part is conclusion. So if we want to write out our everyday life, we can imitate this structure, OK?
-写前Before writing, let’s have a brainstorm. As Tom, what information can you write to reply to Nick’s letter? You can have a discussion in groups. 3 minutes for you. Stop! Who can try, this boy? You will write some activities during camping. Your ideas are wonderful. Bravo! Thank you.OK，I can see you all have many ideas. How about writing down your ideas with the structure we just learned. You have 2 minutes to design your outline.OK, time is up. Finished? I see all of you nod your heads. Very good!It’s time to finish the whole letter. While writing, you should pay attention to the grammar.We should use simple past tense to talk about the experience in the past.And for the signature, you should write”Tom”. If you have any problems, just raise your hands, and I will help you. Are you ready? Let’s do it.
-写后Have you finished your writing? Show me your hands. Well done. Next, go over your writing one more time and then exchange it with your group members.Try to check and correct the mistakes, got it? You have 2 minutes.Stop here.Who wants to share your writing? Cindy, please. Wow, good pronunciation. You state the story vividly. The logic is clear! OK, anyone else? Tony. Please. Oh, you want to present Tina’s article.Can you read it? Very good. Thank you, Tony. Guys, Let’s look at Tina’s work together. “Tom” went to a mountain for camping. I think her article is perfect. We can learn a lot from it. Boys and girls, you all did a good job!
-总结How time files! The class is almost over. Before ending our class, let’s have a summary. Who can summarize what we have learned this class? Fiona please. Very good. I hope you can apply what we have learned in your daily life so that we can improve our reading and speaking ability, right?Our homework is as follows: You should finish the exercise book and search for more information about ask your parents about their day off. Next class, we will share them together.
-Class is over, see you next time.
+    <title>中小学信息技术教学模版</title>
+    <url>/2025/08/21/%E4%B8%AD%E5%B0%8F%E5%AD%A6%E4%BF%A1%E6%81%AF%E6%8A%80%E6%9C%AF%E6%95%99%E5%AD%A6%E6%A8%A1%E7%89%88/</url>
+    <content><![CDATA[《if-elif条件语句》逐字稿  &emsp;&emsp;同学们，老师刚才留意到班级上的值日表，周一到周五有好多勤劳的小蜜蜂呀。老师想问下周一值日的同学有哪些举下手？诶，老师看见了。那么同学们记住这些周一值日的同学了吗？是的，总共有六位。那如果以三个班为单位，给你一个名字，你能快速给出这名同学是星期几值日吗？你们有什么好办法吗？请你，对了，可以自己用绕口令等方式背下来。还有更好的办法吗？请你，对了，可以利用程序的方式输出出来。那该使用什么语句来表示多个条件呢？今天我们就一起来学习python中的另一种条件语句if-elif-else&emsp;&emsp;现在请大家同桌两人为一小组，先来分析if-elif-else怎么实现同学名字对应星期几值日的问题，时间是8分钟。开始吧，时间到了，刚才在巡视的过程中，大家都在认真的讨论，那哪个小组代表想来分享你们的成果，你来说，你说想要判断同学是哪天值日的，只要输入他的名字，根据名字找到对应星期几输出就行了。还有补充的吗？第五小组，你们来说，他说可以弄五个数组对应星期一到星期五，把每个人的名字放进去对应的数组里，然后判断输出。你补充的非常关键。请坐。非常好，请坐，大家分析的很正确，说明大家有充分预习本节课的内容。 &emsp;&emsp;接下来我们就综合大家的分析，请同学们自主思考，并画出流程图，时间是5分钟，开始吧，时间到了，请这位同学来展示你的流程图，你说首先输入学生的名字，假如小花在星期一的数组里，那么输出星期一，依次类推。现在请大家尝试写出多分支结构的语句，老师提示一下，条件子句的如果需要用elif来表示。我们请这位同学将他的答案写到黑板上，请同学们来看跟你写的一样吗？哪些地方需要修改？你说将最后一个elif应该写成else，是表达都不满足条件的话，执行else后面的语句。你说要注意缩进和冒号。大家观察的很仔细，希望同学们写的时候一定要认真。请大家利用学到的if-elif语句去编写刚才你们设计的算法。我看到大家都能准确的写出来了，并且都避免了刚才的问题。&emsp;&emsp;语句我们已经写出来了，那他的执行过程是什么呢？现在请同学们以同桌两人为一小组，进行讨论，一会我们请一名小组代表展示讲解，时间是7分钟，开始吧，我看到有同学在小声的讨论，时间到了，第二小组，请你们讲一讲执行过程，他结合流程图告诉我们，执行过程是依次判断输入的同学姓名符合哪个条件，如符合则输出，若都不符合则输出错误。他用图文的形式讲解，非常的直观。那现在我们就可以就着大屏幕上的流程图，总结出if-elif语句的执行过程是从if行开始依次对条件进行判断，如果正确则执行改条件下面的语句块，然后跳出if语句，如果不正确则对下一个条件进行判断，如果所有条件都不成立，则执行else下面的语句块。&emsp;&emsp;新知识我们已经学完了，现在请大家编写完整程序，实现上述的执行过程，学有余力的同学，请自己思考生活中有哪些需要对多个条件进行检测的事情，自主进行编写。我们请这些同学来进行展示，他们中有的从数学出发，编写了比较三个数，求最大数问题，还有的是从生活出发，编写了出租车计费的问题。大家编写的语句和格式都很规范。&emsp;&emsp;这堂课已经接近尾声了，这节课你都有哪些收获呢？大家说学会了if-elif的格式和执行过程，看来这节课的知识同学们都掌握了。其实编程离咱们的生活和学习很近，并且也没有想象中的那么难，老师希望同学们以后都可以像今天一样在课堂上积极思考，表达想法。&emsp;&emsp;最后布置一个小作业，请同学们对比三种if语句特点，整理成表格。&emsp;&emsp;这节课就上到这里，同学们再见。
 ]]></content>
       <categories>
         <category>教资</category>
@@ -429,6 +421,22 @@ The indefinite pronouns some and any.(普通不定代词)Refer to people or thin
 The indefinite pronouns many and much.Refer to people or things.Many can replace or modify plural nouns, and much can replace or modify the uncountable nouns, right?We use “How many…” questions to ask about the plural nouns, and “How much…” question to ask about the uncountable nouns.
 the compound indefinite pronouns something, anything, nothing(复合不定代词)Refer to people or things.If the subject is something, anything… it is seen as singular(单数形式), right?We should put the adjectives after the indefinite pronouns. For example, something important.
 the modal verbs.(情态动词)Make inferences.(作出推断)The main structure of this grammar is “modal verbs + be”, right?Some modal verbs can be used for making inferences. They are must, can’t, could, may, might. We use must to show that we think something is probably true. And use may, might and could to show that we think something is possibly true. Use can’t to show that you are almost sure something is not true. 
+]]></content>
+      <categories>
+        <category>教资</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>初中英语教师资格作文课模版</title>
+    <url>/2025/07/14/%E5%88%9D%E4%B8%AD%E8%8B%B1%E8%AF%AD%E6%95%99%E8%B5%84%E4%BD%9C%E6%96%87%E6%A8%A1%E7%89%88/</url>
+    <content><![CDATA[开场问候Dear Judges, Now I’ll start the lesson. Good morning, Boys and girls. How are you today? Good? Fine? I’m fine, too. Before the class, Let’s sing a song together. If you can sing, sing along with me . “You are my sunshine, my only sunshine, you make me happy.” Do you feel better? Great, let’s start the lesson.At the beginning, I’ll show you a video, and you should try to answer the question: What can you see in the video? Who would like to try? Blair, please. You saw the girl had much fun. She had dinner and went shopping with friends. Thank you, Blair, you set a good example for us. You know so much about this topic. Do you want to learn more? Today, let’s learn a new lesson — How was your day off.
+导入OK, everyone, here is a passage. I’ll read it for you. You should listen carefully and tell me the main idea, OK? Here we go! …….OK, Please share your ideas. Jenny, you please. It talks about the Bermuda Triangle, where a number of planes and ships disappeared.Do you agree? I totally agree with her.
+PreBoys and girls, since we already know the content of the letter, Let’s look at the structure of the letter.There are 4 parts of it, right?The first one is to whom. We call it salutation&#x2F;ˌsalyəˈtāSH(ə)n&#x2F;, such as Hi Henry, Dear Lucy and so on. The second part is body part. You can write whatever you want. The third part, we often add complementary close&#x2F;wishes, such as ‘yours’, ‘sincerely’. The last part is from whom, we call it signature. Am I clear? So when we write a letter, we can imitate it. Brilliant!
+the first part is introduction. It’s a fun day last Saturday. The second part is main body, it’s about what they did in the morning, afternoon and so on. The third part is conclusion. So if we want to write out our everyday life, we can imitate this structure, OK?
+写前Before writing, let’s have a brainstorm. As Tom, what information can you write to reply to Nick’s letter? You can have a discussion in groups. 3 minutes for you. Stop! Who can try, this boy? You will write some activities during camping. Your ideas are wonderful. Bravo! Thank you.OK，I can see you all have many ideas. How about writing down your ideas with the structure we just learned. You have 2 minutes to design your outline.OK, time is up. Finished? I see all of you nod your heads. Very good!It’s time to finish the whole letter. While writing, you should pay attention to the grammar.We should use simple past tense to talk about the experience in the past.And for the signature, you should write”Tom”. If you have any problems, just raise your hands, and I will help you. Are you ready? Let’s do it.
+写后Have you finished your writing? Show me your hands. Well done. Next, go over your writing one more time and then exchange it with your group members.Try to check and correct the mistakes, got it? You have 2 minutes.Stop here.Who wants to share your writing? Cindy, please. Wow, good pronunciation. You state the story vividly. The logic is clear! OK, anyone else? Tony. Please. Oh, you want to present Tina’s article.Can you read it? Very good. Thank you, Tony. Guys, Let’s look at Tina’s work together. “Tom” went to a mountain for camping. I think her article is perfect. We can learn a lot from it. Boys and girls, you all did a good job!
+总结How time files! The class is almost over. Before ending our class, let’s have a summary. Who can summarize what we have learned this class? Fiona please. Very good. I hope you can apply what we have learned in your daily life so that we can improve our reading and speaking ability, right?Our homework is as follows: You should finish the exercise book and search for more information about ask your parents about their day off. Next class, we will share them together.
+Class is over, see you next time.
 ]]></content>
       <categories>
         <category>教资</category>
@@ -665,6 +673,28 @@ vue2 和 vue3 匿名插槽不一样  具名插槽使用方式不同：vue2 使�
       </categories>
   </entry>
   <entry>
+    <title>如何防御 XSS（跨站脚本攻击）</title>
+    <url>/2025/10/17/%E5%A6%82%E4%BD%95%E9%98%B2%E5%BE%A1%20XSS%EF%BC%88%E8%B7%A8%E7%AB%99%E8%84%9A%E6%9C%AC%E6%94%BB%E5%87%BB%EF%BC%89/</url>
+    <content><![CDATA[
+输入验证和过滤：对用户输入的数据进行严格验证和过滤，确保用户输入的内容不包含恶意脚本。可以使用正则表达式、HTML编码等方式来过滤用户输入。
+
+使用安全的API：避免直接在前端代码中操作敏感数据，尽量使用后端API来处理用户输入和返回数据，以减少XSS攻击的可能性。
+
+使用内容安全策略（CSP）：通过在网页中添加CSP头部，限制浏览器加载外部资源的方式，可以有效减少XSS攻击的风险。CSP可以限制哪些资源可以被加载，从而减少恶意脚本的注入。
+
+使用HttpOnly标记：在设置Cookie时，使用HttpOnly标记可以防止JavaScript访问Cookie，从而减少XSS攻击对Cookie的窃取。
+
+定期更新和维护第三方库：确保使用的第三方库和插件没有已知的安全漏洞，及时更新到最新版本，以减少XSS攻击的风险。
+
+安全编程实践：避免在前端代码中直接拼接用户输入到HTML标签中，使用安全的方法来动态生成DOM元素，如使用createElement()等方法。
+
+
+]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+  </entry>
+  <entry>
     <title>宝塔安装puppeteer</title>
     <url>/2025/09/02/%E5%AE%9D%E5%A1%94%E5%AE%89%E8%A3%85puppeteer/</url>
     <content><![CDATA[centos8使用yum失败，切换镜像源，更改镜像源文件，尝试清除缓存并重新建立
@@ -713,28 +743,6 @@ data()&#123;    return&#123;        focus: true,		code:[&#x27;&#x27;,&#x27;&#x27
     <title>手写New</title>
     <url>/2025/10/20/%E6%89%8B%E5%86%99New/</url>
     <content><![CDATA[function myNew(constructor, ...args) &#123;  // 1. 创建一个新对象，并将其原型指向构造函数的原型  const obj = Object.create(constructor.prototype);    // 2. 执行构造函数，并将this绑定到新创建的对象  const result = constructor.apply(obj, args);    // 3. 如果构造函数返回了一个对象，则返回该对象，否则返回新创建的对象  return result instanceof Object ? result : obj;&#125;// 测试function Person(name, age) &#123;  this.name = name;  this.age = age;&#125;const p1 = myNew(Person, &#x27;Alice&#x27;, 25);console.log(p1.name); // 输出: Aliceconsole.log(p1.age); // 输出: 25
-
-]]></content>
-      <categories>
-        <category>前端</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>如何防御 XSS（跨站脚本攻击）</title>
-    <url>/2025/10/17/%E5%A6%82%E4%BD%95%E9%98%B2%E5%BE%A1%20XSS%EF%BC%88%E8%B7%A8%E7%AB%99%E8%84%9A%E6%9C%AC%E6%94%BB%E5%87%BB%EF%BC%89/</url>
-    <content><![CDATA[
-输入验证和过滤：对用户输入的数据进行严格验证和过滤，确保用户输入的内容不包含恶意脚本。可以使用正则表达式、HTML编码等方式来过滤用户输入。
-
-使用安全的API：避免直接在前端代码中操作敏感数据，尽量使用后端API来处理用户输入和返回数据，以减少XSS攻击的可能性。
-
-使用内容安全策略（CSP）：通过在网页中添加CSP头部，限制浏览器加载外部资源的方式，可以有效减少XSS攻击的风险。CSP可以限制哪些资源可以被加载，从而减少恶意脚本的注入。
-
-使用HttpOnly标记：在设置Cookie时，使用HttpOnly标记可以防止JavaScript访问Cookie，从而减少XSS攻击对Cookie的窃取。
-
-定期更新和维护第三方库：确保使用的第三方库和插件没有已知的安全漏洞，及时更新到最新版本，以减少XSS攻击的风险。
-
-安全编程实践：避免在前端代码中直接拼接用户输入到HTML标签中，使用安全的方法来动态生成DOM元素，如使用createElement()等方法。
-
 
 ]]></content>
       <categories>
