@@ -232,6 +232,158 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://lidyaqf.github.io/2025/12/18/%E6%89%8B%E5%86%99Promise/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="lidya">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="My English Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2025/12/18/%E6%89%8B%E5%86%99Promise/" class="post-title-link" itemprop="url">Handwriting Promise.race (From Theory to Practice)</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2025-12-18 00:00:00 / Modified: 17:48:32" itemprop="dateCreated datePublished" datetime="2025-12-18T00:00:00+08:00">2025-12-18</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Frontend/" itemprop="url" rel="index"><span itemprop="name">Frontend</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>In frontend interviews and daily development, <code>Promise.race</code> is a very common yet often overlooked API. Its rule is simple:</p>
+<blockquote>
+<p><strong>Multiple Promises “race” against each other—whichever settles first (fulfilled or rejected) determines the final result.</strong></p>
+</blockquote>
+<p>In this article, we will:</p>
+<ul>
+<li>Clearly explain how <code>Promise.race</code> behaves and when to use it</li>
+<li>Implement a custom <code>myPromiseRace</code> from scratch</li>
+<li>Cover edge cases, optimizations, and common interview questions</li>
+</ul>
+<h2 id="1-What-Is-Promise-race"><a href="#1-What-Is-Promise-race" class="headerlink" title="1. What Is Promise.race?"></a>1. What Is Promise.race?</h2><p><code>Promise.race(iterable)</code> accepts an iterable (usually an array) and returns a new Promise:</p>
+<ul>
+<li>If <strong>any Promise fulfills first</strong>, the returned Promise fulfills</li>
+<li>If <strong>any Promise rejects first</strong>, the returned Promise rejects</li>
+<li>It does <strong>not</strong> wait for all Promises to finish</li>
+<li>It does <strong>not</strong> cancel the remaining Promises—they continue running</li>
+</ul>
+<h2 id="2-Common-Use-Cases"><a href="#2-Common-Use-Cases" class="headerlink" title="2. Common Use Cases"></a>2. Common Use Cases</h2><h3 id="2-1-Timeout-Control-Most-Common"><a href="#2-1-Timeout-Control-Most-Common" class="headerlink" title="2.1 Timeout Control (Most Common)"></a>2.1 Timeout Control (Most Common)</h3><p>For example, treat a request as failed if it takes longer than 3 seconds:</p>
+<ul>
+<li><code>fetch(url)</code> vs <code>timeoutPromise(3000)</code></li>
+<li>Whichever finishes first determines the result</li>
+</ul>
+<h3 id="2-2-Multiple-Data-Sources-Fallback-Strategy"><a href="#2-2-Multiple-Data-Sources-Fallback-Strategy" class="headerlink" title="2.2 Multiple Data Sources (Fallback Strategy)"></a>2.2 Multiple Data Sources (Fallback Strategy)</h3><p>Fetch the same resource from multiple CDNs (CDN1&#x2F;CDN2).<br>Use whichever responds first.</p>
+<h3 id="2-3-First-Render-Racing"><a href="#2-3-First-Render-Racing" class="headerlink" title="2.3 First-Render Racing"></a>2.3 First-Render Racing</h3><p>Load primary data, fallback data, and cached data simultaneously.<br>Render the page as soon as the fastest result arrives.</p>
+<h2 id="3-Implementing-myPromiseRace"><a href="#3-Implementing-myPromiseRace" class="headerlink" title="3. Implementing myPromiseRace"></a>3. Implementing <code>myPromiseRace</code></h2><p>This implementation closely matches native behavior:</p>
+<ul>
+<li>Validates that the input is iterable</li>
+<li>Iterates over all inputs</li>
+<li>Uses <code>Promise.resolve</code> to normalize non-Promise values</li>
+<li>Resolves or rejects as soon as one Promise settles</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">myPromiseRace</span>(<span class="params">promises</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// Validate iterable input</span></span><br><span class="line">    <span class="keyword">if</span> (!promises || <span class="keyword">typeof</span> promises[<span class="title class_">Symbol</span>.<span class="property">iterator</span>] !== <span class="string">&#x27;function&#x27;</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="title function_">reject</span>(<span class="keyword">new</span> <span class="title class_">TypeError</span>(<span class="string">&#x27;Argument is not iterable&#x27;</span>));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Iterate over each Promise or value</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">const</span> promise <span class="keyword">of</span> promises) &#123;</span><br><span class="line">      <span class="comment">// Wrap with Promise.resolve to handle thenables and values</span></span><br><span class="line">      <span class="title class_">Promise</span>.<span class="title function_">resolve</span>(promise)</span><br><span class="line">        .<span class="title function_">then</span>(resolve)   <span class="comment">// First fulfilled wins</span></span><br><span class="line">        .<span class="title function_">catch</span>(reject);  <span class="comment">// First rejected wins</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="4-Key-Insight-Why-Use-Promise-resolve"><a href="#4-Key-Insight-Why-Use-Promise-resolve" class="headerlink" title="4. Key Insight: Why Use Promise.resolve?"></a>4. Key Insight: Why Use <code>Promise.resolve</code>?</h2><p>The input to <code>Promise.race</code> does not have to be Promises. It may include:</p>
+<ul>
+<li>Plain values: <code>Promise.race([1, 2, 3])</code></li>
+<li>Thenables: <code>&#123; then(resolve) &#123; resolve(123) &#125; &#125;</code></li>
+</ul>
+<p>Using <code>Promise.resolve(x)</code> ensures:</p>
+<ul>
+<li>Plain values become immediately fulfilled Promises</li>
+<li>Thenables are properly assimilated into the Promise chain</li>
+</ul>
+<p>This behavior is consistent with the native <code>Promise.race</code>.</p>
+<h2 id="5-Handling-Empty-Iterables"><a href="#5-Handling-Empty-Iterables" class="headerlink" title="5. Handling Empty Iterables"></a>5. Handling Empty Iterables</h2><blockquote>
+<p>Native <code>Promise.race([])</code> returns a Promise that remains <strong>pending forever</strong>.</p>
+</blockquote>
+<p>Your current implementation behaves the same way, since the loop never executes.<br>This matches the ECMAScript specification.</p>
+<p>You <em>could</em> add explicit handling, but it’s not required.</p>
+<h2 id="6-Additional-Test-Cases"><a href="#6-Additional-Test-Cases" class="headerlink" title="6. Additional Test Cases"></a>6. Additional Test Cases</h2><h3 id="6-1-Rejection-Wins-First"><a href="#6-1-Rejection-Wins-First" class="headerlink" title="6.1 Rejection Wins First"></a>6.1 Rejection Wins First</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> p1 = <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function"><span class="params">res</span> =&gt;</span> <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> <span class="title function_">res</span>(<span class="string">&#x27;p1&#x27;</span>), <span class="number">1000</span>));</span><br><span class="line"><span class="keyword">const</span> p2 = <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function"><span class="params">res</span> =&gt;</span> <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> <span class="title function_">res</span>(<span class="string">&#x27;p2&#x27;</span>), <span class="number">500</span>));</span><br><span class="line"><span class="keyword">const</span> p3 = <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">res, rej</span>) =&gt;</span> <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> <span class="title function_">rej</span>(<span class="string">&#x27;p3 error&#x27;</span>), <span class="number">300</span>));</span><br><span class="line"></span><br><span class="line"><span class="title function_">myPromiseRace</span>([p1, p2, p3])</span><br><span class="line">  .<span class="title function_">then</span>(<span class="variable language_">console</span>.<span class="property">log</span>)</span><br><span class="line">  .<span class="title function_">catch</span>(<span class="variable language_">console</span>.<span class="property">error</span>); <span class="comment">// Output: p3 error</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="6-2-Plain-Values-Participate-in-the-Race"><a href="#6-2-Plain-Values-Participate-in-the-Race" class="headerlink" title="6.2 Plain Values Participate in the Race"></a>6.2 Plain Values Participate in the Race</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">myPromiseRace</span>([</span><br><span class="line">  <span class="title class_">Promise</span>.<span class="title function_">resolve</span>(<span class="string">&#x27;A&#x27;</span>),</span><br><span class="line">  <span class="number">123</span>,</span><br><span class="line">  <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function"><span class="params">res</span> =&gt;</span> <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> <span class="title function_">res</span>(<span class="string">&#x27;B&#x27;</span>), <span class="number">10</span>))</span><br><span class="line">])</span><br><span class="line">  .<span class="title function_">then</span>(<span class="variable language_">console</span>.<span class="property">log</span>)</span><br><span class="line">  .<span class="title function_">catch</span>(<span class="variable language_">console</span>.<span class="property">error</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Output: 123 (plain value wins immediately)</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="6-3-Empty-Array-Remains-Pending"><a href="#6-3-Empty-Array-Remains-Pending" class="headerlink" title="6.3 Empty Array Remains Pending"></a>6.3 Empty Array Remains Pending</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> p = <span class="title function_">myPromiseRace</span>([]);</span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;still pending...&#x27;</span>), <span class="number">1000</span>);</span><br><span class="line"><span class="comment">// After 1 second: &quot;still pending...&quot;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="7-Practical-Example-Request-Timeout-with-race"><a href="#7-Practical-Example-Request-Timeout-with-race" class="headerlink" title="7. Practical Example: Request Timeout with race"></a>7. Practical Example: Request Timeout with <code>race</code></h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">timeout</span>(<span class="params">ms</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">_, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> <span class="title function_">reject</span>(<span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">`Timeout after <span class="subst">$&#123;ms&#125;</span>ms`</span>)), ms);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">fetchWithTimeout</span>(<span class="params">url, ms = <span class="number">3000</span></span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="title function_">myPromiseRace</span>([<span class="title function_">fetch</span>(url), <span class="title function_">timeout</span>(ms)]);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Usage</span></span><br><span class="line"><span class="title function_">fetchWithTimeout</span>(<span class="string">&#x27;https://example.com/api&#x27;</span>, <span class="number">2000</span>)</span><br><span class="line">  .<span class="title function_">then</span>(<span class="function"><span class="params">res</span> =&gt;</span> res.<span class="title function_">json</span>())</span><br><span class="line">  .<span class="title function_">then</span>(<span class="function"><span class="params">data</span> =&gt;</span> <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;data:&#x27;</span>, data))</span><br><span class="line">  .<span class="title function_">catch</span>(<span class="function"><span class="params">err</span> =&gt;</span> <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">&#x27;error:&#x27;</span>, err.<span class="property">message</span>));</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="8-Common-Interview-Questions-Bonus-Points"><a href="#8-Common-Interview-Questions-Bonus-Points" class="headerlink" title="8. Common Interview Questions (Bonus Points)"></a>8. Common Interview Questions (Bonus Points)</h2><ul>
+<li><p><strong>Q: Can <code>Promise.race</code> cancel the other Promises?</strong><br>No. Promises are not cancellable by default. Cancellation requires tools like <code>AbortController</code> or custom logic.</p>
+</li>
+<li><p><strong>Q: What happens if you pass a plain value into <code>race</code>?</strong><br>It is wrapped by <code>Promise.resolve</code> and usually wins immediately.</p>
+</li>
+<li><p><strong>Q: What’s the difference between <code>race</code>, <code>any</code>, and <code>allSettled</code>?</strong></p>
+<ul>
+<li><code>race</code>: settles as soon as the first Promise settles</li>
+<li><code>any</code>: fulfills as soon as the first Promise fulfills (rejects only if all reject)</li>
+<li><code>allSettled</code>: waits for all Promises and returns their final states</li>
+</ul>
+</li>
+</ul>
+<h2 id="9-Summary"><a href="#9-Summary" class="headerlink" title="9. Summary"></a>9. Summary</h2><p>The core idea behind implementing <code>Promise.race</code> can be summarized in one sentence:</p>
+<blockquote>
+<p><strong>Iterate over the iterable, wrap each item with <code>Promise.resolve</code>, attach the same <code>resolve</code> and <code>reject</code>, and let the first settled Promise decide the outcome.</strong></p>
+</blockquote>
+
+      
+    </div>
+
+    
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://lidyaqf.github.io/2025/12/02/js%E5%9F%BA%E7%A1%80/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1238,74 +1390,11 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://lidyaqf.github.io/2024/08/16/redis-en/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="lidya">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="My English Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/08/16/redis-en/" class="post-title-link" itemprop="url">Hello English</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2024-08-16 00:00:00" itemprop="dateCreated datePublished" datetime="2024-08-16T00:00:00+08:00">2024-08-16</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-05-22 14:26:08" itemprop="dateModified" datetime="2025-05-22T14:26:08+08:00">2025-05-22</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>This is an English post.</p>
-
-      
-    </div>
-
-    
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+  </nav>
 
 
 
@@ -1372,7 +1461,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/ening/archives/">
         
-          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-count">11</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

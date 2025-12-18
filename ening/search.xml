@@ -80,6 +80,27 @@ Additional: Install Docker, Portainer, and Related Commandssudo apt updatesudo a
       </categories>
   </entry>
   <entry>
+    <title>Talking About Node RPC</title>
+    <url>/2025/07/16/node-rpc/</url>
+    <content><![CDATA[
+What Is SerializationData transmitted over a TCP channel can only be in binary form. So converting a data structure or an object into binary form is called serialization. The reverse process is called deserialization. The rules that define how they convert back and forth are called a protocol.
+
+What Is RPCRPC stands for Remote Procedure Call. Most RPC systems are based on TCP. The general implementation flow is as follows:
+
+The frontend calls the corresponding interface through a Proxy. The Proxy converts information such as the RPC service name, method name, and parameters into an RPC Request object and passes it to the RPC framework.
+The RPC framework serializes the RPC Request object into binary form according to the RPC protocol.
+The RPC framework sends the binary data to the backend through a TCP channel.
+The backend deserializes the binary data back into an RPC Request object.
+The backend maps the deserialized data to the actual method it implements, passes in the parameters, obtains the result, and then packages it into an RPC Response object for the RPC framework.
+The RPC framework serializes the RPC Response object into binary form according to the RPC protocol and sends it back to the frontend through the TCP channel.
+After receiving the binary data, the frontend deserializes it into an RPC Response object, and the Proxy returns the result to the business code.
+
+]]></content>
+      <categories>
+        <category>Backend</category>
+      </categories>
+  </entry>
+  <entry>
     <title>GitLab CI/CD</title>
     <url>/2025/04/10/gitlabci/</url>
     <content><![CDATA[GitLab CI&#x2F;CD Guide for Frontend Projects (Mac Environment)OverviewIn daily development, we often manually send the built dist package to the backend for deployment, which is inefficient and error-prone. CI (Continuous Integration) automates this process. This guide shows how to use GitLab CI to implement continuous integration and deployment.
@@ -144,6 +165,32 @@ After successful deployment, you can view the build process on the GitLab CI&#x2
       <tags>
         <tag>Frontend</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>JavaScript Basics</title>
+    <url>/2025/12/02/js%E5%9F%BA%E7%A1%80/</url>
+    <content><![CDATA[JavaScript Basics Summary (Hoisting, Strict Mode)
+Rules for Variable and Function Hoisting
+Variable hoisting: Execution still happens in order; variable declarations are hoisted but assignments are not.
+Function hoisting: The entire function body is hoisted to the top of its scope.
+Priority: Function hoisting &gt; Variable hoisting.
+
+console.log(a); // undefinedvar a = 2;foo(); // works normallyfunction foo() &#123;  console.log(&quot;Function hoisting succeeded&quot;);&#125;
+
+
+Using Strict Mode with use strictWhat it does:
+Prevents creating accidental global variables;
+Disallows using undeclared variables, helping avoid memory leaks;
+Binds this to undefined by default instead of window.
+
+function foo() &#123;  &quot;use strict&quot;;  console.log(this.a); // ❌ TypeError&#125;var a = 2;foo(); // in strict mode, this is undefined, so this.a cannot be read
+
+
+(function() &#123;  &quot;use strict&quot;;  foo(); // calling foo here doesn&#x27;t change its default binding&#125;)();function foo() &#123;  console.log(this.a);&#125;var a = 2;
+]]></content>
+      <categories>
+        <category>Frontend</category>
+      </categories>
   </entry>
   <entry>
     <title>Hello English</title>
@@ -374,6 +421,110 @@ Oh, right—just like Brother Shang waiting at the finish line, and I’d smile 
 ]]></content>
   </entry>
   <entry>
+    <title>Handwriting Promise.race (From Theory to Practice)</title>
+    <url>/2025/12/18/%E6%89%8B%E5%86%99Promise/</url>
+    <content><![CDATA[In frontend interviews and daily development, Promise.race is a very common yet often overlooked API. Its rule is simple:
+
+Multiple Promises “race” against each other—whichever settles first (fulfilled or rejected) determines the final result.
+
+In this article, we will:
+
+Clearly explain how Promise.race behaves and when to use it
+Implement a custom myPromiseRace from scratch
+Cover edge cases, optimizations, and common interview questions
+
+1. What Is Promise.race?Promise.race(iterable) accepts an iterable (usually an array) and returns a new Promise:
+
+If any Promise fulfills first, the returned Promise fulfills
+If any Promise rejects first, the returned Promise rejects
+It does not wait for all Promises to finish
+It does not cancel the remaining Promises—they continue running
+
+2. Common Use Cases2.1 Timeout Control (Most Common)For example, treat a request as failed if it takes longer than 3 seconds:
+
+fetch(url) vs timeoutPromise(3000)
+Whichever finishes first determines the result
+
+2.2 Multiple Data Sources (Fallback Strategy)Fetch the same resource from multiple CDNs (CDN1&#x2F;CDN2).Use whichever responds first.
+2.3 First-Render RacingLoad primary data, fallback data, and cached data simultaneously.Render the page as soon as the fastest result arrives.
+3. Implementing myPromiseRaceThis implementation closely matches native behavior:
+
+Validates that the input is iterable
+Iterates over all inputs
+Uses Promise.resolve to normalize non-Promise values
+Resolves or rejects as soon as one Promise settles
+
+function myPromiseRace(promises) &#123;  return new Promise((resolve, reject) =&gt; &#123;    // Validate iterable input    if (!promises || typeof promises[Symbol.iterator] !== &#x27;function&#x27;) &#123;      return reject(new TypeError(&#x27;Argument is not iterable&#x27;));    &#125;    // Iterate over each Promise or value    for (const promise of promises) &#123;      // Wrap with Promise.resolve to handle thenables and values      Promise.resolve(promise)        .then(resolve)   // First fulfilled wins        .catch(reject);  // First rejected wins    &#125;  &#125;);&#125;
+
+
+
+4. Key Insight: Why Use Promise.resolve?The input to Promise.race does not have to be Promises. It may include:
+
+Plain values: Promise.race([1, 2, 3])
+Thenables: &#123; then(resolve) &#123; resolve(123) &#125; &#125;
+
+Using Promise.resolve(x) ensures:
+
+Plain values become immediately fulfilled Promises
+Thenables are properly assimilated into the Promise chain
+
+This behavior is consistent with the native Promise.race.
+5. Handling Empty Iterables
+Native Promise.race([]) returns a Promise that remains pending forever.
+
+Your current implementation behaves the same way, since the loop never executes.This matches the ECMAScript specification.
+You could add explicit handling, but it’s not required.
+6. Additional Test Cases6.1 Rejection Wins Firstconst p1 = new Promise(res =&gt; setTimeout(() =&gt; res(&#x27;p1&#x27;), 1000));const p2 = new Promise(res =&gt; setTimeout(() =&gt; res(&#x27;p2&#x27;), 500));const p3 = new Promise((res, rej) =&gt; setTimeout(() =&gt; rej(&#x27;p3 error&#x27;), 300));myPromiseRace([p1, p2, p3])  .then(console.log)  .catch(console.error); // Output: p3 error
+
+
+
+6.2 Plain Values Participate in the RacemyPromiseRace([  Promise.resolve(&#x27;A&#x27;),  123,  new Promise(res =&gt; setTimeout(() =&gt; res(&#x27;B&#x27;), 10))])  .then(console.log)  .catch(console.error);// Output: 123 (plain value wins immediately)
+
+
+
+6.3 Empty Array Remains Pendingconst p = myPromiseRace([]);setTimeout(() =&gt; console.log(&#x27;still pending...&#x27;), 1000);// After 1 second: &quot;still pending...&quot;
+
+
+
+7. Practical Example: Request Timeout with racefunction timeout(ms) &#123;  return new Promise((_, reject) =&gt; &#123;    setTimeout(() =&gt; reject(new Error(`Timeout after $&#123;ms&#125;ms`)), ms);  &#125;);&#125;async function fetchWithTimeout(url, ms = 3000) &#123;  return myPromiseRace([fetch(url), timeout(ms)]);&#125;// UsagefetchWithTimeout(&#x27;https://example.com/api&#x27;, 2000)  .then(res =&gt; res.json())  .then(data =&gt; console.log(&#x27;data:&#x27;, data))  .catch(err =&gt; console.error(&#x27;error:&#x27;, err.message));
+
+
+
+8. Common Interview Questions (Bonus Points)
+Q: Can Promise.race cancel the other Promises?No. Promises are not cancellable by default. Cancellation requires tools like AbortController or custom logic.
+
+Q: What happens if you pass a plain value into race?It is wrapped by Promise.resolve and usually wins immediately.
+
+Q: What’s the difference between race, any, and allSettled?
+
+race: settles as soon as the first Promise settles
+any: fulfills as soon as the first Promise fulfills (rejects only if all reject)
+allSettled: waits for all Promises and returns their final states
+
+
+
+9. SummaryThe core idea behind implementing Promise.race can be summarized in one sentence:
+
+Iterate over the iterable, wrap each item with Promise.resolve, attach the same resolve and reject, and let the first settled Promise decide the outcome.
+
+]]></content>
+      <categories>
+        <category>Frontend</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>Reflections on *Skin*</title>
+    <url>/2025/06/26/%E7%9A%AE%E5%9B%8A%E6%84%9F%E6%82%9F/</url>
+    <content><![CDATA[Aunt TaiAunt Tai is strong-willed and resilient. Her optimistic attitude is something worth learning from. The greatest thing my father ever did was marrying my mother—a truly great woman. A real woman should face everything with positivity and build the future she desires with her own hands.
+Although she resorted to stealing, it was driven by hardship—survival and family. Setting aside pride to do things against her will is, in a way, a form of strength. It’s not about crying and making a scene, but staying proactive in adversity.
+Thinking about it, the author’s achievements are inseparable from his great mother.
+Ah, that lovely mother! To preserve her husband’s dignity and happiness, she insisted on completing the house. Isn’t that a form of strength too? To follow her heart courageously is truly admirable.
+In fact, the person who understands my father the most is my mother. She knows his pride. Isn’t this what love is? You don’t need to say it—I understand. I understand you, and you understand me, and that’s why we’ve been together for so long.
+Zhang MeiliGet up from where you fell. Zhang Meili seems like someone who pursued true love and worked hard for what she desired. Though she was eventually forced to liberate herself sexually, I still respect her for everything she once did.
+Public opinion is powerful, but Zhang Meili’s inner strength is even more powerful.
+]]></content>
+  </entry>
+  <entry>
     <title>Encountering the Unknown Self</title>
     <url>/2025/06/30/%E9%81%87%E8%A7%81%E6%9C%AA%E7%9F%A5%E7%9A%84%E8%87%AA%E5%B7%B1/</url>
     <content><![CDATA[Notes on Encountering the Unknown SelfWhat is the “Unknown”?The “self” refers to the “true self.” From the question “Who am I?” to the concept of “from existence to non-existence,” the entire book is structured around dialogues between Ruoling and a wise elder, revealing many profound life concepts.
@@ -410,64 +561,5 @@ ConclusionThis book is not only about discovering “who you are,” but also ab
       <tags>
         <tag>Personal Growth</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>Reflections on *Skin*</title>
-    <url>/2025/06/26/%E7%9A%AE%E5%9B%8A%E6%84%9F%E6%82%9F/</url>
-    <content><![CDATA[Aunt TaiAunt Tai is strong-willed and resilient. Her optimistic attitude is something worth learning from. The greatest thing my father ever did was marrying my mother—a truly great woman. A real woman should face everything with positivity and build the future she desires with her own hands.
-Although she resorted to stealing, it was driven by hardship—survival and family. Setting aside pride to do things against her will is, in a way, a form of strength. It’s not about crying and making a scene, but staying proactive in adversity.
-Thinking about it, the author’s achievements are inseparable from his great mother.
-Ah, that lovely mother! To preserve her husband’s dignity and happiness, she insisted on completing the house. Isn’t that a form of strength too? To follow her heart courageously is truly admirable.
-In fact, the person who understands my father the most is my mother. She knows his pride. Isn’t this what love is? You don’t need to say it—I understand. I understand you, and you understand me, and that’s why we’ve been together for so long.
-Zhang MeiliGet up from where you fell. Zhang Meili seems like someone who pursued true love and worked hard for what she desired. Though she was eventually forced to liberate herself sexually, I still respect her for everything she once did.
-Public opinion is powerful, but Zhang Meili’s inner strength is even more powerful.
-]]></content>
-  </entry>
-  <entry>
-    <title>JavaScript Basics</title>
-    <url>/2025/12/02/js%E5%9F%BA%E7%A1%80/</url>
-    <content><![CDATA[JavaScript Basics Summary (Hoisting, Strict Mode)
-Rules for Variable and Function Hoisting
-Variable hoisting: Execution still happens in order; variable declarations are hoisted but assignments are not.
-Function hoisting: The entire function body is hoisted to the top of its scope.
-Priority: Function hoisting &gt; Variable hoisting.
-
-console.log(a); // undefinedvar a = 2;foo(); // works normallyfunction foo() &#123;  console.log(&quot;Function hoisting succeeded&quot;);&#125;
-
-
-Using Strict Mode with use strictWhat it does:
-Prevents creating accidental global variables;
-Disallows using undeclared variables, helping avoid memory leaks;
-Binds this to undefined by default instead of window.
-
-function foo() &#123;  &quot;use strict&quot;;  console.log(this.a); // ❌ TypeError&#125;var a = 2;foo(); // in strict mode, this is undefined, so this.a cannot be read
-
-
-(function() &#123;  &quot;use strict&quot;;  foo(); // calling foo here doesn&#x27;t change its default binding&#125;)();function foo() &#123;  console.log(this.a);&#125;var a = 2;
-]]></content>
-      <categories>
-        <category>Frontend</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>Talking About Node RPC</title>
-    <url>/2025/07/16/node-rpc/</url>
-    <content><![CDATA[
-What Is SerializationData transmitted over a TCP channel can only be in binary form. So converting a data structure or an object into binary form is called serialization. The reverse process is called deserialization. The rules that define how they convert back and forth are called a protocol.
-
-What Is RPCRPC stands for Remote Procedure Call. Most RPC systems are based on TCP. The general implementation flow is as follows:
-
-The frontend calls the corresponding interface through a Proxy. The Proxy converts information such as the RPC service name, method name, and parameters into an RPC Request object and passes it to the RPC framework.
-The RPC framework serializes the RPC Request object into binary form according to the RPC protocol.
-The RPC framework sends the binary data to the backend through a TCP channel.
-The backend deserializes the binary data back into an RPC Request object.
-The backend maps the deserialized data to the actual method it implements, passes in the parameters, obtains the result, and then packages it into an RPC Response object for the RPC framework.
-The RPC framework serializes the RPC Response object into binary form according to the RPC protocol and sends it back to the frontend through the TCP channel.
-After receiving the binary data, the frontend deserializes it into an RPC Response object, and the Proxy returns the result to the business code.
-
-]]></content>
-      <categories>
-        <category>Backend</category>
-      </categories>
   </entry>
 </search>
