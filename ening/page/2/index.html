@@ -232,6 +232,135 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://lidyaqf.github.io/2025/04/10/gitlabci/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="lidya">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="My English Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2025/04/10/gitlabci/" class="post-title-link" itemprop="url">GitLab CI/CD</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2025-04-10 11:41:51" itemprop="dateCreated datePublished" datetime="2025-04-10T11:41:51+08:00">2025-04-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-07-02 16:51:28" itemprop="dateModified" datetime="2025-07-02T16:51:28+08:00">2025-07-02</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Frontend/" itemprop="url" rel="index"><span itemprop="name">Frontend</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="GitLab-CI-CD-Guide-for-Frontend-Projects-Mac-Environment"><a href="#GitLab-CI-CD-Guide-for-Frontend-Projects-Mac-Environment" class="headerlink" title="GitLab CI&#x2F;CD Guide for Frontend Projects (Mac Environment)"></a>GitLab CI&#x2F;CD Guide for Frontend Projects (Mac Environment)</h1><h2 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h2><p>In daily development, we often manually send the built <code>dist</code> package to the backend for deployment, which is inefficient and error-prone. CI (Continuous Integration) automates this process. This guide shows how to use GitLab CI to implement continuous integration and deployment.</p>
+<hr>
+<h2 id="1-Install-GitLab-Runner"><a href="#1-Install-GitLab-Runner" class="headerlink" title="1. Install GitLab Runner"></a>1. Install GitLab Runner</h2><p>Refer to the official documentation: <a target="_blank" rel="noopener" href="https://docs.gitlab.com/runner/install/">GitLab Runner Installation Guide</a></p>
+<hr>
+<h2 id="2-Register-Runner-Locally"><a href="#2-Register-Runner-Locally" class="headerlink" title="2. Register Runner Locally"></a>2. Register Runner Locally</h2><ol>
+<li>Open your GitLab project page and go to <strong>Settings → CI&#x2F;CD</strong>, expand the <strong>Runners</strong> section.</li>
+<li>Note the displayed <strong>URL</strong> and <strong>token</strong> for registration.</li>
+</ol>
+<h3 id="Run-the-registration-command"><a href="#Run-the-registration-command" class="headerlink" title="Run the registration command"></a>Run the registration command</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gitlab-runner register</span><br></pre></td></tr></table></figure>
+
+<p>Follow the prompts and enter the following information:</p>
+<ul>
+<li>GitLab CI Coordinator URL: <code>https://gitlab.com</code></li>
+<li>GitLab CI Token: <code>xxx</code> (copy from the project)</li>
+<li>Tags: <code>my-tag,another-tag</code> (custom tags)</li>
+<li>Description: <code>my-runner</code> (custom description)</li>
+<li>Executor: <code>shell</code> (recommended on Mac)</li>
+</ul>
+<p>After registration, return to the GitLab CI&#x2F;CD settings page. If the runner status is green, it’s running successfully. If not, start the runner manually:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gitlab-runner run</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="3-Create-and-Commit-gitlab-ci-yml"><a href="#3-Create-and-Commit-gitlab-ci-yml" class="headerlink" title="3. Create and Commit .gitlab-ci.yml"></a>3. Create and Commit <code>.gitlab-ci.yml</code></h2><p>Save the following content as <code>.gitlab-ci.yml</code> and push it to GitLab:</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">stages:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">deploy</span></span><br><span class="line"></span><br><span class="line"><span class="attr">deploy_to_test:</span></span><br><span class="line">  <span class="attr">stage:</span> <span class="string">deploy</span></span><br><span class="line">  <span class="attr">script:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">yarn</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">rm</span> <span class="string">-rf</span> <span class="string">dist/</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">yarn</span> <span class="string">build</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">ls</span> <span class="string">-l</span> <span class="string">-t</span> <span class="string">./dist/</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">rsync</span> <span class="string">-avz</span> <span class="string">./dist/</span> <span class="string">root@xxx.xx.xx.xxx:/dist</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>This CI script builds the project and uses <code>rsync</code> to deploy the <code>dist</code> folder to a remote server.</li>
+</ul>
+<hr>
+<h2 id="4-CI-with-Docker-Optional"><a href="#4-CI-with-Docker-Optional" class="headerlink" title="4. CI with Docker (Optional)"></a>4. CI with Docker (Optional)</h2><p>If you want a more comprehensive CI&#x2F;CD pipeline using Docker, follow these steps:</p>
+<h3 id="1-Install-Docker-Mac"><a href="#1-Install-Docker-Mac" class="headerlink" title="1. Install Docker (Mac)"></a>1. Install Docker (Mac)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install --cask docker</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-Pull-GitLab-Image"><a href="#2-Pull-GitLab-Image" class="headerlink" title="2. Pull GitLab Image"></a>2. Pull GitLab Image</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull drud/gitlab-ce:v0.29.1</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-Create-GitLab-Container"><a href="#3-Create-GitLab-Container" class="headerlink" title="3. Create GitLab Container"></a>3. Create GitLab Container</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d -p 8443:443 -p 8090:80 -p 8022:22 --restart always --name gitlab drud/gitlab-ce:v0.29.1</span><br></pre></td></tr></table></figure>
+
+<p>Explanation:</p>
+<ul>
+<li><code>-p 8443:443</code>: map HTTPS port</li>
+<li><code>-p 8090:80</code>: map HTTP port</li>
+<li><code>-p 8022:22</code>: map SSH port</li>
+<li><code>--restart always</code>: auto-restart on crash or reboot</li>
+<li><code>--name gitlab</code>: container named <code>gitlab</code></li>
+</ul>
+<p>Visit:</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://localhost:8090/</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="5-gitlab-ci-yml-Example-for-Docker-Mode"><a href="#5-gitlab-ci-yml-Example-for-Docker-Mode" class="headerlink" title="5. .gitlab-ci.yml Example for Docker Mode"></a>5. <code>.gitlab-ci.yml</code> Example for Docker Mode</h2><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">variables:</span></span><br><span class="line">  <span class="attr">TEST_NAME:</span> <span class="string">&quot;tips&quot;</span></span><br><span class="line">  <span class="attr">OUT_PORT:</span> <span class="string">&quot;8081&quot;</span></span><br><span class="line">  <span class="attr">IN_PORT:</span> <span class="string">&quot;8081&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">stages:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">deploy</span></span><br><span class="line"></span><br><span class="line"><span class="attr">deploy_to_test:</span></span><br><span class="line">  <span class="attr">stage:</span> <span class="string">deploy</span></span><br><span class="line">  <span class="attr">before_script:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">if</span> [ <span class="string">$(docker</span> <span class="string">ps</span> <span class="string">-aq</span> <span class="string">--filter</span> <span class="string">name=$CI_PROJECT_NAME)</span> ]<span class="string">;</span> <span class="string">then</span> <span class="string">docker</span> <span class="string">rm</span> <span class="string">-f</span> <span class="string">$CI_PROJECT_NAME;</span> <span class="string">fi</span></span><br><span class="line">  <span class="attr">script:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">docker</span> <span class="string">build</span> <span class="string">-f</span> <span class="string">Dockerfile</span> <span class="string">-t</span> <span class="string">$TEST_NAME:latest</span> <span class="string">.</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">docker</span> <span class="string">run</span> <span class="string">-d</span> <span class="string">-p</span> <span class="string">$OUT_PORT:$IN_PORT</span> <span class="string">--name</span> <span class="string">$TEST_NAME</span> <span class="string">$TEST_NAME:latest</span></span><br></pre></td></tr></table></figure>
+
+<p>After successful deployment, you can view the build process on the GitLab CI&#x2F;CD Pipelines page. A new container will be generated under the <strong>Containers</strong> section. Click the corresponding port to access the deployed page.</p>
+<hr>
+<!-- ## Recommendations -->
+
+<!-- - [Just for Fun](https://edunextgen1.com) -->
+
+      
+    </div>
+
+    
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://lidyaqf.github.io/2024/08/16/redis-en/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -365,7 +494,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/ening/archives/">
         
-          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-count">12</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

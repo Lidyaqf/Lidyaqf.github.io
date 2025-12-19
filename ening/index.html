@@ -384,6 +384,184 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://lidyaqf.github.io/2025/12/17/%E6%89%8B%E5%86%99New/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="lidya">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="My English Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2025/12/17/%E6%89%8B%E5%86%99New/" class="post-title-link" itemprop="url">Fully Understanding How the JavaScript `new` Operator Works</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2025-12-17 00:00:00" itemprop="dateCreated datePublished" datetime="2025-12-17T00:00:00+08:00">2025-12-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-12-19 10:01:28" itemprop="dateModified" datetime="2025-12-19T10:01:28+08:00">2025-12-19</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Frontend/" itemprop="url" rel="index"><span itemprop="name">Frontend</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>In JavaScript, the <code>new</code> operator is a core concept that frequently appears in both interviews and everyday development.<br>Many developers use <code>new</code> regularly, but few truly understand <strong>what actually happens behind the scenes</strong>.</p>
+<p>In this article, we’ll <strong>implement <code>new</code> by hand</strong>, breaking down its internal mechanics step by step to help you fully understand how JavaScript objects are created.</p>
+<h2 id="1-What-Does-the-new-Operator-Actually-Do"><a href="#1-What-Does-the-new-Operator-Actually-Do" class="headerlink" title="1. What Does the new Operator Actually Do?"></a>1. What Does the <code>new</code> Operator Actually Do?</h2><p>When we execute the following line of code:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> person = <span class="keyword">new</span> <span class="title class_">Person</span>(<span class="string">&#x27;Alice&#x27;</span>, <span class="number">25</span>);</span><br></pre></td></tr></table></figure>
+
+<p>JavaScript actually performs <strong>four steps internally</strong>:</p>
+<ol>
+<li><strong>Create a new empty object</strong></li>
+<li><strong>Set the object’s prototype to the constructor’s <code>prototype</code></strong></li>
+<li><strong>Execute the constructor and bind <code>this</code> to the new object</strong></li>
+<li><strong>If the constructor returns an object, return it; otherwise return the new object</strong></li>
+</ol>
+<p>Understanding these four steps is the key to understanding how <code>new</code> works.</p>
+<h2 id="2-Why-Implement-new-Manually"><a href="#2-Why-Implement-new-Manually" class="headerlink" title="2. Why Implement new Manually?"></a>2. Why Implement <code>new</code> Manually?</h2><p>There are three main benefits to handwriting <code>new</code>:</p>
+<ul>
+<li>Deepens your understanding of <strong>the prototype chain</strong> and <strong><code>this</code> binding</strong></li>
+<li>It is a <strong>high-frequency frontend interview question</strong></li>
+<li>Helps you understand how frameworks create objects internally</li>
+</ul>
+<p>Let’s jump straight into the code.</p>
+<h2 id="3-Handwriting-the-new-Operator"><a href="#3-Handwriting-the-new-Operator" class="headerlink" title="3. Handwriting the new Operator"></a>3. Handwriting the <code>new</code> Operator</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">myNew</span>(<span class="params">constructor, ...args</span>) &#123;</span><br><span class="line">  <span class="comment">// 1. Create a new object and link its prototype</span></span><br><span class="line">  <span class="keyword">const</span> obj = <span class="title class_">Object</span>.<span class="title function_">create</span>(constructor.<span class="property"><span class="keyword">prototype</span></span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 2. Execute the constructor with `this` bound to the new object</span></span><br><span class="line">  <span class="keyword">const</span> result = constructor.<span class="title function_">apply</span>(obj, args);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 3. If the constructor returns an object, return it</span></span><br><span class="line">  <span class="comment">//    Otherwise, return the newly created object</span></span><br><span class="line">  <span class="keyword">return</span> result <span class="keyword">instanceof</span> <span class="title class_">Object</span> ? result : obj;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>This implementation fully reproduces the core behavior of the <code>new</code> operator.</p>
+<h2 id="4-Line-by-Line-Breakdown"><a href="#4-Line-by-Line-Breakdown" class="headerlink" title="4. Line-by-Line Breakdown"></a>4. Line-by-Line Breakdown</h2><h3 id="1-The-Role-of-Object-create"><a href="#1-The-Role-of-Object-create" class="headerlink" title="1. The Role of Object.create"></a>1. The Role of <code>Object.create</code></h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> obj = <span class="title class_">Object</span>.<span class="title function_">create</span>(constructor.<span class="property"><span class="keyword">prototype</span></span>);</span><br></pre></td></tr></table></figure>
+
+<p>This is equivalent to:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">obj.<span class="property">__proto__</span> === constructor.<span class="property"><span class="keyword">prototype</span></span></span><br></pre></td></tr></table></figure>
+
+<p>Which means:</p>
+<ul>
+<li>The new object can access methods on the constructor’s prototype</li>
+<li>The prototype chain is properly established</li>
+</ul>
+<h3 id="2-constructor-apply-obj-args"><a href="#2-constructor-apply-obj-args" class="headerlink" title="2. constructor.apply(obj, args)"></a>2. <code>constructor.apply(obj, args)</code></h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> result = constructor.<span class="title function_">apply</span>(obj, args);</span><br></pre></td></tr></table></figure>
+
+<p>This step does two things:</p>
+<ul>
+<li>Executes the constructor function</li>
+<li>Binds <code>this</code> inside the constructor to the new object</li>
+</ul>
+<p>So code like this:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">this</span>.<span class="property">name</span> = name;</span><br><span class="line"><span class="variable language_">this</span>.<span class="property">age</span> = age;</span><br></pre></td></tr></table></figure>
+
+<p>Actually assigns properties directly to <code>obj</code>.</p>
+<h3 id="3-Why-Do-We-Check-the-Return-Value"><a href="#3-Why-Do-We-Check-the-Return-Value" class="headerlink" title="3. Why Do We Check the Return Value?"></a>3. Why Do We Check the Return Value?</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> result <span class="keyword">instanceof</span> <span class="title class_">Object</span> ? result : obj;</span><br></pre></td></tr></table></figure>
+
+<p>This is a detail many developers overlook.</p>
+<p>Consider this example:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">Test</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">a</span> = <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">return</span> &#123; <span class="attr">b</span>: <span class="number">2</span> &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> t = <span class="keyword">new</span> <span class="title class_">Test</span>();</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(t); <span class="comment">// &#123; b: 2 &#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>If a constructor <strong>explicitly returns an object</strong>, the <code>new</code> operator returns that object instead of <code>this</code>.</p>
+<p>That’s why we must handle this case in our <code>myNew</code> implementation.</p>
+<h2 id="5-Testing-Our-myNew-Function"><a href="#5-Testing-Our-myNew-Function" class="headerlink" title="5. Testing Our myNew Function"></a>5. Testing Our <code>myNew</code> Function</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">Person</span>(<span class="params">name, age</span>) &#123;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">name</span> = name;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">age</span> = age;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> p1 = <span class="title function_">myNew</span>(<span class="title class_">Person</span>, <span class="string">&#x27;Alice&#x27;</span>, <span class="number">25</span>);</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(p1.<span class="property">name</span>); <span class="comment">// Alice</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(p1.<span class="property">age</span>);  <span class="comment">// 25</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(p1 <span class="keyword">instanceof</span> <span class="title class_">Person</span>); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+
+<p>The behavior matches native <code>new</code> perfectly.</p>
+<h2 id="6-Comparing-myNew-and-Native-new"><a href="#6-Comparing-myNew-and-Native-new" class="headerlink" title="6. Comparing myNew and Native new"></a>6. Comparing <code>myNew</code> and Native <code>new</code></h2><table>
+<thead>
+<tr>
+<th>Behavior</th>
+<th><code>new</code></th>
+<th><code>myNew</code></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Create new object</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Bind prototype</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Bind <code>this</code></td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Handle returned object</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+</tbody></table>
+<p>In practice, <code>myNew</code> reproduces <strong>about 90% of the real <code>new</code> operator’s behavior</strong>, which is more than sufficient for interviews and deep understanding.</p>
+<h2 id="7-Common-Interview-Follow-Up-Questions"><a href="#7-Common-Interview-Follow-Up-Questions" class="headerlink" title="7. Common Interview Follow-Up Questions"></a>7. Common Interview Follow-Up Questions</h2><h3 id="Q1-Why-not-simply-use-const-obj"><a href="#Q1-Why-not-simply-use-const-obj" class="headerlink" title="Q1: Why not simply use const obj = {}?"></a>Q1: Why not simply use <code>const obj = &#123;&#125;</code>?</h3><p>Because objects created with <code>&#123;&#125;</code> have their prototype set to <code>Object.prototype</code>.<br>Objects created with <code>new</code> must have their prototype set to <strong>the constructor’s <code>prototype</code></strong>.</p>
+<h3 id="Q2-Can-constructor-apply-be-replaced-with-call"><a href="#Q2-Can-constructor-apply-be-replaced-with-call" class="headerlink" title="Q2: Can constructor.apply be replaced with call?"></a>Q2: Can <code>constructor.apply</code> be replaced with <code>call</code>?</h3><p>Yes. The only difference is how arguments are passed:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">constructor.<span class="title function_">call</span>(obj, ...args);</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="Q3-How-does-instanceof-work"><a href="#Q3-How-does-instanceof-work" class="headerlink" title="Q3: How does instanceof work?"></a>Q3: How does <code>instanceof</code> work?</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">p1 <span class="keyword">instanceof</span> <span class="title class_">Person</span></span><br></pre></td></tr></table></figure>
+
+<p>Internally, JavaScript checks whether:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Person</span>.<span class="property"><span class="keyword">prototype</span></span> exists <span class="keyword">in</span> p1’s prototype chain</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="8-Summary"><a href="#8-Summary" class="headerlink" title="8. Summary"></a>8. Summary</h2><ul>
+<li>The <code>new</code> operator is not magic—it follows a well-defined execution process</li>
+<li>Handwriting <code>new</code> is one of the best ways to understand <strong>prototype chains, <code>this</code>, and constructors</strong></li>
+<li>Mastering this concept helps when learning Vue, React, and Node.js internals</li>
+</ul>
+<p>If you can both <strong>write and explain</strong> this implementation,<br><strong>90% of interviewers will consider your JavaScript fundamentals solid</strong>.</p>
+
+      
+    </div>
+
+    
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://lidyaqf.github.io/2025/12/02/js%E5%9F%BA%E7%A1%80/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1261,135 +1439,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://lidyaqf.github.io/2025/04/10/gitlabci/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="lidya">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="My English Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2025/04/10/gitlabci/" class="post-title-link" itemprop="url">GitLab CI/CD</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2025-04-10 11:41:51" itemprop="dateCreated datePublished" datetime="2025-04-10T11:41:51+08:00">2025-04-10</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-07-02 16:51:28" itemprop="dateModified" datetime="2025-07-02T16:51:28+08:00">2025-07-02</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Frontend/" itemprop="url" rel="index"><span itemprop="name">Frontend</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="GitLab-CI-CD-Guide-for-Frontend-Projects-Mac-Environment"><a href="#GitLab-CI-CD-Guide-for-Frontend-Projects-Mac-Environment" class="headerlink" title="GitLab CI&#x2F;CD Guide for Frontend Projects (Mac Environment)"></a>GitLab CI&#x2F;CD Guide for Frontend Projects (Mac Environment)</h1><h2 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h2><p>In daily development, we often manually send the built <code>dist</code> package to the backend for deployment, which is inefficient and error-prone. CI (Continuous Integration) automates this process. This guide shows how to use GitLab CI to implement continuous integration and deployment.</p>
-<hr>
-<h2 id="1-Install-GitLab-Runner"><a href="#1-Install-GitLab-Runner" class="headerlink" title="1. Install GitLab Runner"></a>1. Install GitLab Runner</h2><p>Refer to the official documentation: <a target="_blank" rel="noopener" href="https://docs.gitlab.com/runner/install/">GitLab Runner Installation Guide</a></p>
-<hr>
-<h2 id="2-Register-Runner-Locally"><a href="#2-Register-Runner-Locally" class="headerlink" title="2. Register Runner Locally"></a>2. Register Runner Locally</h2><ol>
-<li>Open your GitLab project page and go to <strong>Settings → CI&#x2F;CD</strong>, expand the <strong>Runners</strong> section.</li>
-<li>Note the displayed <strong>URL</strong> and <strong>token</strong> for registration.</li>
-</ol>
-<h3 id="Run-the-registration-command"><a href="#Run-the-registration-command" class="headerlink" title="Run the registration command"></a>Run the registration command</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gitlab-runner register</span><br></pre></td></tr></table></figure>
-
-<p>Follow the prompts and enter the following information:</p>
-<ul>
-<li>GitLab CI Coordinator URL: <code>https://gitlab.com</code></li>
-<li>GitLab CI Token: <code>xxx</code> (copy from the project)</li>
-<li>Tags: <code>my-tag,another-tag</code> (custom tags)</li>
-<li>Description: <code>my-runner</code> (custom description)</li>
-<li>Executor: <code>shell</code> (recommended on Mac)</li>
-</ul>
-<p>After registration, return to the GitLab CI&#x2F;CD settings page. If the runner status is green, it’s running successfully. If not, start the runner manually:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gitlab-runner run</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="3-Create-and-Commit-gitlab-ci-yml"><a href="#3-Create-and-Commit-gitlab-ci-yml" class="headerlink" title="3. Create and Commit .gitlab-ci.yml"></a>3. Create and Commit <code>.gitlab-ci.yml</code></h2><p>Save the following content as <code>.gitlab-ci.yml</code> and push it to GitLab:</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">stages:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">deploy</span></span><br><span class="line"></span><br><span class="line"><span class="attr">deploy_to_test:</span></span><br><span class="line">  <span class="attr">stage:</span> <span class="string">deploy</span></span><br><span class="line">  <span class="attr">script:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">yarn</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">rm</span> <span class="string">-rf</span> <span class="string">dist/</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">yarn</span> <span class="string">build</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">ls</span> <span class="string">-l</span> <span class="string">-t</span> <span class="string">./dist/</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">rsync</span> <span class="string">-avz</span> <span class="string">./dist/</span> <span class="string">root@xxx.xx.xx.xxx:/dist</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>This CI script builds the project and uses <code>rsync</code> to deploy the <code>dist</code> folder to a remote server.</li>
-</ul>
-<hr>
-<h2 id="4-CI-with-Docker-Optional"><a href="#4-CI-with-Docker-Optional" class="headerlink" title="4. CI with Docker (Optional)"></a>4. CI with Docker (Optional)</h2><p>If you want a more comprehensive CI&#x2F;CD pipeline using Docker, follow these steps:</p>
-<h3 id="1-Install-Docker-Mac"><a href="#1-Install-Docker-Mac" class="headerlink" title="1. Install Docker (Mac)"></a>1. Install Docker (Mac)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install --cask docker</span><br></pre></td></tr></table></figure>
-
-<h3 id="2-Pull-GitLab-Image"><a href="#2-Pull-GitLab-Image" class="headerlink" title="2. Pull GitLab Image"></a>2. Pull GitLab Image</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull drud/gitlab-ce:v0.29.1</span><br></pre></td></tr></table></figure>
-
-<h3 id="3-Create-GitLab-Container"><a href="#3-Create-GitLab-Container" class="headerlink" title="3. Create GitLab Container"></a>3. Create GitLab Container</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d -p 8443:443 -p 8090:80 -p 8022:22 --restart always --name gitlab drud/gitlab-ce:v0.29.1</span><br></pre></td></tr></table></figure>
-
-<p>Explanation:</p>
-<ul>
-<li><code>-p 8443:443</code>: map HTTPS port</li>
-<li><code>-p 8090:80</code>: map HTTP port</li>
-<li><code>-p 8022:22</code>: map SSH port</li>
-<li><code>--restart always</code>: auto-restart on crash or reboot</li>
-<li><code>--name gitlab</code>: container named <code>gitlab</code></li>
-</ul>
-<p>Visit:</p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://localhost:8090/</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="5-gitlab-ci-yml-Example-for-Docker-Mode"><a href="#5-gitlab-ci-yml-Example-for-Docker-Mode" class="headerlink" title="5. .gitlab-ci.yml Example for Docker Mode"></a>5. <code>.gitlab-ci.yml</code> Example for Docker Mode</h2><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">variables:</span></span><br><span class="line">  <span class="attr">TEST_NAME:</span> <span class="string">&quot;tips&quot;</span></span><br><span class="line">  <span class="attr">OUT_PORT:</span> <span class="string">&quot;8081&quot;</span></span><br><span class="line">  <span class="attr">IN_PORT:</span> <span class="string">&quot;8081&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">stages:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">deploy</span></span><br><span class="line"></span><br><span class="line"><span class="attr">deploy_to_test:</span></span><br><span class="line">  <span class="attr">stage:</span> <span class="string">deploy</span></span><br><span class="line">  <span class="attr">before_script:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">if</span> [ <span class="string">$(docker</span> <span class="string">ps</span> <span class="string">-aq</span> <span class="string">--filter</span> <span class="string">name=$CI_PROJECT_NAME)</span> ]<span class="string">;</span> <span class="string">then</span> <span class="string">docker</span> <span class="string">rm</span> <span class="string">-f</span> <span class="string">$CI_PROJECT_NAME;</span> <span class="string">fi</span></span><br><span class="line">  <span class="attr">script:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">docker</span> <span class="string">build</span> <span class="string">-f</span> <span class="string">Dockerfile</span> <span class="string">-t</span> <span class="string">$TEST_NAME:latest</span> <span class="string">.</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">docker</span> <span class="string">run</span> <span class="string">-d</span> <span class="string">-p</span> <span class="string">$OUT_PORT:$IN_PORT</span> <span class="string">--name</span> <span class="string">$TEST_NAME</span> <span class="string">$TEST_NAME:latest</span></span><br></pre></td></tr></table></figure>
-
-<p>After successful deployment, you can view the build process on the GitLab CI&#x2F;CD Pipelines page. A new container will be generated under the <strong>Containers</strong> section. Click the corresponding port to access the deployed page.</p>
-<hr>
-<!-- ## Recommendations -->
-
-<!-- - [Just for Fun](https://edunextgen1.com) -->
-
-      
-    </div>
-
-    
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1461,7 +1510,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/ening/archives/">
         
-          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-count">12</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

@@ -80,27 +80,6 @@ Additional: Install Docker, Portainer, and Related Commandssudo apt updatesudo a
       </categories>
   </entry>
   <entry>
-    <title>Talking About Node RPC</title>
-    <url>/2025/07/16/node-rpc/</url>
-    <content><![CDATA[
-What Is SerializationData transmitted over a TCP channel can only be in binary form. So converting a data structure or an object into binary form is called serialization. The reverse process is called deserialization. The rules that define how they convert back and forth are called a protocol.
-
-What Is RPCRPC stands for Remote Procedure Call. Most RPC systems are based on TCP. The general implementation flow is as follows:
-
-The frontend calls the corresponding interface through a Proxy. The Proxy converts information such as the RPC service name, method name, and parameters into an RPC Request object and passes it to the RPC framework.
-The RPC framework serializes the RPC Request object into binary form according to the RPC protocol.
-The RPC framework sends the binary data to the backend through a TCP channel.
-The backend deserializes the binary data back into an RPC Request object.
-The backend maps the deserialized data to the actual method it implements, passes in the parameters, obtains the result, and then packages it into an RPC Response object for the RPC framework.
-The RPC framework serializes the RPC Response object into binary form according to the RPC protocol and sends it back to the frontend through the TCP channel.
-After receiving the binary data, the frontend deserializes it into an RPC Response object, and the Proxy returns the result to the business code.
-
-]]></content>
-      <categories>
-        <category>Backend</category>
-      </categories>
-  </entry>
-  <entry>
     <title>GitLab CI/CD</title>
     <url>/2025/04/10/gitlabci/</url>
     <content><![CDATA[GitLab CI&#x2F;CD Guide for Frontend Projects (Mac Environment)OverviewIn daily development, we often manually send the built dist package to the backend for deployment, which is inefficient and error-prone. CI (Continuous Integration) automates this process. This guide shows how to use GitLab CI to implement continuous integration and deployment.
@@ -167,36 +146,25 @@ After successful deployment, you can view the build process on the GitLab CI&#x2
       </tags>
   </entry>
   <entry>
-    <title>JavaScript Basics</title>
-    <url>/2025/12/02/js%E5%9F%BA%E7%A1%80/</url>
-    <content><![CDATA[JavaScript Basics Summary (Hoisting, Strict Mode)
-Rules for Variable and Function Hoisting
-Variable hoisting: Execution still happens in order; variable declarations are hoisted but assignments are not.
-Function hoisting: The entire function body is hoisted to the top of its scope.
-Priority: Function hoisting &gt; Variable hoisting.
+    <title>Talking About Node RPC</title>
+    <url>/2025/07/16/node-rpc/</url>
+    <content><![CDATA[
+What Is SerializationData transmitted over a TCP channel can only be in binary form. So converting a data structure or an object into binary form is called serialization. The reverse process is called deserialization. The rules that define how they convert back and forth are called a protocol.
 
-console.log(a); // undefinedvar a = 2;foo(); // works normallyfunction foo() &#123;  console.log(&quot;Function hoisting succeeded&quot;);&#125;
+What Is RPCRPC stands for Remote Procedure Call. Most RPC systems are based on TCP. The general implementation flow is as follows:
 
+The frontend calls the corresponding interface through a Proxy. The Proxy converts information such as the RPC service name, method name, and parameters into an RPC Request object and passes it to the RPC framework.
+The RPC framework serializes the RPC Request object into binary form according to the RPC protocol.
+The RPC framework sends the binary data to the backend through a TCP channel.
+The backend deserializes the binary data back into an RPC Request object.
+The backend maps the deserialized data to the actual method it implements, passes in the parameters, obtains the result, and then packages it into an RPC Response object for the RPC framework.
+The RPC framework serializes the RPC Response object into binary form according to the RPC protocol and sends it back to the frontend through the TCP channel.
+After receiving the binary data, the frontend deserializes it into an RPC Response object, and the Proxy returns the result to the business code.
 
-Using Strict Mode with use strictWhat it does:
-Prevents creating accidental global variables;
-Disallows using undeclared variables, helping avoid memory leaks;
-Binds this to undefined by default instead of window.
-
-function foo() &#123;  &quot;use strict&quot;;  console.log(this.a); // ❌ TypeError&#125;var a = 2;foo(); // in strict mode, this is undefined, so this.a cannot be read
-
-
-(function() &#123;  &quot;use strict&quot;;  foo(); // calling foo here doesn&#x27;t change its default binding&#125;)();function foo() &#123;  console.log(this.a);&#125;var a = 2;
 ]]></content>
       <categories>
-        <category>Frontend</category>
+        <category>Backend</category>
       </categories>
-  </entry>
-  <entry>
-    <title>Hello English</title>
-    <url>/2024/08/16/redis-en/</url>
-    <content><![CDATA[This is an English post.
-]]></content>
   </entry>
   <entry>
     <title>One Day You&#39;ll Understand - Reading Notes by Mr. Zhuomo</title>
@@ -421,6 +389,118 @@ Oh, right—just like Brother Shang waiting at the finish line, and I’d smile 
 ]]></content>
   </entry>
   <entry>
+    <title>Fully Understanding How the JavaScript `new` Operator Works</title>
+    <url>/2025/12/17/%E6%89%8B%E5%86%99New/</url>
+    <content><![CDATA[In JavaScript, the new operator is a core concept that frequently appears in both interviews and everyday development.Many developers use new regularly, but few truly understand what actually happens behind the scenes.
+In this article, we’ll implement new by hand, breaking down its internal mechanics step by step to help you fully understand how JavaScript objects are created.
+1. What Does the new Operator Actually Do?When we execute the following line of code:
+const person = new Person(&#x27;Alice&#x27;, 25);
+
+JavaScript actually performs four steps internally:
+
+Create a new empty object
+Set the object’s prototype to the constructor’s prototype
+Execute the constructor and bind this to the new object
+If the constructor returns an object, return it; otherwise return the new object
+
+Understanding these four steps is the key to understanding how new works.
+2. Why Implement new Manually?There are three main benefits to handwriting new:
+
+Deepens your understanding of the prototype chain and this binding
+It is a high-frequency frontend interview question
+Helps you understand how frameworks create objects internally
+
+Let’s jump straight into the code.
+3. Handwriting the new Operatorfunction myNew(constructor, ...args) &#123;  // 1. Create a new object and link its prototype  const obj = Object.create(constructor.prototype);  // 2. Execute the constructor with `this` bound to the new object  const result = constructor.apply(obj, args);  // 3. If the constructor returns an object, return it  //    Otherwise, return the newly created object  return result instanceof Object ? result : obj;&#125;
+
+This implementation fully reproduces the core behavior of the new operator.
+4. Line-by-Line Breakdown1. The Role of Object.createconst obj = Object.create(constructor.prototype);
+
+This is equivalent to:
+obj.__proto__ === constructor.prototype
+
+Which means:
+
+The new object can access methods on the constructor’s prototype
+The prototype chain is properly established
+
+2. constructor.apply(obj, args)const result = constructor.apply(obj, args);
+
+This step does two things:
+
+Executes the constructor function
+Binds this inside the constructor to the new object
+
+So code like this:
+this.name = name;this.age = age;
+
+Actually assigns properties directly to obj.
+3. Why Do We Check the Return Value?return result instanceof Object ? result : obj;
+
+This is a detail many developers overlook.
+Consider this example:
+function Test() &#123;  this.a = 1;  return &#123; b: 2 &#125;;&#125;const t = new Test();console.log(t); // &#123; b: 2 &#125;
+
+If a constructor explicitly returns an object, the new operator returns that object instead of this.
+That’s why we must handle this case in our myNew implementation.
+5. Testing Our myNew Functionfunction Person(name, age) &#123;  this.name = name;  this.age = age;&#125;const p1 = myNew(Person, &#x27;Alice&#x27;, 25);console.log(p1.name); // Aliceconsole.log(p1.age);  // 25console.log(p1 instanceof Person); // true
+
+The behavior matches native new perfectly.
+6. Comparing myNew and Native new
+
+
+Behavior
+new
+myNew
+
+
+
+Create new object
+✅
+✅
+
+
+Bind prototype
+✅
+✅
+
+
+Bind this
+✅
+✅
+
+
+Handle returned object
+✅
+✅
+
+
+In practice, myNew reproduces about 90% of the real new operator’s behavior, which is more than sufficient for interviews and deep understanding.
+7. Common Interview Follow-Up QuestionsQ1: Why not simply use const obj = &#123;&#125;?Because objects created with &#123;&#125; have their prototype set to Object.prototype.Objects created with new must have their prototype set to the constructor’s prototype.
+Q2: Can constructor.apply be replaced with call?Yes. The only difference is how arguments are passed:
+constructor.call(obj, ...args);
+
+
+
+Q3: How does instanceof work?p1 instanceof Person
+
+Internally, JavaScript checks whether:
+Person.prototype exists in p1’s prototype chain
+
+
+
+8. Summary
+The new operator is not magic—it follows a well-defined execution process
+Handwriting new is one of the best ways to understand prototype chains, this, and constructors
+Mastering this concept helps when learning Vue, React, and Node.js internals
+
+If you can both write and explain this implementation,90% of interviewers will consider your JavaScript fundamentals solid.
+]]></content>
+      <categories>
+        <category>Frontend</category>
+      </categories>
+  </entry>
+  <entry>
     <title>Handwriting Promise.race (From Theory to Practice)</title>
     <url>/2025/12/18/%E6%89%8B%E5%86%99Promise/</url>
     <content><![CDATA[In frontend interviews and daily development, Promise.race is a very common yet often overlooked API. Its rule is simple:
@@ -561,5 +641,37 @@ ConclusionThis book is not only about discovering “who you are,” but also ab
       <tags>
         <tag>Personal Growth</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>JavaScript Basics</title>
+    <url>/2025/12/02/js%E5%9F%BA%E7%A1%80/</url>
+    <content><![CDATA[JavaScript Basics Summary (Hoisting, Strict Mode)
+Rules for Variable and Function Hoisting
+Variable hoisting: Execution still happens in order; variable declarations are hoisted but assignments are not.
+Function hoisting: The entire function body is hoisted to the top of its scope.
+Priority: Function hoisting &gt; Variable hoisting.
+
+console.log(a); // undefinedvar a = 2;foo(); // works normallyfunction foo() &#123;  console.log(&quot;Function hoisting succeeded&quot;);&#125;
+
+
+Using Strict Mode with use strictWhat it does:
+Prevents creating accidental global variables;
+Disallows using undeclared variables, helping avoid memory leaks;
+Binds this to undefined by default instead of window.
+
+function foo() &#123;  &quot;use strict&quot;;  console.log(this.a); // ❌ TypeError&#125;var a = 2;foo(); // in strict mode, this is undefined, so this.a cannot be read
+
+
+(function() &#123;  &quot;use strict&quot;;  foo(); // calling foo here doesn&#x27;t change its default binding&#125;)();function foo() &#123;  console.log(this.a);&#125;var a = 2;
+]]></content>
+      <categories>
+        <category>Frontend</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>Hello English</title>
+    <url>/2024/08/16/redis-en/</url>
+    <content><![CDATA[This is an English post.
+]]></content>
   </entry>
 </search>
