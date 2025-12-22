@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+<style>
+    .contain {
+      position: relative;
+      width: 100%;
+      height: 50px;
+      background: #f0f0f0;
+      overflow: hidden;
+    }
+  
+    .danmaku {
+      position: absolute;
+      white-space: nowrap;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 14px;
+      color: #333;
+      animation: moveLeft 15s linear forwards;
+    }
+  
+    .danmaku.paused {
+      animation-play-state: paused;
+    }
+  
+    @keyframes moveLeft {
+      from {
+        left: 100%;
+      }
+      to {
+        left: -100%;
+      }
+    }
+  </style>
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.svg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.svg">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+<meta name="baidu_union_verify" content="4c95743ab0ae1a7dcfbc5c20c004854b">
+
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noto Serif SC:300,300italic,400,400italic,700,700italic|Source Code Pro:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"lidyaqf.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"manual","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+
+
+
+
+
+  <meta name="description" content="In web development, XSS (Cross-Site Scripting) is one of the most common and most dangerous security vulnerabilities.Once a website contains an XSS flaw, attackers may execute malicious scripts in use">
+<meta property="og:type" content="article">
+<meta property="og:title" content="How to Prevent XSS">
+<meta property="og:url" content="https://lidyaqf.github.io/2025/10/17/%E5%A6%82%E4%BD%95%E9%98%B2%E5%BE%A1%20XSS%EF%BC%88%E8%B7%A8%E7%AB%99%E8%84%9A%E6%9C%AC%E6%94%BB%E5%87%BB%EF%BC%89/index.html">
+<meta property="og:site_name" content="My English Blog">
+<meta property="og:description" content="In web development, XSS (Cross-Site Scripting) is one of the most common and most dangerous security vulnerabilities.Once a website contains an XSS flaw, attackers may execute malicious scripts in use">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-10-16T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-12-22T06:23:31.831Z">
+<meta property="article:author" content="lidya">
+<meta property="article:tag" content="XSS">
+<meta property="article:tag" content="Web Security">
+<meta property="article:tag" content="Frontend Security">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="Browser Security">
+<meta property="article:tag" content="Cybersecurity">
+<meta property="article:tag" content="Web Development">
+<meta property="article:tag" content="Secure Coding">
+<meta property="article:tag" content="Content Security Policy">
+<meta property="article:tag" content="HttpOnly">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://lidyaqf.github.io/2025/10/17/%E5%A6%82%E4%BD%95%E9%98%B2%E5%BE%A1%20XSS%EF%BC%88%E8%B7%A8%E7%AB%99%E8%84%9A%E6%9C%AC%E6%94%BB%E5%87%BB%EF%BC%89/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>How to Prevent XSS | My English Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">My English Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/ening/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/ening/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/ening/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-english">
+
+    <a href="/ening" rel="section"><i class="fa fa-language fa-fw"></i>English</a>
+
+  </li>
+        <li class="menu-item menu-item-中文">
+
+    <a href="/../" rel="section"><i class="fa fa-language fa-fw"></i>中文</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://lidyaqf.github.io/2025/10/17/%E5%A6%82%E4%BD%95%E9%98%B2%E5%BE%A1%20XSS%EF%BC%88%E8%B7%A8%E7%AB%99%E8%84%9A%E6%9C%AC%E6%94%BB%E5%87%BB%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="lidya">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="My English Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          How to Prevent XSS
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2025-10-17 00:00:00" itemprop="dateCreated datePublished" datetime="2025-10-17T00:00:00+08:00">2025-10-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-12-22 14:23:31" itemprop="dateModified" datetime="2025-12-22T14:23:31+08:00">2025-12-22</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Frontend/" itemprop="url" rel="index"><span itemprop="name">Frontend</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>In web development, <strong>XSS (Cross-Site Scripting)</strong> is one of the most common and most dangerous security vulnerabilities.<br>Once a website contains an XSS flaw, attackers may execute malicious scripts in users’ browsers, allowing them to steal cookies, hijack sessions, deface pages, or even take over user accounts.</p>
+<p>This article explains <strong>how to effectively defend against XSS attacks</strong> from both a <strong>theoretical and practical perspective</strong>, covering frontend and full-stack security best practices.</p>
+<h2 id="1-What-Is-an-XSS-Attack"><a href="#1-What-Is-an-XSS-Attack" class="headerlink" title="1. What Is an XSS Attack?"></a>1. What Is an XSS Attack?</h2><p>The essence of XSS is simple:</p>
+<blockquote>
+<p><strong>An attacker injects malicious JavaScript into a webpage, which is then executed in other users’ browsers.</strong></p>
+</blockquote>
+<p>Common types of XSS attacks include:</p>
+<ul>
+<li><strong>Reflected XSS</strong>: malicious scripts are delivered through URL parameters</li>
+<li><strong>Stored XSS</strong>: malicious scripts are stored in a database and served to users</li>
+<li><strong>DOM-based XSS</strong>: frontend JavaScript logic directly handles untrusted data</li>
+</ul>
+<p>No matter the type, the root cause is the same:<br>👉 <strong>User input is treated as executable code.</strong></p>
+<h2 id="2-Input-Validation-and-Filtering-The-Most-Basic-Defense"><a href="#2-Input-Validation-and-Filtering-The-Most-Basic-Defense" class="headerlink" title="2. Input Validation and Filtering (The Most Basic Defense)"></a>2. Input Validation and Filtering (The Most Basic Defense)</h2><p><strong>Never trust user input.</strong></p>
+<h3 id="1-Basic-Frontend-Validation"><a href="#1-Basic-Frontend-Validation" class="headerlink" title="1. Basic Frontend Validation"></a>1. Basic Frontend Validation</h3><p>On the frontend, basic validation can improve user experience, such as:</p>
+<ul>
+<li>Limiting input length</li>
+<li>Enforcing input formats (e.g., email, phone numbers)</li>
+<li>Filtering obviously dangerous characters</li>
+</ul>
+<p>Example (for basic validation only):</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">sanitizeInput</span>(<span class="params">input</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> input.<span class="title function_">replace</span>(<span class="regexp">/[&lt;&gt;]/g</span>, <span class="string">&#x27;&#x27;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>⚠️ Important:<br><strong>Frontend validation is not a security boundary and should never be relied on alone.</strong></p>
+<h3 id="2-Strict-Backend-Validation-Critical"><a href="#2-Strict-Backend-Validation-Critical" class="headerlink" title="2. Strict Backend Validation (Critical)"></a>2. Strict Backend Validation (Critical)</h3><p>Effective input validation <strong>must be performed on the server side</strong>:</p>
+<ul>
+<li>Validate data types</li>
+<li>Enforce length constraints</li>
+<li>Reject inputs that violate business rules</li>
+<li>Escape or sanitize HTML content using whitelists</li>
+</ul>
+<p>Recommended principles:</p>
+<ul>
+<li><strong>Deny by default</strong></li>
+<li><strong>Whitelist over blacklist</strong></li>
+</ul>
+<h2 id="3-Output-Encoding-More-Important-Than-Input-Filtering"><a href="#3-Output-Encoding-More-Important-Than-Input-Filtering" class="headerlink" title="3. Output Encoding (More Important Than Input Filtering)"></a>3. Output Encoding (More Important Than Input Filtering)</h2><p>Many XSS vulnerabilities occur not because input is unsafe, but because <strong>output is handled incorrectly</strong>.</p>
+<h3 id="1-HTML-Escaping-on-Output"><a href="#1-HTML-Escaping-on-Output" class="headerlink" title="1. HTML Escaping on Output"></a>1. HTML Escaping on Output</h3><p>When rendering user input, always encode HTML characters:</p>
+<table>
+<thead>
+<tr>
+<th>Character</th>
+<th>Escaped Form</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>&lt;</code></td>
+<td><code>&amp;lt;</code></td>
+</tr>
+<tr>
+<td><code>&gt;</code></td>
+<td><code>&amp;gt;</code></td>
+</tr>
+<tr>
+<td><code>&quot;</code></td>
+<td><code>&amp;quot;</code></td>
+</tr>
+<tr>
+<td><code>&#39;</code></td>
+<td><code>&amp;#39;</code></td>
+</tr>
+</tbody></table>
+<p>Most modern template engines (Vue, React, Handlebars) <strong>escape output by default</strong>.<br>Do not disable this behavior unless absolutely necessary.</p>
+<h3 id="2-Avoid-Dangerous-APIs"><a href="#2-Avoid-Dangerous-APIs" class="headerlink" title="2. Avoid Dangerous APIs"></a>2. Avoid Dangerous APIs</h3><p>Avoid patterns like:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">element.<span class="property">innerHTML</span> = userInput;</span><br></pre></td></tr></table></figure>
+
+<p>Safer alternatives include:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">element.<span class="property">textContent</span> = userInput;</span><br></pre></td></tr></table></figure>
+
+<p>Or:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> el = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&#x27;div&#x27;</span>);</span><br><span class="line">el.<span class="property">textContent</span> = userInput;</span><br><span class="line">container.<span class="title function_">appendChild</span>(el);</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="4-Use-Safe-APIs-and-Framework-Protections"><a href="#4-Use-Safe-APIs-and-Framework-Protections" class="headerlink" title="4. Use Safe APIs and Framework Protections"></a>4. Use Safe APIs and Framework Protections</h2><p>Modern frontend frameworks include built-in XSS protections.</p>
+<h3 id="1-Default-Protections-in-React-and-Vue"><a href="#1-Default-Protections-in-React-and-Vue" class="headerlink" title="1. Default Protections in React and Vue"></a>1. Default Protections in React and Vue</h3><ul>
+<li>JSX and template syntax escape output by default</li>
+<li>Dangerous APIs are explicitly labeled (e.g., <code>v-html</code>, <code>dangerouslySetInnerHTML</code>)</li>
+</ul>
+<p>⚠️ If you use these APIs, you must ensure the content is <strong>100% trusted</strong>.</p>
+<h3 id="2-Avoid-String-Based-HTML-Construction"><a href="#2-Avoid-String-Based-HTML-Construction" class="headerlink" title="2. Avoid String-Based HTML Construction"></a>2. Avoid String-Based HTML Construction</h3><p>❌ Unsafe example:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">container.<span class="property">innerHTML</span> = <span class="string">`&lt;div&gt;<span class="subst">$&#123;userInput&#125;</span>&lt;/div&gt;`</span>;</span><br></pre></td></tr></table></figure>
+
+<p>✅ Safe alternative:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> div = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&#x27;div&#x27;</span>);</span><br><span class="line">div.<span class="property">textContent</span> = userInput;</span><br><span class="line">container.<span class="title function_">appendChild</span>(div);</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="5-Use-Content-Security-Policy-CSP"><a href="#5-Use-Content-Security-Policy-CSP" class="headerlink" title="5. Use Content Security Policy (CSP)"></a>5. Use Content Security Policy (CSP)</h2><p><strong>Content Security Policy (CSP)</strong> is one of the most powerful defenses against XSS.</p>
+<h3 id="1-What-CSP-Can-Do"><a href="#1-What-CSP-Can-Do" class="headerlink" title="1. What CSP Can Do"></a>1. What CSP Can Do</h3><ul>
+<li>Block inline script execution</li>
+<li>Restrict allowed script sources</li>
+<li>Prevent loading malicious third-party resources</li>
+</ul>
+<p>Example HTTP header:</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Content-Security-Policy</span>:</span><br><span class="line">  default-src &#x27;self&#x27;;</span><br><span class="line">  script-src &#x27;self&#x27;;</span><br><span class="line">  object-src &#x27;none&#x27;;</span><br></pre></td></tr></table></figure>
+
+<p>Even if an attacker injects a script, CSP can prevent the browser from executing it.</p>
+<h3 id="2-Why-CSP-Is-So-Important"><a href="#2-Why-CSP-Is-So-Important" class="headerlink" title="2. Why CSP Is So Important"></a>2. Why CSP Is So Important</h3><p>Because it provides:</p>
+<ul>
+<li><strong>Browser-level protection</strong></li>
+<li>A strong fallback even when application code has flaws</li>
+</ul>
+<h2 id="6-Use-HttpOnly-and-Secure-Cookies"><a href="#6-Use-HttpOnly-and-Secure-Cookies" class="headerlink" title="6. Use HttpOnly and Secure Cookies"></a>6. Use HttpOnly and Secure Cookies</h2><h3 id="1-Purpose-of-HttpOnly"><a href="#1-Purpose-of-HttpOnly" class="headerlink" title="1. Purpose of HttpOnly"></a>1. Purpose of HttpOnly</h3><p>When setting cookies, add the <code>HttpOnly</code> flag:</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Set-Cookie</span><span class="punctuation">: </span>sessionId=xxx; HttpOnly;</span><br></pre></td></tr></table></figure>
+
+<p>This prevents JavaScript from accessing cookies, reducing the impact of XSS attacks.</p>
+<h3 id="2-Combine-with-Secure-and-SameSite"><a href="#2-Combine-with-Secure-and-SameSite" class="headerlink" title="2. Combine with Secure and SameSite"></a>2. Combine with Secure and SameSite</h3><p>For stronger protection, also use:</p>
+<ul>
+<li><code>Secure</code></li>
+<li><code>SameSite=Strict</code> or <code>Lax</code></li>
+</ul>
+<p>This significantly improves session security.</p>
+<h2 id="7-Keep-Third-Party-Libraries-Up-to-Date"><a href="#7-Keep-Third-Party-Libraries-Up-to-Date" class="headerlink" title="7. Keep Third-Party Libraries Up to Date"></a>7. Keep Third-Party Libraries Up to Date</h2><p>In real-world projects, <strong>many XSS vulnerabilities come from third-party dependencies</strong>:</p>
+<ul>
+<li>Outdated UI components</li>
+<li>Unmaintained plugins</li>
+<li>Vulnerable npm packages</li>
+</ul>
+<p>Best practices:</p>
+<ul>
+<li>Update dependencies regularly</li>
+<li>Use <code>npm audit</code></li>
+<li>Monitor security advisories</li>
+</ul>
+<h2 id="8-Develop-Secure-Coding-Habits"><a href="#8-Develop-Secure-Coding-Habits" class="headerlink" title="8. Develop Secure Coding Habits"></a>8. Develop Secure Coding Habits</h2><p>Preventing XSS is not about a single technique, but about consistent habits:</p>
+<ul>
+<li>Never trust external input</li>
+<li>Avoid <code>innerHTML</code> unless necessary</li>
+<li>Do not ignore security warnings</li>
+<li>Prioritize security over convenience</li>
+</ul>
+<h2 id="9-Summary"><a href="#9-Summary" class="headerlink" title="9. Summary"></a>9. Summary</h2><ul>
+<li>XSS is one of the most common and dangerous web security threats</li>
+<li>Effective protection requires <strong>frontend, backend, and browser-level defenses</strong></li>
+<li>Input validation is only the beginning—<strong>safe output handling and CSP are critical</strong></li>
+<li>Good security habits are more valuable than any single patch</li>
+</ul>
+<p>For frontend developers,<br><strong>understanding how to prevent XSS is a key step toward true professionalism.</strong></p>
+<p>If you’d like, I can also help you:</p>
+<ul>
+<li>Write <strong>“What Is XSS? From Attack to Defense with Examples”</strong></li>
+<li>Create a <strong>complete CSRF prevention guide</strong></li>
+<li>Plan a <strong>Web Security article series</strong> (ideal for AdSense)</li>
+<li>Optimize your site structure for <strong>AdSense approval</strong></li>
+</ul>
+<p>Just tell me what you’d like to do next.</p>
+
+    </div>
+
+    
+    
+    
+    
+      <div>
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:24px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+      </div>
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:  </strong>lidya
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link: </strong>
+    <a href="https://lidyaqf.github.io/2025/10/17/%E5%A6%82%E4%BD%95%E9%98%B2%E5%BE%A1%20XSS%EF%BC%88%E8%B7%A8%E7%AB%99%E8%84%9A%E6%9C%AC%E6%94%BB%E5%87%BB%EF%BC%89/" title="How to Prevent XSS">https://lidyaqf.github.io/2025/10/17/如何防御 XSS（跨站脚本攻击）/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/XSS/" rel="tag"># XSS</a>
+              <a href="/tags/Web-Security/" rel="tag"># Web Security</a>
+              <a href="/tags/Frontend-Security/" rel="tag"># Frontend Security</a>
+              <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+              <a href="/tags/Browser-Security/" rel="tag"># Browser Security</a>
+              <a href="/tags/Cybersecurity/" rel="tag"># Cybersecurity</a>
+              <a href="/tags/Web-Development/" rel="tag"># Web Development</a>
+              <a href="/tags/Secure-Coding/" rel="tag"># Secure Coding</a>
+              <a href="/tags/Content-Security-Policy/" rel="tag"># Content Security Policy</a>
+              <a href="/tags/HttpOnly/" rel="tag"># HttpOnly</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/07/16/node-rpc/" rel="prev" title="Talking About Node RPC">
+      <i class="fa fa-chevron-left"></i> Talking About Node RPC
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2025/12/02/js%E5%9F%BA%E7%A1%80/" rel="next" title="JavaScript Basics">
+      JavaScript Basics <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC82MDU2Mi8zNzAzMw=="></div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-What-Is-an-XSS-Attack"><span class="nav-number">1.</span> <span class="nav-text">1. What Is an XSS Attack?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Input-Validation-and-Filtering-The-Most-Basic-Defense"><span class="nav-number">2.</span> <span class="nav-text">2. Input Validation and Filtering (The Most Basic Defense)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Basic-Frontend-Validation"><span class="nav-number">2.1.</span> <span class="nav-text">1. Basic Frontend Validation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Strict-Backend-Validation-Critical"><span class="nav-number">2.2.</span> <span class="nav-text">2. Strict Backend Validation (Critical)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Output-Encoding-More-Important-Than-Input-Filtering"><span class="nav-number">3.</span> <span class="nav-text">3. Output Encoding (More Important Than Input Filtering)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-HTML-Escaping-on-Output"><span class="nav-number">3.1.</span> <span class="nav-text">1. HTML Escaping on Output</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Avoid-Dangerous-APIs"><span class="nav-number">3.2.</span> <span class="nav-text">2. Avoid Dangerous APIs</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-Use-Safe-APIs-and-Framework-Protections"><span class="nav-number">4.</span> <span class="nav-text">4. Use Safe APIs and Framework Protections</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Default-Protections-in-React-and-Vue"><span class="nav-number">4.1.</span> <span class="nav-text">1. Default Protections in React and Vue</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Avoid-String-Based-HTML-Construction"><span class="nav-number">4.2.</span> <span class="nav-text">2. Avoid String-Based HTML Construction</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-Use-Content-Security-Policy-CSP"><span class="nav-number">5.</span> <span class="nav-text">5. Use Content Security Policy (CSP)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-What-CSP-Can-Do"><span class="nav-number">5.1.</span> <span class="nav-text">1. What CSP Can Do</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Why-CSP-Is-So-Important"><span class="nav-number">5.2.</span> <span class="nav-text">2. Why CSP Is So Important</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-Use-HttpOnly-and-Secure-Cookies"><span class="nav-number">6.</span> <span class="nav-text">6. Use HttpOnly and Secure Cookies</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Purpose-of-HttpOnly"><span class="nav-number">6.1.</span> <span class="nav-text">1. Purpose of HttpOnly</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Combine-with-Secure-and-SameSite"><span class="nav-number">6.2.</span> <span class="nav-text">2. Combine with Secure and SameSite</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-Keep-Third-Party-Libraries-Up-to-Date"><span class="nav-number">7.</span> <span class="nav-text">7. Keep Third-Party Libraries Up to Date</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-Develop-Secure-Coding-Habits"><span class="nav-number">8.</span> <span class="nav-text">8. Develop Secure Coding Habits</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-Summary"><span class="nav-number">9.</span> <span class="nav-text">9. Summary</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="lidya"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">lidya</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/ening/archives/">
+        
+          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/ening/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">lidya</span>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    if (location.pathname.startsWith('/ening/')) {
+      const item = document.querySelector('.menu-item-english');
+      if (item) item.style.display = 'none';
+    }
+  });
+</script>
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
+  window.livereOptions = {
+    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+});
+</script>
+
+</body>
+</html>

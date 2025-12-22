@@ -654,6 +654,227 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://lidyaqf.github.io/2025/10/17/%E5%A6%82%E4%BD%95%E9%98%B2%E5%BE%A1%20XSS%EF%BC%88%E8%B7%A8%E7%AB%99%E8%84%9A%E6%9C%AC%E6%94%BB%E5%87%BB%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="lidya">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="My English Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2025/10/17/%E5%A6%82%E4%BD%95%E9%98%B2%E5%BE%A1%20XSS%EF%BC%88%E8%B7%A8%E7%AB%99%E8%84%9A%E6%9C%AC%E6%94%BB%E5%87%BB%EF%BC%89/" class="post-title-link" itemprop="url">How to Prevent XSS</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2025-10-17 00:00:00" itemprop="dateCreated datePublished" datetime="2025-10-17T00:00:00+08:00">2025-10-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-12-22 14:23:31" itemprop="dateModified" datetime="2025-12-22T14:23:31+08:00">2025-12-22</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Frontend/" itemprop="url" rel="index"><span itemprop="name">Frontend</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>In web development, <strong>XSS (Cross-Site Scripting)</strong> is one of the most common and most dangerous security vulnerabilities.<br>Once a website contains an XSS flaw, attackers may execute malicious scripts in users’ browsers, allowing them to steal cookies, hijack sessions, deface pages, or even take over user accounts.</p>
+<p>This article explains <strong>how to effectively defend against XSS attacks</strong> from both a <strong>theoretical and practical perspective</strong>, covering frontend and full-stack security best practices.</p>
+<h2 id="1-What-Is-an-XSS-Attack"><a href="#1-What-Is-an-XSS-Attack" class="headerlink" title="1. What Is an XSS Attack?"></a>1. What Is an XSS Attack?</h2><p>The essence of XSS is simple:</p>
+<blockquote>
+<p><strong>An attacker injects malicious JavaScript into a webpage, which is then executed in other users’ browsers.</strong></p>
+</blockquote>
+<p>Common types of XSS attacks include:</p>
+<ul>
+<li><strong>Reflected XSS</strong>: malicious scripts are delivered through URL parameters</li>
+<li><strong>Stored XSS</strong>: malicious scripts are stored in a database and served to users</li>
+<li><strong>DOM-based XSS</strong>: frontend JavaScript logic directly handles untrusted data</li>
+</ul>
+<p>No matter the type, the root cause is the same:<br>👉 <strong>User input is treated as executable code.</strong></p>
+<h2 id="2-Input-Validation-and-Filtering-The-Most-Basic-Defense"><a href="#2-Input-Validation-and-Filtering-The-Most-Basic-Defense" class="headerlink" title="2. Input Validation and Filtering (The Most Basic Defense)"></a>2. Input Validation and Filtering (The Most Basic Defense)</h2><p><strong>Never trust user input.</strong></p>
+<h3 id="1-Basic-Frontend-Validation"><a href="#1-Basic-Frontend-Validation" class="headerlink" title="1. Basic Frontend Validation"></a>1. Basic Frontend Validation</h3><p>On the frontend, basic validation can improve user experience, such as:</p>
+<ul>
+<li>Limiting input length</li>
+<li>Enforcing input formats (e.g., email, phone numbers)</li>
+<li>Filtering obviously dangerous characters</li>
+</ul>
+<p>Example (for basic validation only):</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">sanitizeInput</span>(<span class="params">input</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> input.<span class="title function_">replace</span>(<span class="regexp">/[&lt;&gt;]/g</span>, <span class="string">&#x27;&#x27;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>⚠️ Important:<br><strong>Frontend validation is not a security boundary and should never be relied on alone.</strong></p>
+<h3 id="2-Strict-Backend-Validation-Critical"><a href="#2-Strict-Backend-Validation-Critical" class="headerlink" title="2. Strict Backend Validation (Critical)"></a>2. Strict Backend Validation (Critical)</h3><p>Effective input validation <strong>must be performed on the server side</strong>:</p>
+<ul>
+<li>Validate data types</li>
+<li>Enforce length constraints</li>
+<li>Reject inputs that violate business rules</li>
+<li>Escape or sanitize HTML content using whitelists</li>
+</ul>
+<p>Recommended principles:</p>
+<ul>
+<li><strong>Deny by default</strong></li>
+<li><strong>Whitelist over blacklist</strong></li>
+</ul>
+<h2 id="3-Output-Encoding-More-Important-Than-Input-Filtering"><a href="#3-Output-Encoding-More-Important-Than-Input-Filtering" class="headerlink" title="3. Output Encoding (More Important Than Input Filtering)"></a>3. Output Encoding (More Important Than Input Filtering)</h2><p>Many XSS vulnerabilities occur not because input is unsafe, but because <strong>output is handled incorrectly</strong>.</p>
+<h3 id="1-HTML-Escaping-on-Output"><a href="#1-HTML-Escaping-on-Output" class="headerlink" title="1. HTML Escaping on Output"></a>1. HTML Escaping on Output</h3><p>When rendering user input, always encode HTML characters:</p>
+<table>
+<thead>
+<tr>
+<th>Character</th>
+<th>Escaped Form</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>&lt;</code></td>
+<td><code>&amp;lt;</code></td>
+</tr>
+<tr>
+<td><code>&gt;</code></td>
+<td><code>&amp;gt;</code></td>
+</tr>
+<tr>
+<td><code>&quot;</code></td>
+<td><code>&amp;quot;</code></td>
+</tr>
+<tr>
+<td><code>&#39;</code></td>
+<td><code>&amp;#39;</code></td>
+</tr>
+</tbody></table>
+<p>Most modern template engines (Vue, React, Handlebars) <strong>escape output by default</strong>.<br>Do not disable this behavior unless absolutely necessary.</p>
+<h3 id="2-Avoid-Dangerous-APIs"><a href="#2-Avoid-Dangerous-APIs" class="headerlink" title="2. Avoid Dangerous APIs"></a>2. Avoid Dangerous APIs</h3><p>Avoid patterns like:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">element.<span class="property">innerHTML</span> = userInput;</span><br></pre></td></tr></table></figure>
+
+<p>Safer alternatives include:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">element.<span class="property">textContent</span> = userInput;</span><br></pre></td></tr></table></figure>
+
+<p>Or:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> el = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&#x27;div&#x27;</span>);</span><br><span class="line">el.<span class="property">textContent</span> = userInput;</span><br><span class="line">container.<span class="title function_">appendChild</span>(el);</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="4-Use-Safe-APIs-and-Framework-Protections"><a href="#4-Use-Safe-APIs-and-Framework-Protections" class="headerlink" title="4. Use Safe APIs and Framework Protections"></a>4. Use Safe APIs and Framework Protections</h2><p>Modern frontend frameworks include built-in XSS protections.</p>
+<h3 id="1-Default-Protections-in-React-and-Vue"><a href="#1-Default-Protections-in-React-and-Vue" class="headerlink" title="1. Default Protections in React and Vue"></a>1. Default Protections in React and Vue</h3><ul>
+<li>JSX and template syntax escape output by default</li>
+<li>Dangerous APIs are explicitly labeled (e.g., <code>v-html</code>, <code>dangerouslySetInnerHTML</code>)</li>
+</ul>
+<p>⚠️ If you use these APIs, you must ensure the content is <strong>100% trusted</strong>.</p>
+<h3 id="2-Avoid-String-Based-HTML-Construction"><a href="#2-Avoid-String-Based-HTML-Construction" class="headerlink" title="2. Avoid String-Based HTML Construction"></a>2. Avoid String-Based HTML Construction</h3><p>❌ Unsafe example:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">container.<span class="property">innerHTML</span> = <span class="string">`&lt;div&gt;<span class="subst">$&#123;userInput&#125;</span>&lt;/div&gt;`</span>;</span><br></pre></td></tr></table></figure>
+
+<p>✅ Safe alternative:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> div = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&#x27;div&#x27;</span>);</span><br><span class="line">div.<span class="property">textContent</span> = userInput;</span><br><span class="line">container.<span class="title function_">appendChild</span>(div);</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="5-Use-Content-Security-Policy-CSP"><a href="#5-Use-Content-Security-Policy-CSP" class="headerlink" title="5. Use Content Security Policy (CSP)"></a>5. Use Content Security Policy (CSP)</h2><p><strong>Content Security Policy (CSP)</strong> is one of the most powerful defenses against XSS.</p>
+<h3 id="1-What-CSP-Can-Do"><a href="#1-What-CSP-Can-Do" class="headerlink" title="1. What CSP Can Do"></a>1. What CSP Can Do</h3><ul>
+<li>Block inline script execution</li>
+<li>Restrict allowed script sources</li>
+<li>Prevent loading malicious third-party resources</li>
+</ul>
+<p>Example HTTP header:</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Content-Security-Policy</span>:</span><br><span class="line">  default-src &#x27;self&#x27;;</span><br><span class="line">  script-src &#x27;self&#x27;;</span><br><span class="line">  object-src &#x27;none&#x27;;</span><br></pre></td></tr></table></figure>
+
+<p>Even if an attacker injects a script, CSP can prevent the browser from executing it.</p>
+<h3 id="2-Why-CSP-Is-So-Important"><a href="#2-Why-CSP-Is-So-Important" class="headerlink" title="2. Why CSP Is So Important"></a>2. Why CSP Is So Important</h3><p>Because it provides:</p>
+<ul>
+<li><strong>Browser-level protection</strong></li>
+<li>A strong fallback even when application code has flaws</li>
+</ul>
+<h2 id="6-Use-HttpOnly-and-Secure-Cookies"><a href="#6-Use-HttpOnly-and-Secure-Cookies" class="headerlink" title="6. Use HttpOnly and Secure Cookies"></a>6. Use HttpOnly and Secure Cookies</h2><h3 id="1-Purpose-of-HttpOnly"><a href="#1-Purpose-of-HttpOnly" class="headerlink" title="1. Purpose of HttpOnly"></a>1. Purpose of HttpOnly</h3><p>When setting cookies, add the <code>HttpOnly</code> flag:</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Set-Cookie</span><span class="punctuation">: </span>sessionId=xxx; HttpOnly;</span><br></pre></td></tr></table></figure>
+
+<p>This prevents JavaScript from accessing cookies, reducing the impact of XSS attacks.</p>
+<h3 id="2-Combine-with-Secure-and-SameSite"><a href="#2-Combine-with-Secure-and-SameSite" class="headerlink" title="2. Combine with Secure and SameSite"></a>2. Combine with Secure and SameSite</h3><p>For stronger protection, also use:</p>
+<ul>
+<li><code>Secure</code></li>
+<li><code>SameSite=Strict</code> or <code>Lax</code></li>
+</ul>
+<p>This significantly improves session security.</p>
+<h2 id="7-Keep-Third-Party-Libraries-Up-to-Date"><a href="#7-Keep-Third-Party-Libraries-Up-to-Date" class="headerlink" title="7. Keep Third-Party Libraries Up to Date"></a>7. Keep Third-Party Libraries Up to Date</h2><p>In real-world projects, <strong>many XSS vulnerabilities come from third-party dependencies</strong>:</p>
+<ul>
+<li>Outdated UI components</li>
+<li>Unmaintained plugins</li>
+<li>Vulnerable npm packages</li>
+</ul>
+<p>Best practices:</p>
+<ul>
+<li>Update dependencies regularly</li>
+<li>Use <code>npm audit</code></li>
+<li>Monitor security advisories</li>
+</ul>
+<h2 id="8-Develop-Secure-Coding-Habits"><a href="#8-Develop-Secure-Coding-Habits" class="headerlink" title="8. Develop Secure Coding Habits"></a>8. Develop Secure Coding Habits</h2><p>Preventing XSS is not about a single technique, but about consistent habits:</p>
+<ul>
+<li>Never trust external input</li>
+<li>Avoid <code>innerHTML</code> unless necessary</li>
+<li>Do not ignore security warnings</li>
+<li>Prioritize security over convenience</li>
+</ul>
+<h2 id="9-Summary"><a href="#9-Summary" class="headerlink" title="9. Summary"></a>9. Summary</h2><ul>
+<li>XSS is one of the most common and dangerous web security threats</li>
+<li>Effective protection requires <strong>frontend, backend, and browser-level defenses</strong></li>
+<li>Input validation is only the beginning—<strong>safe output handling and CSP are critical</strong></li>
+<li>Good security habits are more valuable than any single patch</li>
+</ul>
+<p>For frontend developers,<br><strong>understanding how to prevent XSS is a key step toward true professionalism.</strong></p>
+<p>If you’d like, I can also help you:</p>
+<ul>
+<li>Write <strong>“What Is XSS? From Attack to Defense with Examples”</strong></li>
+<li>Create a <strong>complete CSRF prevention guide</strong></li>
+<li>Plan a <strong>Web Security article series</strong> (ideal for AdSense)</li>
+<li>Optimize your site structure for <strong>AdSense approval</strong></li>
+</ul>
+<p>Just tell me what you’d like to do next.</p>
+
+      
+    </div>
+
+    
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://lidyaqf.github.io/2025/07/16/node-rpc/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1294,151 +1515,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://lidyaqf.github.io/2025/04/11/ELK%E5%AE%89%E8%A3%85%E6%B5%81%E7%A8%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="lidya">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="My English Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2025/04/11/ELK%E5%AE%89%E8%A3%85%E6%B5%81%E7%A8%8B/" class="post-title-link" itemprop="url">ELK Installation Guide</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2025-04-11 17:16:46" itemprop="dateCreated datePublished" datetime="2025-04-11T17:16:46+08:00">2025-04-11</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-07-02 16:51:37" itemprop="dateModified" datetime="2025-07-02T16:51:37+08:00">2025-07-02</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Backend/" itemprop="url" rel="index"><span itemprop="name">Backend</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="Installing-ELK-Stack-ElasticSearch-Logstash-Kibana-with-Docker"><a href="#Installing-ELK-Stack-ElasticSearch-Logstash-Kibana-with-Docker" class="headerlink" title="Installing ELK Stack (ElasticSearch, Logstash, Kibana) with Docker"></a>Installing ELK Stack (ElasticSearch, Logstash, Kibana) with Docker</h1><blockquote>
-<p>It is recommended to install on Docker due to lower resource consumption. The installation version used below is <strong>8.12.2</strong>. Please use the same version to avoid conflicts.</p>
-</blockquote>
-<h2 id="Table-of-Contents"><a href="#Table-of-Contents" class="headerlink" title="Table of Contents"></a>Table of Contents</h2><p><a href="#1-install-elasticsearch">1. Install ElasticSearch</a><br><a href="#2-install-logstash">2. Install Logstash</a><br><a href="#3-install-kibana">3. Install Kibana</a><br><a href="#recommendations">Recommendations</a></p>
-<hr>
-<h2 id="1-Install-ElasticSearch"><a href="#1-Install-ElasticSearch" class="headerlink" title="1. Install ElasticSearch"></a>1. Install ElasticSearch</h2><ul>
-<li>Pull the image:</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">docker pull elasticsearch:8.12.2</span><br><span class="line">````</span><br><span class="line"></span><br><span class="line">* Start the container:</span><br><span class="line"></span><br><span class="line">```bash</span><br><span class="line">docker run --name some-elasticsearch -p 9200:9200 -p 9300:9300 -e <span class="string">&quot;discovery.type=single-node&quot;</span> -d elasticsearch:8.12.2</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>Enter the container:</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> docker <span class="built_in">exec</span> -u 0 -it some-elasticsearch bash</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>Restart the container:</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker restart some-elasticsearch</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="2-Install-Logstash"><a href="#2-Install-Logstash" class="headerlink" title="2. Install Logstash"></a>2. Install Logstash</h2><ul>
-<li>Pull the image:</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull docker.elastic.co/logstash/logstash:8.12.2</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>Start the container:</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> docker run -it -p 5044:5044 -p 9600:9600 --name logstash -v /usr/share/logstash/piplines:/usr/share/logstash/config --privileged=<span class="literal">true</span> docker.elastic.co/logstash/logstash:8.12.2 /bin/bash</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>Use <code>scp</code> to upload the MySQL Connector JAR file to the virtual machine:</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scp <span class="string">&quot;/Users/Downloads/logstash-8.12.2/mysql-connector-j-8.4.0.jar&quot;</span> username@VM-IP:/home</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>Move the JAR file from the VM to the Logstash container:</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="built_in">cp</span> ./mysql-connector-j-8.4.0.jar logstash:/usr/share/logstash</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>Enter the container:</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="built_in">exec</span> -u 0 -it logstash bash</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="3-Install-Kibana"><a href="#3-Install-Kibana" class="headerlink" title="3. Install Kibana"></a>3. Install Kibana</h2><ul>
-<li>Pull the image:</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull kibana:8.12.2</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>Start the container:</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run --name some-kibana -p 9200:9200 -p 9300:9300 -e <span class="string">&quot;discovery.type=single-node&quot;</span> -d elasticsearch:8.12.2</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>Enter the container:</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="built_in">exec</span> -u 0 -it some-kibana bash</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="Additional-Install-Docker-Portainer-and-Related-Commands"><a href="#Additional-Install-Docker-Portainer-and-Related-Commands" class="headerlink" title="Additional: Install Docker, Portainer, and Related Commands"></a>Additional: Install Docker, Portainer, and Related Commands</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt update</span><br><span class="line"><span class="built_in">sudo</span> apt install docker.io docker-compose</span><br><span class="line">docker -v</span><br><span class="line"><span class="built_in">sudo</span> systemctl start docker</span><br><span class="line"></span><br><span class="line"><span class="built_in">sudo</span> docker search portainer</span><br><span class="line">docker pull portainer/portainer</span><br><span class="line"><span class="built_in">sudo</span> docker pull portainer/portainer</span><br><span class="line"><span class="built_in">sudo</span> docker run -d --name portainerUI -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock portainer/portainer</span><br><span class="line"></span><br><span class="line"><span class="built_in">sudo</span> docker start portainerUI</span><br><span class="line"><span class="built_in">sudo</span> passwd root</span><br></pre></td></tr></table></figure>
-
-<hr>
-<!-- ## Recommendations -->
-
-<!-- * [Just for Fun](https://edunextgen1.com) -->
-
-
-
-      
-    </div>
-
-    
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1510,7 +1586,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/ening/archives/">
         
-          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-count">13</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -1523,7 +1599,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
