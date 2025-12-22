@@ -84,6 +84,18 @@ docker exec -u 0 -it some-kibana bash
       </categories>
   </entry>
   <entry>
+    <title>Hexo-Next-更改字体、代码可复制</title>
+    <url>/2025/08/18/Hexo-Next-%E6%9B%B4%E6%94%B9%E5%AD%97%E4%BD%93/</url>
+    <content><![CDATA[Next版本为7.8.0，找到 &#x2F;themes&#x2F;next&#x2F;_config.yml 文件，搜索 font 关键词，这里注意一定要将 font 里面的 enable 设置为true, 因为默认为false，然后设置 family 为自己想要的，如果family在其他平台找的，就需要修改host。(只是修改了family， 没修改enable就会不生效，所以一定一定要记得)
+font:  enable: true  # Uri of fonts host, e.g. https://fonts.googleapis.com (Default).  host:   # Font options:  # `external: true` will load this font family from `host` above.  # `family: Times New Roman`. Without any quotes.  # `size: x.x`. Use `em` as unit. Default: 1 (16px)  # Global font settings used for all elements inside &lt;body&gt;.  global:    external: true    family: Noto Serif SC    size:  # Font settings for site title (.site-title).  title:    external: true    family: Noto Serif SC    size:  # Font settings for headlines (&lt;h1&gt; to &lt;h6&gt;).  headings:    external: true    family: Noto Serif SC    size:  # Font settings for posts (.post-body).  posts:    external: true    family:  Noto Serif SC  # Font settings for &lt;code&gt; and code blocks.  codes:    external: true    family: Source Code Pro
+
+代码可复制，还是上面同一个文件，找到以下代码段，将copy_button的enable设置为true，启用就可以啦。show_result设置true后，复制完会显示一个勾。style对应的copy_button不同的样式，看个人喜好来～
+codeblock:  # Code Highlight theme  # Available values: normal | night | night eighties | night blue | night bright | solarized | solarized dark | galactic  # See: https://github.com/chriskempson/tomorrow-theme  highlight_theme: night eighties  # Add copy button on codeblock  copy_button:    enable: true    # Show text copy result.    show_result: true    # Available values: default | flat | mac    style: mac]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+  </entry>
+  <entry>
     <title>H5与原生交互</title>
     <url>/2025/07/04/H5%E4%B8%8E%E5%8E%9F%E7%94%9F%E4%BA%A4%E4%BA%92/</url>
     <content><![CDATA[H5手机端日志工具(vconsole手机端)：&lt;script src=&quot;https://cdn.bootcdn.net/ajax/libs/vConsole/3.15.1/vconsole.min.js&quot;&gt;&lt;/script&gt;&lt;script&gt;  // 初始化 vConsole  var vConsole = new VConsole();  console.log(&#x27;vConsole is ready.&#x27;);&lt;/script&gt;
@@ -94,18 +106,6 @@ docker exec -u 0 -it some-kibana bash
 
 当需要通过按钮跳转到app时：直接用 a 标签的 href 跳转，前提是原生应用定义了 myapp://*** 作为触发特定功能的URL，可参考 Instagram 的 H5 跳转 app 的竞品例子，instagram://**。一般跳不过去就是原生端不支持。
 ]]></content>
-      <categories>
-        <category>前端</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>Hexo-Next-更改字体、代码可复制</title>
-    <url>/2025/08/18/Hexo-Next-%E6%9B%B4%E6%94%B9%E5%AD%97%E4%BD%93/</url>
-    <content><![CDATA[Next版本为7.8.0，找到 &#x2F;themes&#x2F;next&#x2F;_config.yml 文件，搜索 font 关键词，这里注意一定要将 font 里面的 enable 设置为true, 因为默认为false，然后设置 family 为自己想要的，如果family在其他平台找的，就需要修改host。(只是修改了family， 没修改enable就会不生效，所以一定一定要记得)
-font:  enable: true  # Uri of fonts host, e.g. https://fonts.googleapis.com (Default).  host:   # Font options:  # `external: true` will load this font family from `host` above.  # `family: Times New Roman`. Without any quotes.  # `size: x.x`. Use `em` as unit. Default: 1 (16px)  # Global font settings used for all elements inside &lt;body&gt;.  global:    external: true    family: Noto Serif SC    size:  # Font settings for site title (.site-title).  title:    external: true    family: Noto Serif SC    size:  # Font settings for headlines (&lt;h1&gt; to &lt;h6&gt;).  headings:    external: true    family: Noto Serif SC    size:  # Font settings for posts (.post-body).  posts:    external: true    family:  Noto Serif SC  # Font settings for &lt;code&gt; and code blocks.  codes:    external: true    family: Source Code Pro
-
-代码可复制，还是上面同一个文件，找到以下代码段，将copy_button的enable设置为true，启用就可以啦。show_result设置true后，复制完会显示一个勾。style对应的copy_button不同的样式，看个人喜好来～
-codeblock:  # Code Highlight theme  # Available values: normal | night | night eighties | night blue | night bright | solarized | solarized dark | galactic  # See: https://github.com/chriskempson/tomorrow-theme  highlight_theme: night eighties  # Add copy button on codeblock  copy_button:    enable: true    # Show text copy result.    show_result: true    # Available values: default | flat | mac    style: mac]]></content>
       <categories>
         <category>前端</category>
       </categories>
@@ -824,6 +824,33 @@ data()&#123;    return&#123;        focus: true,		code:[&#x27;&#x27;,&#x27;&#x27
       </categories>
   </entry>
   <entry>
+    <title>索引</title>
+    <url>/2025/07/27/%E7%B4%A2%E5%BC%95/</url>
+    <content><![CDATA[索引的作用当想要快速查找到自己想要的数据时，可以用索引。通过索引，可以在检索数据时直接定位到，省去时间，就好比一本书前面的目录，能让你快速找到自己想看的内容。如果索引包含多列，那么按照从左到右的顺序，即最左前缀列来进行。
+索引的类型
+唯一索引：对某些列（比如身份证）添加唯一索引，不能出现两条身份证相同的记录，通过 UNIQUE 关键字我们就添加了一个唯一索引。
+
+ADD UNIQUE INDEX uni_sf (sf);
+
+也可以给列添加唯一约束，而不创建唯一索引，列具有唯一性。
+ADD CONSTRAINT uni_name UNIQUE (name);
+
+
+主键索引： 主键一旦创建，就会自动带上索引。这也是为什么主键搜索数据会更快的原因。一个表只能有一个主键，一个主键可以包含多列，即联合主键。
+
+ALTER TABLE table_name ADD PRIMARY KEY (column);
+
+
+普通索引： 任何一列都可以创建索引，建议只在自己经常想要检索的列上加索引，不要全部加，会耗性能。
+
+ALTER TABLE table_name ADD INDEX index_name (column);
+
+]]></content>
+      <categories>
+        <category>后端</category>
+      </categories>
+  </entry>
+  <entry>
     <title>获取到的csv保存数据库</title>
     <url>/2025/07/29/%E8%8E%B7%E5%8F%96%E5%88%B0%E7%9A%84csv%E4%BF%9D%E5%AD%98%E6%95%B0%E6%8D%AE%E5%BA%93/</url>
     <content><![CDATA[如果第三方接口获取到的数据，返回为csv文档时，可以先把csv文档保存到本地某路径，再通过fs的createReadStream读取数据，保存到本地数据库。
@@ -886,30 +913,115 @@ const processConversations = async (dateObj) =&gt; &#123;  const username = &#x2
       </categories>
   </entry>
   <entry>
-    <title>索引</title>
-    <url>/2025/07/27/%E7%B4%A2%E5%BC%95/</url>
-    <content><![CDATA[索引的作用当想要快速查找到自己想要的数据时，可以用索引。通过索引，可以在检索数据时直接定位到，省去时间，就好比一本书前面的目录，能让你快速找到自己想看的内容。如果索引包含多列，那么按照从左到右的顺序，即最左前缀列来进行。
-索引的类型
-唯一索引：对某些列（比如身份证）添加唯一索引，不能出现两条身份证相同的记录，通过 UNIQUE 关键字我们就添加了一个唯一索引。
-
-ADD UNIQUE INDEX uni_sf (sf);
-
-也可以给列添加唯一约束，而不创建唯一索引，列具有唯一性。
-ADD CONSTRAINT uni_name UNIQUE (name);
+    <title>手写 new：彻底搞懂 JavaScript new 运算符的实现原理</title>
+    <url>/2025/10/20/%E6%89%8B%E5%86%99New/</url>
+    <content><![CDATA[在 JavaScript 中，new 运算符是面试和日常开发中都会频繁遇到的知识点。很多人会用 new，但并不真正理解它背后到底发生了什么。
+本文将通过 手写 new 的实现，一步步拆解 new 运算符的底层逻辑，帮助你真正掌握 JavaScript 对象创建机制。
+一、new 运算符到底做了什么？当我们执行下面这行代码时：
+const person = new Person(&#x27;Alice&#x27;, 25);
 
 
-主键索引： 主键一旦创建，就会自动带上索引。这也是为什么主键搜索数据会更快的原因。一个表只能有一个主键，一个主键可以包含多列，即联合主键。
+  JavaScript 实际上在背后做了 4 件事情：
 
-ALTER TABLE table_name ADD PRIMARY KEY (column);
+创建一个新的空对象
+将新对象的原型指向构造函数的 prototype
+执行构造函数，并将 this 绑定到新对象
+如果构造函数返回的是对象，则返回该对象；否则返回新对象
+
+  理解这 4 步，是理解 new 的关键。
+二、为什么要手写 new？手写 new 的好处有三点：
+
+加深对 原型链 和 this 指向 的理解
+几乎是 前端面试高频题
+有助于理解框架中对象创建的底层逻辑
+
+接下来我们直接上代码。
+三、手写 new 的完整实现function myNew(constructor, ...args) &#123;  // 1. 创建一个新对象，并将其原型指向构造函数的 prototype  const obj = Object.create(constructor.prototype);  // 2. 执行构造函数，将 this 绑定到新对象  const result = constructor.apply(obj, args);  // 3. 如果构造函数返回的是对象，则返回该对象  //    否则返回我们创建的新对象  return result instanceof Object ? result : obj;&#125;
+
+这段代码完整复现了 new 运算符的核心行为。
+四、逐行拆解实现逻辑1. Object.create 的作用const obj = Object.create(constructor.prototype);
+
+这一步等价于：
+obj.__proto__ === constructor.prototype
+
+也就是说：
+
+新对象可以访问构造函数原型上的方法
+原型链关系得以建立
+
+2. constructor.apply(obj, args)const result = constructor.apply(obj, args);
+
+这一步做了两件事：
+
+执行构造函数
+将构造函数内部的 this 指向新创建的对象
+
+也就是：
+this.name = name;this.age = age;
+
+实际上是在给 obj 添加属性。
+3. 为什么要判断返回值？return result instanceof Object ? result : obj;
+
+这是很多人容易忽略的一点。
+来看一个例子：
+function Test() &#123;  this.a = 1;  return &#123; b: 2 &#125;;&#125;const t = new Test();console.log(t); // &#123; b: 2 &#125;
+
+如果构造函数 显式返回一个对象，new 会返回这个对象，而不是 this。
+所以我们在 myNew 中必须处理这种情况。
+五、测试手写的 myNewfunction Person(name, age) &#123;  this.name = name;  this.age = age;&#125;const p1 = myNew(Person, &#x27;Alice&#x27;, 25);console.log(p1.name); // Aliceconsole.log(p1.age);  // 25console.log(p1 instanceof Person); // true
+
+结果完全符合原生 new 的行为。
+六、myNew 与 new 的对比总结
 
 
-普通索引： 任何一列都可以创建索引，建议只在自己经常想要检索的列上加索引，不要全部加，会耗性能。
+行为
+new
+myNew
 
-ALTER TABLE table_name ADD INDEX index_name (column);
+
+
+创建新对象
+✅
+✅
+
+
+绑定原型
+✅
+✅
+
+
+绑定 this
+✅
+✅
+
+
+处理返回对象
+✅
+✅
+
+
+可以说，myNew 已经实现了 90% 的 new 运算符行为，足以应付面试和深入理解 JS 原理。
+七、常见面试追问Q1：为什么不能直接 const obj = &#123;&#125;？因为 &#123;&#125; 创建的对象原型是 Object.prototype，而 new 创建的对象原型必须是 构造函数的 prototype。
+Q2：constructor.apply 能不能换成 call？可以，只是参数形式不同：
+constructor.call(obj, ...args);
+
+
+
+Q3：instanceof 是如何工作的？p1 instanceof Person
+
+本质是沿着原型链查找：
+Person.prototype 是否在 p1 的原型链上
+
+
+
+八、总结
+new 并不是魔法，而是一套明确的执行流程
+手写 new 是理解 原型链 + this + 构造函数 的最佳方式
+掌握这个知识点，对学习 Vue、React、Node.js 都有帮助
 
 ]]></content>
       <categories>
-        <category>后端</category>
+        <category>前端</category>
       </categories>
   </entry>
   <entry>
@@ -1162,117 +1274,5 @@ XSS 是最常见、也是最危险的 Web 安全问题之一
         <tag>Content Security Policy</tag>
         <tag>HttpOnly</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>手写 new：彻底搞懂 JavaScript new 运算符的实现原理</title>
-    <url>/2025/10/20/%E6%89%8B%E5%86%99New/</url>
-    <content><![CDATA[在 JavaScript 中，new 运算符是面试和日常开发中都会频繁遇到的知识点。很多人会用 new，但并不真正理解它背后到底发生了什么。
-本文将通过 手写 new 的实现，一步步拆解 new 运算符的底层逻辑，帮助你真正掌握 JavaScript 对象创建机制。
-一、new 运算符到底做了什么？当我们执行下面这行代码时：
-const person = new Person(&#x27;Alice&#x27;, 25);
-
-
-  JavaScript 实际上在背后做了 4 件事情：
-
-创建一个新的空对象
-将新对象的原型指向构造函数的 prototype
-执行构造函数，并将 this 绑定到新对象
-如果构造函数返回的是对象，则返回该对象；否则返回新对象
-
-  理解这 4 步，是理解 new 的关键。
-二、为什么要手写 new？手写 new 的好处有三点：
-
-加深对 原型链 和 this 指向 的理解
-几乎是 前端面试高频题
-有助于理解框架中对象创建的底层逻辑
-
-接下来我们直接上代码。
-三、手写 new 的完整实现function myNew(constructor, ...args) &#123;  // 1. 创建一个新对象，并将其原型指向构造函数的 prototype  const obj = Object.create(constructor.prototype);  // 2. 执行构造函数，将 this 绑定到新对象  const result = constructor.apply(obj, args);  // 3. 如果构造函数返回的是对象，则返回该对象  //    否则返回我们创建的新对象  return result instanceof Object ? result : obj;&#125;
-
-这段代码完整复现了 new 运算符的核心行为。
-四、逐行拆解实现逻辑1. Object.create 的作用const obj = Object.create(constructor.prototype);
-
-这一步等价于：
-obj.__proto__ === constructor.prototype
-
-也就是说：
-
-新对象可以访问构造函数原型上的方法
-原型链关系得以建立
-
-2. constructor.apply(obj, args)const result = constructor.apply(obj, args);
-
-这一步做了两件事：
-
-执行构造函数
-将构造函数内部的 this 指向新创建的对象
-
-也就是：
-this.name = name;this.age = age;
-
-实际上是在给 obj 添加属性。
-3. 为什么要判断返回值？return result instanceof Object ? result : obj;
-
-这是很多人容易忽略的一点。
-来看一个例子：
-function Test() &#123;  this.a = 1;  return &#123; b: 2 &#125;;&#125;const t = new Test();console.log(t); // &#123; b: 2 &#125;
-
-如果构造函数 显式返回一个对象，new 会返回这个对象，而不是 this。
-所以我们在 myNew 中必须处理这种情况。
-五、测试手写的 myNewfunction Person(name, age) &#123;  this.name = name;  this.age = age;&#125;const p1 = myNew(Person, &#x27;Alice&#x27;, 25);console.log(p1.name); // Aliceconsole.log(p1.age);  // 25console.log(p1 instanceof Person); // true
-
-结果完全符合原生 new 的行为。
-六、myNew 与 new 的对比总结
-
-
-行为
-new
-myNew
-
-
-
-创建新对象
-✅
-✅
-
-
-绑定原型
-✅
-✅
-
-
-绑定 this
-✅
-✅
-
-
-处理返回对象
-✅
-✅
-
-
-可以说，myNew 已经实现了 90% 的 new 运算符行为，足以应付面试和深入理解 JS 原理。
-七、常见面试追问Q1：为什么不能直接 const obj = &#123;&#125;？因为 &#123;&#125; 创建的对象原型是 Object.prototype，而 new 创建的对象原型必须是 构造函数的 prototype。
-Q2：constructor.apply 能不能换成 call？可以，只是参数形式不同：
-constructor.call(obj, ...args);
-
-
-
-Q3：instanceof 是如何工作的？p1 instanceof Person
-
-本质是沿着原型链查找：
-Person.prototype 是否在 p1 的原型链上
-
-
-
-八、总结
-new 并不是魔法，而是一套明确的执行流程
-手写 new 是理解 原型链 + this + 构造函数 的最佳方式
-掌握这个知识点，对学习 Vue、React、Node.js 都有帮助
-
-]]></content>
-      <categories>
-        <category>前端</category>
-      </categories>
   </entry>
 </search>

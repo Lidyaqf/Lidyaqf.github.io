@@ -172,6 +172,12 @@ function foo() &#123;  &quot;use strict&quot;;  console.log(this.a); // ❌ Type
       </categories>
   </entry>
   <entry>
+    <title>Hello English</title>
+    <url>/2024/08/16/redis-en/</url>
+    <content><![CDATA[This is an English post.
+]]></content>
+  </entry>
+  <entry>
     <title>Talking About Node RPC</title>
     <url>/2025/07/16/node-rpc/</url>
     <content><![CDATA[
@@ -191,12 +197,6 @@ After receiving the binary data, the frontend deserializes it into an RPC Respon
       <categories>
         <category>Backend</category>
       </categories>
-  </entry>
-  <entry>
-    <title>Hello English</title>
-    <url>/2024/08/16/redis-en/</url>
-    <content><![CDATA[This is an English post.
-]]></content>
   </entry>
   <entry>
     <title>One Day You&#39;ll Understand - Reading Notes by Mr. Zhuomo</title>
@@ -545,14 +545,6 @@ Input validation is only the beginning—safe output handling and CSP are critic
 Good security habits are more valuable than any single patch
 
 For frontend developers,understanding how to prevent XSS is a key step toward true professionalism.
-If you’d like, I can also help you:
-
-Write “What Is XSS? From Attack to Defense with Examples”
-Create a complete CSRF prevention guide
-Plan a Web Security article series (ideal for AdSense)
-Optimize your site structure for AdSense approval
-
-Just tell me what you’d like to do next.
 ]]></content>
       <categories>
         <category>Frontend</category>
@@ -680,18 +672,6 @@ Iterate over the iterable, wrap each item with Promise.resolve, attach the same 
       </categories>
   </entry>
   <entry>
-    <title>Reflections on *Skin*</title>
-    <url>/2025/06/26/%E7%9A%AE%E5%9B%8A%E6%84%9F%E6%82%9F/</url>
-    <content><![CDATA[Aunt TaiAunt Tai is strong-willed and resilient. Her optimistic attitude is something worth learning from. The greatest thing my father ever did was marrying my mother—a truly great woman. A real woman should face everything with positivity and build the future she desires with her own hands.
-Although she resorted to stealing, it was driven by hardship—survival and family. Setting aside pride to do things against her will is, in a way, a form of strength. It’s not about crying and making a scene, but staying proactive in adversity.
-Thinking about it, the author’s achievements are inseparable from his great mother.
-Ah, that lovely mother! To preserve her husband’s dignity and happiness, she insisted on completing the house. Isn’t that a form of strength too? To follow her heart courageously is truly admirable.
-In fact, the person who understands my father the most is my mother. She knows his pride. Isn’t this what love is? You don’t need to say it—I understand. I understand you, and you understand me, and that’s why we’ve been together for so long.
-Zhang MeiliGet up from where you fell. Zhang Meili seems like someone who pursued true love and worked hard for what she desired. Though she was eventually forced to liberate herself sexually, I still respect her for everything she once did.
-Public opinion is powerful, but Zhang Meili’s inner strength is even more powerful.
-]]></content>
-  </entry>
-  <entry>
     <title>Encountering the Unknown Self</title>
     <url>/2025/06/30/%E9%81%87%E8%A7%81%E6%9C%AA%E7%9F%A5%E7%9A%84%E8%87%AA%E5%B7%B1/</url>
     <content><![CDATA[Notes on Encountering the Unknown SelfWhat is the “Unknown”?The “self” refers to the “true self.” From the question “Who am I?” to the concept of “from existence to non-existence,” the entire book is structured around dialogues between Ruoling and a wise elder, revealing many profound life concepts.
@@ -728,6 +708,18 @@ ConclusionThis book is not only about discovering “who you are,” but also ab
       <tags>
         <tag>Personal Growth</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>Reflections on *Skin*</title>
+    <url>/2025/06/26/%E7%9A%AE%E5%9B%8A%E6%84%9F%E6%82%9F/</url>
+    <content><![CDATA[Aunt TaiAunt Tai is strong-willed and resilient. Her optimistic attitude is something worth learning from. The greatest thing my father ever did was marrying my mother—a truly great woman. A real woman should face everything with positivity and build the future she desires with her own hands.
+Although she resorted to stealing, it was driven by hardship—survival and family. Setting aside pride to do things against her will is, in a way, a form of strength. It’s not about crying and making a scene, but staying proactive in adversity.
+Thinking about it, the author’s achievements are inseparable from his great mother.
+Ah, that lovely mother! To preserve her husband’s dignity and happiness, she insisted on completing the house. Isn’t that a form of strength too? To follow her heart courageously is truly admirable.
+In fact, the person who understands my father the most is my mother. She knows his pride. Isn’t this what love is? You don’t need to say it—I understand. I understand you, and you understand me, and that’s why we’ve been together for so long.
+Zhang MeiliGet up from where you fell. Zhang Meili seems like someone who pursued true love and worked hard for what she desired. Though she was eventually forced to liberate herself sexually, I still respect her for everything she once did.
+Public opinion is powerful, but Zhang Meili’s inner strength is even more powerful.
+]]></content>
   </entry>
   <entry>
     <title>Fully Understanding How the JavaScript `new` Operator Works</title>
