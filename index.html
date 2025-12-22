@@ -574,7 +574,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2025/10/17/%E5%A6%82%E4%BD%95%E9%98%B2%E5%BE%A1%20XSS%EF%BC%88%E8%B7%A8%E7%AB%99%E8%84%9A%E6%9C%AC%E6%94%BB%E5%87%BB%EF%BC%89/" class="post-title-link" itemprop="url">如何防御 XSS（跨站脚本攻击）</a>
+            <a href="/2025/10/17/%E5%A6%82%E4%BD%95%E9%98%B2%E5%BE%A1%20XSS%EF%BC%88%E8%B7%A8%E7%AB%99%E8%84%9A%E6%9C%AC%E6%94%BB%E5%87%BB%EF%BC%89/" class="post-title-link" itemprop="url">如何防御 XSS（跨站脚本攻击）：前端开发者必须掌握的安全实践</a>
         </h2>
 
         <div class="post-meta">
@@ -583,10 +583,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2025-10-17 00:00:00 / 修改时间：10:10:53" itemprop="dateCreated datePublished" datetime="2025-10-17T00:00:00+08:00">2025-10-17</time>
+              <time title="创建时间：2025-10-17 00:00:00" itemprop="dateCreated datePublished" datetime="2025-10-17T00:00:00+08:00">2025-10-17</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-12-22 11:42:02" itemprop="dateModified" datetime="2025-12-22T11:42:02+08:00">2025-12-22</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -608,20 +614,150 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <ol>
-<li><p>输入验证和过滤：对用户输入的数据进行严格验证和过滤，确保用户输入的内容不包含恶意脚本。可以使用正则表达式、HTML编码等方式来过滤用户输入。</p>
-</li>
-<li><p>使用安全的API：避免直接在前端代码中操作敏感数据，尽量使用后端API来处理用户输入和返回数据，以减少XSS攻击的可能性。</p>
-</li>
-<li><p>使用内容安全策略（CSP）：通过在网页中添加CSP头部，限制浏览器加载外部资源的方式，可以有效减少XSS攻击的风险。CSP可以限制哪些资源可以被加载，从而减少恶意脚本的注入。</p>
-</li>
-<li><p>使用HttpOnly标记：在设置Cookie时，使用HttpOnly标记可以防止JavaScript访问Cookie，从而减少XSS攻击对Cookie的窃取。</p>
-</li>
-<li><p>定期更新和维护第三方库：确保使用的第三方库和插件没有已知的安全漏洞，及时更新到最新版本，以减少XSS攻击的风险。</p>
-</li>
-<li><p>安全编程实践：避免在前端代码中直接拼接用户输入到HTML标签中，使用安全的方法来动态生成DOM元素，如使用createElement()等方法。</p>
-</li>
-</ol>
+          <p>在 Web 开发中，<strong>XSS（Cross-Site Scripting，跨站脚本攻击）</strong> 是最常见、危害也非常大的安全漏洞之一。<br>一旦网站存在 XSS 漏洞，攻击者就可能在用户浏览器中执行恶意脚本，进而窃取 Cookie、劫持会话、篡改页面内容，甚至控制用户账号。</p>
+<p>本文将从 <strong>原理 + 实战防御手段</strong> 的角度，系统讲解前端和全栈开发中 <strong>如何有效防御 XSS 攻击</strong></p>
+<h2 id="一、什么是-XSS-攻击？"><a href="#一、什么是-XSS-攻击？" class="headerlink" title="一、什么是 XSS 攻击？"></a>一、什么是 XSS 攻击？</h2><p>XSS 的本质是：</p>
+<blockquote>
+<p><strong>攻击者将恶意 JavaScript 注入到网页中，并在其他用户的浏览器里执行。</strong></p>
+</blockquote>
+<p>常见的 XSS 攻击类型包括：</p>
+<ul>
+<li><strong>反射型 XSS</strong>：恶意脚本来自 URL 参数</li>
+<li><strong>存储型 XSS</strong>：恶意脚本被存储在数据库中</li>
+<li><strong>DOM 型 XSS</strong>：前端 JS 逻辑直接操作不可信数据</li>
+</ul>
+<p>不论是哪种形式，核心问题都在于：<br>👉 <strong>用户输入被当作代码执行了</strong></p>
+<h2 id="二、输入验证和过滤（最基础也是最重要）"><a href="#二、输入验证和过滤（最基础也是最重要）" class="headerlink" title="二、输入验证和过滤（最基础也是最重要）"></a>二、输入验证和过滤（最基础也是最重要）</h2><p><strong>永远不要相信用户输入。</strong></p>
+<h3 id="1-前端层面的基本校验"><a href="#1-前端层面的基本校验" class="headerlink" title="1. 前端层面的基本校验"></a>1. 前端层面的基本校验</h3><p>在前端可以做一些基础校验，例如：</p>
+<ul>
+<li>限制输入长度</li>
+<li>限制输入格式（如邮箱、手机号）</li>
+<li>过滤明显的危险字符</li>
+</ul>
+<p>示例（仅用于基础校验）：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">sanitizeInput</span>(<span class="params">input</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> input.<span class="title function_">replace</span>(<span class="regexp">/[&lt;&gt;]/g</span>, <span class="string">&#x27;&#x27;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>⚠️ 注意：<br><strong>前端校验只能作为用户体验优化，不能作为最终安全防线。</strong></p>
+<h3 id="2-后端必须做严格校验（关键）"><a href="#2-后端必须做严格校验（关键）" class="headerlink" title="2. 后端必须做严格校验（关键）"></a>2. 后端必须做严格校验（关键）</h3><p>真正有效的输入验证 <strong>必须在后端完成</strong>：</p>
+<ul>
+<li>校验数据类型</li>
+<li>校验长度</li>
+<li>拒绝不符合业务规则的输入</li>
+<li>对 HTML 内容进行转义或白名单过滤</li>
+</ul>
+<p>推荐策略：</p>
+<ul>
+<li><strong>默认拒绝</strong></li>
+<li><strong>白名单优先</strong></li>
+</ul>
+<h2 id="三、对输出进行编码（比过滤更重要）"><a href="#三、对输出进行编码（比过滤更重要）" class="headerlink" title="三、对输出进行编码（比过滤更重要）"></a>三、对输出进行编码（比过滤更重要）</h2><p>很多 XSS 漏洞并不是“输入有问题”，而是<strong>输出方式不安全</strong>。</p>
+<h3 id="1-HTML-转义输出"><a href="#1-HTML-转义输出" class="headerlink" title="1. HTML 转义输出"></a>1. HTML 转义输出</h3><p>在将用户输入输出到页面时，应进行 HTML 编码：</p>
+<table>
+<thead>
+<tr>
+<th>原字符</th>
+<th>转义后</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>&lt;</code></td>
+<td><code>&amp;lt;</code></td>
+</tr>
+<tr>
+<td><code>&gt;</code></td>
+<td><code>&amp;gt;</code></td>
+</tr>
+<tr>
+<td><code>&quot;</code></td>
+<td><code>&amp;quot;</code></td>
+</tr>
+<tr>
+<td><code>&#39;</code></td>
+<td><code>&amp;#39;</code></td>
+</tr>
+</tbody></table>
+<p>很多模板引擎（如 Vue、React、Handlebars）<strong>默认会做转义</strong>，不要轻易关闭。</p>
+<hr>
+<h3 id="2-避免危险-API"><a href="#2-避免危险-API" class="headerlink" title="2. 避免危险 API"></a>2. 避免危险 API</h3><p>尽量避免以下写法：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">element.<span class="property">innerHTML</span> = userInput;</span><br></pre></td></tr></table></figure>
+
+<p>推荐安全方式：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">element.<span class="property">textContent</span> = userInput;</span><br></pre></td></tr></table></figure>
+
+<p>或者：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> el = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&#x27;div&#x27;</span>);</span><br><span class="line">el.<span class="property">textContent</span> = userInput;</span><br><span class="line">container.<span class="title function_">appendChild</span>(el);</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="四、使用安全的-API-和框架机制"><a href="#四、使用安全的-API-和框架机制" class="headerlink" title="四、使用安全的 API 和框架机制"></a>四、使用安全的 API 和框架机制</h2><p>现代前端框架本身已经内置了大量 XSS 防护机制。</p>
+<h3 id="1-React-Vue-的默认保护"><a href="#1-React-Vue-的默认保护" class="headerlink" title="1. React &#x2F; Vue 的默认保护"></a>1. React &#x2F; Vue 的默认保护</h3><ul>
+<li>JSX &#x2F; 模板语法默认转义</li>
+<li>明确标注危险行为（如 <code>v-html</code>、<code>dangerouslySetInnerHTML</code>）</li>
+</ul>
+<p>⚠️ 一旦使用这些 API，就必须 <strong>100% 确保内容可信</strong></p>
+<h3 id="2-避免在前端拼接-HTML-字符串"><a href="#2-避免在前端拼接-HTML-字符串" class="headerlink" title="2. 避免在前端拼接 HTML 字符串"></a>2. 避免在前端拼接 HTML 字符串</h3><p>错误示例：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">container.<span class="property">innerHTML</span> = <span class="string">`&lt;div&gt;<span class="subst">$&#123;userInput&#125;</span>&lt;/div&gt;`</span>;</span><br></pre></td></tr></table></figure>
+
+<p>正确做法：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> div = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&#x27;div&#x27;</span>);</span><br><span class="line">div.<span class="property">textContent</span> = userInput;</span><br><span class="line">container.<span class="title function_">appendChild</span>(div);</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="五、使用内容安全策略（CSP）"><a href="#五、使用内容安全策略（CSP）" class="headerlink" title="五、使用内容安全策略（CSP）"></a>五、使用内容安全策略（CSP）</h2><p><strong>CSP（Content Security Policy）</strong> 是防御 XSS 的“终极武器”之一。</p>
+<h3 id="1-CSP-能做什么？"><a href="#1-CSP-能做什么？" class="headerlink" title="1. CSP 能做什么？"></a>1. CSP 能做什么？</h3><ul>
+<li>禁止内联脚本执行</li>
+<li>限制脚本来源</li>
+<li>阻止恶意第三方资源加载</li>
+</ul>
+<p>示例 HTTP 头：</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Content-Security-Policy</span>:</span><br><span class="line">  default-src &#x27;self&#x27;;</span><br><span class="line">  script-src &#x27;self&#x27;;</span><br><span class="line">  object-src &#x27;none&#x27;;</span><br></pre></td></tr></table></figure>
+
+<p>即使攻击者成功注入脚本，只要 CSP 生效，浏览器也会拒绝执行。</p>
+<h3 id="2-为什么-CSP-非常重要？"><a href="#2-为什么-CSP-非常重要？" class="headerlink" title="2. 为什么 CSP 非常重要？"></a>2. 为什么 CSP 非常重要？</h3><p>因为它属于：</p>
+<ul>
+<li><strong>浏览器层面的安全防护</strong></li>
+<li>就算代码有疏漏，也能兜底</li>
+</ul>
+<h2 id="六、使用-HttpOnly-和-Secure-Cookie"><a href="#六、使用-HttpOnly-和-Secure-Cookie" class="headerlink" title="六、使用 HttpOnly 和 Secure Cookie"></a>六、使用 HttpOnly 和 Secure Cookie</h2><h3 id="1-HttpOnly-的作用"><a href="#1-HttpOnly-的作用" class="headerlink" title="1. HttpOnly 的作用"></a>1. HttpOnly 的作用</h3><p>设置 Cookie 时加上 <code>HttpOnly</code>：</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Set-Cookie</span><span class="punctuation">: </span>sessionId=xxx; HttpOnly;</span><br></pre></td></tr></table></figure>
+
+<p>这样可以：</p>
+<ul>
+<li>防止 JavaScript 读取 Cookie</li>
+<li>即使发生 XSS，也能降低会话被盗风险</li>
+</ul>
+<h3 id="2-配合-Secure-和-SameSite"><a href="#2-配合-Secure-和-SameSite" class="headerlink" title="2. 配合 Secure 和 SameSite"></a>2. 配合 Secure 和 SameSite</h3><p>推荐同时使用：</p>
+<ul>
+<li><code>Secure</code></li>
+<li><code>SameSite=Strict</code> 或 <code>Lax</code></li>
+</ul>
+<p>提升整体安全等级。</p>
+<h2 id="七、定期更新第三方库和依赖"><a href="#七、定期更新第三方库和依赖" class="headerlink" title="七、定期更新第三方库和依赖"></a>七、定期更新第三方库和依赖</h2><p>现实中的 XSS 漏洞，<strong>大量来自第三方依赖</strong>：</p>
+<ul>
+<li>旧版本 UI 组件</li>
+<li>不再维护的插件</li>
+<li>存在漏洞的 npm 包</li>
+</ul>
+<p>建议：</p>
+<ul>
+<li>定期更新依赖</li>
+<li>使用 <code>npm audit</code></li>
+<li>关注安全公告</li>
+</ul>
+<h2 id="八、良好的安全编程习惯"><a href="#八、良好的安全编程习惯" class="headerlink" title="八、良好的安全编程习惯"></a>八、良好的安全编程习惯</h2><p>最后，防御 XSS 不是“某一个技巧”，而是一整套习惯：</p>
+<ul>
+<li>不信任任何外部输入</li>
+<li>不随意使用 <code>innerHTML</code></li>
+<li>不忽略安全警告</li>
+<li>安全优先于“图方便”</li>
+</ul>
+<h2 id="九、总结"><a href="#九、总结" class="headerlink" title="九、总结"></a>九、总结</h2><ul>
+<li>XSS 是最常见、也是最危险的 Web 安全问题之一</li>
+<li>真正有效的防御需要 <strong>前端 + 后端 + 浏览器策略</strong> 三层配合</li>
+<li>输入校验只是开始，<strong>安全输出和 CSP 才是关键</strong></li>
+<li>养成良好的安全编程习惯，比任何补丁都重要</li>
+</ul>
+<p>对于前端开发者来说，<br><strong>懂得如何防御 XSS，是走向专业的重要一步。</strong></p>
 
       
     </div>
@@ -1242,7 +1378,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">17</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
