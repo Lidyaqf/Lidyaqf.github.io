@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
@@ -59,19 +59,19 @@
 
 
 
-  <meta name="description" content="Fabric：同步渲染 UI，消除 Bridge 通信瓶颈 TurboModules：按需加载原生模块，提升启动速度 JSI（JavaScript Interface）：直接调用原生代码，替代异步 Bridge, Bridge是异步的、单线程的，会带来额外的开销；而JSI是同步的，更低开销、并发的。">
+  <meta name="description" content="Installing Puppeteer on Baota (CentOS 8)When using CentOS 8, yum may fail because CentOS 8 is no longer officially maintained.To fix this, you need to switch the YUM mirror source, clear the cache, an">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ReactNative新架构">
-<meta property="og:url" content="https://lidyaqf.github.io/2025/08/19/ReactNative%E6%96%B0%E6%9E%B6%E6%9E%84/index.html">
-<meta property="og:site_name" content="枫叶白">
-<meta property="og:description" content="Fabric：同步渲染 UI，消除 Bridge 通信瓶颈 TurboModules：按需加载原生模块，提升启动速度 JSI（JavaScript Interface）：直接调用原生代码，替代异步 Bridge, Bridge是异步的、单线程的，会带来额外的开销；而JSI是同步的，更低开销、并发的。">
-<meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2025-08-18T16:00:00.000Z">
-<meta property="article:modified_time" content="2025-08-19T03:34:25.317Z">
+<meta property="og:title" content="Installing Puppeteer on Baota Panel">
+<meta property="og:url" content="https://lidyaqf.github.io/2025/09/02/%E5%AE%9D%E5%A1%94%E5%AE%89%E8%A3%85puppeteer/index.html">
+<meta property="og:site_name" content="My English Blog">
+<meta property="og:description" content="Installing Puppeteer on Baota (CentOS 8)When using CentOS 8, yum may fail because CentOS 8 is no longer officially maintained.To fix this, you need to switch the YUM mirror source, clear the cache, an">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-09-01T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-01-14T07:16:25.108Z">
 <meta property="article:author" content="lidya">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://lidyaqf.github.io/2025/08/19/ReactNative%E6%96%B0%E6%9E%B6%E6%9E%84/">
+<link rel="canonical" href="https://lidyaqf.github.io/2025/09/02/%E5%AE%9D%E5%A1%94%E5%AE%89%E8%A3%85puppeteer/">
 
 
 <script id="page-configurations">
@@ -80,11 +80,11 @@
     sidebar: "",
     isHome : false,
     isPost : true,
-    lang   : 'zh-CN'
+    lang   : 'en'
   };
 </script>
 
-  <title>ReactNative新架构 | 枫叶白</title>
+  <title>Installing Puppeteer on Baota Panel | My English Blog</title>
   
 
 
@@ -124,7 +124,7 @@
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
+    <div class="toggle" aria-label="Toggle navigation bar">
       <span class="toggle-line toggle-line-first"></span>
       <span class="toggle-line toggle-line-middle"></span>
       <span class="toggle-line toggle-line-last"></span>
@@ -135,7 +135,7 @@
 
     <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">枫叶白</h1>
+      <h1 class="site-title">My English Blog</h1>
       <span class="logo-line-after"><i></i></span>
     </a>
   </div>
@@ -154,22 +154,22 @@
   <ul id="menu" class="main-menu menu">
         <li class="menu-item menu-item-home">
 
-    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+    <a href="/ening/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
 
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+    <a href="/ening/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+    <a href="/ening/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
 
   </li>
         <li class="menu-item menu-item-english">
@@ -177,8 +177,13 @@
     <a href="/ening" rel="section"><i class="fa fa-language fa-fw"></i>English</a>
 
   </li>
+        <li class="menu-item menu-item-中文">
+
+    <a href="/../" rel="section"><i class="fa fa-language fa-fw"></i>中文</a>
+
+  </li>
       <li class="menu-item menu-item-search">
-        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
       </li>
   </ul>
@@ -194,7 +199,7 @@
   </span>
   <div class="search-input-container">
     <input autocomplete="off" autocapitalize="off"
-           placeholder="搜索..." spellcheck="false"
+           placeholder="Searching..." spellcheck="false"
            type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
@@ -231,21 +236,21 @@
     
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://lidyaqf.github.io/2025/08/19/ReactNative%E6%96%B0%E6%9E%B6%E6%9E%84/">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://lidyaqf.github.io/2025/09/02/%E5%AE%9D%E5%A1%94%E5%AE%89%E8%A3%85puppeteer/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
       <meta itemprop="name" content="lidya">
-      <meta itemprop="description" content="服人以诚不以言">
+      <meta itemprop="description" content="">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="枫叶白">
+      <meta itemprop="name" content="My English Blog">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          ReactNative新架构
+          Installing Puppeteer on Baota Panel
         </h1>
 
         <div class="post-meta">
@@ -253,27 +258,33 @@
               <span class="post-meta-item-icon">
                 <i class="far fa-calendar"></i>
               </span>
-              <span class="post-meta-item-text">发表于</span>
-              
+              <span class="post-meta-item-text">Posted on</span>
 
-              <time title="创建时间：2025-08-19 00:00:00 / 修改时间：11:34:25" itemprop="dateCreated datePublished" datetime="2025-08-19T00:00:00+08:00">2025-08-19</time>
+              <time title="Created: 2025-09-02 00:00:00" itemprop="dateCreated datePublished" datetime="2025-09-02T00:00:00+08:00">2025-09-02</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2026-01-14 15:16:25" itemprop="dateModified" datetime="2026-01-14T15:16:25+08:00">2026-01-14</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
-              <span class="post-meta-item-text">分类于</span>
+              <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
+                  <a href="/categories/Frontend/" itemprop="url" rel="index"><span itemprop="name">Frontend</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
-              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="post-meta-item-text">Views: </span>
               <span id="busuanzi_value_page_pv"></span>
             </span>
 
@@ -286,11 +297,21 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <ul>
-<li>Fabric：同步渲染 UI，消除 Bridge 通信瓶颈</li>
-<li>TurboModules：按需加载原生模块，提升启动速度</li>
-<li>JSI（JavaScript Interface）：直接调用原生代码，替代异步 Bridge, Bridge是异步的、单线程的，会带来额外的开销；而JSI是同步的，更低开销、并发的。</li>
-</ul>
+        <h2 id="Installing-Puppeteer-on-Baota-CentOS-8"><a href="#Installing-Puppeteer-on-Baota-CentOS-8" class="headerlink" title="Installing Puppeteer on Baota (CentOS 8)"></a>Installing Puppeteer on Baota (CentOS 8)</h2><p>When using <strong>CentOS 8</strong>, <code>yum</code> may fail because CentOS 8 is no longer officially maintained.<br>To fix this, you need to <strong>switch the YUM mirror source</strong>, clear the cache, and rebuild it.</p>
+<h3 id="1-Replace-the-YUM-repository-source"><a href="#1-Replace-the-YUM-repository-source" class="headerlink" title="1. Replace the YUM repository source"></a>1. Replace the YUM repository source</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget -O /etc/yum.repos.d/CentOS-Base.repo https://mirrors.aliyun.com/repo/Centos-8.repo</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-Clean-YUM-cache"><a href="#2-Clean-YUM-cache" class="headerlink" title="2. Clean YUM cache"></a>2. Clean YUM cache</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> yum clean all</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-Rebuild-YUM-cache"><a href="#3-Rebuild-YUM-cache" class="headerlink" title="3. Rebuild YUM cache"></a>3. Rebuild YUM cache</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> yum makecache</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>⚠️ Note:<br>CentOS 8 has reached <strong>End of Life (EOL)</strong> and is no longer maintained.<br>You must rely on third-party mirror sources to continue using <code>yum</code>.</p>
+</blockquote>
+<h2 id="Puppeteer-Dependency-Download-Error"><a href="#Puppeteer-Dependency-Download-Error" class="headerlink" title="Puppeteer Dependency Download Error"></a>Puppeteer Dependency Download Error</h2><p>When installing <strong>Puppeteer</strong>, you may encounter errors while downloading Chromium dependencies.</p>
+<p>You can refer to this article for details:<br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/ilizhu/p/14504049.html">https://www.cnblogs.com/ilizhu/p/14504049.html</a></p>
+<h2 id="Puppeteer-Sandbox-Error"><a href="#Puppeteer-Sandbox-Error" class="headerlink" title="Puppeteer Sandbox Error"></a>Puppeteer Sandbox Error</h2><p>On some servers (such as Baota or other managed VPS environments), Puppeteer may fail to launch Chromium due to <strong>sandbox restrictions</strong>.</p>
+<h3 id="Solution-Disable-sandbox-when-launching-Puppeteer"><a href="#Solution-Disable-sandbox-when-launching-Puppeteer" class="headerlink" title="Solution: Disable sandbox when launching Puppeteer"></a>Solution: Disable sandbox when launching Puppeteer</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Add launch arguments to disable sandbox</span></span><br><span class="line"><span class="keyword">const</span> browser = <span class="keyword">await</span> puppeteer.<span class="title function_">launch</span>(&#123;</span><br><span class="line">  <span class="attr">args</span>: [<span class="string">&#x27;--no-sandbox&#x27;</span>, <span class="string">&#x27;--disable-setuid-sandbox&#x27;</span>]</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
 
     </div>
 
@@ -311,14 +332,14 @@
 <div>
 <ul class="post-copyright">
   <li class="post-copyright-author">
-    <strong>本文作者： </strong>lidya
+    <strong>Post author:  </strong>lidya
   </li>
   <li class="post-copyright-link">
-    <strong>本文链接：</strong>
-    <a href="https://lidyaqf.github.io/2025/08/19/ReactNative%E6%96%B0%E6%9E%B6%E6%9E%84/" title="ReactNative新架构">https://lidyaqf.github.io/2025/08/19/ReactNative新架构/</a>
+    <strong>Post link: </strong>
+    <a href="https://lidyaqf.github.io/2025/09/02/%E5%AE%9D%E5%A1%94%E5%AE%89%E8%A3%85puppeteer/" title="Installing Puppeteer on Baota Panel">https://lidyaqf.github.io/2025/09/02/宝塔安装puppeteer/</a>
   </li>
   <li class="post-copyright-license">
-    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
   </li>
 </ul>
 </div>
@@ -332,12 +353,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2025/08/18/Hexo-Next-%E6%9B%B4%E6%94%B9%E5%AD%97%E4%BD%93/" rel="prev" title="Hexo-Next-更改字体、代码可复制">
-      <i class="fa fa-chevron-left"></i> Hexo-Next-更改字体、代码可复制
+    <a href="/2025/07/16/node-rpc/" rel="prev" title="Talking About Node RPC">
+      <i class="fa fa-chevron-left"></i> Talking About Node RPC
     </a></div>
       <div class="post-nav-item">
-    <a href="/2025/08/21/%E4%B8%AD%E5%B0%8F%E5%AD%A6%E4%BF%A1%E6%81%AF%E6%8A%80%E6%9C%AF%E6%95%99%E5%AD%A6%E6%A8%A1%E7%89%88/" rel="next" title="中小学信息技术教学模版">
-      中小学信息技术教学模版 <i class="fa fa-chevron-right"></i>
+    <a href="/2025/10/17/%E5%A6%82%E4%BD%95%E9%98%B2%E5%BE%A1%20XSS%EF%BC%88%E8%B7%A8%E7%AB%99%E8%84%9A%E6%9C%AC%E6%94%BB%E5%87%BB%EF%BC%89/" rel="next" title="How to Prevent XSS">
+      How to Prevent XSS <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -393,15 +414,16 @@
 
       <ul class="sidebar-nav motion-element">
         <li class="sidebar-nav-toc">
-          文章目录
+          Table of Contents
         </li>
         <li class="sidebar-nav-overview">
-          站点概览
+          Overview
         </li>
       </ul>
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Installing-Puppeteer-on-Baota-CentOS-8"><span class="nav-number">1.</span> <span class="nav-text">Installing Puppeteer on Baota (CentOS 8)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Replace-the-YUM-repository-source"><span class="nav-number">1.1.</span> <span class="nav-text">1. Replace the YUM repository source</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Clean-YUM-cache"><span class="nav-number">1.2.</span> <span class="nav-text">2. Clean YUM cache</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-Rebuild-YUM-cache"><span class="nav-number">1.3.</span> <span class="nav-text">3. Rebuild YUM cache</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Puppeteer-Dependency-Download-Error"><span class="nav-number">2.</span> <span class="nav-text">Puppeteer Dependency Download Error</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Puppeteer-Sandbox-Error"><span class="nav-number">3.</span> <span class="nav-text">Puppeteer Sandbox Error</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution-Disable-sandbox-when-launching-Puppeteer"><span class="nav-number">3.1.</span> <span class="nav-text">Solution: Disable sandbox when launching Puppeteer</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -410,28 +432,28 @@
     <img class="site-author-image" itemprop="image" alt="lidya"
       src="/images/avatar.jpg">
   <p class="site-author-name" itemprop="name">lidya</p>
-  <div class="site-description" itemprop="description">服人以诚不以言</div>
+  <div class="site-description" itemprop="description"></div>
 </div>
 <div class="site-state-wrap motion-element">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
-          <a href="/archives/">
+          <a href="/ening/archives/">
         
-          <span class="site-state-item-count">32</span>
-          <span class="site-state-item-name">日志</span>
+          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-            <a href="/categories/">
+            <a href="/ening/categories/">
           
-        <span class="site-state-item-count">5</span>
-        <span class="site-state-item-name">分类</span></a>
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">17</span>
-        <span class="site-state-item-name">标签</span></a>
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
 </div>
@@ -478,7 +500,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-user"></i>
       </span>
-      <span class="site-uv" title="总访客量">
+      <span class="site-uv" title="Total Visitors">
         <span id="busuanzi_value_site_uv"></span>
       </span>
     </span>
@@ -487,7 +509,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-eye"></i>
       </span>
-      <span class="site-pv" title="总访问量">
+      <span class="site-pv" title="Total Views">
         <span id="busuanzi_value_site_pv"></span>
       </span>
     </span>

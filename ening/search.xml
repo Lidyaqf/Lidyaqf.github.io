@@ -1,85 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>ELK Installation Guide</title>
-    <url>/2025/04/11/ELK%E5%AE%89%E8%A3%85%E6%B5%81%E7%A8%8B/</url>
-    <content><![CDATA[Installing ELK Stack (ElasticSearch, Logstash, Kibana) with Docker
-It is recommended to install on Docker due to lower resource consumption. The installation version used below is 8.12.2. Please use the same version to avoid conflicts.
-
-Table of Contents1. Install ElasticSearch2. Install Logstash3. Install KibanaRecommendations
-
-1. Install ElasticSearch
-Pull the image:
-
-docker pull elasticsearch:8.12.2````* Start the container:```bashdocker run --name some-elasticsearch -p 9200:9200 -p 9300:9300 -e &quot;discovery.type=single-node&quot; -d elasticsearch:8.12.2
-
-
-Enter the container:
-
-sudo docker exec -u 0 -it some-elasticsearch bash
-
-
-Restart the container:
-
-docker restart some-elasticsearch
-
-
-2. Install Logstash
-Pull the image:
-
-docker pull docker.elastic.co/logstash/logstash:8.12.2
-
-
-Start the container:
-
-sudo docker run -it -p 5044:5044 -p 9600:9600 --name logstash -v /usr/share/logstash/piplines:/usr/share/logstash/config --privileged=true docker.elastic.co/logstash/logstash:8.12.2 /bin/bash
-
-
-Use scp to upload the MySQL Connector JAR file to the virtual machine:
-
-scp &quot;/Users/Downloads/logstash-8.12.2/mysql-connector-j-8.4.0.jar&quot; username@VM-IP:/home
-
-
-Move the JAR file from the VM to the Logstash container:
-
-docker cp ./mysql-connector-j-8.4.0.jar logstash:/usr/share/logstash
-
-
-Enter the container:
-
-docker exec -u 0 -it logstash bash
-
-
-3. Install Kibana
-Pull the image:
-
-docker pull kibana:8.12.2
-
-
-Start the container:
-
-docker run --name some-kibana -p 9200:9200 -p 9300:9300 -e &quot;discovery.type=single-node&quot; -d elasticsearch:8.12.2
-
-
-Enter the container:
-
-docker exec -u 0 -it some-kibana bash
-
-
-Additional: Install Docker, Portainer, and Related Commandssudo apt updatesudo apt install docker.io docker-composedocker -vsudo systemctl start dockersudo docker search portainerdocker pull portainer/portainersudo docker pull portainer/portainersudo docker run -d --name portainerUI -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock portainer/portainersudo docker start portainerUIsudo passwd root
-
-
-
-
-
-
-
-]]></content>
-      <categories>
-        <category>Backend</category>
-      </categories>
-  </entry>
-  <entry>
     <title>GitLab CI/CD</title>
     <url>/2025/04/10/gitlabci/</url>
     <content><![CDATA[GitLab CI&#x2F;CD Guide for Frontend Projects (Mac Environment)OverviewIn daily development, we often manually send the built dist package to the backend for deployment, which is inefficient and error-prone. CI (Continuous Integration) automates this process. This guide shows how to use GitLab CI to implement continuous integration and deployment.
@@ -172,31 +93,89 @@ function foo() &#123;  &quot;use strict&quot;;  console.log(this.a); // ❌ Type
       </categories>
   </entry>
   <entry>
-    <title>Hello English</title>
-    <url>/2024/08/16/redis-en/</url>
-    <content><![CDATA[This is an English post.
-]]></content>
-  </entry>
-  <entry>
-    <title>Talking About Node RPC</title>
-    <url>/2025/07/16/node-rpc/</url>
-    <content><![CDATA[
-What Is SerializationData transmitted over a TCP channel can only be in binary form. So converting a data structure or an object into binary form is called serialization. The reverse process is called deserialization. The rules that define how they convert back and forth are called a protocol.
+    <title>ELK Installation Guide</title>
+    <url>/2025/04/11/ELK%E5%AE%89%E8%A3%85%E6%B5%81%E7%A8%8B/</url>
+    <content><![CDATA[Installing ELK Stack (ElasticSearch, Logstash, Kibana) with Docker
+It is recommended to install on Docker due to lower resource consumption. The installation version used below is 8.12.2. Please use the same version to avoid conflicts.
 
-What Is RPCRPC stands for Remote Procedure Call. Most RPC systems are based on TCP. The general implementation flow is as follows:
+Table of Contents1. Install ElasticSearch2. Install Logstash3. Install KibanaRecommendations
 
-The frontend calls the corresponding interface through a Proxy. The Proxy converts information such as the RPC service name, method name, and parameters into an RPC Request object and passes it to the RPC framework.
-The RPC framework serializes the RPC Request object into binary form according to the RPC protocol.
-The RPC framework sends the binary data to the backend through a TCP channel.
-The backend deserializes the binary data back into an RPC Request object.
-The backend maps the deserialized data to the actual method it implements, passes in the parameters, obtains the result, and then packages it into an RPC Response object for the RPC framework.
-The RPC framework serializes the RPC Response object into binary form according to the RPC protocol and sends it back to the frontend through the TCP channel.
-After receiving the binary data, the frontend deserializes it into an RPC Response object, and the Proxy returns the result to the business code.
+1. Install ElasticSearch
+Pull the image:
+
+docker pull elasticsearch:8.12.2````* Start the container:```bashdocker run --name some-elasticsearch -p 9200:9200 -p 9300:9300 -e &quot;discovery.type=single-node&quot; -d elasticsearch:8.12.2
+
+
+Enter the container:
+
+sudo docker exec -u 0 -it some-elasticsearch bash
+
+
+Restart the container:
+
+docker restart some-elasticsearch
+
+
+2. Install Logstash
+Pull the image:
+
+docker pull docker.elastic.co/logstash/logstash:8.12.2
+
+
+Start the container:
+
+sudo docker run -it -p 5044:5044 -p 9600:9600 --name logstash -v /usr/share/logstash/piplines:/usr/share/logstash/config --privileged=true docker.elastic.co/logstash/logstash:8.12.2 /bin/bash
+
+
+Use scp to upload the MySQL Connector JAR file to the virtual machine:
+
+scp &quot;/Users/Downloads/logstash-8.12.2/mysql-connector-j-8.4.0.jar&quot; username@VM-IP:/home
+
+
+Move the JAR file from the VM to the Logstash container:
+
+docker cp ./mysql-connector-j-8.4.0.jar logstash:/usr/share/logstash
+
+
+Enter the container:
+
+docker exec -u 0 -it logstash bash
+
+
+3. Install Kibana
+Pull the image:
+
+docker pull kibana:8.12.2
+
+
+Start the container:
+
+docker run --name some-kibana -p 9200:9200 -p 9300:9300 -e &quot;discovery.type=single-node&quot; -d elasticsearch:8.12.2
+
+
+Enter the container:
+
+docker exec -u 0 -it some-kibana bash
+
+
+Additional: Install Docker, Portainer, and Related Commandssudo apt updatesudo apt install docker.io docker-composedocker -vsudo systemctl start dockersudo docker search portainerdocker pull portainer/portainersudo docker pull portainer/portainersudo docker run -d --name portainerUI -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock portainer/portainersudo docker start portainerUIsudo passwd root
+
+
+
+
+
+
 
 ]]></content>
       <categories>
         <category>Backend</category>
       </categories>
+  </entry>
+  <entry>
+    <title>Hello English</title>
+    <url>/2024/08/16/redis-en/</url>
+    <content><![CDATA[This is an English post.
+]]></content>
   </entry>
   <entry>
     <title>One Day You&#39;ll Understand - Reading Notes by Mr. Zhuomo</title>
@@ -563,6 +542,29 @@ For frontend developers,understanding how to prevent XSS is a key step toward tr
       </tags>
   </entry>
   <entry>
+    <title>Installing Puppeteer on Baota Panel</title>
+    <url>/2025/09/02/%E5%AE%9D%E5%A1%94%E5%AE%89%E8%A3%85puppeteer/</url>
+    <content><![CDATA[Installing Puppeteer on Baota (CentOS 8)When using CentOS 8, yum may fail because CentOS 8 is no longer officially maintained.To fix this, you need to switch the YUM mirror source, clear the cache, and rebuild it.
+1. Replace the YUM repository sourcewget -O /etc/yum.repos.d/CentOS-Base.repo https://mirrors.aliyun.com/repo/Centos-8.repo
+
+2. Clean YUM cachesudo yum clean all
+
+3. Rebuild YUM cachesudo yum makecache
+
+
+⚠️ Note:CentOS 8 has reached End of Life (EOL) and is no longer maintained.You must rely on third-party mirror sources to continue using yum.
+
+Puppeteer Dependency Download ErrorWhen installing Puppeteer, you may encounter errors while downloading Chromium dependencies.
+You can refer to this article for details:https://www.cnblogs.com/ilizhu/p/14504049.html
+Puppeteer Sandbox ErrorOn some servers (such as Baota or other managed VPS environments), Puppeteer may fail to launch Chromium due to sandbox restrictions.
+Solution: Disable sandbox when launching Puppeteer// Add launch arguments to disable sandboxconst browser = await puppeteer.launch(&#123;  args: [&#x27;--no-sandbox&#x27;, &#x27;--disable-setuid-sandbox&#x27;]&#125;);
+
+]]></content>
+      <categories>
+        <category>Frontend</category>
+      </categories>
+  </entry>
+  <entry>
     <title>Reflections on *What I Talk About When I Talk About Running*</title>
     <url>/2025/06/26/%E5%BD%93%E6%88%91%E8%B0%88%E8%B7%91%E6%AD%A5%E6%97%B6/</url>
     <content><![CDATA[What I Talk About When I Talk About RunningIt was through this book that I realized there could be another version of myself out there, doing something I love. Before reading this book, I had never read anything by Murakami. I knew he was popular and had many famous books, but I hadn’t really paid attention. But when it comes to running, I felt there could be a connection.
@@ -578,6 +580,139 @@ What’s most similar is that we both love to run non-stop. Not the type who wal
 When reaching the finish line, I’d feel so cool, a rush of pride, like winning the lottery or getting incredibly lucky. It’s a principle—and also my pride.
 Oh, right—just like Brother Shang waiting at the finish line, and I’d smile proudly.
 ]]></content>
+  </entry>
+  <entry>
+    <title>Talking About Node RPC</title>
+    <url>/2025/07/16/node-rpc/</url>
+    <content><![CDATA[
+What Is SerializationData transmitted over a TCP channel can only be in binary form. So converting a data structure or an object into binary form is called serialization. The reverse process is called deserialization. The rules that define how they convert back and forth are called a protocol.
+
+What Is RPCRPC stands for Remote Procedure Call. Most RPC systems are based on TCP. The general implementation flow is as follows:
+
+The frontend calls the corresponding interface through a Proxy. The Proxy converts information such as the RPC service name, method name, and parameters into an RPC Request object and passes it to the RPC framework.
+The RPC framework serializes the RPC Request object into binary form according to the RPC protocol.
+The RPC framework sends the binary data to the backend through a TCP channel.
+The backend deserializes the binary data back into an RPC Request object.
+The backend maps the deserialized data to the actual method it implements, passes in the parameters, obtains the result, and then packages it into an RPC Response object for the RPC framework.
+The RPC framework serializes the RPC Response object into binary form according to the RPC protocol and sends it back to the frontend through the TCP channel.
+After receiving the binary data, the frontend deserializes it into an RPC Response object, and the Proxy returns the result to the business code.
+
+]]></content>
+      <categories>
+        <category>Backend</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>Fully Understanding How the JavaScript `new` Operator Works</title>
+    <url>/2025/12/17/%E6%89%8B%E5%86%99New/</url>
+    <content><![CDATA[In JavaScript, the new operator is a core concept that frequently appears in both interviews and everyday development.Many developers use new regularly, but few truly understand what actually happens behind the scenes.
+In this article, we’ll implement new by hand, breaking down its internal mechanics step by step to help you fully understand how JavaScript objects are created.
+1. What Does the new Operator Actually Do?When we execute the following line of code:
+const person = new Person(&#x27;Alice&#x27;, 25);
+
+JavaScript actually performs four steps internally:
+
+Create a new empty object
+Set the object’s prototype to the constructor’s prototype
+Execute the constructor and bind this to the new object
+If the constructor returns an object, return it; otherwise return the new object
+
+Understanding these four steps is the key to understanding how new works.
+2. Why Implement new Manually?There are three main benefits to handwriting new:
+
+Deepens your understanding of the prototype chain and this binding
+It is a high-frequency frontend interview question
+Helps you understand how frameworks create objects internally
+
+Let’s jump straight into the code.
+3. Handwriting the new Operatorfunction myNew(constructor, ...args) &#123;  // 1. Create a new object and link its prototype  const obj = Object.create(constructor.prototype);  // 2. Execute the constructor with `this` bound to the new object  const result = constructor.apply(obj, args);  // 3. If the constructor returns an object, return it  //    Otherwise, return the newly created object  return result instanceof Object ? result : obj;&#125;
+
+This implementation fully reproduces the core behavior of the new operator.
+4. Line-by-Line Breakdown1. The Role of Object.createconst obj = Object.create(constructor.prototype);
+
+This is equivalent to:
+obj.__proto__ === constructor.prototype
+
+Which means:
+
+The new object can access methods on the constructor’s prototype
+The prototype chain is properly established
+
+2. constructor.apply(obj, args)const result = constructor.apply(obj, args);
+
+This step does two things:
+
+Executes the constructor function
+Binds this inside the constructor to the new object
+
+So code like this:
+this.name = name;this.age = age;
+
+Actually assigns properties directly to obj.
+3. Why Do We Check the Return Value?return result instanceof Object ? result : obj;
+
+This is a detail many developers overlook.
+Consider this example:
+function Test() &#123;  this.a = 1;  return &#123; b: 2 &#125;;&#125;const t = new Test();console.log(t); // &#123; b: 2 &#125;
+
+If a constructor explicitly returns an object, the new operator returns that object instead of this.
+That’s why we must handle this case in our myNew implementation.
+5. Testing Our myNew Functionfunction Person(name, age) &#123;  this.name = name;  this.age = age;&#125;const p1 = myNew(Person, &#x27;Alice&#x27;, 25);console.log(p1.name); // Aliceconsole.log(p1.age);  // 25console.log(p1 instanceof Person); // true
+
+The behavior matches native new perfectly.
+6. Comparing myNew and Native new
+
+
+Behavior
+new
+myNew
+
+
+
+Create new object
+✅
+✅
+
+
+Bind prototype
+✅
+✅
+
+
+Bind this
+✅
+✅
+
+
+Handle returned object
+✅
+✅
+
+
+In practice, myNew reproduces about 90% of the real new operator’s behavior, which is more than sufficient for interviews and deep understanding.
+7. Common Interview Follow-Up QuestionsQ1: Why not simply use const obj = &#123;&#125;?Because objects created with &#123;&#125; have their prototype set to Object.prototype.Objects created with new must have their prototype set to the constructor’s prototype.
+Q2: Can constructor.apply be replaced with call?Yes. The only difference is how arguments are passed:
+constructor.call(obj, ...args);
+
+
+
+Q3: How does instanceof work?p1 instanceof Person
+
+Internally, JavaScript checks whether:
+Person.prototype exists in p1’s prototype chain
+
+
+
+8. Summary
+The new operator is not magic—it follows a well-defined execution process
+Handwriting new is one of the best ways to understand prototype chains, this, and constructors
+Mastering this concept helps when learning Vue, React, and Node.js internals
+
+If you can both write and explain this implementation,90% of interviewers will consider your JavaScript fundamentals solid.
+]]></content>
+      <categories>
+        <category>Frontend</category>
+      </categories>
   </entry>
   <entry>
     <title>Handwriting Promise.race (From Theory to Practice)</title>
@@ -720,117 +855,5 @@ In fact, the person who understands my father the most is my mother. She knows h
 Zhang MeiliGet up from where you fell. Zhang Meili seems like someone who pursued true love and worked hard for what she desired. Though she was eventually forced to liberate herself sexually, I still respect her for everything she once did.
 Public opinion is powerful, but Zhang Meili’s inner strength is even more powerful.
 ]]></content>
-  </entry>
-  <entry>
-    <title>Fully Understanding How the JavaScript `new` Operator Works</title>
-    <url>/2025/12/17/%E6%89%8B%E5%86%99New/</url>
-    <content><![CDATA[In JavaScript, the new operator is a core concept that frequently appears in both interviews and everyday development.Many developers use new regularly, but few truly understand what actually happens behind the scenes.
-In this article, we’ll implement new by hand, breaking down its internal mechanics step by step to help you fully understand how JavaScript objects are created.
-1. What Does the new Operator Actually Do?When we execute the following line of code:
-const person = new Person(&#x27;Alice&#x27;, 25);
-
-JavaScript actually performs four steps internally:
-
-Create a new empty object
-Set the object’s prototype to the constructor’s prototype
-Execute the constructor and bind this to the new object
-If the constructor returns an object, return it; otherwise return the new object
-
-Understanding these four steps is the key to understanding how new works.
-2. Why Implement new Manually?There are three main benefits to handwriting new:
-
-Deepens your understanding of the prototype chain and this binding
-It is a high-frequency frontend interview question
-Helps you understand how frameworks create objects internally
-
-Let’s jump straight into the code.
-3. Handwriting the new Operatorfunction myNew(constructor, ...args) &#123;  // 1. Create a new object and link its prototype  const obj = Object.create(constructor.prototype);  // 2. Execute the constructor with `this` bound to the new object  const result = constructor.apply(obj, args);  // 3. If the constructor returns an object, return it  //    Otherwise, return the newly created object  return result instanceof Object ? result : obj;&#125;
-
-This implementation fully reproduces the core behavior of the new operator.
-4. Line-by-Line Breakdown1. The Role of Object.createconst obj = Object.create(constructor.prototype);
-
-This is equivalent to:
-obj.__proto__ === constructor.prototype
-
-Which means:
-
-The new object can access methods on the constructor’s prototype
-The prototype chain is properly established
-
-2. constructor.apply(obj, args)const result = constructor.apply(obj, args);
-
-This step does two things:
-
-Executes the constructor function
-Binds this inside the constructor to the new object
-
-So code like this:
-this.name = name;this.age = age;
-
-Actually assigns properties directly to obj.
-3. Why Do We Check the Return Value?return result instanceof Object ? result : obj;
-
-This is a detail many developers overlook.
-Consider this example:
-function Test() &#123;  this.a = 1;  return &#123; b: 2 &#125;;&#125;const t = new Test();console.log(t); // &#123; b: 2 &#125;
-
-If a constructor explicitly returns an object, the new operator returns that object instead of this.
-That’s why we must handle this case in our myNew implementation.
-5. Testing Our myNew Functionfunction Person(name, age) &#123;  this.name = name;  this.age = age;&#125;const p1 = myNew(Person, &#x27;Alice&#x27;, 25);console.log(p1.name); // Aliceconsole.log(p1.age);  // 25console.log(p1 instanceof Person); // true
-
-The behavior matches native new perfectly.
-6. Comparing myNew and Native new
-
-
-Behavior
-new
-myNew
-
-
-
-Create new object
-✅
-✅
-
-
-Bind prototype
-✅
-✅
-
-
-Bind this
-✅
-✅
-
-
-Handle returned object
-✅
-✅
-
-
-In practice, myNew reproduces about 90% of the real new operator’s behavior, which is more than sufficient for interviews and deep understanding.
-7. Common Interview Follow-Up QuestionsQ1: Why not simply use const obj = &#123;&#125;?Because objects created with &#123;&#125; have their prototype set to Object.prototype.Objects created with new must have their prototype set to the constructor’s prototype.
-Q2: Can constructor.apply be replaced with call?Yes. The only difference is how arguments are passed:
-constructor.call(obj, ...args);
-
-
-
-Q3: How does instanceof work?p1 instanceof Person
-
-Internally, JavaScript checks whether:
-Person.prototype exists in p1’s prototype chain
-
-
-
-8. Summary
-The new operator is not magic—it follows a well-defined execution process
-Handwriting new is one of the best ways to understand prototype chains, this, and constructors
-Mastering this concept helps when learning Vue, React, and Node.js internals
-
-If you can both write and explain this implementation,90% of interviewers will consider your JavaScript fundamentals solid.
-]]></content>
-      <categories>
-        <category>Frontend</category>
-      </categories>
   </entry>
 </search>

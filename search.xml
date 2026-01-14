@@ -84,18 +84,6 @@ docker exec -u 0 -it some-kibana bash
       </categories>
   </entry>
   <entry>
-    <title>Hexo-Next-更改字体、代码可复制</title>
-    <url>/2025/08/18/Hexo-Next-%E6%9B%B4%E6%94%B9%E5%AD%97%E4%BD%93/</url>
-    <content><![CDATA[Next版本为7.8.0，找到 &#x2F;themes&#x2F;next&#x2F;_config.yml 文件，搜索 font 关键词，这里注意一定要将 font 里面的 enable 设置为true, 因为默认为false，然后设置 family 为自己想要的，如果family在其他平台找的，就需要修改host。(只是修改了family， 没修改enable就会不生效，所以一定一定要记得)
-font:  enable: true  # Uri of fonts host, e.g. https://fonts.googleapis.com (Default).  host:   # Font options:  # `external: true` will load this font family from `host` above.  # `family: Times New Roman`. Without any quotes.  # `size: x.x`. Use `em` as unit. Default: 1 (16px)  # Global font settings used for all elements inside &lt;body&gt;.  global:    external: true    family: Noto Serif SC    size:  # Font settings for site title (.site-title).  title:    external: true    family: Noto Serif SC    size:  # Font settings for headlines (&lt;h1&gt; to &lt;h6&gt;).  headings:    external: true    family: Noto Serif SC    size:  # Font settings for posts (.post-body).  posts:    external: true    family:  Noto Serif SC  # Font settings for &lt;code&gt; and code blocks.  codes:    external: true    family: Source Code Pro
-
-代码可复制，还是上面同一个文件，找到以下代码段，将copy_button的enable设置为true，启用就可以啦。show_result设置true后，复制完会显示一个勾。style对应的copy_button不同的样式，看个人喜好来～
-codeblock:  # Code Highlight theme  # Available values: normal | night | night eighties | night blue | night bright | solarized | solarized dark | galactic  # See: https://github.com/chriskempson/tomorrow-theme  highlight_theme: night eighties  # Add copy button on codeblock  copy_button:    enable: true    # Show text copy result.    show_result: true    # Available values: default | flat | mac    style: mac]]></content>
-      <categories>
-        <category>前端</category>
-      </categories>
-  </entry>
-  <entry>
     <title>H5与原生交互</title>
     <url>/2025/07/04/H5%E4%B8%8E%E5%8E%9F%E7%94%9F%E4%BA%A4%E4%BA%92/</url>
     <content><![CDATA[H5手机端日志工具(vconsole手机端)：&lt;script src=&quot;https://cdn.bootcdn.net/ajax/libs/vConsole/3.15.1/vconsole.min.js&quot;&gt;&lt;/script&gt;&lt;script&gt;  // 初始化 vConsole  var vConsole = new VConsole();  console.log(&#x27;vConsole is ready.&#x27;);&lt;/script&gt;
@@ -106,6 +94,18 @@ codeblock:  # Code Highlight theme  # Available values: normal | night | night e
 
 当需要通过按钮跳转到app时：直接用 a 标签的 href 跳转，前提是原生应用定义了 myapp://*** 作为触发特定功能的URL，可参考 Instagram 的 H5 跳转 app 的竞品例子，instagram://**。一般跳不过去就是原生端不支持。
 ]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>Hexo-Next-更改字体、代码可复制</title>
+    <url>/2025/08/18/Hexo-Next-%E6%9B%B4%E6%94%B9%E5%AD%97%E4%BD%93/</url>
+    <content><![CDATA[Next版本为7.8.0，找到 &#x2F;themes&#x2F;next&#x2F;_config.yml 文件，搜索 font 关键词，这里注意一定要将 font 里面的 enable 设置为true, 因为默认为false，然后设置 family 为自己想要的，如果family在其他平台找的，就需要修改host。(只是修改了family， 没修改enable就会不生效，所以一定一定要记得)
+font:  enable: true  # Uri of fonts host, e.g. https://fonts.googleapis.com (Default).  host:   # Font options:  # `external: true` will load this font family from `host` above.  # `family: Times New Roman`. Without any quotes.  # `size: x.x`. Use `em` as unit. Default: 1 (16px)  # Global font settings used for all elements inside &lt;body&gt;.  global:    external: true    family: Noto Serif SC    size:  # Font settings for site title (.site-title).  title:    external: true    family: Noto Serif SC    size:  # Font settings for headlines (&lt;h1&gt; to &lt;h6&gt;).  headings:    external: true    family: Noto Serif SC    size:  # Font settings for posts (.post-body).  posts:    external: true    family:  Noto Serif SC  # Font settings for &lt;code&gt; and code blocks.  codes:    external: true    family: Source Code Pro
+
+代码可复制，还是上面同一个文件，找到以下代码段，将copy_button的enable设置为true，启用就可以啦。show_result设置true后，复制完会显示一个勾。style对应的copy_button不同的样式，看个人喜好来～
+codeblock:  # Code Highlight theme  # Available values: normal | night | night eighties | night blue | night bright | solarized | solarized dark | galactic  # See: https://github.com/chriskempson/tomorrow-theme  highlight_theme: night eighties  # Add copy button on codeblock  copy_button:    enable: true    # Show text copy result.    show_result: true    # Available values: default | flat | mac    style: mac]]></content>
       <categories>
         <category>前端</category>
       </categories>
@@ -207,15 +207,6 @@ http://localhost:8090/
       </tags>
   </entry>
   <entry>
-    <title>google sheet同步表格数据</title>
-    <url>/2025/08/28/google%20sheet%E5%90%8C%E6%AD%A5%E8%A1%A8%E6%A0%BC%E6%95%B0%E6%8D%AE/</url>
-    <content><![CDATA[有个需求是根据一个表格的所有子表，同步到另个表格（包含子表）的数据，用google sheets里面的扩展程序里的apps 脚本功能，编写脚本。为什么要同步呢？因为原表默认是不可编辑的，打算同步过来后再进行编辑。sourceSpreadsheetId跟targetSpreadsheetId为google sheet 表格地址栏d后面的一串字符。
-function synchronizeSheetsToAnotherFile() &#123;  const sourceSpreadsheetId = &quot;id1&quot;;  const targetSpreadsheetId = &quot;id2&quot;; # 比如：1NOtSSvDwXrca8vqyZW6OqQJwGaCICMVguSz1-i72oqg  const sourceSpreadsheet = SpreadsheetApp.openById(sourceSpreadsheetId);  const targetSpreadsheet = SpreadsheetApp.openById(targetSpreadsheetId);  const sourceSheets = sourceSpreadsheet.getSheets();  sourceSheets.forEach(sheet =&gt; &#123;    const sheetName = sheet.getName();    let targetSheet = targetSpreadsheet.getSheetByName(sheetName);    if (!targetSheet) &#123;      targetSheet = targetSpreadsheet.insertSheet(sheetName);    &#125; else &#123;      targetSheet.clear();     &#125;    const range = sheet.getDataRange();    const displayValues = range.getDisplayValues();     const formats = range.getBackgrounds();            const fontWeights = range.getFontWeights();        const targetRange = targetSheet.getRange(1, 1, displayValues.length, displayValues[0].length);    targetRange.setValues(displayValues);     targetRange.setBackgrounds(formats);     targetRange.setFontWeights(fontWeights);    &#125;);&#125;]]></content>
-      <categories>
-        <category>前端</category>
-      </categories>
-  </entry>
-  <entry>
     <title>JavaScript 基础</title>
     <url>/2025/07/02/js%E5%9F%BA%E7%A1%80/</url>
     <content><![CDATA[JavaScript 基础总结（变量提升、严格模式）
@@ -239,6 +230,15 @@ function foo() &#123;  &quot;use strict&quot;;  console.log(this.a); // ❌ Type
 
 
 ]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>google sheet同步表格数据</title>
+    <url>/2025/08/28/google%20sheet%E5%90%8C%E6%AD%A5%E8%A1%A8%E6%A0%BC%E6%95%B0%E6%8D%AE/</url>
+    <content><![CDATA[有个需求是根据一个表格的所有子表，同步到另个表格（包含子表）的数据，用google sheets里面的扩展程序里的apps 脚本功能，编写脚本。为什么要同步呢？因为原表默认是不可编辑的，打算同步过来后再进行编辑。sourceSpreadsheetId跟targetSpreadsheetId为google sheet 表格地址栏d后面的一串字符。
+function synchronizeSheetsToAnotherFile() &#123;  const sourceSpreadsheetId = &quot;id1&quot;;  const targetSpreadsheetId = &quot;id2&quot;; # 比如：1NOtSSvDwXrca8vqyZW6OqQJwGaCICMVguSz1-i72oqg  const sourceSpreadsheet = SpreadsheetApp.openById(sourceSpreadsheetId);  const targetSpreadsheet = SpreadsheetApp.openById(targetSpreadsheetId);  const sourceSheets = sourceSpreadsheet.getSheets();  sourceSheets.forEach(sheet =&gt; &#123;    const sheetName = sheet.getName();    let targetSheet = targetSpreadsheet.getSheetByName(sheetName);    if (!targetSheet) &#123;      targetSheet = targetSpreadsheet.insertSheet(sheetName);    &#125; else &#123;      targetSheet.clear();     &#125;    const range = sheet.getDataRange();    const displayValues = range.getDisplayValues();     const formats = range.getBackgrounds();            const fontWeights = range.getFontWeights();        const targetRange = targetSheet.getRange(1, 1, displayValues.length, displayValues[0].length);    targetRange.setValues(displayValues);     targetRange.setBackgrounds(formats);     targetRange.setFontWeights(fontWeights);    &#125;);&#125;]]></content>
       <categories>
         <category>前端</category>
       </categories>
@@ -482,22 +482,6 @@ the modal verbs.(情态动词)Make inferences.(作出推断)The main structure o
       </categories>
   </entry>
   <entry>
-    <title>初中英语教师资格面试模板（Reading）</title>
-    <url>/2025/07/09/%E5%88%9D%E4%B8%AD%E8%8B%B1%E8%AF%AD%E6%95%99%E8%B5%84%E9%9D%A2%E8%AF%95%E6%A8%A1%E6%9D%BF/</url>
-    <content><![CDATA[Reading&#x2F;Listening开场问候Dear Judges, Now I’ll start the lesson. Good morning, Boys and girls. How are you today? Good? Fine? I’m fine, too. Before the class, Let’s sing a song together. If you can sing, sing along with me . “You are my sunshine, my only sunshine, you make me happy.” Do you feel better? Great, let’s start the lesson.
-导入At the beginning, I’ll show you a video, and you should try to answer the question: What can you see in the video? Who would like to try? Blair, please. You see different cartoons, such as Snow White and Tom and Jerry.Thank you, Blair, you set a good example for us. You know so much about cartoons.Do you want to learn more? Today, let’s learn a new lesson — Cartoon.
-读前Before reading, To help you understand the passage better, let’s learn some words. Now, Look at the first one. Smart.Form example, Zhu Geliang is very smart and he can solve many problems. Can you understand now? Great! The next one cute. Look at the picture. What’s that? A cat. So cats are very cute and it’s very lovely. So cute means lovely. You are so cute. Cats are so cute. Birds are so cute, okay, wonderful How about the last one? Ivory. Here is a picture about ivory. It forms long teeth of elephants. Read after me, ivory, ivory. Well done! All of you did a good job.
-读中Now boys and girls, let’s have a prediction according to the title and the pictures on your book. Take a guess:What’s the passage mainly about? Try to think out as many answers as you can. OK, who wants to have a try?Justin, you please. The passage is about a cartoon Mickey Mouse. Nice try! Do you agree? OK, maybe you are right.Next, Let’s find out the truth in this passage.
-读后Let’s read it together.When you read, think about this question:What’s the passage mainly about? You should read quickly and check your prediction.Let’s begin.OK, guys, are you right? Wow, I heard John said he had the correct prediction.The passage tells us some information about Mickey Mouse. Oh, most of you are right! I am so proud of you.For the second time, you should read it carefully and catch some detail informations. After that, you should answer some true or false question. Okay? Let’s start. Time is up. The first one, It’s easy, right? Answer me together. It’s true. Then the second question. Lily, what’s your answer? It ’s false. Can you correct it ? Great. Thank you. The last one, boys come on. Eric please. It’s true.perfect.
-巩固We have done so many exercises.It’s time for fun. Let’s have a group discussion. Think about the topic: Introducing your favorite cartoon characters to group members. Work in group of 4 and discuss with your partners. Then show your work on the stage. You have 5 minutes to prepare.Are you ready? Go!  Time  is up. Which group goes first? Christina and your partners, please. Wow, your ideas are very creative and Your pronunciation is perfect.Let’s give them a big hand.
-总结How time files! The class is almost over. Before ending our class, let’s have a summary. Who can summarize what we have learned this class? Fiona please. Very good. I hope you can apply what we have learned in your daily life so that we can improve our reading and speaking ability, right?Our homework is as follows: You should finish the exercise book and search for more information about famous cartoons on the Internet. Next class, we will share them together.
-Class is over, see you next time.
-]]></content>
-      <categories>
-        <category>教资</category>
-      </categories>
-  </entry>
-  <entry>
     <title>初中英语教师资格语篇课模版</title>
     <url>/2025/07/15/%E5%88%9D%E4%B8%AD%E8%8B%B1%E8%AF%AD%E6%95%99%E8%B5%84%E8%AF%AD%E7%AF%87%E8%AF%BE%E6%A8%A1%E6%9D%BF/</url>
     <content><![CDATA[The intonation.（语调）Express the different feelings of the speaker.We often use the falling tone when we read a statement, a special question, an exclamatory or imperative sentence(祈使句、感叹句). We often use rising tone when we ask a Yes&#x2F;No question. We often use rising-falling tone to read an alternative question and a coordinate clause（选择疑问句、并列句）. There are two parts in a tag question（反义疑问句）. The first part is often in a falling tone and for second part, there are two cases. If we are not sure about the question, we often use a rising tone. If we are sure about that, we offen use a falling tone.We choose different intonations to express different feelings and moods.
@@ -509,6 +493,22 @@ Weak form(弱读)speak English more fluently and naturally.Some words often appe
 Assimilation(同化)We use it to speak English more fluently and naturally.As we can see, Two different sounds affect each other and become more alike.&#x2F;s+ j&#x2F; -&gt; &#x2F;F&#x2F;this year,&#x2F;d+j&#x2F; -&gt; &#x2F;d3&#x2F; would you
 Sense group(意群)We use it to make our expression more easily to understand.As we can see, a sentence may consists of several groups according to meaning or structure. Each group is called a sense group. It can be a word, a phrase, a clause. After a sense group, there should be a short pause.We should remind that we should change it according to the situation and feelings of the speaker.
 The pause(停顿)We use to speak English more fluently and naturally.As we can see, in a long sentence, we should pause several times according to the sense group. Normally, we pause based on meaning and grammatical structure.We should remind that there should be no pause in a sense group. Where to pause also depends on the situation and the feelings of the speaker.
+]]></content>
+      <categories>
+        <category>教资</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>初中英语教师资格面试模板（Reading）</title>
+    <url>/2025/07/09/%E5%88%9D%E4%B8%AD%E8%8B%B1%E8%AF%AD%E6%95%99%E8%B5%84%E9%9D%A2%E8%AF%95%E6%A8%A1%E6%9D%BF/</url>
+    <content><![CDATA[Reading&#x2F;Listening开场问候Dear Judges, Now I’ll start the lesson. Good morning, Boys and girls. How are you today? Good? Fine? I’m fine, too. Before the class, Let’s sing a song together. If you can sing, sing along with me . “You are my sunshine, my only sunshine, you make me happy.” Do you feel better? Great, let’s start the lesson.
+导入At the beginning, I’ll show you a video, and you should try to answer the question: What can you see in the video? Who would like to try? Blair, please. You see different cartoons, such as Snow White and Tom and Jerry.Thank you, Blair, you set a good example for us. You know so much about cartoons.Do you want to learn more? Today, let’s learn a new lesson — Cartoon.
+读前Before reading, To help you understand the passage better, let’s learn some words. Now, Look at the first one. Smart.Form example, Zhu Geliang is very smart and he can solve many problems. Can you understand now? Great! The next one cute. Look at the picture. What’s that? A cat. So cats are very cute and it’s very lovely. So cute means lovely. You are so cute. Cats are so cute. Birds are so cute, okay, wonderful How about the last one? Ivory. Here is a picture about ivory. It forms long teeth of elephants. Read after me, ivory, ivory. Well done! All of you did a good job.
+读中Now boys and girls, let’s have a prediction according to the title and the pictures on your book. Take a guess:What’s the passage mainly about? Try to think out as many answers as you can. OK, who wants to have a try?Justin, you please. The passage is about a cartoon Mickey Mouse. Nice try! Do you agree? OK, maybe you are right.Next, Let’s find out the truth in this passage.
+读后Let’s read it together.When you read, think about this question:What’s the passage mainly about? You should read quickly and check your prediction.Let’s begin.OK, guys, are you right? Wow, I heard John said he had the correct prediction.The passage tells us some information about Mickey Mouse. Oh, most of you are right! I am so proud of you.For the second time, you should read it carefully and catch some detail informations. After that, you should answer some true or false question. Okay? Let’s start. Time is up. The first one, It’s easy, right? Answer me together. It’s true. Then the second question. Lily, what’s your answer? It ’s false. Can you correct it ? Great. Thank you. The last one, boys come on. Eric please. It’s true.perfect.
+巩固We have done so many exercises.It’s time for fun. Let’s have a group discussion. Think about the topic: Introducing your favorite cartoon characters to group members. Work in group of 4 and discuss with your partners. Then show your work on the stage. You have 5 minutes to prepare.Are you ready? Go!  Time  is up. Which group goes first? Christina and your partners, please. Wow, your ideas are very creative and Your pronunciation is perfect.Let’s give them a big hand.
+总结How time files! The class is almost over. Before ending our class, let’s have a summary. Who can summarize what we have learned this class? Fiona please. Very good. I hope you can apply what we have learned in your daily life so that we can improve our reading and speaking ability, right?Our homework is as follows: You should finish the exercise book and search for more information about famous cartoons on the Internet. Next class, we will share them together.
+Class is over, see you next time.
 ]]></content>
       <categories>
         <category>教资</category>
@@ -712,17 +712,168 @@ vue2 和 vue3 匿名插槽不一样  具名插槽使用方式不同：vue2 使�
       </categories>
   </entry>
   <entry>
-    <title>宝塔安装puppeteer</title>
-    <url>/2025/09/02/%E5%AE%9D%E5%A1%94%E5%AE%89%E8%A3%85puppeteer/</url>
-    <content><![CDATA[centos8使用yum失败，切换镜像源，更改镜像源文件，尝试清除缓存并重新建立
-wget -O /etc/yum.repos.d/CentOS-Base.repo https://mirrors.aliyun.com/repo/Centos-8.reposudo yum clean allsudo yum makecache
+    <title>如何防御 XSS（跨站脚本攻击）：前端开发者必须掌握的安全实践</title>
+    <url>/2025/10/17/%E5%A6%82%E4%BD%95%E9%98%B2%E5%BE%A1%20XSS%EF%BC%88%E8%B7%A8%E7%AB%99%E8%84%9A%E6%9C%AC%E6%94%BB%E5%87%BB%EF%BC%89/</url>
+    <content><![CDATA[在 Web 开发中，XSS（Cross-Site Scripting，跨站脚本攻击） 是最常见、危害也非常大的安全漏洞之一。一旦网站存在 XSS 漏洞，攻击者就可能在用户浏览器中执行恶意脚本，进而窃取 Cookie、劫持会话、篡改页面内容，甚至控制用户账号。
+本文将从 原理 + 实战防御手段 的角度，系统讲解前端和全栈开发中 如何有效防御 XSS 攻击
+一、什么是 XSS 攻击？XSS 的本质是：
 
-Centos8已不维护，只能找
-puppeteer报错下载依赖 参考链接：https://www.cnblogs.com/ilizhu/p/14504049.html报错sandbox：
-#添加启动参数const browser = await puppeteer.launch(&#123;args: [&#x27;--no-sandbox&#x27;, &#x27;--disable-setuid-sandbox&#x27;]&#125;);]]></content>
+攻击者将恶意 JavaScript 注入到网页中，并在其他用户的浏览器里执行。
+
+常见的 XSS 攻击类型包括：
+
+反射型 XSS：恶意脚本来自 URL 参数
+存储型 XSS：恶意脚本被存储在数据库中
+DOM 型 XSS：前端 JS 逻辑直接操作不可信数据
+
+不论是哪种形式，核心问题都在于：👉 用户输入被当作代码执行了
+二、输入验证和过滤（最基础也是最重要）永远不要相信用户输入。
+1. 前端层面的基本校验在前端可以做一些基础校验，例如：
+
+限制输入长度
+限制输入格式（如邮箱、手机号）
+过滤明显的危险字符
+
+示例（仅用于基础校验）：
+function sanitizeInput(input) &#123;  return input.replace(/[&lt;&gt;]/g, &#x27;&#x27;);&#125;
+
+⚠️ 注意：前端校验只能作为用户体验优化，不能作为最终安全防线。
+2. 后端必须做严格校验（关键）真正有效的输入验证 必须在后端完成：
+
+校验数据类型
+校验长度
+拒绝不符合业务规则的输入
+对 HTML 内容进行转义或白名单过滤
+
+推荐策略：
+
+默认拒绝
+白名单优先
+
+三、对输出进行编码（比过滤更重要）很多 XSS 漏洞并不是“输入有问题”，而是输出方式不安全。
+1. HTML 转义输出在将用户输入输出到页面时，应进行 HTML 编码：
+
+
+
+原字符
+转义后
+
+
+
+&lt;
+&amp;lt;
+
+
+&gt;
+&amp;gt;
+
+
+&quot;
+&amp;quot;
+
+
+&#39;
+&amp;#39;
+
+
+很多模板引擎（如 Vue、React、Handlebars）默认会做转义，不要轻易关闭。
+
+2. 避免危险 API尽量避免以下写法：
+element.innerHTML = userInput;
+
+推荐安全方式：
+element.textContent = userInput;
+
+或者：
+const el = document.createElement(&#x27;div&#x27;);el.textContent = userInput;container.appendChild(el);
+
+
+
+四、使用安全的 API 和框架机制现代前端框架本身已经内置了大量 XSS 防护机制。
+1. React &#x2F; Vue 的默认保护
+JSX &#x2F; 模板语法默认转义
+明确标注危险行为（如 v-html、dangerouslySetInnerHTML）
+
+⚠️ 一旦使用这些 API，就必须 100% 确保内容可信
+2. 避免在前端拼接 HTML 字符串错误示例：
+container.innerHTML = `&lt;div&gt;$&#123;userInput&#125;&lt;/div&gt;`;
+
+正确做法：
+const div = document.createElement(&#x27;div&#x27;);div.textContent = userInput;container.appendChild(div);
+
+
+
+五、使用内容安全策略（CSP）CSP（Content Security Policy） 是防御 XSS 的“终极武器”之一。
+1. CSP 能做什么？
+禁止内联脚本执行
+限制脚本来源
+阻止恶意第三方资源加载
+
+示例 HTTP 头：
+Content-Security-Policy:  default-src &#x27;self&#x27;;  script-src &#x27;self&#x27;;  object-src &#x27;none&#x27;;
+
+即使攻击者成功注入脚本，只要 CSP 生效，浏览器也会拒绝执行。
+2. 为什么 CSP 非常重要？因为它属于：
+
+浏览器层面的安全防护
+就算代码有疏漏，也能兜底
+
+六、使用 HttpOnly 和 Secure Cookie1. HttpOnly 的作用设置 Cookie 时加上 HttpOnly：
+Set-Cookie: sessionId=xxx; HttpOnly;
+
+这样可以：
+
+防止 JavaScript 读取 Cookie
+即使发生 XSS，也能降低会话被盗风险
+
+2. 配合 Secure 和 SameSite推荐同时使用：
+
+Secure
+SameSite=Strict 或 Lax
+
+提升整体安全等级。
+七、定期更新第三方库和依赖现实中的 XSS 漏洞，大量来自第三方依赖：
+
+旧版本 UI 组件
+不再维护的插件
+存在漏洞的 npm 包
+
+建议：
+
+定期更新依赖
+使用 npm audit
+关注安全公告
+
+八、良好的安全编程习惯最后，防御 XSS 不是“某一个技巧”，而是一整套习惯：
+
+不信任任何外部输入
+不随意使用 innerHTML
+不忽略安全警告
+安全优先于“图方便”
+
+九、总结
+XSS 是最常见、也是最危险的 Web 安全问题之一
+真正有效的防御需要 前端 + 后端 + 浏览器策略 三层配合
+输入校验只是开始，安全输出和 CSP 才是关键
+养成良好的安全编程习惯，比任何补丁都重要
+
+对于前端开发者来说，懂得如何防御 XSS，是走向专业的重要一步。
+]]></content>
       <categories>
         <category>前端</category>
       </categories>
+      <tags>
+        <tag>XSS</tag>
+        <tag>Web安全</tag>
+        <tag>前端安全</tag>
+        <tag>JavaScript</tag>
+        <tag>浏览器安全</tag>
+        <tag>网络安全</tag>
+        <tag>Web开发</tag>
+        <tag>安全编程</tag>
+        <tag>Content Security Policy</tag>
+        <tag>HttpOnly</tag>
+      </tags>
   </entry>
   <entry>
     <title>小程序验证码输入框自动聚焦下个输入框</title>
@@ -751,162 +902,6 @@ data()&#123;    return&#123;        focus: true,		code:[&#x27;&#x27;,&#x27;&#x27
 极为像的一点就是我们都喜欢不停地奔跑，不是那种觉得自己快不行了就走几步，也不是适当的时候停下来看风景。可能每个人的见解不同。但我觉得能不停跑下去的人才是真正的王者。
 当抵达终点那一刻，会觉得怎么那么酷，一股自豪感涌上来，就好比中了彩票或是走了狗屎运。这是原则，亦是我的骄傲。
 噢对，好比尚三哥在终点等着我，然后我得意地笑了。
-]]></content>
-      <categories>
-        <category>读书感悟</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>2022应届毕业生办理深户流程</title>
-    <url>/2025/07/01/%E6%B7%B1%E6%88%B7%E5%8A%9E%E7%90%86%E6%B5%81%E7%A8%8B/</url>
-    <content><![CDATA[
-
-1. 登录广东政务服务网申请毕业生接收
-打开 广东政务服务网
-搜索“人才引进” → 选择“接收毕业生”
-填写个人资料后，下载电子版《申请书》
-
-2. 报到证改派
-每个地区流程略有不同，建议致电报到证抬头地区的人社局咨询
-示例：汕尾市城区 → 在广东政务服务网搜索“档案转出” → 点击在线办理
-上传报到证、申请表等资料到“调函”栏目
-不久后，工作人员会联系确认是否需要电子版“同意改派”文件（推荐选择电子版）, 她会把电子版的“同意改派”发到我们填的邮箱里。
-
-其他地区如潮州市：可直接在广东政务服务网搜索“报到证改派”在线办理
-3. 上传材料至“广东就业创业”小程序
-打开小程序，选择应届生接收模块
-上传材料：电子版“同意改派”的报到证、申请表、三方协议等
-等待校方审核通过
-
-4. 返回广东政务服务网上传最终材料
-上传审核通过后的报到证等资料
-审核通过后会收到含有“指标卡”的短信通知
-
-5. 在“深圳本地宝”预约现场办理
-打开“深圳本地宝”微信公众号，搜索“大学生”
-进入现场办理流程 → 点击“户政预约” → 选择“普通户政预约”
-预约业务选择“接收应届生户籍迁入”
-选择时间和地点并预约成功后，带好上述资料和以下材料前往办理：
-户口本
-身份证及二代回执
-一寸白底照片
-
-
-
-6. 第一次现场办理后领取档案袋
-办理后工作人员会发放档案袋
-需在五个工作日后再次前往办理
-
-7. 第二次预约并完成迁户手续
-提前预约，带齐上次材料再次前往办理
-办理成功后可选择身份证邮寄
-
-
-备注： 整个流程较为繁琐，建议提前准备资料并留意预约时间。
-]]></content>
-      <categories>
-        <category>其他</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>《皮囊》感悟</title>
-    <url>/2025/06/26/%E7%9A%AE%E5%9B%8A%E6%84%9F%E6%82%9F/</url>
-    <content><![CDATA[阿太阿太倔强坚强，豁达的心态值得人学习。父亲最强大的地方就是娶了我的母亲。一个伟大的女人。真正的女人就是应该要积极乐观面对一切，用自己的双手打造自己想要的未来。
-虽然有偷窃，但也是生活所迫，为了生存，为了家人，放下面子干一些违心事，又何尝不是一种积极的心态呢？而不是一哭二闹三上吊。
-想来作者能有如此作为，跟他伟大的母亲脱不了干系。
-那可爱的母亲呀！为了父亲的面子，为了父亲开心，都坚持要把房子建完，这何尝不是一种力量，向往心之所向，佩服这种勇气。
-其实最了解父亲的人是母亲，母亲知道父亲好面子，爱情不就是这样吗？你不用说，我懂，我懂你懂我，所以我们才会在一起这么久。
-张美丽从哪里跌倒，就从哪里爬起来。仿佛看见一个追求真爱，为爱为自己想要的东西不懈努力的人，虽说最终还是被迫性解放了自己，但她曾经的所作所为仍让我敬佩。
-舆论的力量是强大的，但比其而言，张美丽的内心力量更强大。
-]]></content>
-      <categories>
-        <category>读书感悟</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>索引</title>
-    <url>/2025/07/27/%E7%B4%A2%E5%BC%95/</url>
-    <content><![CDATA[索引的作用当想要快速查找到自己想要的数据时，可以用索引。通过索引，可以在检索数据时直接定位到，省去时间，就好比一本书前面的目录，能让你快速找到自己想看的内容。如果索引包含多列，那么按照从左到右的顺序，即最左前缀列来进行。
-索引的类型
-唯一索引：对某些列（比如身份证）添加唯一索引，不能出现两条身份证相同的记录，通过 UNIQUE 关键字我们就添加了一个唯一索引。
-
-ADD UNIQUE INDEX uni_sf (sf);
-
-也可以给列添加唯一约束，而不创建唯一索引，列具有唯一性。
-ADD CONSTRAINT uni_name UNIQUE (name);
-
-
-主键索引： 主键一旦创建，就会自动带上索引。这也是为什么主键搜索数据会更快的原因。一个表只能有一个主键，一个主键可以包含多列，即联合主键。
-
-ALTER TABLE table_name ADD PRIMARY KEY (column);
-
-
-普通索引： 任何一列都可以创建索引，建议只在自己经常想要检索的列上加索引，不要全部加，会耗性能。
-
-ALTER TABLE table_name ADD INDEX index_name (column);
-
-]]></content>
-      <categories>
-        <category>后端</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>获取到的csv保存数据库</title>
-    <url>/2025/07/29/%E8%8E%B7%E5%8F%96%E5%88%B0%E7%9A%84csv%E4%BF%9D%E5%AD%98%E6%95%B0%E6%8D%AE%E5%BA%93/</url>
-    <content><![CDATA[如果第三方接口获取到的数据，返回为csv文档时，可以先把csv文档保存到本地某路径，再通过fs的createReadStream读取数据，保存到本地数据库。
-const processConversations = async (dateObj) =&gt; &#123;  const username = &#x27;你的帐户名&#x27;;  const password = &#x27;密码&#x27;;  const year = dateObj.format(&#x27;YYYY&#x27;);  const month = dateObj.format(&#x27;MM&#x27;);  const day = dateObj.format(&#x27;DD&#x27;);  const hour = dateObj.format(&#x27;HH&#x27;);  const dateStr = `$&#123;year&#125;-$&#123;month&#125;-$&#123;day&#125;-$&#123;hour&#125;`;  const fileName = `路径后半部份`;  const url = `https://api/$&#123;fileName&#125;`;  const outputPath = `/tmp/conversations`;  const tableName = &#x27;test&#x27;;  try &#123;    // 下载 CSV    const response = await axios.get(url, &#123;      responseType: &#x27;stream&#x27;,      headers: &#123;        Authorization: `Basic $&#123;Buffer.from(`$&#123;username&#125;:$&#123;password&#125;`).toString(&#x27;base64&#x27;)&#125;`      &#125;    &#125;);    const writer = fs.createWriteStream(outputPath);    response.data.pipe(writer);    await new Promise((resolve, reject) =&gt; &#123;      writer.on(&#x27;finish&#x27;, resolve);      writer.on(&#x27;error&#x27;, reject);    &#125;);    console.log(&#x27; CSV 文件下载成功:&#x27;, fileName);    const rows = [];    await new Promise((resolve, reject) =&gt; &#123;      fs.createReadStream(outputPath)        .pipe(csv())        .on(&#x27;data&#x27;, (row) =&gt; &#123;          rows.push([            row[&#x27;DATE_TIME&#x27;] ? dayjs(row[&#x27;DATE_TIME&#x27;]).format(&#x27;YYYY-MM-DD HH:mm:ss&#x27;) : null,            row[&#x27;CLID&#x27;] || null,            row[&#x27;CLID_SOURCE&#x27;] || null          ]);        &#125;)        .on(&#x27;end&#x27;, resolve)        .on(&#x27;error&#x27;, reject);    &#125;);    if (rows.length === 0) &#123;      console.warn(`CSV 中没有数据: $&#123;fileName&#125;`);      return;    &#125;    const insertSQL = `      INSERT INTO \`$&#123;tableName&#125;\` (        date_time, clid, clid_source      ) VALUES ?    `;    await query(insertSQL, [rows]);    console.log(`成功插入 $&#123;rows.length&#125; 条记录: $&#123;fileName&#125;`);  &#125; catch (error) &#123;    console.error(`报错 ($&#123;fileName&#125;):`, error.message);  &#125;&#125;;
-
-]]></content>
-      <categories>
-        <category>后端</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>遇见未知的自己</title>
-    <url>/2025/06/30/%E9%81%87%E8%A7%81%E6%9C%AA%E7%9F%A5%E7%9A%84%E8%87%AA%E5%B7%B1/</url>
-    <content><![CDATA[《遇见未知的自己》读书笔记何为“未知”？“自己”即指“真我”，从“我是谁”到后来的“从有到无”，整本书以若菱与一位智者老人的对话为主线，引申出许多深刻的生命观念。
-
-
-
-
-
-
-
-
-
-核心观点
-外面没有别人，只有你自己。所有的外境，其实都是内心的投射。
-
-与潜意识对话的黄金时刻想象自己已经实现目标的最佳时刻，是清晨将醒未醒、夜晚将睡未睡之间的那段时间，因为那时我们最接近潜意识。
-
-关键修炼：觉察、臣服、战胜胜肽（小我）
-
-觉察：关注当下的自己，不批判地观察情绪和反应。
-臣服：接受现实，而不是抗拒。
-胜肽小我：代表恐惧、比较、焦虑的内在声音，要学会看见并超越它。
-
-
-
-
-冥想、感恩、付出
-
-冥想时，要设想自己已经拥有渴望的生活。
-在实现之前就先学会感恩。
-保持利他、愿意付出的心态。
-
-
-
-
-
-少关心别人，多关心自己
-
-注意力回到自己身上，关注内在世界。
-当情绪上来时，觉察身体哪个部位最不舒服，了解内在信号。
-
-
-
-
-总结这本书不只是关于“找到自己是谁”，更是提醒我们“成为那个自己”。内在力量的唤醒，需要持续的觉察、练习与自我超越。
 ]]></content>
       <categories>
         <category>读书感悟</category>
@@ -1112,167 +1107,172 @@ allSettled：等全部结束，返回每个结果状态
       </categories>
   </entry>
   <entry>
-    <title>如何防御 XSS（跨站脚本攻击）：前端开发者必须掌握的安全实践</title>
-    <url>/2025/10/17/%E5%A6%82%E4%BD%95%E9%98%B2%E5%BE%A1%20XSS%EF%BC%88%E8%B7%A8%E7%AB%99%E8%84%9A%E6%9C%AC%E6%94%BB%E5%87%BB%EF%BC%89/</url>
-    <content><![CDATA[在 Web 开发中，XSS（Cross-Site Scripting，跨站脚本攻击） 是最常见、危害也非常大的安全漏洞之一。一旦网站存在 XSS 漏洞，攻击者就可能在用户浏览器中执行恶意脚本，进而窃取 Cookie、劫持会话、篡改页面内容，甚至控制用户账号。
-本文将从 原理 + 实战防御手段 的角度，系统讲解前端和全栈开发中 如何有效防御 XSS 攻击
-一、什么是 XSS 攻击？XSS 的本质是：
+    <title>2022应届毕业生办理深户流程</title>
+    <url>/2025/07/01/%E6%B7%B1%E6%88%B7%E5%8A%9E%E7%90%86%E6%B5%81%E7%A8%8B/</url>
+    <content><![CDATA[
 
-攻击者将恶意 JavaScript 注入到网页中，并在其他用户的浏览器里执行。
+1. 登录广东政务服务网申请毕业生接收
+打开 广东政务服务网
+搜索“人才引进” → 选择“接收毕业生”
+填写个人资料后，下载电子版《申请书》
 
-常见的 XSS 攻击类型包括：
+2. 报到证改派
+每个地区流程略有不同，建议致电报到证抬头地区的人社局咨询
+示例：汕尾市城区 → 在广东政务服务网搜索“档案转出” → 点击在线办理
+上传报到证、申请表等资料到“调函”栏目
+不久后，工作人员会联系确认是否需要电子版“同意改派”文件（推荐选择电子版）, 她会把电子版的“同意改派”发到我们填的邮箱里。
 
-反射型 XSS：恶意脚本来自 URL 参数
-存储型 XSS：恶意脚本被存储在数据库中
-DOM 型 XSS：前端 JS 逻辑直接操作不可信数据
+其他地区如潮州市：可直接在广东政务服务网搜索“报到证改派”在线办理
+3. 上传材料至“广东就业创业”小程序
+打开小程序，选择应届生接收模块
+上传材料：电子版“同意改派”的报到证、申请表、三方协议等
+等待校方审核通过
 
-不论是哪种形式，核心问题都在于：👉 用户输入被当作代码执行了
-二、输入验证和过滤（最基础也是最重要）永远不要相信用户输入。
-1. 前端层面的基本校验在前端可以做一些基础校验，例如：
+4. 返回广东政务服务网上传最终材料
+上传审核通过后的报到证等资料
+审核通过后会收到含有“指标卡”的短信通知
 
-限制输入长度
-限制输入格式（如邮箱、手机号）
-过滤明显的危险字符
-
-示例（仅用于基础校验）：
-function sanitizeInput(input) &#123;  return input.replace(/[&lt;&gt;]/g, &#x27;&#x27;);&#125;
-
-⚠️ 注意：前端校验只能作为用户体验优化，不能作为最终安全防线。
-2. 后端必须做严格校验（关键）真正有效的输入验证 必须在后端完成：
-
-校验数据类型
-校验长度
-拒绝不符合业务规则的输入
-对 HTML 内容进行转义或白名单过滤
-
-推荐策略：
-
-默认拒绝
-白名单优先
-
-三、对输出进行编码（比过滤更重要）很多 XSS 漏洞并不是“输入有问题”，而是输出方式不安全。
-1. HTML 转义输出在将用户输入输出到页面时，应进行 HTML 编码：
+5. 在“深圳本地宝”预约现场办理
+打开“深圳本地宝”微信公众号，搜索“大学生”
+进入现场办理流程 → 点击“户政预约” → 选择“普通户政预约”
+预约业务选择“接收应届生户籍迁入”
+选择时间和地点并预约成功后，带好上述资料和以下材料前往办理：
+户口本
+身份证及二代回执
+一寸白底照片
 
 
 
-原字符
-转义后
+6. 第一次现场办理后领取档案袋
+办理后工作人员会发放档案袋
+需在五个工作日后再次前往办理
+
+7. 第二次预约并完成迁户手续
+提前预约，带齐上次材料再次前往办理
+办理成功后可选择身份证邮寄
 
 
-
-&lt;
-&amp;lt;
-
-
-&gt;
-&amp;gt;
-
-
-&quot;
-&amp;quot;
-
-
-&#39;
-&amp;#39;
-
-
-很多模板引擎（如 Vue、React、Handlebars）默认会做转义，不要轻易关闭。
-
-2. 避免危险 API尽量避免以下写法：
-element.innerHTML = userInput;
-
-推荐安全方式：
-element.textContent = userInput;
-
-或者：
-const el = document.createElement(&#x27;div&#x27;);el.textContent = userInput;container.appendChild(el);
-
-
-
-四、使用安全的 API 和框架机制现代前端框架本身已经内置了大量 XSS 防护机制。
-1. React &#x2F; Vue 的默认保护
-JSX &#x2F; 模板语法默认转义
-明确标注危险行为（如 v-html、dangerouslySetInnerHTML）
-
-⚠️ 一旦使用这些 API，就必须 100% 确保内容可信
-2. 避免在前端拼接 HTML 字符串错误示例：
-container.innerHTML = `&lt;div&gt;$&#123;userInput&#125;&lt;/div&gt;`;
-
-正确做法：
-const div = document.createElement(&#x27;div&#x27;);div.textContent = userInput;container.appendChild(div);
-
-
-
-五、使用内容安全策略（CSP）CSP（Content Security Policy） 是防御 XSS 的“终极武器”之一。
-1. CSP 能做什么？
-禁止内联脚本执行
-限制脚本来源
-阻止恶意第三方资源加载
-
-示例 HTTP 头：
-Content-Security-Policy:  default-src &#x27;self&#x27;;  script-src &#x27;self&#x27;;  object-src &#x27;none&#x27;;
-
-即使攻击者成功注入脚本，只要 CSP 生效，浏览器也会拒绝执行。
-2. 为什么 CSP 非常重要？因为它属于：
-
-浏览器层面的安全防护
-就算代码有疏漏，也能兜底
-
-六、使用 HttpOnly 和 Secure Cookie1. HttpOnly 的作用设置 Cookie 时加上 HttpOnly：
-Set-Cookie: sessionId=xxx; HttpOnly;
-
-这样可以：
-
-防止 JavaScript 读取 Cookie
-即使发生 XSS，也能降低会话被盗风险
-
-2. 配合 Secure 和 SameSite推荐同时使用：
-
-Secure
-SameSite=Strict 或 Lax
-
-提升整体安全等级。
-七、定期更新第三方库和依赖现实中的 XSS 漏洞，大量来自第三方依赖：
-
-旧版本 UI 组件
-不再维护的插件
-存在漏洞的 npm 包
-
-建议：
-
-定期更新依赖
-使用 npm audit
-关注安全公告
-
-八、良好的安全编程习惯最后，防御 XSS 不是“某一个技巧”，而是一整套习惯：
-
-不信任任何外部输入
-不随意使用 innerHTML
-不忽略安全警告
-安全优先于“图方便”
-
-九、总结
-XSS 是最常见、也是最危险的 Web 安全问题之一
-真正有效的防御需要 前端 + 后端 + 浏览器策略 三层配合
-输入校验只是开始，安全输出和 CSP 才是关键
-养成良好的安全编程习惯，比任何补丁都重要
-
-对于前端开发者来说，懂得如何防御 XSS，是走向专业的重要一步。
+备注： 整个流程较为繁琐，建议提前准备资料并留意预约时间。
 ]]></content>
+      <categories>
+        <category>其他</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>《皮囊》感悟</title>
+    <url>/2025/06/26/%E7%9A%AE%E5%9B%8A%E6%84%9F%E6%82%9F/</url>
+    <content><![CDATA[阿太阿太倔强坚强，豁达的心态值得人学习。父亲最强大的地方就是娶了我的母亲。一个伟大的女人。真正的女人就是应该要积极乐观面对一切，用自己的双手打造自己想要的未来。
+虽然有偷窃，但也是生活所迫，为了生存，为了家人，放下面子干一些违心事，又何尝不是一种积极的心态呢？而不是一哭二闹三上吊。
+想来作者能有如此作为，跟他伟大的母亲脱不了干系。
+那可爱的母亲呀！为了父亲的面子，为了父亲开心，都坚持要把房子建完，这何尝不是一种力量，向往心之所向，佩服这种勇气。
+其实最了解父亲的人是母亲，母亲知道父亲好面子，爱情不就是这样吗？你不用说，我懂，我懂你懂我，所以我们才会在一起这么久。
+张美丽从哪里跌倒，就从哪里爬起来。仿佛看见一个追求真爱，为爱为自己想要的东西不懈努力的人，虽说最终还是被迫性解放了自己，但她曾经的所作所为仍让我敬佩。
+舆论的力量是强大的，但比其而言，张美丽的内心力量更强大。
+]]></content>
+      <categories>
+        <category>读书感悟</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>索引</title>
+    <url>/2025/07/27/%E7%B4%A2%E5%BC%95/</url>
+    <content><![CDATA[索引的作用当想要快速查找到自己想要的数据时，可以用索引。通过索引，可以在检索数据时直接定位到，省去时间，就好比一本书前面的目录，能让你快速找到自己想看的内容。如果索引包含多列，那么按照从左到右的顺序，即最左前缀列来进行。
+索引的类型
+唯一索引：对某些列（比如身份证）添加唯一索引，不能出现两条身份证相同的记录，通过 UNIQUE 关键字我们就添加了一个唯一索引。
+
+ADD UNIQUE INDEX uni_sf (sf);
+
+也可以给列添加唯一约束，而不创建唯一索引，列具有唯一性。
+ADD CONSTRAINT uni_name UNIQUE (name);
+
+
+主键索引： 主键一旦创建，就会自动带上索引。这也是为什么主键搜索数据会更快的原因。一个表只能有一个主键，一个主键可以包含多列，即联合主键。
+
+ALTER TABLE table_name ADD PRIMARY KEY (column);
+
+
+普通索引： 任何一列都可以创建索引，建议只在自己经常想要检索的列上加索引，不要全部加，会耗性能。
+
+ALTER TABLE table_name ADD INDEX index_name (column);
+
+]]></content>
+      <categories>
+        <category>后端</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>获取到的csv保存数据库</title>
+    <url>/2025/07/29/%E8%8E%B7%E5%8F%96%E5%88%B0%E7%9A%84csv%E4%BF%9D%E5%AD%98%E6%95%B0%E6%8D%AE%E5%BA%93/</url>
+    <content><![CDATA[如果第三方接口获取到的数据，返回为csv文档时，可以先把csv文档保存到本地某路径，再通过fs的createReadStream读取数据，保存到本地数据库。
+const processConversations = async (dateObj) =&gt; &#123;  const username = &#x27;你的帐户名&#x27;;  const password = &#x27;密码&#x27;;  const year = dateObj.format(&#x27;YYYY&#x27;);  const month = dateObj.format(&#x27;MM&#x27;);  const day = dateObj.format(&#x27;DD&#x27;);  const hour = dateObj.format(&#x27;HH&#x27;);  const dateStr = `$&#123;year&#125;-$&#123;month&#125;-$&#123;day&#125;-$&#123;hour&#125;`;  const fileName = `路径后半部份`;  const url = `https://api/$&#123;fileName&#125;`;  const outputPath = `/tmp/conversations`;  const tableName = &#x27;test&#x27;;  try &#123;    // 下载 CSV    const response = await axios.get(url, &#123;      responseType: &#x27;stream&#x27;,      headers: &#123;        Authorization: `Basic $&#123;Buffer.from(`$&#123;username&#125;:$&#123;password&#125;`).toString(&#x27;base64&#x27;)&#125;`      &#125;    &#125;);    const writer = fs.createWriteStream(outputPath);    response.data.pipe(writer);    await new Promise((resolve, reject) =&gt; &#123;      writer.on(&#x27;finish&#x27;, resolve);      writer.on(&#x27;error&#x27;, reject);    &#125;);    console.log(&#x27; CSV 文件下载成功:&#x27;, fileName);    const rows = [];    await new Promise((resolve, reject) =&gt; &#123;      fs.createReadStream(outputPath)        .pipe(csv())        .on(&#x27;data&#x27;, (row) =&gt; &#123;          rows.push([            row[&#x27;DATE_TIME&#x27;] ? dayjs(row[&#x27;DATE_TIME&#x27;]).format(&#x27;YYYY-MM-DD HH:mm:ss&#x27;) : null,            row[&#x27;CLID&#x27;] || null,            row[&#x27;CLID_SOURCE&#x27;] || null          ]);        &#125;)        .on(&#x27;end&#x27;, resolve)        .on(&#x27;error&#x27;, reject);    &#125;);    if (rows.length === 0) &#123;      console.warn(`CSV 中没有数据: $&#123;fileName&#125;`);      return;    &#125;    const insertSQL = `      INSERT INTO \`$&#123;tableName&#125;\` (        date_time, clid, clid_source      ) VALUES ?    `;    await query(insertSQL, [rows]);    console.log(`成功插入 $&#123;rows.length&#125; 条记录: $&#123;fileName&#125;`);  &#125; catch (error) &#123;    console.error(`报错 ($&#123;fileName&#125;):`, error.message);  &#125;&#125;;
+
+]]></content>
+      <categories>
+        <category>后端</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>遇见未知的自己</title>
+    <url>/2025/06/30/%E9%81%87%E8%A7%81%E6%9C%AA%E7%9F%A5%E7%9A%84%E8%87%AA%E5%B7%B1/</url>
+    <content><![CDATA[《遇见未知的自己》读书笔记何为“未知”？“自己”即指“真我”，从“我是谁”到后来的“从有到无”，整本书以若菱与一位智者老人的对话为主线，引申出许多深刻的生命观念。
+
+
+
+
+
+
+
+
+
+核心观点
+外面没有别人，只有你自己。所有的外境，其实都是内心的投射。
+
+与潜意识对话的黄金时刻想象自己已经实现目标的最佳时刻，是清晨将醒未醒、夜晚将睡未睡之间的那段时间，因为那时我们最接近潜意识。
+
+关键修炼：觉察、臣服、战胜胜肽（小我）
+
+觉察：关注当下的自己，不批判地观察情绪和反应。
+臣服：接受现实，而不是抗拒。
+胜肽小我：代表恐惧、比较、焦虑的内在声音，要学会看见并超越它。
+
+
+
+
+冥想、感恩、付出
+
+冥想时，要设想自己已经拥有渴望的生活。
+在实现之前就先学会感恩。
+保持利他、愿意付出的心态。
+
+
+
+
+
+少关心别人，多关心自己
+
+注意力回到自己身上，关注内在世界。
+当情绪上来时，觉察身体哪个部位最不舒服，了解内在信号。
+
+
+
+
+总结这本书不只是关于“找到自己是谁”，更是提醒我们“成为那个自己”。内在力量的唤醒，需要持续的觉察、练习与自我超越。
+]]></content>
+      <categories>
+        <category>读书感悟</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>宝塔安装puppeteer</title>
+    <url>/2025/09/02/%E5%AE%9D%E5%A1%94%E5%AE%89%E8%A3%85puppeteer/</url>
+    <content><![CDATA[centos8使用yum失败，切换镜像源，更改镜像源文件，尝试清除缓存并重新建立
+wget -O /etc/yum.repos.d/CentOS-Base.repo https://mirrors.aliyun.com/repo/Centos-8.reposudo yum clean allsudo yum makecache
+
+Centos8已不维护，只能找
+puppeteer报错下载依赖 参考链接：https://www.cnblogs.com/ilizhu/p/14504049.html报错sandbox：
+#添加启动参数const browser = await puppeteer.launch(&#123;args: [&#x27;--no-sandbox&#x27;, &#x27;--disable-setuid-sandbox&#x27;]&#125;);]]></content>
       <categories>
         <category>前端</category>
       </categories>
-      <tags>
-        <tag>XSS</tag>
-        <tag>Web安全</tag>
-        <tag>前端安全</tag>
-        <tag>JavaScript</tag>
-        <tag>浏览器安全</tag>
-        <tag>网络安全</tag>
-        <tag>Web开发</tag>
-        <tag>安全编程</tag>
-        <tag>Content Security Policy</tag>
-        <tag>HttpOnly</tag>
-      </tags>
   </entry>
 </search>
