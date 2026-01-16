@@ -146,20 +146,6 @@ After successful deployment, you can view the build process on the GitLab CI&#x2
       </tags>
   </entry>
   <entry>
-    <title>Sync Google Sheets Data Between Spreadsheets</title>
-    <url>/2025/08/28/google%20sheet%E5%90%8C%E6%AD%A5%E8%A1%A8%E6%A0%BC%E6%95%B0%E6%8D%AE/</url>
-    <content><![CDATA[Sync Google Sheets Data Across Multiple SheetsThere is a requirement to synchronize all sheets from one Google Spreadsheet to another spreadsheet (including all sub-sheets).
-This is implemented using Google Sheets → Extensions → Apps Script.
-Why synchronization is neededThe source spreadsheet is read-only by default.By synchronizing its data into another spreadsheet, the copied sheets can then be edited freely.
-sourceSpreadsheetId and targetSpreadsheetId are the IDs from the Google Sheets URL —they are the long strings after /d/ in the address bar.
-Apps Script Code Examplefunction synchronizeSheetsToAnotherFile() &#123;  const sourceSpreadsheetId = &quot;id1&quot;;  const targetSpreadsheetId = &quot;id2&quot;;   // Example: 1NOtSSvDwXrca8vqyZW6OqQJwGaCICMVguSz1-i72oqg  const sourceSpreadsheet = SpreadsheetApp.openById(sourceSpreadsheetId);  const targetSpreadsheet = SpreadsheetApp.openById(targetSpreadsheetId);  const sourceSheets = sourceSpreadsheet.getSheets();  sourceSheets.forEach(sheet =&gt; &#123;    const sheetName = sheet.getName();    let targetSheet = targetSpreadsheet.getSheetByName(sheetName);    if (!targetSheet) &#123;      targetSheet = targetSpreadsheet.insertSheet(sheetName);    &#125; else &#123;      targetSheet.clear();    &#125;    const range = sheet.getDataRange();    const displayValues = range.getDisplayValues();     const formats = range.getBackgrounds();            const fontWeights = range.getFontWeights();        const targetRange = targetSheet.getRange(      1,      1,      displayValues.length,      displayValues[0].length    );    targetRange.setValues(displayValues);    targetRange.setBackgrounds(formats);    targetRange.setFontWeights(fontWeights);  &#125;);&#125;
-
-]]></content>
-      <categories>
-        <category>Frontend</category>
-      </categories>
-  </entry>
-  <entry>
     <title>Talking About Node RPC</title>
     <url>/2025/07/16/node-rpc/</url>
     <content><![CDATA[
@@ -178,6 +164,26 @@ After receiving the binary data, the frontend deserializes it into an RPC Respon
 ]]></content>
       <categories>
         <category>Backend</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>React Component Communication Methods</title>
+    <url>/2025/08/25/react%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F/</url>
+    <content><![CDATA[
+Props and Callback Props:Used for parent–child component communication. Child components receive data from parents via props. Parents pass callback functions to children, and children invoke these callbacks to send data back to the parent.
+
+Context API:An API for sharing state across components without the need to pass props down through every level of the component tree.
+
+Redux or MobX:For complex applications, state management libraries can be used to handle communication and shared state between components.
+
+Event Subscription Pattern:Uses mechanisms such as EventEmitter or third-party libraries to implement publish–subscribe patterns for communication between non-related components.
+
+Hooks:Some React Hooks, such as useState, can be used to share logic and state between components through custom hooks.
+
+
+]]></content>
+      <categories>
+        <category>Frontend</category>
       </categories>
   </entry>
   <entry>
@@ -207,12 +213,6 @@ function foo() &#123;  &quot;use strict&quot;;  console.log(this.a); // ❌ Type
       </categories>
   </entry>
   <entry>
-    <title>Hello English</title>
-    <url>/2024/08/16/redis-en/</url>
-    <content><![CDATA[This is an English post.
-]]></content>
-  </entry>
-  <entry>
     <title>One Day You&#39;ll Understand - Reading Notes by Mr. Zhuomo</title>
     <url>/2025/05/21/%E3%80%8A%E7%BB%88%E6%9C%89%E4%B8%80%E5%A4%A9%E4%BD%A0%E4%BC%9A%E6%87%82%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%20-%20%E7%90%A2%E7%A3%A8%E5%85%88%E7%94%9F/</url>
     <content><![CDATA[The book does contain a lot of his own “biases,” but I find him authentic and humorous. His language is simple and understandable, and each subtitle essentially tells us what we should do.
@@ -236,6 +236,18 @@ Understanding TravelThis part recounts Mr. Zhuomo’s experiences in Tibet. Many
 Understanding CareerFirst learn to endure hardship. Then understand yourself and your talents. Begin with the end in mind and stay focused.
 Understanding EducationEvery child is born pure. Without proper education, they won’t become pillars of the nation.
 Understanding Entertainment &amp; FreedomLife has two paths: one for career ambition—keep passion; the other for living warmly—keep humanity.Open your eyes each day and tell yourself: Oh yeah!
+]]></content>
+      <categories>
+        <category>Reading</category>
+      </categories>
+      <tags>
+        <tag>Reading</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hello English</title>
+    <url>/2024/08/16/redis-en/</url>
+    <content><![CDATA[This is an English post.
 ]]></content>
   </entry>
   <entry>
@@ -416,6 +428,12 @@ Scoped slot: Vue 2 uses slot-scope=&quot;data&quot;, Vue 3 uses #data or #defaul
 
 
 ]]></content>
+      <categories>
+        <category>Frontend</category>
+      </categories>
+      <tags>
+        <tag>Frontend</tag>
+      </tags>
   </entry>
   <entry>
     <title>How to Prevent XSS</title>
@@ -577,6 +595,52 @@ For frontend developers,understanding how to prevent XSS is a key step toward tr
       </tags>
   </entry>
   <entry>
+    <title>Reflections on *What I Talk About When I Talk About Running*</title>
+    <url>/2025/06/26/%E5%BD%93%E6%88%91%E8%B0%88%E8%B7%91%E6%AD%A5%E6%97%B6/</url>
+    <content><![CDATA[What I Talk About When I Talk About RunningIt was through this book that I realized there could be another version of myself out there, doing something I love. Before reading this book, I had never read anything by Murakami. I knew he was popular and had many famous books, but I hadn’t really paid attention. But when it comes to running, I felt there could be a connection.
+If I keep running, will I eventually reach the moon? Running isn’t about living longer, but about making life feel easier and lighter within the time we have.
+I was surprised by Murakami’s imagination while running—so free and boundless. I really enjoy that. I’ve imagined many things too, like suddenly recalling a lyric while running—something like “speeding up to chase happiness,” blabla… Long-distance running requires endurance, but also imagination. Of course, the premise is loving to run. If someone doesn’t like running, no matter how much you say, it won’t matter. But if someone does love it, they’ll even want to meet another version of themselves during a break in the rain. Humans are inherently lonely, but the spirit can resonate with others.
+I plan to keep running no matter how the world changes. Once, I walked 30 kilometers in one day. Despite the sunburn, I loved the spiritual fulfillment more. If you haven’t experienced it, you have no voice. Maybe I’m like Chen Kun—a pessimistic optimist. I live actively in this world, but I also see through its illusions. Neither joyful because of things, nor sorrowful because of myself.
+My pulse has dropped to just over 50 beats per minute. Seems like I’m built for jogging. After all, it’s about interest. As long as my freedom isn’t restricted, anything is acceptable.
+I hope next year I’ll join a marathon, with people cheering me on. That would be so happy.
+
+“I’m not a person, but a pure machine. So I don’t need to feel anything, just keep running forward.”
+
+What’s most similar is that we both love to run non-stop. Not the type who walks when tired or stops to enjoy the scenery. Maybe people have different views, but I think the true king is the one who can keep running without stopping.
+When reaching the finish line, I’d feel so cool, a rush of pride, like winning the lottery or getting incredibly lucky. It’s a principle—and also my pride.
+Oh, right—just like Brother Shang waiting at the finish line, and I’d smile proudly.
+]]></content>
+      <categories>
+        <category>Reading</category>
+      </categories>
+      <tags>
+        <tag>Reading</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Installing Puppeteer on Baota Panel</title>
+    <url>/2025/09/02/%E5%AE%9D%E5%A1%94%E5%AE%89%E8%A3%85puppeteer/</url>
+    <content><![CDATA[Installing Puppeteer on Baota (CentOS 8)When using CentOS 8, yum may fail because CentOS 8 is no longer officially maintained.To fix this, you need to switch the YUM mirror source, clear the cache, and rebuild it.
+1. Replace the YUM repository sourcewget -O /etc/yum.repos.d/CentOS-Base.repo https://mirrors.aliyun.com/repo/Centos-8.repo
+
+2. Clean YUM cachesudo yum clean all
+
+3. Rebuild YUM cachesudo yum makecache
+
+
+⚠️ Note:CentOS 8 has reached End of Life (EOL) and is no longer maintained.You must rely on third-party mirror sources to continue using yum.
+
+Puppeteer Dependency Download ErrorWhen installing Puppeteer, you may encounter errors while downloading Chromium dependencies.
+You can refer to this article for details:https://www.cnblogs.com/ilizhu/p/14504049.html
+Puppeteer Sandbox ErrorOn some servers (such as Baota or other managed VPS environments), Puppeteer may fail to launch Chromium due to sandbox restrictions.
+Solution: Disable sandbox when launching Puppeteer// Add launch arguments to disable sandboxconst browser = await puppeteer.launch(&#123;  args: [&#x27;--no-sandbox&#x27;, &#x27;--disable-setuid-sandbox&#x27;]&#125;);
+
+]]></content>
+      <categories>
+        <category>Frontend</category>
+      </categories>
+  </entry>
+  <entry>
     <title>Fully Understanding How the JavaScript `new` Operator Works</title>
     <url>/2025/12/17/%E6%89%8B%E5%86%99New/</url>
     <content><![CDATA[In JavaScript, the new operator is a core concept that frequently appears in both interviews and everyday development.Many developers use new regularly, but few truly understand what actually happens behind the scenes.
@@ -689,23 +753,6 @@ If you can both write and explain this implementation,90% of interviewers will c
       </categories>
   </entry>
   <entry>
-    <title>Reflections on *What I Talk About When I Talk About Running*</title>
-    <url>/2025/06/26/%E5%BD%93%E6%88%91%E8%B0%88%E8%B7%91%E6%AD%A5%E6%97%B6/</url>
-    <content><![CDATA[What I Talk About When I Talk About RunningIt was through this book that I realized there could be another version of myself out there, doing something I love. Before reading this book, I had never read anything by Murakami. I knew he was popular and had many famous books, but I hadn’t really paid attention. But when it comes to running, I felt there could be a connection.
-If I keep running, will I eventually reach the moon? Running isn’t about living longer, but about making life feel easier and lighter within the time we have.
-I was surprised by Murakami’s imagination while running—so free and boundless. I really enjoy that. I’ve imagined many things too, like suddenly recalling a lyric while running—something like “speeding up to chase happiness,” blabla… Long-distance running requires endurance, but also imagination. Of course, the premise is loving to run. If someone doesn’t like running, no matter how much you say, it won’t matter. But if someone does love it, they’ll even want to meet another version of themselves during a break in the rain. Humans are inherently lonely, but the spirit can resonate with others.
-I plan to keep running no matter how the world changes. Once, I walked 30 kilometers in one day. Despite the sunburn, I loved the spiritual fulfillment more. If you haven’t experienced it, you have no voice. Maybe I’m like Chen Kun—a pessimistic optimist. I live actively in this world, but I also see through its illusions. Neither joyful because of things, nor sorrowful because of myself.
-My pulse has dropped to just over 50 beats per minute. Seems like I’m built for jogging. After all, it’s about interest. As long as my freedom isn’t restricted, anything is acceptable.
-I hope next year I’ll join a marathon, with people cheering me on. That would be so happy.
-
-“I’m not a person, but a pure machine. So I don’t need to feel anything, just keep running forward.”
-
-What’s most similar is that we both love to run non-stop. Not the type who walks when tired or stops to enjoy the scenery. Maybe people have different views, but I think the true king is the one who can keep running without stopping.
-When reaching the finish line, I’d feel so cool, a rush of pride, like winning the lottery or getting incredibly lucky. It’s a principle—and also my pride.
-Oh, right—just like Brother Shang waiting at the finish line, and I’d smile proudly.
-]]></content>
-  </entry>
-  <entry>
     <title>Handwriting Promise.race (From Theory to Practice)</title>
     <url>/2025/12/18/%E6%89%8B%E5%86%99Promise/</url>
     <content><![CDATA[In frontend interviews and daily development, Promise.race is a very common yet often overlooked API. Its rule is simple:
@@ -798,16 +845,18 @@ Iterate over the iterable, wrap each item with Promise.resolve, attach the same 
       </categories>
   </entry>
   <entry>
-    <title>Reflections on *Skin*</title>
-    <url>/2025/06/26/%E7%9A%AE%E5%9B%8A%E6%84%9F%E6%82%9F/</url>
-    <content><![CDATA[Aunt TaiAunt Tai is strong-willed and resilient. Her optimistic attitude is something worth learning from. The greatest thing my father ever did was marrying my mother—a truly great woman. A real woman should face everything with positivity and build the future she desires with her own hands.
-Although she resorted to stealing, it was driven by hardship—survival and family. Setting aside pride to do things against her will is, in a way, a form of strength. It’s not about crying and making a scene, but staying proactive in adversity.
-Thinking about it, the author’s achievements are inseparable from his great mother.
-Ah, that lovely mother! To preserve her husband’s dignity and happiness, she insisted on completing the house. Isn’t that a form of strength too? To follow her heart courageously is truly admirable.
-In fact, the person who understands my father the most is my mother. She knows his pride. Isn’t this what love is? You don’t need to say it—I understand. I understand you, and you understand me, and that’s why we’ve been together for so long.
-Zhang MeiliGet up from where you fell. Zhang Meili seems like someone who pursued true love and worked hard for what she desired. Though she was eventually forced to liberate herself sexually, I still respect her for everything she once did.
-Public opinion is powerful, but Zhang Meili’s inner strength is even more powerful.
+    <title>Sync Google Sheets Data Between Spreadsheets</title>
+    <url>/2025/08/28/google%20sheet%E5%90%8C%E6%AD%A5%E8%A1%A8%E6%A0%BC%E6%95%B0%E6%8D%AE/</url>
+    <content><![CDATA[Sync Google Sheets Data Across Multiple SheetsThere is a requirement to synchronize all sheets from one Google Spreadsheet to another spreadsheet (including all sub-sheets).
+This is implemented using Google Sheets → Extensions → Apps Script.
+Why synchronization is neededThe source spreadsheet is read-only by default.By synchronizing its data into another spreadsheet, the copied sheets can then be edited freely.
+sourceSpreadsheetId and targetSpreadsheetId are the IDs from the Google Sheets URL —they are the long strings after /d/ in the address bar.
+Apps Script Code Examplefunction synchronizeSheetsToAnotherFile() &#123;  const sourceSpreadsheetId = &quot;id1&quot;;  const targetSpreadsheetId = &quot;id2&quot;;   // Example: 1NOtSSvDwXrca8vqyZW6OqQJwGaCICMVguSz1-i72oqg  const sourceSpreadsheet = SpreadsheetApp.openById(sourceSpreadsheetId);  const targetSpreadsheet = SpreadsheetApp.openById(targetSpreadsheetId);  const sourceSheets = sourceSpreadsheet.getSheets();  sourceSheets.forEach(sheet =&gt; &#123;    const sheetName = sheet.getName();    let targetSheet = targetSpreadsheet.getSheetByName(sheetName);    if (!targetSheet) &#123;      targetSheet = targetSpreadsheet.insertSheet(sheetName);    &#125; else &#123;      targetSheet.clear();    &#125;    const range = sheet.getDataRange();    const displayValues = range.getDisplayValues();     const formats = range.getBackgrounds();            const fontWeights = range.getFontWeights();        const targetRange = targetSheet.getRange(      1,      1,      displayValues.length,      displayValues[0].length    );    targetRange.setValues(displayValues);    targetRange.setBackgrounds(formats);    targetRange.setFontWeights(fontWeights);  &#125;);&#125;
+
 ]]></content>
+      <categories>
+        <category>Frontend</category>
+      </categories>
   </entry>
   <entry>
     <title>Encountering the Unknown Self</title>
@@ -843,31 +892,29 @@ When emotions arise, be aware of which part of your body feels uncomfortable and
 
 ConclusionThis book is not only about discovering “who you are,” but also about reminding you to “become that true self.” Awakening inner strength requires continuous awareness, practice, and transcending the ego.
 ]]></content>
+      <categories>
+        <category>Reading</category>
+      </categories>
       <tags>
         <tag>Personal Growth</tag>
       </tags>
   </entry>
   <entry>
-    <title>Installing Puppeteer on Baota Panel</title>
-    <url>/2025/09/02/%E5%AE%9D%E5%A1%94%E5%AE%89%E8%A3%85puppeteer/</url>
-    <content><![CDATA[Installing Puppeteer on Baota (CentOS 8)When using CentOS 8, yum may fail because CentOS 8 is no longer officially maintained.To fix this, you need to switch the YUM mirror source, clear the cache, and rebuild it.
-1. Replace the YUM repository sourcewget -O /etc/yum.repos.d/CentOS-Base.repo https://mirrors.aliyun.com/repo/Centos-8.repo
-
-2. Clean YUM cachesudo yum clean all
-
-3. Rebuild YUM cachesudo yum makecache
-
-
-⚠️ Note:CentOS 8 has reached End of Life (EOL) and is no longer maintained.You must rely on third-party mirror sources to continue using yum.
-
-Puppeteer Dependency Download ErrorWhen installing Puppeteer, you may encounter errors while downloading Chromium dependencies.
-You can refer to this article for details:https://www.cnblogs.com/ilizhu/p/14504049.html
-Puppeteer Sandbox ErrorOn some servers (such as Baota or other managed VPS environments), Puppeteer may fail to launch Chromium due to sandbox restrictions.
-Solution: Disable sandbox when launching Puppeteer// Add launch arguments to disable sandboxconst browser = await puppeteer.launch(&#123;  args: [&#x27;--no-sandbox&#x27;, &#x27;--disable-setuid-sandbox&#x27;]&#125;);
-
+    <title>Reflections on *Skin*</title>
+    <url>/2025/06/26/%E7%9A%AE%E5%9B%8A%E6%84%9F%E6%82%9F/</url>
+    <content><![CDATA[Aunt TaiAunt Tai is strong-willed and resilient. Her optimistic attitude is something worth learning from. The greatest thing my father ever did was marrying my mother—a truly great woman. A real woman should face everything with positivity and build the future she desires with her own hands.
+Although she resorted to stealing, it was driven by hardship—survival and family. Setting aside pride to do things against her will is, in a way, a form of strength. It’s not about crying and making a scene, but staying proactive in adversity.
+Thinking about it, the author’s achievements are inseparable from his great mother.
+Ah, that lovely mother! To preserve her husband’s dignity and happiness, she insisted on completing the house. Isn’t that a form of strength too? To follow her heart courageously is truly admirable.
+In fact, the person who understands my father the most is my mother. She knows his pride. Isn’t this what love is? You don’t need to say it—I understand. I understand you, and you understand me, and that’s why we’ve been together for so long.
+Zhang MeiliGet up from where you fell. Zhang Meili seems like someone who pursued true love and worked hard for what she desired. Though she was eventually forced to liberate herself sexually, I still respect her for everything she once did.
+Public opinion is powerful, but Zhang Meili’s inner strength is even more powerful.
 ]]></content>
       <categories>
-        <category>Frontend</category>
+        <category>Reading</category>
       </categories>
+      <tags>
+        <tag>Reading</tag>
+      </tags>
   </entry>
 </search>
