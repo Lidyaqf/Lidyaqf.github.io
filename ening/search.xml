@@ -80,6 +80,44 @@ Additional: Install Docker, Portainer, and Related Commandssudo apt updatesudo a
       </categories>
   </entry>
   <entry>
+    <title>React Native New Architecture</title>
+    <url>/2025/08/19/ReactNative%E6%96%B0%E6%9E%B6%E6%9E%84/</url>
+    <content><![CDATA[
+Fabric: Enables synchronous UI rendering, eliminating the communication bottleneck of the Bridge.
+TurboModules: Loads native modules on demand, improving app startup performance.
+JSI (JavaScript Interface): Allows JavaScript to directly call native code, replacing the asynchronous Bridge. The Bridge is asynchronous and single-threaded, which introduces additional overhead; JSI, by contrast, is synchronous, lower-overhead, and supports concurrency.
+
+]]></content>
+      <categories>
+        <category>Frontend</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>Hexo-Next – Change Fonts &amp; Enable Code Copy</title>
+    <url>/2025/08/18/Hexo-Next-%E6%9B%B4%E6%94%B9%E5%AD%97%E4%BD%93/</url>
+    <content><![CDATA[
+The Next theme version used here is 7.8.0.
+First, locate the file:
+/themes/next/_config.yml
+
+Search for the keyword font.⚠️ Important: You must set enable inside font to true, because the default value is false.If you only modify the family without enabling it, the font change will not take effect — so make sure you don’t miss this step.
+If the font family is sourced from an external platform, you also need to configure the host.
+font:  enable: true  # Uri of fonts host, e.g. https://fonts.googleapis.com (Default).  host:   # Font options:  # `external: true` will load this font family from `host` above.  # `family: Times New Roman`. Without any quotes.  # `size: x.x`. Use `em` as unit. Default: 1 (16px)  # Global font settings used for all elements inside &lt;body&gt;.  global:    external: true    family: Noto Serif SC    size:  # Font settings for site title (.site-title).  title:    external: true    family: Noto Serif SC    size:  # Font settings for headlines (&lt;h1&gt; to &lt;h6&gt;).  headings:    external: true    family: Noto Serif SC    size:  # Font settings for posts (.post-body).  posts:    external: true    family: Noto Serif SC  # Font settings for &lt;code&gt; and code blocks.  codes:    external: true    family: Source Code Pro
+
+
+Enable Copy Button for Code BlocksIn the same _config.yml file, locate the following configuration section.
+Set copy_button.enable to true to enable the copy feature.
+
+When show_result is set to true, a checkmark will be shown after copying.
+The style option controls the appearance of the copy button. Choose based on your preference.
+
+codeblock:  # Code Highlight theme  # Available values: normal | night | night eighties | night blue | night bright | solarized | solarized dark | galactic  # See: https://github.com/chriskempson/tomorrow-theme  highlight_theme: night eighties  # Add copy button on codeblock  copy_button:    enable: true    # Show text copy result.    show_result: true    # Available values: default | flat | mac    style: mac
+]]></content>
+      <categories>
+        <category>Frontend</category>
+      </categories>
+  </entry>
+  <entry>
     <title>GitLab CI/CD</title>
     <url>/2025/04/10/gitlabci/</url>
     <content><![CDATA[GitLab CI&#x2F;CD Guide for Frontend Projects (Mac Environment)OverviewIn daily development, we often manually send the built dist package to the backend for deployment, which is inefficient and error-prone. CI (Continuous Integration) automates this process. This guide shows how to use GitLab CI to implement continuous integration and deployment.
@@ -146,13 +184,40 @@ After successful deployment, you can view the build process on the GitLab CI&#x2
       </tags>
   </entry>
   <entry>
-    <title>React Native New Architecture</title>
-    <url>/2025/08/19/ReactNative%E6%96%B0%E6%9E%B6%E6%9E%84/</url>
-    <content><![CDATA[
-Fabric: Enables synchronous UI rendering, eliminating the communication bottleneck of the Bridge.
-TurboModules: Loads native modules on demand, improving app startup performance.
-JSI (JavaScript Interface): Allows JavaScript to directly call native code, replacing the asynchronous Bridge. The Bridge is asynchronous and single-threaded, which introduces additional overhead; JSI, by contrast, is synchronous, lower-overhead, and supports concurrency.
+    <title>Sync Google Sheets Data Between Spreadsheets</title>
+    <url>/2025/08/28/google%20sheet%E5%90%8C%E6%AD%A5%E8%A1%A8%E6%A0%BC%E6%95%B0%E6%8D%AE/</url>
+    <content><![CDATA[Sync Google Sheets Data Across Multiple SheetsThere is a requirement to synchronize all sheets from one Google Spreadsheet to another spreadsheet (including all sub-sheets).
+This is implemented using Google Sheets → Extensions → Apps Script.
+Why synchronization is neededThe source spreadsheet is read-only by default.By synchronizing its data into another spreadsheet, the copied sheets can then be edited freely.
+sourceSpreadsheetId and targetSpreadsheetId are the IDs from the Google Sheets URL —they are the long strings after /d/ in the address bar.
+Apps Script Code Examplefunction synchronizeSheetsToAnotherFile() &#123;  const sourceSpreadsheetId = &quot;id1&quot;;  const targetSpreadsheetId = &quot;id2&quot;;   // Example: 1NOtSSvDwXrca8vqyZW6OqQJwGaCICMVguSz1-i72oqg  const sourceSpreadsheet = SpreadsheetApp.openById(sourceSpreadsheetId);  const targetSpreadsheet = SpreadsheetApp.openById(targetSpreadsheetId);  const sourceSheets = sourceSpreadsheet.getSheets();  sourceSheets.forEach(sheet =&gt; &#123;    const sheetName = sheet.getName();    let targetSheet = targetSpreadsheet.getSheetByName(sheetName);    if (!targetSheet) &#123;      targetSheet = targetSpreadsheet.insertSheet(sheetName);    &#125; else &#123;      targetSheet.clear();    &#125;    const range = sheet.getDataRange();    const displayValues = range.getDisplayValues();     const formats = range.getBackgrounds();            const fontWeights = range.getFontWeights();        const targetRange = targetSheet.getRange(      1,      1,      displayValues.length,      displayValues[0].length    );    targetRange.setValues(displayValues);    targetRange.setBackgrounds(formats);    targetRange.setFontWeights(fontWeights);  &#125;);&#125;
 
+]]></content>
+      <categories>
+        <category>Frontend</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>JavaScript Basics</title>
+    <url>/2025/12/02/js%E5%9F%BA%E7%A1%80/</url>
+    <content><![CDATA[JavaScript Basics Summary (Hoisting, Strict Mode)
+Rules for Variable and Function Hoisting
+Variable hoisting: Execution still happens in order; variable declarations are hoisted but assignments are not.
+Function hoisting: The entire function body is hoisted to the top of its scope.
+Priority: Function hoisting &gt; Variable hoisting.
+
+console.log(a); // undefinedvar a = 2;foo(); // works normallyfunction foo() &#123;  console.log(&quot;Function hoisting succeeded&quot;);&#125;
+
+
+Using Strict Mode with use strictWhat it does:
+Prevents creating accidental global variables;
+Disallows using undeclared variables, helping avoid memory leaks;
+Binds this to undefined by default instead of window.
+
+function foo() &#123;  &quot;use strict&quot;;  console.log(this.a); // ❌ TypeError&#125;var a = 2;foo(); // in strict mode, this is undefined, so this.a cannot be read
+
+
+(function() &#123;  &quot;use strict&quot;;  foo(); // calling foo here doesn&#x27;t change its default binding&#125;)();function foo() &#123;  console.log(this.a);&#125;var a = 2;
 ]]></content>
       <categories>
         <category>Frontend</category>
@@ -180,36 +245,62 @@ After receiving the binary data, the frontend deserializes it into an RPC Respon
       </categories>
   </entry>
   <entry>
+    <title>React Component Communication Methods</title>
+    <url>/2025/08/25/react%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F/</url>
+    <content><![CDATA[
+Props and Callback Props:Used for parent–child component communication. Child components receive data from parents via props. Parents pass callback functions to children, and children invoke these callbacks to send data back to the parent.
+
+Context API:An API for sharing state across components without the need to pass props down through every level of the component tree.
+
+Redux or MobX:For complex applications, state management libraries can be used to handle communication and shared state between components.
+
+Event Subscription Pattern:Uses mechanisms such as EventEmitter or third-party libraries to implement publish–subscribe patterns for communication between non-related components.
+
+Hooks:Some React Hooks, such as useState, can be used to share logic and state between components through custom hooks.
+
+
+]]></content>
+      <categories>
+        <category>Frontend</category>
+      </categories>
+  </entry>
+  <entry>
     <title>Hello English</title>
     <url>/2024/08/16/redis-en/</url>
     <content><![CDATA[This is an English post.
 ]]></content>
   </entry>
   <entry>
-    <title>JavaScript Basics</title>
-    <url>/2025/12/02/js%E5%9F%BA%E7%A1%80/</url>
-    <content><![CDATA[JavaScript Basics Summary (Hoisting, Strict Mode)
-Rules for Variable and Function Hoisting
-Variable hoisting: Execution still happens in order; variable declarations are hoisted but assignments are not.
-Function hoisting: The entire function body is hoisted to the top of its scope.
-Priority: Function hoisting &gt; Variable hoisting.
+    <title>One Day You&#39;ll Understand - Reading Notes by Mr. Zhuomo</title>
+    <url>/2025/05/21/%E3%80%8A%E7%BB%88%E6%9C%89%E4%B8%80%E5%A4%A9%E4%BD%A0%E4%BC%9A%E6%87%82%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%20-%20%E7%90%A2%E7%A3%A8%E5%85%88%E7%94%9F/</url>
+    <content><![CDATA[The book does contain a lot of his own “biases,” but I find him authentic and humorous. His language is simple and understandable, and each subtitle essentially tells us what we should do.
+Understanding LifeLife is never about what you want it to be. It’s good to discover beauty and to view things from others’ perspectives. At the same time, one should have self-awareness.
+Understanding LoveSheldon once said: “The pursuit of another human to spend life with is something I’ve never understood. Maybe I’m too interesting to need company. So I wish you the same joy with each other as I have with myself.”One can never escape loneliness through another person; only through passion for life. Managing a relationship requires rationality. Freedom is inalienable. I once checked my ex’s phone—I realized it was wrong and won’t do it again.
+Understanding StrategyThis section mainly introduces the strategies of courting and how to maintain a good relationship—true wisdom. Never sacrifice your career for family. Don’t live with in-laws (though I think it depends). Have your own hobbies.
+Understanding MarriageEndure and stay loyal. As for non-marriage beliefs, there’s nothing more to say.
+Understanding SetbacksEvery breakup is just making way for true love. Don’t force it. I love you, so I wish you well, even if I’m not the one by your side.Do what you want regardless of others’ opinions. Only care about those who matter to you.
+Understanding ReadingWhat, Why, How. Keep reading. Don’t chase speed, but depth.
+Understanding RomanceHe shares sweet daily stories with his wife. If you don’t break up, you won’t discover how many better people there are out there. If you find one—lucky. If not—you can still live happily on your own.Live with emotional intelligence and the world becomes beautiful.
+Understanding SocializingAssociate with decent people. Different people require different approaches. Rejecting others is an art. If you don’t have the guts to ask for your money back, don’t lend it.
+Understanding Human NatureI tend to be skeptical about human nature. You can’t control others, so just manage yourself. Don’t be vulgar.
+Understanding Good and EvilSome people enter your life just to teach you a lesson. Good or evil—I prefer believing in others, as trust is given before it’s earned.Even if deceived, it’s a lesson learned—don’t fall into the same trap again. But don’t stop trusting altogether; kind people still exist.God made the right hand a right hand as a reward; same for kind people—kindness is its own reward.I recall being in a restroom without tissue once. I was going to ask a friend, but a stranger overheard and handed me tissues. Such kindness moved me deeply.Kindness must come with principles—otherwise it may hurt others or yourself.
+Understanding WealthThe poor stay poor because of narrow thinking. To get rich, don’t just invest in your body—think bigger. See the essence of problems.Time is limited—how to get rich fast? Find a subject you love, apply it, think broadly, and work in fields closely tied to society.
+Understanding SocietyHave ambition. Take one step at a time. Build an independent personality. Be accountable for your actions. Learn to transform your ability to feel happiness—then change yourself.
+Understanding Life and DeathDeath studies include concepts like: No death, no life; face death to live; understand death to be reborn. Interesting and thought-provoking.Knowing that we will die is what pushes us to live fully. When the time comes, I think I’ll embrace death.
 
-console.log(a); // undefinedvar a = 2;foo(); // works normallyfunction foo() &#123;  console.log(&quot;Function hoisting succeeded&quot;);&#125;
+What the world lacks isn’t perfect people, but justice, sincerity, courage, and compassion from the heart. — My biggest takeaway after watching Forever Young today.We all know cause and effect—but causes and effects come from relationships. Someday, I’ll read Schopenhauer and Nietzsche properly.
 
-
-Using Strict Mode with use strictWhat it does:
-Prevents creating accidental global variables;
-Disallows using undeclared variables, helping avoid memory leaks;
-Binds this to undefined by default instead of window.
-
-function foo() &#123;  &quot;use strict&quot;;  console.log(this.a); // ❌ TypeError&#125;var a = 2;foo(); // in strict mode, this is undefined, so this.a cannot be read
-
-
-(function() &#123;  &quot;use strict&quot;;  foo(); // calling foo here doesn&#x27;t change its default binding&#125;)();function foo() &#123;  console.log(this.a);&#125;var a = 2;
+Understanding TravelThis part recounts Mr. Zhuomo’s experiences in Tibet. Many dream of going there—maybe because it helps people truly understand life’s struggles.The US is less disciplined than the UK. Japan has great food culture and says “sorry” a lot—avoiding bothering others.
+Understanding CareerFirst learn to endure hardship. Then understand yourself and your talents. Begin with the end in mind and stay focused.
+Understanding EducationEvery child is born pure. Without proper education, they won’t become pillars of the nation.
+Understanding Entertainment &amp; FreedomLife has two paths: one for career ambition—keep passion; the other for living warmly—keep humanity.Open your eyes each day and tell yourself: Oh yeah!
 ]]></content>
       <categories>
-        <category>Frontend</category>
+        <category>Reading</category>
       </categories>
+      <tags>
+        <tag>Reading</tag>
+      </tags>
   </entry>
   <entry>
     <title>Information Technology Teaching Template for Primary and Secondary Schools</title>
@@ -414,38 +505,6 @@ Scoped slot: Vue 2 uses slot-scope=&quot;data&quot;, Vue 3 uses #data or #defaul
       </tags>
   </entry>
   <entry>
-    <title>One Day You&#39;ll Understand - Reading Notes by Mr. Zhuomo</title>
-    <url>/2025/05/21/%E3%80%8A%E7%BB%88%E6%9C%89%E4%B8%80%E5%A4%A9%E4%BD%A0%E4%BC%9A%E6%87%82%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%20-%20%E7%90%A2%E7%A3%A8%E5%85%88%E7%94%9F/</url>
-    <content><![CDATA[The book does contain a lot of his own “biases,” but I find him authentic and humorous. His language is simple and understandable, and each subtitle essentially tells us what we should do.
-Understanding LifeLife is never about what you want it to be. It’s good to discover beauty and to view things from others’ perspectives. At the same time, one should have self-awareness.
-Understanding LoveSheldon once said: “The pursuit of another human to spend life with is something I’ve never understood. Maybe I’m too interesting to need company. So I wish you the same joy with each other as I have with myself.”One can never escape loneliness through another person; only through passion for life. Managing a relationship requires rationality. Freedom is inalienable. I once checked my ex’s phone—I realized it was wrong and won’t do it again.
-Understanding StrategyThis section mainly introduces the strategies of courting and how to maintain a good relationship—true wisdom. Never sacrifice your career for family. Don’t live with in-laws (though I think it depends). Have your own hobbies.
-Understanding MarriageEndure and stay loyal. As for non-marriage beliefs, there’s nothing more to say.
-Understanding SetbacksEvery breakup is just making way for true love. Don’t force it. I love you, so I wish you well, even if I’m not the one by your side.Do what you want regardless of others’ opinions. Only care about those who matter to you.
-Understanding ReadingWhat, Why, How. Keep reading. Don’t chase speed, but depth.
-Understanding RomanceHe shares sweet daily stories with his wife. If you don’t break up, you won’t discover how many better people there are out there. If you find one—lucky. If not—you can still live happily on your own.Live with emotional intelligence and the world becomes beautiful.
-Understanding SocializingAssociate with decent people. Different people require different approaches. Rejecting others is an art. If you don’t have the guts to ask for your money back, don’t lend it.
-Understanding Human NatureI tend to be skeptical about human nature. You can’t control others, so just manage yourself. Don’t be vulgar.
-Understanding Good and EvilSome people enter your life just to teach you a lesson. Good or evil—I prefer believing in others, as trust is given before it’s earned.Even if deceived, it’s a lesson learned—don’t fall into the same trap again. But don’t stop trusting altogether; kind people still exist.God made the right hand a right hand as a reward; same for kind people—kindness is its own reward.I recall being in a restroom without tissue once. I was going to ask a friend, but a stranger overheard and handed me tissues. Such kindness moved me deeply.Kindness must come with principles—otherwise it may hurt others or yourself.
-Understanding WealthThe poor stay poor because of narrow thinking. To get rich, don’t just invest in your body—think bigger. See the essence of problems.Time is limited—how to get rich fast? Find a subject you love, apply it, think broadly, and work in fields closely tied to society.
-Understanding SocietyHave ambition. Take one step at a time. Build an independent personality. Be accountable for your actions. Learn to transform your ability to feel happiness—then change yourself.
-Understanding Life and DeathDeath studies include concepts like: No death, no life; face death to live; understand death to be reborn. Interesting and thought-provoking.Knowing that we will die is what pushes us to live fully. When the time comes, I think I’ll embrace death.
-
-What the world lacks isn’t perfect people, but justice, sincerity, courage, and compassion from the heart. — My biggest takeaway after watching Forever Young today.We all know cause and effect—but causes and effects come from relationships. Someday, I’ll read Schopenhauer and Nietzsche properly.
-
-Understanding TravelThis part recounts Mr. Zhuomo’s experiences in Tibet. Many dream of going there—maybe because it helps people truly understand life’s struggles.The US is less disciplined than the UK. Japan has great food culture and says “sorry” a lot—avoiding bothering others.
-Understanding CareerFirst learn to endure hardship. Then understand yourself and your talents. Begin with the end in mind and stay focused.
-Understanding EducationEvery child is born pure. Without proper education, they won’t become pillars of the nation.
-Understanding Entertainment &amp; FreedomLife has two paths: one for career ambition—keep passion; the other for living warmly—keep humanity.Open your eyes each day and tell yourself: Oh yeah!
-]]></content>
-      <categories>
-        <category>Reading</category>
-      </categories>
-      <tags>
-        <tag>Reading</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>How to Prevent XSS</title>
     <url>/2025/10/17/%E5%A6%82%E4%BD%95%E9%98%B2%E5%BE%A1%20XSS%EF%BC%88%E8%B7%A8%E7%AB%99%E8%84%9A%E6%9C%AC%E6%94%BB%E5%87%BB%EF%BC%89/</url>
     <content><![CDATA[In web development, XSS (Cross-Site Scripting) is one of the most common and most dangerous security vulnerabilities.Once a website contains an XSS flaw, attackers may execute malicious scripts in users’ browsers, allowing them to steal cookies, hijack sessions, deface pages, or even take over user accounts.
@@ -603,6 +662,29 @@ For frontend developers,understanding how to prevent XSS is a key step toward tr
         <tag>Content Security Policy</tag>
         <tag>HttpOnly</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>Installing Puppeteer on Baota Panel</title>
+    <url>/2025/09/02/%E5%AE%9D%E5%A1%94%E5%AE%89%E8%A3%85puppeteer/</url>
+    <content><![CDATA[Installing Puppeteer on Baota (CentOS 8)When using CentOS 8, yum may fail because CentOS 8 is no longer officially maintained.To fix this, you need to switch the YUM mirror source, clear the cache, and rebuild it.
+1. Replace the YUM repository sourcewget -O /etc/yum.repos.d/CentOS-Base.repo https://mirrors.aliyun.com/repo/Centos-8.repo
+
+2. Clean YUM cachesudo yum clean all
+
+3. Rebuild YUM cachesudo yum makecache
+
+
+⚠️ Note:CentOS 8 has reached End of Life (EOL) and is no longer maintained.You must rely on third-party mirror sources to continue using yum.
+
+Puppeteer Dependency Download ErrorWhen installing Puppeteer, you may encounter errors while downloading Chromium dependencies.
+You can refer to this article for details:https://www.cnblogs.com/ilizhu/p/14504049.html
+Puppeteer Sandbox ErrorOn some servers (such as Baota or other managed VPS environments), Puppeteer may fail to launch Chromium due to sandbox restrictions.
+Solution: Disable sandbox when launching Puppeteer// Add launch arguments to disable sandboxconst browser = await puppeteer.launch(&#123;  args: [&#x27;--no-sandbox&#x27;, &#x27;--disable-setuid-sandbox&#x27;]&#125;);
+
+]]></content>
+      <categories>
+        <category>Frontend</category>
+      </categories>
   </entry>
   <entry>
     <title>Reflections on *What I Talk About When I Talk About Running*</title>
@@ -832,26 +914,6 @@ Iterate over the iterable, wrap each item with Promise.resolve, attach the same 
       </categories>
   </entry>
   <entry>
-    <title>React Component Communication Methods</title>
-    <url>/2025/08/25/react%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F/</url>
-    <content><![CDATA[
-Props and Callback Props:Used for parent–child component communication. Child components receive data from parents via props. Parents pass callback functions to children, and children invoke these callbacks to send data back to the parent.
-
-Context API:An API for sharing state across components without the need to pass props down through every level of the component tree.
-
-Redux or MobX:For complex applications, state management libraries can be used to handle communication and shared state between components.
-
-Event Subscription Pattern:Uses mechanisms such as EventEmitter or third-party libraries to implement publish–subscribe patterns for communication between non-related components.
-
-Hooks:Some React Hooks, such as useState, can be used to share logic and state between components through custom hooks.
-
-
-]]></content>
-      <categories>
-        <category>Frontend</category>
-      </categories>
-  </entry>
-  <entry>
     <title>Encountering the Unknown Self</title>
     <url>/2025/06/30/%E9%81%87%E8%A7%81%E6%9C%AA%E7%9F%A5%E7%9A%84%E8%87%AA%E5%B7%B1/</url>
     <content><![CDATA[Notes on Encountering the Unknown SelfWhat is the “Unknown”?The “self” refers to the “true self.” From the question “Who am I?” to the concept of “from existence to non-existence,” the entire book is structured around dialogues between Ruoling and a wise elder, revealing many profound life concepts.
@@ -893,20 +955,6 @@ ConclusionThis book is not only about discovering “who you are,” but also ab
       </tags>
   </entry>
   <entry>
-    <title>Sync Google Sheets Data Between Spreadsheets</title>
-    <url>/2025/08/28/google%20sheet%E5%90%8C%E6%AD%A5%E8%A1%A8%E6%A0%BC%E6%95%B0%E6%8D%AE/</url>
-    <content><![CDATA[Sync Google Sheets Data Across Multiple SheetsThere is a requirement to synchronize all sheets from one Google Spreadsheet to another spreadsheet (including all sub-sheets).
-This is implemented using Google Sheets → Extensions → Apps Script.
-Why synchronization is neededThe source spreadsheet is read-only by default.By synchronizing its data into another spreadsheet, the copied sheets can then be edited freely.
-sourceSpreadsheetId and targetSpreadsheetId are the IDs from the Google Sheets URL —they are the long strings after /d/ in the address bar.
-Apps Script Code Examplefunction synchronizeSheetsToAnotherFile() &#123;  const sourceSpreadsheetId = &quot;id1&quot;;  const targetSpreadsheetId = &quot;id2&quot;;   // Example: 1NOtSSvDwXrca8vqyZW6OqQJwGaCICMVguSz1-i72oqg  const sourceSpreadsheet = SpreadsheetApp.openById(sourceSpreadsheetId);  const targetSpreadsheet = SpreadsheetApp.openById(targetSpreadsheetId);  const sourceSheets = sourceSpreadsheet.getSheets();  sourceSheets.forEach(sheet =&gt; &#123;    const sheetName = sheet.getName();    let targetSheet = targetSpreadsheet.getSheetByName(sheetName);    if (!targetSheet) &#123;      targetSheet = targetSpreadsheet.insertSheet(sheetName);    &#125; else &#123;      targetSheet.clear();    &#125;    const range = sheet.getDataRange();    const displayValues = range.getDisplayValues();     const formats = range.getBackgrounds();            const fontWeights = range.getFontWeights();        const targetRange = targetSheet.getRange(      1,      1,      displayValues.length,      displayValues[0].length    );    targetRange.setValues(displayValues);    targetRange.setBackgrounds(formats);    targetRange.setFontWeights(fontWeights);  &#125;);&#125;
-
-]]></content>
-      <categories>
-        <category>Frontend</category>
-      </categories>
-  </entry>
-  <entry>
     <title>Reflections on *Skin*</title>
     <url>/2025/06/26/%E7%9A%AE%E5%9B%8A%E6%84%9F%E6%82%9F/</url>
     <content><![CDATA[Aunt TaiAunt Tai is strong-willed and resilient. Her optimistic attitude is something worth learning from. The greatest thing my father ever did was marrying my mother—a truly great woman. A real woman should face everything with positivity and build the future she desires with her own hands.
@@ -923,28 +971,5 @@ Public opinion is powerful, but Zhang Meili’s inner strength is even more powe
       <tags>
         <tag>Reading</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>Installing Puppeteer on Baota Panel</title>
-    <url>/2025/09/02/%E5%AE%9D%E5%A1%94%E5%AE%89%E8%A3%85puppeteer/</url>
-    <content><![CDATA[Installing Puppeteer on Baota (CentOS 8)When using CentOS 8, yum may fail because CentOS 8 is no longer officially maintained.To fix this, you need to switch the YUM mirror source, clear the cache, and rebuild it.
-1. Replace the YUM repository sourcewget -O /etc/yum.repos.d/CentOS-Base.repo https://mirrors.aliyun.com/repo/Centos-8.repo
-
-2. Clean YUM cachesudo yum clean all
-
-3. Rebuild YUM cachesudo yum makecache
-
-
-⚠️ Note:CentOS 8 has reached End of Life (EOL) and is no longer maintained.You must rely on third-party mirror sources to continue using yum.
-
-Puppeteer Dependency Download ErrorWhen installing Puppeteer, you may encounter errors while downloading Chromium dependencies.
-You can refer to this article for details:https://www.cnblogs.com/ilizhu/p/14504049.html
-Puppeteer Sandbox ErrorOn some servers (such as Baota or other managed VPS environments), Puppeteer may fail to launch Chromium due to sandbox restrictions.
-Solution: Disable sandbox when launching Puppeteer// Add launch arguments to disable sandboxconst browser = await puppeteer.launch(&#123;  args: [&#x27;--no-sandbox&#x27;, &#x27;--disable-setuid-sandbox&#x27;]&#125;);
-
-]]></content>
-      <categories>
-        <category>Frontend</category>
-      </categories>
   </entry>
 </search>

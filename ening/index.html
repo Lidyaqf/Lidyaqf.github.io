@@ -1284,7 +1284,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://lidyaqf.github.io/2025/07/16/node-rpc/">
+    <link itemprop="mainEntityOfPage" href="https://lidyaqf.github.io/2025/08/18/Hexo-Next-%E6%9B%B4%E6%94%B9%E5%AD%97%E4%BD%93/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -1298,7 +1298,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2025/07/16/node-rpc/" class="post-title-link" itemprop="url">Talking About Node RPC</a>
+            <a href="/2025/08/18/Hexo-Next-%E6%9B%B4%E6%94%B9%E5%AD%97%E4%BD%93/" class="post-title-link" itemprop="url">Hexo-Next – Change Fonts & Enable Code Copy</a>
         </h2>
 
         <div class="post-meta">
@@ -1308,14 +1308,14 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2025-07-16 00:00:00" itemprop="dateCreated datePublished" datetime="2025-07-16T00:00:00+08:00">2025-07-16</time>
+              <time title="Created: 2025-08-18 00:00:00" itemprop="dateCreated datePublished" datetime="2025-08-18T00:00:00+08:00">2025-08-18</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-12-03 14:36:43" itemprop="dateModified" datetime="2025-12-03T14:36:43+08:00">2025-12-03</time>
+                <time title="Modified: 2026-01-21 16:30:54" itemprop="dateModified" datetime="2026-01-21T16:30:54+08:00">2026-01-21</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1323,7 +1323,7 @@
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Backend/" itemprop="url" rel="index"><span itemprop="name">Backend</span></a>
+                  <a href="/categories/Frontend/" itemprop="url" rel="index"><span itemprop="name">Frontend</span></a>
                 </span>
             </span>
 
@@ -1339,18 +1339,22 @@
 
       
           <hr>
-<h2 id="What-Is-Serialization"><a href="#What-Is-Serialization" class="headerlink" title="What Is Serialization"></a>What Is Serialization</h2><p>Data transmitted over a TCP channel can only be in binary form. So converting a data structure or an object into binary form is called <strong>serialization</strong>. The reverse process is called <strong>deserialization</strong>. The rules that define how they convert back and forth are called a <strong>protocol</strong>.</p>
+<p>The Next theme version used here is <strong>7.8.0</strong>.</p>
+<p>First, locate the file:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/themes/next/_config.yml</span><br></pre></td></tr></table></figure>
+
+<p>Search for the keyword <strong><code>font</code></strong>.<br>⚠️ <strong>Important:</strong> You must set <code>enable</code> inside <code>font</code> to <code>true</code>, because the default value is <code>false</code>.<br>If you only modify the <code>family</code> without enabling it, the font change <strong>will not take effect</strong> — so make sure you don’t miss this step.</p>
+<p>If the font family is sourced from an external platform, you also need to configure the <code>host</code>.</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">font:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># Uri of fonts host, e.g. https://fonts.googleapis.com (Default).</span></span><br><span class="line">  <span class="attr">host:</span> </span><br><span class="line"></span><br><span class="line">  <span class="comment"># Font options:</span></span><br><span class="line">  <span class="comment"># `external: true` will load this font family from `host` above.</span></span><br><span class="line">  <span class="comment"># `family: Times New Roman`. Without any quotes.</span></span><br><span class="line">  <span class="comment"># `size: x.x`. Use `em` as unit. Default: 1 (16px)</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># Global font settings used for all elements inside &lt;body&gt;.</span></span><br><span class="line">  <span class="attr">global:</span></span><br><span class="line">    <span class="attr">external:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">family:</span> <span class="string">Noto</span> <span class="string">Serif</span> <span class="string">SC</span></span><br><span class="line">    <span class="attr">size:</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># Font settings for site title (.site-title).</span></span><br><span class="line">  <span class="attr">title:</span></span><br><span class="line">    <span class="attr">external:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">family:</span> <span class="string">Noto</span> <span class="string">Serif</span> <span class="string">SC</span></span><br><span class="line">    <span class="attr">size:</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># Font settings for headlines (&lt;h1&gt; to &lt;h6&gt;).</span></span><br><span class="line">  <span class="attr">headings:</span></span><br><span class="line">    <span class="attr">external:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">family:</span> <span class="string">Noto</span> <span class="string">Serif</span> <span class="string">SC</span></span><br><span class="line">    <span class="attr">size:</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># Font settings for posts (.post-body).</span></span><br><span class="line">  <span class="attr">posts:</span></span><br><span class="line">    <span class="attr">external:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">family:</span> <span class="string">Noto</span> <span class="string">Serif</span> <span class="string">SC</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># Font settings for &lt;code&gt; and code blocks.</span></span><br><span class="line">  <span class="attr">codes:</span></span><br><span class="line">    <span class="attr">external:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">family:</span> <span class="string">Source</span> <span class="string">Code</span> <span class="string">Pro</span></span><br></pre></td></tr></table></figure>
+
 <hr>
-<h2 id="What-Is-RPC"><a href="#What-Is-RPC" class="headerlink" title="What Is RPC"></a>What Is RPC</h2><p>RPC stands for <strong>Remote Procedure Call</strong>. Most RPC systems are based on TCP. The general implementation flow is as follows:</p>
-<ol>
-<li>The frontend calls the corresponding interface through a Proxy. The Proxy converts information such as the RPC service name, method name, and parameters into an RPC Request object and passes it to the RPC framework.</li>
-<li>The RPC framework serializes the RPC Request object into binary form according to the RPC protocol.</li>
-<li>The RPC framework sends the binary data to the backend through a TCP channel.</li>
-<li>The backend deserializes the binary data back into an RPC Request object.</li>
-<li>The backend maps the deserialized data to the actual method it implements, passes in the parameters, obtains the result, and then packages it into an RPC Response object for the RPC framework.</li>
-<li>The RPC framework serializes the RPC Response object into binary form according to the RPC protocol and sends it back to the frontend through the TCP channel.</li>
-<li>After receiving the binary data, the frontend deserializes it into an RPC Response object, and the Proxy returns the result to the business code.</li>
-</ol>
+<h2 id="Enable-Copy-Button-for-Code-Blocks"><a href="#Enable-Copy-Button-for-Code-Blocks" class="headerlink" title="Enable Copy Button for Code Blocks"></a>Enable Copy Button for Code Blocks</h2><p>In the <strong>same <code>_config.yml</code> file</strong>, locate the following configuration section.</p>
+<p>Set <code>copy_button.enable</code> to <code>true</code> to enable the copy feature.</p>
+<ul>
+<li>When <code>show_result</code> is set to <code>true</code>, a checkmark will be shown after copying.</li>
+<li>The <code>style</code> option controls the appearance of the copy button. Choose based on your preference.</li>
+</ul>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">codeblock:</span></span><br><span class="line">  <span class="comment"># Code Highlight theme</span></span><br><span class="line">  <span class="comment"># Available values: normal | night | night eighties | night blue | night bright | solarized | solarized dark | galactic</span></span><br><span class="line">  <span class="comment"># See: https://github.com/chriskempson/tomorrow-theme</span></span><br><span class="line">  <span class="attr">highlight_theme:</span> <span class="string">night</span> <span class="string">eighties</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># Add copy button on codeblock</span></span><br><span class="line">  <span class="attr">copy_button:</span></span><br><span class="line">    <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">    <span class="comment"># Show text copy result.</span></span><br><span class="line">    <span class="attr">show_result:</span> <span class="literal">true</span></span><br><span class="line">    <span class="comment"># Available values: default | flat | mac</span></span><br><span class="line">    <span class="attr">style:</span> <span class="string">mac</span></span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -1438,7 +1442,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/ening/archives/">
         
-          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-count">19</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
