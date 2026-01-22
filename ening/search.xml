@@ -1,441 +1,988 @@
 <?xml version="1.0" encoding="utf-8"?>
-<search> 
-  
-  
-    
-    <entry>
-      <title>Handwriting Promise.race (From Theory to Practice)</title>
-      <link href="/2025/12/18/%E6%89%8B%E5%86%99Promise/"/>
-      <url>/2025/12/18/%E6%89%8B%E5%86%99Promise/</url>
-      
-        <content type="html"><![CDATA[<p>In frontend interviews and daily development, <code>Promise.race</code> is a very common yet often overlooked API. Its rule is simple:</p><blockquote><p><strong>Multiple Promises “race” against each other—whichever settles first (fulfilled or rejected) determines the final result.</strong></p></blockquote><p>In this article, we will:</p><ul><li>Clearly explain how <code>Promise.race</code> behaves and when to use it</li><li>Implement a custom <code>myPromiseRace</code> from scratch</li><li>Cover edge cases, optimizations, and common interview questions</li></ul><h2 id="1-What-Is-Promise-race"><a href="#1-What-Is-Promise-race" class="headerlink" title="1. What Is Promise.race?"></a>1. What Is Promise.race?</h2><p><code>Promise.race(iterable)</code> accepts an iterable (usually an array) and returns a new Promise:</p><ul><li>If <strong>any Promise fulfills first</strong>, the returned Promise fulfills</li><li>If <strong>any Promise rejects first</strong>, the returned Promise rejects</li><li>It does <strong>not</strong> wait for all Promises to finish</li><li>It does <strong>not</strong> cancel the remaining Promises—they continue running</li></ul><h2 id="2-Common-Use-Cases"><a href="#2-Common-Use-Cases" class="headerlink" title="2. Common Use Cases"></a>2. Common Use Cases</h2><h3 id="2-1-Timeout-Control-Most-Common"><a href="#2-1-Timeout-Control-Most-Common" class="headerlink" title="2.1 Timeout Control (Most Common)"></a>2.1 Timeout Control (Most Common)</h3><p>For example, treat a request as failed if it takes longer than 3 seconds:</p><ul><li><code>fetch(url)</code> vs <code>timeoutPromise(3000)</code></li><li>Whichever finishes first determines the result</li></ul><h3 id="2-2-Multiple-Data-Sources-Fallback-Strategy"><a href="#2-2-Multiple-Data-Sources-Fallback-Strategy" class="headerlink" title="2.2 Multiple Data Sources (Fallback Strategy)"></a>2.2 Multiple Data Sources (Fallback Strategy)</h3><p>Fetch the same resource from multiple CDNs (CDN1&#x2F;CDN2).<br>Use whichever responds first.</p><h3 id="2-3-First-Render-Racing"><a href="#2-3-First-Render-Racing" class="headerlink" title="2.3 First-Render Racing"></a>2.3 First-Render Racing</h3><p>Load primary data, fallback data, and cached data simultaneously.<br>Render the page as soon as the fastest result arrives.</p><h2 id="3-Implementing-myPromiseRace"><a href="#3-Implementing-myPromiseRace" class="headerlink" title="3. Implementing myPromiseRace"></a>3. Implementing <code>myPromiseRace</code></h2><p>This implementation closely matches native behavior:</p><ul><li>Validates that the input is iterable</li><li>Iterates over all inputs</li><li>Uses <code>Promise.resolve</code> to normalize non-Promise values</li><li>Resolves or rejects as soon as one Promise settles</li></ul><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">myPromiseRace</span>(<span class="params">promises</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// Validate iterable input</span></span><br><span class="line">    <span class="keyword">if</span> (!promises || <span class="keyword">typeof</span> promises[<span class="title class_">Symbol</span>.<span class="property">iterator</span>] !== <span class="string">&#x27;function&#x27;</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="title function_">reject</span>(<span class="keyword">new</span> <span class="title class_">TypeError</span>(<span class="string">&#x27;Argument is not iterable&#x27;</span>));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Iterate over each Promise or value</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">const</span> promise <span class="keyword">of</span> promises) &#123;</span><br><span class="line">      <span class="comment">// Wrap with Promise.resolve to handle thenables and values</span></span><br><span class="line">      <span class="title class_">Promise</span>.<span class="title function_">resolve</span>(promise)</span><br><span class="line">        .<span class="title function_">then</span>(resolve)   <span class="comment">// First fulfilled wins</span></span><br><span class="line">        .<span class="title function_">catch</span>(reject);  <span class="comment">// First rejected wins</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="4-Key-Insight-Why-Use-Promise-resolve"><a href="#4-Key-Insight-Why-Use-Promise-resolve" class="headerlink" title="4. Key Insight: Why Use Promise.resolve?"></a>4. Key Insight: Why Use <code>Promise.resolve</code>?</h2><p>The input to <code>Promise.race</code> does not have to be Promises. It may include:</p><ul><li>Plain values: <code>Promise.race([1, 2, 3])</code></li><li>Thenables: <code>&#123; then(resolve) &#123; resolve(123) &#125; &#125;</code></li></ul><p>Using <code>Promise.resolve(x)</code> ensures:</p><ul><li>Plain values become immediately fulfilled Promises</li><li>Thenables are properly assimilated into the Promise chain</li></ul><p>This behavior is consistent with the native <code>Promise.race</code>.</p><h2 id="5-Handling-Empty-Iterables"><a href="#5-Handling-Empty-Iterables" class="headerlink" title="5. Handling Empty Iterables"></a>5. Handling Empty Iterables</h2><blockquote><p>Native <code>Promise.race([])</code> returns a Promise that remains <strong>pending forever</strong>.</p></blockquote><p>Your current implementation behaves the same way, since the loop never executes.<br>This matches the ECMAScript specification.</p><p>You <em>could</em> add explicit handling, but it’s not required.</p><h2 id="6-Additional-Test-Cases"><a href="#6-Additional-Test-Cases" class="headerlink" title="6. Additional Test Cases"></a>6. Additional Test Cases</h2><h3 id="6-1-Rejection-Wins-First"><a href="#6-1-Rejection-Wins-First" class="headerlink" title="6.1 Rejection Wins First"></a>6.1 Rejection Wins First</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> p1 = <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function"><span class="params">res</span> =&gt;</span> <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> <span class="title function_">res</span>(<span class="string">&#x27;p1&#x27;</span>), <span class="number">1000</span>));</span><br><span class="line"><span class="keyword">const</span> p2 = <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function"><span class="params">res</span> =&gt;</span> <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> <span class="title function_">res</span>(<span class="string">&#x27;p2&#x27;</span>), <span class="number">500</span>));</span><br><span class="line"><span class="keyword">const</span> p3 = <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">res, rej</span>) =&gt;</span> <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> <span class="title function_">rej</span>(<span class="string">&#x27;p3 error&#x27;</span>), <span class="number">300</span>));</span><br><span class="line"></span><br><span class="line"><span class="title function_">myPromiseRace</span>([p1, p2, p3])</span><br><span class="line">  .<span class="title function_">then</span>(<span class="variable language_">console</span>.<span class="property">log</span>)</span><br><span class="line">  .<span class="title function_">catch</span>(<span class="variable language_">console</span>.<span class="property">error</span>); <span class="comment">// Output: p3 error</span></span><br></pre></td></tr></table></figure><h3 id="6-2-Plain-Values-Participate-in-the-Race"><a href="#6-2-Plain-Values-Participate-in-the-Race" class="headerlink" title="6.2 Plain Values Participate in the Race"></a>6.2 Plain Values Participate in the Race</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">myPromiseRace</span>([</span><br><span class="line">  <span class="title class_">Promise</span>.<span class="title function_">resolve</span>(<span class="string">&#x27;A&#x27;</span>),</span><br><span class="line">  <span class="number">123</span>,</span><br><span class="line">  <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function"><span class="params">res</span> =&gt;</span> <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> <span class="title function_">res</span>(<span class="string">&#x27;B&#x27;</span>), <span class="number">10</span>))</span><br><span class="line">])</span><br><span class="line">  .<span class="title function_">then</span>(<span class="variable language_">console</span>.<span class="property">log</span>)</span><br><span class="line">  .<span class="title function_">catch</span>(<span class="variable language_">console</span>.<span class="property">error</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Output: 123 (plain value wins immediately)</span></span><br></pre></td></tr></table></figure><h3 id="6-3-Empty-Array-Remains-Pending"><a href="#6-3-Empty-Array-Remains-Pending" class="headerlink" title="6.3 Empty Array Remains Pending"></a>6.3 Empty Array Remains Pending</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> p = <span class="title function_">myPromiseRace</span>([]);</span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;still pending...&#x27;</span>), <span class="number">1000</span>);</span><br><span class="line"><span class="comment">// After 1 second: &quot;still pending...&quot;</span></span><br></pre></td></tr></table></figure><h2 id="7-Practical-Example-Request-Timeout-with-race"><a href="#7-Practical-Example-Request-Timeout-with-race" class="headerlink" title="7. Practical Example: Request Timeout with race"></a>7. Practical Example: Request Timeout with <code>race</code></h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">timeout</span>(<span class="params">ms</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">_, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> <span class="title function_">reject</span>(<span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">`Timeout after <span class="subst">$&#123;ms&#125;</span>ms`</span>)), ms);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">fetchWithTimeout</span>(<span class="params">url, ms = <span class="number">3000</span></span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="title function_">myPromiseRace</span>([<span class="title function_">fetch</span>(url), <span class="title function_">timeout</span>(ms)]);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Usage</span></span><br><span class="line"><span class="title function_">fetchWithTimeout</span>(<span class="string">&#x27;https://example.com/api&#x27;</span>, <span class="number">2000</span>)</span><br><span class="line">  .<span class="title function_">then</span>(<span class="function"><span class="params">res</span> =&gt;</span> res.<span class="title function_">json</span>())</span><br><span class="line">  .<span class="title function_">then</span>(<span class="function"><span class="params">data</span> =&gt;</span> <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;data:&#x27;</span>, data))</span><br><span class="line">  .<span class="title function_">catch</span>(<span class="function"><span class="params">err</span> =&gt;</span> <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">&#x27;error:&#x27;</span>, err.<span class="property">message</span>));</span><br></pre></td></tr></table></figure><h2 id="8-Common-Interview-Questions-Bonus-Points"><a href="#8-Common-Interview-Questions-Bonus-Points" class="headerlink" title="8. Common Interview Questions (Bonus Points)"></a>8. Common Interview Questions (Bonus Points)</h2><ul><li><p><strong>Q: Can <code>Promise.race</code> cancel the other Promises?</strong><br>No. Promises are not cancellable by default. Cancellation requires tools like <code>AbortController</code> or custom logic.</p></li><li><p><strong>Q: What happens if you pass a plain value into <code>race</code>?</strong><br>It is wrapped by <code>Promise.resolve</code> and usually wins immediately.</p></li><li><p><strong>Q: What’s the difference between <code>race</code>, <code>any</code>, and <code>allSettled</code>?</strong></p><ul><li><code>race</code>: settles as soon as the first Promise settles</li><li><code>any</code>: fulfills as soon as the first Promise fulfills (rejects only if all reject)</li><li><code>allSettled</code>: waits for all Promises and returns their final states</li></ul></li></ul><h2 id="9-Summary"><a href="#9-Summary" class="headerlink" title="9. Summary"></a>9. Summary</h2><p>The core idea behind implementing <code>Promise.race</code> can be summarized in one sentence:</p><blockquote><p><strong>Iterate over the iterable, wrap each item with <code>Promise.resolve</code>, attach the same <code>resolve</code> and <code>reject</code>, and let the first settled Promise decide the outcome.</strong></p></blockquote>]]></content>
-      
-      
+<search>
+  <entry>
+    <title>ELK Installation Guide</title>
+    <url>/ening/2025/04/11/ELK%E5%AE%89%E8%A3%85%E6%B5%81%E7%A8%8B/</url>
+    <content><![CDATA[Installing ELK Stack (ElasticSearch, Logstash, Kibana) with Docker
+It is recommended to install on Docker due to lower resource consumption. The installation version used below is 8.12.2. Please use the same version to avoid conflicts.
+
+Table of Contents1. Install ElasticSearch2. Install Logstash3. Install KibanaRecommendations
+
+1. Install ElasticSearch
+Pull the image:
+
+docker pull elasticsearch:8.12.2````* Start the container:```bashdocker run --name some-elasticsearch -p 9200:9200 -p 9300:9300 -e &quot;discovery.type=single-node&quot; -d elasticsearch:8.12.2
+
+
+Enter the container:
+
+sudo docker exec -u 0 -it some-elasticsearch bash
+
+
+Restart the container:
+
+docker restart some-elasticsearch
+
+
+2. Install Logstash
+Pull the image:
+
+docker pull docker.elastic.co/logstash/logstash:8.12.2
+
+
+Start the container:
+
+sudo docker run -it -p 5044:5044 -p 9600:9600 --name logstash -v /usr/share/logstash/piplines:/usr/share/logstash/config --privileged=true docker.elastic.co/logstash/logstash:8.12.2 /bin/bash
+
+
+Use scp to upload the MySQL Connector JAR file to the virtual machine:
+
+scp &quot;/Users/Downloads/logstash-8.12.2/mysql-connector-j-8.4.0.jar&quot; username@VM-IP:/home
+
+
+Move the JAR file from the VM to the Logstash container:
+
+docker cp ./mysql-connector-j-8.4.0.jar logstash:/usr/share/logstash
+
+
+Enter the container:
+
+docker exec -u 0 -it logstash bash
+
+
+3. Install Kibana
+Pull the image:
+
+docker pull kibana:8.12.2
+
+
+Start the container:
+
+docker run --name some-kibana -p 9200:9200 -p 9300:9300 -e &quot;discovery.type=single-node&quot; -d elasticsearch:8.12.2
+
+
+Enter the container:
+
+docker exec -u 0 -it some-kibana bash
+
+
+Additional: Install Docker, Portainer, and Related Commandssudo apt updatesudo apt install docker.io docker-composedocker -vsudo systemctl start dockersudo docker search portainerdocker pull portainer/portainersudo docker pull portainer/portainersudo docker run -d --name portainerUI -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock portainer/portainersudo docker start portainerUIsudo passwd root
+
+
+
+
+
+
+
+]]></content>
       <categories>
-          
-          <category> Frontend </category>
-          
+        <category>Backend</category>
       </categories>
-      
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>Fully Understanding How the JavaScript `new` Operator Works</title>
-      <link href="/2025/12/17/%E6%89%8B%E5%86%99New/"/>
-      <url>/2025/12/17/%E6%89%8B%E5%86%99New/</url>
-      
-        <content type="html"><![CDATA[<p>In JavaScript, the <code>new</code> operator is a core concept that frequently appears in both interviews and everyday development.<br>Many developers use <code>new</code> regularly, but few truly understand <strong>what actually happens behind the scenes</strong>.</p><p>In this article, we’ll <strong>implement <code>new</code> by hand</strong>, breaking down its internal mechanics step by step to help you fully understand how JavaScript objects are created.</p><h2 id="1-What-Does-the-new-Operator-Actually-Do"><a href="#1-What-Does-the-new-Operator-Actually-Do" class="headerlink" title="1. What Does the new Operator Actually Do?"></a>1. What Does the <code>new</code> Operator Actually Do?</h2><p>When we execute the following line of code:</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> person = <span class="keyword">new</span> <span class="title class_">Person</span>(<span class="string">&#x27;Alice&#x27;</span>, <span class="number">25</span>);</span><br></pre></td></tr></table></figure><p>JavaScript actually performs <strong>four steps internally</strong>:</p><ol><li><strong>Create a new empty object</strong></li><li><strong>Set the object’s prototype to the constructor’s <code>prototype</code></strong></li><li><strong>Execute the constructor and bind <code>this</code> to the new object</strong></li><li><strong>If the constructor returns an object, return it; otherwise return the new object</strong></li></ol><p>Understanding these four steps is the key to understanding how <code>new</code> works.</p><h2 id="2-Why-Implement-new-Manually"><a href="#2-Why-Implement-new-Manually" class="headerlink" title="2. Why Implement new Manually?"></a>2. Why Implement <code>new</code> Manually?</h2><p>There are three main benefits to handwriting <code>new</code>:</p><ul><li>Deepens your understanding of <strong>the prototype chain</strong> and <strong><code>this</code> binding</strong></li><li>It is a <strong>high-frequency frontend interview question</strong></li><li>Helps you understand how frameworks create objects internally</li></ul><p>Let’s jump straight into the code.</p><h2 id="3-Handwriting-the-new-Operator"><a href="#3-Handwriting-the-new-Operator" class="headerlink" title="3. Handwriting the new Operator"></a>3. Handwriting the <code>new</code> Operator</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">myNew</span>(<span class="params">constructor, ...args</span>) &#123;</span><br><span class="line">  <span class="comment">// 1. Create a new object and link its prototype</span></span><br><span class="line">  <span class="keyword">const</span> obj = <span class="title class_">Object</span>.<span class="title function_">create</span>(constructor.<span class="property"><span class="keyword">prototype</span></span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 2. Execute the constructor with `this` bound to the new object</span></span><br><span class="line">  <span class="keyword">const</span> result = constructor.<span class="title function_">apply</span>(obj, args);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 3. If the constructor returns an object, return it</span></span><br><span class="line">  <span class="comment">//    Otherwise, return the newly created object</span></span><br><span class="line">  <span class="keyword">return</span> result <span class="keyword">instanceof</span> <span class="title class_">Object</span> ? result : obj;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>This implementation fully reproduces the core behavior of the <code>new</code> operator.</p><h2 id="4-Line-by-Line-Breakdown"><a href="#4-Line-by-Line-Breakdown" class="headerlink" title="4. Line-by-Line Breakdown"></a>4. Line-by-Line Breakdown</h2><h3 id="1-The-Role-of-Object-create"><a href="#1-The-Role-of-Object-create" class="headerlink" title="1. The Role of Object.create"></a>1. The Role of <code>Object.create</code></h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> obj = <span class="title class_">Object</span>.<span class="title function_">create</span>(constructor.<span class="property"><span class="keyword">prototype</span></span>);</span><br></pre></td></tr></table></figure><p>This is equivalent to:</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">obj.<span class="property">__proto__</span> === constructor.<span class="property"><span class="keyword">prototype</span></span></span><br></pre></td></tr></table></figure><p>Which means:</p><ul><li>The new object can access methods on the constructor’s prototype</li><li>The prototype chain is properly established</li></ul><h3 id="2-constructor-apply-obj-args"><a href="#2-constructor-apply-obj-args" class="headerlink" title="2. constructor.apply(obj, args)"></a>2. <code>constructor.apply(obj, args)</code></h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> result = constructor.<span class="title function_">apply</span>(obj, args);</span><br></pre></td></tr></table></figure><p>This step does two things:</p><ul><li>Executes the constructor function</li><li>Binds <code>this</code> inside the constructor to the new object</li></ul><p>So code like this:</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">this</span>.<span class="property">name</span> = name;</span><br><span class="line"><span class="variable language_">this</span>.<span class="property">age</span> = age;</span><br></pre></td></tr></table></figure><p>Actually assigns properties directly to <code>obj</code>.</p><h3 id="3-Why-Do-We-Check-the-Return-Value"><a href="#3-Why-Do-We-Check-the-Return-Value" class="headerlink" title="3. Why Do We Check the Return Value?"></a>3. Why Do We Check the Return Value?</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> result <span class="keyword">instanceof</span> <span class="title class_">Object</span> ? result : obj;</span><br></pre></td></tr></table></figure><p>This is a detail many developers overlook.</p><p>Consider this example:</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">Test</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">a</span> = <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">return</span> &#123; <span class="attr">b</span>: <span class="number">2</span> &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> t = <span class="keyword">new</span> <span class="title class_">Test</span>();</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(t); <span class="comment">// &#123; b: 2 &#125;</span></span><br></pre></td></tr></table></figure><p>If a constructor <strong>explicitly returns an object</strong>, the <code>new</code> operator returns that object instead of <code>this</code>.</p><p>That’s why we must handle this case in our <code>myNew</code> implementation.</p><h2 id="5-Testing-Our-myNew-Function"><a href="#5-Testing-Our-myNew-Function" class="headerlink" title="5. Testing Our myNew Function"></a>5. Testing Our <code>myNew</code> Function</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">Person</span>(<span class="params">name, age</span>) &#123;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">name</span> = name;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">age</span> = age;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> p1 = <span class="title function_">myNew</span>(<span class="title class_">Person</span>, <span class="string">&#x27;Alice&#x27;</span>, <span class="number">25</span>);</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(p1.<span class="property">name</span>); <span class="comment">// Alice</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(p1.<span class="property">age</span>);  <span class="comment">// 25</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(p1 <span class="keyword">instanceof</span> <span class="title class_">Person</span>); <span class="comment">// true</span></span><br></pre></td></tr></table></figure><p>The behavior matches native <code>new</code> perfectly.</p><h2 id="6-Comparing-myNew-and-Native-new"><a href="#6-Comparing-myNew-and-Native-new" class="headerlink" title="6. Comparing myNew and Native new"></a>6. Comparing <code>myNew</code> and Native <code>new</code></h2><table><thead><tr><th>Behavior</th><th><code>new</code></th><th><code>myNew</code></th></tr></thead><tbody><tr><td>Create new object</td><td>✅</td><td>✅</td></tr><tr><td>Bind prototype</td><td>✅</td><td>✅</td></tr><tr><td>Bind <code>this</code></td><td>✅</td><td>✅</td></tr><tr><td>Handle returned object</td><td>✅</td><td>✅</td></tr></tbody></table><p>In practice, <code>myNew</code> reproduces <strong>about 90% of the real <code>new</code> operator’s behavior</strong>, which is more than sufficient for interviews and deep understanding.</p><h2 id="7-Common-Interview-Follow-Up-Questions"><a href="#7-Common-Interview-Follow-Up-Questions" class="headerlink" title="7. Common Interview Follow-Up Questions"></a>7. Common Interview Follow-Up Questions</h2><h3 id="Q1-Why-not-simply-use-const-obj"><a href="#Q1-Why-not-simply-use-const-obj" class="headerlink" title="Q1: Why not simply use const obj = {}?"></a>Q1: Why not simply use <code>const obj = &#123;&#125;</code>?</h3><p>Because objects created with <code>&#123;&#125;</code> have their prototype set to <code>Object.prototype</code>.<br>Objects created with <code>new</code> must have their prototype set to <strong>the constructor’s <code>prototype</code></strong>.</p><h3 id="Q2-Can-constructor-apply-be-replaced-with-call"><a href="#Q2-Can-constructor-apply-be-replaced-with-call" class="headerlink" title="Q2: Can constructor.apply be replaced with call?"></a>Q2: Can <code>constructor.apply</code> be replaced with <code>call</code>?</h3><p>Yes. The only difference is how arguments are passed:</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">constructor.<span class="title function_">call</span>(obj, ...args);</span><br></pre></td></tr></table></figure><h3 id="Q3-How-does-instanceof-work"><a href="#Q3-How-does-instanceof-work" class="headerlink" title="Q3: How does instanceof work?"></a>Q3: How does <code>instanceof</code> work?</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">p1 <span class="keyword">instanceof</span> <span class="title class_">Person</span></span><br></pre></td></tr></table></figure><p>Internally, JavaScript checks whether:</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Person</span>.<span class="property"><span class="keyword">prototype</span></span> exists <span class="keyword">in</span> p1’s prototype chain</span><br></pre></td></tr></table></figure><h2 id="8-Summary"><a href="#8-Summary" class="headerlink" title="8. Summary"></a>8. Summary</h2><ul><li>The <code>new</code> operator is not magic—it follows a well-defined execution process</li><li>Handwriting <code>new</code> is one of the best ways to understand <strong>prototype chains, <code>this</code>, and constructors</strong></li><li>Mastering this concept helps when learning Vue, React, and Node.js internals</li></ul><p>If you can both <strong>write and explain</strong> this implementation,<br><strong>90% of interviewers will consider your JavaScript fundamentals solid</strong>.</p>]]></content>
-      
-      
+  </entry>
+  <entry>
+    <title>Hexo-Next – Change Fonts &amp; Enable Code Copy</title>
+    <url>/ening/2025/08/18/Hexo-Next-%E6%9B%B4%E6%94%B9%E5%AD%97%E4%BD%93/</url>
+    <content><![CDATA[
+The Next theme version used here is 7.8.0.
+First, locate the file:
+/themes/next/_config.yml
+
+Search for the keyword font.⚠️ Important: You must set enable inside font to true, because the default value is false.If you only modify the family without enabling it, the font change will not take effect — so make sure you don’t miss this step.
+If the font family is sourced from an external platform, you also need to configure the host.
+font:  enable: true  # Uri of fonts host, e.g. https://fonts.googleapis.com (Default).  host:   # Font options:  # `external: true` will load this font family from `host` above.  # `family: Times New Roman`. Without any quotes.  # `size: x.x`. Use `em` as unit. Default: 1 (16px)  # Global font settings used for all elements inside &lt;body&gt;.  global:    external: true    family: Noto Serif SC    size:  # Font settings for site title (.site-title).  title:    external: true    family: Noto Serif SC    size:  # Font settings for headlines (&lt;h1&gt; to &lt;h6&gt;).  headings:    external: true    family: Noto Serif SC    size:  # Font settings for posts (.post-body).  posts:    external: true    family: Noto Serif SC  # Font settings for &lt;code&gt; and code blocks.  codes:    external: true    family: Source Code Pro
+
+
+Enable Copy Button for Code BlocksIn the same _config.yml file, locate the following configuration section.
+Set copy_button.enable to true to enable the copy feature.
+
+When show_result is set to true, a checkmark will be shown after copying.
+The style option controls the appearance of the copy button. Choose based on your preference.
+
+codeblock:  # Code Highlight theme  # Available values: normal | night | night eighties | night blue | night bright | solarized | solarized dark | galactic  # See: https://github.com/chriskempson/tomorrow-theme  highlight_theme: night eighties  # Add copy button on codeblock  copy_button:    enable: true    # Show text copy result.    show_result: true    # Available values: default | flat | mac    style: mac
+]]></content>
       <categories>
-          
-          <category> Frontend </category>
-          
+        <category>Frontend</category>
       </categories>
-      
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>JavaScript Basics</title>
-      <link href="/2025/12/02/js%E5%9F%BA%E7%A1%80/"/>
-      <url>/2025/12/02/js%E5%9F%BA%E7%A1%80/</url>
-      
-        <content type="html"><![CDATA[<h1 id="JavaScript-Basics-Summary-Hoisting-Strict-Mode"><a href="#JavaScript-Basics-Summary-Hoisting-Strict-Mode" class="headerlink" title="JavaScript Basics Summary (Hoisting, Strict Mode)"></a>JavaScript Basics Summary (Hoisting, Strict Mode)</h1><hr><h2 id="Rules-for-Variable-and-Function-Hoisting"><a href="#Rules-for-Variable-and-Function-Hoisting" class="headerlink" title="Rules for Variable and Function Hoisting"></a>Rules for Variable and Function Hoisting</h2><ul><li><strong>Variable hoisting</strong>: Execution still happens in order; variable <strong>declarations</strong> are hoisted but <strong>assignments are not</strong>.</li><li><strong>Function hoisting</strong>: The <strong>entire function body</strong> is hoisted to the top of its scope.</li><li><strong>Priority</strong>: Function hoisting &gt; Variable hoisting.</li></ul><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(a); <span class="comment">// undefined</span></span><br><span class="line"><span class="keyword">var</span> a = <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line"><span class="title function_">foo</span>(); <span class="comment">// works normally</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">foo</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;Function hoisting succeeded&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><hr><h2 id="Using-Strict-Mode-with-use-strict"><a href="#Using-Strict-Mode-with-use-strict" class="headerlink" title="Using Strict Mode with use strict"></a>Using Strict Mode with <code>use strict</code></h2><h3 id="What-it-does"><a href="#What-it-does" class="headerlink" title="What it does:"></a>What it does:</h3><ul><li>Prevents creating <strong>accidental global variables</strong>;</li><li>Disallows using undeclared variables, helping avoid memory leaks;</li><li>Binds <code>this</code> to <code>undefined</code> by default instead of <code>window</code>.</li></ul><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">foo</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="string">&quot;use strict&quot;</span>;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>.<span class="property">a</span>); <span class="comment">// ❌ TypeError</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> a = <span class="number">2</span>;</span><br><span class="line"><span class="title function_">foo</span>(); <span class="comment">// in strict mode, this is undefined, so this.a cannot be read</span></span><br></pre></td></tr></table></figure><hr><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">(<span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="string">&quot;use strict&quot;</span>;</span><br><span class="line">  <span class="title function_">foo</span>(); <span class="comment">// calling foo here doesn&#x27;t change its default binding</span></span><br><span class="line">&#125;)();</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">foo</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>.<span class="property">a</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> a = <span class="number">2</span>;</span><br></pre></td></tr></table></figure>]]></content>
-      
-      
+  </entry>
+  <entry>
+    <title>React Native New Architecture</title>
+    <url>/ening/2025/08/19/ReactNative%E6%96%B0%E6%9E%B6%E6%9E%84/</url>
+    <content><![CDATA[
+Fabric: Enables synchronous UI rendering, eliminating the communication bottleneck of the Bridge.
+TurboModules: Loads native modules on demand, improving app startup performance.
+JSI (JavaScript Interface): Allows JavaScript to directly call native code, replacing the asynchronous Bridge. The Bridge is asynchronous and single-threaded, which introduces additional overhead; JSI, by contrast, is synchronous, lower-overhead, and supports concurrency.
+
+]]></content>
       <categories>
-          
-          <category> Frontend </category>
-          
+        <category>Frontend</category>
       </categories>
-      
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>How to Prevent XSS</title>
-      <link href="/2025/10/17/%E5%A6%82%E4%BD%95%E9%98%B2%E5%BE%A1%20XSS%EF%BC%88%E8%B7%A8%E7%AB%99%E8%84%9A%E6%9C%AC%E6%94%BB%E5%87%BB%EF%BC%89/"/>
-      <url>/2025/10/17/%E5%A6%82%E4%BD%95%E9%98%B2%E5%BE%A1%20XSS%EF%BC%88%E8%B7%A8%E7%AB%99%E8%84%9A%E6%9C%AC%E6%94%BB%E5%87%BB%EF%BC%89/</url>
-      
-        <content type="html"><![CDATA[<p>In web development, <strong>XSS (Cross-Site Scripting)</strong> is one of the most common and most dangerous security vulnerabilities.<br>Once a website contains an XSS flaw, attackers may execute malicious scripts in users’ browsers, allowing them to steal cookies, hijack sessions, deface pages, or even take over user accounts.</p><p>This article explains <strong>how to effectively defend against XSS attacks</strong> from both a <strong>theoretical and practical perspective</strong>, covering frontend and full-stack security best practices.</p><h2 id="1-What-Is-an-XSS-Attack"><a href="#1-What-Is-an-XSS-Attack" class="headerlink" title="1. What Is an XSS Attack?"></a>1. What Is an XSS Attack?</h2><p>The essence of XSS is simple:</p><blockquote><p><strong>An attacker injects malicious JavaScript into a webpage, which is then executed in other users’ browsers.</strong></p></blockquote><p>Common types of XSS attacks include:</p><ul><li><strong>Reflected XSS</strong>: malicious scripts are delivered through URL parameters</li><li><strong>Stored XSS</strong>: malicious scripts are stored in a database and served to users</li><li><strong>DOM-based XSS</strong>: frontend JavaScript logic directly handles untrusted data</li></ul><p>No matter the type, the root cause is the same:<br>👉 <strong>User input is treated as executable code.</strong></p><h2 id="2-Input-Validation-and-Filtering-The-Most-Basic-Defense"><a href="#2-Input-Validation-and-Filtering-The-Most-Basic-Defense" class="headerlink" title="2. Input Validation and Filtering (The Most Basic Defense)"></a>2. Input Validation and Filtering (The Most Basic Defense)</h2><p><strong>Never trust user input.</strong></p><h3 id="1-Basic-Frontend-Validation"><a href="#1-Basic-Frontend-Validation" class="headerlink" title="1. Basic Frontend Validation"></a>1. Basic Frontend Validation</h3><p>On the frontend, basic validation can improve user experience, such as:</p><ul><li>Limiting input length</li><li>Enforcing input formats (e.g., email, phone numbers)</li><li>Filtering obviously dangerous characters</li></ul><p>Example (for basic validation only):</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">sanitizeInput</span>(<span class="params">input</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> input.<span class="title function_">replace</span>(<span class="regexp">/[&lt;&gt;]/g</span>, <span class="string">&#x27;&#x27;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>⚠️ Important:<br><strong>Frontend validation is not a security boundary and should never be relied on alone.</strong></p><h3 id="2-Strict-Backend-Validation-Critical"><a href="#2-Strict-Backend-Validation-Critical" class="headerlink" title="2. Strict Backend Validation (Critical)"></a>2. Strict Backend Validation (Critical)</h3><p>Effective input validation <strong>must be performed on the server side</strong>:</p><ul><li>Validate data types</li><li>Enforce length constraints</li><li>Reject inputs that violate business rules</li><li>Escape or sanitize HTML content using whitelists</li></ul><p>Recommended principles:</p><ul><li><strong>Deny by default</strong></li><li><strong>Whitelist over blacklist</strong></li></ul><h2 id="3-Output-Encoding-More-Important-Than-Input-Filtering"><a href="#3-Output-Encoding-More-Important-Than-Input-Filtering" class="headerlink" title="3. Output Encoding (More Important Than Input Filtering)"></a>3. Output Encoding (More Important Than Input Filtering)</h2><p>Many XSS vulnerabilities occur not because input is unsafe, but because <strong>output is handled incorrectly</strong>.</p><h3 id="1-HTML-Escaping-on-Output"><a href="#1-HTML-Escaping-on-Output" class="headerlink" title="1. HTML Escaping on Output"></a>1. HTML Escaping on Output</h3><p>When rendering user input, always encode HTML characters:</p><table><thead><tr><th>Character</th><th>Escaped Form</th></tr></thead><tbody><tr><td><code>&lt;</code></td><td><code>&amp;lt;</code></td></tr><tr><td><code>&gt;</code></td><td><code>&amp;gt;</code></td></tr><tr><td><code>&quot;</code></td><td><code>&amp;quot;</code></td></tr><tr><td><code>&#39;</code></td><td><code>&amp;#39;</code></td></tr></tbody></table><p>Most modern template engines (Vue, React, Handlebars) <strong>escape output by default</strong>.<br>Do not disable this behavior unless absolutely necessary.</p><h3 id="2-Avoid-Dangerous-APIs"><a href="#2-Avoid-Dangerous-APIs" class="headerlink" title="2. Avoid Dangerous APIs"></a>2. Avoid Dangerous APIs</h3><p>Avoid patterns like:</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">element.<span class="property">innerHTML</span> = userInput;</span><br></pre></td></tr></table></figure><p>Safer alternatives include:</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">element.<span class="property">textContent</span> = userInput;</span><br></pre></td></tr></table></figure><p>Or:</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> el = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&#x27;div&#x27;</span>);</span><br><span class="line">el.<span class="property">textContent</span> = userInput;</span><br><span class="line">container.<span class="title function_">appendChild</span>(el);</span><br></pre></td></tr></table></figure><h2 id="4-Use-Safe-APIs-and-Framework-Protections"><a href="#4-Use-Safe-APIs-and-Framework-Protections" class="headerlink" title="4. Use Safe APIs and Framework Protections"></a>4. Use Safe APIs and Framework Protections</h2><p>Modern frontend frameworks include built-in XSS protections.</p><h3 id="1-Default-Protections-in-React-and-Vue"><a href="#1-Default-Protections-in-React-and-Vue" class="headerlink" title="1. Default Protections in React and Vue"></a>1. Default Protections in React and Vue</h3><ul><li>JSX and template syntax escape output by default</li><li>Dangerous APIs are explicitly labeled (e.g., <code>v-html</code>, <code>dangerouslySetInnerHTML</code>)</li></ul><p>⚠️ If you use these APIs, you must ensure the content is <strong>100% trusted</strong>.</p><h3 id="2-Avoid-String-Based-HTML-Construction"><a href="#2-Avoid-String-Based-HTML-Construction" class="headerlink" title="2. Avoid String-Based HTML Construction"></a>2. Avoid String-Based HTML Construction</h3><p>❌ Unsafe example:</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">container.<span class="property">innerHTML</span> = <span class="string">`&lt;div&gt;<span class="subst">$&#123;userInput&#125;</span>&lt;/div&gt;`</span>;</span><br></pre></td></tr></table></figure><p>✅ Safe alternative:</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> div = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&#x27;div&#x27;</span>);</span><br><span class="line">div.<span class="property">textContent</span> = userInput;</span><br><span class="line">container.<span class="title function_">appendChild</span>(div);</span><br></pre></td></tr></table></figure><h2 id="5-Use-Content-Security-Policy-CSP"><a href="#5-Use-Content-Security-Policy-CSP" class="headerlink" title="5. Use Content Security Policy (CSP)"></a>5. Use Content Security Policy (CSP)</h2><p><strong>Content Security Policy (CSP)</strong> is one of the most powerful defenses against XSS.</p><h3 id="1-What-CSP-Can-Do"><a href="#1-What-CSP-Can-Do" class="headerlink" title="1. What CSP Can Do"></a>1. What CSP Can Do</h3><ul><li>Block inline script execution</li><li>Restrict allowed script sources</li><li>Prevent loading malicious third-party resources</li></ul><p>Example HTTP header:</p><figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Content-Security-Policy</span>:</span><br><span class="line">  default-src &#x27;self&#x27;;</span><br><span class="line">  script-src &#x27;self&#x27;;</span><br><span class="line">  object-src &#x27;none&#x27;;</span><br></pre></td></tr></table></figure><p>Even if an attacker injects a script, CSP can prevent the browser from executing it.</p><h3 id="2-Why-CSP-Is-So-Important"><a href="#2-Why-CSP-Is-So-Important" class="headerlink" title="2. Why CSP Is So Important"></a>2. Why CSP Is So Important</h3><p>Because it provides:</p><ul><li><strong>Browser-level protection</strong></li><li>A strong fallback even when application code has flaws</li></ul><h2 id="6-Use-HttpOnly-and-Secure-Cookies"><a href="#6-Use-HttpOnly-and-Secure-Cookies" class="headerlink" title="6. Use HttpOnly and Secure Cookies"></a>6. Use HttpOnly and Secure Cookies</h2><h3 id="1-Purpose-of-HttpOnly"><a href="#1-Purpose-of-HttpOnly" class="headerlink" title="1. Purpose of HttpOnly"></a>1. Purpose of HttpOnly</h3><p>When setting cookies, add the <code>HttpOnly</code> flag:</p><figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Set-Cookie</span><span class="punctuation">: </span>sessionId=xxx; HttpOnly;</span><br></pre></td></tr></table></figure><p>This prevents JavaScript from accessing cookies, reducing the impact of XSS attacks.</p><h3 id="2-Combine-with-Secure-and-SameSite"><a href="#2-Combine-with-Secure-and-SameSite" class="headerlink" title="2. Combine with Secure and SameSite"></a>2. Combine with Secure and SameSite</h3><p>For stronger protection, also use:</p><ul><li><code>Secure</code></li><li><code>SameSite=Strict</code> or <code>Lax</code></li></ul><p>This significantly improves session security.</p><h2 id="7-Keep-Third-Party-Libraries-Up-to-Date"><a href="#7-Keep-Third-Party-Libraries-Up-to-Date" class="headerlink" title="7. Keep Third-Party Libraries Up to Date"></a>7. Keep Third-Party Libraries Up to Date</h2><p>In real-world projects, <strong>many XSS vulnerabilities come from third-party dependencies</strong>:</p><ul><li>Outdated UI components</li><li>Unmaintained plugins</li><li>Vulnerable npm packages</li></ul><p>Best practices:</p><ul><li>Update dependencies regularly</li><li>Use <code>npm audit</code></li><li>Monitor security advisories</li></ul><h2 id="8-Develop-Secure-Coding-Habits"><a href="#8-Develop-Secure-Coding-Habits" class="headerlink" title="8. Develop Secure Coding Habits"></a>8. Develop Secure Coding Habits</h2><p>Preventing XSS is not about a single technique, but about consistent habits:</p><ul><li>Never trust external input</li><li>Avoid <code>innerHTML</code> unless necessary</li><li>Do not ignore security warnings</li><li>Prioritize security over convenience</li></ul><h2 id="9-Summary"><a href="#9-Summary" class="headerlink" title="9. Summary"></a>9. Summary</h2><ul><li>XSS is one of the most common and dangerous web security threats</li><li>Effective protection requires <strong>frontend, backend, and browser-level defenses</strong></li><li>Input validation is only the beginning—<strong>safe output handling and CSP are critical</strong></li><li>Good security habits are more valuable than any single patch</li></ul><p>For frontend developers,<br><strong>understanding how to prevent XSS is a key step toward true professionalism.</strong></p>]]></content>
-      
-      
+  </entry>
+  <entry>
+    <title>GitLab CI/CD</title>
+    <url>/ening/2025/04/10/gitlabci/</url>
+    <content><![CDATA[GitLab CI&#x2F;CD Guide for Frontend Projects (Mac Environment)OverviewIn daily development, we often manually send the built dist package to the backend for deployment, which is inefficient and error-prone. CI (Continuous Integration) automates this process. This guide shows how to use GitLab CI to implement continuous integration and deployment.
+
+1. Install GitLab RunnerRefer to the official documentation: GitLab Runner Installation Guide
+
+2. Register Runner Locally
+Open your GitLab project page and go to Settings → CI&#x2F;CD, expand the Runners section.
+Note the displayed URL and token for registration.
+
+Run the registration commandgitlab-runner register
+
+Follow the prompts and enter the following information:
+
+GitLab CI Coordinator URL: https://gitlab.com
+GitLab CI Token: xxx (copy from the project)
+Tags: my-tag,another-tag (custom tags)
+Description: my-runner (custom description)
+Executor: shell (recommended on Mac)
+
+After registration, return to the GitLab CI&#x2F;CD settings page. If the runner status is green, it’s running successfully. If not, start the runner manually:
+gitlab-runner run
+
+
+3. Create and Commit .gitlab-ci.ymlSave the following content as .gitlab-ci.yml and push it to GitLab:
+stages:  - deploydeploy_to_test:  stage: deploy  script:    - yarn    - rm -rf dist/    - yarn build    - ls -l -t ./dist/    - rsync -avz ./dist/ root@xxx.xx.xx.xxx:/dist
+
+
+This CI script builds the project and uses rsync to deploy the dist folder to a remote server.
+
+
+4. CI with Docker (Optional)If you want a more comprehensive CI&#x2F;CD pipeline using Docker, follow these steps:
+1. Install Docker (Mac)brew install --cask docker
+
+2. Pull GitLab Imagedocker pull drud/gitlab-ce:v0.29.1
+
+3. Create GitLab Containerdocker run -d -p 8443:443 -p 8090:80 -p 8022:22 --restart always --name gitlab drud/gitlab-ce:v0.29.1
+
+Explanation:
+
+-p 8443:443: map HTTPS port
+-p 8090:80: map HTTP port
+-p 8022:22: map SSH port
+--restart always: auto-restart on crash or reboot
+--name gitlab: container named gitlab
+
+Visit:
+http://localhost:8090/
+
+
+5. .gitlab-ci.yml Example for Docker Modevariables:  TEST_NAME: &quot;tips&quot;  OUT_PORT: &quot;8081&quot;  IN_PORT: &quot;8081&quot;stages:  - deploydeploy_to_test:  stage: deploy  before_script:    - if [ $(docker ps -aq --filter name=$CI_PROJECT_NAME) ]; then docker rm -f $CI_PROJECT_NAME; fi  script:    - docker build -f Dockerfile -t $TEST_NAME:latest .    - docker run -d -p $OUT_PORT:$IN_PORT --name $TEST_NAME $TEST_NAME:latest
+
+After successful deployment, you can view the build process on the GitLab CI&#x2F;CD Pipelines page. A new container will be generated under the Containers section. Click the corresponding port to access the deployed page.
+
+
+
+
+]]></content>
       <categories>
-          
-          <category> Frontend </category>
-          
+        <category>Frontend</category>
       </categories>
-      
-      
-        <tags>
-            
-            <tag> XSS </tag>
-            
-            <tag> Web Security </tag>
-            
-            <tag> Frontend Security </tag>
-            
-            <tag> JavaScript </tag>
-            
-            <tag> Browser Security </tag>
-            
-            <tag> Cybersecurity </tag>
-            
-            <tag> Web Development </tag>
-            
-            <tag> Secure Coding </tag>
-            
-            <tag> Content Security Policy </tag>
-            
-            <tag> HttpOnly </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>Installing Puppeteer on Baota Panel</title>
-      <link href="/2025/09/02/%E5%AE%9D%E5%A1%94%E5%AE%89%E8%A3%85puppeteer/"/>
-      <url>/2025/09/02/%E5%AE%9D%E5%A1%94%E5%AE%89%E8%A3%85puppeteer/</url>
-      
-        <content type="html"><![CDATA[<h2 id="Installing-Puppeteer-on-Baota-CentOS-8"><a href="#Installing-Puppeteer-on-Baota-CentOS-8" class="headerlink" title="Installing Puppeteer on Baota (CentOS 8)"></a>Installing Puppeteer on Baota (CentOS 8)</h2><p>When using <strong>CentOS 8</strong>, <code>yum</code> may fail because CentOS 8 is no longer officially maintained.<br>To fix this, you need to <strong>switch the YUM mirror source</strong>, clear the cache, and rebuild it.</p><h3 id="1-Replace-the-YUM-repository-source"><a href="#1-Replace-the-YUM-repository-source" class="headerlink" title="1. Replace the YUM repository source"></a>1. Replace the YUM repository source</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget -O /etc/yum.repos.d/CentOS-Base.repo https://mirrors.aliyun.com/repo/Centos-8.repo</span><br></pre></td></tr></table></figure><h3 id="2-Clean-YUM-cache"><a href="#2-Clean-YUM-cache" class="headerlink" title="2. Clean YUM cache"></a>2. Clean YUM cache</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> yum clean all</span><br></pre></td></tr></table></figure><h3 id="3-Rebuild-YUM-cache"><a href="#3-Rebuild-YUM-cache" class="headerlink" title="3. Rebuild YUM cache"></a>3. Rebuild YUM cache</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> yum makecache</span><br></pre></td></tr></table></figure><blockquote><p>⚠️ Note:<br>CentOS 8 has reached <strong>End of Life (EOL)</strong> and is no longer maintained.<br>You must rely on third-party mirror sources to continue using <code>yum</code>.</p></blockquote><h2 id="Puppeteer-Dependency-Download-Error"><a href="#Puppeteer-Dependency-Download-Error" class="headerlink" title="Puppeteer Dependency Download Error"></a>Puppeteer Dependency Download Error</h2><p>When installing <strong>Puppeteer</strong>, you may encounter errors while downloading Chromium dependencies.</p><p>You can refer to this article for details:<br><a href="https://www.cnblogs.com/ilizhu/p/14504049.html">https://www.cnblogs.com/ilizhu/p/14504049.html</a></p><h2 id="Puppeteer-Sandbox-Error"><a href="#Puppeteer-Sandbox-Error" class="headerlink" title="Puppeteer Sandbox Error"></a>Puppeteer Sandbox Error</h2><p>On some servers (such as Baota or other managed VPS environments), Puppeteer may fail to launch Chromium due to <strong>sandbox restrictions</strong>.</p><h3 id="Solution-Disable-sandbox-when-launching-Puppeteer"><a href="#Solution-Disable-sandbox-when-launching-Puppeteer" class="headerlink" title="Solution: Disable sandbox when launching Puppeteer"></a>Solution: Disable sandbox when launching Puppeteer</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Add launch arguments to disable sandbox</span></span><br><span class="line"><span class="keyword">const</span> browser = <span class="keyword">await</span> puppeteer.<span class="title function_">launch</span>(&#123;</span><br><span class="line">  <span class="attr">args</span>: [<span class="string">&#x27;--no-sandbox&#x27;</span>, <span class="string">&#x27;--disable-setuid-sandbox&#x27;</span>]</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>]]></content>
-      
-      
+      <tags>
+        <tag>Frontend</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Sync Google Sheets Data Between Spreadsheets</title>
+    <url>/ening/2025/08/28/google%20sheet%E5%90%8C%E6%AD%A5%E8%A1%A8%E6%A0%BC%E6%95%B0%E6%8D%AE/</url>
+    <content><![CDATA[Sync Google Sheets Data Across Multiple SheetsThere is a requirement to synchronize all sheets from one Google Spreadsheet to another spreadsheet (including all sub-sheets).
+This is implemented using Google Sheets → Extensions → Apps Script.
+Why synchronization is neededThe source spreadsheet is read-only by default.By synchronizing its data into another spreadsheet, the copied sheets can then be edited freely.
+sourceSpreadsheetId and targetSpreadsheetId are the IDs from the Google Sheets URL —they are the long strings after /d/ in the address bar.
+Apps Script Code Examplefunction synchronizeSheetsToAnotherFile() &#123;  const sourceSpreadsheetId = &quot;id1&quot;;  const targetSpreadsheetId = &quot;id2&quot;;   // Example: 1NOtSSvDwXrca8vqyZW6OqQJwGaCICMVguSz1-i72oqg  const sourceSpreadsheet = SpreadsheetApp.openById(sourceSpreadsheetId);  const targetSpreadsheet = SpreadsheetApp.openById(targetSpreadsheetId);  const sourceSheets = sourceSpreadsheet.getSheets();  sourceSheets.forEach(sheet =&gt; &#123;    const sheetName = sheet.getName();    let targetSheet = targetSpreadsheet.getSheetByName(sheetName);    if (!targetSheet) &#123;      targetSheet = targetSpreadsheet.insertSheet(sheetName);    &#125; else &#123;      targetSheet.clear();    &#125;    const range = sheet.getDataRange();    const displayValues = range.getDisplayValues();     const formats = range.getBackgrounds();            const fontWeights = range.getFontWeights();        const targetRange = targetSheet.getRange(      1,      1,      displayValues.length,      displayValues[0].length    );    targetRange.setValues(displayValues);    targetRange.setBackgrounds(formats);    targetRange.setFontWeights(fontWeights);  &#125;);&#125;
+
+]]></content>
       <categories>
-          
-          <category> Frontend </category>
-          
+        <category>Frontend</category>
       </categories>
-      
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>Sync Google Sheets Data Between Spreadsheets</title>
-      <link href="/2025/08/28/google%20sheet%E5%90%8C%E6%AD%A5%E8%A1%A8%E6%A0%BC%E6%95%B0%E6%8D%AE/"/>
-      <url>/2025/08/28/google%20sheet%E5%90%8C%E6%AD%A5%E8%A1%A8%E6%A0%BC%E6%95%B0%E6%8D%AE/</url>
-      
-        <content type="html"><![CDATA[<h2 id="Sync-Google-Sheets-Data-Across-Multiple-Sheets"><a href="#Sync-Google-Sheets-Data-Across-Multiple-Sheets" class="headerlink" title="Sync Google Sheets Data Across Multiple Sheets"></a>Sync Google Sheets Data Across Multiple Sheets</h2><p>There is a requirement to <strong>synchronize all sheets from one Google Spreadsheet to another spreadsheet (including all sub-sheets)</strong>.</p><p>This is implemented using <strong>Google Sheets → Extensions → Apps Script</strong>.</p><h3 id="Why-synchronization-is-needed"><a href="#Why-synchronization-is-needed" class="headerlink" title="Why synchronization is needed"></a>Why synchronization is needed</h3><p>The <strong>source spreadsheet is read-only</strong> by default.<br>By synchronizing its data into another spreadsheet, the copied sheets can then be <strong>edited freely</strong>.</p><p><code>sourceSpreadsheetId</code> and <code>targetSpreadsheetId</code> are the IDs from the Google Sheets URL —<br>they are the long strings after <code>/d/</code> in the address bar.</p><h2 id="Apps-Script-Code-Example"><a href="#Apps-Script-Code-Example" class="headerlink" title="Apps Script Code Example"></a>Apps Script Code Example</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">synchronizeSheetsToAnotherFile</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> sourceSpreadsheetId = <span class="string">&quot;id1&quot;</span>;</span><br><span class="line">  <span class="keyword">const</span> targetSpreadsheetId = <span class="string">&quot;id2&quot;</span>; </span><br><span class="line">  <span class="comment">// Example: 1NOtSSvDwXrca8vqyZW6OqQJwGaCICMVguSz1-i72oqg</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> sourceSpreadsheet = <span class="title class_">SpreadsheetApp</span>.<span class="title function_">openById</span>(sourceSpreadsheetId);</span><br><span class="line">  <span class="keyword">const</span> targetSpreadsheet = <span class="title class_">SpreadsheetApp</span>.<span class="title function_">openById</span>(targetSpreadsheetId);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> sourceSheets = sourceSpreadsheet.<span class="title function_">getSheets</span>();</span><br><span class="line"></span><br><span class="line">  sourceSheets.<span class="title function_">forEach</span>(<span class="function"><span class="params">sheet</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> sheetName = sheet.<span class="title function_">getName</span>();</span><br><span class="line">    <span class="keyword">let</span> targetSheet = targetSpreadsheet.<span class="title function_">getSheetByName</span>(sheetName);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!targetSheet) &#123;</span><br><span class="line">      targetSheet = targetSpreadsheet.<span class="title function_">insertSheet</span>(sheetName);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      targetSheet.<span class="title function_">clear</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> range = sheet.<span class="title function_">getDataRange</span>();</span><br><span class="line">    <span class="keyword">const</span> displayValues = range.<span class="title function_">getDisplayValues</span>(); </span><br><span class="line">    <span class="keyword">const</span> formats = range.<span class="title function_">getBackgrounds</span>();        </span><br><span class="line">    <span class="keyword">const</span> fontWeights = range.<span class="title function_">getFontWeights</span>();    </span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> targetRange = targetSheet.<span class="title function_">getRange</span>(</span><br><span class="line">      <span class="number">1</span>,</span><br><span class="line">      <span class="number">1</span>,</span><br><span class="line">      displayValues.<span class="property">length</span>,</span><br><span class="line">      displayValues[<span class="number">0</span>].<span class="property">length</span></span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">    targetRange.<span class="title function_">setValues</span>(displayValues);</span><br><span class="line">    targetRange.<span class="title function_">setBackgrounds</span>(formats);</span><br><span class="line">    targetRange.<span class="title function_">setFontWeights</span>(fontWeights);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
-      
-      
+  </entry>
+  <entry>
+    <title>JavaScript Basics</title>
+    <url>/ening/2025/12/02/js%E5%9F%BA%E7%A1%80/</url>
+    <content><![CDATA[JavaScript Basics Summary (Hoisting, Strict Mode)
+Rules for Variable and Function Hoisting
+Variable hoisting: Execution still happens in order; variable declarations are hoisted but assignments are not.
+Function hoisting: The entire function body is hoisted to the top of its scope.
+Priority: Function hoisting &gt; Variable hoisting.
+
+console.log(a); // undefinedvar a = 2;foo(); // works normallyfunction foo() &#123;  console.log(&quot;Function hoisting succeeded&quot;);&#125;
+
+
+Using Strict Mode with use strictWhat it does:
+Prevents creating accidental global variables;
+Disallows using undeclared variables, helping avoid memory leaks;
+Binds this to undefined by default instead of window.
+
+function foo() &#123;  &quot;use strict&quot;;  console.log(this.a); // ❌ TypeError&#125;var a = 2;foo(); // in strict mode, this is undefined, so this.a cannot be read
+
+
+(function() &#123;  &quot;use strict&quot;;  foo(); // calling foo here doesn&#x27;t change its default binding&#125;)();function foo() &#123;  console.log(this.a);&#125;var a = 2;
+]]></content>
       <categories>
-          
-          <category> Frontend </category>
-          
+        <category>Frontend</category>
       </categories>
-      
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>React Component Communication Methods</title>
-      <link href="/2025/08/25/react%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F/"/>
-      <url>/2025/08/25/react%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F/</url>
-      
-        <content type="html"><![CDATA[<ul><li><p><strong>Props and Callback Props</strong>:<br>Used for parent–child component communication. Child components receive data from parents via props. Parents pass callback functions to children, and children invoke these callbacks to send data back to the parent.</p></li><li><p><strong>Context API</strong>:<br>An API for sharing state across components without the need to pass props down through every level of the component tree.</p></li><li><p><strong>Redux or MobX</strong>:<br>For complex applications, state management libraries can be used to handle communication and shared state between components.</p></li><li><p><strong>Event Subscription Pattern</strong>:<br>Uses mechanisms such as <code>EventEmitter</code> or third-party libraries to implement publish–subscribe patterns for communication between non-related components.</p></li><li><p><strong>Hooks</strong>:<br>Some React Hooks, such as <code>useState</code>, can be used to share logic and state between components through custom hooks.</p></li></ul>]]></content>
-      
-      
+  </entry>
+  <entry>
+    <title>Talking About Node RPC</title>
+    <url>/ening/2025/07/16/node-rpc/</url>
+    <content><![CDATA[
+What Is SerializationData transmitted over a TCP channel can only be in binary form. So converting a data structure or an object into binary form is called serialization. The reverse process is called deserialization. The rules that define how they convert back and forth are called a protocol.
+
+What Is RPCRPC stands for Remote Procedure Call. Most RPC systems are based on TCP. The general implementation flow is as follows:
+
+The frontend calls the corresponding interface through a Proxy. The Proxy converts information such as the RPC service name, method name, and parameters into an RPC Request object and passes it to the RPC framework.
+The RPC framework serializes the RPC Request object into binary form according to the RPC protocol.
+The RPC framework sends the binary data to the backend through a TCP channel.
+The backend deserializes the binary data back into an RPC Request object.
+The backend maps the deserialized data to the actual method it implements, passes in the parameters, obtains the result, and then packages it into an RPC Response object for the RPC framework.
+The RPC framework serializes the RPC Response object into binary form according to the RPC protocol and sends it back to the frontend through the TCP channel.
+After receiving the binary data, the frontend deserializes it into an RPC Response object, and the Proxy returns the result to the business code.
+
+]]></content>
       <categories>
-          
-          <category> Frontend </category>
-          
+        <category>Backend</category>
       </categories>
-      
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>Information Technology Teaching Template for Primary and Secondary Schools</title>
-      <link href="/2025/08/21/%E4%B8%AD%E5%B0%8F%E5%AD%A6%E4%BF%A1%E6%81%AF%E6%8A%80%E6%9C%AF%E6%95%99%E5%AD%A6%E6%A8%A1%E7%89%88/"/>
-      <url>/2025/08/21/%E4%B8%AD%E5%B0%8F%E5%AD%A6%E4%BF%A1%E6%81%AF%E6%8A%80%E6%9C%AF%E6%95%99%E5%AD%A6%E6%A8%A1%E7%89%88/</url>
-      
-        <content type="html"><![CDATA[<h1 id="Verbatim-Teaching-Script-“if-elif-Conditional-Statements”"><a href="#Verbatim-Teaching-Script-“if-elif-Conditional-Statements”" class="headerlink" title="Verbatim Teaching Script: “if-elif Conditional Statements”"></a><strong>Verbatim Teaching Script: “if-elif Conditional Statements”</strong></h1><p>    Students, just now the teacher noticed the class duty roster. From Monday to Friday, there are many diligent “little bees” on duty. I’d like to ask: which students are on duty on Monday? Please raise your hands. Yes, I see you. Now, students, do you remember who the students on duty on Monday are? That’s right, there are six students in total.</p><p>    Now suppose we take three classes as a unit and give you a student’s name. Can you quickly tell which day of the week this student is on duty? Do you have any good ideas? You there—yes, you mentioned memorizing it with a rhyme or mnemonic. Are there any better methods? You—right, we can use a program to output the result. So, what kind of statement should we use to represent multiple conditions? Today, we are going to learn another conditional statement in Python: <strong>if-elif-else</strong>.</p><p>    Next, please work in pairs with your desk mates. Analyze how to use if-elif-else to solve the problem of matching student names to duty days. You have 8 minutes. Begin.<br>Time’s up. While walking around, I saw everyone actively discussing. Which group would like to share your ideas? You, please. You said that we can input a student’s name and determine which day they are on duty by matching the name and outputting the corresponding weekday. Any additions? Group Five, please share. They suggested creating five arrays corresponding to Monday through Friday, placing each student’s name into the appropriate array, and then judging which day to output. That’s a very important point. Please sit down. Excellent work. It’s clear that everyone has previewed today’s lesson well.</p><p>    Next, let’s integrate everyone’s ideas. Please think independently and draw a flowchart. You have 5 minutes. Begin.<br>Time’s up. This student, please come up and present your flowchart. You explained that first we input the student’s name. If Xiaohua is in Monday’s array, then output Monday, and so on. Now, please try to write a multi-branch conditional statement. Here’s a hint from the teacher: use <strong>elif</strong> for additional conditional clauses. Let’s ask this student to write their answer on the blackboard. Students, compare it with your own code. Which parts need modification? You said the final <strong>elif</strong> should be changed to <strong>else</strong>, to indicate that when none of the conditions are met, the statements under <strong>else</strong> are executed. You also mentioned paying attention to indentation and colons. Very careful observations. I hope everyone writes carefully when coding. Now please use the if-elif statements you’ve learned to implement the algorithm you designed. I see that everyone has written it correctly and avoided the earlier issues.</p><p>    Now that we’ve written the statements, what is their execution process? Please discuss this in pairs. In a moment, we’ll ask one group to explain. You have 7 minutes. Begin.<br>I see students discussing quietly. Time’s up. Group Two, please explain the execution process. They used the flowchart to explain that the program checks each condition in order. If a condition is satisfied, it outputs the result; if none are satisfied, it outputs an error message. Their explanation combined diagrams and text and was very clear. Based on the flowchart on the screen, we can summarize the execution process of if-elif statements: the program starts from the <strong>if</strong> condition and checks conditions one by one. If a condition is true, the corresponding block of code is executed and the program exits the if structure. If the condition is false, it moves on to the next condition. If all conditions are false, the <strong>else</strong> block is executed.</p><p>    Now that we’ve finished learning the new knowledge, please write a complete program that implements this process. Students who finish early may think about real-life situations that require checking multiple conditions and write corresponding programs. Let’s invite some students to present their work. Some students approached the problem from a mathematics perspective, writing a program to compare three numbers and find the maximum. Others took inspiration from daily life and wrote a taxi fare calculation program. All of your programs were well-structured and correctly formatted.</p><p>    As today’s lesson comes to an end, what have you learned from this class? You said that you’ve learned the format and execution process of if-elif statements. It seems everyone has mastered today’s content. In fact, programming is very close to our daily life and studies, and it’s not as difficult as it may seem. The teacher hopes that you will continue to think actively and express your ideas in class just like today.</p><p>    Finally, here is a homework assignment: please compare the characteristics of the three types of if statements and organize them into a table.</p><p>    That’s all for today’s lesson. Goodbye, students.</p>]]></content>
-      
-      
+  </entry>
+  <entry>
+    <title>React Component Communication Methods</title>
+    <url>/ening/2025/08/25/react%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F/</url>
+    <content><![CDATA[
+Props and Callback Props:Used for parent–child component communication. Child components receive data from parents via props. Parents pass callback functions to children, and children invoke these callbacks to send data back to the parent.
+
+Context API:An API for sharing state across components without the need to pass props down through every level of the component tree.
+
+Redux or MobX:For complex applications, state management libraries can be used to handle communication and shared state between components.
+
+Event Subscription Pattern:Uses mechanisms such as EventEmitter or third-party libraries to implement publish–subscribe patterns for communication between non-related components.
+
+Hooks:Some React Hooks, such as useState, can be used to share logic and state between components through custom hooks.
+
+
+]]></content>
       <categories>
-          
-          <category> Teacher Certification </category>
-          
+        <category>Frontend</category>
       </categories>
-      
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>React Native New Architecture</title>
-      <link href="/2025/08/19/ReactNative%E6%96%B0%E6%9E%B6%E6%9E%84/"/>
-      <url>/2025/08/19/ReactNative%E6%96%B0%E6%9E%B6%E6%9E%84/</url>
-      
-        <content type="html"><![CDATA[<ul><li><strong>Fabric</strong>: Enables synchronous UI rendering, eliminating the communication bottleneck of the Bridge.</li><li><strong>TurboModules</strong>: Loads native modules on demand, improving app startup performance.</li><li><strong>JSI (JavaScript Interface)</strong>: Allows JavaScript to directly call native code, replacing the asynchronous Bridge. The Bridge is asynchronous and single-threaded, which introduces additional overhead; JSI, by contrast, is synchronous, lower-overhead, and supports concurrency.</li></ul>]]></content>
-      
-      
+  </entry>
+  <entry>
+    <title>Hello English</title>
+    <url>/ening/2024/08/16/redis-en/</url>
+    <content><![CDATA[This is an English post.
+]]></content>
+  </entry>
+  <entry>
+    <title>One Day You&#39;ll Understand - Reading Notes by Mr. Zhuomo</title>
+    <url>/ening/2025/05/21/%E3%80%8A%E7%BB%88%E6%9C%89%E4%B8%80%E5%A4%A9%E4%BD%A0%E4%BC%9A%E6%87%82%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%20-%20%E7%90%A2%E7%A3%A8%E5%85%88%E7%94%9F/</url>
+    <content><![CDATA[The book does contain a lot of his own “biases,” but I find him authentic and humorous. His language is simple and understandable, and each subtitle essentially tells us what we should do.
+Understanding LifeLife is never about what you want it to be. It’s good to discover beauty and to view things from others’ perspectives. At the same time, one should have self-awareness.
+Understanding LoveSheldon once said: “The pursuit of another human to spend life with is something I’ve never understood. Maybe I’m too interesting to need company. So I wish you the same joy with each other as I have with myself.”One can never escape loneliness through another person; only through passion for life. Managing a relationship requires rationality. Freedom is inalienable. I once checked my ex’s phone—I realized it was wrong and won’t do it again.
+Understanding StrategyThis section mainly introduces the strategies of courting and how to maintain a good relationship—true wisdom. Never sacrifice your career for family. Don’t live with in-laws (though I think it depends). Have your own hobbies.
+Understanding MarriageEndure and stay loyal. As for non-marriage beliefs, there’s nothing more to say.
+Understanding SetbacksEvery breakup is just making way for true love. Don’t force it. I love you, so I wish you well, even if I’m not the one by your side.Do what you want regardless of others’ opinions. Only care about those who matter to you.
+Understanding ReadingWhat, Why, How. Keep reading. Don’t chase speed, but depth.
+Understanding RomanceHe shares sweet daily stories with his wife. If you don’t break up, you won’t discover how many better people there are out there. If you find one—lucky. If not—you can still live happily on your own.Live with emotional intelligence and the world becomes beautiful.
+Understanding SocializingAssociate with decent people. Different people require different approaches. Rejecting others is an art. If you don’t have the guts to ask for your money back, don’t lend it.
+Understanding Human NatureI tend to be skeptical about human nature. You can’t control others, so just manage yourself. Don’t be vulgar.
+Understanding Good and EvilSome people enter your life just to teach you a lesson. Good or evil—I prefer believing in others, as trust is given before it’s earned.Even if deceived, it’s a lesson learned—don’t fall into the same trap again. But don’t stop trusting altogether; kind people still exist.God made the right hand a right hand as a reward; same for kind people—kindness is its own reward.I recall being in a restroom without tissue once. I was going to ask a friend, but a stranger overheard and handed me tissues. Such kindness moved me deeply.Kindness must come with principles—otherwise it may hurt others or yourself.
+Understanding WealthThe poor stay poor because of narrow thinking. To get rich, don’t just invest in your body—think bigger. See the essence of problems.Time is limited—how to get rich fast? Find a subject you love, apply it, think broadly, and work in fields closely tied to society.
+Understanding SocietyHave ambition. Take one step at a time. Build an independent personality. Be accountable for your actions. Learn to transform your ability to feel happiness—then change yourself.
+Understanding Life and DeathDeath studies include concepts like: No death, no life; face death to live; understand death to be reborn. Interesting and thought-provoking.Knowing that we will die is what pushes us to live fully. When the time comes, I think I’ll embrace death.
+
+What the world lacks isn’t perfect people, but justice, sincerity, courage, and compassion from the heart. — My biggest takeaway after watching Forever Young today.We all know cause and effect—but causes and effects come from relationships. Someday, I’ll read Schopenhauer and Nietzsche properly.
+
+Understanding TravelThis part recounts Mr. Zhuomo’s experiences in Tibet. Many dream of going there—maybe because it helps people truly understand life’s struggles.The US is less disciplined than the UK. Japan has great food culture and says “sorry” a lot—avoiding bothering others.
+Understanding CareerFirst learn to endure hardship. Then understand yourself and your talents. Begin with the end in mind and stay focused.
+Understanding EducationEvery child is born pure. Without proper education, they won’t become pillars of the nation.
+Understanding Entertainment &amp; FreedomLife has two paths: one for career ambition—keep passion; the other for living warmly—keep humanity.Open your eyes each day and tell yourself: Oh yeah!
+]]></content>
       <categories>
-          
-          <category> Frontend </category>
-          
+        <category>Reading</category>
       </categories>
-      
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>Hexo-Next – Change Fonts &amp; Enable Code Copy</title>
-      <link href="/2025/08/18/Hexo-Next-%E6%9B%B4%E6%94%B9%E5%AD%97%E4%BD%93/"/>
-      <url>/2025/08/18/Hexo-Next-%E6%9B%B4%E6%94%B9%E5%AD%97%E4%BD%93/</url>
-      
-        <content type="html"><![CDATA[<hr><p>The Next theme version used here is <strong>7.8.0</strong>.</p><p>First, locate the file:</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/themes/next/_config.yml</span><br></pre></td></tr></table></figure><p>Search for the keyword <strong><code>font</code></strong>.<br>⚠️ <strong>Important:</strong> You must set <code>enable</code> inside <code>font</code> to <code>true</code>, because the default value is <code>false</code>.<br>If you only modify the <code>family</code> without enabling it, the font change <strong>will not take effect</strong> — so make sure you don’t miss this step.</p><p>If the font family is sourced from an external platform, you also need to configure the <code>host</code>.</p><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">font:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># Uri of fonts host, e.g. https://fonts.googleapis.com (Default).</span></span><br><span class="line">  <span class="attr">host:</span> </span><br><span class="line"></span><br><span class="line">  <span class="comment"># Font options:</span></span><br><span class="line">  <span class="comment"># `external: true` will load this font family from `host` above.</span></span><br><span class="line">  <span class="comment"># `family: Times New Roman`. Without any quotes.</span></span><br><span class="line">  <span class="comment"># `size: x.x`. Use `em` as unit. Default: 1 (16px)</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># Global font settings used for all elements inside &lt;body&gt;.</span></span><br><span class="line">  <span class="attr">global:</span></span><br><span class="line">    <span class="attr">external:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">family:</span> <span class="string">Noto</span> <span class="string">Serif</span> <span class="string">SC</span></span><br><span class="line">    <span class="attr">size:</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># Font settings for site title (.site-title).</span></span><br><span class="line">  <span class="attr">title:</span></span><br><span class="line">    <span class="attr">external:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">family:</span> <span class="string">Noto</span> <span class="string">Serif</span> <span class="string">SC</span></span><br><span class="line">    <span class="attr">size:</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># Font settings for headlines (&lt;h1&gt; to &lt;h6&gt;).</span></span><br><span class="line">  <span class="attr">headings:</span></span><br><span class="line">    <span class="attr">external:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">family:</span> <span class="string">Noto</span> <span class="string">Serif</span> <span class="string">SC</span></span><br><span class="line">    <span class="attr">size:</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># Font settings for posts (.post-body).</span></span><br><span class="line">  <span class="attr">posts:</span></span><br><span class="line">    <span class="attr">external:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">family:</span> <span class="string">Noto</span> <span class="string">Serif</span> <span class="string">SC</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># Font settings for &lt;code&gt; and code blocks.</span></span><br><span class="line">  <span class="attr">codes:</span></span><br><span class="line">    <span class="attr">external:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">family:</span> <span class="string">Source</span> <span class="string">Code</span> <span class="string">Pro</span></span><br></pre></td></tr></table></figure><hr><h2 id="Enable-Copy-Button-for-Code-Blocks"><a href="#Enable-Copy-Button-for-Code-Blocks" class="headerlink" title="Enable Copy Button for Code Blocks"></a>Enable Copy Button for Code Blocks</h2><p>In the <strong>same <code>_config.yml</code> file</strong>, locate the following configuration section.</p><p>Set <code>copy_button.enable</code> to <code>true</code> to enable the copy feature.</p><ul><li>When <code>show_result</code> is set to <code>true</code>, a checkmark will be shown after copying.</li><li>The <code>style</code> option controls the appearance of the copy button. Choose based on your preference.</li></ul><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">codeblock:</span></span><br><span class="line">  <span class="comment"># Code Highlight theme</span></span><br><span class="line">  <span class="comment"># Available values: normal | night | night eighties | night blue | night bright | solarized | solarized dark | galactic</span></span><br><span class="line">  <span class="comment"># See: https://github.com/chriskempson/tomorrow-theme</span></span><br><span class="line">  <span class="attr">highlight_theme:</span> <span class="string">night</span> <span class="string">eighties</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># Add copy button on codeblock</span></span><br><span class="line">  <span class="attr">copy_button:</span></span><br><span class="line">    <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">    <span class="comment"># Show text copy result.</span></span><br><span class="line">    <span class="attr">show_result:</span> <span class="literal">true</span></span><br><span class="line">    <span class="comment"># Available values: default | flat | mac</span></span><br><span class="line">    <span class="attr">style:</span> <span class="string">mac</span></span><br></pre></td></tr></table></figure>]]></content>
-      
-      
+      <tags>
+        <tag>Reading</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Information Technology Teaching Template for Primary and Secondary Schools</title>
+    <url>/ening/2025/08/21/%E4%B8%AD%E5%B0%8F%E5%AD%A6%E4%BF%A1%E6%81%AF%E6%8A%80%E6%9C%AF%E6%95%99%E5%AD%A6%E6%A8%A1%E7%89%88/</url>
+    <content><![CDATA[Verbatim Teaching Script: “if-elif Conditional Statements”    Students, just now the teacher noticed the class duty roster. From Monday to Friday, there are many diligent “little bees” on duty. I’d like to ask: which students are on duty on Monday? Please raise your hands. Yes, I see you. Now, students, do you remember who the students on duty on Monday are? That’s right, there are six students in total.
+    Now suppose we take three classes as a unit and give you a student’s name. Can you quickly tell which day of the week this student is on duty? Do you have any good ideas? You there—yes, you mentioned memorizing it with a rhyme or mnemonic. Are there any better methods? You—right, we can use a program to output the result. So, what kind of statement should we use to represent multiple conditions? Today, we are going to learn another conditional statement in Python: if-elif-else.
+    Next, please work in pairs with your desk mates. Analyze how to use if-elif-else to solve the problem of matching student names to duty days. You have 8 minutes. Begin.Time’s up. While walking around, I saw everyone actively discussing. Which group would like to share your ideas? You, please. You said that we can input a student’s name and determine which day they are on duty by matching the name and outputting the corresponding weekday. Any additions? Group Five, please share. They suggested creating five arrays corresponding to Monday through Friday, placing each student’s name into the appropriate array, and then judging which day to output. That’s a very important point. Please sit down. Excellent work. It’s clear that everyone has previewed today’s lesson well.
+    Next, let’s integrate everyone’s ideas. Please think independently and draw a flowchart. You have 5 minutes. Begin.Time’s up. This student, please come up and present your flowchart. You explained that first we input the student’s name. If Xiaohua is in Monday’s array, then output Monday, and so on. Now, please try to write a multi-branch conditional statement. Here’s a hint from the teacher: use elif for additional conditional clauses. Let’s ask this student to write their answer on the blackboard. Students, compare it with your own code. Which parts need modification? You said the final elif should be changed to else, to indicate that when none of the conditions are met, the statements under else are executed. You also mentioned paying attention to indentation and colons. Very careful observations. I hope everyone writes carefully when coding. Now please use the if-elif statements you’ve learned to implement the algorithm you designed. I see that everyone has written it correctly and avoided the earlier issues.
+    Now that we’ve written the statements, what is their execution process? Please discuss this in pairs. In a moment, we’ll ask one group to explain. You have 7 minutes. Begin.I see students discussing quietly. Time’s up. Group Two, please explain the execution process. They used the flowchart to explain that the program checks each condition in order. If a condition is satisfied, it outputs the result; if none are satisfied, it outputs an error message. Their explanation combined diagrams and text and was very clear. Based on the flowchart on the screen, we can summarize the execution process of if-elif statements: the program starts from the if condition and checks conditions one by one. If a condition is true, the corresponding block of code is executed and the program exits the if structure. If the condition is false, it moves on to the next condition. If all conditions are false, the else block is executed.
+    Now that we’ve finished learning the new knowledge, please write a complete program that implements this process. Students who finish early may think about real-life situations that require checking multiple conditions and write corresponding programs. Let’s invite some students to present their work. Some students approached the problem from a mathematics perspective, writing a program to compare three numbers and find the maximum. Others took inspiration from daily life and wrote a taxi fare calculation program. All of your programs were well-structured and correctly formatted.
+    As today’s lesson comes to an end, what have you learned from this class? You said that you’ve learned the format and execution process of if-elif statements. It seems everyone has mastered today’s content. In fact, programming is very close to our daily life and studies, and it’s not as difficult as it may seem. The teacher hopes that you will continue to think actively and express your ideas in class just like today.
+    Finally, here is a homework assignment: please compare the characteristics of the three types of if statements and organize them into a table.
+    That’s all for today’s lesson. Goodbye, students.
+]]></content>
       <categories>
-          
-          <category> Frontend </category>
-          
+        <category>Teacher Certification</category>
       </categories>
-      
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>Developing Without Frameworks</title>
-      <link href="/2025/08/13/%E5%A6%82%E4%BD%95%E8%84%B1%E7%A6%BB%E6%A1%86%E6%9E%B6%E5%BC%80%E5%8F%91/"/>
-      <url>/2025/08/13/%E5%A6%82%E4%BD%95%E8%84%B1%E7%A6%BB%E6%A1%86%E6%9E%B6%E5%BC%80%E5%8F%91/</url>
-      
-        <content type="html"><![CDATA[<hr><p>Developing frontend applications without frameworks means building web projects <strong>without using any frontend frameworks</strong> such as Vue or React, and instead relying directly on <strong>JavaScript, HTML, and CSS</strong>. This approach allows developers to gain a deeper understanding of the underlying principles and mechanisms of frontend development, while avoiding over-reliance on frameworks.</p><p>For <strong>static projects or low-complexity applications with limited functionality</strong>, developing without a framework is often more than sufficient. Code written with frameworks must be compiled before it can be rendered in the browser, which is why tools like Webpack exist. Frameworks such as Vue were created to solve specific pain points—like two-way data binding and automatic reactive updates—but they also require developers to follow framework-specific syntax and conventions. As frameworks evolve, developers must continuously learn and adapt to new versions.</p><p>Frameworks are undoubtedly beneficial for development efficiency, but for <strong>simple requirements</strong>, avoiding a framework can actually be the wiser choice. Whether or not to use a framework should always be decided based on the <strong>actual project requirements</strong>.</p><p>When developing multiple similar websites, unbundled code can be uploaded directly to the server and modified in place. In contrast, when using a framework, only the compiled output is deployed, and any changes require local modification and rebuilding, which can be more time-consuming. After becoming proficient in pure JavaScript development, developers can even go on to build their own tools or frameworks.</p>]]></content>
-      
-      
+  </entry>
+  <entry>
+    <title>Frontend Interview Questions</title>
+    <url>/ening/2025/04/18/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98/</url>
+    <content><![CDATA[
+  Differences between var, let, and const?
+
+✅ Scope
+Variables declared with var do not have block scope. They can be accessed outside blocks but not outside functions.
+Variables declared with let have block scope, accessible only within the declared block.
+const defines constants, must be initialized, accessible only in the declared block, and cannot be reassigned.
+
+✅ Declaration Rules
+A variable name can only be declared once using one of these methods; otherwise, it throws an error.
+
+✅ Difference when using with this
+
+
+Feature
+var &#x2F; let &#x2F; const
+
+
+
+Can change this context
+✅ Yes
+
+
+First parameter is the object this refers to
+✅ Yes
+
+
+No object or undefined/null
+Defaults to global window
+
+
+Parameter passing
+apply uses array, call uses parameter list, bind supports multiple arguments
+
+
+Execution method
+apply/call execute immediately, bind returns a new function
+
+
+
+
+
+  What is event delegation?
+
+
+Event delegation attaches events to a parent or ancestor element instead of individual child elements.
+When the event reaches the target element, it bubbles up and triggers the handler on the outer element.
+
+
+
+
+  Difference between debounce and throttle?
+
+
+Debounce: Executes only the last trigger. Even if the event keeps firing, it waits until n seconds after the last event to execute.
+Throttle: Controls the execution frequency. Fires every n seconds during continuous event triggers.
+
+
+
+
+  How does frontend prevent SQL injection?
+
+
+Parameterized Queries: Use prepared statements or parameterized queries.
+Input Validation: Ensure user input follows expected format.
+Escape Special Characters: Escape characters when constructing SQL queries.
+Limit Permissions: Restrict user privileges to prevent unsafe operations.
+Whitelist Validation: Only allow expected values in input.
+Code Review: Regularly review code, especially DB-related parts.
+
+
+
+
+  Difference between HTTP and HTTPS
+
+
+HTTPS requires a certificate from a CA, which may cost money.
+HTTP transmits data in plaintext, while HTTPS uses SSL encryption.
+They use different connection methods and ports: HTTP uses 80, HTTPS uses 443.
+HTTP is stateless; HTTPS combines SSL + HTTP for encrypted, authenticated, secure communication.
+
+
+
+
+  Difference between created and mounted?
+
+
+created runs before mounted. DOM is not fully rendered, but API requests can be made early here.
+mounted is triggered when the DOM has been rendered, so it’s suitable for manipulating DOM elements.
+
+
+
+
+  Explain the event loop mechanism
+
+🔁 What is the Event Loop?JavaScript is single-threaded. In addition to the call stack, it relies on task queues to control asynchronous code execution order.
+This whole process is called the Event Loop.
+🧠 Core Concepts
+Only one event loop in a single thread.
+Multiple task queues:
+Macro Tasks
+Micro Tasks
+
+
+
+
+⏱ Execution Order
+Macro Task ➝ Clear all Micro Tasks ➝ Next Macro Task ➝ Clear all Micro Tasks…
+
+
+Execute a macro task (like the whole script)
+Execute all micro tasks created during this macro task
+If micro tasks generate more micro tasks, execute them too
+Begin the next macro task loop
+
+
+🧩 Examples of Macro Tasks
+script
+setTimeout
+setInterval
+setImmediate (Node.js)
+I/O operations
+UI rendering
+
+🧬 Examples of Micro Tasks
+process.nextTick (Node.js, higher priority)
+Promise.then / catch / finally
+async / await
+MutationObserver
+
+
+
+
+  Explain the CSS box model
+
+The CSS box model includes IE and standard W3C models.
+
+In standard W3C box model, width only includes content. box-sizing: content-box (default).
+In IE box model, width includes content + padding + border. box-sizing: border-box.
+box-sizing: padding-box includes left&#x2F;right padding + width.
+
+
+
+
+  Differences between Vue 2 and Vue 3
+
+
+Two-way binding:
+Vue 2: uses Object.defineProperty() (ES5), which only watches individual properties.
+Vue 3: uses Proxy (ES6), which can observe entire objects and arrays.
+
+
+Lifecycle hooks:
+Vue 2: beforeCreate, created, beforeMount, mounted, etc.
+Vue 3: setup, onBeforeMount, onMounted, etc.
+
+
+Vue 2 requires a root tag; Vue 3 allows multiple root tags via Fragment.
+API:
+Vue 2: Options API (functions and data handled separately).
+Vue 3: Composition API (related code grouped together).
+
+
+Slots:
+Named slot: Vue 2 uses slot=&quot;&quot;, Vue 3 uses v-slot=&quot;&quot;.
+Scoped slot: Vue 2 uses slot-scope=&quot;data&quot;, Vue 3 uses #data or #default=&quot;&#123;data&#125;&quot;.
+
+
+
+
+
+
+
+
+]]></content>
       <categories>
-          
-          <category> Frontend </category>
-          
+        <category>Frontend</category>
       </categories>
-      
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>Talking About Node RPC</title>
-      <link href="/2025/07/16/node-rpc/"/>
-      <url>/2025/07/16/node-rpc/</url>
-      
-        <content type="html"><![CDATA[<hr><h2 id="What-Is-Serialization"><a href="#What-Is-Serialization" class="headerlink" title="What Is Serialization"></a>What Is Serialization</h2><p>Data transmitted over a TCP channel can only be in binary form. So converting a data structure or an object into binary form is called <strong>serialization</strong>. The reverse process is called <strong>deserialization</strong>. The rules that define how they convert back and forth are called a <strong>protocol</strong>.</p><hr><h2 id="What-Is-RPC"><a href="#What-Is-RPC" class="headerlink" title="What Is RPC"></a>What Is RPC</h2><p>RPC stands for <strong>Remote Procedure Call</strong>. Most RPC systems are based on TCP. The general implementation flow is as follows:</p><ol><li>The frontend calls the corresponding interface through a Proxy. The Proxy converts information such as the RPC service name, method name, and parameters into an RPC Request object and passes it to the RPC framework.</li><li>The RPC framework serializes the RPC Request object into binary form according to the RPC protocol.</li><li>The RPC framework sends the binary data to the backend through a TCP channel.</li><li>The backend deserializes the binary data back into an RPC Request object.</li><li>The backend maps the deserialized data to the actual method it implements, passes in the parameters, obtains the result, and then packages it into an RPC Response object for the RPC framework.</li><li>The RPC framework serializes the RPC Response object into binary form according to the RPC protocol and sends it back to the frontend through the TCP channel.</li><li>After receiving the binary data, the frontend deserializes it into an RPC Response object, and the Proxy returns the result to the business code.</li></ol>]]></content>
-      
-      
+      <tags>
+        <tag>Frontend</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Developing Without Frameworks</title>
+    <url>/ening/2025/08/13/%E5%A6%82%E4%BD%95%E8%84%B1%E7%A6%BB%E6%A1%86%E6%9E%B6%E5%BC%80%E5%8F%91/</url>
+    <content><![CDATA[
+Developing frontend applications without frameworks means building web projects without using any frontend frameworks such as Vue or React, and instead relying directly on JavaScript, HTML, and CSS. This approach allows developers to gain a deeper understanding of the underlying principles and mechanisms of frontend development, while avoiding over-reliance on frameworks.
+For static projects or low-complexity applications with limited functionality, developing without a framework is often more than sufficient. Code written with frameworks must be compiled before it can be rendered in the browser, which is why tools like Webpack exist. Frameworks such as Vue were created to solve specific pain points—like two-way data binding and automatic reactive updates—but they also require developers to follow framework-specific syntax and conventions. As frameworks evolve, developers must continuously learn and adapt to new versions.
+Frameworks are undoubtedly beneficial for development efficiency, but for simple requirements, avoiding a framework can actually be the wiser choice. Whether or not to use a framework should always be decided based on the actual project requirements.
+When developing multiple similar websites, unbundled code can be uploaded directly to the server and modified in place. In contrast, when using a framework, only the compiled output is deployed, and any changes require local modification and rebuilding, which can be more time-consuming. After becoming proficient in pure JavaScript development, developers can even go on to build their own tools or frameworks.
+]]></content>
       <categories>
-          
-          <category> Backend </category>
-          
+        <category>Frontend</category>
       </categories>
-      
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>Encountering the Unknown Self</title>
-      <link href="/2025/06/30/%E9%81%87%E8%A7%81%E6%9C%AA%E7%9F%A5%E7%9A%84%E8%87%AA%E5%B7%B1/"/>
-      <url>/2025/06/30/%E9%81%87%E8%A7%81%E6%9C%AA%E7%9F%A5%E7%9A%84%E8%87%AA%E5%B7%B1/</url>
-      
-        <content type="html"><![CDATA[<h1 id="Notes-on-Encountering-the-Unknown-Self"><a href="#Notes-on-Encountering-the-Unknown-Self" class="headerlink" title="Notes on Encountering the Unknown Self"></a>Notes on <em>Encountering the Unknown Self</em></h1><h2 id="What-is-the-“Unknown”"><a href="#What-is-the-“Unknown”" class="headerlink" title="What is the “Unknown”?"></a>What is the “Unknown”?</h2><p>The “self” refers to the “true self.” From the question “Who am I?” to the concept of “from existence to non-existence,” the entire book is structured around dialogues between Ruoling and a wise elder, revealing many profound life concepts.</p><hr><h2 id="Core-Concepts"><a href="#Core-Concepts" class="headerlink" title="Core Concepts"></a>Core Concepts</h2><ul><li><p><strong>There is no one outside—only yourself.</strong><br>All external situations are actually projections of your inner world.</p></li><li><p><strong>Golden Moments to Talk with the Subconscious</strong><br>The best times to imagine you’ve already achieved your goals are the moments between waking and sleeping—early morning just before fully waking up, or late at night before falling asleep. These times are when we are closest to our subconscious.</p></li><li><p><strong>Key Practices: Awareness, Surrender, Overcoming the Peptide Self (Ego)</strong></p><ul><li><strong>Awareness</strong>: Focus on your present self. Observe your emotions and reactions without judgment.</li><li><strong>Surrender</strong>: Accept reality instead of resisting it.</li><li><strong>Peptide Self (Ego)</strong>: Represents inner voices of fear, comparison, and anxiety. Learn to recognize and transcend them.</li></ul></li><li><p><strong>Meditation, Gratitude, Giving</strong></p><ul><li>During meditation, visualize yourself already living your desired life.</li><li>Be grateful even before your goals are achieved.</li><li>Maintain a selfless, giving mindset.</li></ul></li><li><p><strong>Care Less About Others, Care More About Yourself</strong></p><ul><li>Bring your attention back to yourself and your inner world.</li><li>When emotions arise, be aware of which part of your body feels uncomfortable and understand its message.</li></ul></li></ul><hr><h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>This book is not only about discovering “who you are,” but also about reminding you to “become that true self.” Awakening inner strength requires continuous awareness, practice, and transcending the ego.</p>]]></content>
-      
-      
+  </entry>
+  <entry>
+    <title>How to Prevent XSS</title>
+    <url>/ening/2025/10/17/%E5%A6%82%E4%BD%95%E9%98%B2%E5%BE%A1%20XSS%EF%BC%88%E8%B7%A8%E7%AB%99%E8%84%9A%E6%9C%AC%E6%94%BB%E5%87%BB%EF%BC%89/</url>
+    <content><![CDATA[In web development, XSS (Cross-Site Scripting) is one of the most common and most dangerous security vulnerabilities.Once a website contains an XSS flaw, attackers may execute malicious scripts in users’ browsers, allowing them to steal cookies, hijack sessions, deface pages, or even take over user accounts.
+This article explains how to effectively defend against XSS attacks from both a theoretical and practical perspective, covering frontend and full-stack security best practices.
+1. What Is an XSS Attack?The essence of XSS is simple:
+
+An attacker injects malicious JavaScript into a webpage, which is then executed in other users’ browsers.
+
+Common types of XSS attacks include:
+
+Reflected XSS: malicious scripts are delivered through URL parameters
+Stored XSS: malicious scripts are stored in a database and served to users
+DOM-based XSS: frontend JavaScript logic directly handles untrusted data
+
+No matter the type, the root cause is the same:👉 User input is treated as executable code.
+2. Input Validation and Filtering (The Most Basic Defense)Never trust user input.
+1. Basic Frontend ValidationOn the frontend, basic validation can improve user experience, such as:
+
+Limiting input length
+Enforcing input formats (e.g., email, phone numbers)
+Filtering obviously dangerous characters
+
+Example (for basic validation only):
+function sanitizeInput(input) &#123;  return input.replace(/[&lt;&gt;]/g, &#x27;&#x27;);&#125;
+
+⚠️ Important:Frontend validation is not a security boundary and should never be relied on alone.
+2. Strict Backend Validation (Critical)Effective input validation must be performed on the server side:
+
+Validate data types
+Enforce length constraints
+Reject inputs that violate business rules
+Escape or sanitize HTML content using whitelists
+
+Recommended principles:
+
+Deny by default
+Whitelist over blacklist
+
+3. Output Encoding (More Important Than Input Filtering)Many XSS vulnerabilities occur not because input is unsafe, but because output is handled incorrectly.
+1. HTML Escaping on OutputWhen rendering user input, always encode HTML characters:
+
+
+
+Character
+Escaped Form
+
+
+
+&lt;
+&amp;lt;
+
+
+&gt;
+&amp;gt;
+
+
+&quot;
+&amp;quot;
+
+
+&#39;
+&amp;#39;
+
+
+Most modern template engines (Vue, React, Handlebars) escape output by default.Do not disable this behavior unless absolutely necessary.
+2. Avoid Dangerous APIsAvoid patterns like:
+element.innerHTML = userInput;
+
+Safer alternatives include:
+element.textContent = userInput;
+
+Or:
+const el = document.createElement(&#x27;div&#x27;);el.textContent = userInput;container.appendChild(el);
+
+
+
+4. Use Safe APIs and Framework ProtectionsModern frontend frameworks include built-in XSS protections.
+1. Default Protections in React and Vue
+JSX and template syntax escape output by default
+Dangerous APIs are explicitly labeled (e.g., v-html, dangerouslySetInnerHTML)
+
+⚠️ If you use these APIs, you must ensure the content is 100% trusted.
+2. Avoid String-Based HTML Construction❌ Unsafe example:
+container.innerHTML = `&lt;div&gt;$&#123;userInput&#125;&lt;/div&gt;`;
+
+✅ Safe alternative:
+const div = document.createElement(&#x27;div&#x27;);div.textContent = userInput;container.appendChild(div);
+
+
+
+5. Use Content Security Policy (CSP)Content Security Policy (CSP) is one of the most powerful defenses against XSS.
+1. What CSP Can Do
+Block inline script execution
+Restrict allowed script sources
+Prevent loading malicious third-party resources
+
+Example HTTP header:
+Content-Security-Policy:  default-src &#x27;self&#x27;;  script-src &#x27;self&#x27;;  object-src &#x27;none&#x27;;
+
+Even if an attacker injects a script, CSP can prevent the browser from executing it.
+2. Why CSP Is So ImportantBecause it provides:
+
+Browser-level protection
+A strong fallback even when application code has flaws
+
+6. Use HttpOnly and Secure Cookies1. Purpose of HttpOnlyWhen setting cookies, add the HttpOnly flag:
+Set-Cookie: sessionId=xxx; HttpOnly;
+
+This prevents JavaScript from accessing cookies, reducing the impact of XSS attacks.
+2. Combine with Secure and SameSiteFor stronger protection, also use:
+
+Secure
+SameSite=Strict or Lax
+
+This significantly improves session security.
+7. Keep Third-Party Libraries Up to DateIn real-world projects, many XSS vulnerabilities come from third-party dependencies:
+
+Outdated UI components
+Unmaintained plugins
+Vulnerable npm packages
+
+Best practices:
+
+Update dependencies regularly
+Use npm audit
+Monitor security advisories
+
+8. Develop Secure Coding HabitsPreventing XSS is not about a single technique, but about consistent habits:
+
+Never trust external input
+Avoid innerHTML unless necessary
+Do not ignore security warnings
+Prioritize security over convenience
+
+9. Summary
+XSS is one of the most common and dangerous web security threats
+Effective protection requires frontend, backend, and browser-level defenses
+Input validation is only the beginning—safe output handling and CSP are critical
+Good security habits are more valuable than any single patch
+
+For frontend developers,understanding how to prevent XSS is a key step toward true professionalism.
+]]></content>
       <categories>
-          
-          <category> Reading </category>
-          
+        <category>Frontend</category>
       </categories>
-      
-      
-        <tags>
-            
-            <tag> Personal Growth </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>Reflections on *What I Talk About When I Talk About Running*</title>
-      <link href="/2025/06/26/%E5%BD%93%E6%88%91%E8%B0%88%E8%B7%91%E6%AD%A5%E6%97%B6/"/>
-      <url>/2025/06/26/%E5%BD%93%E6%88%91%E8%B0%88%E8%B7%91%E6%AD%A5%E6%97%B6/</url>
-      
-        <content type="html"><![CDATA[<h2 id="What-I-Talk-About-When-I-Talk-About-Running"><a href="#What-I-Talk-About-When-I-Talk-About-Running" class="headerlink" title="What I Talk About When I Talk About Running"></a>What I Talk About When I Talk About Running</h2><p>It was through this book that I realized there could be another version of myself out there, doing something I love. Before reading this book, I had never read anything by Murakami. I knew he was popular and had many famous books, but I hadn’t really paid attention. But when it comes to running, I felt there could be a connection.</p><p>If I keep running, will I eventually reach the moon? Running isn’t about living longer, but about making life feel easier and lighter within the time we have.</p><p>I was surprised by Murakami’s imagination while running—so free and boundless. I really enjoy that. I’ve imagined many things too, like suddenly recalling a lyric while running—something like “speeding up to chase happiness,” blabla… Long-distance running requires endurance, but also imagination. Of course, the premise is loving to run. If someone doesn’t like running, no matter how much you say, it won’t matter. But if someone does love it, they’ll even want to meet another version of themselves during a break in the rain. Humans are inherently lonely, but the spirit can resonate with others.</p><p>I plan to keep running no matter how the world changes. Once, I walked 30 kilometers in one day. Despite the sunburn, I loved the spiritual fulfillment more. If you haven’t experienced it, you have no voice. Maybe I’m like Chen Kun—a pessimistic optimist. I live actively in this world, but I also see through its illusions. Neither joyful because of things, nor sorrowful because of myself.</p><p>My pulse has dropped to just over 50 beats per minute. Seems like I’m built for jogging. After all, it’s about interest. As long as my freedom isn’t restricted, anything is acceptable.</p><p>I hope next year I’ll join a marathon, with people cheering me on. That would be so happy.</p><blockquote><p>“I’m not a person, but a pure machine. So I don’t need to feel anything, just keep running forward.”</p></blockquote><p>What’s most similar is that we both love to run non-stop. Not the type who walks when tired or stops to enjoy the scenery. Maybe people have different views, but I think the true king is the one who can keep running without stopping.</p><p>When reaching the finish line, I’d feel so cool, a rush of pride, like winning the lottery or getting incredibly lucky. It’s a principle—and also my pride.</p><p>Oh, right—just like Brother Shang waiting at the finish line, and I’d smile proudly.</p>]]></content>
-      
-      
+      <tags>
+        <tag>XSS</tag>
+        <tag>Web Security</tag>
+        <tag>Frontend Security</tag>
+        <tag>JavaScript</tag>
+        <tag>Browser Security</tag>
+        <tag>Cybersecurity</tag>
+        <tag>Web Development</tag>
+        <tag>Secure Coding</tag>
+        <tag>Content Security Policy</tag>
+        <tag>HttpOnly</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Installing Puppeteer on Baota Panel</title>
+    <url>/ening/2025/09/02/%E5%AE%9D%E5%A1%94%E5%AE%89%E8%A3%85puppeteer/</url>
+    <content><![CDATA[Installing Puppeteer on Baota (CentOS 8)When using CentOS 8, yum may fail because CentOS 8 is no longer officially maintained.To fix this, you need to switch the YUM mirror source, clear the cache, and rebuild it.
+1. Replace the YUM repository sourcewget -O /etc/yum.repos.d/CentOS-Base.repo https://mirrors.aliyun.com/repo/Centos-8.repo
+
+2. Clean YUM cachesudo yum clean all
+
+3. Rebuild YUM cachesudo yum makecache
+
+
+⚠️ Note:CentOS 8 has reached End of Life (EOL) and is no longer maintained.You must rely on third-party mirror sources to continue using yum.
+
+Puppeteer Dependency Download ErrorWhen installing Puppeteer, you may encounter errors while downloading Chromium dependencies.
+You can refer to this article for details:https://www.cnblogs.com/ilizhu/p/14504049.html
+Puppeteer Sandbox ErrorOn some servers (such as Baota or other managed VPS environments), Puppeteer may fail to launch Chromium due to sandbox restrictions.
+Solution: Disable sandbox when launching Puppeteer// Add launch arguments to disable sandboxconst browser = await puppeteer.launch(&#123;  args: [&#x27;--no-sandbox&#x27;, &#x27;--disable-setuid-sandbox&#x27;]&#125;);
+
+]]></content>
       <categories>
-          
-          <category> Reading </category>
-          
+        <category>Frontend</category>
       </categories>
-      
-      
-        <tags>
-            
-            <tag> Reading </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>Reflections on *Skin*</title>
-      <link href="/2025/06/26/%E7%9A%AE%E5%9B%8A%E6%84%9F%E6%82%9F/"/>
-      <url>/2025/06/26/%E7%9A%AE%E5%9B%8A%E6%84%9F%E6%82%9F/</url>
-      
-        <content type="html"><![CDATA[<h2 id="Aunt-Tai"><a href="#Aunt-Tai" class="headerlink" title="Aunt Tai"></a>Aunt Tai</h2><p>Aunt Tai is strong-willed and resilient. Her optimistic attitude is something worth learning from. The greatest thing my father ever did was marrying my mother—a truly great woman. A real woman should face everything with positivity and build the future she desires with her own hands.</p><p>Although she resorted to stealing, it was driven by hardship—survival and family. Setting aside pride to do things against her will is, in a way, a form of strength. It’s not about crying and making a scene, but staying proactive in adversity.</p><p>Thinking about it, the author’s achievements are inseparable from his great mother.</p><p>Ah, that lovely mother! To preserve her husband’s dignity and happiness, she insisted on completing the house. Isn’t that a form of strength too? To follow her heart courageously is truly admirable.</p><p>In fact, the person who understands my father the most is my mother. She knows his pride. Isn’t this what love is? You don’t need to say it—I understand. I understand you, and you understand me, and that’s why we’ve been together for so long.</p><h2 id="Zhang-Meili"><a href="#Zhang-Meili" class="headerlink" title="Zhang Meili"></a>Zhang Meili</h2><p>Get up from where you fell. Zhang Meili seems like someone who pursued true love and worked hard for what she desired. Though she was eventually forced to liberate herself sexually, I still respect her for everything she once did.</p><p>Public opinion is powerful, but Zhang Meili’s inner strength is even more powerful.</p>]]></content>
-      
-      
+  </entry>
+  <entry>
+    <title>Reflections on *What I Talk About When I Talk About Running*</title>
+    <url>/ening/2025/06/26/%E5%BD%93%E6%88%91%E8%B0%88%E8%B7%91%E6%AD%A5%E6%97%B6/</url>
+    <content><![CDATA[What I Talk About When I Talk About RunningIt was through this book that I realized there could be another version of myself out there, doing something I love. Before reading this book, I had never read anything by Murakami. I knew he was popular and had many famous books, but I hadn’t really paid attention. But when it comes to running, I felt there could be a connection.
+If I keep running, will I eventually reach the moon? Running isn’t about living longer, but about making life feel easier and lighter within the time we have.
+I was surprised by Murakami’s imagination while running—so free and boundless. I really enjoy that. I’ve imagined many things too, like suddenly recalling a lyric while running—something like “speeding up to chase happiness,” blabla… Long-distance running requires endurance, but also imagination. Of course, the premise is loving to run. If someone doesn’t like running, no matter how much you say, it won’t matter. But if someone does love it, they’ll even want to meet another version of themselves during a break in the rain. Humans are inherently lonely, but the spirit can resonate with others.
+I plan to keep running no matter how the world changes. Once, I walked 30 kilometers in one day. Despite the sunburn, I loved the spiritual fulfillment more. If you haven’t experienced it, you have no voice. Maybe I’m like Chen Kun—a pessimistic optimist. I live actively in this world, but I also see through its illusions. Neither joyful because of things, nor sorrowful because of myself.
+My pulse has dropped to just over 50 beats per minute. Seems like I’m built for jogging. After all, it’s about interest. As long as my freedom isn’t restricted, anything is acceptable.
+I hope next year I’ll join a marathon, with people cheering me on. That would be so happy.
+
+“I’m not a person, but a pure machine. So I don’t need to feel anything, just keep running forward.”
+
+What’s most similar is that we both love to run non-stop. Not the type who walks when tired or stops to enjoy the scenery. Maybe people have different views, but I think the true king is the one who can keep running without stopping.
+When reaching the finish line, I’d feel so cool, a rush of pride, like winning the lottery or getting incredibly lucky. It’s a principle—and also my pride.
+Oh, right—just like Brother Shang waiting at the finish line, and I’d smile proudly.
+]]></content>
       <categories>
-          
-          <category> Reading </category>
-          
+        <category>Reading</category>
       </categories>
-      
-      
-        <tags>
-            
-            <tag> Reading </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>One Day You&#39;ll Understand - Reading Notes by Mr. Zhuomo</title>
-      <link href="/2025/05/21/%E3%80%8A%E7%BB%88%E6%9C%89%E4%B8%80%E5%A4%A9%E4%BD%A0%E4%BC%9A%E6%87%82%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%20-%20%E7%90%A2%E7%A3%A8%E5%85%88%E7%94%9F/"/>
-      <url>/2025/05/21/%E3%80%8A%E7%BB%88%E6%9C%89%E4%B8%80%E5%A4%A9%E4%BD%A0%E4%BC%9A%E6%87%82%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%20-%20%E7%90%A2%E7%A3%A8%E5%85%88%E7%94%9F/</url>
-      
-        <content type="html"><![CDATA[<p>The book does contain a lot of his own “biases,” but I find him authentic and humorous. His language is simple and understandable, and each subtitle essentially tells us what we should do.</p><h2 id="Understanding-Life"><a href="#Understanding-Life" class="headerlink" title="Understanding Life"></a>Understanding Life</h2><p>Life is never about what you want it to be. It’s good to discover beauty and to view things from others’ perspectives. At the same time, one should have self-awareness.</p><h2 id="Understanding-Love"><a href="#Understanding-Love" class="headerlink" title="Understanding Love"></a>Understanding Love</h2><p>Sheldon once said: “The pursuit of another human to spend life with is something I’ve never understood. Maybe I’m too interesting to need company. So I wish you the same joy with each other as I have with myself.”<br>One can never escape loneliness through another person; only through passion for life. Managing a relationship requires rationality. Freedom is inalienable. I once checked my ex’s phone—I realized it was wrong and won’t do it again.</p><h2 id="Understanding-Strategy"><a href="#Understanding-Strategy" class="headerlink" title="Understanding Strategy"></a>Understanding Strategy</h2><p>This section mainly introduces the strategies of courting and how to maintain a good relationship—true wisdom. Never sacrifice your career for family. Don’t live with in-laws (though I think it depends). Have your own hobbies.</p><h2 id="Understanding-Marriage"><a href="#Understanding-Marriage" class="headerlink" title="Understanding Marriage"></a>Understanding Marriage</h2><p>Endure and stay loyal. As for non-marriage beliefs, there’s nothing more to say.</p><h2 id="Understanding-Setbacks"><a href="#Understanding-Setbacks" class="headerlink" title="Understanding Setbacks"></a>Understanding Setbacks</h2><p>Every breakup is just making way for true love. Don’t force it. I love you, so I wish you well, even if I’m not the one by your side.<br>Do what you want regardless of others’ opinions. Only care about those who matter to you.</p><h2 id="Understanding-Reading"><a href="#Understanding-Reading" class="headerlink" title="Understanding Reading"></a>Understanding Reading</h2><p>What, Why, How. Keep reading. Don’t chase speed, but depth.</p><h2 id="Understanding-Romance"><a href="#Understanding-Romance" class="headerlink" title="Understanding Romance"></a>Understanding Romance</h2><p>He shares sweet daily stories with his wife. If you don’t break up, you won’t discover how many better people there are out there. If you find one—lucky. If not—you can still live happily on your own.<br>Live with emotional intelligence and the world becomes beautiful.</p><h2 id="Understanding-Socializing"><a href="#Understanding-Socializing" class="headerlink" title="Understanding Socializing"></a>Understanding Socializing</h2><p>Associate with decent people. Different people require different approaches. Rejecting others is an art. If you don’t have the guts to ask for your money back, don’t lend it.</p><h2 id="Understanding-Human-Nature"><a href="#Understanding-Human-Nature" class="headerlink" title="Understanding Human Nature"></a>Understanding Human Nature</h2><p>I tend to be skeptical about human nature. You can’t control others, so just manage yourself. Don’t be vulgar.</p><h2 id="Understanding-Good-and-Evil"><a href="#Understanding-Good-and-Evil" class="headerlink" title="Understanding Good and Evil"></a>Understanding Good and Evil</h2><p>Some people enter your life just to teach you a lesson. Good or evil—I prefer believing in others, as trust is given before it’s earned.<br>Even if deceived, it’s a lesson learned—don’t fall into the same trap again. But don’t stop trusting altogether; kind people still exist.<br>God made the right hand a right hand as a reward; same for kind people—kindness is its own reward.<br>I recall being in a restroom without tissue once. I was going to ask a friend, but a stranger overheard and handed me tissues. Such kindness moved me deeply.<br>Kindness must come with principles—otherwise it may hurt others or yourself.</p><h2 id="Understanding-Wealth"><a href="#Understanding-Wealth" class="headerlink" title="Understanding Wealth"></a>Understanding Wealth</h2><p>The poor stay poor because of narrow thinking. To get rich, don’t just invest in your body—think bigger. See the essence of problems.<br>Time is limited—how to get rich fast? Find a subject you love, apply it, think broadly, and work in fields closely tied to society.</p><h2 id="Understanding-Society"><a href="#Understanding-Society" class="headerlink" title="Understanding Society"></a>Understanding Society</h2><p>Have ambition. Take one step at a time. Build an independent personality. Be accountable for your actions. Learn to transform your ability to feel happiness—then change yourself.</p><h2 id="Understanding-Life-and-Death"><a href="#Understanding-Life-and-Death" class="headerlink" title="Understanding Life and Death"></a>Understanding Life and Death</h2><p>Death studies include concepts like: No death, no life; face death to live; understand death to be reborn. Interesting and thought-provoking.<br>Knowing that we will die is what pushes us to live fully. When the time comes, I think I’ll embrace death.</p><blockquote><p>What the world lacks isn’t perfect people, but justice, sincerity, courage, and compassion from the heart. — My biggest takeaway after watching <em>Forever Young</em> today.<br>We all know cause and effect—but causes and effects come from relationships. Someday, I’ll read Schopenhauer and Nietzsche properly.</p></blockquote><h2 id="Understanding-Travel"><a href="#Understanding-Travel" class="headerlink" title="Understanding Travel"></a>Understanding Travel</h2><p>This part recounts Mr. Zhuomo’s experiences in Tibet. Many dream of going there—maybe because it helps people truly understand life’s struggles.<br>The US is less disciplined than the UK. Japan has great food culture and says “sorry” a lot—avoiding bothering others.</p><h2 id="Understanding-Career"><a href="#Understanding-Career" class="headerlink" title="Understanding Career"></a>Understanding Career</h2><p>First learn to endure hardship. Then understand yourself and your talents. Begin with the end in mind and stay focused.</p><h2 id="Understanding-Education"><a href="#Understanding-Education" class="headerlink" title="Understanding Education"></a>Understanding Education</h2><p>Every child is born pure. Without proper education, they won’t become pillars of the nation.</p><h2 id="Understanding-Entertainment-Freedom"><a href="#Understanding-Entertainment-Freedom" class="headerlink" title="Understanding Entertainment &amp; Freedom"></a>Understanding Entertainment &amp; Freedom</h2><p>Life has two paths: one for career ambition—keep passion; the other for living warmly—keep humanity.<br>Open your eyes each day and tell yourself: Oh yeah!</p>]]></content>
-      
-      
+      <tags>
+        <tag>Reading</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Fully Understanding How the JavaScript `new` Operator Works</title>
+    <url>/ening/2025/12/17/%E6%89%8B%E5%86%99New/</url>
+    <content><![CDATA[In JavaScript, the new operator is a core concept that frequently appears in both interviews and everyday development.Many developers use new regularly, but few truly understand what actually happens behind the scenes.
+In this article, we’ll implement new by hand, breaking down its internal mechanics step by step to help you fully understand how JavaScript objects are created.
+1. What Does the new Operator Actually Do?When we execute the following line of code:
+const person = new Person(&#x27;Alice&#x27;, 25);
+
+JavaScript actually performs four steps internally:
+
+Create a new empty object
+Set the object’s prototype to the constructor’s prototype
+Execute the constructor and bind this to the new object
+If the constructor returns an object, return it; otherwise return the new object
+
+Understanding these four steps is the key to understanding how new works.
+2. Why Implement new Manually?There are three main benefits to handwriting new:
+
+Deepens your understanding of the prototype chain and this binding
+It is a high-frequency frontend interview question
+Helps you understand how frameworks create objects internally
+
+Let’s jump straight into the code.
+3. Handwriting the new Operatorfunction myNew(constructor, ...args) &#123;  // 1. Create a new object and link its prototype  const obj = Object.create(constructor.prototype);  // 2. Execute the constructor with `this` bound to the new object  const result = constructor.apply(obj, args);  // 3. If the constructor returns an object, return it  //    Otherwise, return the newly created object  return result instanceof Object ? result : obj;&#125;
+
+This implementation fully reproduces the core behavior of the new operator.
+4. Line-by-Line Breakdown1. The Role of Object.createconst obj = Object.create(constructor.prototype);
+
+This is equivalent to:
+obj.__proto__ === constructor.prototype
+
+Which means:
+
+The new object can access methods on the constructor’s prototype
+The prototype chain is properly established
+
+2. constructor.apply(obj, args)const result = constructor.apply(obj, args);
+
+This step does two things:
+
+Executes the constructor function
+Binds this inside the constructor to the new object
+
+So code like this:
+this.name = name;this.age = age;
+
+Actually assigns properties directly to obj.
+3. Why Do We Check the Return Value?return result instanceof Object ? result : obj;
+
+This is a detail many developers overlook.
+Consider this example:
+function Test() &#123;  this.a = 1;  return &#123; b: 2 &#125;;&#125;const t = new Test();console.log(t); // &#123; b: 2 &#125;
+
+If a constructor explicitly returns an object, the new operator returns that object instead of this.
+That’s why we must handle this case in our myNew implementation.
+5. Testing Our myNew Functionfunction Person(name, age) &#123;  this.name = name;  this.age = age;&#125;const p1 = myNew(Person, &#x27;Alice&#x27;, 25);console.log(p1.name); // Aliceconsole.log(p1.age);  // 25console.log(p1 instanceof Person); // true
+
+The behavior matches native new perfectly.
+6. Comparing myNew and Native new
+
+
+Behavior
+new
+myNew
+
+
+
+Create new object
+✅
+✅
+
+
+Bind prototype
+✅
+✅
+
+
+Bind this
+✅
+✅
+
+
+Handle returned object
+✅
+✅
+
+
+In practice, myNew reproduces about 90% of the real new operator’s behavior, which is more than sufficient for interviews and deep understanding.
+7. Common Interview Follow-Up QuestionsQ1: Why not simply use const obj = &#123;&#125;?Because objects created with &#123;&#125; have their prototype set to Object.prototype.Objects created with new must have their prototype set to the constructor’s prototype.
+Q2: Can constructor.apply be replaced with call?Yes. The only difference is how arguments are passed:
+constructor.call(obj, ...args);
+
+
+
+Q3: How does instanceof work?p1 instanceof Person
+
+Internally, JavaScript checks whether:
+Person.prototype exists in p1’s prototype chain
+
+
+
+8. Summary
+The new operator is not magic—it follows a well-defined execution process
+Handwriting new is one of the best ways to understand prototype chains, this, and constructors
+Mastering this concept helps when learning Vue, React, and Node.js internals
+
+If you can both write and explain this implementation,90% of interviewers will consider your JavaScript fundamentals solid.
+]]></content>
       <categories>
-          
-          <category> Reading </category>
-          
+        <category>Frontend</category>
       </categories>
-      
-      
-        <tags>
-            
-            <tag> Reading </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>Frontend Interview Questions</title>
-      <link href="/2025/04/18/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98/"/>
-      <url>/2025/04/18/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98/</url>
-      
-        <content type="html"><![CDATA[<h1 id=""><a href="#" class="headerlink" title=""></a></h1><details>  <summary><strong>Differences between var, let, and const?</strong></summary><h4 id="✅-Scope"><a href="#✅-Scope" class="headerlink" title="✅ Scope"></a>✅ Scope</h4><ol><li>Variables declared with <code>var</code> do not have block scope. <strong>They can be accessed outside blocks but not outside functions</strong>.</li><li>Variables declared with <code>let</code> have block scope, <strong>accessible only within the declared block</strong>.</li><li><code>const</code> defines constants, <strong>must be initialized, accessible only in the declared block, and cannot be reassigned</strong>.</li></ol><h4 id="✅-Declaration-Rules"><a href="#✅-Declaration-Rules" class="headerlink" title="✅ Declaration Rules"></a>✅ Declaration Rules</h4><ul><li>A variable name can only be declared once using one of these methods; otherwise, it throws an error.</li></ul><h4 id="✅-Difference-when-using-with-this"><a href="#✅-Difference-when-using-with-this" class="headerlink" title="✅ Difference when using with this"></a>✅ Difference when using with <code>this</code></h4><table><thead><tr><th>Feature</th><th>var &#x2F; let &#x2F; const</th></tr></thead><tbody><tr><td>Can change <code>this</code> context</td><td>✅ Yes</td></tr><tr><td>First parameter is the object <code>this</code> refers to</td><td>✅ Yes</td></tr><tr><td>No object or <code>undefined/null</code></td><td>Defaults to global <code>window</code></td></tr><tr><td>Parameter passing</td><td><code>apply</code> uses array, <code>call</code> uses parameter list, <code>bind</code> supports multiple arguments</td></tr><tr><td>Execution method</td><td><code>apply/call</code> execute immediately, <code>bind</code> returns a new function</td></tr></tbody></table></details><details>  <summary><strong>What is event delegation?</strong></summary><ul><li>Event delegation attaches events to a parent or ancestor element instead of individual child elements.<br/></li><li>When the event reaches the target element, it bubbles up and triggers the handler on the outer element.</li></ul></details><details>  <summary><strong>Difference between debounce and throttle?</strong></summary><ul><li><strong>Debounce</strong>: Executes only the last trigger. Even if the event keeps firing, it waits until <code>n</code> seconds after the last event to execute.</li><li><strong>Throttle</strong>: Controls the execution frequency. Fires every <code>n</code> seconds during continuous event triggers.</li></ul></details><details>  <summary><strong>How does frontend prevent SQL injection?</strong></summary><ol><li><strong>Parameterized Queries</strong>: Use prepared statements or parameterized queries.</li><li><strong>Input Validation</strong>: Ensure user input follows expected format.</li><li><strong>Escape Special Characters</strong>: Escape characters when constructing SQL queries.</li><li><strong>Limit Permissions</strong>: Restrict user privileges to prevent unsafe operations.</li><li><strong>Whitelist Validation</strong>: Only allow expected values in input.</li><li><strong>Code Review</strong>: Regularly review code, especially DB-related parts.</li></ol></details><details>  <summary><strong>Difference between HTTP and HTTPS</strong></summary><ol><li>HTTPS requires a certificate from a CA, which may cost money.</li><li>HTTP transmits data in plaintext, while HTTPS uses SSL encryption.</li><li>They use different connection methods and ports: HTTP uses 80, HTTPS uses 443.</li><li>HTTP is stateless; HTTPS combines SSL + HTTP for encrypted, authenticated, secure communication.</li></ol></details><details>  <summary><strong>Difference between created and mounted?</strong></summary><ul><li><code>created</code> runs before <code>mounted</code>. DOM is not fully rendered, but API requests can be made early here.</li><li><code>mounted</code> is triggered when the DOM has been rendered, so it’s suitable for manipulating DOM elements.</li></ul></details><details>  <summary><strong>Explain the event loop mechanism</strong></summary><h3 id="🔁-What-is-the-Event-Loop"><a href="#🔁-What-is-the-Event-Loop" class="headerlink" title="🔁 What is the Event Loop?"></a>🔁 What is the Event Loop?</h3><p>JavaScript is single-threaded. In addition to the <strong>call stack</strong>, it relies on <strong>task queues</strong> to control asynchronous code execution order.</p><p>This whole process is called the <strong>Event Loop</strong>.</p><h3 id="🧠-Core-Concepts"><a href="#🧠-Core-Concepts" class="headerlink" title="🧠 Core Concepts"></a>🧠 Core Concepts</h3><ul><li>Only one event loop in a single thread.</li><li>Multiple task queues:<ul><li><strong>Macro Tasks</strong></li><li><strong>Micro Tasks</strong></li></ul></li></ul><hr><h3 id="⏱-Execution-Order"><a href="#⏱-Execution-Order" class="headerlink" title="⏱ Execution Order"></a>⏱ Execution Order</h3><blockquote><p><strong>Macro Task ➝ Clear all Micro Tasks ➝ Next Macro Task ➝ Clear all Micro Tasks…</strong></p></blockquote><ol><li>Execute a macro task (like the whole script)</li><li>Execute all micro tasks created during this macro task</li><li>If micro tasks generate more micro tasks, execute them too</li><li>Begin the next macro task loop</li></ol><hr><h3 id="🧩-Examples-of-Macro-Tasks"><a href="#🧩-Examples-of-Macro-Tasks" class="headerlink" title="🧩 Examples of Macro Tasks"></a>🧩 Examples of Macro Tasks</h3><ul><li><code>script</code></li><li><code>setTimeout</code></li><li><code>setInterval</code></li><li><code>setImmediate</code> (Node.js)</li><li><code>I/O operations</code></li><li><code>UI rendering</code></li></ul><h3 id="🧬-Examples-of-Micro-Tasks"><a href="#🧬-Examples-of-Micro-Tasks" class="headerlink" title="🧬 Examples of Micro Tasks"></a>🧬 Examples of Micro Tasks</h3><ul><li><code>process.nextTick</code> (Node.js, higher priority)</li><li><code>Promise.then / catch / finally</code></li><li><code>async / await</code></li><li><code>MutationObserver</code></li></ul></details><details>  <summary><strong>Explain the CSS box model</strong></summary><p>The CSS box model includes IE and standard W3C models.</p><ul><li>In <strong>standard W3C box model</strong>, <code>width</code> only includes content. <code>box-sizing: content-box</code> (default).</li><li>In <strong>IE box model</strong>, <code>width</code> includes content + padding + border. <code>box-sizing: border-box</code>.</li><li><code>box-sizing: padding-box</code> includes left&#x2F;right padding + width.</li></ul></details><details>  <summary><strong>Differences between Vue 2 and Vue 3</strong></summary><ol><li>Two-way binding:<ul><li>Vue 2: uses <code>Object.defineProperty()</code> (ES5), which only watches individual properties.</li><li>Vue 3: uses <code>Proxy</code> (ES6), which can observe entire objects and arrays.</li></ul></li><li>Lifecycle hooks:<ul><li>Vue 2: <code>beforeCreate</code>, <code>created</code>, <code>beforeMount</code>, <code>mounted</code>, etc.</li><li>Vue 3: <code>setup</code>, <code>onBeforeMount</code>, <code>onMounted</code>, etc.</li></ul></li><li>Vue 2 requires a root tag; Vue 3 allows multiple root tags via Fragment.</li><li>API:<ul><li>Vue 2: Options API (functions and data handled separately).</li><li>Vue 3: Composition API (related code grouped together).</li></ul></li><li>Slots:<ul><li>Named slot: Vue 2 uses <code>slot=&quot;&quot;</code>, Vue 3 uses <code>v-slot=&quot;&quot;</code>.</li><li>Scoped slot: Vue 2 uses <code>slot-scope=&quot;data&quot;</code>, Vue 3 uses <code>#data</code> or <code>#default=&quot;&#123;data&#125;&quot;</code>.</li></ul></li></ol></details><!-- ## Recommendation --><!-- - [Just for Fun](https://edunextgen1.com) -->]]></content>
-      
-      
+  </entry>
+  <entry>
+    <title>Handwriting Promise.race (From Theory to Practice)</title>
+    <url>/ening/2025/12/18/%E6%89%8B%E5%86%99Promise/</url>
+    <content><![CDATA[In frontend interviews and daily development, Promise.race is a very common yet often overlooked API. Its rule is simple:
+
+Multiple Promises “race” against each other—whichever settles first (fulfilled or rejected) determines the final result.
+
+In this article, we will:
+
+Clearly explain how Promise.race behaves and when to use it
+Implement a custom myPromiseRace from scratch
+Cover edge cases, optimizations, and common interview questions
+
+1. What Is Promise.race?Promise.race(iterable) accepts an iterable (usually an array) and returns a new Promise:
+
+If any Promise fulfills first, the returned Promise fulfills
+If any Promise rejects first, the returned Promise rejects
+It does not wait for all Promises to finish
+It does not cancel the remaining Promises—they continue running
+
+2. Common Use Cases2.1 Timeout Control (Most Common)For example, treat a request as failed if it takes longer than 3 seconds:
+
+fetch(url) vs timeoutPromise(3000)
+Whichever finishes first determines the result
+
+2.2 Multiple Data Sources (Fallback Strategy)Fetch the same resource from multiple CDNs (CDN1&#x2F;CDN2).Use whichever responds first.
+2.3 First-Render RacingLoad primary data, fallback data, and cached data simultaneously.Render the page as soon as the fastest result arrives.
+3. Implementing myPromiseRaceThis implementation closely matches native behavior:
+
+Validates that the input is iterable
+Iterates over all inputs
+Uses Promise.resolve to normalize non-Promise values
+Resolves or rejects as soon as one Promise settles
+
+function myPromiseRace(promises) &#123;  return new Promise((resolve, reject) =&gt; &#123;    // Validate iterable input    if (!promises || typeof promises[Symbol.iterator] !== &#x27;function&#x27;) &#123;      return reject(new TypeError(&#x27;Argument is not iterable&#x27;));    &#125;    // Iterate over each Promise or value    for (const promise of promises) &#123;      // Wrap with Promise.resolve to handle thenables and values      Promise.resolve(promise)        .then(resolve)   // First fulfilled wins        .catch(reject);  // First rejected wins    &#125;  &#125;);&#125;
+
+
+
+4. Key Insight: Why Use Promise.resolve?The input to Promise.race does not have to be Promises. It may include:
+
+Plain values: Promise.race([1, 2, 3])
+Thenables: &#123; then(resolve) &#123; resolve(123) &#125; &#125;
+
+Using Promise.resolve(x) ensures:
+
+Plain values become immediately fulfilled Promises
+Thenables are properly assimilated into the Promise chain
+
+This behavior is consistent with the native Promise.race.
+5. Handling Empty Iterables
+Native Promise.race([]) returns a Promise that remains pending forever.
+
+Your current implementation behaves the same way, since the loop never executes.This matches the ECMAScript specification.
+You could add explicit handling, but it’s not required.
+6. Additional Test Cases6.1 Rejection Wins Firstconst p1 = new Promise(res =&gt; setTimeout(() =&gt; res(&#x27;p1&#x27;), 1000));const p2 = new Promise(res =&gt; setTimeout(() =&gt; res(&#x27;p2&#x27;), 500));const p3 = new Promise((res, rej) =&gt; setTimeout(() =&gt; rej(&#x27;p3 error&#x27;), 300));myPromiseRace([p1, p2, p3])  .then(console.log)  .catch(console.error); // Output: p3 error
+
+
+
+6.2 Plain Values Participate in the RacemyPromiseRace([  Promise.resolve(&#x27;A&#x27;),  123,  new Promise(res =&gt; setTimeout(() =&gt; res(&#x27;B&#x27;), 10))])  .then(console.log)  .catch(console.error);// Output: 123 (plain value wins immediately)
+
+
+
+6.3 Empty Array Remains Pendingconst p = myPromiseRace([]);setTimeout(() =&gt; console.log(&#x27;still pending...&#x27;), 1000);// After 1 second: &quot;still pending...&quot;
+
+
+
+7. Practical Example: Request Timeout with racefunction timeout(ms) &#123;  return new Promise((_, reject) =&gt; &#123;    setTimeout(() =&gt; reject(new Error(`Timeout after $&#123;ms&#125;ms`)), ms);  &#125;);&#125;async function fetchWithTimeout(url, ms = 3000) &#123;  return myPromiseRace([fetch(url), timeout(ms)]);&#125;// UsagefetchWithTimeout(&#x27;https://example.com/api&#x27;, 2000)  .then(res =&gt; res.json())  .then(data =&gt; console.log(&#x27;data:&#x27;, data))  .catch(err =&gt; console.error(&#x27;error:&#x27;, err.message));
+
+
+
+8. Common Interview Questions (Bonus Points)
+Q: Can Promise.race cancel the other Promises?No. Promises are not cancellable by default. Cancellation requires tools like AbortController or custom logic.
+
+Q: What happens if you pass a plain value into race?It is wrapped by Promise.resolve and usually wins immediately.
+
+Q: What’s the difference between race, any, and allSettled?
+
+race: settles as soon as the first Promise settles
+any: fulfills as soon as the first Promise fulfills (rejects only if all reject)
+allSettled: waits for all Promises and returns their final states
+
+
+
+9. SummaryThe core idea behind implementing Promise.race can be summarized in one sentence:
+
+Iterate over the iterable, wrap each item with Promise.resolve, attach the same resolve and reject, and let the first settled Promise decide the outcome.
+
+]]></content>
       <categories>
-          
-          <category> Frontend </category>
-          
+        <category>Frontend</category>
       </categories>
-      
-      
-        <tags>
-            
-            <tag> Frontend </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>ELK Installation Guide</title>
-      <link href="/2025/04/11/ELK%E5%AE%89%E8%A3%85%E6%B5%81%E7%A8%8B/"/>
-      <url>/2025/04/11/ELK%E5%AE%89%E8%A3%85%E6%B5%81%E7%A8%8B/</url>
-      
-        <content type="html"><![CDATA[<h1 id="Installing-ELK-Stack-ElasticSearch-Logstash-Kibana-with-Docker"><a href="#Installing-ELK-Stack-ElasticSearch-Logstash-Kibana-with-Docker" class="headerlink" title="Installing ELK Stack (ElasticSearch, Logstash, Kibana) with Docker"></a>Installing ELK Stack (ElasticSearch, Logstash, Kibana) with Docker</h1><blockquote><p>It is recommended to install on Docker due to lower resource consumption. The installation version used below is <strong>8.12.2</strong>. Please use the same version to avoid conflicts.</p></blockquote><h2 id="Table-of-Contents"><a href="#Table-of-Contents" class="headerlink" title="Table of Contents"></a>Table of Contents</h2><p><a href="#1-install-elasticsearch">1. Install ElasticSearch</a><br><a href="#2-install-logstash">2. Install Logstash</a><br><a href="#3-install-kibana">3. Install Kibana</a><br><a href="#recommendations">Recommendations</a></p><hr><h2 id="1-Install-ElasticSearch"><a href="#1-Install-ElasticSearch" class="headerlink" title="1. Install ElasticSearch"></a>1. Install ElasticSearch</h2><ul><li>Pull the image:</li></ul><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">docker pull elasticsearch:8.12.2</span><br><span class="line">````</span><br><span class="line"></span><br><span class="line">* Start the container:</span><br><span class="line"></span><br><span class="line">```bash</span><br><span class="line">docker run --name some-elasticsearch -p 9200:9200 -p 9300:9300 -e <span class="string">&quot;discovery.type=single-node&quot;</span> -d elasticsearch:8.12.2</span><br></pre></td></tr></table></figure><ul><li>Enter the container:</li></ul><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> docker <span class="built_in">exec</span> -u 0 -it some-elasticsearch bash</span><br></pre></td></tr></table></figure><ul><li>Restart the container:</li></ul><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker restart some-elasticsearch</span><br></pre></td></tr></table></figure><hr><h2 id="2-Install-Logstash"><a href="#2-Install-Logstash" class="headerlink" title="2. Install Logstash"></a>2. Install Logstash</h2><ul><li>Pull the image:</li></ul><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull docker.elastic.co/logstash/logstash:8.12.2</span><br></pre></td></tr></table></figure><ul><li>Start the container:</li></ul><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> docker run -it -p 5044:5044 -p 9600:9600 --name logstash -v /usr/share/logstash/piplines:/usr/share/logstash/config --privileged=<span class="literal">true</span> docker.elastic.co/logstash/logstash:8.12.2 /bin/bash</span><br></pre></td></tr></table></figure><ul><li>Use <code>scp</code> to upload the MySQL Connector JAR file to the virtual machine:</li></ul><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scp <span class="string">&quot;/Users/Downloads/logstash-8.12.2/mysql-connector-j-8.4.0.jar&quot;</span> username@VM-IP:/home</span><br></pre></td></tr></table></figure><ul><li>Move the JAR file from the VM to the Logstash container:</li></ul><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="built_in">cp</span> ./mysql-connector-j-8.4.0.jar logstash:/usr/share/logstash</span><br></pre></td></tr></table></figure><ul><li>Enter the container:</li></ul><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="built_in">exec</span> -u 0 -it logstash bash</span><br></pre></td></tr></table></figure><hr><h2 id="3-Install-Kibana"><a href="#3-Install-Kibana" class="headerlink" title="3. Install Kibana"></a>3. Install Kibana</h2><ul><li>Pull the image:</li></ul><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull kibana:8.12.2</span><br></pre></td></tr></table></figure><ul><li>Start the container:</li></ul><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run --name some-kibana -p 9200:9200 -p 9300:9300 -e <span class="string">&quot;discovery.type=single-node&quot;</span> -d elasticsearch:8.12.2</span><br></pre></td></tr></table></figure><ul><li>Enter the container:</li></ul><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="built_in">exec</span> -u 0 -it some-kibana bash</span><br></pre></td></tr></table></figure><hr><h2 id="Additional-Install-Docker-Portainer-and-Related-Commands"><a href="#Additional-Install-Docker-Portainer-and-Related-Commands" class="headerlink" title="Additional: Install Docker, Portainer, and Related Commands"></a>Additional: Install Docker, Portainer, and Related Commands</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt update</span><br><span class="line"><span class="built_in">sudo</span> apt install docker.io docker-compose</span><br><span class="line">docker -v</span><br><span class="line"><span class="built_in">sudo</span> systemctl start docker</span><br><span class="line"></span><br><span class="line"><span class="built_in">sudo</span> docker search portainer</span><br><span class="line">docker pull portainer/portainer</span><br><span class="line"><span class="built_in">sudo</span> docker pull portainer/portainer</span><br><span class="line"><span class="built_in">sudo</span> docker run -d --name portainerUI -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock portainer/portainer</span><br><span class="line"></span><br><span class="line"><span class="built_in">sudo</span> docker start portainerUI</span><br><span class="line"><span class="built_in">sudo</span> passwd root</span><br></pre></td></tr></table></figure><hr><!-- ## Recommendations --><!-- * [Just for Fun](https://edunextgen1.com) -->]]></content>
-      
-      
+  </entry>
+  <entry>
+    <title>Reflections on *Skin*</title>
+    <url>/ening/2025/06/26/%E7%9A%AE%E5%9B%8A%E6%84%9F%E6%82%9F/</url>
+    <content><![CDATA[Aunt TaiAunt Tai is strong-willed and resilient. Her optimistic attitude is something worth learning from. The greatest thing my father ever did was marrying my mother—a truly great woman. A real woman should face everything with positivity and build the future she desires with her own hands.
+Although she resorted to stealing, it was driven by hardship—survival and family. Setting aside pride to do things against her will is, in a way, a form of strength. It’s not about crying and making a scene, but staying proactive in adversity.
+Thinking about it, the author’s achievements are inseparable from his great mother.
+Ah, that lovely mother! To preserve her husband’s dignity and happiness, she insisted on completing the house. Isn’t that a form of strength too? To follow her heart courageously is truly admirable.
+In fact, the person who understands my father the most is my mother. She knows his pride. Isn’t this what love is? You don’t need to say it—I understand. I understand you, and you understand me, and that’s why we’ve been together for so long.
+Zhang MeiliGet up from where you fell. Zhang Meili seems like someone who pursued true love and worked hard for what she desired. Though she was eventually forced to liberate herself sexually, I still respect her for everything she once did.
+Public opinion is powerful, but Zhang Meili’s inner strength is even more powerful.
+]]></content>
       <categories>
-          
-          <category> Backend </category>
-          
+        <category>Reading</category>
       </categories>
-      
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>GitLab CI/CD</title>
-      <link href="/2025/04/10/gitlabci/"/>
-      <url>/2025/04/10/gitlabci/</url>
-      
-        <content type="html"><![CDATA[<h1 id="GitLab-CI-CD-Guide-for-Frontend-Projects-Mac-Environment"><a href="#GitLab-CI-CD-Guide-for-Frontend-Projects-Mac-Environment" class="headerlink" title="GitLab CI&#x2F;CD Guide for Frontend Projects (Mac Environment)"></a>GitLab CI&#x2F;CD Guide for Frontend Projects (Mac Environment)</h1><h2 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h2><p>In daily development, we often manually send the built <code>dist</code> package to the backend for deployment, which is inefficient and error-prone. CI (Continuous Integration) automates this process. This guide shows how to use GitLab CI to implement continuous integration and deployment.</p><hr><h2 id="1-Install-GitLab-Runner"><a href="#1-Install-GitLab-Runner" class="headerlink" title="1. Install GitLab Runner"></a>1. Install GitLab Runner</h2><p>Refer to the official documentation: <a href="https://docs.gitlab.com/runner/install/">GitLab Runner Installation Guide</a></p><hr><h2 id="2-Register-Runner-Locally"><a href="#2-Register-Runner-Locally" class="headerlink" title="2. Register Runner Locally"></a>2. Register Runner Locally</h2><ol><li>Open your GitLab project page and go to <strong>Settings → CI&#x2F;CD</strong>, expand the <strong>Runners</strong> section.</li><li>Note the displayed <strong>URL</strong> and <strong>token</strong> for registration.</li></ol><h3 id="Run-the-registration-command"><a href="#Run-the-registration-command" class="headerlink" title="Run the registration command"></a>Run the registration command</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gitlab-runner register</span><br></pre></td></tr></table></figure><p>Follow the prompts and enter the following information:</p><ul><li>GitLab CI Coordinator URL: <code>https://gitlab.com</code></li><li>GitLab CI Token: <code>xxx</code> (copy from the project)</li><li>Tags: <code>my-tag,another-tag</code> (custom tags)</li><li>Description: <code>my-runner</code> (custom description)</li><li>Executor: <code>shell</code> (recommended on Mac)</li></ul><p>After registration, return to the GitLab CI&#x2F;CD settings page. If the runner status is green, it’s running successfully. If not, start the runner manually:</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gitlab-runner run</span><br></pre></td></tr></table></figure><hr><h2 id="3-Create-and-Commit-gitlab-ci-yml"><a href="#3-Create-and-Commit-gitlab-ci-yml" class="headerlink" title="3. Create and Commit .gitlab-ci.yml"></a>3. Create and Commit <code>.gitlab-ci.yml</code></h2><p>Save the following content as <code>.gitlab-ci.yml</code> and push it to GitLab:</p><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">stages:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">deploy</span></span><br><span class="line"></span><br><span class="line"><span class="attr">deploy_to_test:</span></span><br><span class="line">  <span class="attr">stage:</span> <span class="string">deploy</span></span><br><span class="line">  <span class="attr">script:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">yarn</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">rm</span> <span class="string">-rf</span> <span class="string">dist/</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">yarn</span> <span class="string">build</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">ls</span> <span class="string">-l</span> <span class="string">-t</span> <span class="string">./dist/</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">rsync</span> <span class="string">-avz</span> <span class="string">./dist/</span> <span class="string">root@xxx.xx.xx.xxx:/dist</span></span><br></pre></td></tr></table></figure><ul><li>This CI script builds the project and uses <code>rsync</code> to deploy the <code>dist</code> folder to a remote server.</li></ul><hr><h2 id="4-CI-with-Docker-Optional"><a href="#4-CI-with-Docker-Optional" class="headerlink" title="4. CI with Docker (Optional)"></a>4. CI with Docker (Optional)</h2><p>If you want a more comprehensive CI&#x2F;CD pipeline using Docker, follow these steps:</p><h3 id="1-Install-Docker-Mac"><a href="#1-Install-Docker-Mac" class="headerlink" title="1. Install Docker (Mac)"></a>1. Install Docker (Mac)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install --cask docker</span><br></pre></td></tr></table></figure><h3 id="2-Pull-GitLab-Image"><a href="#2-Pull-GitLab-Image" class="headerlink" title="2. Pull GitLab Image"></a>2. Pull GitLab Image</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull drud/gitlab-ce:v0.29.1</span><br></pre></td></tr></table></figure><h3 id="3-Create-GitLab-Container"><a href="#3-Create-GitLab-Container" class="headerlink" title="3. Create GitLab Container"></a>3. Create GitLab Container</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d -p 8443:443 -p 8090:80 -p 8022:22 --restart always --name gitlab drud/gitlab-ce:v0.29.1</span><br></pre></td></tr></table></figure><p>Explanation:</p><ul><li><code>-p 8443:443</code>: map HTTPS port</li><li><code>-p 8090:80</code>: map HTTP port</li><li><code>-p 8022:22</code>: map SSH port</li><li><code>--restart always</code>: auto-restart on crash or reboot</li><li><code>--name gitlab</code>: container named <code>gitlab</code></li></ul><p>Visit:</p><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://localhost:8090/</span><br></pre></td></tr></table></figure><hr><h2 id="5-gitlab-ci-yml-Example-for-Docker-Mode"><a href="#5-gitlab-ci-yml-Example-for-Docker-Mode" class="headerlink" title="5. .gitlab-ci.yml Example for Docker Mode"></a>5. <code>.gitlab-ci.yml</code> Example for Docker Mode</h2><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">variables:</span></span><br><span class="line">  <span class="attr">TEST_NAME:</span> <span class="string">&quot;tips&quot;</span></span><br><span class="line">  <span class="attr">OUT_PORT:</span> <span class="string">&quot;8081&quot;</span></span><br><span class="line">  <span class="attr">IN_PORT:</span> <span class="string">&quot;8081&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">stages:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">deploy</span></span><br><span class="line"></span><br><span class="line"><span class="attr">deploy_to_test:</span></span><br><span class="line">  <span class="attr">stage:</span> <span class="string">deploy</span></span><br><span class="line">  <span class="attr">before_script:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">if</span> [ <span class="string">$(docker</span> <span class="string">ps</span> <span class="string">-aq</span> <span class="string">--filter</span> <span class="string">name=$CI_PROJECT_NAME)</span> ]<span class="string">;</span> <span class="string">then</span> <span class="string">docker</span> <span class="string">rm</span> <span class="string">-f</span> <span class="string">$CI_PROJECT_NAME;</span> <span class="string">fi</span></span><br><span class="line">  <span class="attr">script:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">docker</span> <span class="string">build</span> <span class="string">-f</span> <span class="string">Dockerfile</span> <span class="string">-t</span> <span class="string">$TEST_NAME:latest</span> <span class="string">.</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">docker</span> <span class="string">run</span> <span class="string">-d</span> <span class="string">-p</span> <span class="string">$OUT_PORT:$IN_PORT</span> <span class="string">--name</span> <span class="string">$TEST_NAME</span> <span class="string">$TEST_NAME:latest</span></span><br></pre></td></tr></table></figure><p>After successful deployment, you can view the build process on the GitLab CI&#x2F;CD Pipelines page. A new container will be generated under the <strong>Containers</strong> section. Click the corresponding port to access the deployed page.</p><hr><!-- ## Recommendations --><!-- - [Just for Fun](https://edunextgen1.com) -->]]></content>
-      
-      
+      <tags>
+        <tag>Reading</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Encountering the Unknown Self</title>
+    <url>/ening/2025/06/30/%E9%81%87%E8%A7%81%E6%9C%AA%E7%9F%A5%E7%9A%84%E8%87%AA%E5%B7%B1/</url>
+    <content><![CDATA[Notes on Encountering the Unknown SelfWhat is the “Unknown”?The “self” refers to the “true self.” From the question “Who am I?” to the concept of “from existence to non-existence,” the entire book is structured around dialogues between Ruoling and a wise elder, revealing many profound life concepts.
+
+Core Concepts
+There is no one outside—only yourself.All external situations are actually projections of your inner world.
+
+Golden Moments to Talk with the SubconsciousThe best times to imagine you’ve already achieved your goals are the moments between waking and sleeping—early morning just before fully waking up, or late at night before falling asleep. These times are when we are closest to our subconscious.
+
+Key Practices: Awareness, Surrender, Overcoming the Peptide Self (Ego)
+
+Awareness: Focus on your present self. Observe your emotions and reactions without judgment.
+Surrender: Accept reality instead of resisting it.
+Peptide Self (Ego): Represents inner voices of fear, comparison, and anxiety. Learn to recognize and transcend them.
+
+
+Meditation, Gratitude, Giving
+
+During meditation, visualize yourself already living your desired life.
+Be grateful even before your goals are achieved.
+Maintain a selfless, giving mindset.
+
+
+Care Less About Others, Care More About Yourself
+
+Bring your attention back to yourself and your inner world.
+When emotions arise, be aware of which part of your body feels uncomfortable and understand its message.
+
+
+
+
+ConclusionThis book is not only about discovering “who you are,” but also about reminding you to “become that true self.” Awakening inner strength requires continuous awareness, practice, and transcending the ego.
+]]></content>
       <categories>
-          
-          <category> Frontend </category>
-          
+        <category>Reading</category>
       </categories>
-      
-      
-        <tags>
-            
-            <tag> Frontend </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>Hello English</title>
-      <link href="/2024/08/16/redis-en/"/>
-      <url>/2024/08/16/redis-en/</url>
-      
-        <content type="html"><![CDATA[<p>This is an English post.</p>]]></content>
-      
-      
-      
-    </entry>
-    
-    
-  
-  
+      <tags>
+        <tag>Personal Growth</tag>
+      </tags>
+  </entry>
 </search>
