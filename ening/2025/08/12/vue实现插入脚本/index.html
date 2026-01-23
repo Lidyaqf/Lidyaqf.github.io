@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+<style>
+    .contain {
+      position: relative;
+      width: 100%;
+      height: 50px;
+      background: #f0f0f0;
+      overflow: hidden;
+    }
+  
+    .danmaku {
+      position: absolute;
+      white-space: nowrap;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 14px;
+      color: #333;
+      animation: moveLeft 15s linear forwards;
+    }
+  
+    .danmaku.paused {
+      animation-play-state: paused;
+    }
+  
+    @keyframes moveLeft {
+      from {
+        left: 100%;
+      }
+      to {
+        left: -100%;
+      }
+    }
+  </style>
+  <link rel="apple-touch-icon" sizes="180x180" href="/ening/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/ening/images/favicon.svg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/ening/images/favicon.svg">
+  <link rel="mask-icon" href="/ening/images/logo.svg" color="#222">
+<meta name="baidu_union_verify" content="4c95743ab0ae1a7dcfbc5c20c004854b">
+
+
+<link rel="stylesheet" href="/ening/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noto Serif SC:300,300italic,400,400italic,700,700italic|Source Code Pro:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/ening/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"lidyaqf.github.io","root":"/ening/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"manual","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+
+
+
+
+
+  <meta name="description" content="How to Properly Insert &lt;script&gt; Code in Vue (Including Ad Code Examples)In real-world development, we often need to integrate third-party services such as advertising platforms, analytics tools,">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Inserting Scripts in Vue">
+<meta property="og:url" content="https://lidyaqf.github.io/2025/08/12/vue%E5%AE%9E%E7%8E%B0%E6%8F%92%E5%85%A5%E8%84%9A%E6%9C%AC/index.html">
+<meta property="og:site_name" content="My English Blog">
+<meta property="og:description" content="How to Properly Insert &lt;script&gt; Code in Vue (Including Ad Code Examples)In real-world development, we often need to integrate third-party services such as advertising platforms, analytics tools,">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-08-11T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-01-23T01:46:33.508Z">
+<meta property="article:author" content="lidya">
+<meta property="article:tag" content="Vue">
+<meta property="article:tag" content="script">
+<meta property="article:tag" content="ad code">
+<meta property="article:tag" content="dynamic script injection">
+<meta property="article:tag" content="DOM manipulation">
+<meta property="article:tag" content="third-party ads">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://lidyaqf.github.io/2025/08/12/vue%E5%AE%9E%E7%8E%B0%E6%8F%92%E5%85%A5%E8%84%9A%E6%9C%AC/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Inserting Scripts in Vue | My English Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/ening/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">My English Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/ening/ening/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/ening/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/ening/ening/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/ening/ening/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-english">
+
+    <a href="/ening/ening" rel="section"><i class="fa fa-language fa-fw"></i>English</a>
+
+  </li>
+        <li class="menu-item menu-item-中文">
+
+    <a href="/ening/../" rel="section"><i class="fa fa-language fa-fw"></i>中文</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://lidyaqf.github.io/2025/08/12/vue%E5%AE%9E%E7%8E%B0%E6%8F%92%E5%85%A5%E8%84%9A%E6%9C%AC/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/ening/images/avatar.jpg">
+      <meta itemprop="name" content="lidya">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="My English Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Inserting Scripts in Vue
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2025-08-12 00:00:00" itemprop="dateCreated datePublished" datetime="2025-08-12T00:00:00+08:00">2025-08-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2026-01-23 09:46:33" itemprop="dateModified" datetime="2026-01-23T09:46:33+08:00">2026-01-23</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/ening/categories/Frontend/" itemprop="url" rel="index"><span itemprop="name">Frontend</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="How-to-Properly-Insert-Code-in-Vue-Including-Ad-Code-Examples"><a href="#How-to-Properly-Insert-Code-in-Vue-Including-Ad-Code-Examples" class="headerlink" title="How to Properly Insert &lt;script&gt; Code in Vue (Including Ad Code Examples)"></a>How to Properly Insert <code>&lt;script&gt;</code> Code in Vue (Including Ad Code Examples)</h1><p>In real-world development, we often need to integrate third-party services such as advertising platforms, analytics tools, or customer support widgets. These services usually provide a block of code that includes <code>&lt;script&gt;</code> tags.</p>
+<p>However, if you try to place <code>&lt;script&gt;</code> tags directly inside a Vue template (<code>&lt;template&gt;</code>), they will not work—and may even cause errors.</p>
+<p>This article explains <strong>why <code>&lt;script&gt;</code> tags cannot be directly used inside Vue templates</strong>, and <strong>how to correctly inject scripts dynamically</strong>, with a ready-to-use example (using ad code as a case study).</p>
+<hr>
+<h2 id="1-Why-You-Can’t-Write-Directly-in-a-Vue-Template"><a href="#1-Why-You-Can’t-Write-Directly-in-a-Vue-Template" class="headerlink" title="1. Why You Can’t Write &lt;script&gt; Directly in a Vue Template"></a>1. Why You Can’t Write <code>&lt;script&gt;</code> Directly in a Vue Template</h2><p>Vue Single File Components (SFC) have a clear structure:</p>
+<ul>
+<li><code>&lt;template&gt;</code>: markup &#x2F; structure</li>
+<li><code>&lt;script&gt;</code>: logic</li>
+<li><code>&lt;style&gt;</code>: styles</li>
+</ul>
+<p>Placing <code>&lt;script&gt;</code> tags inside <code>&lt;template&gt;</code> causes several problems:</p>
+<ol>
+<li><strong>Vue treats <code>&lt;script&gt;</code> tags as plain text or strips them out</strong></li>
+<li>It breaks Vue’s compilation process and may throw errors</li>
+<li>Third-party scripts (ads, analytics, trackers) will not execute at all</li>
+</ol>
+<p>Therefore, to make external scripts work properly, they must be <strong>dynamically injected using DOM APIs during the component lifecycle</strong>.</p>
+<hr>
+<h2 id="2-Incorrect-Example-Pasting-Ad-Code-Directly-This-Will-NOT-Work"><a href="#2-Incorrect-Example-Pasting-Ad-Code-Directly-This-Will-NOT-Work" class="headerlink" title="2. Incorrect Example: Pasting Ad Code Directly (This Will NOT Work)"></a>2. Incorrect Example: Pasting Ad Code Directly (This Will NOT Work)</h2><p>Suppose an ad network provides the following code:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">  atOptions = &#123;</span></span><br><span class="line"><span class="language-javascript">    <span class="string">&#x27;key&#x27;</span> : <span class="string">&#x27;1523b7ddb936e560aadef64a851d500c&#x27;</span>,</span></span><br><span class="line"><span class="language-javascript">    <span class="string">&#x27;format&#x27;</span> : <span class="string">&#x27;iframe&#x27;</span>,</span></span><br><span class="line"><span class="language-javascript">    <span class="string">&#x27;height&#x27;</span> : <span class="number">250</span>,</span></span><br><span class="line"><span class="language-javascript">    <span class="string">&#x27;width&#x27;</span> : <span class="number">300</span>,</span></span><br><span class="line"><span class="language-javascript">    <span class="string">&#x27;params&#x27;</span> : &#123;&#125;</span></span><br><span class="line"><span class="language-javascript">  &#125;;</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span></span></span><br><span class="line"><span class="tag">  <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span></span></span><br><span class="line"><span class="tag">  <span class="attr">src</span>=<span class="string">&quot;//www.highperformanceformat.com/1523b7ddb936e560aadef64a851d500c/invoke.js&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>If you paste this code directly into a Vue <code>&lt;template&gt;</code>, <strong>the advertisement will never render</strong>.</p>
+<hr>
+<h2 id="3-The-Correct-Approach-Dynamically-Inject-Scripts-in-Vue"><a href="#3-The-Correct-Approach-Dynamically-Inject-Scripts-in-Vue" class="headerlink" title="3. The Correct Approach: Dynamically Inject Scripts in Vue"></a>3. The Correct Approach: Dynamically Inject Scripts in Vue</h2><p>The core idea is simple:</p>
+<ol>
+<li>Place a container element in the template (e.g. <code>&lt;div id=&quot;de_v&quot;&gt;&lt;/div&gt;</code>)</li>
+<li>Use the <code>onMounted</code> (or <code>mounted</code>) lifecycle hook</li>
+<li>Create <code>&lt;script&gt;</code> elements via JavaScript</li>
+<li>Append them to the DOM</li>
+</ol>
+<hr>
+<h2 id="4-Complete-Example-Vue-3"><a href="#4-Complete-Example-Vue-3" class="headerlink" title="4. Complete Example (Vue 3 + &lt;script setup&gt;)"></a>4. Complete Example (Vue 3 + <code>&lt;script setup&gt;</code>)</h2><p>Assume the ad should be rendered inside a container with the ID <code>&quot;de_v&quot;</code>.</p>
+<h3 id="Template-Section"><a href="#Template-Section" class="headerlink" title="Template Section"></a><strong>Template Section</strong></h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;de_v&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Script-Section"><a href="#Script-Section" class="headerlink" title="Script Section"></a><strong>Script Section</strong></h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">&lt;script setup&gt;</span><br><span class="line">import &#123; onMounted &#125; from &quot;vue&quot;;</span><br><span class="line"></span><br><span class="line">onMounted(() =&gt; &#123;</span><br><span class="line">  const targetDiv = document.getElementById(&quot;de_v&quot;);</span><br><span class="line">  if (!targetDiv) return;</span><br><span class="line"></span><br><span class="line">  // Create the first script (ad configuration)</span><br><span class="line">  const script1 = document.createElement(&quot;script&quot;);</span><br><span class="line">  script1.type = &quot;text/javascript&quot;;</span><br><span class="line">  script1.innerHTML = `</span><br><span class="line">    atOptions = &#123;</span><br><span class="line">      &#x27;key&#x27; : &#x27;1523b7ddb936e560aadef64a851d500c&#x27;,</span><br><span class="line">      &#x27;format&#x27; : &#x27;iframe&#x27;,</span><br><span class="line">      &#x27;height&#x27; : 250,</span><br><span class="line">      &#x27;width&#x27; : 300,</span><br><span class="line">      &#x27;params&#x27; : &#123;&#125;</span><br><span class="line">    &#125;;</span><br><span class="line">  `;</span><br><span class="line"></span><br><span class="line">  // Create the second script (external ad script)</span><br><span class="line">  const script2 = document.createElement(&quot;script&quot;);</span><br><span class="line">  script2.type = &quot;text/javascript&quot;;</span><br><span class="line">  script2.src =</span><br><span class="line">    &quot;//www.highperformanceformat.com/1523b7ddb936e560aadef64a851d500c/invoke.js&quot;;</span><br><span class="line"></span><br><span class="line">  // Append scripts to the container</span><br><span class="line">  targetDiv.appendChild(script1);</span><br><span class="line">  targetDiv.appendChild(script2);</span><br><span class="line">&#125;);</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="5-Common-Issues-and-Notes"><a href="#5-Common-Issues-and-Notes" class="headerlink" title="5. Common Issues and Notes"></a>5. Common Issues and Notes</h2><h3 id="1-Will-the-script-be-injected-multiple-times"><a href="#1-Will-the-script-be-injected-multiple-times" class="headerlink" title="1. Will the script be injected multiple times?"></a>1. Will the script be injected multiple times?</h3><p>If the component is mounted and unmounted repeatedly, the scripts may be injected multiple times.</p>
+<p>Solutions:</p>
+<ul>
+<li>Check whether the script already exists before inserting</li>
+<li>Or remove the scripts in <code>onUnmounted</code></li>
+</ul>
+<hr>
+<h3 id="2-How-to-Handle-Multiple-Ad-Slots"><a href="#2-How-to-Handle-Multiple-Ad-Slots" class="headerlink" title="2. How to Handle Multiple Ad Slots?"></a>2. How to Handle Multiple Ad Slots?</h3><p>Use <strong>different container IDs</strong> for each ad slot, for example:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;ad1&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;ad2&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>Then inject scripts into the corresponding container.</p>
+<hr>
+<h3 id="3-What-About-SSR-Frameworks-Nuxt"><a href="#3-What-About-SSR-Frameworks-Nuxt" class="headerlink" title="3. What About SSR Frameworks (Nuxt)?"></a>3. What About SSR Frameworks (Nuxt)?</h3><p>On the server side, <code>document</code> is not available.</p>
+<p>You <strong>must</strong> run the script injection code on the client side only:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">onMounted</span>(<span class="function">() =&gt;</span> &#123; ... &#125;)</span><br></pre></td></tr></table></figure>
+
+<p>Otherwise, you will encounter:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">document is not defined</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="6-Summary"><a href="#6-Summary" class="headerlink" title="6. Summary"></a>6. Summary</h2><ul>
+<li>You cannot directly place <code>&lt;script&gt;</code> tags inside Vue templates</li>
+<li>The correct solution is to <strong>dynamically create and inject scripts during the component lifecycle</strong></li>
+<li>Using <code>appendChild()</code> ensures third-party scripts execute properly</li>
+<li>This approach works for ads, analytics, tracking pixels, and external SDKs</li>
+</ul>
+<p>By following the method described above, third-party scripts will run correctly in Vue-based applications.</p>
+
+    </div>
+
+    
+    
+    
+    
+      <div>
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:24px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+      </div>
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:  </strong>lidya
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link: </strong>
+    <a href="https://lidyaqf.github.io/2025/08/12/vue%E5%AE%9E%E7%8E%B0%E6%8F%92%E5%85%A5%E8%84%9A%E6%9C%AC/" title="Inserting Scripts in Vue">https://lidyaqf.github.io/2025/08/12/vue实现插入脚本/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/ening/tags/Vue/" rel="tag"># Vue</a>
+              <a href="/ening/tags/script/" rel="tag"># script</a>
+              <a href="/ening/tags/ad-code/" rel="tag"># ad code</a>
+              <a href="/ening/tags/dynamic-script-injection/" rel="tag"># dynamic script injection</a>
+              <a href="/ening/tags/DOM-manipulation/" rel="tag"># DOM manipulation</a>
+              <a href="/ening/tags/third-party-ads/" rel="tag"># third-party ads</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/ening/2025/07/16/node-rpc/" rel="prev" title="Talking About Node RPC">
+      <i class="fa fa-chevron-left"></i> Talking About Node RPC
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/ening/2025/08/13/%E5%A6%82%E4%BD%95%E8%84%B1%E7%A6%BB%E6%A1%86%E6%9E%B6%E5%BC%80%E5%8F%91/" rel="next" title="Developing Without Frameworks">
+      Developing Without Frameworks <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC82MDU2Mi8zNzAzMw=="></div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#How-to-Properly-Insert-Code-in-Vue-Including-Ad-Code-Examples"><span class="nav-number">1.</span> <span class="nav-text">How to Properly Insert &lt;script&gt; Code in Vue (Including Ad Code Examples)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Why-You-Can%E2%80%99t-Write-Directly-in-a-Vue-Template"><span class="nav-number">1.1.</span> <span class="nav-text">1. Why You Can’t Write &lt;script&gt; Directly in a Vue Template</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Incorrect-Example-Pasting-Ad-Code-Directly-This-Will-NOT-Work"><span class="nav-number">1.2.</span> <span class="nav-text">2. Incorrect Example: Pasting Ad Code Directly (This Will NOT Work)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-The-Correct-Approach-Dynamically-Inject-Scripts-in-Vue"><span class="nav-number">1.3.</span> <span class="nav-text">3. The Correct Approach: Dynamically Inject Scripts in Vue</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-Complete-Example-Vue-3"><span class="nav-number">1.4.</span> <span class="nav-text">4. Complete Example (Vue 3 + &lt;script setup&gt;)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Template-Section"><span class="nav-number">1.4.1.</span> <span class="nav-text">Template Section</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Script-Section"><span class="nav-number">1.4.2.</span> <span class="nav-text">Script Section</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-Common-Issues-and-Notes"><span class="nav-number">1.5.</span> <span class="nav-text">5. Common Issues and Notes</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Will-the-script-be-injected-multiple-times"><span class="nav-number">1.5.1.</span> <span class="nav-text">1. Will the script be injected multiple times?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-How-to-Handle-Multiple-Ad-Slots"><span class="nav-number">1.5.2.</span> <span class="nav-text">2. How to Handle Multiple Ad Slots?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-What-About-SSR-Frameworks-Nuxt"><span class="nav-number">1.5.3.</span> <span class="nav-text">3. What About SSR Frameworks (Nuxt)?</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-Summary"><span class="nav-number">1.6.</span> <span class="nav-text">6. Summary</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="lidya"
+      src="/ening/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">lidya</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/ening/ening/archives/">
+        
+          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/ening/ening/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/ening/tags/">
+          
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">lidya</span>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    if (location.pathname.startsWith('/ening/')) {
+      const item = document.querySelector('.menu-item-english');
+      if (item) item.style.display = 'none';
+    }
+  });
+</script>
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/ening/lib/anime.min.js"></script>
+  <script src="/ening/lib/velocity/velocity.min.js"></script>
+  <script src="/ening/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/ening/js/utils.js"></script>
+
+<script src="/ening/js/motion.js"></script>
+
+
+<script src="/ening/js/schemes/pisces.js"></script>
+
+
+<script src="/ening/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/ening/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
+  window.livereOptions = {
+    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+});
+</script>
+
+</body>
+</html>

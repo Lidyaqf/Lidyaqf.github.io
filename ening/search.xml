@@ -184,20 +184,6 @@ After successful deployment, you can view the build process on the GitLab CI&#x2
       </tags>
   </entry>
   <entry>
-    <title>Sync Google Sheets Data Between Spreadsheets</title>
-    <url>/ening/2025/08/28/google%20sheet%E5%90%8C%E6%AD%A5%E8%A1%A8%E6%A0%BC%E6%95%B0%E6%8D%AE/</url>
-    <content><![CDATA[Sync Google Sheets Data Across Multiple SheetsThere is a requirement to synchronize all sheets from one Google Spreadsheet to another spreadsheet (including all sub-sheets).
-This is implemented using Google Sheets → Extensions → Apps Script.
-Why synchronization is neededThe source spreadsheet is read-only by default.By synchronizing its data into another spreadsheet, the copied sheets can then be edited freely.
-sourceSpreadsheetId and targetSpreadsheetId are the IDs from the Google Sheets URL —they are the long strings after /d/ in the address bar.
-Apps Script Code Examplefunction synchronizeSheetsToAnotherFile() &#123;  const sourceSpreadsheetId = &quot;id1&quot;;  const targetSpreadsheetId = &quot;id2&quot;;   // Example: 1NOtSSvDwXrca8vqyZW6OqQJwGaCICMVguSz1-i72oqg  const sourceSpreadsheet = SpreadsheetApp.openById(sourceSpreadsheetId);  const targetSpreadsheet = SpreadsheetApp.openById(targetSpreadsheetId);  const sourceSheets = sourceSpreadsheet.getSheets();  sourceSheets.forEach(sheet =&gt; &#123;    const sheetName = sheet.getName();    let targetSheet = targetSpreadsheet.getSheetByName(sheetName);    if (!targetSheet) &#123;      targetSheet = targetSpreadsheet.insertSheet(sheetName);    &#125; else &#123;      targetSheet.clear();    &#125;    const range = sheet.getDataRange();    const displayValues = range.getDisplayValues();     const formats = range.getBackgrounds();            const fontWeights = range.getFontWeights();        const targetRange = targetSheet.getRange(      1,      1,      displayValues.length,      displayValues[0].length    );    targetRange.setValues(displayValues);    targetRange.setBackgrounds(formats);    targetRange.setFontWeights(fontWeights);  &#125;);&#125;
-
-]]></content>
-      <categories>
-        <category>Frontend</category>
-      </categories>
-  </entry>
-  <entry>
     <title>JavaScript Basics</title>
     <url>/ening/2025/12/02/js%E5%9F%BA%E7%A1%80/</url>
     <content><![CDATA[JavaScript Basics Summary (Hoisting, Strict Mode)
@@ -218,6 +204,20 @@ function foo() &#123;  &quot;use strict&quot;;  console.log(this.a); // ❌ Type
 
 
 (function() &#123;  &quot;use strict&quot;;  foo(); // calling foo here doesn&#x27;t change its default binding&#125;)();function foo() &#123;  console.log(this.a);&#125;var a = 2;
+]]></content>
+      <categories>
+        <category>Frontend</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>Sync Google Sheets Data Between Spreadsheets</title>
+    <url>/ening/2025/08/28/google%20sheet%E5%90%8C%E6%AD%A5%E8%A1%A8%E6%A0%BC%E6%95%B0%E6%8D%AE/</url>
+    <content><![CDATA[Sync Google Sheets Data Across Multiple SheetsThere is a requirement to synchronize all sheets from one Google Spreadsheet to another spreadsheet (including all sub-sheets).
+This is implemented using Google Sheets → Extensions → Apps Script.
+Why synchronization is neededThe source spreadsheet is read-only by default.By synchronizing its data into another spreadsheet, the copied sheets can then be edited freely.
+sourceSpreadsheetId and targetSpreadsheetId are the IDs from the Google Sheets URL —they are the long strings after /d/ in the address bar.
+Apps Script Code Examplefunction synchronizeSheetsToAnotherFile() &#123;  const sourceSpreadsheetId = &quot;id1&quot;;  const targetSpreadsheetId = &quot;id2&quot;;   // Example: 1NOtSSvDwXrca8vqyZW6OqQJwGaCICMVguSz1-i72oqg  const sourceSpreadsheet = SpreadsheetApp.openById(sourceSpreadsheetId);  const targetSpreadsheet = SpreadsheetApp.openById(targetSpreadsheetId);  const sourceSheets = sourceSpreadsheet.getSheets();  sourceSheets.forEach(sheet =&gt; &#123;    const sheetName = sheet.getName();    let targetSheet = targetSpreadsheet.getSheetByName(sheetName);    if (!targetSheet) &#123;      targetSheet = targetSpreadsheet.insertSheet(sheetName);    &#125; else &#123;      targetSheet.clear();    &#125;    const range = sheet.getDataRange();    const displayValues = range.getDisplayValues();     const formats = range.getBackgrounds();            const fontWeights = range.getFontWeights();        const targetRange = targetSheet.getRange(      1,      1,      displayValues.length,      displayValues[0].length    );    targetRange.setValues(displayValues);    targetRange.setBackgrounds(formats);    targetRange.setFontWeights(fontWeights);  &#125;);&#125;
+
 ]]></content>
       <categories>
         <category>Frontend</category>
@@ -318,6 +318,165 @@ Understanding Entertainment &amp; FreedomLife has two paths: one for career ambi
       <categories>
         <category>Teacher Certification</category>
       </categories>
+  </entry>
+  <entry>
+    <title>How to Prevent XSS</title>
+    <url>/ening/2025/10/17/%E5%A6%82%E4%BD%95%E9%98%B2%E5%BE%A1%20XSS%EF%BC%88%E8%B7%A8%E7%AB%99%E8%84%9A%E6%9C%AC%E6%94%BB%E5%87%BB%EF%BC%89/</url>
+    <content><![CDATA[In web development, XSS (Cross-Site Scripting) is one of the most common and most dangerous security vulnerabilities.Once a website contains an XSS flaw, attackers may execute malicious scripts in users’ browsers, allowing them to steal cookies, hijack sessions, deface pages, or even take over user accounts.
+This article explains how to effectively defend against XSS attacks from both a theoretical and practical perspective, covering frontend and full-stack security best practices.
+1. What Is an XSS Attack?The essence of XSS is simple:
+
+An attacker injects malicious JavaScript into a webpage, which is then executed in other users’ browsers.
+
+Common types of XSS attacks include:
+
+Reflected XSS: malicious scripts are delivered through URL parameters
+Stored XSS: malicious scripts are stored in a database and served to users
+DOM-based XSS: frontend JavaScript logic directly handles untrusted data
+
+No matter the type, the root cause is the same:👉 User input is treated as executable code.
+2. Input Validation and Filtering (The Most Basic Defense)Never trust user input.
+1. Basic Frontend ValidationOn the frontend, basic validation can improve user experience, such as:
+
+Limiting input length
+Enforcing input formats (e.g., email, phone numbers)
+Filtering obviously dangerous characters
+
+Example (for basic validation only):
+function sanitizeInput(input) &#123;  return input.replace(/[&lt;&gt;]/g, &#x27;&#x27;);&#125;
+
+⚠️ Important:Frontend validation is not a security boundary and should never be relied on alone.
+2. Strict Backend Validation (Critical)Effective input validation must be performed on the server side:
+
+Validate data types
+Enforce length constraints
+Reject inputs that violate business rules
+Escape or sanitize HTML content using whitelists
+
+Recommended principles:
+
+Deny by default
+Whitelist over blacklist
+
+3. Output Encoding (More Important Than Input Filtering)Many XSS vulnerabilities occur not because input is unsafe, but because output is handled incorrectly.
+1. HTML Escaping on OutputWhen rendering user input, always encode HTML characters:
+
+
+
+Character
+Escaped Form
+
+
+
+&lt;
+&amp;lt;
+
+
+&gt;
+&amp;gt;
+
+
+&quot;
+&amp;quot;
+
+
+&#39;
+&amp;#39;
+
+
+Most modern template engines (Vue, React, Handlebars) escape output by default.Do not disable this behavior unless absolutely necessary.
+2. Avoid Dangerous APIsAvoid patterns like:
+element.innerHTML = userInput;
+
+Safer alternatives include:
+element.textContent = userInput;
+
+Or:
+const el = document.createElement(&#x27;div&#x27;);el.textContent = userInput;container.appendChild(el);
+
+
+
+4. Use Safe APIs and Framework ProtectionsModern frontend frameworks include built-in XSS protections.
+1. Default Protections in React and Vue
+JSX and template syntax escape output by default
+Dangerous APIs are explicitly labeled (e.g., v-html, dangerouslySetInnerHTML)
+
+⚠️ If you use these APIs, you must ensure the content is 100% trusted.
+2. Avoid String-Based HTML Construction❌ Unsafe example:
+container.innerHTML = `&lt;div&gt;$&#123;userInput&#125;&lt;/div&gt;`;
+
+✅ Safe alternative:
+const div = document.createElement(&#x27;div&#x27;);div.textContent = userInput;container.appendChild(div);
+
+
+
+5. Use Content Security Policy (CSP)Content Security Policy (CSP) is one of the most powerful defenses against XSS.
+1. What CSP Can Do
+Block inline script execution
+Restrict allowed script sources
+Prevent loading malicious third-party resources
+
+Example HTTP header:
+Content-Security-Policy:  default-src &#x27;self&#x27;;  script-src &#x27;self&#x27;;  object-src &#x27;none&#x27;;
+
+Even if an attacker injects a script, CSP can prevent the browser from executing it.
+2. Why CSP Is So ImportantBecause it provides:
+
+Browser-level protection
+A strong fallback even when application code has flaws
+
+6. Use HttpOnly and Secure Cookies1. Purpose of HttpOnlyWhen setting cookies, add the HttpOnly flag:
+Set-Cookie: sessionId=xxx; HttpOnly;
+
+This prevents JavaScript from accessing cookies, reducing the impact of XSS attacks.
+2. Combine with Secure and SameSiteFor stronger protection, also use:
+
+Secure
+SameSite=Strict or Lax
+
+This significantly improves session security.
+7. Keep Third-Party Libraries Up to DateIn real-world projects, many XSS vulnerabilities come from third-party dependencies:
+
+Outdated UI components
+Unmaintained plugins
+Vulnerable npm packages
+
+Best practices:
+
+Update dependencies regularly
+Use npm audit
+Monitor security advisories
+
+8. Develop Secure Coding HabitsPreventing XSS is not about a single technique, but about consistent habits:
+
+Never trust external input
+Avoid innerHTML unless necessary
+Do not ignore security warnings
+Prioritize security over convenience
+
+9. Summary
+XSS is one of the most common and dangerous web security threats
+Effective protection requires frontend, backend, and browser-level defenses
+Input validation is only the beginning—safe output handling and CSP are critical
+Good security habits are more valuable than any single patch
+
+For frontend developers,understanding how to prevent XSS is a key step toward true professionalism.
+]]></content>
+      <categories>
+        <category>Frontend</category>
+      </categories>
+      <tags>
+        <tag>XSS</tag>
+        <tag>Web Security</tag>
+        <tag>Frontend Security</tag>
+        <tag>JavaScript</tag>
+        <tag>Browser Security</tag>
+        <tag>Cybersecurity</tag>
+        <tag>Web Development</tag>
+        <tag>Secure Coding</tag>
+        <tag>Content Security Policy</tag>
+        <tag>HttpOnly</tag>
+      </tags>
   </entry>
   <entry>
     <title>Frontend Interview Questions</title>
@@ -505,178 +664,6 @@ Scoped slot: Vue 2 uses slot-scope=&quot;data&quot;, Vue 3 uses #data or #defaul
       </tags>
   </entry>
   <entry>
-    <title>Developing Without Frameworks</title>
-    <url>/ening/2025/08/13/%E5%A6%82%E4%BD%95%E8%84%B1%E7%A6%BB%E6%A1%86%E6%9E%B6%E5%BC%80%E5%8F%91/</url>
-    <content><![CDATA[
-Developing frontend applications without frameworks means building web projects without using any frontend frameworks such as Vue or React, and instead relying directly on JavaScript, HTML, and CSS. This approach allows developers to gain a deeper understanding of the underlying principles and mechanisms of frontend development, while avoiding over-reliance on frameworks.
-For static projects or low-complexity applications with limited functionality, developing without a framework is often more than sufficient. Code written with frameworks must be compiled before it can be rendered in the browser, which is why tools like Webpack exist. Frameworks such as Vue were created to solve specific pain points—like two-way data binding and automatic reactive updates—but they also require developers to follow framework-specific syntax and conventions. As frameworks evolve, developers must continuously learn and adapt to new versions.
-Frameworks are undoubtedly beneficial for development efficiency, but for simple requirements, avoiding a framework can actually be the wiser choice. Whether or not to use a framework should always be decided based on the actual project requirements.
-When developing multiple similar websites, unbundled code can be uploaded directly to the server and modified in place. In contrast, when using a framework, only the compiled output is deployed, and any changes require local modification and rebuilding, which can be more time-consuming. After becoming proficient in pure JavaScript development, developers can even go on to build their own tools or frameworks.
-]]></content>
-      <categories>
-        <category>Frontend</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>How to Prevent XSS</title>
-    <url>/ening/2025/10/17/%E5%A6%82%E4%BD%95%E9%98%B2%E5%BE%A1%20XSS%EF%BC%88%E8%B7%A8%E7%AB%99%E8%84%9A%E6%9C%AC%E6%94%BB%E5%87%BB%EF%BC%89/</url>
-    <content><![CDATA[In web development, XSS (Cross-Site Scripting) is one of the most common and most dangerous security vulnerabilities.Once a website contains an XSS flaw, attackers may execute malicious scripts in users’ browsers, allowing them to steal cookies, hijack sessions, deface pages, or even take over user accounts.
-This article explains how to effectively defend against XSS attacks from both a theoretical and practical perspective, covering frontend and full-stack security best practices.
-1. What Is an XSS Attack?The essence of XSS is simple:
-
-An attacker injects malicious JavaScript into a webpage, which is then executed in other users’ browsers.
-
-Common types of XSS attacks include:
-
-Reflected XSS: malicious scripts are delivered through URL parameters
-Stored XSS: malicious scripts are stored in a database and served to users
-DOM-based XSS: frontend JavaScript logic directly handles untrusted data
-
-No matter the type, the root cause is the same:👉 User input is treated as executable code.
-2. Input Validation and Filtering (The Most Basic Defense)Never trust user input.
-1. Basic Frontend ValidationOn the frontend, basic validation can improve user experience, such as:
-
-Limiting input length
-Enforcing input formats (e.g., email, phone numbers)
-Filtering obviously dangerous characters
-
-Example (for basic validation only):
-function sanitizeInput(input) &#123;  return input.replace(/[&lt;&gt;]/g, &#x27;&#x27;);&#125;
-
-⚠️ Important:Frontend validation is not a security boundary and should never be relied on alone.
-2. Strict Backend Validation (Critical)Effective input validation must be performed on the server side:
-
-Validate data types
-Enforce length constraints
-Reject inputs that violate business rules
-Escape or sanitize HTML content using whitelists
-
-Recommended principles:
-
-Deny by default
-Whitelist over blacklist
-
-3. Output Encoding (More Important Than Input Filtering)Many XSS vulnerabilities occur not because input is unsafe, but because output is handled incorrectly.
-1. HTML Escaping on OutputWhen rendering user input, always encode HTML characters:
-
-
-
-Character
-Escaped Form
-
-
-
-&lt;
-&amp;lt;
-
-
-&gt;
-&amp;gt;
-
-
-&quot;
-&amp;quot;
-
-
-&#39;
-&amp;#39;
-
-
-Most modern template engines (Vue, React, Handlebars) escape output by default.Do not disable this behavior unless absolutely necessary.
-2. Avoid Dangerous APIsAvoid patterns like:
-element.innerHTML = userInput;
-
-Safer alternatives include:
-element.textContent = userInput;
-
-Or:
-const el = document.createElement(&#x27;div&#x27;);el.textContent = userInput;container.appendChild(el);
-
-
-
-4. Use Safe APIs and Framework ProtectionsModern frontend frameworks include built-in XSS protections.
-1. Default Protections in React and Vue
-JSX and template syntax escape output by default
-Dangerous APIs are explicitly labeled (e.g., v-html, dangerouslySetInnerHTML)
-
-⚠️ If you use these APIs, you must ensure the content is 100% trusted.
-2. Avoid String-Based HTML Construction❌ Unsafe example:
-container.innerHTML = `&lt;div&gt;$&#123;userInput&#125;&lt;/div&gt;`;
-
-✅ Safe alternative:
-const div = document.createElement(&#x27;div&#x27;);div.textContent = userInput;container.appendChild(div);
-
-
-
-5. Use Content Security Policy (CSP)Content Security Policy (CSP) is one of the most powerful defenses against XSS.
-1. What CSP Can Do
-Block inline script execution
-Restrict allowed script sources
-Prevent loading malicious third-party resources
-
-Example HTTP header:
-Content-Security-Policy:  default-src &#x27;self&#x27;;  script-src &#x27;self&#x27;;  object-src &#x27;none&#x27;;
-
-Even if an attacker injects a script, CSP can prevent the browser from executing it.
-2. Why CSP Is So ImportantBecause it provides:
-
-Browser-level protection
-A strong fallback even when application code has flaws
-
-6. Use HttpOnly and Secure Cookies1. Purpose of HttpOnlyWhen setting cookies, add the HttpOnly flag:
-Set-Cookie: sessionId=xxx; HttpOnly;
-
-This prevents JavaScript from accessing cookies, reducing the impact of XSS attacks.
-2. Combine with Secure and SameSiteFor stronger protection, also use:
-
-Secure
-SameSite=Strict or Lax
-
-This significantly improves session security.
-7. Keep Third-Party Libraries Up to DateIn real-world projects, many XSS vulnerabilities come from third-party dependencies:
-
-Outdated UI components
-Unmaintained plugins
-Vulnerable npm packages
-
-Best practices:
-
-Update dependencies regularly
-Use npm audit
-Monitor security advisories
-
-8. Develop Secure Coding HabitsPreventing XSS is not about a single technique, but about consistent habits:
-
-Never trust external input
-Avoid innerHTML unless necessary
-Do not ignore security warnings
-Prioritize security over convenience
-
-9. Summary
-XSS is one of the most common and dangerous web security threats
-Effective protection requires frontend, backend, and browser-level defenses
-Input validation is only the beginning—safe output handling and CSP are critical
-Good security habits are more valuable than any single patch
-
-For frontend developers,understanding how to prevent XSS is a key step toward true professionalism.
-]]></content>
-      <categories>
-        <category>Frontend</category>
-      </categories>
-      <tags>
-        <tag>XSS</tag>
-        <tag>Web Security</tag>
-        <tag>Frontend Security</tag>
-        <tag>JavaScript</tag>
-        <tag>Browser Security</tag>
-        <tag>Cybersecurity</tag>
-        <tag>Web Development</tag>
-        <tag>Secure Coding</tag>
-        <tag>Content Security Policy</tag>
-        <tag>HttpOnly</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Installing Puppeteer on Baota Panel</title>
     <url>/ening/2025/09/02/%E5%AE%9D%E5%A1%94%E5%AE%89%E8%A3%85puppeteer/</url>
     <content><![CDATA[Installing Puppeteer on Baota (CentOS 8)When using CentOS 8, yum may fail because CentOS 8 is no longer officially maintained.To fix this, you need to switch the YUM mirror source, clear the cache, and rebuild it.
@@ -721,6 +708,98 @@ Oh, right—just like Brother Shang waiting at the finish line, and I’d smile 
       <tags>
         <tag>Reading</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>Handwriting Promise.race (From Theory to Practice)</title>
+    <url>/ening/2025/12/18/%E6%89%8B%E5%86%99Promise/</url>
+    <content><![CDATA[In frontend interviews and daily development, Promise.race is a very common yet often overlooked API. Its rule is simple:
+
+Multiple Promises “race” against each other—whichever settles first (fulfilled or rejected) determines the final result.
+
+In this article, we will:
+
+Clearly explain how Promise.race behaves and when to use it
+Implement a custom myPromiseRace from scratch
+Cover edge cases, optimizations, and common interview questions
+
+1. What Is Promise.race?Promise.race(iterable) accepts an iterable (usually an array) and returns a new Promise:
+
+If any Promise fulfills first, the returned Promise fulfills
+If any Promise rejects first, the returned Promise rejects
+It does not wait for all Promises to finish
+It does not cancel the remaining Promises—they continue running
+
+2. Common Use Cases2.1 Timeout Control (Most Common)For example, treat a request as failed if it takes longer than 3 seconds:
+
+fetch(url) vs timeoutPromise(3000)
+Whichever finishes first determines the result
+
+2.2 Multiple Data Sources (Fallback Strategy)Fetch the same resource from multiple CDNs (CDN1&#x2F;CDN2).Use whichever responds first.
+2.3 First-Render RacingLoad primary data, fallback data, and cached data simultaneously.Render the page as soon as the fastest result arrives.
+3. Implementing myPromiseRaceThis implementation closely matches native behavior:
+
+Validates that the input is iterable
+Iterates over all inputs
+Uses Promise.resolve to normalize non-Promise values
+Resolves or rejects as soon as one Promise settles
+
+function myPromiseRace(promises) &#123;  return new Promise((resolve, reject) =&gt; &#123;    // Validate iterable input    if (!promises || typeof promises[Symbol.iterator] !== &#x27;function&#x27;) &#123;      return reject(new TypeError(&#x27;Argument is not iterable&#x27;));    &#125;    // Iterate over each Promise or value    for (const promise of promises) &#123;      // Wrap with Promise.resolve to handle thenables and values      Promise.resolve(promise)        .then(resolve)   // First fulfilled wins        .catch(reject);  // First rejected wins    &#125;  &#125;);&#125;
+
+
+
+4. Key Insight: Why Use Promise.resolve?The input to Promise.race does not have to be Promises. It may include:
+
+Plain values: Promise.race([1, 2, 3])
+Thenables: &#123; then(resolve) &#123; resolve(123) &#125; &#125;
+
+Using Promise.resolve(x) ensures:
+
+Plain values become immediately fulfilled Promises
+Thenables are properly assimilated into the Promise chain
+
+This behavior is consistent with the native Promise.race.
+5. Handling Empty Iterables
+Native Promise.race([]) returns a Promise that remains pending forever.
+
+Your current implementation behaves the same way, since the loop never executes.This matches the ECMAScript specification.
+You could add explicit handling, but it’s not required.
+6. Additional Test Cases6.1 Rejection Wins Firstconst p1 = new Promise(res =&gt; setTimeout(() =&gt; res(&#x27;p1&#x27;), 1000));const p2 = new Promise(res =&gt; setTimeout(() =&gt; res(&#x27;p2&#x27;), 500));const p3 = new Promise((res, rej) =&gt; setTimeout(() =&gt; rej(&#x27;p3 error&#x27;), 300));myPromiseRace([p1, p2, p3])  .then(console.log)  .catch(console.error); // Output: p3 error
+
+
+
+6.2 Plain Values Participate in the RacemyPromiseRace([  Promise.resolve(&#x27;A&#x27;),  123,  new Promise(res =&gt; setTimeout(() =&gt; res(&#x27;B&#x27;), 10))])  .then(console.log)  .catch(console.error);// Output: 123 (plain value wins immediately)
+
+
+
+6.3 Empty Array Remains Pendingconst p = myPromiseRace([]);setTimeout(() =&gt; console.log(&#x27;still pending...&#x27;), 1000);// After 1 second: &quot;still pending...&quot;
+
+
+
+7. Practical Example: Request Timeout with racefunction timeout(ms) &#123;  return new Promise((_, reject) =&gt; &#123;    setTimeout(() =&gt; reject(new Error(`Timeout after $&#123;ms&#125;ms`)), ms);  &#125;);&#125;async function fetchWithTimeout(url, ms = 3000) &#123;  return myPromiseRace([fetch(url), timeout(ms)]);&#125;// UsagefetchWithTimeout(&#x27;https://example.com/api&#x27;, 2000)  .then(res =&gt; res.json())  .then(data =&gt; console.log(&#x27;data:&#x27;, data))  .catch(err =&gt; console.error(&#x27;error:&#x27;, err.message));
+
+
+
+8. Common Interview Questions (Bonus Points)
+Q: Can Promise.race cancel the other Promises?No. Promises are not cancellable by default. Cancellation requires tools like AbortController or custom logic.
+
+Q: What happens if you pass a plain value into race?It is wrapped by Promise.resolve and usually wins immediately.
+
+Q: What’s the difference between race, any, and allSettled?
+
+race: settles as soon as the first Promise settles
+any: fulfills as soon as the first Promise fulfills (rejects only if all reject)
+allSettled: waits for all Promises and returns their final states
+
+
+
+9. SummaryThe core idea behind implementing Promise.race can be summarized in one sentence:
+
+Iterate over the iterable, wrap each item with Promise.resolve, attach the same resolve and reject, and let the first settled Promise decide the outcome.
+
+]]></content>
+      <categories>
+        <category>Frontend</category>
+      </categories>
   </entry>
   <entry>
     <title>Fully Understanding How the JavaScript `new` Operator Works</title>
@@ -835,98 +914,6 @@ If you can both write and explain this implementation,90% of interviewers will c
       </categories>
   </entry>
   <entry>
-    <title>Handwriting Promise.race (From Theory to Practice)</title>
-    <url>/ening/2025/12/18/%E6%89%8B%E5%86%99Promise/</url>
-    <content><![CDATA[In frontend interviews and daily development, Promise.race is a very common yet often overlooked API. Its rule is simple:
-
-Multiple Promises “race” against each other—whichever settles first (fulfilled or rejected) determines the final result.
-
-In this article, we will:
-
-Clearly explain how Promise.race behaves and when to use it
-Implement a custom myPromiseRace from scratch
-Cover edge cases, optimizations, and common interview questions
-
-1. What Is Promise.race?Promise.race(iterable) accepts an iterable (usually an array) and returns a new Promise:
-
-If any Promise fulfills first, the returned Promise fulfills
-If any Promise rejects first, the returned Promise rejects
-It does not wait for all Promises to finish
-It does not cancel the remaining Promises—they continue running
-
-2. Common Use Cases2.1 Timeout Control (Most Common)For example, treat a request as failed if it takes longer than 3 seconds:
-
-fetch(url) vs timeoutPromise(3000)
-Whichever finishes first determines the result
-
-2.2 Multiple Data Sources (Fallback Strategy)Fetch the same resource from multiple CDNs (CDN1&#x2F;CDN2).Use whichever responds first.
-2.3 First-Render RacingLoad primary data, fallback data, and cached data simultaneously.Render the page as soon as the fastest result arrives.
-3. Implementing myPromiseRaceThis implementation closely matches native behavior:
-
-Validates that the input is iterable
-Iterates over all inputs
-Uses Promise.resolve to normalize non-Promise values
-Resolves or rejects as soon as one Promise settles
-
-function myPromiseRace(promises) &#123;  return new Promise((resolve, reject) =&gt; &#123;    // Validate iterable input    if (!promises || typeof promises[Symbol.iterator] !== &#x27;function&#x27;) &#123;      return reject(new TypeError(&#x27;Argument is not iterable&#x27;));    &#125;    // Iterate over each Promise or value    for (const promise of promises) &#123;      // Wrap with Promise.resolve to handle thenables and values      Promise.resolve(promise)        .then(resolve)   // First fulfilled wins        .catch(reject);  // First rejected wins    &#125;  &#125;);&#125;
-
-
-
-4. Key Insight: Why Use Promise.resolve?The input to Promise.race does not have to be Promises. It may include:
-
-Plain values: Promise.race([1, 2, 3])
-Thenables: &#123; then(resolve) &#123; resolve(123) &#125; &#125;
-
-Using Promise.resolve(x) ensures:
-
-Plain values become immediately fulfilled Promises
-Thenables are properly assimilated into the Promise chain
-
-This behavior is consistent with the native Promise.race.
-5. Handling Empty Iterables
-Native Promise.race([]) returns a Promise that remains pending forever.
-
-Your current implementation behaves the same way, since the loop never executes.This matches the ECMAScript specification.
-You could add explicit handling, but it’s not required.
-6. Additional Test Cases6.1 Rejection Wins Firstconst p1 = new Promise(res =&gt; setTimeout(() =&gt; res(&#x27;p1&#x27;), 1000));const p2 = new Promise(res =&gt; setTimeout(() =&gt; res(&#x27;p2&#x27;), 500));const p3 = new Promise((res, rej) =&gt; setTimeout(() =&gt; rej(&#x27;p3 error&#x27;), 300));myPromiseRace([p1, p2, p3])  .then(console.log)  .catch(console.error); // Output: p3 error
-
-
-
-6.2 Plain Values Participate in the RacemyPromiseRace([  Promise.resolve(&#x27;A&#x27;),  123,  new Promise(res =&gt; setTimeout(() =&gt; res(&#x27;B&#x27;), 10))])  .then(console.log)  .catch(console.error);// Output: 123 (plain value wins immediately)
-
-
-
-6.3 Empty Array Remains Pendingconst p = myPromiseRace([]);setTimeout(() =&gt; console.log(&#x27;still pending...&#x27;), 1000);// After 1 second: &quot;still pending...&quot;
-
-
-
-7. Practical Example: Request Timeout with racefunction timeout(ms) &#123;  return new Promise((_, reject) =&gt; &#123;    setTimeout(() =&gt; reject(new Error(`Timeout after $&#123;ms&#125;ms`)), ms);  &#125;);&#125;async function fetchWithTimeout(url, ms = 3000) &#123;  return myPromiseRace([fetch(url), timeout(ms)]);&#125;// UsagefetchWithTimeout(&#x27;https://example.com/api&#x27;, 2000)  .then(res =&gt; res.json())  .then(data =&gt; console.log(&#x27;data:&#x27;, data))  .catch(err =&gt; console.error(&#x27;error:&#x27;, err.message));
-
-
-
-8. Common Interview Questions (Bonus Points)
-Q: Can Promise.race cancel the other Promises?No. Promises are not cancellable by default. Cancellation requires tools like AbortController or custom logic.
-
-Q: What happens if you pass a plain value into race?It is wrapped by Promise.resolve and usually wins immediately.
-
-Q: What’s the difference between race, any, and allSettled?
-
-race: settles as soon as the first Promise settles
-any: fulfills as soon as the first Promise fulfills (rejects only if all reject)
-allSettled: waits for all Promises and returns their final states
-
-
-
-9. SummaryThe core idea behind implementing Promise.race can be summarized in one sentence:
-
-Iterate over the iterable, wrap each item with Promise.resolve, attach the same resolve and reject, and let the first settled Promise decide the outcome.
-
-]]></content>
-      <categories>
-        <category>Frontend</category>
-      </categories>
-  </entry>
-  <entry>
     <title>Reflections on *Skin*</title>
     <url>/ening/2025/06/26/%E7%9A%AE%E5%9B%8A%E6%84%9F%E6%82%9F/</url>
     <content><![CDATA[Aunt TaiAunt Tai is strong-willed and resilient. Her optimistic attitude is something worth learning from. The greatest thing my father ever did was marrying my mother—a truly great woman. A real woman should face everything with positivity and build the future she desires with her own hands.
@@ -983,6 +970,99 @@ ConclusionThis book is not only about discovering “who you are,” but also ab
       </categories>
       <tags>
         <tag>Personal Growth</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Developing Without Frameworks</title>
+    <url>/ening/2025/08/13/%E5%A6%82%E4%BD%95%E8%84%B1%E7%A6%BB%E6%A1%86%E6%9E%B6%E5%BC%80%E5%8F%91/</url>
+    <content><![CDATA[
+Developing frontend applications without frameworks means building web projects without using any frontend frameworks such as Vue or React, and instead relying directly on JavaScript, HTML, and CSS. This approach allows developers to gain a deeper understanding of the underlying principles and mechanisms of frontend development, while avoiding over-reliance on frameworks.
+For static projects or low-complexity applications with limited functionality, developing without a framework is often more than sufficient. Code written with frameworks must be compiled before it can be rendered in the browser, which is why tools like Webpack exist. Frameworks such as Vue were created to solve specific pain points—like two-way data binding and automatic reactive updates—but they also require developers to follow framework-specific syntax and conventions. As frameworks evolve, developers must continuously learn and adapt to new versions.
+Frameworks are undoubtedly beneficial for development efficiency, but for simple requirements, avoiding a framework can actually be the wiser choice. Whether or not to use a framework should always be decided based on the actual project requirements.
+When developing multiple similar websites, unbundled code can be uploaded directly to the server and modified in place. In contrast, when using a framework, only the compiled output is deployed, and any changes require local modification and rebuilding, which can be more time-consuming. After becoming proficient in pure JavaScript development, developers can even go on to build their own tools or frameworks.
+]]></content>
+      <categories>
+        <category>Frontend</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>Inserting Scripts in Vue</title>
+    <url>/ening/2025/08/12/vue%E5%AE%9E%E7%8E%B0%E6%8F%92%E5%85%A5%E8%84%9A%E6%9C%AC/</url>
+    <content><![CDATA[How to Properly Insert &lt;script&gt; Code in Vue (Including Ad Code Examples)In real-world development, we often need to integrate third-party services such as advertising platforms, analytics tools, or customer support widgets. These services usually provide a block of code that includes &lt;script&gt; tags.
+However, if you try to place &lt;script&gt; tags directly inside a Vue template (&lt;template&gt;), they will not work—and may even cause errors.
+This article explains why &lt;script&gt; tags cannot be directly used inside Vue templates, and how to correctly inject scripts dynamically, with a ready-to-use example (using ad code as a case study).
+
+1. Why You Can’t Write &lt;script&gt; Directly in a Vue TemplateVue Single File Components (SFC) have a clear structure:
+
+&lt;template&gt;: markup &#x2F; structure
+&lt;script&gt;: logic
+&lt;style&gt;: styles
+
+Placing &lt;script&gt; tags inside &lt;template&gt; causes several problems:
+
+Vue treats &lt;script&gt; tags as plain text or strips them out
+It breaks Vue’s compilation process and may throw errors
+Third-party scripts (ads, analytics, trackers) will not execute at all
+
+Therefore, to make external scripts work properly, they must be dynamically injected using DOM APIs during the component lifecycle.
+
+2. Incorrect Example: Pasting Ad Code Directly (This Will NOT Work)Suppose an ad network provides the following code:
+&lt;script type=&quot;text/javascript&quot;&gt;  atOptions = &#123;    &#x27;key&#x27; : &#x27;1523b7ddb936e560aadef64a851d500c&#x27;,    &#x27;format&#x27; : &#x27;iframe&#x27;,    &#x27;height&#x27; : 250,    &#x27;width&#x27; : 300,    &#x27;params&#x27; : &#123;&#125;  &#125;;&lt;/script&gt;&lt;script  type=&quot;text/javascript&quot;  src=&quot;//www.highperformanceformat.com/1523b7ddb936e560aadef64a851d500c/invoke.js&quot;&gt;&lt;/script&gt;
+
+If you paste this code directly into a Vue &lt;template&gt;, the advertisement will never render.
+
+3. The Correct Approach: Dynamically Inject Scripts in VueThe core idea is simple:
+
+Place a container element in the template (e.g. &lt;div id=&quot;de_v&quot;&gt;&lt;/div&gt;)
+Use the onMounted (or mounted) lifecycle hook
+Create &lt;script&gt; elements via JavaScript
+Append them to the DOM
+
+
+4. Complete Example (Vue 3 + &lt;script setup&gt;)Assume the ad should be rendered inside a container with the ID &quot;de_v&quot;.
+Template Section&lt;template&gt;  &lt;div id=&quot;de_v&quot;&gt;&lt;/div&gt;&lt;/template&gt;
+
+Script Section&lt;script setup&gt;import &#123; onMounted &#125; from &quot;vue&quot;;onMounted(() =&gt; &#123;  const targetDiv = document.getElementById(&quot;de_v&quot;);  if (!targetDiv) return;  // Create the first script (ad configuration)  const script1 = document.createElement(&quot;script&quot;);  script1.type = &quot;text/javascript&quot;;  script1.innerHTML = `    atOptions = &#123;      &#x27;key&#x27; : &#x27;1523b7ddb936e560aadef64a851d500c&#x27;,      &#x27;format&#x27; : &#x27;iframe&#x27;,      &#x27;height&#x27; : 250,      &#x27;width&#x27; : 300,      &#x27;params&#x27; : &#123;&#125;    &#125;;  `;  // Create the second script (external ad script)  const script2 = document.createElement(&quot;script&quot;);  script2.type = &quot;text/javascript&quot;;  script2.src =    &quot;//www.highperformanceformat.com/1523b7ddb936e560aadef64a851d500c/invoke.js&quot;;  // Append scripts to the container  targetDiv.appendChild(script1);  targetDiv.appendChild(script2);&#125;);&lt;/script&gt;
+
+
+5. Common Issues and Notes1. Will the script be injected multiple times?If the component is mounted and unmounted repeatedly, the scripts may be injected multiple times.
+Solutions:
+
+Check whether the script already exists before inserting
+Or remove the scripts in onUnmounted
+
+
+2. How to Handle Multiple Ad Slots?Use different container IDs for each ad slot, for example:
+&lt;div id=&quot;ad1&quot;&gt;&lt;/div&gt;&lt;div id=&quot;ad2&quot;&gt;&lt;/div&gt;
+
+Then inject scripts into the corresponding container.
+
+3. What About SSR Frameworks (Nuxt)?On the server side, document is not available.
+You must run the script injection code on the client side only:
+onMounted(() =&gt; &#123; ... &#125;)
+
+Otherwise, you will encounter:
+document is not defined
+
+
+6. Summary
+You cannot directly place &lt;script&gt; tags inside Vue templates
+The correct solution is to dynamically create and inject scripts during the component lifecycle
+Using appendChild() ensures third-party scripts execute properly
+This approach works for ads, analytics, tracking pixels, and external SDKs
+
+By following the method described above, third-party scripts will run correctly in Vue-based applications.
+]]></content>
+      <categories>
+        <category>Frontend</category>
+      </categories>
+      <tags>
+        <tag>Vue</tag>
+        <tag>script</tag>
+        <tag>ad code</tag>
+        <tag>dynamic script injection</tag>
+        <tag>DOM manipulation</tag>
+        <tag>third-party ads</tag>
       </tags>
   </entry>
 </search>
