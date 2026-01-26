@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>React Native New Architecture</title>
+    <url>/ening/2025/08/19/ReactNative%E6%96%B0%E6%9E%B6%E6%9E%84/</url>
+    <content><![CDATA[
+Fabric: Enables synchronous UI rendering, eliminating the communication bottleneck of the Bridge.
+TurboModules: Loads native modules on demand, improving app startup performance.
+JSI (JavaScript Interface): Allows JavaScript to directly call native code, replacing the asynchronous Bridge. The Bridge is asynchronous and single-threaded, which introduces additional overhead; JSI, by contrast, is synchronous, lower-overhead, and supports concurrency.
+
+]]></content>
+      <categories>
+        <category>Frontend</category>
+      </categories>
+  </entry>
+  <entry>
     <title>ELK Installation Guide</title>
     <url>/ening/2025/04/11/ELK%E5%AE%89%E8%A3%85%E6%B5%81%E7%A8%8B/</url>
     <content><![CDATA[Installing ELK Stack (ElasticSearch, Logstash, Kibana) with Docker
@@ -80,44 +93,6 @@ Additional: Install Docker, Portainer, and Related Commandssudo apt updatesudo a
       </categories>
   </entry>
   <entry>
-    <title>Hexo-Next – Change Fonts &amp; Enable Code Copy</title>
-    <url>/ening/2025/08/18/Hexo-Next-%E6%9B%B4%E6%94%B9%E5%AD%97%E4%BD%93/</url>
-    <content><![CDATA[
-The Next theme version used here is 7.8.0.
-First, locate the file:
-/themes/next/_config.yml
-
-Search for the keyword font.⚠️ Important: You must set enable inside font to true, because the default value is false.If you only modify the family without enabling it, the font change will not take effect — so make sure you don’t miss this step.
-If the font family is sourced from an external platform, you also need to configure the host.
-font:  enable: true  # Uri of fonts host, e.g. https://fonts.googleapis.com (Default).  host:   # Font options:  # `external: true` will load this font family from `host` above.  # `family: Times New Roman`. Without any quotes.  # `size: x.x`. Use `em` as unit. Default: 1 (16px)  # Global font settings used for all elements inside &lt;body&gt;.  global:    external: true    family: Noto Serif SC    size:  # Font settings for site title (.site-title).  title:    external: true    family: Noto Serif SC    size:  # Font settings for headlines (&lt;h1&gt; to &lt;h6&gt;).  headings:    external: true    family: Noto Serif SC    size:  # Font settings for posts (.post-body).  posts:    external: true    family: Noto Serif SC  # Font settings for &lt;code&gt; and code blocks.  codes:    external: true    family: Source Code Pro
-
-
-Enable Copy Button for Code BlocksIn the same _config.yml file, locate the following configuration section.
-Set copy_button.enable to true to enable the copy feature.
-
-When show_result is set to true, a checkmark will be shown after copying.
-The style option controls the appearance of the copy button. Choose based on your preference.
-
-codeblock:  # Code Highlight theme  # Available values: normal | night | night eighties | night blue | night bright | solarized | solarized dark | galactic  # See: https://github.com/chriskempson/tomorrow-theme  highlight_theme: night eighties  # Add copy button on codeblock  copy_button:    enable: true    # Show text copy result.    show_result: true    # Available values: default | flat | mac    style: mac
-]]></content>
-      <categories>
-        <category>Frontend</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>React Native New Architecture</title>
-    <url>/ening/2025/08/19/ReactNative%E6%96%B0%E6%9E%B6%E6%9E%84/</url>
-    <content><![CDATA[
-Fabric: Enables synchronous UI rendering, eliminating the communication bottleneck of the Bridge.
-TurboModules: Loads native modules on demand, improving app startup performance.
-JSI (JavaScript Interface): Allows JavaScript to directly call native code, replacing the asynchronous Bridge. The Bridge is asynchronous and single-threaded, which introduces additional overhead; JSI, by contrast, is synchronous, lower-overhead, and supports concurrency.
-
-]]></content>
-      <categories>
-        <category>Frontend</category>
-      </categories>
-  </entry>
-  <entry>
     <title>GitLab CI/CD</title>
     <url>/ening/2025/04/10/gitlabci/</url>
     <content><![CDATA[GitLab CI&#x2F;CD Guide for Frontend Projects (Mac Environment)OverviewIn daily development, we often manually send the built dist package to the backend for deployment, which is inefficient and error-prone. CI (Continuous Integration) automates this process. This guide shows how to use GitLab CI to implement continuous integration and deployment.
@@ -182,6 +157,31 @@ After successful deployment, you can view the build process on the GitLab CI&#x2
       <tags>
         <tag>Frontend</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>Hexo-Next – Change Fonts &amp; Enable Code Copy</title>
+    <url>/ening/2025/08/18/Hexo-Next-%E6%9B%B4%E6%94%B9%E5%AD%97%E4%BD%93/</url>
+    <content><![CDATA[
+The Next theme version used here is 7.8.0.
+First, locate the file:
+/themes/next/_config.yml
+
+Search for the keyword font.⚠️ Important: You must set enable inside font to true, because the default value is false.If you only modify the family without enabling it, the font change will not take effect — so make sure you don’t miss this step.
+If the font family is sourced from an external platform, you also need to configure the host.
+font:  enable: true  # Uri of fonts host, e.g. https://fonts.googleapis.com (Default).  host:   # Font options:  # `external: true` will load this font family from `host` above.  # `family: Times New Roman`. Without any quotes.  # `size: x.x`. Use `em` as unit. Default: 1 (16px)  # Global font settings used for all elements inside &lt;body&gt;.  global:    external: true    family: Noto Serif SC    size:  # Font settings for site title (.site-title).  title:    external: true    family: Noto Serif SC    size:  # Font settings for headlines (&lt;h1&gt; to &lt;h6&gt;).  headings:    external: true    family: Noto Serif SC    size:  # Font settings for posts (.post-body).  posts:    external: true    family: Noto Serif SC  # Font settings for &lt;code&gt; and code blocks.  codes:    external: true    family: Source Code Pro
+
+
+Enable Copy Button for Code BlocksIn the same _config.yml file, locate the following configuration section.
+Set copy_button.enable to true to enable the copy feature.
+
+When show_result is set to true, a checkmark will be shown after copying.
+The style option controls the appearance of the copy button. Choose based on your preference.
+
+codeblock:  # Code Highlight theme  # Available values: normal | night | night eighties | night blue | night bright | solarized | solarized dark | galactic  # See: https://github.com/chriskempson/tomorrow-theme  highlight_theme: night eighties  # Add copy button on codeblock  copy_button:    enable: true    # Show text copy result.    show_result: true    # Available values: default | flat | mac    style: mac
+]]></content>
+      <categories>
+        <category>Frontend</category>
+      </categories>
   </entry>
   <entry>
     <title>JavaScript Basics</title>
@@ -318,165 +318,6 @@ Understanding Entertainment &amp; FreedomLife has two paths: one for career ambi
       <categories>
         <category>Teacher Certification</category>
       </categories>
-  </entry>
-  <entry>
-    <title>How to Prevent XSS</title>
-    <url>/ening/2025/10/17/%E5%A6%82%E4%BD%95%E9%98%B2%E5%BE%A1%20XSS%EF%BC%88%E8%B7%A8%E7%AB%99%E8%84%9A%E6%9C%AC%E6%94%BB%E5%87%BB%EF%BC%89/</url>
-    <content><![CDATA[In web development, XSS (Cross-Site Scripting) is one of the most common and most dangerous security vulnerabilities.Once a website contains an XSS flaw, attackers may execute malicious scripts in users’ browsers, allowing them to steal cookies, hijack sessions, deface pages, or even take over user accounts.
-This article explains how to effectively defend against XSS attacks from both a theoretical and practical perspective, covering frontend and full-stack security best practices.
-1. What Is an XSS Attack?The essence of XSS is simple:
-
-An attacker injects malicious JavaScript into a webpage, which is then executed in other users’ browsers.
-
-Common types of XSS attacks include:
-
-Reflected XSS: malicious scripts are delivered through URL parameters
-Stored XSS: malicious scripts are stored in a database and served to users
-DOM-based XSS: frontend JavaScript logic directly handles untrusted data
-
-No matter the type, the root cause is the same:👉 User input is treated as executable code.
-2. Input Validation and Filtering (The Most Basic Defense)Never trust user input.
-1. Basic Frontend ValidationOn the frontend, basic validation can improve user experience, such as:
-
-Limiting input length
-Enforcing input formats (e.g., email, phone numbers)
-Filtering obviously dangerous characters
-
-Example (for basic validation only):
-function sanitizeInput(input) &#123;  return input.replace(/[&lt;&gt;]/g, &#x27;&#x27;);&#125;
-
-⚠️ Important:Frontend validation is not a security boundary and should never be relied on alone.
-2. Strict Backend Validation (Critical)Effective input validation must be performed on the server side:
-
-Validate data types
-Enforce length constraints
-Reject inputs that violate business rules
-Escape or sanitize HTML content using whitelists
-
-Recommended principles:
-
-Deny by default
-Whitelist over blacklist
-
-3. Output Encoding (More Important Than Input Filtering)Many XSS vulnerabilities occur not because input is unsafe, but because output is handled incorrectly.
-1. HTML Escaping on OutputWhen rendering user input, always encode HTML characters:
-
-
-
-Character
-Escaped Form
-
-
-
-&lt;
-&amp;lt;
-
-
-&gt;
-&amp;gt;
-
-
-&quot;
-&amp;quot;
-
-
-&#39;
-&amp;#39;
-
-
-Most modern template engines (Vue, React, Handlebars) escape output by default.Do not disable this behavior unless absolutely necessary.
-2. Avoid Dangerous APIsAvoid patterns like:
-element.innerHTML = userInput;
-
-Safer alternatives include:
-element.textContent = userInput;
-
-Or:
-const el = document.createElement(&#x27;div&#x27;);el.textContent = userInput;container.appendChild(el);
-
-
-
-4. Use Safe APIs and Framework ProtectionsModern frontend frameworks include built-in XSS protections.
-1. Default Protections in React and Vue
-JSX and template syntax escape output by default
-Dangerous APIs are explicitly labeled (e.g., v-html, dangerouslySetInnerHTML)
-
-⚠️ If you use these APIs, you must ensure the content is 100% trusted.
-2. Avoid String-Based HTML Construction❌ Unsafe example:
-container.innerHTML = `&lt;div&gt;$&#123;userInput&#125;&lt;/div&gt;`;
-
-✅ Safe alternative:
-const div = document.createElement(&#x27;div&#x27;);div.textContent = userInput;container.appendChild(div);
-
-
-
-5. Use Content Security Policy (CSP)Content Security Policy (CSP) is one of the most powerful defenses against XSS.
-1. What CSP Can Do
-Block inline script execution
-Restrict allowed script sources
-Prevent loading malicious third-party resources
-
-Example HTTP header:
-Content-Security-Policy:  default-src &#x27;self&#x27;;  script-src &#x27;self&#x27;;  object-src &#x27;none&#x27;;
-
-Even if an attacker injects a script, CSP can prevent the browser from executing it.
-2. Why CSP Is So ImportantBecause it provides:
-
-Browser-level protection
-A strong fallback even when application code has flaws
-
-6. Use HttpOnly and Secure Cookies1. Purpose of HttpOnlyWhen setting cookies, add the HttpOnly flag:
-Set-Cookie: sessionId=xxx; HttpOnly;
-
-This prevents JavaScript from accessing cookies, reducing the impact of XSS attacks.
-2. Combine with Secure and SameSiteFor stronger protection, also use:
-
-Secure
-SameSite=Strict or Lax
-
-This significantly improves session security.
-7. Keep Third-Party Libraries Up to DateIn real-world projects, many XSS vulnerabilities come from third-party dependencies:
-
-Outdated UI components
-Unmaintained plugins
-Vulnerable npm packages
-
-Best practices:
-
-Update dependencies regularly
-Use npm audit
-Monitor security advisories
-
-8. Develop Secure Coding HabitsPreventing XSS is not about a single technique, but about consistent habits:
-
-Never trust external input
-Avoid innerHTML unless necessary
-Do not ignore security warnings
-Prioritize security over convenience
-
-9. Summary
-XSS is one of the most common and dangerous web security threats
-Effective protection requires frontend, backend, and browser-level defenses
-Input validation is only the beginning—safe output handling and CSP are critical
-Good security habits are more valuable than any single patch
-
-For frontend developers,understanding how to prevent XSS is a key step toward true professionalism.
-]]></content>
-      <categories>
-        <category>Frontend</category>
-      </categories>
-      <tags>
-        <tag>XSS</tag>
-        <tag>Web Security</tag>
-        <tag>Frontend Security</tag>
-        <tag>JavaScript</tag>
-        <tag>Browser Security</tag>
-        <tag>Cybersecurity</tag>
-        <tag>Web Development</tag>
-        <tag>Secure Coding</tag>
-        <tag>Content Security Policy</tag>
-        <tag>HttpOnly</tag>
-      </tags>
   </entry>
   <entry>
     <title>Frontend Interview Questions</title>
@@ -664,6 +505,165 @@ Scoped slot: Vue 2 uses slot-scope=&quot;data&quot;, Vue 3 uses #data or #defaul
       </tags>
   </entry>
   <entry>
+    <title>How to Prevent XSS</title>
+    <url>/ening/2025/10/17/%E5%A6%82%E4%BD%95%E9%98%B2%E5%BE%A1%20XSS%EF%BC%88%E8%B7%A8%E7%AB%99%E8%84%9A%E6%9C%AC%E6%94%BB%E5%87%BB%EF%BC%89/</url>
+    <content><![CDATA[In web development, XSS (Cross-Site Scripting) is one of the most common and most dangerous security vulnerabilities.Once a website contains an XSS flaw, attackers may execute malicious scripts in users’ browsers, allowing them to steal cookies, hijack sessions, deface pages, or even take over user accounts.
+This article explains how to effectively defend against XSS attacks from both a theoretical and practical perspective, covering frontend and full-stack security best practices.
+1. What Is an XSS Attack?The essence of XSS is simple:
+
+An attacker injects malicious JavaScript into a webpage, which is then executed in other users’ browsers.
+
+Common types of XSS attacks include:
+
+Reflected XSS: malicious scripts are delivered through URL parameters
+Stored XSS: malicious scripts are stored in a database and served to users
+DOM-based XSS: frontend JavaScript logic directly handles untrusted data
+
+No matter the type, the root cause is the same:👉 User input is treated as executable code.
+2. Input Validation and Filtering (The Most Basic Defense)Never trust user input.
+1. Basic Frontend ValidationOn the frontend, basic validation can improve user experience, such as:
+
+Limiting input length
+Enforcing input formats (e.g., email, phone numbers)
+Filtering obviously dangerous characters
+
+Example (for basic validation only):
+function sanitizeInput(input) &#123;  return input.replace(/[&lt;&gt;]/g, &#x27;&#x27;);&#125;
+
+⚠️ Important:Frontend validation is not a security boundary and should never be relied on alone.
+2. Strict Backend Validation (Critical)Effective input validation must be performed on the server side:
+
+Validate data types
+Enforce length constraints
+Reject inputs that violate business rules
+Escape or sanitize HTML content using whitelists
+
+Recommended principles:
+
+Deny by default
+Whitelist over blacklist
+
+3. Output Encoding (More Important Than Input Filtering)Many XSS vulnerabilities occur not because input is unsafe, but because output is handled incorrectly.
+1. HTML Escaping on OutputWhen rendering user input, always encode HTML characters:
+
+
+
+Character
+Escaped Form
+
+
+
+&lt;
+&amp;lt;
+
+
+&gt;
+&amp;gt;
+
+
+&quot;
+&amp;quot;
+
+
+&#39;
+&amp;#39;
+
+
+Most modern template engines (Vue, React, Handlebars) escape output by default.Do not disable this behavior unless absolutely necessary.
+2. Avoid Dangerous APIsAvoid patterns like:
+element.innerHTML = userInput;
+
+Safer alternatives include:
+element.textContent = userInput;
+
+Or:
+const el = document.createElement(&#x27;div&#x27;);el.textContent = userInput;container.appendChild(el);
+
+
+
+4. Use Safe APIs and Framework ProtectionsModern frontend frameworks include built-in XSS protections.
+1. Default Protections in React and Vue
+JSX and template syntax escape output by default
+Dangerous APIs are explicitly labeled (e.g., v-html, dangerouslySetInnerHTML)
+
+⚠️ If you use these APIs, you must ensure the content is 100% trusted.
+2. Avoid String-Based HTML Construction❌ Unsafe example:
+container.innerHTML = `&lt;div&gt;$&#123;userInput&#125;&lt;/div&gt;`;
+
+✅ Safe alternative:
+const div = document.createElement(&#x27;div&#x27;);div.textContent = userInput;container.appendChild(div);
+
+
+
+5. Use Content Security Policy (CSP)Content Security Policy (CSP) is one of the most powerful defenses against XSS.
+1. What CSP Can Do
+Block inline script execution
+Restrict allowed script sources
+Prevent loading malicious third-party resources
+
+Example HTTP header:
+Content-Security-Policy:  default-src &#x27;self&#x27;;  script-src &#x27;self&#x27;;  object-src &#x27;none&#x27;;
+
+Even if an attacker injects a script, CSP can prevent the browser from executing it.
+2. Why CSP Is So ImportantBecause it provides:
+
+Browser-level protection
+A strong fallback even when application code has flaws
+
+6. Use HttpOnly and Secure Cookies1. Purpose of HttpOnlyWhen setting cookies, add the HttpOnly flag:
+Set-Cookie: sessionId=xxx; HttpOnly;
+
+This prevents JavaScript from accessing cookies, reducing the impact of XSS attacks.
+2. Combine with Secure and SameSiteFor stronger protection, also use:
+
+Secure
+SameSite=Strict or Lax
+
+This significantly improves session security.
+7. Keep Third-Party Libraries Up to DateIn real-world projects, many XSS vulnerabilities come from third-party dependencies:
+
+Outdated UI components
+Unmaintained plugins
+Vulnerable npm packages
+
+Best practices:
+
+Update dependencies regularly
+Use npm audit
+Monitor security advisories
+
+8. Develop Secure Coding HabitsPreventing XSS is not about a single technique, but about consistent habits:
+
+Never trust external input
+Avoid innerHTML unless necessary
+Do not ignore security warnings
+Prioritize security over convenience
+
+9. Summary
+XSS is one of the most common and dangerous web security threats
+Effective protection requires frontend, backend, and browser-level defenses
+Input validation is only the beginning—safe output handling and CSP are critical
+Good security habits are more valuable than any single patch
+
+For frontend developers,understanding how to prevent XSS is a key step toward true professionalism.
+]]></content>
+      <categories>
+        <category>Frontend</category>
+      </categories>
+      <tags>
+        <tag>XSS</tag>
+        <tag>Web Security</tag>
+        <tag>Frontend Security</tag>
+        <tag>JavaScript</tag>
+        <tag>Browser Security</tag>
+        <tag>Cybersecurity</tag>
+        <tag>Web Development</tag>
+        <tag>Secure Coding</tag>
+        <tag>Content Security Policy</tag>
+        <tag>HttpOnly</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Installing Puppeteer on Baota Panel</title>
     <url>/ening/2025/09/02/%E5%AE%9D%E5%A1%94%E5%AE%89%E8%A3%85puppeteer/</url>
     <content><![CDATA[Installing Puppeteer on Baota (CentOS 8)When using CentOS 8, yum may fail because CentOS 8 is no longer officially maintained.To fix this, you need to switch the YUM mirror source, clear the cache, and rebuild it.
@@ -708,98 +708,6 @@ Oh, right—just like Brother Shang waiting at the finish line, and I’d smile 
       <tags>
         <tag>Reading</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>Handwriting Promise.race (From Theory to Practice)</title>
-    <url>/ening/2025/12/18/%E6%89%8B%E5%86%99Promise/</url>
-    <content><![CDATA[In frontend interviews and daily development, Promise.race is a very common yet often overlooked API. Its rule is simple:
-
-Multiple Promises “race” against each other—whichever settles first (fulfilled or rejected) determines the final result.
-
-In this article, we will:
-
-Clearly explain how Promise.race behaves and when to use it
-Implement a custom myPromiseRace from scratch
-Cover edge cases, optimizations, and common interview questions
-
-1. What Is Promise.race?Promise.race(iterable) accepts an iterable (usually an array) and returns a new Promise:
-
-If any Promise fulfills first, the returned Promise fulfills
-If any Promise rejects first, the returned Promise rejects
-It does not wait for all Promises to finish
-It does not cancel the remaining Promises—they continue running
-
-2. Common Use Cases2.1 Timeout Control (Most Common)For example, treat a request as failed if it takes longer than 3 seconds:
-
-fetch(url) vs timeoutPromise(3000)
-Whichever finishes first determines the result
-
-2.2 Multiple Data Sources (Fallback Strategy)Fetch the same resource from multiple CDNs (CDN1&#x2F;CDN2).Use whichever responds first.
-2.3 First-Render RacingLoad primary data, fallback data, and cached data simultaneously.Render the page as soon as the fastest result arrives.
-3. Implementing myPromiseRaceThis implementation closely matches native behavior:
-
-Validates that the input is iterable
-Iterates over all inputs
-Uses Promise.resolve to normalize non-Promise values
-Resolves or rejects as soon as one Promise settles
-
-function myPromiseRace(promises) &#123;  return new Promise((resolve, reject) =&gt; &#123;    // Validate iterable input    if (!promises || typeof promises[Symbol.iterator] !== &#x27;function&#x27;) &#123;      return reject(new TypeError(&#x27;Argument is not iterable&#x27;));    &#125;    // Iterate over each Promise or value    for (const promise of promises) &#123;      // Wrap with Promise.resolve to handle thenables and values      Promise.resolve(promise)        .then(resolve)   // First fulfilled wins        .catch(reject);  // First rejected wins    &#125;  &#125;);&#125;
-
-
-
-4. Key Insight: Why Use Promise.resolve?The input to Promise.race does not have to be Promises. It may include:
-
-Plain values: Promise.race([1, 2, 3])
-Thenables: &#123; then(resolve) &#123; resolve(123) &#125; &#125;
-
-Using Promise.resolve(x) ensures:
-
-Plain values become immediately fulfilled Promises
-Thenables are properly assimilated into the Promise chain
-
-This behavior is consistent with the native Promise.race.
-5. Handling Empty Iterables
-Native Promise.race([]) returns a Promise that remains pending forever.
-
-Your current implementation behaves the same way, since the loop never executes.This matches the ECMAScript specification.
-You could add explicit handling, but it’s not required.
-6. Additional Test Cases6.1 Rejection Wins Firstconst p1 = new Promise(res =&gt; setTimeout(() =&gt; res(&#x27;p1&#x27;), 1000));const p2 = new Promise(res =&gt; setTimeout(() =&gt; res(&#x27;p2&#x27;), 500));const p3 = new Promise((res, rej) =&gt; setTimeout(() =&gt; rej(&#x27;p3 error&#x27;), 300));myPromiseRace([p1, p2, p3])  .then(console.log)  .catch(console.error); // Output: p3 error
-
-
-
-6.2 Plain Values Participate in the RacemyPromiseRace([  Promise.resolve(&#x27;A&#x27;),  123,  new Promise(res =&gt; setTimeout(() =&gt; res(&#x27;B&#x27;), 10))])  .then(console.log)  .catch(console.error);// Output: 123 (plain value wins immediately)
-
-
-
-6.3 Empty Array Remains Pendingconst p = myPromiseRace([]);setTimeout(() =&gt; console.log(&#x27;still pending...&#x27;), 1000);// After 1 second: &quot;still pending...&quot;
-
-
-
-7. Practical Example: Request Timeout with racefunction timeout(ms) &#123;  return new Promise((_, reject) =&gt; &#123;    setTimeout(() =&gt; reject(new Error(`Timeout after $&#123;ms&#125;ms`)), ms);  &#125;);&#125;async function fetchWithTimeout(url, ms = 3000) &#123;  return myPromiseRace([fetch(url), timeout(ms)]);&#125;// UsagefetchWithTimeout(&#x27;https://example.com/api&#x27;, 2000)  .then(res =&gt; res.json())  .then(data =&gt; console.log(&#x27;data:&#x27;, data))  .catch(err =&gt; console.error(&#x27;error:&#x27;, err.message));
-
-
-
-8. Common Interview Questions (Bonus Points)
-Q: Can Promise.race cancel the other Promises?No. Promises are not cancellable by default. Cancellation requires tools like AbortController or custom logic.
-
-Q: What happens if you pass a plain value into race?It is wrapped by Promise.resolve and usually wins immediately.
-
-Q: What’s the difference between race, any, and allSettled?
-
-race: settles as soon as the first Promise settles
-any: fulfills as soon as the first Promise fulfills (rejects only if all reject)
-allSettled: waits for all Promises and returns their final states
-
-
-
-9. SummaryThe core idea behind implementing Promise.race can be summarized in one sentence:
-
-Iterate over the iterable, wrap each item with Promise.resolve, attach the same resolve and reject, and let the first settled Promise decide the outcome.
-
-]]></content>
-      <categories>
-        <category>Frontend</category>
-      </categories>
   </entry>
   <entry>
     <title>Fully Understanding How the JavaScript `new` Operator Works</title>
@@ -908,6 +816,98 @@ Handwriting new is one of the best ways to understand prototype chains, this, an
 Mastering this concept helps when learning Vue, React, and Node.js internals
 
 If you can both write and explain this implementation,90% of interviewers will consider your JavaScript fundamentals solid.
+]]></content>
+      <categories>
+        <category>Frontend</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>Handwriting Promise.race (From Theory to Practice)</title>
+    <url>/ening/2025/12/18/%E6%89%8B%E5%86%99Promise/</url>
+    <content><![CDATA[In frontend interviews and daily development, Promise.race is a very common yet often overlooked API. Its rule is simple:
+
+Multiple Promises “race” against each other—whichever settles first (fulfilled or rejected) determines the final result.
+
+In this article, we will:
+
+Clearly explain how Promise.race behaves and when to use it
+Implement a custom myPromiseRace from scratch
+Cover edge cases, optimizations, and common interview questions
+
+1. What Is Promise.race?Promise.race(iterable) accepts an iterable (usually an array) and returns a new Promise:
+
+If any Promise fulfills first, the returned Promise fulfills
+If any Promise rejects first, the returned Promise rejects
+It does not wait for all Promises to finish
+It does not cancel the remaining Promises—they continue running
+
+2. Common Use Cases2.1 Timeout Control (Most Common)For example, treat a request as failed if it takes longer than 3 seconds:
+
+fetch(url) vs timeoutPromise(3000)
+Whichever finishes first determines the result
+
+2.2 Multiple Data Sources (Fallback Strategy)Fetch the same resource from multiple CDNs (CDN1&#x2F;CDN2).Use whichever responds first.
+2.3 First-Render RacingLoad primary data, fallback data, and cached data simultaneously.Render the page as soon as the fastest result arrives.
+3. Implementing myPromiseRaceThis implementation closely matches native behavior:
+
+Validates that the input is iterable
+Iterates over all inputs
+Uses Promise.resolve to normalize non-Promise values
+Resolves or rejects as soon as one Promise settles
+
+function myPromiseRace(promises) &#123;  return new Promise((resolve, reject) =&gt; &#123;    // Validate iterable input    if (!promises || typeof promises[Symbol.iterator] !== &#x27;function&#x27;) &#123;      return reject(new TypeError(&#x27;Argument is not iterable&#x27;));    &#125;    // Iterate over each Promise or value    for (const promise of promises) &#123;      // Wrap with Promise.resolve to handle thenables and values      Promise.resolve(promise)        .then(resolve)   // First fulfilled wins        .catch(reject);  // First rejected wins    &#125;  &#125;);&#125;
+
+
+
+4. Key Insight: Why Use Promise.resolve?The input to Promise.race does not have to be Promises. It may include:
+
+Plain values: Promise.race([1, 2, 3])
+Thenables: &#123; then(resolve) &#123; resolve(123) &#125; &#125;
+
+Using Promise.resolve(x) ensures:
+
+Plain values become immediately fulfilled Promises
+Thenables are properly assimilated into the Promise chain
+
+This behavior is consistent with the native Promise.race.
+5. Handling Empty Iterables
+Native Promise.race([]) returns a Promise that remains pending forever.
+
+Your current implementation behaves the same way, since the loop never executes.This matches the ECMAScript specification.
+You could add explicit handling, but it’s not required.
+6. Additional Test Cases6.1 Rejection Wins Firstconst p1 = new Promise(res =&gt; setTimeout(() =&gt; res(&#x27;p1&#x27;), 1000));const p2 = new Promise(res =&gt; setTimeout(() =&gt; res(&#x27;p2&#x27;), 500));const p3 = new Promise((res, rej) =&gt; setTimeout(() =&gt; rej(&#x27;p3 error&#x27;), 300));myPromiseRace([p1, p2, p3])  .then(console.log)  .catch(console.error); // Output: p3 error
+
+
+
+6.2 Plain Values Participate in the RacemyPromiseRace([  Promise.resolve(&#x27;A&#x27;),  123,  new Promise(res =&gt; setTimeout(() =&gt; res(&#x27;B&#x27;), 10))])  .then(console.log)  .catch(console.error);// Output: 123 (plain value wins immediately)
+
+
+
+6.3 Empty Array Remains Pendingconst p = myPromiseRace([]);setTimeout(() =&gt; console.log(&#x27;still pending...&#x27;), 1000);// After 1 second: &quot;still pending...&quot;
+
+
+
+7. Practical Example: Request Timeout with racefunction timeout(ms) &#123;  return new Promise((_, reject) =&gt; &#123;    setTimeout(() =&gt; reject(new Error(`Timeout after $&#123;ms&#125;ms`)), ms);  &#125;);&#125;async function fetchWithTimeout(url, ms = 3000) &#123;  return myPromiseRace([fetch(url), timeout(ms)]);&#125;// UsagefetchWithTimeout(&#x27;https://example.com/api&#x27;, 2000)  .then(res =&gt; res.json())  .then(data =&gt; console.log(&#x27;data:&#x27;, data))  .catch(err =&gt; console.error(&#x27;error:&#x27;, err.message));
+
+
+
+8. Common Interview Questions (Bonus Points)
+Q: Can Promise.race cancel the other Promises?No. Promises are not cancellable by default. Cancellation requires tools like AbortController or custom logic.
+
+Q: What happens if you pass a plain value into race?It is wrapped by Promise.resolve and usually wins immediately.
+
+Q: What’s the difference between race, any, and allSettled?
+
+race: settles as soon as the first Promise settles
+any: fulfills as soon as the first Promise fulfills (rejects only if all reject)
+allSettled: waits for all Promises and returns their final states
+
+
+
+9. SummaryThe core idea behind implementing Promise.race can be summarized in one sentence:
+
+Iterate over the iterable, wrap each item with Promise.resolve, attach the same resolve and reject, and let the first settled Promise decide the outcome.
+
 ]]></content>
       <categories>
         <category>Frontend</category>
@@ -1064,5 +1064,22 @@ By following the method described above, third-party scripts will run correctly 
         <tag>DOM manipulation</tag>
         <tag>third-party ads</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>Saving Retrieved CSV Data into a Database</title>
+    <url>/ening/2025/07/29/%E8%8E%B7%E5%8F%96%E5%88%B0%E7%9A%84csv%E4%BF%9D%E5%AD%98%E6%95%B0%E6%8D%AE%E5%BA%93/</url>
+    <content><![CDATA[Saving CSV Data from a Third-Party API into a DatabaseWhen data retrieved from a third-party API is returned in CSV format, a common and reliable approach is:
+
+First, save the CSV file to a local path
+Then use fs.createReadStream to read the file
+Finally, parse the CSV content and store it in a local database
+
+Below is an example implementation:
+const processConversations = async (dateObj) =&gt; &#123;  const username = &#x27;your_account_name&#x27;;  const password = &#x27;password&#x27;;  const year = dateObj.format(&#x27;YYYY&#x27;);  const month = dateObj.format(&#x27;MM&#x27;);  const day = dateObj.format(&#x27;DD&#x27;);  const hour = dateObj.format(&#x27;HH&#x27;);  const dateStr = `$&#123;year&#125;-$&#123;month&#125;-$&#123;day&#125;-$&#123;hour&#125;`;  const fileName = `partial_path`;  const url = `https://api/$&#123;fileName&#125;`;  const outputPath = `/tmp/conversations`;  const tableName = &#x27;test&#x27;;  try &#123;    // Download CSV    const response = await axios.get(url, &#123;      responseType: &#x27;stream&#x27;,      headers: &#123;        Authorization: `Basic $&#123;Buffer.from(`$&#123;username&#125;:$&#123;password&#125;`).toString(&#x27;base64&#x27;)&#125;`      &#125;    &#125;);    const writer = fs.createWriteStream(outputPath);    response.data.pipe(writer);    await new Promise((resolve, reject) =&gt; &#123;      writer.on(&#x27;finish&#x27;, resolve);      writer.on(&#x27;error&#x27;, reject);    &#125;);    console.log(&#x27;CSV file downloaded successfully:&#x27;, fileName);    const rows = [];    await new Promise((resolve, reject) =&gt; &#123;      fs.createReadStream(outputPath)        .pipe(csv())        .on(&#x27;data&#x27;, (row) =&gt; &#123;          rows.push([            row[&#x27;DATE_TIME&#x27;]              ? dayjs(row[&#x27;DATE_TIME&#x27;]).format(&#x27;YYYY-MM-DD HH:mm:ss&#x27;)              : null,            row[&#x27;CLID&#x27;] || null,            row[&#x27;CLID_SOURCE&#x27;] || null          ]);        &#125;)        .on(&#x27;end&#x27;, resolve)        .on(&#x27;error&#x27;, reject);    &#125;);    if (rows.length === 0) &#123;      console.warn(`No data found in CSV: $&#123;fileName&#125;`);      return;    &#125;    const insertSQL = `      INSERT INTO \`$&#123;tableName&#125;\` (        date_time, clid, clid_source      ) VALUES ?    `;    await query(insertSQL, [rows]);    console.log(`Successfully inserted $&#123;rows.length&#125; records: $&#123;fileName&#125;`);  &#125; catch (error) &#123;    console.error(`Error ($&#123;fileName&#125;):`, error.message);  &#125;&#125;;
+
+]]></content>
+      <categories>
+        <category>Backend</category>
+      </categories>
   </entry>
 </search>

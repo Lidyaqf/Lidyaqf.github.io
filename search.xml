@@ -1,31 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Hexo-Next-更改字体、代码可复制</title>
-    <url>/2025/08/18/Hexo-Next-%E6%9B%B4%E6%94%B9%E5%AD%97%E4%BD%93/</url>
-    <content><![CDATA[Next版本为7.8.0，找到 &#x2F;themes&#x2F;next&#x2F;_config.yml 文件，搜索 font 关键词，这里注意一定要将 font 里面的 enable 设置为true, 因为默认为false，然后设置 family 为自己想要的，如果family在其他平台找的，就需要修改host。(只是修改了family， 没修改enable就会不生效，所以一定一定要记得)
-font:  enable: true  # Uri of fonts host, e.g. https://fonts.googleapis.com (Default).  host:   # Font options:  # `external: true` will load this font family from `host` above.  # `family: Times New Roman`. Without any quotes.  # `size: x.x`. Use `em` as unit. Default: 1 (16px)  # Global font settings used for all elements inside &lt;body&gt;.  global:    external: true    family: Noto Serif SC    size:  # Font settings for site title (.site-title).  title:    external: true    family: Noto Serif SC    size:  # Font settings for headlines (&lt;h1&gt; to &lt;h6&gt;).  headings:    external: true    family: Noto Serif SC    size:  # Font settings for posts (.post-body).  posts:    external: true    family:  Noto Serif SC  # Font settings for &lt;code&gt; and code blocks.  codes:    external: true    family: Source Code Pro
-
-代码可复制，还是上面同一个文件，找到以下代码段，将copy_button的enable设置为true，启用就可以啦。show_result设置true后，复制完会显示一个勾。style对应的copy_button不同的样式，看个人喜好来～
-codeblock:  # Code Highlight theme  # Available values: normal | night | night eighties | night blue | night bright | solarized | solarized dark | galactic  # See: https://github.com/chriskempson/tomorrow-theme  highlight_theme: night eighties  # Add copy button on codeblock  copy_button:    enable: true    # Show text copy result.    show_result: true    # Available values: default | flat | mac    style: mac]]></content>
-      <categories>
-        <category>前端</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>ReactNative新架构</title>
-    <url>/2025/08/19/ReactNative%E6%96%B0%E6%9E%B6%E6%9E%84/</url>
-    <content><![CDATA[
-Fabric：同步渲染 UI，消除 Bridge 通信瓶颈
-TurboModules：按需加载原生模块，提升启动速度
-JSI（JavaScript Interface）：直接调用原生代码，替代异步 Bridge, Bridge是异步的、单线程的，会带来额外的开销；而JSI是同步的，更低开销、并发的。
-
-]]></content>
-      <categories>
-        <category>前端</category>
-      </categories>
-  </entry>
-  <entry>
     <title>H5与原生交互</title>
     <url>/2025/07/04/H5%E4%B8%8E%E5%8E%9F%E7%94%9F%E4%BA%A4%E4%BA%92/</url>
     <content><![CDATA[H5手机端日志工具(vconsole手机端)：&lt;script src=&quot;https://cdn.bootcdn.net/ajax/libs/vConsole/3.15.1/vconsole.min.js&quot;&gt;&lt;/script&gt;&lt;script&gt;  // 初始化 vConsole  var vConsole = new VConsole();  console.log(&#x27;vConsole is ready.&#x27;);&lt;/script&gt;
@@ -36,6 +11,18 @@ JSI（JavaScript Interface）：直接调用原生代码，替代异步 Bridge, 
 
 当需要通过按钮跳转到app时：直接用 a 标签的 href 跳转，前提是原生应用定义了 myapp://*** 作为触发特定功能的URL，可参考 Instagram 的 H5 跳转 app 的竞品例子，instagram://**。一般跳不过去就是原生端不支持。
 ]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>Hexo-Next-更改字体、代码可复制</title>
+    <url>/2025/08/18/Hexo-Next-%E6%9B%B4%E6%94%B9%E5%AD%97%E4%BD%93/</url>
+    <content><![CDATA[Next版本为7.8.0，找到 &#x2F;themes&#x2F;next&#x2F;_config.yml 文件，搜索 font 关键词，这里注意一定要将 font 里面的 enable 设置为true, 因为默认为false，然后设置 family 为自己想要的，如果family在其他平台找的，就需要修改host。(只是修改了family， 没修改enable就会不生效，所以一定一定要记得)
+font:  enable: true  # Uri of fonts host, e.g. https://fonts.googleapis.com (Default).  host:   # Font options:  # `external: true` will load this font family from `host` above.  # `family: Times New Roman`. Without any quotes.  # `size: x.x`. Use `em` as unit. Default: 1 (16px)  # Global font settings used for all elements inside &lt;body&gt;.  global:    external: true    family: Noto Serif SC    size:  # Font settings for site title (.site-title).  title:    external: true    family: Noto Serif SC    size:  # Font settings for headlines (&lt;h1&gt; to &lt;h6&gt;).  headings:    external: true    family: Noto Serif SC    size:  # Font settings for posts (.post-body).  posts:    external: true    family:  Noto Serif SC  # Font settings for &lt;code&gt; and code blocks.  codes:    external: true    family: Source Code Pro
+
+代码可复制，还是上面同一个文件，找到以下代码段，将copy_button的enable设置为true，启用就可以啦。show_result设置true后，复制完会显示一个勾。style对应的copy_button不同的样式，看个人喜好来～
+codeblock:  # Code Highlight theme  # Available values: normal | night | night eighties | night blue | night bright | solarized | solarized dark | galactic  # See: https://github.com/chriskempson/tomorrow-theme  highlight_theme: night eighties  # Add copy button on codeblock  copy_button:    enable: true    # Show text copy result.    show_result: true    # Available values: default | flat | mac    style: mac]]></content>
       <categories>
         <category>前端</category>
       </categories>
@@ -121,6 +108,19 @@ docker exec -u 0 -it some-kibana bash
 ]]></content>
       <categories>
         <category>后端</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>ReactNative新架构</title>
+    <url>/2025/08/19/ReactNative%E6%96%B0%E6%9E%B6%E6%9E%84/</url>
+    <content><![CDATA[
+Fabric：同步渲染 UI，消除 Bridge 通信瓶颈
+TurboModules：按需加载原生模块，提升启动速度
+JSI（JavaScript Interface）：直接调用原生代码，替代异步 Bridge, Bridge是异步的、单线程的，会带来额外的开销；而JSI是同步的，更低开销、并发的。
+
+]]></content>
+      <categories>
+        <category>前端</category>
       </categories>
   </entry>
   <entry>
@@ -244,21 +244,6 @@ function foo() &#123;  &quot;use strict&quot;;  console.log(this.a); // ❌ Type
       </categories>
   </entry>
   <entry>
-    <title>react组件通信方式</title>
-    <url>/2025/08/25/react%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F/</url>
-    <content><![CDATA[
-通过Props和Props回调：用于父子组件的通信，子组件通过props接收父的数据，父组件将回调函数传给子组件，子组件调用这个回调函数，传数据给父组件。
-通过Context API：可以共享状态的API，不需要按层级去传递。
-Redux或Mobx：对于复杂的应用，可以用状态库来实现组件通信。
-事件订阅模式：使用EventEmitter或者第三方库来实现跨组件的事件发布订阅。
-Hooks：React的一些Hooks，比如useState，能实现不同组件的共享逻辑跟状态。
-
-]]></content>
-      <categories>
-        <category>前端</category>
-      </categories>
-  </entry>
-  <entry>
     <title>聊聊Node RPC</title>
     <url>/2025/07/16/node%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%E7%82%B9/</url>
     <content><![CDATA[什么是序列化在 TCP 通道里传输的数据只能是二进制形式的，所以将数据结构或对象转化成二进制的形式就叫序列化。反过来就叫反序列化，他们之间的规则就叫协议。
@@ -267,121 +252,6 @@ RPC是什么全称是Remote Procedure Call， 中文名字叫远程过程调用�
 ]]></content>
       <categories>
         <category>后端</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>Vue中插入脚本</title>
-    <url>/2025/08/12/vue%E5%AE%9E%E7%8E%B0%E6%8F%92%E5%85%A5%E8%84%9A%E6%9C%AC/</url>
-    <content><![CDATA[Vue 中如何正确插入 &lt;script&gt; 脚本（含广告代码示例）在实际开发中，我们经常会接入第三方广告平台、统计工具或客服系统，而这些服务通常会提供一整段包含 &lt;script&gt; 标签的代码。但如果你在 Vue 的模板中（&lt;template&gt;）直接写 &lt;script&gt;，不仅不会生效，还可能直接报错。
-本文将详细讲解 为什么不能在 Vue 模板里直接插入 &lt;script&gt;，以及 如何正确动态插入脚本，并给出一个可直接使用的代码示例（以广告代码为例）。
-一、为什么 Vue 中不能直接写 &lt;script&gt;？Vue 单文件组件（SFC）结构清晰：
-
-&lt;template&gt;：写结构
-&lt;script&gt;：写逻辑
-&lt;style&gt;：写样式
-
-在 &lt;template&gt; 中插入 &lt;script&gt; 会出现以下问题：
-
-Vue 模板会自动移除或忽略 &lt;script&gt; 标签（当成普通文本）
-会破坏 Vue 的编译流程，可能直接报错
-导致第三方广告脚本、统计脚本完全无法执行
-
-因此，要让脚本正常工作，我们只能在组件的生命周期中 通过 DOM API 动态插入 &lt;script&gt; 标签。
-二、错误示例：直接粘贴广告代码（不可行）例如你拿到的广告商提供的代码是这样的：
-&lt;script type=&quot;text/javascript&quot;&gt; atOptions = &#123;  &#x27;key&#x27; : &#x27;1523b7ddb936e560aadef64a851d500c&#x27;,  &#x27;format&#x27; : &#x27;iframe&#x27;,  &#x27;height&#x27; : 250,  &#x27;width&#x27; : 300,  &#x27;params&#x27; : &#123;&#125; &#125;;&lt;/script&gt;&lt;script type=&quot;text/javascript&quot; src=&quot;//www.highperformanceformat.com/1523b7ddb936e560aadef64a851d500c/invoke.js&quot;&gt;&lt;/script&gt;
-
-如果你把这些代码放进 Vue 的 &lt;template&gt; 区域，广告绝对不会显示。
-三、正确做法：在 Vue 中动态插入脚本核心思路：
-
-在模板中放一个容器（如 &lt;div id=&quot;de_v&quot;&gt;&lt;/div&gt;）
-在 onMounted（或 mounted）生命周期中创建 &lt;script&gt; 标签
-把参数脚本 + 外链脚本动态插进去
-
-四、完整代码示例（Vue 3 + &lt;script setup&gt;）假设你的广告要插入到 id 为 &quot;de_v&quot; 的容器里：
-template 部分&lt;template&gt;  &lt;div id=&quot;de_v&quot;&gt;&lt;/div&gt;&lt;/template&gt;
-
-script 部分&lt;script setup&gt;import &#123; onMounted &#125; from &quot;vue&quot;;onMounted(() =&gt; &#123;  const targetDiv = document.getElementById(&quot;de_v&quot;);  if (!targetDiv) return;  // 创建第一个 script（广告参数）  const script1 = document.createElement(&quot;script&quot;);  script1.type = &quot;text/javascript&quot;;  script1.innerHTML = `    atOptions = &#123;      &#x27;key&#x27; : &#x27;1523b7ddb936e560aadef64a851d500c&#x27;,      &#x27;format&#x27; : &#x27;iframe&#x27;,      &#x27;height&#x27; : 250,      &#x27;width&#x27; : 300,      &#x27;params&#x27; : &#123;&#125;    &#125;;  `;  // 创建第二个 script（外部广告脚本）  const script2 = document.createElement(&quot;script&quot;);  script2.type = &quot;text/javascript&quot;;  script2.src = &quot;//www.highperformanceformat.com/1523b7ddb936e560aadef64a851d500c/invoke.js&quot;;  // 插入脚本到容器内  targetDiv.appendChild(script1);  targetDiv.appendChild(script2);&#125;);&lt;/script&gt;
-
-
-
-五、常见问题与注意事项1. 组件多次挂载会重复插入脚本？如果组件会反复进入&#x2F;离开页面，建议：
-
-在插入前检查是否已添加脚本
-或在 onUnmounted 中移除它们
-
-2. 多个广告位怎么办？每个广告位使用 不同的容器 ID 即可，例如：
-&lt;div id=&quot;ad1&quot;&gt;&lt;/div&gt;&lt;div id=&quot;ad2&quot;&gt;&lt;/div&gt;
-
-脚本注入时改对应的 id 即可。
-3. SSR 框架（Nuxt）如何处理？服务端无法访问 document，必须放到客户端生命周期中执行，例如：
-onMounted(() =&gt; &#123; ... &#125;)
-
-否则会报 document is not defined。
-六、总结
-Vue 模板中不能直接写 &lt;script&gt;，否则脚本不会执行
-正确方式是在生命周期里 动态创建 script 标签
-通过 appendChild() 可以正常加载广告脚本、统计脚本、第三方插件等
-本文提供的示例可直接用于实际项目
-
-只要按照本文方法插入脚本，不论是广告代码、统计代码还是第三方 SDK，都能正常在 Vue 环境中运行。
-]]></content>
-      <categories>
-        <category>前端</category>
-      </categories>
-      <tags>
-        <tag>Vue</tag>
-        <tag>script</tag>
-        <tag>广告代码</tag>
-        <tag>动态插入脚本</tag>
-        <tag>DOM 操作</tag>
-        <tag>第三方广告</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>《终有一天你会懂》琢磨先生 - 读书笔记</title>
-    <url>/2025/05/21/%E3%80%8A%E7%BB%88%E6%9C%89%E4%B8%80%E5%A4%A9%E4%BD%A0%E4%BC%9A%E6%87%82%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%20-%20%E7%90%A2%E7%A3%A8%E5%85%88%E7%94%9F/</url>
-    <content><![CDATA[
-
-全书的确包含了很多他自己的“偏见”，但我觉得他真实幽默，语言简单易懂，其实各个小标题就是告诉我们该做什么。
-懂生活生活从来不是你想怎样就能变成怎样的。生活中多发现美，多从他人角度看待事情，是好的。同时自己还要有自知之明。
-懂爱情谢耳朵说：人穷尽一生追寻另一个人类共度一生的事，我一直无法理解。或许我自己太有意思，无需他人陪伴。所以我祝你们在对方身上得到的快乐，与我给自己的一样多。靠另一个人永远无法让你摆脱孤独，只能靠自己对生活的热情。经营一段感情要的是理智，自由是不可剥夺的。这让我想起对前任，我曾经有查看过他的手机，我觉得挺不对，以后不会再出现这种事情了。
-懂兵法主要就是介绍女追男或男追女的技巧，以及如何经营好一段感情，就是大智慧。同时千万别因为家庭放弃自己的事业，不要跟公公婆婆住一起（但我的观点还是觉得因人而异），要有属于自己的兴趣爱好。
-懂婚姻忍，忠一。对于不婚主义，当然也没什么想多说的了。
-懂失意每一次失恋，只不过是在为真爱让路。还是那句勉强不来，我爱你，所以我祝你一生如意，即使陪着你的人，不是我。做自己想做的事，不要管他人怎么想。只关心自己在乎的人。
-懂阅读What Why How。一直阅读下去，不要求快，要求精。
-懂情趣介绍了他与妻子的日常 sweet，告诉我们不分手，就不知道世界上还有那么多人值得我们去爱。如果找到了，是我的幸运，如果找不到，我也有能力让自己快乐地活着。高情商地活着，会发觉世界是那么美好。
-懂交际跟正经人交往，跟不同人要有不同方式去与之交往，拒绝别人也是一门艺术。如果没有厚脸皮去找别人还钱，干脆别借。
-懂人性只能说我可能在人性方面持怀疑态度，管不了别人，那么就只能管好自己，别做个恶俗的人。
-懂善恶有些人在你生命中出现，就是为了给你上一课。何为善何为恶，我宁愿相信他人的话，因为人与人之间的信任本来就是有一方愿意相信，另一方才会不负此信。即使被骗，也是告诉我们下次同样的坑，别再跳了。但别因为入了一次坑，就不再相信了，善人始终存在。上帝让右手成为右手，就是对右手最高的奖赏；同理，上帝让善人成为善人，也就是对善人的最高奖赏。这让我想起，有次在外，洗手间里没有纸巾，原本是想问旁边的好朋友有没有纸巾的，结果旁边一位陌生女子听见了，立刻拿出包纸巾给我，此等善举，让我倍感荣幸。而善良还需要有原则，否则害人害己。
-懂财富穷人之所以穷，是思维的匮乏。要想富起来，不能只在自己身体上投资，而要在大局上有思维的开拓。看透问题的本质。时间是有限，在有限时间内如何快速致富？找到一门自己感兴趣的学科，学以致用，发散思维，与社会息息相关的行业，去做。
-懂社会要有抱负，一步一个脚印。要有自己独立的人格，要能为自己所做的事情负责。学会转化一种让自己幸福的能力，然后改变自己。
-懂生死生死学里几个词：无死不生，向死而生，知死而后生。颇为有趣且发人深思。人就是因为知道有一天会死去，才会争取好好地活着。我想，真到了那天，我会主动拥抱死亡。
-
-这世界上缺的不是完美的人，而是从心底给出的正义、真心、无畏和同情—这是今天看完《无问西东》后给我最感慨的话。生而为人，便要心之所向，无问西东。大家都知道有因必有果，却不只因果皆由缘而起。叔本华跟尼采，有时间必好好读佳作。
-
-懂远游这部分写了琢磨先生在西藏的经历，看过很多书，都是大家想去西藏的。也许去了那里，人真的能体会到人生的不易。美国不如英国自律，日本对美食态度极佳，常把“对不起”挂在嘴边，不喜欢给别人添麻烦。
-懂职场首先要懂得吃苦，然后要清楚自己，发掘自己的天赋所在。以终为始，聚焦所做。
-懂教育我只知道，每一个出生在这世上的小孩都是纯粹的，如果不好好教育，长大后便不可能为国之栋梁。
-懂娱乐、懂自由人生有两个方向：一个方向是往大处拼搏，保持对事业的激情；一个方向是往小处生活，保持做人的温度。每天睁开眼，对自己说声：欧耶
-]]></content>
-      <categories>
-        <category>读书感悟</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>初中英语教师资格作文课模版</title>
-    <url>/2025/07/14/%E5%88%9D%E4%B8%AD%E8%8B%B1%E8%AF%AD%E6%95%99%E8%B5%84%E4%BD%9C%E6%96%87%E6%A8%A1%E7%89%88/</url>
-    <content><![CDATA[开场问候Dear Judges, Now I’ll start the lesson. Good morning, Boys and girls. How are you today? Good? Fine? I’m fine, too. Before the class, Let’s sing a song together. If you can sing, sing along with me . “You are my sunshine, my only sunshine, you make me happy.” Do you feel better? Great, let’s start the lesson.At the beginning, I’ll show you a video, and you should try to answer the question: What can you see in the video? Who would like to try? Blair, please. You saw the girl had much fun. She had dinner and went shopping with friends. Thank you, Blair, you set a good example for us. You know so much about this topic. Do you want to learn more? Today, let’s learn a new lesson — How was your day off.
-导入OK, everyone, here is a passage. I’ll read it for you. You should listen carefully and tell me the main idea, OK? Here we go! …….OK, Please share your ideas. Jenny, you please. It talks about the Bermuda Triangle, where a number of planes and ships disappeared.Do you agree? I totally agree with her.
-PreBoys and girls, since we already know the content of the letter, Let’s look at the structure of the letter.There are 4 parts of it, right?The first one is to whom. We call it salutation&#x2F;ˌsalyəˈtāSH(ə)n&#x2F;, such as Hi Henry, Dear Lucy and so on. The second part is body part. You can write whatever you want. The third part, we often add complementary close&#x2F;wishes, such as ‘yours’, ‘sincerely’. The last part is from whom, we call it signature. Am I clear? So when we write a letter, we can imitate it. Brilliant!
-the first part is introduction. It’s a fun day last Saturday. The second part is main body, it’s about what they did in the morning, afternoon and so on. The third part is conclusion. So if we want to write out our everyday life, we can imitate this structure, OK?
-写前Before writing, let’s have a brainstorm. As Tom, what information can you write to reply to Nick’s letter? You can have a discussion in groups. 3 minutes for you. Stop! Who can try, this boy? You will write some activities during camping. Your ideas are wonderful. Bravo! Thank you.OK，I can see you all have many ideas. How about writing down your ideas with the structure we just learned. You have 2 minutes to design your outline.OK, time is up. Finished? I see all of you nod your heads. Very good!It’s time to finish the whole letter. While writing, you should pay attention to the grammar.We should use simple past tense to talk about the experience in the past.And for the signature, you should write”Tom”. If you have any problems, just raise your hands, and I will help you. Are you ready? Let’s do it.
-写后Have you finished your writing? Show me your hands. Well done. Next, go over your writing one more time and then exchange it with your group members.Try to check and correct the mistakes, got it? You have 2 minutes.Stop here.Who wants to share your writing? Cindy, please. Wow, good pronunciation. You state the story vividly. The logic is clear! OK, anyone else? Tony. Please. Oh, you want to present Tina’s article.Can you read it? Very good. Thank you, Tony. Guys, Let’s look at Tina’s work together. “Tom” went to a mountain for camping. I think her article is perfect. We can learn a lot from it. Boys and girls, you all did a good job!
-总结How time files! The class is almost over. Before ending our class, let’s have a summary. Who can summarize what we have learned this class? Fiona please. Very good. I hope you can apply what we have learned in your daily life so that we can improve our reading and speaking ability, right?Our homework is as follows: You should finish the exercise book and search for more information about ask your parents about their day off. Next class, we will share them together.
-Class is over, see you next time.
-]]></content>
-      <categories>
-        <category>教资</category>
       </categories>
   </entry>
   <entry>
@@ -444,6 +314,68 @@ redis本质上是一个key-value类型的内存数据库，性能最快的key-va
       </categories>
   </entry>
   <entry>
+    <title>初中英语教师资格作文课模版</title>
+    <url>/2025/07/14/%E5%88%9D%E4%B8%AD%E8%8B%B1%E8%AF%AD%E6%95%99%E8%B5%84%E4%BD%9C%E6%96%87%E6%A8%A1%E7%89%88/</url>
+    <content><![CDATA[开场问候Dear Judges, Now I’ll start the lesson. Good morning, Boys and girls. How are you today? Good? Fine? I’m fine, too. Before the class, Let’s sing a song together. If you can sing, sing along with me . “You are my sunshine, my only sunshine, you make me happy.” Do you feel better? Great, let’s start the lesson.At the beginning, I’ll show you a video, and you should try to answer the question: What can you see in the video? Who would like to try? Blair, please. You saw the girl had much fun. She had dinner and went shopping with friends. Thank you, Blair, you set a good example for us. You know so much about this topic. Do you want to learn more? Today, let’s learn a new lesson — How was your day off.
+导入OK, everyone, here is a passage. I’ll read it for you. You should listen carefully and tell me the main idea, OK? Here we go! …….OK, Please share your ideas. Jenny, you please. It talks about the Bermuda Triangle, where a number of planes and ships disappeared.Do you agree? I totally agree with her.
+PreBoys and girls, since we already know the content of the letter, Let’s look at the structure of the letter.There are 4 parts of it, right?The first one is to whom. We call it salutation&#x2F;ˌsalyəˈtāSH(ə)n&#x2F;, such as Hi Henry, Dear Lucy and so on. The second part is body part. You can write whatever you want. The third part, we often add complementary close&#x2F;wishes, such as ‘yours’, ‘sincerely’. The last part is from whom, we call it signature. Am I clear? So when we write a letter, we can imitate it. Brilliant!
+the first part is introduction. It’s a fun day last Saturday. The second part is main body, it’s about what they did in the morning, afternoon and so on. The third part is conclusion. So if we want to write out our everyday life, we can imitate this structure, OK?
+写前Before writing, let’s have a brainstorm. As Tom, what information can you write to reply to Nick’s letter? You can have a discussion in groups. 3 minutes for you. Stop! Who can try, this boy? You will write some activities during camping. Your ideas are wonderful. Bravo! Thank you.OK，I can see you all have many ideas. How about writing down your ideas with the structure we just learned. You have 2 minutes to design your outline.OK, time is up. Finished? I see all of you nod your heads. Very good!It’s time to finish the whole letter. While writing, you should pay attention to the grammar.We should use simple past tense to talk about the experience in the past.And for the signature, you should write”Tom”. If you have any problems, just raise your hands, and I will help you. Are you ready? Let’s do it.
+写后Have you finished your writing? Show me your hands. Well done. Next, go over your writing one more time and then exchange it with your group members.Try to check and correct the mistakes, got it? You have 2 minutes.Stop here.Who wants to share your writing? Cindy, please. Wow, good pronunciation. You state the story vividly. The logic is clear! OK, anyone else? Tony. Please. Oh, you want to present Tina’s article.Can you read it? Very good. Thank you, Tony. Guys, Let’s look at Tina’s work together. “Tom” went to a mountain for camping. I think her article is perfect. We can learn a lot from it. Boys and girls, you all did a good job!
+总结How time files! The class is almost over. Before ending our class, let’s have a summary. Who can summarize what we have learned this class? Fiona please. Very good. I hope you can apply what we have learned in your daily life so that we can improve our reading and speaking ability, right?Our homework is as follows: You should finish the exercise book and search for more information about ask your parents about their day off. Next class, we will share them together.
+Class is over, see you next time.
+]]></content>
+      <categories>
+        <category>教资</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>react组件通信方式</title>
+    <url>/2025/08/25/react%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F/</url>
+    <content><![CDATA[
+通过Props和Props回调：用于父子组件的通信，子组件通过props接收父的数据，父组件将回调函数传给子组件，子组件调用这个回调函数，传数据给父组件。
+通过Context API：可以共享状态的API，不需要按层级去传递。
+Redux或Mobx：对于复杂的应用，可以用状态库来实现组件通信。
+事件订阅模式：使用EventEmitter或者第三方库来实现跨组件的事件发布订阅。
+Hooks：React的一些Hooks，比如useState，能实现不同组件的共享逻辑跟状态。
+
+]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>《终有一天你会懂》琢磨先生 - 读书笔记</title>
+    <url>/2025/05/21/%E3%80%8A%E7%BB%88%E6%9C%89%E4%B8%80%E5%A4%A9%E4%BD%A0%E4%BC%9A%E6%87%82%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%20-%20%E7%90%A2%E7%A3%A8%E5%85%88%E7%94%9F/</url>
+    <content><![CDATA[
+
+全书的确包含了很多他自己的“偏见”，但我觉得他真实幽默，语言简单易懂，其实各个小标题就是告诉我们该做什么。
+懂生活生活从来不是你想怎样就能变成怎样的。生活中多发现美，多从他人角度看待事情，是好的。同时自己还要有自知之明。
+懂爱情谢耳朵说：人穷尽一生追寻另一个人类共度一生的事，我一直无法理解。或许我自己太有意思，无需他人陪伴。所以我祝你们在对方身上得到的快乐，与我给自己的一样多。靠另一个人永远无法让你摆脱孤独，只能靠自己对生活的热情。经营一段感情要的是理智，自由是不可剥夺的。这让我想起对前任，我曾经有查看过他的手机，我觉得挺不对，以后不会再出现这种事情了。
+懂兵法主要就是介绍女追男或男追女的技巧，以及如何经营好一段感情，就是大智慧。同时千万别因为家庭放弃自己的事业，不要跟公公婆婆住一起（但我的观点还是觉得因人而异），要有属于自己的兴趣爱好。
+懂婚姻忍，忠一。对于不婚主义，当然也没什么想多说的了。
+懂失意每一次失恋，只不过是在为真爱让路。还是那句勉强不来，我爱你，所以我祝你一生如意，即使陪着你的人，不是我。做自己想做的事，不要管他人怎么想。只关心自己在乎的人。
+懂阅读What Why How。一直阅读下去，不要求快，要求精。
+懂情趣介绍了他与妻子的日常 sweet，告诉我们不分手，就不知道世界上还有那么多人值得我们去爱。如果找到了，是我的幸运，如果找不到，我也有能力让自己快乐地活着。高情商地活着，会发觉世界是那么美好。
+懂交际跟正经人交往，跟不同人要有不同方式去与之交往，拒绝别人也是一门艺术。如果没有厚脸皮去找别人还钱，干脆别借。
+懂人性只能说我可能在人性方面持怀疑态度，管不了别人，那么就只能管好自己，别做个恶俗的人。
+懂善恶有些人在你生命中出现，就是为了给你上一课。何为善何为恶，我宁愿相信他人的话，因为人与人之间的信任本来就是有一方愿意相信，另一方才会不负此信。即使被骗，也是告诉我们下次同样的坑，别再跳了。但别因为入了一次坑，就不再相信了，善人始终存在。上帝让右手成为右手，就是对右手最高的奖赏；同理，上帝让善人成为善人，也就是对善人的最高奖赏。这让我想起，有次在外，洗手间里没有纸巾，原本是想问旁边的好朋友有没有纸巾的，结果旁边一位陌生女子听见了，立刻拿出包纸巾给我，此等善举，让我倍感荣幸。而善良还需要有原则，否则害人害己。
+懂财富穷人之所以穷，是思维的匮乏。要想富起来，不能只在自己身体上投资，而要在大局上有思维的开拓。看透问题的本质。时间是有限，在有限时间内如何快速致富？找到一门自己感兴趣的学科，学以致用，发散思维，与社会息息相关的行业，去做。
+懂社会要有抱负，一步一个脚印。要有自己独立的人格，要能为自己所做的事情负责。学会转化一种让自己幸福的能力，然后改变自己。
+懂生死生死学里几个词：无死不生，向死而生，知死而后生。颇为有趣且发人深思。人就是因为知道有一天会死去，才会争取好好地活着。我想，真到了那天，我会主动拥抱死亡。
+
+这世界上缺的不是完美的人，而是从心底给出的正义、真心、无畏和同情—这是今天看完《无问西东》后给我最感慨的话。生而为人，便要心之所向，无问西东。大家都知道有因必有果，却不只因果皆由缘而起。叔本华跟尼采，有时间必好好读佳作。
+
+懂远游这部分写了琢磨先生在西藏的经历，看过很多书，都是大家想去西藏的。也许去了那里，人真的能体会到人生的不易。美国不如英国自律，日本对美食态度极佳，常把“对不起”挂在嘴边，不喜欢给别人添麻烦。
+懂职场首先要懂得吃苦，然后要清楚自己，发掘自己的天赋所在。以终为始，聚焦所做。
+懂教育我只知道，每一个出生在这世上的小孩都是纯粹的，如果不好好教育，长大后便不可能为国之栋梁。
+懂娱乐、懂自由人生有两个方向：一个方向是往大处拼搏，保持对事业的激情；一个方向是往小处生活，保持做人的温度。每天睁开眼，对自己说声：欧耶
+]]></content>
+      <categories>
+        <category>读书感悟</category>
+      </categories>
+  </entry>
+  <entry>
     <title>初中英语教师资格语篇课模版</title>
     <url>/2025/07/15/%E5%88%9D%E4%B8%AD%E8%8B%B1%E8%AF%AD%E6%95%99%E8%B5%84%E8%AF%AD%E7%AF%87%E8%AF%BE%E6%A8%A1%E6%9D%BF/</url>
     <content><![CDATA[The intonation.（语调）Express the different feelings of the speaker.We often use the falling tone when we read a statement, a special question, an exclamatory or imperative sentence(祈使句、感叹句). We often use rising tone when we ask a Yes&#x2F;No question. We often use rising-falling tone to read an alternative question and a coordinate clause（选择疑问句、并列句）. There are two parts in a tag question（反义疑问句）. The first part is often in a falling tone and for second part, there are two cases. If we are not sure about the question, we often use a rising tone. If we are sure about that, we offen use a falling tone.We choose different intonations to express different feelings and moods.
@@ -496,36 +428,6 @@ the modal verbs.(情态动词)Make inferences.(作出推断)The main structure o
 ]]></content>
       <categories>
         <category>教资</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>初中英语教师资格面试模板（Reading）</title>
-    <url>/2025/07/09/%E5%88%9D%E4%B8%AD%E8%8B%B1%E8%AF%AD%E6%95%99%E8%B5%84%E9%9D%A2%E8%AF%95%E6%A8%A1%E6%9D%BF/</url>
-    <content><![CDATA[Reading&#x2F;Listening开场问候Dear Judges, Now I’ll start the lesson. Good morning, Boys and girls. How are you today? Good? Fine? I’m fine, too. Before the class, Let’s sing a song together. If you can sing, sing along with me . “You are my sunshine, my only sunshine, you make me happy.” Do you feel better? Great, let’s start the lesson.
-导入At the beginning, I’ll show you a video, and you should try to answer the question: What can you see in the video? Who would like to try? Blair, please. You see different cartoons, such as Snow White and Tom and Jerry.Thank you, Blair, you set a good example for us. You know so much about cartoons.Do you want to learn more? Today, let’s learn a new lesson — Cartoon.
-读前Before reading, To help you understand the passage better, let’s learn some words. Now, Look at the first one. Smart.Form example, Zhu Geliang is very smart and he can solve many problems. Can you understand now? Great! The next one cute. Look at the picture. What’s that? A cat. So cats are very cute and it’s very lovely. So cute means lovely. You are so cute. Cats are so cute. Birds are so cute, okay, wonderful How about the last one? Ivory. Here is a picture about ivory. It forms long teeth of elephants. Read after me, ivory, ivory. Well done! All of you did a good job.
-读中Now boys and girls, let’s have a prediction according to the title and the pictures on your book. Take a guess:What’s the passage mainly about? Try to think out as many answers as you can. OK, who wants to have a try?Justin, you please. The passage is about a cartoon Mickey Mouse. Nice try! Do you agree? OK, maybe you are right.Next, Let’s find out the truth in this passage.
-读后Let’s read it together.When you read, think about this question:What’s the passage mainly about? You should read quickly and check your prediction.Let’s begin.OK, guys, are you right? Wow, I heard John said he had the correct prediction.The passage tells us some information about Mickey Mouse. Oh, most of you are right! I am so proud of you.For the second time, you should read it carefully and catch some detail informations. After that, you should answer some true or false question. Okay? Let’s start. Time is up. The first one, It’s easy, right? Answer me together. It’s true. Then the second question. Lily, what’s your answer? It ’s false. Can you correct it ? Great. Thank you. The last one, boys come on. Eric please. It’s true.perfect.
-巩固We have done so many exercises.It’s time for fun. Let’s have a group discussion. Think about the topic: Introducing your favorite cartoon characters to group members. Work in group of 4 and discuss with your partners. Then show your work on the stage. You have 5 minutes to prepare.Are you ready? Go!  Time  is up. Which group goes first? Christina and your partners, please. Wow, your ideas are very creative and Your pronunciation is perfect.Let’s give them a big hand.
-总结How time files! The class is almost over. Before ending our class, let’s have a summary. Who can summarize what we have learned this class? Fiona please. Very good. I hope you can apply what we have learned in your daily life so that we can improve our reading and speaking ability, right?Our homework is as follows: You should finish the exercise book and search for more information about famous cartoons on the Internet. Next class, we will share them together.
-Class is over, see you next time.
-]]></content>
-      <categories>
-        <category>教资</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>前端骨架屏</title>
-    <url>/2025/07/07/%E5%89%8D%E7%AB%AF%E9%AA%A8%E6%9E%B6%E5%B1%8F/</url>
-    <content><![CDATA[Dps.config.js 中文说明文档本配置文件用以生成 Vue 应用的骨架屏。
-
-基本配置字段说明    const dpsConfig = &#123;    url: &#x27;file:///Users/myname/Desktop/project/pro/scaleTips/dist/index.html#/&#x27;,          // 待生成骨架屏页面的地址，用百度（https://baidu.com）试试也可以    output: &#123;        filepath: &#x27;/Users/myname/Desktop/project/pro&#x27;,        // 生成骨架屏的存放页面，一般为项目的入口页面        injectSelector: &#x27;#app&#x27;          // 生成的骨架屏插入页面的节点    &#125;,    // header: &#123;    //  height: 40,    //  background: &#x27;#1b9af4&#x27;    // &#125;,    // background: &#x27;#eee&#x27;,    // animation: &#x27;opacity 1s linear infinite;&#x27;,    //用于定制或排除某些节点的绘制行为    includeElement: function(node, draw) &#123;        // 定制某个节点画出来的样子，带上return false        if(node.id == &#x27;ui-alert&#x27;) &#123;            //跳过该节点及其子节点            return false;        &#125;        if(node.tagName.toLowerCase() === &#x27;img&#x27;) &#123;            // 对该图片生成宽100%，高8%，颜色为红色的色块            draw(&#123;                width: 100,                height: 8,                left: 0,                top: 0,                zIndex: 99999999,                background: &#x27;red&#x27;            &#125;);            return false;        &#125;     &#125;,    // writePageStructure: function(html) &#123;        // 自己处理生成的骨架屏        // fs.writeFileSync(filepath, html);        // console.log(html)    // &#125;,    init: function() &#123;        // 生成骨架屏之前的操作，比如删除干扰节点    &#125;&#125;module.exports = dpsConfig;
-
-
-
-]]></content>
-      <categories>
-        <category>前端</category>
       </categories>
   </entry>
   <entry>
@@ -701,6 +603,36 @@ vue2 和 vue3 匿名插槽不一样  具名插槽使用方式不同：vue2 使�
       </categories>
   </entry>
   <entry>
+    <title>初中英语教师资格面试模板（Reading）</title>
+    <url>/2025/07/09/%E5%88%9D%E4%B8%AD%E8%8B%B1%E8%AF%AD%E6%95%99%E8%B5%84%E9%9D%A2%E8%AF%95%E6%A8%A1%E6%9D%BF/</url>
+    <content><![CDATA[Reading&#x2F;Listening开场问候Dear Judges, Now I’ll start the lesson. Good morning, Boys and girls. How are you today? Good? Fine? I’m fine, too. Before the class, Let’s sing a song together. If you can sing, sing along with me . “You are my sunshine, my only sunshine, you make me happy.” Do you feel better? Great, let’s start the lesson.
+导入At the beginning, I’ll show you a video, and you should try to answer the question: What can you see in the video? Who would like to try? Blair, please. You see different cartoons, such as Snow White and Tom and Jerry.Thank you, Blair, you set a good example for us. You know so much about cartoons.Do you want to learn more? Today, let’s learn a new lesson — Cartoon.
+读前Before reading, To help you understand the passage better, let’s learn some words. Now, Look at the first one. Smart.Form example, Zhu Geliang is very smart and he can solve many problems. Can you understand now? Great! The next one cute. Look at the picture. What’s that? A cat. So cats are very cute and it’s very lovely. So cute means lovely. You are so cute. Cats are so cute. Birds are so cute, okay, wonderful How about the last one? Ivory. Here is a picture about ivory. It forms long teeth of elephants. Read after me, ivory, ivory. Well done! All of you did a good job.
+读中Now boys and girls, let’s have a prediction according to the title and the pictures on your book. Take a guess:What’s the passage mainly about? Try to think out as many answers as you can. OK, who wants to have a try?Justin, you please. The passage is about a cartoon Mickey Mouse. Nice try! Do you agree? OK, maybe you are right.Next, Let’s find out the truth in this passage.
+读后Let’s read it together.When you read, think about this question:What’s the passage mainly about? You should read quickly and check your prediction.Let’s begin.OK, guys, are you right? Wow, I heard John said he had the correct prediction.The passage tells us some information about Mickey Mouse. Oh, most of you are right! I am so proud of you.For the second time, you should read it carefully and catch some detail informations. After that, you should answer some true or false question. Okay? Let’s start. Time is up. The first one, It’s easy, right? Answer me together. It’s true. Then the second question. Lily, what’s your answer? It ’s false. Can you correct it ? Great. Thank you. The last one, boys come on. Eric please. It’s true.perfect.
+巩固We have done so many exercises.It’s time for fun. Let’s have a group discussion. Think about the topic: Introducing your favorite cartoon characters to group members. Work in group of 4 and discuss with your partners. Then show your work on the stage. You have 5 minutes to prepare.Are you ready? Go!  Time  is up. Which group goes first? Christina and your partners, please. Wow, your ideas are very creative and Your pronunciation is perfect.Let’s give them a big hand.
+总结How time files! The class is almost over. Before ending our class, let’s have a summary. Who can summarize what we have learned this class? Fiona please. Very good. I hope you can apply what we have learned in your daily life so that we can improve our reading and speaking ability, right?Our homework is as follows: You should finish the exercise book and search for more information about famous cartoons on the Internet. Next class, we will share them together.
+Class is over, see you next time.
+]]></content>
+      <categories>
+        <category>教资</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>前端骨架屏</title>
+    <url>/2025/07/07/%E5%89%8D%E7%AB%AF%E9%AA%A8%E6%9E%B6%E5%B1%8F/</url>
+    <content><![CDATA[Dps.config.js 中文说明文档本配置文件用以生成 Vue 应用的骨架屏。
+
+基本配置字段说明    const dpsConfig = &#123;    url: &#x27;file:///Users/myname/Desktop/project/pro/scaleTips/dist/index.html#/&#x27;,          // 待生成骨架屏页面的地址，用百度（https://baidu.com）试试也可以    output: &#123;        filepath: &#x27;/Users/myname/Desktop/project/pro&#x27;,        // 生成骨架屏的存放页面，一般为项目的入口页面        injectSelector: &#x27;#app&#x27;          // 生成的骨架屏插入页面的节点    &#125;,    // header: &#123;    //  height: 40,    //  background: &#x27;#1b9af4&#x27;    // &#125;,    // background: &#x27;#eee&#x27;,    // animation: &#x27;opacity 1s linear infinite;&#x27;,    //用于定制或排除某些节点的绘制行为    includeElement: function(node, draw) &#123;        // 定制某个节点画出来的样子，带上return false        if(node.id == &#x27;ui-alert&#x27;) &#123;            //跳过该节点及其子节点            return false;        &#125;        if(node.tagName.toLowerCase() === &#x27;img&#x27;) &#123;            // 对该图片生成宽100%，高8%，颜色为红色的色块            draw(&#123;                width: 100,                height: 8,                left: 0,                top: 0,                zIndex: 99999999,                background: &#x27;red&#x27;            &#125;);            return false;        &#125;     &#125;,    // writePageStructure: function(html) &#123;        // 自己处理生成的骨架屏        // fs.writeFileSync(filepath, html);        // console.log(html)    // &#125;,    init: function() &#123;        // 生成骨架屏之前的操作，比如删除干扰节点    &#125;&#125;module.exports = dpsConfig;
+
+
+
+]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+  </entry>
+  <entry>
     <title>如何防御 XSS（跨站脚本攻击）：前端开发者必须掌握的安全实践</title>
     <url>/2025/10/17/%E5%A6%82%E4%BD%95%E9%98%B2%E5%BE%A1%20XSS%EF%BC%88%E8%B7%A8%E7%AB%99%E8%84%9A%E6%9C%AC%E6%94%BB%E5%87%BB%EF%BC%89/</url>
     <content><![CDATA[在 Web 开发中，XSS（Cross-Site Scripting，跨站脚本攻击） 是最常见、危害也非常大的安全漏洞之一。一旦网站存在 XSS 漏洞，攻击者就可能在用户浏览器中执行恶意脚本，进而窃取 Cookie、劫持会话、篡改页面内容，甚至控制用户账号。
@@ -865,6 +797,74 @@ XSS 是最常见、也是最危险的 Web 安全问题之一
       </tags>
   </entry>
   <entry>
+    <title>Vue中插入脚本</title>
+    <url>/2025/08/12/vue%E5%AE%9E%E7%8E%B0%E6%8F%92%E5%85%A5%E8%84%9A%E6%9C%AC/</url>
+    <content><![CDATA[Vue 中如何正确插入 &lt;script&gt; 脚本（含广告代码示例）在实际开发中，我们经常会接入第三方广告平台、统计工具或客服系统，而这些服务通常会提供一整段包含 &lt;script&gt; 标签的代码。但如果你在 Vue 的模板中（&lt;template&gt;）直接写 &lt;script&gt;，不仅不会生效，还可能直接报错。
+本文将详细讲解 为什么不能在 Vue 模板里直接插入 &lt;script&gt;，以及 如何正确动态插入脚本，并给出一个可直接使用的代码示例（以广告代码为例）。
+一、为什么 Vue 中不能直接写 &lt;script&gt;？Vue 单文件组件（SFC）结构清晰：
+
+&lt;template&gt;：写结构
+&lt;script&gt;：写逻辑
+&lt;style&gt;：写样式
+
+在 &lt;template&gt; 中插入 &lt;script&gt; 会出现以下问题：
+
+Vue 模板会自动移除或忽略 &lt;script&gt; 标签（当成普通文本）
+会破坏 Vue 的编译流程，可能直接报错
+导致第三方广告脚本、统计脚本完全无法执行
+
+因此，要让脚本正常工作，我们只能在组件的生命周期中 通过 DOM API 动态插入 &lt;script&gt; 标签。
+二、错误示例：直接粘贴广告代码（不可行）例如你拿到的广告商提供的代码是这样的：
+&lt;script type=&quot;text/javascript&quot;&gt; atOptions = &#123;  &#x27;key&#x27; : &#x27;1523b7ddb936e560aadef64a851d500c&#x27;,  &#x27;format&#x27; : &#x27;iframe&#x27;,  &#x27;height&#x27; : 250,  &#x27;width&#x27; : 300,  &#x27;params&#x27; : &#123;&#125; &#125;;&lt;/script&gt;&lt;script type=&quot;text/javascript&quot; src=&quot;//www.highperformanceformat.com/1523b7ddb936e560aadef64a851d500c/invoke.js&quot;&gt;&lt;/script&gt;
+
+如果你把这些代码放进 Vue 的 &lt;template&gt; 区域，广告绝对不会显示。
+三、正确做法：在 Vue 中动态插入脚本核心思路：
+
+在模板中放一个容器（如 &lt;div id=&quot;de_v&quot;&gt;&lt;/div&gt;）
+在 onMounted（或 mounted）生命周期中创建 &lt;script&gt; 标签
+把参数脚本 + 外链脚本动态插进去
+
+四、完整代码示例（Vue 3 + &lt;script setup&gt;）假设你的广告要插入到 id 为 &quot;de_v&quot; 的容器里：
+template 部分&lt;template&gt;  &lt;div id=&quot;de_v&quot;&gt;&lt;/div&gt;&lt;/template&gt;
+
+script 部分&lt;script setup&gt;import &#123; onMounted &#125; from &quot;vue&quot;;onMounted(() =&gt; &#123;  const targetDiv = document.getElementById(&quot;de_v&quot;);  if (!targetDiv) return;  // 创建第一个 script（广告参数）  const script1 = document.createElement(&quot;script&quot;);  script1.type = &quot;text/javascript&quot;;  script1.innerHTML = `    atOptions = &#123;      &#x27;key&#x27; : &#x27;1523b7ddb936e560aadef64a851d500c&#x27;,      &#x27;format&#x27; : &#x27;iframe&#x27;,      &#x27;height&#x27; : 250,      &#x27;width&#x27; : 300,      &#x27;params&#x27; : &#123;&#125;    &#125;;  `;  // 创建第二个 script（外部广告脚本）  const script2 = document.createElement(&quot;script&quot;);  script2.type = &quot;text/javascript&quot;;  script2.src = &quot;//www.highperformanceformat.com/1523b7ddb936e560aadef64a851d500c/invoke.js&quot;;  // 插入脚本到容器内  targetDiv.appendChild(script1);  targetDiv.appendChild(script2);&#125;);&lt;/script&gt;
+
+
+
+五、常见问题与注意事项1. 组件多次挂载会重复插入脚本？如果组件会反复进入&#x2F;离开页面，建议：
+
+在插入前检查是否已添加脚本
+或在 onUnmounted 中移除它们
+
+2. 多个广告位怎么办？每个广告位使用 不同的容器 ID 即可，例如：
+&lt;div id=&quot;ad1&quot;&gt;&lt;/div&gt;&lt;div id=&quot;ad2&quot;&gt;&lt;/div&gt;
+
+脚本注入时改对应的 id 即可。
+3. SSR 框架（Nuxt）如何处理？服务端无法访问 document，必须放到客户端生命周期中执行，例如：
+onMounted(() =&gt; &#123; ... &#125;)
+
+否则会报 document is not defined。
+六、总结
+Vue 模板中不能直接写 &lt;script&gt;，否则脚本不会执行
+正确方式是在生命周期里 动态创建 script 标签
+通过 appendChild() 可以正常加载广告脚本、统计脚本、第三方插件等
+本文提供的示例可直接用于实际项目
+
+只要按照本文方法插入脚本，不论是广告代码、统计代码还是第三方 SDK，都能正常在 Vue 环境中运行。
+]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+      <tags>
+        <tag>Vue</tag>
+        <tag>script</tag>
+        <tag>广告代码</tag>
+        <tag>动态插入脚本</tag>
+        <tag>DOM 操作</tag>
+        <tag>第三方广告</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>宝塔安装puppeteer</title>
     <url>/2025/09/02/%E5%AE%9D%E5%A1%94%E5%AE%89%E8%A3%85puppeteer/</url>
     <content><![CDATA[centos8使用yum失败，切换镜像源，更改镜像源文件，尝试清除缓存并重新建立
@@ -875,6 +875,38 @@ puppeteer报错下载依赖 参考链接：https://www.cnblogs.com/ilizhu/p/1450
 #添加启动参数const browser = await puppeteer.launch(&#123;args: [&#x27;--no-sandbox&#x27;, &#x27;--disable-setuid-sandbox&#x27;]&#125;);]]></content>
       <categories>
         <category>前端</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>小程序验证码输入框自动聚焦下个输入框</title>
+    <url>/2025/07/21/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E9%AA%8C%E8%AF%81%E7%A0%81%E8%BE%93%E5%85%A5%E6%A1%86%E8%87%AA%E5%8A%A8%E8%81%9A%E7%84%A6%E4%B8%8B%E4%B8%AA%E8%BE%93%E5%85%A5%E6%A1%86/</url>
+    <content><![CDATA[最开始我想的是有多少个输入框，就放多少个input，做完会发现有各种bug。比如键盘突然消失、没聚焦下个输入框、操作不丝滑等。正确思路是一个输入框就够了，然后通过改变样式（间隔、高亮）来实现，就是表面看起来是六个输入框，本质上只有一个input
+正确解法：&lt;view class=&quot;w-80 h-100 rad-10 b-a-9 tc f-50&quot; v-for=&quot;(item,index)  in 6&quot;&gt;	&lt;input class=&quot;w-80 h-100 &quot; maxlength=&quot;1&quot; type=&quot;text&quot;    @input=&quot;inputListener(index)&quot;   :focus=&quot;focus &amp;&amp; (focusIndex == index)&quot;/&gt;&lt;/view&gt; 
+
+
+data()&#123;    return&#123;        focus: true,		code:[&#x27;&#x27;,&#x27;&#x27;,&#x27;&#x27;,&#x27;&#x27;,&#x27;&#x27;,&#x27;&#x27;],// 需要获取焦点的序号		focusIndex: 0    &#125;&#125;method:&#123;      // 输入时事件	inputListener(e) &#123;		if (this.focusIndex != e)this.focusIndex=e		if (e &lt; 6) &#123;					this.focus=true,					this.focusIndex=e + 1		&#125;else &#123;					this.focus=false		&#125;	&#125;,&#125;
+
+
+完整版可参考链接：https://blog.csdn.net/u011423258/article/details/106683068?spm=1001.2014.3001.5506
+]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>《当我谈跑步时，我谈些什么》读后感</title>
+    <url>/2025/06/26/%E5%BD%93%E6%88%91%E8%B0%88%E8%B7%91%E6%AD%A5%E6%97%B6/</url>
+    <content><![CDATA[《当我谈跑步时，我谈些什么》也就是看了这本书，才知道世界上会有另一个自己在做着自己喜欢的事情。看这本书之前，从没有看过村上君写的书。知道有这么一个火人，也知道那么多火书，但就是没怎么看过。可论及跑步呀，觉得能与之有所交流。一直跑下去，会不会就到月球上了呢？跑步并非为了长命百岁，而是在有限生命里让自己活得更轻松点罢了。
+惊喜于能发现村上君跑步时的想象力，天马行空我很喜欢，我也曾幻想过很多，也会跑着跑着就突然想起一句歌词，什么现在加快速度追幸福呀 blala……长跑需要耐力，但没有想象力可不行哟。当然前提是热爱跑步，一个不喜欢跑步的人，你说再多也无动于衷；一个热爱跑步的人，即使是雨天，也想要在停雨空隙去相遇另一个自己。人本孤独，但精神却能得到共鸣。
+想着未来一定会坚持跑下去，不管世界如何变化。自从有次在外一整天走了 30 公里，除了身体上晒伤的疼痛以外，我更喜欢的是精神世界的富足。没经历过，就没有话语权。可能我跟陈坤一样，是个悲观的极乐主义者，在世上积极活着，却也看透红尘。不以物喜，不以己悲。脉搏也降到一分钟 50 多次，看来还是很适合慢跑的。说这么多，主要还是兴趣使然。只要不限制我的自由，一切好说。
+想着来年，我也会参加马拉松，然后旁边的人都在为我加油，那该有多 happy。
+“我不是人，是一架纯粹的机器，所以什么也无须感觉，唯有向前奔跑。”
+极为像的一点就是我们都喜欢不停地奔跑，不是那种觉得自己快不行了就走几步，也不是适当的时候停下来看风景。可能每个人的见解不同。但我觉得能不停跑下去的人才是真正的王者。
+当抵达终点那一刻，会觉得怎么那么酷，一股自豪感涌上来，就好比中了彩票或是走了狗屎运。这是原则，亦是我的骄傲。
+噢对，好比尚三哥在终点等着我，然后我得意地笑了。
+]]></content>
+      <categories>
+        <category>读书感悟</category>
       </categories>
   </entry>
   <entry>
@@ -990,90 +1022,6 @@ new 并不是魔法，而是一套明确的执行流程
       </categories>
   </entry>
   <entry>
-    <title>《当我谈跑步时，我谈些什么》读后感</title>
-    <url>/2025/06/26/%E5%BD%93%E6%88%91%E8%B0%88%E8%B7%91%E6%AD%A5%E6%97%B6/</url>
-    <content><![CDATA[《当我谈跑步时，我谈些什么》也就是看了这本书，才知道世界上会有另一个自己在做着自己喜欢的事情。看这本书之前，从没有看过村上君写的书。知道有这么一个火人，也知道那么多火书，但就是没怎么看过。可论及跑步呀，觉得能与之有所交流。一直跑下去，会不会就到月球上了呢？跑步并非为了长命百岁，而是在有限生命里让自己活得更轻松点罢了。
-惊喜于能发现村上君跑步时的想象力，天马行空我很喜欢，我也曾幻想过很多，也会跑着跑着就突然想起一句歌词，什么现在加快速度追幸福呀 blala……长跑需要耐力，但没有想象力可不行哟。当然前提是热爱跑步，一个不喜欢跑步的人，你说再多也无动于衷；一个热爱跑步的人，即使是雨天，也想要在停雨空隙去相遇另一个自己。人本孤独，但精神却能得到共鸣。
-想着未来一定会坚持跑下去，不管世界如何变化。自从有次在外一整天走了 30 公里，除了身体上晒伤的疼痛以外，我更喜欢的是精神世界的富足。没经历过，就没有话语权。可能我跟陈坤一样，是个悲观的极乐主义者，在世上积极活着，却也看透红尘。不以物喜，不以己悲。脉搏也降到一分钟 50 多次，看来还是很适合慢跑的。说这么多，主要还是兴趣使然。只要不限制我的自由，一切好说。
-想着来年，我也会参加马拉松，然后旁边的人都在为我加油，那该有多 happy。
-“我不是人，是一架纯粹的机器，所以什么也无须感觉，唯有向前奔跑。”
-极为像的一点就是我们都喜欢不停地奔跑，不是那种觉得自己快不行了就走几步，也不是适当的时候停下来看风景。可能每个人的见解不同。但我觉得能不停跑下去的人才是真正的王者。
-当抵达终点那一刻，会觉得怎么那么酷，一股自豪感涌上来，就好比中了彩票或是走了狗屎运。这是原则，亦是我的骄傲。
-噢对，好比尚三哥在终点等着我，然后我得意地笑了。
-]]></content>
-      <categories>
-        <category>读书感悟</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>小程序验证码输入框自动聚焦下个输入框</title>
-    <url>/2025/07/21/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E9%AA%8C%E8%AF%81%E7%A0%81%E8%BE%93%E5%85%A5%E6%A1%86%E8%87%AA%E5%8A%A8%E8%81%9A%E7%84%A6%E4%B8%8B%E4%B8%AA%E8%BE%93%E5%85%A5%E6%A1%86/</url>
-    <content><![CDATA[最开始我想的是有多少个输入框，就放多少个input，做完会发现有各种bug。比如键盘突然消失、没聚焦下个输入框、操作不丝滑等。正确思路是一个输入框就够了，然后通过改变样式（间隔、高亮）来实现，就是表面看起来是六个输入框，本质上只有一个input
-正确解法：&lt;view class=&quot;w-80 h-100 rad-10 b-a-9 tc f-50&quot; v-for=&quot;(item,index)  in 6&quot;&gt;	&lt;input class=&quot;w-80 h-100 &quot; maxlength=&quot;1&quot; type=&quot;text&quot;    @input=&quot;inputListener(index)&quot;   :focus=&quot;focus &amp;&amp; (focusIndex == index)&quot;/&gt;&lt;/view&gt; 
-
-
-data()&#123;    return&#123;        focus: true,		code:[&#x27;&#x27;,&#x27;&#x27;,&#x27;&#x27;,&#x27;&#x27;,&#x27;&#x27;,&#x27;&#x27;],// 需要获取焦点的序号		focusIndex: 0    &#125;&#125;method:&#123;      // 输入时事件	inputListener(e) &#123;		if (this.focusIndex != e)this.focusIndex=e		if (e &lt; 6) &#123;					this.focus=true,					this.focusIndex=e + 1		&#125;else &#123;					this.focus=false		&#125;	&#125;,&#125;
-
-
-完整版可参考链接：https://blog.csdn.net/u011423258/article/details/106683068?spm=1001.2014.3001.5506
-]]></content>
-      <categories>
-        <category>前端</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>2022应届毕业生办理深户流程</title>
-    <url>/2025/07/01/%E6%B7%B1%E6%88%B7%E5%8A%9E%E7%90%86%E6%B5%81%E7%A8%8B/</url>
-    <content><![CDATA[
-
-1. 登录广东政务服务网申请毕业生接收
-打开 广东政务服务网
-搜索“人才引进” → 选择“接收毕业生”
-填写个人资料后，下载电子版《申请书》
-
-2. 报到证改派
-每个地区流程略有不同，建议致电报到证抬头地区的人社局咨询
-示例：汕尾市城区 → 在广东政务服务网搜索“档案转出” → 点击在线办理
-上传报到证、申请表等资料到“调函”栏目
-不久后，工作人员会联系确认是否需要电子版“同意改派”文件（推荐选择电子版）, 她会把电子版的“同意改派”发到我们填的邮箱里。
-
-其他地区如潮州市：可直接在广东政务服务网搜索“报到证改派”在线办理
-3. 上传材料至“广东就业创业”小程序
-打开小程序，选择应届生接收模块
-上传材料：电子版“同意改派”的报到证、申请表、三方协议等
-等待校方审核通过
-
-4. 返回广东政务服务网上传最终材料
-上传审核通过后的报到证等资料
-审核通过后会收到含有“指标卡”的短信通知
-
-5. 在“深圳本地宝”预约现场办理
-打开“深圳本地宝”微信公众号，搜索“大学生”
-进入现场办理流程 → 点击“户政预约” → 选择“普通户政预约”
-预约业务选择“接收应届生户籍迁入”
-选择时间和地点并预约成功后，带好上述资料和以下材料前往办理：
-户口本
-身份证及二代回执
-一寸白底照片
-
-
-
-6. 第一次现场办理后领取档案袋
-办理后工作人员会发放档案袋
-需在五个工作日后再次前往办理
-
-7. 第二次预约并完成迁户手续
-提前预约，带齐上次材料再次前往办理
-办理成功后可选择身份证邮寄
-
-
-备注： 整个流程较为繁琐，建议提前准备资料并留意预约时间。
-]]></content>
-      <categories>
-        <category>其他</category>
-      </categories>
-  </entry>
-  <entry>
     <title>手写 Promise.race（从原理到实战）</title>
     <url>/2025/12/18/%E6%89%8B%E5%86%99Promise/</url>
     <content><![CDATA[ 在前端面试和日常业务中，Promise.race 是一个非常常见但又容易被忽略的 API。它的规则很简单：
@@ -1176,41 +1124,55 @@ allSettled：等全部结束，返回每个结果状态
       </categories>
   </entry>
   <entry>
-    <title>获取到的csv保存数据库</title>
-    <url>/2025/07/29/%E8%8E%B7%E5%8F%96%E5%88%B0%E7%9A%84csv%E4%BF%9D%E5%AD%98%E6%95%B0%E6%8D%AE%E5%BA%93/</url>
-    <content><![CDATA[如果第三方接口获取到的数据，返回为csv文档时，可以先把csv文档保存到本地某路径，再通过fs的createReadStream读取数据，保存到本地数据库。
-const processConversations = async (dateObj) =&gt; &#123;  const username = &#x27;你的帐户名&#x27;;  const password = &#x27;密码&#x27;;  const year = dateObj.format(&#x27;YYYY&#x27;);  const month = dateObj.format(&#x27;MM&#x27;);  const day = dateObj.format(&#x27;DD&#x27;);  const hour = dateObj.format(&#x27;HH&#x27;);  const dateStr = `$&#123;year&#125;-$&#123;month&#125;-$&#123;day&#125;-$&#123;hour&#125;`;  const fileName = `路径后半部份`;  const url = `https://api/$&#123;fileName&#125;`;  const outputPath = `/tmp/conversations`;  const tableName = &#x27;test&#x27;;  try &#123;    // 下载 CSV    const response = await axios.get(url, &#123;      responseType: &#x27;stream&#x27;,      headers: &#123;        Authorization: `Basic $&#123;Buffer.from(`$&#123;username&#125;:$&#123;password&#125;`).toString(&#x27;base64&#x27;)&#125;`      &#125;    &#125;);    const writer = fs.createWriteStream(outputPath);    response.data.pipe(writer);    await new Promise((resolve, reject) =&gt; &#123;      writer.on(&#x27;finish&#x27;, resolve);      writer.on(&#x27;error&#x27;, reject);    &#125;);    console.log(&#x27; CSV 文件下载成功:&#x27;, fileName);    const rows = [];    await new Promise((resolve, reject) =&gt; &#123;      fs.createReadStream(outputPath)        .pipe(csv())        .on(&#x27;data&#x27;, (row) =&gt; &#123;          rows.push([            row[&#x27;DATE_TIME&#x27;] ? dayjs(row[&#x27;DATE_TIME&#x27;]).format(&#x27;YYYY-MM-DD HH:mm:ss&#x27;) : null,            row[&#x27;CLID&#x27;] || null,            row[&#x27;CLID_SOURCE&#x27;] || null          ]);        &#125;)        .on(&#x27;end&#x27;, resolve)        .on(&#x27;error&#x27;, reject);    &#125;);    if (rows.length === 0) &#123;      console.warn(`CSV 中没有数据: $&#123;fileName&#125;`);      return;    &#125;    const insertSQL = `      INSERT INTO \`$&#123;tableName&#125;\` (        date_time, clid, clid_source      ) VALUES ?    `;    await query(insertSQL, [rows]);    console.log(`成功插入 $&#123;rows.length&#125; 条记录: $&#123;fileName&#125;`);  &#125; catch (error) &#123;    console.error(`报错 ($&#123;fileName&#125;):`, error.message);  &#125;&#125;;
+    <title>2022应届毕业生办理深户流程</title>
+    <url>/2025/07/01/%E6%B7%B1%E6%88%B7%E5%8A%9E%E7%90%86%E6%B5%81%E7%A8%8B/</url>
+    <content><![CDATA[
 
+1. 登录广东政务服务网申请毕业生接收
+打开 广东政务服务网
+搜索“人才引进” → 选择“接收毕业生”
+填写个人资料后，下载电子版《申请书》
+
+2. 报到证改派
+每个地区流程略有不同，建议致电报到证抬头地区的人社局咨询
+示例：汕尾市城区 → 在广东政务服务网搜索“档案转出” → 点击在线办理
+上传报到证、申请表等资料到“调函”栏目
+不久后，工作人员会联系确认是否需要电子版“同意改派”文件（推荐选择电子版）, 她会把电子版的“同意改派”发到我们填的邮箱里。
+
+其他地区如潮州市：可直接在广东政务服务网搜索“报到证改派”在线办理
+3. 上传材料至“广东就业创业”小程序
+打开小程序，选择应届生接收模块
+上传材料：电子版“同意改派”的报到证、申请表、三方协议等
+等待校方审核通过
+
+4. 返回广东政务服务网上传最终材料
+上传审核通过后的报到证等资料
+审核通过后会收到含有“指标卡”的短信通知
+
+5. 在“深圳本地宝”预约现场办理
+打开“深圳本地宝”微信公众号，搜索“大学生”
+进入现场办理流程 → 点击“户政预约” → 选择“普通户政预约”
+预约业务选择“接收应届生户籍迁入”
+选择时间和地点并预约成功后，带好上述资料和以下材料前往办理：
+户口本
+身份证及二代回执
+一寸白底照片
+
+
+
+6. 第一次现场办理后领取档案袋
+办理后工作人员会发放档案袋
+需在五个工作日后再次前往办理
+
+7. 第二次预约并完成迁户手续
+提前预约，带齐上次材料再次前往办理
+办理成功后可选择身份证邮寄
+
+
+备注： 整个流程较为繁琐，建议提前准备资料并留意预约时间。
 ]]></content>
       <categories>
-        <category>后端</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>索引</title>
-    <url>/2025/07/27/%E7%B4%A2%E5%BC%95/</url>
-    <content><![CDATA[索引的作用当想要快速查找到自己想要的数据时，可以用索引。通过索引，可以在检索数据时直接定位到，省去时间，就好比一本书前面的目录，能让你快速找到自己想看的内容。如果索引包含多列，那么按照从左到右的顺序，即最左前缀列来进行。
-索引的类型
-唯一索引：对某些列（比如身份证）添加唯一索引，不能出现两条身份证相同的记录，通过 UNIQUE 关键字我们就添加了一个唯一索引。
-
-ADD UNIQUE INDEX uni_sf (sf);
-
-也可以给列添加唯一约束，而不创建唯一索引，列具有唯一性。
-ADD CONSTRAINT uni_name UNIQUE (name);
-
-
-主键索引： 主键一旦创建，就会自动带上索引。这也是为什么主键搜索数据会更快的原因。一个表只能有一个主键，一个主键可以包含多列，即联合主键。
-
-ALTER TABLE table_name ADD PRIMARY KEY (column);
-
-
-普通索引： 任何一列都可以创建索引，建议只在自己经常想要检索的列上加索引，不要全部加，会耗性能。
-
-ALTER TABLE table_name ADD INDEX index_name (column);
-
-]]></content>
-      <categories>
-        <category>后端</category>
+        <category>其他</category>
       </categories>
   </entry>
   <entry>
@@ -1273,6 +1235,44 @@ ALTER TABLE table_name ADD INDEX index_name (column);
 ]]></content>
       <categories>
         <category>前端</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>索引</title>
+    <url>/2025/07/27/%E7%B4%A2%E5%BC%95/</url>
+    <content><![CDATA[索引的作用当想要快速查找到自己想要的数据时，可以用索引。通过索引，可以在检索数据时直接定位到，省去时间，就好比一本书前面的目录，能让你快速找到自己想看的内容。如果索引包含多列，那么按照从左到右的顺序，即最左前缀列来进行。
+索引的类型
+唯一索引：对某些列（比如身份证）添加唯一索引，不能出现两条身份证相同的记录，通过 UNIQUE 关键字我们就添加了一个唯一索引。
+
+ADD UNIQUE INDEX uni_sf (sf);
+
+也可以给列添加唯一约束，而不创建唯一索引，列具有唯一性。
+ADD CONSTRAINT uni_name UNIQUE (name);
+
+
+主键索引： 主键一旦创建，就会自动带上索引。这也是为什么主键搜索数据会更快的原因。一个表只能有一个主键，一个主键可以包含多列，即联合主键。
+
+ALTER TABLE table_name ADD PRIMARY KEY (column);
+
+
+普通索引： 任何一列都可以创建索引，建议只在自己经常想要检索的列上加索引，不要全部加，会耗性能。
+
+ALTER TABLE table_name ADD INDEX index_name (column);
+
+]]></content>
+      <categories>
+        <category>后端</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>获取到的csv保存数据库</title>
+    <url>/2025/07/29/%E8%8E%B7%E5%8F%96%E5%88%B0%E7%9A%84csv%E4%BF%9D%E5%AD%98%E6%95%B0%E6%8D%AE%E5%BA%93/</url>
+    <content><![CDATA[如果第三方接口获取到的数据，返回为csv文档时，可以先把csv文档保存到本地某路径，再通过fs的createReadStream读取数据，保存到本地数据库。
+const processConversations = async (dateObj) =&gt; &#123;  const username = &#x27;你的帐户名&#x27;;  const password = &#x27;密码&#x27;;  const year = dateObj.format(&#x27;YYYY&#x27;);  const month = dateObj.format(&#x27;MM&#x27;);  const day = dateObj.format(&#x27;DD&#x27;);  const hour = dateObj.format(&#x27;HH&#x27;);  const dateStr = `$&#123;year&#125;-$&#123;month&#125;-$&#123;day&#125;-$&#123;hour&#125;`;  const fileName = `路径后半部份`;  const url = `https://api/$&#123;fileName&#125;`;  const outputPath = `/tmp/conversations`;  const tableName = &#x27;test&#x27;;  try &#123;    // 下载 CSV    const response = await axios.get(url, &#123;      responseType: &#x27;stream&#x27;,      headers: &#123;        Authorization: `Basic $&#123;Buffer.from(`$&#123;username&#125;:$&#123;password&#125;`).toString(&#x27;base64&#x27;)&#125;`      &#125;    &#125;);    const writer = fs.createWriteStream(outputPath);    response.data.pipe(writer);    await new Promise((resolve, reject) =&gt; &#123;      writer.on(&#x27;finish&#x27;, resolve);      writer.on(&#x27;error&#x27;, reject);    &#125;);    console.log(&#x27; CSV 文件下载成功:&#x27;, fileName);    const rows = [];    await new Promise((resolve, reject) =&gt; &#123;      fs.createReadStream(outputPath)        .pipe(csv())        .on(&#x27;data&#x27;, (row) =&gt; &#123;          rows.push([            row[&#x27;DATE_TIME&#x27;] ? dayjs(row[&#x27;DATE_TIME&#x27;]).format(&#x27;YYYY-MM-DD HH:mm:ss&#x27;) : null,            row[&#x27;CLID&#x27;] || null,            row[&#x27;CLID_SOURCE&#x27;] || null          ]);        &#125;)        .on(&#x27;end&#x27;, resolve)        .on(&#x27;error&#x27;, reject);    &#125;);    if (rows.length === 0) &#123;      console.warn(`CSV 中没有数据: $&#123;fileName&#125;`);      return;    &#125;    const insertSQL = `      INSERT INTO \`$&#123;tableName&#125;\` (        date_time, clid, clid_source      ) VALUES ?    `;    await query(insertSQL, [rows]);    console.log(`成功插入 $&#123;rows.length&#125; 条记录: $&#123;fileName&#125;`);  &#125; catch (error) &#123;    console.error(`报错 ($&#123;fileName&#125;):`, error.message);  &#125;&#125;;
+
+]]></content>
+      <categories>
+        <category>后端</category>
       </categories>
   </entry>
 </search>
