@@ -532,6 +532,101 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://lidyaqf.github.io/2025/07/27/%E7%B4%A2%E5%BC%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/ening/images/avatar.jpg">
+      <meta itemprop="name" content="lidya">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="My English Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/ening/2025/07/27/%E7%B4%A2%E5%BC%95/" class="post-title-link" itemprop="url">Index</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2025-07-27 00:00:00" itemprop="dateCreated datePublished" datetime="2025-07-27T00:00:00+08:00">2025-07-27</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2026-01-27 09:55:10" itemprop="dateModified" datetime="2026-01-27T09:55:10+08:00">2026-01-27</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/ening/categories/Backend/" itemprop="url" rel="index"><span itemprop="name">Backend</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="The-Role-of-Indexes"><a href="#The-Role-of-Indexes" class="headerlink" title="The Role of Indexes"></a>The Role of Indexes</h2><p>When you want to quickly find the data you need, you can use indexes.<br>With indexes, the database can directly locate the required data during retrieval, saving time—much like the table of contents at the front of a book, which helps you quickly find what you want to read.</p>
+<p>If an index contains multiple columns, it follows the <strong>leftmost prefix rule</strong>, meaning it is used from left to right, starting with the leftmost column.</p>
+<h2 id="Types-of-Indexes"><a href="#Types-of-Indexes" class="headerlink" title="Types of Indexes"></a>Types of Indexes</h2><h3 id="1-Unique-Index"><a href="#1-Unique-Index" class="headerlink" title="1. Unique Index"></a>1. Unique Index</h3><p>A unique index can be added to certain columns (such as an ID number) to ensure that no two records have the same value. By using the <code>UNIQUE</code> keyword, we can create a unique index.</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ADD</span> <span class="keyword">UNIQUE</span> INDEX uni_sf (sf);</span><br></pre></td></tr></table></figure>
+
+<p>You can also add a unique constraint to a column without explicitly creating a unique index. In this case, the column is still required to have unique values.</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ADD CONSTRAINT</span> uni_name <span class="keyword">UNIQUE</span> (name);</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="2-Primary-Key-Index"><a href="#2-Primary-Key-Index" class="headerlink" title="2. Primary Key Index"></a>2. Primary Key Index</h3><p>Once a primary key is created, an index is automatically created for it. This is why searching data by the primary key is faster.</p>
+<p>A table can have only one primary key, but a primary key can consist of multiple columns, which is known as a <strong>composite (or joint) primary key</strong>.</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER TABLE</span> table_name <span class="keyword">ADD</span> <span class="keyword">PRIMARY KEY</span> (<span class="keyword">column</span>);</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="3-Normal-Non-unique-Index"><a href="#3-Normal-Non-unique-Index" class="headerlink" title="3. Normal (Non-unique) Index"></a>3. Normal (Non-unique) Index</h3><p>Any column can have an index created on it. It is recommended to add indexes only to columns that are frequently queried. Avoid adding indexes to every column, as this can negatively impact performance.</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER TABLE</span> table_name <span class="keyword">ADD</span> INDEX index_name (<span class="keyword">column</span>);</span><br></pre></td></tr></table></figure>
+
+
+
+
+      
+    </div>
+
+    
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://lidyaqf.github.io/2025/07/16/node-rpc/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1229,151 +1324,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://lidyaqf.github.io/2025/04/11/ELK%E5%AE%89%E8%A3%85%E6%B5%81%E7%A8%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/ening/images/avatar.jpg">
-      <meta itemprop="name" content="lidya">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="My English Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/ening/2025/04/11/ELK%E5%AE%89%E8%A3%85%E6%B5%81%E7%A8%8B/" class="post-title-link" itemprop="url">ELK Installation Guide</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2025-04-11 17:16:46" itemprop="dateCreated datePublished" datetime="2025-04-11T17:16:46+08:00">2025-04-11</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-07-02 16:51:37" itemprop="dateModified" datetime="2025-07-02T16:51:37+08:00">2025-07-02</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/ening/categories/Backend/" itemprop="url" rel="index"><span itemprop="name">Backend</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="Installing-ELK-Stack-ElasticSearch-Logstash-Kibana-with-Docker"><a href="#Installing-ELK-Stack-ElasticSearch-Logstash-Kibana-with-Docker" class="headerlink" title="Installing ELK Stack (ElasticSearch, Logstash, Kibana) with Docker"></a>Installing ELK Stack (ElasticSearch, Logstash, Kibana) with Docker</h1><blockquote>
-<p>It is recommended to install on Docker due to lower resource consumption. The installation version used below is <strong>8.12.2</strong>. Please use the same version to avoid conflicts.</p>
-</blockquote>
-<h2 id="Table-of-Contents"><a href="#Table-of-Contents" class="headerlink" title="Table of Contents"></a>Table of Contents</h2><p><a href="#1-install-elasticsearch">1. Install ElasticSearch</a><br><a href="#2-install-logstash">2. Install Logstash</a><br><a href="#3-install-kibana">3. Install Kibana</a><br><a href="#recommendations">Recommendations</a></p>
-<hr>
-<h2 id="1-Install-ElasticSearch"><a href="#1-Install-ElasticSearch" class="headerlink" title="1. Install ElasticSearch"></a>1. Install ElasticSearch</h2><ul>
-<li>Pull the image:</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">docker pull elasticsearch:8.12.2</span><br><span class="line">````</span><br><span class="line"></span><br><span class="line">* Start the container:</span><br><span class="line"></span><br><span class="line">```bash</span><br><span class="line">docker run --name some-elasticsearch -p 9200:9200 -p 9300:9300 -e <span class="string">&quot;discovery.type=single-node&quot;</span> -d elasticsearch:8.12.2</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>Enter the container:</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> docker <span class="built_in">exec</span> -u 0 -it some-elasticsearch bash</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>Restart the container:</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker restart some-elasticsearch</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="2-Install-Logstash"><a href="#2-Install-Logstash" class="headerlink" title="2. Install Logstash"></a>2. Install Logstash</h2><ul>
-<li>Pull the image:</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull docker.elastic.co/logstash/logstash:8.12.2</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>Start the container:</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> docker run -it -p 5044:5044 -p 9600:9600 --name logstash -v /usr/share/logstash/piplines:/usr/share/logstash/config --privileged=<span class="literal">true</span> docker.elastic.co/logstash/logstash:8.12.2 /bin/bash</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>Use <code>scp</code> to upload the MySQL Connector JAR file to the virtual machine:</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scp <span class="string">&quot;/Users/Downloads/logstash-8.12.2/mysql-connector-j-8.4.0.jar&quot;</span> username@VM-IP:/home</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>Move the JAR file from the VM to the Logstash container:</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="built_in">cp</span> ./mysql-connector-j-8.4.0.jar logstash:/usr/share/logstash</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>Enter the container:</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="built_in">exec</span> -u 0 -it logstash bash</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="3-Install-Kibana"><a href="#3-Install-Kibana" class="headerlink" title="3. Install Kibana"></a>3. Install Kibana</h2><ul>
-<li>Pull the image:</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull kibana:8.12.2</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>Start the container:</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run --name some-kibana -p 9200:9200 -p 9300:9300 -e <span class="string">&quot;discovery.type=single-node&quot;</span> -d elasticsearch:8.12.2</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>Enter the container:</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="built_in">exec</span> -u 0 -it some-kibana bash</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="Additional-Install-Docker-Portainer-and-Related-Commands"><a href="#Additional-Install-Docker-Portainer-and-Related-Commands" class="headerlink" title="Additional: Install Docker, Portainer, and Related Commands"></a>Additional: Install Docker, Portainer, and Related Commands</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt update</span><br><span class="line"><span class="built_in">sudo</span> apt install docker.io docker-compose</span><br><span class="line">docker -v</span><br><span class="line"><span class="built_in">sudo</span> systemctl start docker</span><br><span class="line"></span><br><span class="line"><span class="built_in">sudo</span> docker search portainer</span><br><span class="line">docker pull portainer/portainer</span><br><span class="line"><span class="built_in">sudo</span> docker pull portainer/portainer</span><br><span class="line"><span class="built_in">sudo</span> docker run -d --name portainerUI -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock portainer/portainer</span><br><span class="line"></span><br><span class="line"><span class="built_in">sudo</span> docker start portainerUI</span><br><span class="line"><span class="built_in">sudo</span> passwd root</span><br></pre></td></tr></table></figure>
-
-<hr>
-<!-- ## Recommendations -->
-
-<!-- * [Just for Fun](https://edunextgen1.com) -->
-
-
-
-      
-    </div>
-
-    
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1445,7 +1395,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/ening/ening/archives/">
         
-          <span class="site-state-item-count">22</span>
+          <span class="site-state-item-count">23</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

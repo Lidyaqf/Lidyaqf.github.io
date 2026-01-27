@@ -1,19 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>React Native New Architecture</title>
-    <url>/ening/2025/08/19/ReactNative%E6%96%B0%E6%9E%B6%E6%9E%84/</url>
-    <content><![CDATA[
-Fabric: Enables synchronous UI rendering, eliminating the communication bottleneck of the Bridge.
-TurboModules: Loads native modules on demand, improving app startup performance.
-JSI (JavaScript Interface): Allows JavaScript to directly call native code, replacing the asynchronous Bridge. The Bridge is asynchronous and single-threaded, which introduces additional overhead; JSI, by contrast, is synchronous, lower-overhead, and supports concurrency.
-
-]]></content>
-      <categories>
-        <category>Frontend</category>
-      </categories>
-  </entry>
-  <entry>
     <title>ELK Installation Guide</title>
     <url>/ening/2025/04/11/ELK%E5%AE%89%E8%A3%85%E6%B5%81%E7%A8%8B/</url>
     <content><![CDATA[Installing ELK Stack (ElasticSearch, Logstash, Kibana) with Docker
@@ -93,6 +80,44 @@ Additional: Install Docker, Portainer, and Related Commandssudo apt updatesudo a
       </categories>
   </entry>
   <entry>
+    <title>Hexo-Next – Change Fonts &amp; Enable Code Copy</title>
+    <url>/ening/2025/08/18/Hexo-Next-%E6%9B%B4%E6%94%B9%E5%AD%97%E4%BD%93/</url>
+    <content><![CDATA[
+The Next theme version used here is 7.8.0.
+First, locate the file:
+/themes/next/_config.yml
+
+Search for the keyword font.⚠️ Important: You must set enable inside font to true, because the default value is false.If you only modify the family without enabling it, the font change will not take effect — so make sure you don’t miss this step.
+If the font family is sourced from an external platform, you also need to configure the host.
+font:  enable: true  # Uri of fonts host, e.g. https://fonts.googleapis.com (Default).  host:   # Font options:  # `external: true` will load this font family from `host` above.  # `family: Times New Roman`. Without any quotes.  # `size: x.x`. Use `em` as unit. Default: 1 (16px)  # Global font settings used for all elements inside &lt;body&gt;.  global:    external: true    family: Noto Serif SC    size:  # Font settings for site title (.site-title).  title:    external: true    family: Noto Serif SC    size:  # Font settings for headlines (&lt;h1&gt; to &lt;h6&gt;).  headings:    external: true    family: Noto Serif SC    size:  # Font settings for posts (.post-body).  posts:    external: true    family: Noto Serif SC  # Font settings for &lt;code&gt; and code blocks.  codes:    external: true    family: Source Code Pro
+
+
+Enable Copy Button for Code BlocksIn the same _config.yml file, locate the following configuration section.
+Set copy_button.enable to true to enable the copy feature.
+
+When show_result is set to true, a checkmark will be shown after copying.
+The style option controls the appearance of the copy button. Choose based on your preference.
+
+codeblock:  # Code Highlight theme  # Available values: normal | night | night eighties | night blue | night bright | solarized | solarized dark | galactic  # See: https://github.com/chriskempson/tomorrow-theme  highlight_theme: night eighties  # Add copy button on codeblock  copy_button:    enable: true    # Show text copy result.    show_result: true    # Available values: default | flat | mac    style: mac
+]]></content>
+      <categories>
+        <category>Frontend</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>React Native New Architecture</title>
+    <url>/ening/2025/08/19/ReactNative%E6%96%B0%E6%9E%B6%E6%9E%84/</url>
+    <content><![CDATA[
+Fabric: Enables synchronous UI rendering, eliminating the communication bottleneck of the Bridge.
+TurboModules: Loads native modules on demand, improving app startup performance.
+JSI (JavaScript Interface): Allows JavaScript to directly call native code, replacing the asynchronous Bridge. The Bridge is asynchronous and single-threaded, which introduces additional overhead; JSI, by contrast, is synchronous, lower-overhead, and supports concurrency.
+
+]]></content>
+      <categories>
+        <category>Frontend</category>
+      </categories>
+  </entry>
+  <entry>
     <title>GitLab CI/CD</title>
     <url>/ening/2025/04/10/gitlabci/</url>
     <content><![CDATA[GitLab CI&#x2F;CD Guide for Frontend Projects (Mac Environment)OverviewIn daily development, we often manually send the built dist package to the backend for deployment, which is inefficient and error-prone. CI (Continuous Integration) automates this process. This guide shows how to use GitLab CI to implement continuous integration and deployment.
@@ -159,25 +184,14 @@ After successful deployment, you can view the build process on the GitLab CI&#x2
       </tags>
   </entry>
   <entry>
-    <title>Hexo-Next – Change Fonts &amp; Enable Code Copy</title>
-    <url>/ening/2025/08/18/Hexo-Next-%E6%9B%B4%E6%94%B9%E5%AD%97%E4%BD%93/</url>
-    <content><![CDATA[
-The Next theme version used here is 7.8.0.
-First, locate the file:
-/themes/next/_config.yml
+    <title>Sync Google Sheets Data Between Spreadsheets</title>
+    <url>/ening/2025/08/28/google%20sheet%E5%90%8C%E6%AD%A5%E8%A1%A8%E6%A0%BC%E6%95%B0%E6%8D%AE/</url>
+    <content><![CDATA[Sync Google Sheets Data Across Multiple SheetsThere is a requirement to synchronize all sheets from one Google Spreadsheet to another spreadsheet (including all sub-sheets).
+This is implemented using Google Sheets → Extensions → Apps Script.
+Why synchronization is neededThe source spreadsheet is read-only by default.By synchronizing its data into another spreadsheet, the copied sheets can then be edited freely.
+sourceSpreadsheetId and targetSpreadsheetId are the IDs from the Google Sheets URL —they are the long strings after /d/ in the address bar.
+Apps Script Code Examplefunction synchronizeSheetsToAnotherFile() &#123;  const sourceSpreadsheetId = &quot;id1&quot;;  const targetSpreadsheetId = &quot;id2&quot;;   // Example: 1NOtSSvDwXrca8vqyZW6OqQJwGaCICMVguSz1-i72oqg  const sourceSpreadsheet = SpreadsheetApp.openById(sourceSpreadsheetId);  const targetSpreadsheet = SpreadsheetApp.openById(targetSpreadsheetId);  const sourceSheets = sourceSpreadsheet.getSheets();  sourceSheets.forEach(sheet =&gt; &#123;    const sheetName = sheet.getName();    let targetSheet = targetSpreadsheet.getSheetByName(sheetName);    if (!targetSheet) &#123;      targetSheet = targetSpreadsheet.insertSheet(sheetName);    &#125; else &#123;      targetSheet.clear();    &#125;    const range = sheet.getDataRange();    const displayValues = range.getDisplayValues();     const formats = range.getBackgrounds();            const fontWeights = range.getFontWeights();        const targetRange = targetSheet.getRange(      1,      1,      displayValues.length,      displayValues[0].length    );    targetRange.setValues(displayValues);    targetRange.setBackgrounds(formats);    targetRange.setFontWeights(fontWeights);  &#125;);&#125;
 
-Search for the keyword font.⚠️ Important: You must set enable inside font to true, because the default value is false.If you only modify the family without enabling it, the font change will not take effect — so make sure you don’t miss this step.
-If the font family is sourced from an external platform, you also need to configure the host.
-font:  enable: true  # Uri of fonts host, e.g. https://fonts.googleapis.com (Default).  host:   # Font options:  # `external: true` will load this font family from `host` above.  # `family: Times New Roman`. Without any quotes.  # `size: x.x`. Use `em` as unit. Default: 1 (16px)  # Global font settings used for all elements inside &lt;body&gt;.  global:    external: true    family: Noto Serif SC    size:  # Font settings for site title (.site-title).  title:    external: true    family: Noto Serif SC    size:  # Font settings for headlines (&lt;h1&gt; to &lt;h6&gt;).  headings:    external: true    family: Noto Serif SC    size:  # Font settings for posts (.post-body).  posts:    external: true    family: Noto Serif SC  # Font settings for &lt;code&gt; and code blocks.  codes:    external: true    family: Source Code Pro
-
-
-Enable Copy Button for Code BlocksIn the same _config.yml file, locate the following configuration section.
-Set copy_button.enable to true to enable the copy feature.
-
-When show_result is set to true, a checkmark will be shown after copying.
-The style option controls the appearance of the copy button. Choose based on your preference.
-
-codeblock:  # Code Highlight theme  # Available values: normal | night | night eighties | night blue | night bright | solarized | solarized dark | galactic  # See: https://github.com/chriskempson/tomorrow-theme  highlight_theme: night eighties  # Add copy button on codeblock  copy_button:    enable: true    # Show text copy result.    show_result: true    # Available values: default | flat | mac    style: mac
 ]]></content>
       <categories>
         <category>Frontend</category>
@@ -204,61 +218,6 @@ function foo() &#123;  &quot;use strict&quot;;  console.log(this.a); // ❌ Type
 
 
 (function() &#123;  &quot;use strict&quot;;  foo(); // calling foo here doesn&#x27;t change its default binding&#125;)();function foo() &#123;  console.log(this.a);&#125;var a = 2;
-]]></content>
-      <categories>
-        <category>Frontend</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>Sync Google Sheets Data Between Spreadsheets</title>
-    <url>/ening/2025/08/28/google%20sheet%E5%90%8C%E6%AD%A5%E8%A1%A8%E6%A0%BC%E6%95%B0%E6%8D%AE/</url>
-    <content><![CDATA[Sync Google Sheets Data Across Multiple SheetsThere is a requirement to synchronize all sheets from one Google Spreadsheet to another spreadsheet (including all sub-sheets).
-This is implemented using Google Sheets → Extensions → Apps Script.
-Why synchronization is neededThe source spreadsheet is read-only by default.By synchronizing its data into another spreadsheet, the copied sheets can then be edited freely.
-sourceSpreadsheetId and targetSpreadsheetId are the IDs from the Google Sheets URL —they are the long strings after /d/ in the address bar.
-Apps Script Code Examplefunction synchronizeSheetsToAnotherFile() &#123;  const sourceSpreadsheetId = &quot;id1&quot;;  const targetSpreadsheetId = &quot;id2&quot;;   // Example: 1NOtSSvDwXrca8vqyZW6OqQJwGaCICMVguSz1-i72oqg  const sourceSpreadsheet = SpreadsheetApp.openById(sourceSpreadsheetId);  const targetSpreadsheet = SpreadsheetApp.openById(targetSpreadsheetId);  const sourceSheets = sourceSpreadsheet.getSheets();  sourceSheets.forEach(sheet =&gt; &#123;    const sheetName = sheet.getName();    let targetSheet = targetSpreadsheet.getSheetByName(sheetName);    if (!targetSheet) &#123;      targetSheet = targetSpreadsheet.insertSheet(sheetName);    &#125; else &#123;      targetSheet.clear();    &#125;    const range = sheet.getDataRange();    const displayValues = range.getDisplayValues();     const formats = range.getBackgrounds();            const fontWeights = range.getFontWeights();        const targetRange = targetSheet.getRange(      1,      1,      displayValues.length,      displayValues[0].length    );    targetRange.setValues(displayValues);    targetRange.setBackgrounds(formats);    targetRange.setFontWeights(fontWeights);  &#125;);&#125;
-
-]]></content>
-      <categories>
-        <category>Frontend</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>Talking About Node RPC</title>
-    <url>/ening/2025/07/16/node-rpc/</url>
-    <content><![CDATA[
-What Is SerializationData transmitted over a TCP channel can only be in binary form. So converting a data structure or an object into binary form is called serialization. The reverse process is called deserialization. The rules that define how they convert back and forth are called a protocol.
-
-What Is RPCRPC stands for Remote Procedure Call. Most RPC systems are based on TCP. The general implementation flow is as follows:
-
-The frontend calls the corresponding interface through a Proxy. The Proxy converts information such as the RPC service name, method name, and parameters into an RPC Request object and passes it to the RPC framework.
-The RPC framework serializes the RPC Request object into binary form according to the RPC protocol.
-The RPC framework sends the binary data to the backend through a TCP channel.
-The backend deserializes the binary data back into an RPC Request object.
-The backend maps the deserialized data to the actual method it implements, passes in the parameters, obtains the result, and then packages it into an RPC Response object for the RPC framework.
-The RPC framework serializes the RPC Response object into binary form according to the RPC protocol and sends it back to the frontend through the TCP channel.
-After receiving the binary data, the frontend deserializes it into an RPC Response object, and the Proxy returns the result to the business code.
-
-]]></content>
-      <categories>
-        <category>Backend</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>React Component Communication Methods</title>
-    <url>/ening/2025/08/25/react%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F/</url>
-    <content><![CDATA[
-Props and Callback Props:Used for parent–child component communication. Child components receive data from parents via props. Parents pass callback functions to children, and children invoke these callbacks to send data back to the parent.
-
-Context API:An API for sharing state across components without the need to pass props down through every level of the component tree.
-
-Redux or MobX:For complex applications, state management libraries can be used to handle communication and shared state between components.
-
-Event Subscription Pattern:Uses mechanisms such as EventEmitter or third-party libraries to implement publish–subscribe patterns for communication between non-related components.
-
-Hooks:Some React Hooks, such as useState, can be used to share logic and state between components through custom hooks.
-
-
 ]]></content>
       <categories>
         <category>Frontend</category>
@@ -301,23 +260,6 @@ Understanding Entertainment &amp; FreedomLife has two paths: one for career ambi
       <tags>
         <tag>Reading</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>Information Technology Teaching Template for Primary and Secondary Schools</title>
-    <url>/ening/2025/08/21/%E4%B8%AD%E5%B0%8F%E5%AD%A6%E4%BF%A1%E6%81%AF%E6%8A%80%E6%9C%AF%E6%95%99%E5%AD%A6%E6%A8%A1%E7%89%88/</url>
-    <content><![CDATA[Verbatim Teaching Script: “if-elif Conditional Statements”    Students, just now the teacher noticed the class duty roster. From Monday to Friday, there are many diligent “little bees” on duty. I’d like to ask: which students are on duty on Monday? Please raise your hands. Yes, I see you. Now, students, do you remember who the students on duty on Monday are? That’s right, there are six students in total.
-    Now suppose we take three classes as a unit and give you a student’s name. Can you quickly tell which day of the week this student is on duty? Do you have any good ideas? You there—yes, you mentioned memorizing it with a rhyme or mnemonic. Are there any better methods? You—right, we can use a program to output the result. So, what kind of statement should we use to represent multiple conditions? Today, we are going to learn another conditional statement in Python: if-elif-else.
-    Next, please work in pairs with your desk mates. Analyze how to use if-elif-else to solve the problem of matching student names to duty days. You have 8 minutes. Begin.Time’s up. While walking around, I saw everyone actively discussing. Which group would like to share your ideas? You, please. You said that we can input a student’s name and determine which day they are on duty by matching the name and outputting the corresponding weekday. Any additions? Group Five, please share. They suggested creating five arrays corresponding to Monday through Friday, placing each student’s name into the appropriate array, and then judging which day to output. That’s a very important point. Please sit down. Excellent work. It’s clear that everyone has previewed today’s lesson well.
-    Next, let’s integrate everyone’s ideas. Please think independently and draw a flowchart. You have 5 minutes. Begin.Time’s up. This student, please come up and present your flowchart. You explained that first we input the student’s name. If Xiaohua is in Monday’s array, then output Monday, and so on. Now, please try to write a multi-branch conditional statement. Here’s a hint from the teacher: use elif for additional conditional clauses. Let’s ask this student to write their answer on the blackboard. Students, compare it with your own code. Which parts need modification? You said the final elif should be changed to else, to indicate that when none of the conditions are met, the statements under else are executed. You also mentioned paying attention to indentation and colons. Very careful observations. I hope everyone writes carefully when coding. Now please use the if-elif statements you’ve learned to implement the algorithm you designed. I see that everyone has written it correctly and avoided the earlier issues.
-    Now that we’ve written the statements, what is their execution process? Please discuss this in pairs. In a moment, we’ll ask one group to explain. You have 7 minutes. Begin.I see students discussing quietly. Time’s up. Group Two, please explain the execution process. They used the flowchart to explain that the program checks each condition in order. If a condition is satisfied, it outputs the result; if none are satisfied, it outputs an error message. Their explanation combined diagrams and text and was very clear. Based on the flowchart on the screen, we can summarize the execution process of if-elif statements: the program starts from the if condition and checks conditions one by one. If a condition is true, the corresponding block of code is executed and the program exits the if structure. If the condition is false, it moves on to the next condition. If all conditions are false, the else block is executed.
-    Now that we’ve finished learning the new knowledge, please write a complete program that implements this process. Students who finish early may think about real-life situations that require checking multiple conditions and write corresponding programs. Let’s invite some students to present their work. Some students approached the problem from a mathematics perspective, writing a program to compare three numbers and find the maximum. Others took inspiration from daily life and wrote a taxi fare calculation program. All of your programs were well-structured and correctly formatted.
-    As today’s lesson comes to an end, what have you learned from this class? You said that you’ve learned the format and execution process of if-elif statements. It seems everyone has mastered today’s content. In fact, programming is very close to our daily life and studies, and it’s not as difficult as it may seem. The teacher hopes that you will continue to think actively and express your ideas in class just like today.
-    Finally, here is a homework assignment: please compare the characteristics of the three types of if statements and organize them into a table.
-    That’s all for today’s lesson. Goodbye, students.
-]]></content>
-      <categories>
-        <category>Teacher Certification</category>
-      </categories>
   </entry>
   <entry>
     <title>Frontend Interview Questions</title>
@@ -710,6 +652,27 @@ Oh, right—just like Brother Shang waiting at the finish line, and I’d smile 
       </tags>
   </entry>
   <entry>
+    <title>Talking About Node RPC</title>
+    <url>/ening/2025/07/16/node-rpc/</url>
+    <content><![CDATA[
+What Is SerializationData transmitted over a TCP channel can only be in binary form. So converting a data structure or an object into binary form is called serialization. The reverse process is called deserialization. The rules that define how they convert back and forth are called a protocol.
+
+What Is RPCRPC stands for Remote Procedure Call. Most RPC systems are based on TCP. The general implementation flow is as follows:
+
+The frontend calls the corresponding interface through a Proxy. The Proxy converts information such as the RPC service name, method name, and parameters into an RPC Request object and passes it to the RPC framework.
+The RPC framework serializes the RPC Request object into binary form according to the RPC protocol.
+The RPC framework sends the binary data to the backend through a TCP channel.
+The backend deserializes the binary data back into an RPC Request object.
+The backend maps the deserialized data to the actual method it implements, passes in the parameters, obtains the result, and then packages it into an RPC Response object for the RPC framework.
+The RPC framework serializes the RPC Response object into binary form according to the RPC protocol and sends it back to the frontend through the TCP channel.
+After receiving the binary data, the frontend deserializes it into an RPC Response object, and the Proxy returns the result to the business code.
+
+]]></content>
+      <categories>
+        <category>Backend</category>
+      </categories>
+  </entry>
+  <entry>
     <title>Fully Understanding How the JavaScript `new` Operator Works</title>
     <url>/ening/2025/12/17/%E6%89%8B%E5%86%99New/</url>
     <content><![CDATA[In JavaScript, the new operator is a core concept that frequently appears in both interviews and everyday development.Many developers use new regularly, but few truly understand what actually happens behind the scenes.
@@ -822,6 +785,24 @@ If you can both write and explain this implementation,90% of interviewers will c
       </categories>
   </entry>
   <entry>
+    <title>Reflections on *Skin*</title>
+    <url>/ening/2025/06/26/%E7%9A%AE%E5%9B%8A%E6%84%9F%E6%82%9F/</url>
+    <content><![CDATA[Aunt TaiAunt Tai is strong-willed and resilient. Her optimistic attitude is something worth learning from. The greatest thing my father ever did was marrying my mother—a truly great woman. A real woman should face everything with positivity and build the future she desires with her own hands.
+Although she resorted to stealing, it was driven by hardship—survival and family. Setting aside pride to do things against her will is, in a way, a form of strength. It’s not about crying and making a scene, but staying proactive in adversity.
+Thinking about it, the author’s achievements are inseparable from his great mother.
+Ah, that lovely mother! To preserve her husband’s dignity and happiness, she insisted on completing the house. Isn’t that a form of strength too? To follow her heart courageously is truly admirable.
+In fact, the person who understands my father the most is my mother. She knows his pride. Isn’t this what love is? You don’t need to say it—I understand. I understand you, and you understand me, and that’s why we’ve been together for so long.
+Zhang MeiliGet up from where you fell. Zhang Meili seems like someone who pursued true love and worked hard for what she desired. Though she was eventually forced to liberate herself sexually, I still respect her for everything she once did.
+Public opinion is powerful, but Zhang Meili’s inner strength is even more powerful.
+]]></content>
+      <categories>
+        <category>Reading</category>
+      </categories>
+      <tags>
+        <tag>Reading</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Handwriting Promise.race (From Theory to Practice)</title>
     <url>/ening/2025/12/18/%E6%89%8B%E5%86%99Promise/</url>
     <content><![CDATA[In frontend interviews and daily development, Promise.race is a very common yet often overlooked API. Its rule is simple:
@@ -914,24 +895,6 @@ Iterate over the iterable, wrap each item with Promise.resolve, attach the same 
       </categories>
   </entry>
   <entry>
-    <title>Reflections on *Skin*</title>
-    <url>/ening/2025/06/26/%E7%9A%AE%E5%9B%8A%E6%84%9F%E6%82%9F/</url>
-    <content><![CDATA[Aunt TaiAunt Tai is strong-willed and resilient. Her optimistic attitude is something worth learning from. The greatest thing my father ever did was marrying my mother—a truly great woman. A real woman should face everything with positivity and build the future she desires with her own hands.
-Although she resorted to stealing, it was driven by hardship—survival and family. Setting aside pride to do things against her will is, in a way, a form of strength. It’s not about crying and making a scene, but staying proactive in adversity.
-Thinking about it, the author’s achievements are inseparable from his great mother.
-Ah, that lovely mother! To preserve her husband’s dignity and happiness, she insisted on completing the house. Isn’t that a form of strength too? To follow her heart courageously is truly admirable.
-In fact, the person who understands my father the most is my mother. She knows his pride. Isn’t this what love is? You don’t need to say it—I understand. I understand you, and you understand me, and that’s why we’ve been together for so long.
-Zhang MeiliGet up from where you fell. Zhang Meili seems like someone who pursued true love and worked hard for what she desired. Though she was eventually forced to liberate herself sexually, I still respect her for everything she once did.
-Public opinion is powerful, but Zhang Meili’s inner strength is even more powerful.
-]]></content>
-      <categories>
-        <category>Reading</category>
-      </categories>
-      <tags>
-        <tag>Reading</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Encountering the Unknown Self</title>
     <url>/ening/2025/06/30/%E9%81%87%E8%A7%81%E6%9C%AA%E7%9F%A5%E7%9A%84%E8%87%AA%E5%B7%B1/</url>
     <content><![CDATA[Notes on Encountering the Unknown SelfWhat is the “Unknown”?The “self” refers to the “true self.” From the question “Who am I?” to the concept of “from existence to non-existence,” the entire book is structured around dialogues between Ruoling and a wise elder, revealing many profound life concepts.
@@ -973,6 +936,52 @@ ConclusionThis book is not only about discovering “who you are,” but also ab
       </tags>
   </entry>
   <entry>
+    <title>Index</title>
+    <url>/ening/2025/07/27/%E7%B4%A2%E5%BC%95/</url>
+    <content><![CDATA[The Role of IndexesWhen you want to quickly find the data you need, you can use indexes.With indexes, the database can directly locate the required data during retrieval, saving time—much like the table of contents at the front of a book, which helps you quickly find what you want to read.
+If an index contains multiple columns, it follows the leftmost prefix rule, meaning it is used from left to right, starting with the leftmost column.
+Types of Indexes1. Unique IndexA unique index can be added to certain columns (such as an ID number) to ensure that no two records have the same value. By using the UNIQUE keyword, we can create a unique index.
+ADD UNIQUE INDEX uni_sf (sf);
+
+You can also add a unique constraint to a column without explicitly creating a unique index. In this case, the column is still required to have unique values.
+ADD CONSTRAINT uni_name UNIQUE (name);
+
+
+
+2. Primary Key IndexOnce a primary key is created, an index is automatically created for it. This is why searching data by the primary key is faster.
+A table can have only one primary key, but a primary key can consist of multiple columns, which is known as a composite (or joint) primary key.
+ALTER TABLE table_name ADD PRIMARY KEY (column);
+
+
+
+3. Normal (Non-unique) IndexAny column can have an index created on it. It is recommended to add indexes only to columns that are frequently queried. Avoid adding indexes to every column, as this can negatively impact performance.
+ALTER TABLE table_name ADD INDEX index_name (column);
+
+
+
+]]></content>
+      <categories>
+        <category>Backend</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>Information Technology Teaching Template for Primary and Secondary Schools</title>
+    <url>/ening/2025/08/21/%E4%B8%AD%E5%B0%8F%E5%AD%A6%E4%BF%A1%E6%81%AF%E6%8A%80%E6%9C%AF%E6%95%99%E5%AD%A6%E6%A8%A1%E7%89%88/</url>
+    <content><![CDATA[Verbatim Teaching Script: “if-elif Conditional Statements”    Students, just now the teacher noticed the class duty roster. From Monday to Friday, there are many diligent “little bees” on duty. I’d like to ask: which students are on duty on Monday? Please raise your hands. Yes, I see you. Now, students, do you remember who the students on duty on Monday are? That’s right, there are six students in total.
+    Now suppose we take three classes as a unit and give you a student’s name. Can you quickly tell which day of the week this student is on duty? Do you have any good ideas? You there—yes, you mentioned memorizing it with a rhyme or mnemonic. Are there any better methods? You—right, we can use a program to output the result. So, what kind of statement should we use to represent multiple conditions? Today, we are going to learn another conditional statement in Python: if-elif-else.
+    Next, please work in pairs with your desk mates. Analyze how to use if-elif-else to solve the problem of matching student names to duty days. You have 8 minutes. Begin.Time’s up. While walking around, I saw everyone actively discussing. Which group would like to share your ideas? You, please. You said that we can input a student’s name and determine which day they are on duty by matching the name and outputting the corresponding weekday. Any additions? Group Five, please share. They suggested creating five arrays corresponding to Monday through Friday, placing each student’s name into the appropriate array, and then judging which day to output. That’s a very important point. Please sit down. Excellent work. It’s clear that everyone has previewed today’s lesson well.
+    Next, let’s integrate everyone’s ideas. Please think independently and draw a flowchart. You have 5 minutes. Begin.Time’s up. This student, please come up and present your flowchart. You explained that first we input the student’s name. If Xiaohua is in Monday’s array, then output Monday, and so on. Now, please try to write a multi-branch conditional statement. Here’s a hint from the teacher: use elif for additional conditional clauses. Let’s ask this student to write their answer on the blackboard. Students, compare it with your own code. Which parts need modification? You said the final elif should be changed to else, to indicate that when none of the conditions are met, the statements under else are executed. You also mentioned paying attention to indentation and colons. Very careful observations. I hope everyone writes carefully when coding. Now please use the if-elif statements you’ve learned to implement the algorithm you designed. I see that everyone has written it correctly and avoided the earlier issues.
+    Now that we’ve written the statements, what is their execution process? Please discuss this in pairs. In a moment, we’ll ask one group to explain. You have 7 minutes. Begin.I see students discussing quietly. Time’s up. Group Two, please explain the execution process. They used the flowchart to explain that the program checks each condition in order. If a condition is satisfied, it outputs the result; if none are satisfied, it outputs an error message. Their explanation combined diagrams and text and was very clear. Based on the flowchart on the screen, we can summarize the execution process of if-elif statements: the program starts from the if condition and checks conditions one by one. If a condition is true, the corresponding block of code is executed and the program exits the if structure. If the condition is false, it moves on to the next condition. If all conditions are false, the else block is executed.
+    Now that we’ve finished learning the new knowledge, please write a complete program that implements this process. Students who finish early may think about real-life situations that require checking multiple conditions and write corresponding programs. Let’s invite some students to present their work. Some students approached the problem from a mathematics perspective, writing a program to compare three numbers and find the maximum. Others took inspiration from daily life and wrote a taxi fare calculation program. All of your programs were well-structured and correctly formatted.
+    As today’s lesson comes to an end, what have you learned from this class? You said that you’ve learned the format and execution process of if-elif statements. It seems everyone has mastered today’s content. In fact, programming is very close to our daily life and studies, and it’s not as difficult as it may seem. The teacher hopes that you will continue to think actively and express your ideas in class just like today.
+    Finally, here is a homework assignment: please compare the characteristics of the three types of if statements and organize them into a table.
+    That’s all for today’s lesson. Goodbye, students.
+]]></content>
+      <categories>
+        <category>Teacher Certification</category>
+      </categories>
+  </entry>
+  <entry>
     <title>Developing Without Frameworks</title>
     <url>/ening/2025/08/13/%E5%A6%82%E4%BD%95%E8%84%B1%E7%A6%BB%E6%A1%86%E6%9E%B6%E5%BC%80%E5%8F%91/</url>
     <content><![CDATA[
@@ -983,6 +992,23 @@ When developing multiple similar websites, unbundled code can be uploaded direct
 ]]></content>
       <categories>
         <category>Frontend</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>Saving Retrieved CSV Data into a Database</title>
+    <url>/ening/2025/07/29/%E8%8E%B7%E5%8F%96%E5%88%B0%E7%9A%84csv%E4%BF%9D%E5%AD%98%E6%95%B0%E6%8D%AE%E5%BA%93/</url>
+    <content><![CDATA[Saving CSV Data from a Third-Party API into a DatabaseWhen data retrieved from a third-party API is returned in CSV format, a common and reliable approach is:
+
+First, save the CSV file to a local path
+Then use fs.createReadStream to read the file
+Finally, parse the CSV content and store it in a local database
+
+Below is an example implementation:
+const processConversations = async (dateObj) =&gt; &#123;  const username = &#x27;your_account_name&#x27;;  const password = &#x27;password&#x27;;  const year = dateObj.format(&#x27;YYYY&#x27;);  const month = dateObj.format(&#x27;MM&#x27;);  const day = dateObj.format(&#x27;DD&#x27;);  const hour = dateObj.format(&#x27;HH&#x27;);  const dateStr = `$&#123;year&#125;-$&#123;month&#125;-$&#123;day&#125;-$&#123;hour&#125;`;  const fileName = `partial_path`;  const url = `https://api/$&#123;fileName&#125;`;  const outputPath = `/tmp/conversations`;  const tableName = &#x27;test&#x27;;  try &#123;    // Download CSV    const response = await axios.get(url, &#123;      responseType: &#x27;stream&#x27;,      headers: &#123;        Authorization: `Basic $&#123;Buffer.from(`$&#123;username&#125;:$&#123;password&#125;`).toString(&#x27;base64&#x27;)&#125;`      &#125;    &#125;);    const writer = fs.createWriteStream(outputPath);    response.data.pipe(writer);    await new Promise((resolve, reject) =&gt; &#123;      writer.on(&#x27;finish&#x27;, resolve);      writer.on(&#x27;error&#x27;, reject);    &#125;);    console.log(&#x27;CSV file downloaded successfully:&#x27;, fileName);    const rows = [];    await new Promise((resolve, reject) =&gt; &#123;      fs.createReadStream(outputPath)        .pipe(csv())        .on(&#x27;data&#x27;, (row) =&gt; &#123;          rows.push([            row[&#x27;DATE_TIME&#x27;]              ? dayjs(row[&#x27;DATE_TIME&#x27;]).format(&#x27;YYYY-MM-DD HH:mm:ss&#x27;)              : null,            row[&#x27;CLID&#x27;] || null,            row[&#x27;CLID_SOURCE&#x27;] || null          ]);        &#125;)        .on(&#x27;end&#x27;, resolve)        .on(&#x27;error&#x27;, reject);    &#125;);    if (rows.length === 0) &#123;      console.warn(`No data found in CSV: $&#123;fileName&#125;`);      return;    &#125;    const insertSQL = `      INSERT INTO \`$&#123;tableName&#125;\` (        date_time, clid, clid_source      ) VALUES ?    `;    await query(insertSQL, [rows]);    console.log(`Successfully inserted $&#123;rows.length&#125; records: $&#123;fileName&#125;`);  &#125; catch (error) &#123;    console.error(`Error ($&#123;fileName&#125;):`, error.message);  &#125;&#125;;
+
+]]></content>
+      <categories>
+        <category>Backend</category>
       </categories>
   </entry>
   <entry>
@@ -1066,20 +1092,23 @@ By following the method described above, third-party scripts will run correctly 
       </tags>
   </entry>
   <entry>
-    <title>Saving Retrieved CSV Data into a Database</title>
-    <url>/ening/2025/07/29/%E8%8E%B7%E5%8F%96%E5%88%B0%E7%9A%84csv%E4%BF%9D%E5%AD%98%E6%95%B0%E6%8D%AE%E5%BA%93/</url>
-    <content><![CDATA[Saving CSV Data from a Third-Party API into a DatabaseWhen data retrieved from a third-party API is returned in CSV format, a common and reliable approach is:
+    <title>React Component Communication Methods</title>
+    <url>/ening/2025/08/25/react%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F/</url>
+    <content><![CDATA[
+Props and Callback Props:Used for parent–child component communication. Child components receive data from parents via props. Parents pass callback functions to children, and children invoke these callbacks to send data back to the parent.
 
-First, save the CSV file to a local path
-Then use fs.createReadStream to read the file
-Finally, parse the CSV content and store it in a local database
+Context API:An API for sharing state across components without the need to pass props down through every level of the component tree.
 
-Below is an example implementation:
-const processConversations = async (dateObj) =&gt; &#123;  const username = &#x27;your_account_name&#x27;;  const password = &#x27;password&#x27;;  const year = dateObj.format(&#x27;YYYY&#x27;);  const month = dateObj.format(&#x27;MM&#x27;);  const day = dateObj.format(&#x27;DD&#x27;);  const hour = dateObj.format(&#x27;HH&#x27;);  const dateStr = `$&#123;year&#125;-$&#123;month&#125;-$&#123;day&#125;-$&#123;hour&#125;`;  const fileName = `partial_path`;  const url = `https://api/$&#123;fileName&#125;`;  const outputPath = `/tmp/conversations`;  const tableName = &#x27;test&#x27;;  try &#123;    // Download CSV    const response = await axios.get(url, &#123;      responseType: &#x27;stream&#x27;,      headers: &#123;        Authorization: `Basic $&#123;Buffer.from(`$&#123;username&#125;:$&#123;password&#125;`).toString(&#x27;base64&#x27;)&#125;`      &#125;    &#125;);    const writer = fs.createWriteStream(outputPath);    response.data.pipe(writer);    await new Promise((resolve, reject) =&gt; &#123;      writer.on(&#x27;finish&#x27;, resolve);      writer.on(&#x27;error&#x27;, reject);    &#125;);    console.log(&#x27;CSV file downloaded successfully:&#x27;, fileName);    const rows = [];    await new Promise((resolve, reject) =&gt; &#123;      fs.createReadStream(outputPath)        .pipe(csv())        .on(&#x27;data&#x27;, (row) =&gt; &#123;          rows.push([            row[&#x27;DATE_TIME&#x27;]              ? dayjs(row[&#x27;DATE_TIME&#x27;]).format(&#x27;YYYY-MM-DD HH:mm:ss&#x27;)              : null,            row[&#x27;CLID&#x27;] || null,            row[&#x27;CLID_SOURCE&#x27;] || null          ]);        &#125;)        .on(&#x27;end&#x27;, resolve)        .on(&#x27;error&#x27;, reject);    &#125;);    if (rows.length === 0) &#123;      console.warn(`No data found in CSV: $&#123;fileName&#125;`);      return;    &#125;    const insertSQL = `      INSERT INTO \`$&#123;tableName&#125;\` (        date_time, clid, clid_source      ) VALUES ?    `;    await query(insertSQL, [rows]);    console.log(`Successfully inserted $&#123;rows.length&#125; records: $&#123;fileName&#125;`);  &#125; catch (error) &#123;    console.error(`Error ($&#123;fileName&#125;):`, error.message);  &#125;&#125;;
+Redux or MobX:For complex applications, state management libraries can be used to handle communication and shared state between components.
+
+Event Subscription Pattern:Uses mechanisms such as EventEmitter or third-party libraries to implement publish–subscribe patterns for communication between non-related components.
+
+Hooks:Some React Hooks, such as useState, can be used to share logic and state between components through custom hooks.
+
 
 ]]></content>
       <categories>
-        <category>Backend</category>
+        <category>Frontend</category>
       </categories>
   </entry>
 </search>
