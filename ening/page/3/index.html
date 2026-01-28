@@ -232,6 +232,254 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://lidyaqf.github.io/2025/04/18/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/ening/images/avatar.jpg">
+      <meta itemprop="name" content="lidya">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="My English Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/ening/2025/04/18/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98/" class="post-title-link" itemprop="url">Frontend Interview Questions</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2025-04-18 17:31:30" itemprop="dateCreated datePublished" datetime="2025-04-18T17:31:30+08:00">2025-04-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2026-01-15 10:46:56" itemprop="dateModified" datetime="2026-01-15T10:46:56+08:00">2026-01-15</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/ening/categories/Frontend/" itemprop="url" rel="index"><span itemprop="name">Frontend</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id=""><a href="#" class="headerlink" title=""></a></h1><details>
+  <summary><strong>Differences between var, let, and const?</strong></summary>
+
+<h4 id="✅-Scope"><a href="#✅-Scope" class="headerlink" title="✅ Scope"></a>✅ Scope</h4><ol>
+<li>Variables declared with <code>var</code> do not have block scope. <strong>They can be accessed outside blocks but not outside functions</strong>.</li>
+<li>Variables declared with <code>let</code> have block scope, <strong>accessible only within the declared block</strong>.</li>
+<li><code>const</code> defines constants, <strong>must be initialized, accessible only in the declared block, and cannot be reassigned</strong>.</li>
+</ol>
+<h4 id="✅-Declaration-Rules"><a href="#✅-Declaration-Rules" class="headerlink" title="✅ Declaration Rules"></a>✅ Declaration Rules</h4><ul>
+<li>A variable name can only be declared once using one of these methods; otherwise, it throws an error.</li>
+</ul>
+<h4 id="✅-Difference-when-using-with-this"><a href="#✅-Difference-when-using-with-this" class="headerlink" title="✅ Difference when using with this"></a>✅ Difference when using with <code>this</code></h4><table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>var &#x2F; let &#x2F; const</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Can change <code>this</code> context</td>
+<td>✅ Yes</td>
+</tr>
+<tr>
+<td>First parameter is the object <code>this</code> refers to</td>
+<td>✅ Yes</td>
+</tr>
+<tr>
+<td>No object or <code>undefined/null</code></td>
+<td>Defaults to global <code>window</code></td>
+</tr>
+<tr>
+<td>Parameter passing</td>
+<td><code>apply</code> uses array, <code>call</code> uses parameter list, <code>bind</code> supports multiple arguments</td>
+</tr>
+<tr>
+<td>Execution method</td>
+<td><code>apply/call</code> execute immediately, <code>bind</code> returns a new function</td>
+</tr>
+</tbody></table>
+</details>
+
+<details>
+  <summary><strong>What is event delegation?</strong></summary>
+
+<ul>
+<li>Event delegation attaches events to a parent or ancestor element instead of individual child elements.<br/></li>
+<li>When the event reaches the target element, it bubbles up and triggers the handler on the outer element.</li>
+</ul>
+</details>
+
+<details>
+  <summary><strong>Difference between debounce and throttle?</strong></summary>
+
+<ul>
+<li><strong>Debounce</strong>: Executes only the last trigger. Even if the event keeps firing, it waits until <code>n</code> seconds after the last event to execute.</li>
+<li><strong>Throttle</strong>: Controls the execution frequency. Fires every <code>n</code> seconds during continuous event triggers.</li>
+</ul>
+</details>
+
+<details>
+  <summary><strong>How does frontend prevent SQL injection?</strong></summary>
+
+<ol>
+<li><strong>Parameterized Queries</strong>: Use prepared statements or parameterized queries.</li>
+<li><strong>Input Validation</strong>: Ensure user input follows expected format.</li>
+<li><strong>Escape Special Characters</strong>: Escape characters when constructing SQL queries.</li>
+<li><strong>Limit Permissions</strong>: Restrict user privileges to prevent unsafe operations.</li>
+<li><strong>Whitelist Validation</strong>: Only allow expected values in input.</li>
+<li><strong>Code Review</strong>: Regularly review code, especially DB-related parts.</li>
+</ol>
+</details>
+
+<details>
+  <summary><strong>Difference between HTTP and HTTPS</strong></summary>
+
+<ol>
+<li>HTTPS requires a certificate from a CA, which may cost money.</li>
+<li>HTTP transmits data in plaintext, while HTTPS uses SSL encryption.</li>
+<li>They use different connection methods and ports: HTTP uses 80, HTTPS uses 443.</li>
+<li>HTTP is stateless; HTTPS combines SSL + HTTP for encrypted, authenticated, secure communication.</li>
+</ol>
+</details>
+
+<details>
+  <summary><strong>Difference between created and mounted?</strong></summary>
+
+<ul>
+<li><code>created</code> runs before <code>mounted</code>. DOM is not fully rendered, but API requests can be made early here.</li>
+<li><code>mounted</code> is triggered when the DOM has been rendered, so it’s suitable for manipulating DOM elements.</li>
+</ul>
+</details>
+
+<details>
+  <summary><strong>Explain the event loop mechanism</strong></summary>
+
+<h3 id="🔁-What-is-the-Event-Loop"><a href="#🔁-What-is-the-Event-Loop" class="headerlink" title="🔁 What is the Event Loop?"></a>🔁 What is the Event Loop?</h3><p>JavaScript is single-threaded. In addition to the <strong>call stack</strong>, it relies on <strong>task queues</strong> to control asynchronous code execution order.</p>
+<p>This whole process is called the <strong>Event Loop</strong>.</p>
+<h3 id="🧠-Core-Concepts"><a href="#🧠-Core-Concepts" class="headerlink" title="🧠 Core Concepts"></a>🧠 Core Concepts</h3><ul>
+<li>Only one event loop in a single thread.</li>
+<li>Multiple task queues:<ul>
+<li><strong>Macro Tasks</strong></li>
+<li><strong>Micro Tasks</strong></li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="⏱-Execution-Order"><a href="#⏱-Execution-Order" class="headerlink" title="⏱ Execution Order"></a>⏱ Execution Order</h3><blockquote>
+<p><strong>Macro Task ➝ Clear all Micro Tasks ➝ Next Macro Task ➝ Clear all Micro Tasks…</strong></p>
+</blockquote>
+<ol>
+<li>Execute a macro task (like the whole script)</li>
+<li>Execute all micro tasks created during this macro task</li>
+<li>If micro tasks generate more micro tasks, execute them too</li>
+<li>Begin the next macro task loop</li>
+</ol>
+<hr>
+<h3 id="🧩-Examples-of-Macro-Tasks"><a href="#🧩-Examples-of-Macro-Tasks" class="headerlink" title="🧩 Examples of Macro Tasks"></a>🧩 Examples of Macro Tasks</h3><ul>
+<li><code>script</code></li>
+<li><code>setTimeout</code></li>
+<li><code>setInterval</code></li>
+<li><code>setImmediate</code> (Node.js)</li>
+<li><code>I/O operations</code></li>
+<li><code>UI rendering</code></li>
+</ul>
+<h3 id="🧬-Examples-of-Micro-Tasks"><a href="#🧬-Examples-of-Micro-Tasks" class="headerlink" title="🧬 Examples of Micro Tasks"></a>🧬 Examples of Micro Tasks</h3><ul>
+<li><code>process.nextTick</code> (Node.js, higher priority)</li>
+<li><code>Promise.then / catch / finally</code></li>
+<li><code>async / await</code></li>
+<li><code>MutationObserver</code></li>
+</ul>
+</details>
+
+<details>
+  <summary><strong>Explain the CSS box model</strong></summary>
+
+<p>The CSS box model includes IE and standard W3C models.</p>
+<ul>
+<li>In <strong>standard W3C box model</strong>, <code>width</code> only includes content. <code>box-sizing: content-box</code> (default).</li>
+<li>In <strong>IE box model</strong>, <code>width</code> includes content + padding + border. <code>box-sizing: border-box</code>.</li>
+<li><code>box-sizing: padding-box</code> includes left&#x2F;right padding + width.</li>
+</ul>
+</details>
+
+<details>
+  <summary><strong>Differences between Vue 2 and Vue 3</strong></summary>
+
+<ol>
+<li>Two-way binding:<ul>
+<li>Vue 2: uses <code>Object.defineProperty()</code> (ES5), which only watches individual properties.</li>
+<li>Vue 3: uses <code>Proxy</code> (ES6), which can observe entire objects and arrays.</li>
+</ul>
+</li>
+<li>Lifecycle hooks:<ul>
+<li>Vue 2: <code>beforeCreate</code>, <code>created</code>, <code>beforeMount</code>, <code>mounted</code>, etc.</li>
+<li>Vue 3: <code>setup</code>, <code>onBeforeMount</code>, <code>onMounted</code>, etc.</li>
+</ul>
+</li>
+<li>Vue 2 requires a root tag; Vue 3 allows multiple root tags via Fragment.</li>
+<li>API:<ul>
+<li>Vue 2: Options API (functions and data handled separately).</li>
+<li>Vue 3: Composition API (related code grouped together).</li>
+</ul>
+</li>
+<li>Slots:<ul>
+<li>Named slot: Vue 2 uses <code>slot=&quot;&quot;</code>, Vue 3 uses <code>v-slot=&quot;&quot;</code>.</li>
+<li>Scoped slot: Vue 2 uses <code>slot-scope=&quot;data&quot;</code>, Vue 3 uses <code>#data</code> or <code>#default=&quot;&#123;data&#125;&quot;</code>.</li>
+</ul>
+</li>
+</ol>
+</details>
+
+<!-- ## Recommendation -->
+
+<!-- - [Just for Fun](https://edunextgen1.com) -->
+
+      
+    </div>
+
+    
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://lidyaqf.github.io/2025/04/11/ELK%E5%AE%89%E8%A3%85%E6%B5%81%E7%A8%8B/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -639,7 +887,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/ening/ening/archives/">
         
-          <span class="site-state-item-count">23</span>
+          <span class="site-state-item-count">24</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
