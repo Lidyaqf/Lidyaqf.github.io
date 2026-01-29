@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
@@ -37,21 +37,21 @@
       }
     }
   </style>
-  <link rel="apple-touch-icon" sizes="180x180" href="/ening/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/ening/images/favicon.svg">
-  <link rel="icon" type="image/png" sizes="16x16" href="/ening/images/favicon.svg">
-  <link rel="mask-icon" href="/ening/images/logo.svg" color="#222">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.svg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.svg">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
 <meta name="baidu_union_verify" content="4c95743ab0ae1a7dcfbc5c20c004854b">
 
 
-<link rel="stylesheet" href="/ening/css/main.css">
+<link rel="stylesheet" href="/css/main.css">
 
 <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noto Serif SC:300,300italic,400,400italic,700,700italic|Source Code Pro:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
-<link rel="stylesheet" href="/ening/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"lidyaqf.github.io","root":"/ening/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"manual","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"lidyaqf.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"manual","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
 
@@ -59,15 +59,15 @@
 
 
 
-  <meta name="description" content="Fabric: Enables synchronous UI rendering, eliminating the communication bottleneck of the Bridge. TurboModules: Loads native modules on demand, improving app startup performance. JSI (JavaScript Inte">
+  <meta name="description" content="Fabric：同步渲染 UI，消除 Bridge 通信瓶颈 TurboModules：按需加载原生模块，提升启动速度 JSI（JavaScript Interface）：直接调用原生代码，替代异步 Bridge, Bridge是异步的、单线程的，会带来额外的开销；而JSI是同步的，更低开销、并发的。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="React Native New Architecture">
+<meta property="og:title" content="ReactNative新架构">
 <meta property="og:url" content="https://lidyaqf.github.io/2025/08/19/ReactNative%E6%96%B0%E6%9E%B6%E6%9E%84/index.html">
-<meta property="og:site_name" content="My English Blog">
-<meta property="og:description" content="Fabric: Enables synchronous UI rendering, eliminating the communication bottleneck of the Bridge. TurboModules: Loads native modules on demand, improving app startup performance. JSI (JavaScript Inte">
-<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="枫叶白">
+<meta property="og:description" content="Fabric：同步渲染 UI，消除 Bridge 通信瓶颈 TurboModules：按需加载原生模块，提升启动速度 JSI（JavaScript Interface）：直接调用原生代码，替代异步 Bridge, Bridge是异步的、单线程的，会带来额外的开销；而JSI是同步的，更低开销、并发的。">
+<meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-08-18T16:00:00.000Z">
-<meta property="article:modified_time" content="2026-01-20T02:53:09.805Z">
+<meta property="article:modified_time" content="2025-08-19T03:34:25.317Z">
 <meta property="article:author" content="lidya">
 <meta name="twitter:card" content="summary">
 
@@ -80,11 +80,11 @@
     sidebar: "",
     isHome : false,
     isPost : true,
-    lang   : 'en-US'
+    lang   : 'zh-CN'
   };
 </script>
 
-  <title>React Native New Architecture | My English Blog</title>
+  <title>ReactNative新架构 | 枫叶白</title>
   
 
 
@@ -124,7 +124,7 @@
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-nav-toggle">
-    <div class="toggle" aria-label="Toggle navigation bar">
+    <div class="toggle" aria-label="切换导航栏">
       <span class="toggle-line toggle-line-first"></span>
       <span class="toggle-line toggle-line-middle"></span>
       <span class="toggle-line toggle-line-last"></span>
@@ -133,9 +133,9 @@
 
   <div class="site-meta">
 
-    <a href="/ening/" class="brand" rel="start">
+    <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">My English Blog</h1>
+      <h1 class="site-title">枫叶白</h1>
       <span class="logo-line-after"><i></i></span>
     </a>
   </div>
@@ -154,36 +154,31 @@
   <ul id="menu" class="main-menu menu">
         <li class="menu-item menu-item-home">
 
-    <a href="/ening/ening/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
 
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/ening/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/ening/ening/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/ening/ening/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
 
   </li>
         <li class="menu-item menu-item-english">
 
-    <a href="/ening/ening" rel="section"><i class="fa fa-language fa-fw"></i>English</a>
-
-  </li>
-        <li class="menu-item menu-item-中文">
-
-    <a href="/ening/../" rel="section"><i class="fa fa-language fa-fw"></i>中文</a>
+    <a href="/ening" rel="section"><i class="fa fa-language fa-fw"></i>English</a>
 
   </li>
       <li class="menu-item menu-item-search">
-        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
       </li>
   </ul>
@@ -199,7 +194,7 @@
   </span>
   <div class="search-input-container">
     <input autocomplete="off" autocapitalize="off"
-           placeholder="Searching..." spellcheck="false"
+           placeholder="搜索..." spellcheck="false"
            type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
@@ -236,21 +231,21 @@
     
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en-US">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://lidyaqf.github.io/2025/08/19/ReactNative%E6%96%B0%E6%9E%B6%E6%9E%84/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/ening/images/avatar.jpg">
+      <meta itemprop="image" content="/images/avatar.jpg">
       <meta itemprop="name" content="lidya">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content="服人以诚不以言">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="My English Blog">
+      <meta itemprop="name" content="枫叶白">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          React Native New Architecture
+          ReactNative新架构
         </h1>
 
         <div class="post-meta">
@@ -258,33 +253,27 @@
               <span class="post-meta-item-icon">
                 <i class="far fa-calendar"></i>
               </span>
-              <span class="post-meta-item-text">Posted on</span>
+              <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="Created: 2025-08-19 00:00:00" itemprop="dateCreated datePublished" datetime="2025-08-19T00:00:00+08:00">2025-08-19</time>
+              <time title="创建时间：2025-08-19 00:00:00 / 修改时间：11:34:25" itemprop="dateCreated datePublished" datetime="2025-08-19T00:00:00+08:00">2025-08-19</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2026-01-20 10:53:09" itemprop="dateModified" datetime="2026-01-20T10:53:09+08:00">2026-01-20</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
-              <span class="post-meta-item-text">In</span>
+              <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/ening/categories/Frontend/" itemprop="url" rel="index"><span itemprop="name">Frontend</span></a>
+                  <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
-              <span class="post-meta-item-text">Views: </span>
+              <span class="post-meta-item-text">阅读次数：</span>
               <span id="busuanzi_value_page_pv"></span>
             </span>
 
@@ -298,9 +287,9 @@
 
       
         <ul>
-<li><strong>Fabric</strong>: Enables synchronous UI rendering, eliminating the communication bottleneck of the Bridge.</li>
-<li><strong>TurboModules</strong>: Loads native modules on demand, improving app startup performance.</li>
-<li><strong>JSI (JavaScript Interface)</strong>: Allows JavaScript to directly call native code, replacing the asynchronous Bridge. The Bridge is asynchronous and single-threaded, which introduces additional overhead; JSI, by contrast, is synchronous, lower-overhead, and supports concurrency.</li>
+<li>Fabric：同步渲染 UI，消除 Bridge 通信瓶颈</li>
+<li>TurboModules：按需加载原生模块，提升启动速度</li>
+<li>JSI（JavaScript Interface）：直接调用原生代码，替代异步 Bridge, Bridge是异步的、单线程的，会带来额外的开销；而JSI是同步的，更低开销、并发的。</li>
 </ul>
 
     </div>
@@ -322,14 +311,14 @@
 <div>
 <ul class="post-copyright">
   <li class="post-copyright-author">
-    <strong>Post author:  </strong>lidya
+    <strong>本文作者： </strong>lidya
   </li>
   <li class="post-copyright-link">
-    <strong>Post link: </strong>
-    <a href="https://lidyaqf.github.io/2025/08/19/ReactNative%E6%96%B0%E6%9E%B6%E6%9E%84/" title="React Native New Architecture">https://lidyaqf.github.io/2025/08/19/ReactNative新架构/</a>
+    <strong>本文链接：</strong>
+    <a href="https://lidyaqf.github.io/2025/08/19/ReactNative%E6%96%B0%E6%9E%B6%E6%9E%84/" title="ReactNative新架构">https://lidyaqf.github.io/2025/08/19/ReactNative新架构/</a>
   </li>
   <li class="post-copyright-license">
-    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
   </li>
 </ul>
 </div>
@@ -343,12 +332,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/ening/2025/08/18/Hexo-Next-%E6%9B%B4%E6%94%B9%E5%AD%97%E4%BD%93/" rel="prev" title="Hexo-Next – Change Fonts & Enable Code Copy">
-      <i class="fa fa-chevron-left"></i> Hexo-Next – Change Fonts & Enable Code Copy
+    <a href="/2025/08/18/Hexo-Next-%E6%9B%B4%E6%94%B9%E5%AD%97%E4%BD%93/" rel="prev" title="Hexo-Next-更改字体、代码可复制">
+      <i class="fa fa-chevron-left"></i> Hexo-Next-更改字体、代码可复制
     </a></div>
       <div class="post-nav-item">
-    <a href="/ening/2025/08/21/%E4%B8%AD%E5%B0%8F%E5%AD%A6%E4%BF%A1%E6%81%AF%E6%8A%80%E6%9C%AF%E6%95%99%E5%AD%A6%E6%A8%A1%E7%89%88/" rel="next" title="Information Technology Teaching Template for Primary and Secondary Schools">
-      Information Technology Teaching Template for Primary and Secondary Schools <i class="fa fa-chevron-right"></i>
+    <a href="/2025/08/21/%E4%B8%AD%E5%B0%8F%E5%AD%A6%E4%BF%A1%E6%81%AF%E6%8A%80%E6%9C%AF%E6%95%99%E5%AD%A6%E6%A8%A1%E7%89%88/" rel="next" title="中小学信息技术教学模版">
+      中小学信息技术教学模版 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -404,10 +393,10 @@
 
       <ul class="sidebar-nav motion-element">
         <li class="sidebar-nav-toc">
-          Table of Contents
+          文章目录
         </li>
         <li class="sidebar-nav-overview">
-          Overview
+          站点概览
         </li>
       </ul>
 
@@ -419,30 +408,30 @@
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image" alt="lidya"
-      src="/ening/images/avatar.jpg">
+      src="/images/avatar.jpg">
   <p class="site-author-name" itemprop="name">lidya</p>
-  <div class="site-description" itemprop="description"></div>
+  <div class="site-description" itemprop="description">服人以诚不以言</div>
 </div>
 <div class="site-state-wrap motion-element">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
-          <a href="/ening/ening/archives/">
+          <a href="/archives/">
         
-          <span class="site-state-item-count">24</span>
-          <span class="site-state-item-name">posts</span>
+          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-            <a href="/ening/ening/categories/">
+            <a href="/categories/">
           
-        <span class="site-state-item-count">4</span>
-        <span class="site-state-item-name">categories</span></a>
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
-            <a href="/ening/tags/">
+            <a href="/tags/">
           
-        <span class="site-state-item-count">19</span>
-        <span class="site-state-item-name">tags</span></a>
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
 </div>
@@ -489,7 +478,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-user"></i>
       </span>
-      <span class="site-uv" title="Total Visitors">
+      <span class="site-uv" title="总访客量">
         <span id="busuanzi_value_site_uv"></span>
       </span>
     </span>
@@ -498,7 +487,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-eye"></i>
       </span>
-      <span class="site-pv" title="Total Views">
+      <span class="site-pv" title="总访问量">
         <span id="busuanzi_value_site_pv"></span>
       </span>
     </span>
@@ -516,30 +505,30 @@
   </div>
 
   
-  <script src="/ening/lib/anime.min.js"></script>
-  <script src="/ening/lib/velocity/velocity.min.js"></script>
-  <script src="/ening/lib/velocity/velocity.ui.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
 
-<script src="/ening/js/utils.js"></script>
+<script src="/js/utils.js"></script>
 
-<script src="/ening/js/motion.js"></script>
-
-
-<script src="/ening/js/schemes/pisces.js"></script>
+<script src="/js/motion.js"></script>
 
 
-<script src="/ening/js/next-boot.js"></script>
+<script src="/js/schemes/pisces.js"></script>
 
 
-
-
-  
+<script src="/js/next-boot.js"></script>
 
 
 
 
   
-<script src="/ening/js/local-search.js"></script>
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
 
 
 

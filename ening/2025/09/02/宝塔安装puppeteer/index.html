@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
@@ -37,21 +37,21 @@
       }
     }
   </style>
-  <link rel="apple-touch-icon" sizes="180x180" href="/ening/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/ening/images/favicon.svg">
-  <link rel="icon" type="image/png" sizes="16x16" href="/ening/images/favicon.svg">
-  <link rel="mask-icon" href="/ening/images/logo.svg" color="#222">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.svg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.svg">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
 <meta name="baidu_union_verify" content="4c95743ab0ae1a7dcfbc5c20c004854b">
 
 
-<link rel="stylesheet" href="/ening/css/main.css">
+<link rel="stylesheet" href="/css/main.css">
 
 <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noto Serif SC:300,300italic,400,400italic,700,700italic|Source Code Pro:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
-<link rel="stylesheet" href="/ening/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"lidyaqf.github.io","root":"/ening/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"manual","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"lidyaqf.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"manual","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
 
@@ -59,15 +59,15 @@
 
 
 
-  <meta name="description" content="Installing Puppeteer on Baota (CentOS 8)When using CentOS 8, yum may fail because CentOS 8 is no longer officially maintained.To fix this, you need to switch the YUM mirror source, clear the cache, an">
+  <meta name="description" content="centos8使用yum失败，切换镜像源，更改镜像源文件，尝试清除缓存并重新建立 123456wget -O &#x2F;etc&#x2F;yum.repos.d&#x2F;CentOS-Base.repo https:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;repo&#x2F;Centos-8.reposudo yum clean allsudo yum makecache  Centos8已不维护，只能找 puppeteer报错下">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Installing Puppeteer on Baota Panel">
+<meta property="og:title" content="宝塔安装puppeteer">
 <meta property="og:url" content="https://lidyaqf.github.io/2025/09/02/%E5%AE%9D%E5%A1%94%E5%AE%89%E8%A3%85puppeteer/index.html">
-<meta property="og:site_name" content="My English Blog">
-<meta property="og:description" content="Installing Puppeteer on Baota (CentOS 8)When using CentOS 8, yum may fail because CentOS 8 is no longer officially maintained.To fix this, you need to switch the YUM mirror source, clear the cache, an">
-<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="枫叶白">
+<meta property="og:description" content="centos8使用yum失败，切换镜像源，更改镜像源文件，尝试清除缓存并重新建立 123456wget -O &#x2F;etc&#x2F;yum.repos.d&#x2F;CentOS-Base.repo https:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;repo&#x2F;Centos-8.reposudo yum clean allsudo yum makecache  Centos8已不维护，只能找 puppeteer报错下">
+<meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-09-01T16:00:00.000Z">
-<meta property="article:modified_time" content="2026-01-14T07:16:25.108Z">
+<meta property="article:modified_time" content="2025-09-02T10:12:31.257Z">
 <meta property="article:author" content="lidya">
 <meta name="twitter:card" content="summary">
 
@@ -80,11 +80,11 @@
     sidebar: "",
     isHome : false,
     isPost : true,
-    lang   : 'en'
+    lang   : 'zh-CN'
   };
 </script>
 
-  <title>Installing Puppeteer on Baota Panel | My English Blog</title>
+  <title>宝塔安装puppeteer | 枫叶白</title>
   
 
 
@@ -124,7 +124,7 @@
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-nav-toggle">
-    <div class="toggle" aria-label="Toggle navigation bar">
+    <div class="toggle" aria-label="切换导航栏">
       <span class="toggle-line toggle-line-first"></span>
       <span class="toggle-line toggle-line-middle"></span>
       <span class="toggle-line toggle-line-last"></span>
@@ -133,9 +133,9 @@
 
   <div class="site-meta">
 
-    <a href="/ening/" class="brand" rel="start">
+    <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">My English Blog</h1>
+      <h1 class="site-title">枫叶白</h1>
       <span class="logo-line-after"><i></i></span>
     </a>
   </div>
@@ -154,36 +154,31 @@
   <ul id="menu" class="main-menu menu">
         <li class="menu-item menu-item-home">
 
-    <a href="/ening/ening/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
 
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/ening/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/ening/ening/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/ening/ening/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
 
   </li>
         <li class="menu-item menu-item-english">
 
-    <a href="/ening/ening" rel="section"><i class="fa fa-language fa-fw"></i>English</a>
-
-  </li>
-        <li class="menu-item menu-item-中文">
-
-    <a href="/ening/../" rel="section"><i class="fa fa-language fa-fw"></i>中文</a>
+    <a href="/ening" rel="section"><i class="fa fa-language fa-fw"></i>English</a>
 
   </li>
       <li class="menu-item menu-item-search">
-        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
       </li>
   </ul>
@@ -199,7 +194,7 @@
   </span>
   <div class="search-input-container">
     <input autocomplete="off" autocapitalize="off"
-           placeholder="Searching..." spellcheck="false"
+           placeholder="搜索..." spellcheck="false"
            type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
@@ -236,21 +231,21 @@
     
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://lidyaqf.github.io/2025/09/02/%E5%AE%9D%E5%A1%94%E5%AE%89%E8%A3%85puppeteer/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/ening/images/avatar.jpg">
+      <meta itemprop="image" content="/images/avatar.jpg">
       <meta itemprop="name" content="lidya">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content="服人以诚不以言">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="My English Blog">
+      <meta itemprop="name" content="枫叶白">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Installing Puppeteer on Baota Panel
+          宝塔安装puppeteer
         </h1>
 
         <div class="post-meta">
@@ -258,33 +253,27 @@
               <span class="post-meta-item-icon">
                 <i class="far fa-calendar"></i>
               </span>
-              <span class="post-meta-item-text">Posted on</span>
+              <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="Created: 2025-09-02 00:00:00" itemprop="dateCreated datePublished" datetime="2025-09-02T00:00:00+08:00">2025-09-02</time>
+              <time title="创建时间：2025-09-02 00:00:00 / 修改时间：18:12:31" itemprop="dateCreated datePublished" datetime="2025-09-02T00:00:00+08:00">2025-09-02</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2026-01-14 15:16:25" itemprop="dateModified" datetime="2026-01-14T15:16:25+08:00">2026-01-14</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
-              <span class="post-meta-item-text">In</span>
+              <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/ening/categories/Frontend/" itemprop="url" rel="index"><span itemprop="name">Frontend</span></a>
+                  <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
-              <span class="post-meta-item-text">Views: </span>
+              <span class="post-meta-item-text">阅读次数：</span>
               <span id="busuanzi_value_page_pv"></span>
             </span>
 
@@ -297,22 +286,12 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="Installing-Puppeteer-on-Baota-CentOS-8"><a href="#Installing-Puppeteer-on-Baota-CentOS-8" class="headerlink" title="Installing Puppeteer on Baota (CentOS 8)"></a>Installing Puppeteer on Baota (CentOS 8)</h2><p>When using <strong>CentOS 8</strong>, <code>yum</code> may fail because CentOS 8 is no longer officially maintained.<br>To fix this, you need to <strong>switch the YUM mirror source</strong>, clear the cache, and rebuild it.</p>
-<h3 id="1-Replace-the-YUM-repository-source"><a href="#1-Replace-the-YUM-repository-source" class="headerlink" title="1. Replace the YUM repository source"></a>1. Replace the YUM repository source</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget -O /etc/yum.repos.d/CentOS-Base.repo https://mirrors.aliyun.com/repo/Centos-8.repo</span><br></pre></td></tr></table></figure>
+        <p>centos8使用yum失败，切换镜像源，更改镜像源文件，尝试清除缓存并重新建立</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">wget -O /etc/yum.<span class="property">repos</span>.<span class="property">d</span>/<span class="title class_">CentOS</span>-<span class="title class_">Base</span>.<span class="property">repo</span> <span class="attr">https</span>:<span class="comment">//mirrors.aliyun.com/repo/Centos-8.repo</span></span><br><span class="line"></span><br><span class="line">sudo yum clean all</span><br><span class="line"></span><br><span class="line">sudo yum makecache</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-<h3 id="2-Clean-YUM-cache"><a href="#2-Clean-YUM-cache" class="headerlink" title="2. Clean YUM cache"></a>2. Clean YUM cache</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> yum clean all</span><br></pre></td></tr></table></figure>
-
-<h3 id="3-Rebuild-YUM-cache"><a href="#3-Rebuild-YUM-cache" class="headerlink" title="3. Rebuild YUM cache"></a>3. Rebuild YUM cache</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> yum makecache</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>⚠️ Note:<br>CentOS 8 has reached <strong>End of Life (EOL)</strong> and is no longer maintained.<br>You must rely on third-party mirror sources to continue using <code>yum</code>.</p>
-</blockquote>
-<h2 id="Puppeteer-Dependency-Download-Error"><a href="#Puppeteer-Dependency-Download-Error" class="headerlink" title="Puppeteer Dependency Download Error"></a>Puppeteer Dependency Download Error</h2><p>When installing <strong>Puppeteer</strong>, you may encounter errors while downloading Chromium dependencies.</p>
-<p>You can refer to this article for details:<br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/ilizhu/p/14504049.html">https://www.cnblogs.com/ilizhu/p/14504049.html</a></p>
-<h2 id="Puppeteer-Sandbox-Error"><a href="#Puppeteer-Sandbox-Error" class="headerlink" title="Puppeteer Sandbox Error"></a>Puppeteer Sandbox Error</h2><p>On some servers (such as Baota or other managed VPS environments), Puppeteer may fail to launch Chromium due to <strong>sandbox restrictions</strong>.</p>
-<h3 id="Solution-Disable-sandbox-when-launching-Puppeteer"><a href="#Solution-Disable-sandbox-when-launching-Puppeteer" class="headerlink" title="Solution: Disable sandbox when launching Puppeteer"></a>Solution: Disable sandbox when launching Puppeteer</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Add launch arguments to disable sandbox</span></span><br><span class="line"><span class="keyword">const</span> browser = <span class="keyword">await</span> puppeteer.<span class="title function_">launch</span>(&#123;</span><br><span class="line">  <span class="attr">args</span>: [<span class="string">&#x27;--no-sandbox&#x27;</span>, <span class="string">&#x27;--disable-setuid-sandbox&#x27;</span>]</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-
-
+<p>Centos8已不维护，只能找</p>
+<p>puppeteer报错下载依赖 参考链接：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/ilizhu/p/14504049.html">https://www.cnblogs.com/ilizhu/p/14504049.html</a><br>报错sandbox：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#添加启动参数</span><br><span class="line"><span class="keyword">const</span> browser = <span class="keyword">await</span> puppeteer.<span class="title function_">launch</span>(&#123;<span class="attr">args</span>: [<span class="string">&#x27;--no-sandbox&#x27;</span>, <span class="string">&#x27;--disable-setuid-sandbox&#x27;</span>]&#125;);</span><br></pre></td></tr></table></figure>
     </div>
 
     
@@ -332,14 +311,14 @@
 <div>
 <ul class="post-copyright">
   <li class="post-copyright-author">
-    <strong>Post author:  </strong>lidya
+    <strong>本文作者： </strong>lidya
   </li>
   <li class="post-copyright-link">
-    <strong>Post link: </strong>
-    <a href="https://lidyaqf.github.io/2025/09/02/%E5%AE%9D%E5%A1%94%E5%AE%89%E8%A3%85puppeteer/" title="Installing Puppeteer on Baota Panel">https://lidyaqf.github.io/2025/09/02/宝塔安装puppeteer/</a>
+    <strong>本文链接：</strong>
+    <a href="https://lidyaqf.github.io/2025/09/02/%E5%AE%9D%E5%A1%94%E5%AE%89%E8%A3%85puppeteer/" title="宝塔安装puppeteer">https://lidyaqf.github.io/2025/09/02/宝塔安装puppeteer/</a>
   </li>
   <li class="post-copyright-license">
-    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
   </li>
 </ul>
 </div>
@@ -353,12 +332,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/ening/2025/08/28/google%20sheet%E5%90%8C%E6%AD%A5%E8%A1%A8%E6%A0%BC%E6%95%B0%E6%8D%AE/" rel="prev" title="Sync Google Sheets Data Between Spreadsheets">
-      <i class="fa fa-chevron-left"></i> Sync Google Sheets Data Between Spreadsheets
+    <a href="/2025/08/28/google%20sheet%E5%90%8C%E6%AD%A5%E8%A1%A8%E6%A0%BC%E6%95%B0%E6%8D%AE/" rel="prev" title="google sheet同步表格数据">
+      <i class="fa fa-chevron-left"></i> google sheet同步表格数据
     </a></div>
       <div class="post-nav-item">
-    <a href="/ening/2025/10/17/%E5%A6%82%E4%BD%95%E9%98%B2%E5%BE%A1%20XSS%EF%BC%88%E8%B7%A8%E7%AB%99%E8%84%9A%E6%9C%AC%E6%94%BB%E5%87%BB%EF%BC%89/" rel="next" title="How to Prevent XSS">
-      How to Prevent XSS <i class="fa fa-chevron-right"></i>
+    <a href="/2025/10/17/%E5%A6%82%E4%BD%95%E9%98%B2%E5%BE%A1%20XSS%EF%BC%88%E8%B7%A8%E7%AB%99%E8%84%9A%E6%9C%AC%E6%94%BB%E5%87%BB%EF%BC%89/" rel="next" title="如何防御 XSS（跨站脚本攻击）：前端开发者必须掌握的安全实践">
+      如何防御 XSS（跨站脚本攻击）：前端开发者必须掌握的安全实践 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -414,46 +393,45 @@
 
       <ul class="sidebar-nav motion-element">
         <li class="sidebar-nav-toc">
-          Table of Contents
+          文章目录
         </li>
         <li class="sidebar-nav-overview">
-          Overview
+          站点概览
         </li>
       </ul>
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Installing-Puppeteer-on-Baota-CentOS-8"><span class="nav-number">1.</span> <span class="nav-text">Installing Puppeteer on Baota (CentOS 8)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Replace-the-YUM-repository-source"><span class="nav-number">1.1.</span> <span class="nav-text">1. Replace the YUM repository source</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Clean-YUM-cache"><span class="nav-number">1.2.</span> <span class="nav-text">2. Clean YUM cache</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-Rebuild-YUM-cache"><span class="nav-number">1.3.</span> <span class="nav-text">3. Rebuild YUM cache</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Puppeteer-Dependency-Download-Error"><span class="nav-number">2.</span> <span class="nav-text">Puppeteer Dependency Download Error</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Puppeteer-Sandbox-Error"><span class="nav-number">3.</span> <span class="nav-text">Puppeteer Sandbox Error</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution-Disable-sandbox-when-launching-Puppeteer"><span class="nav-number">3.1.</span> <span class="nav-text">Solution: Disable sandbox when launching Puppeteer</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image" alt="lidya"
-      src="/ening/images/avatar.jpg">
+      src="/images/avatar.jpg">
   <p class="site-author-name" itemprop="name">lidya</p>
-  <div class="site-description" itemprop="description"></div>
+  <div class="site-description" itemprop="description">服人以诚不以言</div>
 </div>
 <div class="site-state-wrap motion-element">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
-          <a href="/ening/ening/archives/">
+          <a href="/archives/">
         
-          <span class="site-state-item-count">24</span>
-          <span class="site-state-item-name">posts</span>
+          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-            <a href="/ening/ening/categories/">
+            <a href="/categories/">
           
-        <span class="site-state-item-count">4</span>
-        <span class="site-state-item-name">categories</span></a>
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
-            <a href="/ening/tags/">
+            <a href="/tags/">
           
-        <span class="site-state-item-count">19</span>
-        <span class="site-state-item-name">tags</span></a>
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
 </div>
@@ -500,7 +478,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-user"></i>
       </span>
-      <span class="site-uv" title="Total Visitors">
+      <span class="site-uv" title="总访客量">
         <span id="busuanzi_value_site_uv"></span>
       </span>
     </span>
@@ -509,7 +487,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-eye"></i>
       </span>
-      <span class="site-pv" title="Total Views">
+      <span class="site-pv" title="总访问量">
         <span id="busuanzi_value_site_pv"></span>
       </span>
     </span>
@@ -527,30 +505,30 @@
   </div>
 
   
-  <script src="/ening/lib/anime.min.js"></script>
-  <script src="/ening/lib/velocity/velocity.min.js"></script>
-  <script src="/ening/lib/velocity/velocity.ui.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
 
-<script src="/ening/js/utils.js"></script>
+<script src="/js/utils.js"></script>
 
-<script src="/ening/js/motion.js"></script>
-
-
-<script src="/ening/js/schemes/pisces.js"></script>
+<script src="/js/motion.js"></script>
 
 
-<script src="/ening/js/next-boot.js"></script>
+<script src="/js/schemes/pisces.js"></script>
 
 
-
-
-  
+<script src="/js/next-boot.js"></script>
 
 
 
 
   
-<script src="/ening/js/local-search.js"></script>
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
 
 
 
