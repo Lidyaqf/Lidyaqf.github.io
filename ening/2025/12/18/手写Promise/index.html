@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
@@ -59,15 +59,15 @@
 
 
 
-  <meta name="description" content="在前端面试和日常业务中，Promise.race 是一个非常常见但又容易被忽略的 API。它的规则很简单：  多个 Promise 同时“赛跑”，谁先落地（fulfilled 或 rejected），整体 Promise 就跟着落地。  这篇文章我们会：  先讲清楚 Promise.race 的行为与典型使用场景 再手写一个 myPromiseRace 最后补充边界情况、优化点与面试常考问题">
+  <meta name="description" content="In frontend interviews and daily development, Promise.race is a very common yet often overlooked API. Its rule is simple:  Multiple Promises “race” against each other—whichever settles first (fulfille">
 <meta property="og:type" content="article">
-<meta property="og:title" content="手写 Promise.race（从原理到实战）">
+<meta property="og:title" content="Handwriting Promise.race (From Theory to Practice)">
 <meta property="og:url" content="https://lidyaqf.github.io/2025/12/18/%E6%89%8B%E5%86%99Promise/index.html">
-<meta property="og:site_name" content="枫叶白">
-<meta property="og:description" content="在前端面试和日常业务中，Promise.race 是一个非常常见但又容易被忽略的 API。它的规则很简单：  多个 Promise 同时“赛跑”，谁先落地（fulfilled 或 rejected），整体 Promise 就跟着落地。  这篇文章我们会：  先讲清楚 Promise.race 的行为与典型使用场景 再手写一个 myPromiseRace 最后补充边界情况、优化点与面试常考问题">
-<meta property="og:locale" content="zh_CN">
+<meta property="og:site_name" content="My English Blog">
+<meta property="og:description" content="In frontend interviews and daily development, Promise.race is a very common yet often overlooked API. Its rule is simple:  Multiple Promises “race” against each other—whichever settles first (fulfille">
+<meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-12-17T16:00:00.000Z">
-<meta property="article:modified_time" content="2025-12-19T01:39:24.073Z">
+<meta property="article:modified_time" content="2025-12-18T09:48:32.631Z">
 <meta property="article:author" content="lidya">
 <meta name="twitter:card" content="summary">
 
@@ -80,11 +80,11 @@
     sidebar: "",
     isHome : false,
     isPost : true,
-    lang   : 'zh-CN'
+    lang   : 'en-US'
   };
 </script>
 
-  <title>手写 Promise.race（从原理到实战） | 枫叶白</title>
+  <title>Handwriting Promise.race (From Theory to Practice) | My English Blog</title>
   
 
 
@@ -124,7 +124,7 @@
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
+    <div class="toggle" aria-label="Toggle navigation bar">
       <span class="toggle-line toggle-line-first"></span>
       <span class="toggle-line toggle-line-middle"></span>
       <span class="toggle-line toggle-line-last"></span>
@@ -135,7 +135,7 @@
 
     <a href="/ening/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">枫叶白</h1>
+      <h1 class="site-title">My English Blog</h1>
       <span class="logo-line-after"><i></i></span>
     </a>
   </div>
@@ -154,22 +154,22 @@
   <ul id="menu" class="main-menu menu">
         <li class="menu-item menu-item-home">
 
-    <a href="/ening/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+    <a href="/ening/ening/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
 
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/ening/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+    <a href="/ening/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/ening/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+    <a href="/ening/ening/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/ening/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+    <a href="/ening/ening/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
 
   </li>
         <li class="menu-item menu-item-english">
@@ -177,8 +177,13 @@
     <a href="/ening/ening" rel="section"><i class="fa fa-language fa-fw"></i>English</a>
 
   </li>
+        <li class="menu-item menu-item-中文">
+
+    <a href="/ening/../" rel="section"><i class="fa fa-language fa-fw"></i>中文</a>
+
+  </li>
       <li class="menu-item menu-item-search">
-        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
       </li>
   </ul>
@@ -194,7 +199,7 @@
   </span>
   <div class="search-input-container">
     <input autocomplete="off" autocapitalize="off"
-           placeholder="搜索..." spellcheck="false"
+           placeholder="Searching..." spellcheck="false"
            type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
@@ -231,21 +236,21 @@
     
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en-US">
     <link itemprop="mainEntityOfPage" href="https://lidyaqf.github.io/2025/12/18/%E6%89%8B%E5%86%99Promise/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/ening/images/avatar.jpg">
       <meta itemprop="name" content="lidya">
-      <meta itemprop="description" content="服人以诚不以言">
+      <meta itemprop="description" content="">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="枫叶白">
+      <meta itemprop="name" content="My English Blog">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          手写 Promise.race（从原理到实战）
+          Handwriting Promise.race (From Theory to Practice)
         </h1>
 
         <div class="post-meta">
@@ -253,33 +258,27 @@
               <span class="post-meta-item-icon">
                 <i class="far fa-calendar"></i>
               </span>
-              <span class="post-meta-item-text">发表于</span>
+              <span class="post-meta-item-text">Posted on</span>
+              
 
-              <time title="创建时间：2025-12-18 00:00:00" itemprop="dateCreated datePublished" datetime="2025-12-18T00:00:00+08:00">2025-12-18</time>
+              <time title="Created: 2025-12-18 00:00:00 / Modified: 17:48:32" itemprop="dateCreated datePublished" datetime="2025-12-18T00:00:00+08:00">2025-12-18</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2025-12-19 09:39:24" itemprop="dateModified" datetime="2025-12-19T09:39:24+08:00">2025-12-19</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
-              <span class="post-meta-item-text">分类于</span>
+              <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/ening/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
+                  <a href="/ening/categories/Frontend/" itemprop="url" rel="index"><span itemprop="name">Frontend</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
-              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="post-meta-item-text">Views: </span>
               <span id="busuanzi_value_page_pv"></span>
             </span>
 
@@ -292,84 +291,89 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p> 在前端面试和日常业务中，<code>Promise.race</code> 是一个非常常见但又容易被忽略的 API。它的规则很简单：</p>
+        <p>In frontend interviews and daily development, <code>Promise.race</code> is a very common yet often overlooked API. Its rule is simple:</p>
 <blockquote>
-<p><strong>多个 Promise 同时“赛跑”，谁先落地（fulfilled 或 rejected），整体 Promise 就跟着落地。</strong></p>
+<p><strong>Multiple Promises “race” against each other—whichever settles first (fulfilled or rejected) determines the final result.</strong></p>
 </blockquote>
-<p>这篇文章我们会：</p>
+<p>In this article, we will:</p>
 <ul>
-<li>先讲清楚 <code>Promise.race</code> 的行为与典型使用场景</li>
-<li>再手写一个 <code>myPromiseRace</code></li>
-<li>最后补充边界情况、优化点与面试常考问题</li>
+<li>Clearly explain how <code>Promise.race</code> behaves and when to use it</li>
+<li>Implement a custom <code>myPromiseRace</code> from scratch</li>
+<li>Cover edge cases, optimizations, and common interview questions</li>
 </ul>
-<h2 id="1-Promise-race-是什么？"><a href="#1-Promise-race-是什么？" class="headerlink" title="1. Promise.race 是什么？"></a>1. Promise.race 是什么？</h2><p><code>Promise.race(iterable)</code> 接收一个可迭代对象（通常是数组），返回一个新的 Promise：</p>
+<h2 id="1-What-Is-Promise-race"><a href="#1-What-Is-Promise-race" class="headerlink" title="1. What Is Promise.race?"></a>1. What Is Promise.race?</h2><p><code>Promise.race(iterable)</code> accepts an iterable (usually an array) and returns a new Promise:</p>
 <ul>
-<li>只要 <strong>任意一个</strong> Promise <strong>先 fulfilled</strong>，结果 Promise 就 fulfilled</li>
-<li>只要 <strong>任意一个</strong> Promise <strong>先 rejected</strong>，结果 Promise 就 rejected</li>
-<li>它不会等待全部结束，也不会“取消”其他 Promise（它们仍然会继续执行）</li>
+<li>If <strong>any Promise fulfills first</strong>, the returned Promise fulfills</li>
+<li>If <strong>any Promise rejects first</strong>, the returned Promise rejects</li>
+<li>It does <strong>not</strong> wait for all Promises to finish</li>
+<li>It does <strong>not</strong> cancel the remaining Promises—they continue running</li>
 </ul>
-<h2 id="2-常见使用场景"><a href="#2-常见使用场景" class="headerlink" title="2. 常见使用场景"></a>2. 常见使用场景</h2><h3 id="2-1-超时控制（最常见）"><a href="#2-1-超时控制（最常见）" class="headerlink" title="2.1 超时控制（最常见）"></a>2.1 超时控制（最常见）</h3><p>比如请求接口超过 3 秒就当作超时处理：</p>
+<h2 id="2-Common-Use-Cases"><a href="#2-Common-Use-Cases" class="headerlink" title="2. Common Use Cases"></a>2. Common Use Cases</h2><h3 id="2-1-Timeout-Control-Most-Common"><a href="#2-1-Timeout-Control-Most-Common" class="headerlink" title="2.1 Timeout Control (Most Common)"></a>2.1 Timeout Control (Most Common)</h3><p>For example, treat a request as failed if it takes longer than 3 seconds:</p>
 <ul>
 <li><code>fetch(url)</code> vs <code>timeoutPromise(3000)</code></li>
-<li>谁先结束就用谁的结果</li>
+<li>Whichever finishes first determines the result</li>
 </ul>
-<h3 id="2-2-多源请求兜底"><a href="#2-2-多源请求兜底" class="headerlink" title="2.2 多源请求兜底"></a>2.2 多源请求兜底</h3><p>比如同一个资源从 CDN1&#x2F;CDN2 同时拉取，谁先成功就用谁。</p>
-<h3 id="2-3-首屏竞速"><a href="#2-3-首屏竞速" class="headerlink" title="2.3 首屏竞速"></a>2.3 首屏竞速</h3><p>首屏数据、降级数据、缓存数据同时读取，谁先返回就先渲染。</p>
-<h2 id="3-手写-myPromiseRace"><a href="#3-手写-myPromiseRace" class="headerlink" title="3. 手写 myPromiseRace"></a>3. 手写 myPromiseRace</h2><p>你这版实现非常接近原生行为：</p>
+<h3 id="2-2-Multiple-Data-Sources-Fallback-Strategy"><a href="#2-2-Multiple-Data-Sources-Fallback-Strategy" class="headerlink" title="2.2 Multiple Data Sources (Fallback Strategy)"></a>2.2 Multiple Data Sources (Fallback Strategy)</h3><p>Fetch the same resource from multiple CDNs (CDN1&#x2F;CDN2).<br>Use whichever responds first.</p>
+<h3 id="2-3-First-Render-Racing"><a href="#2-3-First-Render-Racing" class="headerlink" title="2.3 First-Render Racing"></a>2.3 First-Render Racing</h3><p>Load primary data, fallback data, and cached data simultaneously.<br>Render the page as soon as the fastest result arrives.</p>
+<h2 id="3-Implementing-myPromiseRace"><a href="#3-Implementing-myPromiseRace" class="headerlink" title="3. Implementing myPromiseRace"></a>3. Implementing <code>myPromiseRace</code></h2><p>This implementation closely matches native behavior:</p>
 <ul>
-<li>校验 iterable</li>
-<li>遍历输入</li>
-<li>用 <code>Promise.resolve</code> 兼容非 Promise 值</li>
-<li>谁先 settle 就 resolve&#x2F;reject</li>
+<li>Validates that the input is iterable</li>
+<li>Iterates over all inputs</li>
+<li>Uses <code>Promise.resolve</code> to normalize non-Promise values</li>
+<li>Resolves or rejects as soon as one Promise settles</li>
 </ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">myPromiseRace</span>(<span class="params">promises</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 检查输入是否为可迭代对象</span></span><br><span class="line">    <span class="keyword">if</span> (!promises || <span class="keyword">typeof</span> promises[<span class="title class_">Symbol</span>.<span class="property">iterator</span>] !== <span class="string">&#x27;function&#x27;</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="title function_">reject</span>(<span class="keyword">new</span> <span class="title class_">TypeError</span>(<span class="string">&#x27;Argument is not iterable&#x27;</span>));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 遍历每个 Promise / 值</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">const</span> promise <span class="keyword">of</span> promises) &#123;</span><br><span class="line">      <span class="comment">// 用 Promise.resolve 包一层，确保 thenable / 普通值都能被处理</span></span><br><span class="line">      <span class="title class_">Promise</span>.<span class="title function_">resolve</span>(promise)</span><br><span class="line">        .<span class="title function_">then</span>(resolve)   <span class="comment">// 谁先 fulfilled，整体就 fulfilled</span></span><br><span class="line">        .<span class="title function_">catch</span>(reject);  <span class="comment">// 谁先 rejected，整体就 rejected</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">myPromiseRace</span>(<span class="params">promises</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// Validate iterable input</span></span><br><span class="line">    <span class="keyword">if</span> (!promises || <span class="keyword">typeof</span> promises[<span class="title class_">Symbol</span>.<span class="property">iterator</span>] !== <span class="string">&#x27;function&#x27;</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="title function_">reject</span>(<span class="keyword">new</span> <span class="title class_">TypeError</span>(<span class="string">&#x27;Argument is not iterable&#x27;</span>));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Iterate over each Promise or value</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">const</span> promise <span class="keyword">of</span> promises) &#123;</span><br><span class="line">      <span class="comment">// Wrap with Promise.resolve to handle thenables and values</span></span><br><span class="line">      <span class="title class_">Promise</span>.<span class="title function_">resolve</span>(promise)</span><br><span class="line">        .<span class="title function_">then</span>(resolve)   <span class="comment">// First fulfilled wins</span></span><br><span class="line">        .<span class="title function_">catch</span>(reject);  <span class="comment">// First rejected wins</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
 
-<h2 id="4-关键点拆解（为什么要-Promise-resolve？）"><a href="#4-关键点拆解（为什么要-Promise-resolve？）" class="headerlink" title="4. 关键点拆解（为什么要 Promise.resolve？）"></a>4. 关键点拆解（为什么要 Promise.resolve？）</h2><p><code>Promise.race</code> 的参数里不一定都是 Promise，可能是：</p>
+<h2 id="4-Key-Insight-Why-Use-Promise-resolve"><a href="#4-Key-Insight-Why-Use-Promise-resolve" class="headerlink" title="4. Key Insight: Why Use Promise.resolve?"></a>4. Key Insight: Why Use <code>Promise.resolve</code>?</h2><p>The input to <code>Promise.race</code> does not have to be Promises. It may include:</p>
 <ul>
-<li>普通值：<code>Promise.race([1, 2, 3])</code></li>
-<li>thenable：<code>&#123; then(resolve) &#123; resolve(123) &#125; &#125;</code></li>
+<li>Plain values: <code>Promise.race([1, 2, 3])</code></li>
+<li>Thenables: <code>&#123; then(resolve) &#123; resolve(123) &#125; &#125;</code></li>
 </ul>
-<p>使用 <code>Promise.resolve(x)</code> 的好处是：</p>
+<p>Using <code>Promise.resolve(x)</code> ensures:</p>
 <ul>
-<li>普通值会立刻变成 fulfilled Promise</li>
-<li>thenable 会被吸收并按 Promise 规则执行</li>
+<li>Plain values become immediately fulfilled Promises</li>
+<li>Thenables are properly assimilated into the Promise chain</li>
 </ul>
-<p>这也是符合原生 <code>Promise.race</code> 的行为。</p>
-<h2 id="5-更完整的版本：处理空-iterable"><a href="#5-更完整的版本：处理空-iterable" class="headerlink" title="5. 更完整的版本：处理空 iterable"></a>5. 更完整的版本：处理空 iterable</h2><blockquote>
-<p>原生 <code>Promise.race([])</code> 会返回一个<strong>永远 pending</strong> 的 Promise。</p>
+<p>This behavior is consistent with the native <code>Promise.race</code>.</p>
+<h2 id="5-Handling-Empty-Iterables"><a href="#5-Handling-Empty-Iterables" class="headerlink" title="5. Handling Empty Iterables"></a>5. Handling Empty Iterables</h2><blockquote>
+<p>Native <code>Promise.race([])</code> returns a Promise that remains <strong>pending forever</strong>.</p>
 </blockquote>
-<p>你现在的实现遇到空数组也会返回 pending（因为 for 循环不执行），这符合原生。</p>
-<p>如果你想更明确一点，可以加个计数，但不是必须。</p>
-<h2 id="6-更多测试用例"><a href="#6-更多测试用例" class="headerlink" title="6. 更多测试用例"></a>6. 更多测试用例</h2><h3 id="6-1-测试（先-reject）"><a href="#6-1-测试（先-reject）" class="headerlink" title="6.1 测试（先 reject）"></a>6.1 测试（先 reject）</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> p1 = <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function"><span class="params">res</span> =&gt;</span> <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> <span class="title function_">res</span>(<span class="string">&#x27;p1&#x27;</span>), <span class="number">1000</span>));</span><br><span class="line"><span class="keyword">const</span> p2 = <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function"><span class="params">res</span> =&gt;</span> <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> <span class="title function_">res</span>(<span class="string">&#x27;p2&#x27;</span>), <span class="number">500</span>));</span><br><span class="line"><span class="keyword">const</span> p3 = <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">res, rej</span>) =&gt;</span> <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> <span class="title function_">rej</span>(<span class="string">&#x27;p3 error&#x27;</span>), <span class="number">300</span>));</span><br><span class="line"></span><br><span class="line"><span class="title function_">myPromiseRace</span>([p1, p2, p3])</span><br><span class="line">  .<span class="title function_">then</span>(<span class="variable language_">console</span>.<span class="property">log</span>)</span><br><span class="line">  .<span class="title function_">catch</span>(<span class="variable language_">console</span>.<span class="property">error</span>); <span class="comment">// 输出: p3 error</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="6-2-普通值参与竞速（会立刻赢）"><a href="#6-2-普通值参与竞速（会立刻赢）" class="headerlink" title="6.2 普通值参与竞速（会立刻赢）"></a>6.2 普通值参与竞速（会立刻赢）</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">myPromiseRace</span>([<span class="title class_">Promise</span>.<span class="title function_">resolve</span>(<span class="string">&#x27;A&#x27;</span>), <span class="number">123</span>, <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function"><span class="params">res</span> =&gt;</span> <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> <span class="title function_">res</span>(<span class="string">&#x27;B&#x27;</span>), <span class="number">10</span>))])</span><br><span class="line">  .<span class="title function_">then</span>(<span class="variable language_">console</span>.<span class="property">log</span>)</span><br><span class="line">  .<span class="title function_">catch</span>(<span class="variable language_">console</span>.<span class="property">error</span>);</span><br><span class="line"><span class="comment">// 输出：123（普通值最快）</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="6-3-空数组：永远-pending"><a href="#6-3-空数组：永远-pending" class="headerlink" title="6.3 空数组：永远 pending"></a>6.3 空数组：永远 pending</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> p = <span class="title function_">myPromiseRace</span>([]);</span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;still pending...&#x27;</span>), <span class="number">1000</span>);</span><br><span class="line"><span class="comment">// 1 秒后输出 still pending...，race 本身没有结果</span></span><br></pre></td></tr></table></figure>
+<p>Your current implementation behaves the same way, since the loop never executes.<br>This matches the ECMAScript specification.</p>
+<p>You <em>could</em> add explicit handling, but it’s not required.</p>
+<h2 id="6-Additional-Test-Cases"><a href="#6-Additional-Test-Cases" class="headerlink" title="6. Additional Test Cases"></a>6. Additional Test Cases</h2><h3 id="6-1-Rejection-Wins-First"><a href="#6-1-Rejection-Wins-First" class="headerlink" title="6.1 Rejection Wins First"></a>6.1 Rejection Wins First</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> p1 = <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function"><span class="params">res</span> =&gt;</span> <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> <span class="title function_">res</span>(<span class="string">&#x27;p1&#x27;</span>), <span class="number">1000</span>));</span><br><span class="line"><span class="keyword">const</span> p2 = <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function"><span class="params">res</span> =&gt;</span> <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> <span class="title function_">res</span>(<span class="string">&#x27;p2&#x27;</span>), <span class="number">500</span>));</span><br><span class="line"><span class="keyword">const</span> p3 = <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">res, rej</span>) =&gt;</span> <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> <span class="title function_">rej</span>(<span class="string">&#x27;p3 error&#x27;</span>), <span class="number">300</span>));</span><br><span class="line"></span><br><span class="line"><span class="title function_">myPromiseRace</span>([p1, p2, p3])</span><br><span class="line">  .<span class="title function_">then</span>(<span class="variable language_">console</span>.<span class="property">log</span>)</span><br><span class="line">  .<span class="title function_">catch</span>(<span class="variable language_">console</span>.<span class="property">error</span>); <span class="comment">// Output: p3 error</span></span><br></pre></td></tr></table></figure>
 
 
 
-<h2 id="7-实战：用-race-做请求超时"><a href="#7-实战：用-race-做请求超时" class="headerlink" title="7. 实战：用 race 做请求超时"></a>7. 实战：用 race 做请求超时</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">timeout</span>(<span class="params">ms</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">_, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> <span class="title function_">reject</span>(<span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">`Timeout after <span class="subst">$&#123;ms&#125;</span>ms`</span>)), ms);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">fetchWithTimeout</span>(<span class="params">url, ms = <span class="number">3000</span></span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="title function_">myPromiseRace</span>([<span class="title function_">fetch</span>(url), <span class="title function_">timeout</span>(ms)]);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 用法</span></span><br><span class="line"><span class="title function_">fetchWithTimeout</span>(<span class="string">&#x27;https://example.com/api&#x27;</span>, <span class="number">2000</span>)</span><br><span class="line">  .<span class="title function_">then</span>(<span class="function"><span class="params">res</span> =&gt;</span> res.<span class="title function_">json</span>())</span><br><span class="line">  .<span class="title function_">then</span>(<span class="function"><span class="params">data</span> =&gt;</span> <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;data:&#x27;</span>, data))</span><br><span class="line">  .<span class="title function_">catch</span>(<span class="function"><span class="params">err</span> =&gt;</span> <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">&#x27;error:&#x27;</span>, err.<span class="property">message</span>));</span><br></pre></td></tr></table></figure>
+<h3 id="6-2-Plain-Values-Participate-in-the-Race"><a href="#6-2-Plain-Values-Participate-in-the-Race" class="headerlink" title="6.2 Plain Values Participate in the Race"></a>6.2 Plain Values Participate in the Race</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">myPromiseRace</span>([</span><br><span class="line">  <span class="title class_">Promise</span>.<span class="title function_">resolve</span>(<span class="string">&#x27;A&#x27;</span>),</span><br><span class="line">  <span class="number">123</span>,</span><br><span class="line">  <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function"><span class="params">res</span> =&gt;</span> <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> <span class="title function_">res</span>(<span class="string">&#x27;B&#x27;</span>), <span class="number">10</span>))</span><br><span class="line">])</span><br><span class="line">  .<span class="title function_">then</span>(<span class="variable language_">console</span>.<span class="property">log</span>)</span><br><span class="line">  .<span class="title function_">catch</span>(<span class="variable language_">console</span>.<span class="property">error</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Output: 123 (plain value wins immediately)</span></span><br></pre></td></tr></table></figure>
 
 
 
-<h2 id="8-面试常问点（加分项）"><a href="#8-面试常问点（加分项）" class="headerlink" title="8. 面试常问点（加分项）"></a>8. 面试常问点（加分项）</h2><ul>
-<li><p><strong>Q：race 能取消其他 Promise 吗？</strong><br>不能。Promise 本身不支持取消，除非你用 <code>AbortController</code>（fetch）或自己设计可取消任务。</p>
+<h3 id="6-3-Empty-Array-Remains-Pending"><a href="#6-3-Empty-Array-Remains-Pending" class="headerlink" title="6.3 Empty Array Remains Pending"></a>6.3 Empty Array Remains Pending</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> p = <span class="title function_">myPromiseRace</span>([]);</span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;still pending...&#x27;</span>), <span class="number">1000</span>);</span><br><span class="line"><span class="comment">// After 1 second: &quot;still pending...&quot;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="7-Practical-Example-Request-Timeout-with-race"><a href="#7-Practical-Example-Request-Timeout-with-race" class="headerlink" title="7. Practical Example: Request Timeout with race"></a>7. Practical Example: Request Timeout with <code>race</code></h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">timeout</span>(<span class="params">ms</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">_, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> <span class="title function_">reject</span>(<span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">`Timeout after <span class="subst">$&#123;ms&#125;</span>ms`</span>)), ms);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">fetchWithTimeout</span>(<span class="params">url, ms = <span class="number">3000</span></span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="title function_">myPromiseRace</span>([<span class="title function_">fetch</span>(url), <span class="title function_">timeout</span>(ms)]);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Usage</span></span><br><span class="line"><span class="title function_">fetchWithTimeout</span>(<span class="string">&#x27;https://example.com/api&#x27;</span>, <span class="number">2000</span>)</span><br><span class="line">  .<span class="title function_">then</span>(<span class="function"><span class="params">res</span> =&gt;</span> res.<span class="title function_">json</span>())</span><br><span class="line">  .<span class="title function_">then</span>(<span class="function"><span class="params">data</span> =&gt;</span> <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;data:&#x27;</span>, data))</span><br><span class="line">  .<span class="title function_">catch</span>(<span class="function"><span class="params">err</span> =&gt;</span> <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">&#x27;error:&#x27;</span>, err.<span class="property">message</span>));</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="8-Common-Interview-Questions-Bonus-Points"><a href="#8-Common-Interview-Questions-Bonus-Points" class="headerlink" title="8. Common Interview Questions (Bonus Points)"></a>8. Common Interview Questions (Bonus Points)</h2><ul>
+<li><p><strong>Q: Can <code>Promise.race</code> cancel the other Promises?</strong><br>No. Promises are not cancellable by default. Cancellation requires tools like <code>AbortController</code> or custom logic.</p>
 </li>
-<li><p><strong>Q：race 里放普通值会怎样？</strong><br>会被 <code>Promise.resolve</code> 包装成 fulfilled Promise，通常会立刻“获胜”。</p>
+<li><p><strong>Q: What happens if you pass a plain value into <code>race</code>?</strong><br>It is wrapped by <code>Promise.resolve</code> and usually wins immediately.</p>
 </li>
-<li><p><strong>Q：race 和 any&#x2F;allSettled 有什么区别？</strong></p>
+<li><p><strong>Q: What’s the difference between <code>race</code>, <code>any</code>, and <code>allSettled</code>?</strong></p>
 <ul>
-<li><code>race</code>：谁先 settle 用谁</li>
-<li><code>any</code>：谁先 fulfilled 用谁（全部 rejected 才 rejected）</li>
-<li><code>allSettled</code>：等全部结束，返回每个结果状态</li>
+<li><code>race</code>: settles as soon as the first Promise settles</li>
+<li><code>any</code>: fulfills as soon as the first Promise fulfills (rejects only if all reject)</li>
+<li><code>allSettled</code>: waits for all Promises and returns their final states</li>
 </ul>
 </li>
 </ul>
-<h2 id="9-总结"><a href="#9-总结" class="headerlink" title="9. 总结"></a>9. 总结</h2><p>手写 <code>Promise.race</code> 的核心只有一句话：</p>
+<h2 id="9-Summary"><a href="#9-Summary" class="headerlink" title="9. Summary"></a>9. Summary</h2><p>The core idea behind implementing <code>Promise.race</code> can be summarized in one sentence:</p>
 <blockquote>
-<p><strong>遍历 iterable，把每个元素 Promise.resolve 后接上同一个 resolve&#x2F;reject，谁先 settle 就定局。</strong></p>
+<p><strong>Iterate over the iterable, wrap each item with <code>Promise.resolve</code>, attach the same <code>resolve</code> and <code>reject</code>, and let the first settled Promise decide the outcome.</strong></p>
 </blockquote>
 
     </div>
@@ -391,14 +395,14 @@
 <div>
 <ul class="post-copyright">
   <li class="post-copyright-author">
-    <strong>本文作者： </strong>lidya
+    <strong>Post author:  </strong>lidya
   </li>
   <li class="post-copyright-link">
-    <strong>本文链接：</strong>
-    <a href="https://lidyaqf.github.io/2025/12/18/%E6%89%8B%E5%86%99Promise/" title="手写 Promise.race（从原理到实战）">https://lidyaqf.github.io/2025/12/18/手写Promise/</a>
+    <strong>Post link: </strong>
+    <a href="https://lidyaqf.github.io/2025/12/18/%E6%89%8B%E5%86%99Promise/" title="Handwriting Promise.race (From Theory to Practice)">https://lidyaqf.github.io/2025/12/18/手写Promise/</a>
   </li>
   <li class="post-copyright-license">
-    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
   </li>
 </ul>
 </div>
@@ -412,8 +416,8 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/ening/2025/10/20/%E6%89%8B%E5%86%99New/" rel="prev" title="手写 new：彻底搞懂 JavaScript new 运算符的实现原理">
-      <i class="fa fa-chevron-left"></i> 手写 new：彻底搞懂 JavaScript new 运算符的实现原理
+    <a href="/ening/2025/12/17/%E6%89%8B%E5%86%99New/" rel="prev" title="Fully Understanding How the JavaScript `new` Operator Works">
+      <i class="fa fa-chevron-left"></i> Fully Understanding How the JavaScript `new` Operator Works
     </a></div>
       <div class="post-nav-item"></div>
     </div>
@@ -470,16 +474,16 @@
 
       <ul class="sidebar-nav motion-element">
         <li class="sidebar-nav-toc">
-          文章目录
+          Table of Contents
         </li>
         <li class="sidebar-nav-overview">
-          站点概览
+          Overview
         </li>
       </ul>
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Promise-race-%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">1.</span> <span class="nav-text">1. Promise.race 是什么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%B8%B8%E8%A7%81%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-number">2.</span> <span class="nav-text">2. 常见使用场景</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E8%B6%85%E6%97%B6%E6%8E%A7%E5%88%B6%EF%BC%88%E6%9C%80%E5%B8%B8%E8%A7%81%EF%BC%89"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 超时控制（最常见）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-%E5%A4%9A%E6%BA%90%E8%AF%B7%E6%B1%82%E5%85%9C%E5%BA%95"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 多源请求兜底</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-%E9%A6%96%E5%B1%8F%E7%AB%9E%E9%80%9F"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 首屏竞速</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E6%89%8B%E5%86%99-myPromiseRace"><span class="nav-number">3.</span> <span class="nav-text">3. 手写 myPromiseRace</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E5%85%B3%E9%94%AE%E7%82%B9%E6%8B%86%E8%A7%A3%EF%BC%88%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81-Promise-resolve%EF%BC%9F%EF%BC%89"><span class="nav-number">4.</span> <span class="nav-text">4. 关键点拆解（为什么要 Promise.resolve？）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E6%9B%B4%E5%AE%8C%E6%95%B4%E7%9A%84%E7%89%88%E6%9C%AC%EF%BC%9A%E5%A4%84%E7%90%86%E7%A9%BA-iterable"><span class="nav-number">5.</span> <span class="nav-text">5. 更完整的版本：处理空 iterable</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-%E6%9B%B4%E5%A4%9A%E6%B5%8B%E8%AF%95%E7%94%A8%E4%BE%8B"><span class="nav-number">6.</span> <span class="nav-text">6. 更多测试用例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#6-1-%E6%B5%8B%E8%AF%95%EF%BC%88%E5%85%88-reject%EF%BC%89"><span class="nav-number">6.1.</span> <span class="nav-text">6.1 测试（先 reject）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-2-%E6%99%AE%E9%80%9A%E5%80%BC%E5%8F%82%E4%B8%8E%E7%AB%9E%E9%80%9F%EF%BC%88%E4%BC%9A%E7%AB%8B%E5%88%BB%E8%B5%A2%EF%BC%89"><span class="nav-number">6.2.</span> <span class="nav-text">6.2 普通值参与竞速（会立刻赢）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-3-%E7%A9%BA%E6%95%B0%E7%BB%84%EF%BC%9A%E6%B0%B8%E8%BF%9C-pending"><span class="nav-number">6.3.</span> <span class="nav-text">6.3 空数组：永远 pending</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-%E5%AE%9E%E6%88%98%EF%BC%9A%E7%94%A8-race-%E5%81%9A%E8%AF%B7%E6%B1%82%E8%B6%85%E6%97%B6"><span class="nav-number">7.</span> <span class="nav-text">7. 实战：用 race 做请求超时</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-%E9%9D%A2%E8%AF%95%E5%B8%B8%E9%97%AE%E7%82%B9%EF%BC%88%E5%8A%A0%E5%88%86%E9%A1%B9%EF%BC%89"><span class="nav-number">8.</span> <span class="nav-text">8. 面试常问点（加分项）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-%E6%80%BB%E7%BB%93"><span class="nav-number">9.</span> <span class="nav-text">9. 总结</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-What-Is-Promise-race"><span class="nav-number">1.</span> <span class="nav-text">1. What Is Promise.race?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Common-Use-Cases"><span class="nav-number">2.</span> <span class="nav-text">2. Common Use Cases</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-Timeout-Control-Most-Common"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 Timeout Control (Most Common)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-Multiple-Data-Sources-Fallback-Strategy"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 Multiple Data Sources (Fallback Strategy)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-First-Render-Racing"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 First-Render Racing</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Implementing-myPromiseRace"><span class="nav-number">3.</span> <span class="nav-text">3. Implementing myPromiseRace</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-Key-Insight-Why-Use-Promise-resolve"><span class="nav-number">4.</span> <span class="nav-text">4. Key Insight: Why Use Promise.resolve?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-Handling-Empty-Iterables"><span class="nav-number">5.</span> <span class="nav-text">5. Handling Empty Iterables</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-Additional-Test-Cases"><span class="nav-number">6.</span> <span class="nav-text">6. Additional Test Cases</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#6-1-Rejection-Wins-First"><span class="nav-number">6.1.</span> <span class="nav-text">6.1 Rejection Wins First</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-2-Plain-Values-Participate-in-the-Race"><span class="nav-number">6.2.</span> <span class="nav-text">6.2 Plain Values Participate in the Race</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-3-Empty-Array-Remains-Pending"><span class="nav-number">6.3.</span> <span class="nav-text">6.3 Empty Array Remains Pending</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-Practical-Example-Request-Timeout-with-race"><span class="nav-number">7.</span> <span class="nav-text">7. Practical Example: Request Timeout with race</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-Common-Interview-Questions-Bonus-Points"><span class="nav-number">8.</span> <span class="nav-text">8. Common Interview Questions (Bonus Points)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-Summary"><span class="nav-number">9.</span> <span class="nav-text">9. Summary</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -488,28 +492,28 @@
     <img class="site-author-image" itemprop="image" alt="lidya"
       src="/ening/images/avatar.jpg">
   <p class="site-author-name" itemprop="name">lidya</p>
-  <div class="site-description" itemprop="description">服人以诚不以言</div>
+  <div class="site-description" itemprop="description"></div>
 </div>
 <div class="site-state-wrap motion-element">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
-          <a href="/ening/archives/">
+          <a href="/ening/ening/archives/">
         
-          <span class="site-state-item-count">32</span>
-          <span class="site-state-item-name">日志</span>
+          <span class="site-state-item-count">24</span>
+          <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-            <a href="/ening/categories/">
+            <a href="/ening/ening/categories/">
           
-        <span class="site-state-item-count">5</span>
-        <span class="site-state-item-name">分类</span></a>
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/ening/tags/">
           
-        <span class="site-state-item-count">17</span>
-        <span class="site-state-item-name">标签</span></a>
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
 </div>
@@ -556,7 +560,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-user"></i>
       </span>
-      <span class="site-uv" title="总访客量">
+      <span class="site-uv" title="Total Visitors">
         <span id="busuanzi_value_site_uv"></span>
       </span>
     </span>
@@ -565,7 +569,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-eye"></i>
       </span>
-      <span class="site-pv" title="总访问量">
+      <span class="site-pv" title="Total Views">
         <span id="busuanzi_value_site_pv"></span>
       </span>
     </span>

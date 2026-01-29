@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+<style>
+    .contain {
+      position: relative;
+      width: 100%;
+      height: 50px;
+      background: #f0f0f0;
+      overflow: hidden;
+    }
+  
+    .danmaku {
+      position: absolute;
+      white-space: nowrap;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 14px;
+      color: #333;
+      animation: moveLeft 15s linear forwards;
+    }
+  
+    .danmaku.paused {
+      animation-play-state: paused;
+    }
+  
+    @keyframes moveLeft {
+      from {
+        left: 100%;
+      }
+      to {
+        left: -100%;
+      }
+    }
+  </style>
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.svg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.svg">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+<meta name="baidu_union_verify" content="4c95743ab0ae1a7dcfbc5c20c004854b">
+
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noto Serif SC:300,300italic,400,400italic,700,700italic|Source Code Pro:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"lidyaqf.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"manual","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+
+
+
+
+
+  <meta name="description" content="全书的确包含了很多他自己的“偏见”，但我觉得他真实幽默，语言简单易懂，其实各个小标题就是告诉我们该做什么。 懂生活生活从来不是你想怎样就能变成怎样的。生活中多发现美，多从他人角度看待事情，是好的。同时自己还要有自知之明。 懂爱情谢耳朵说：人穷尽一生追寻另一个人类共度一生的事，我一直无法理解。或许我自己太有意思，无需他人陪伴。所以我祝你们在对方身上得到的快乐，与我给自己的一样多。靠另一个人永远无">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《终有一天你会懂》琢磨先生 - 读书笔记">
+<meta property="og:url" content="https://lidyaqf.github.io/2025/05/21/%E3%80%8A%E7%BB%88%E6%9C%89%E4%B8%80%E5%A4%A9%E4%BD%A0%E4%BC%9A%E6%87%82%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%20-%20%E7%90%A2%E7%A3%A8%E5%85%88%E7%94%9F/index.html">
+<meta property="og:site_name" content="枫叶白">
+<meta property="og:description" content="全书的确包含了很多他自己的“偏见”，但我觉得他真实幽默，语言简单易懂，其实各个小标题就是告诉我们该做什么。 懂生活生活从来不是你想怎样就能变成怎样的。生活中多发现美，多从他人角度看待事情，是好的。同时自己还要有自知之明。 懂爱情谢耳朵说：人穷尽一生追寻另一个人类共度一生的事，我一直无法理解。或许我自己太有意思，无需他人陪伴。所以我祝你们在对方身上得到的快乐，与我给自己的一样多。靠另一个人永远无">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-05-21T02:12:41.000Z">
+<meta property="article:modified_time" content="2025-12-15T08:27:53.160Z">
+<meta property="article:author" content="lidya">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://lidyaqf.github.io/2025/05/21/%E3%80%8A%E7%BB%88%E6%9C%89%E4%B8%80%E5%A4%A9%E4%BD%A0%E4%BC%9A%E6%87%82%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%20-%20%E7%90%A2%E7%A3%A8%E5%85%88%E7%94%9F/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>《终有一天你会懂》琢磨先生 - 读书笔记 | 枫叶白</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">枫叶白</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-english">
+
+    <a href="/ening" rel="section"><i class="fa fa-language fa-fw"></i>English</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://lidyaqf.github.io/2025/05/21/%E3%80%8A%E7%BB%88%E6%9C%89%E4%B8%80%E5%A4%A9%E4%BD%A0%E4%BC%9A%E6%87%82%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%20-%20%E7%90%A2%E7%A3%A8%E5%85%88%E7%94%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="lidya">
+      <meta itemprop="description" content="服人以诚不以言">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="枫叶白">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          《终有一天你会懂》琢磨先生 - 读书笔记
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2025-05-21 10:12:41" itemprop="dateCreated datePublished" datetime="2025-05-21T10:12:41+08:00">2025-05-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-12-15 16:27:53" itemprop="dateModified" datetime="2025-12-15T16:27:53+08:00">2025-12-15</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AF%BB%E4%B9%A6%E6%84%9F%E6%82%9F/" itemprop="url" rel="index"><span itemprop="name">读书感悟</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <!-- ![示例图片](images/logo.svg) -->
+
+<p>全书的确包含了很多他自己的“偏见”，但我觉得他真实幽默，语言简单易懂，其实各个小标题就是告诉我们该做什么。</p>
+<h2 id="懂生活"><a href="#懂生活" class="headerlink" title="懂生活"></a>懂生活</h2><p>生活从来不是你想怎样就能变成怎样的。生活中多发现美，多从他人角度看待事情，是好的。同时自己还要有自知之明。</p>
+<h2 id="懂爱情"><a href="#懂爱情" class="headerlink" title="懂爱情"></a>懂爱情</h2><p>谢耳朵说：人穷尽一生追寻另一个人类共度一生的事，我一直无法理解。或许我自己太有意思，无需他人陪伴。所以我祝你们在对方身上得到的快乐，与我给自己的一样多。<br>靠另一个人永远无法让你摆脱孤独，只能靠自己对生活的热情。经营一段感情要的是理智，自由是不可剥夺的。这让我想起对前任，我曾经有查看过他的手机，我觉得挺不对，以后不会再出现这种事情了。</p>
+<h2 id="懂兵法"><a href="#懂兵法" class="headerlink" title="懂兵法"></a>懂兵法</h2><p>主要就是介绍女追男或男追女的技巧，以及如何经营好一段感情，就是大智慧。同时千万别因为家庭放弃自己的事业，不要跟公公婆婆住一起（但我的观点还是觉得因人而异），要有属于自己的兴趣爱好。</p>
+<h2 id="懂婚姻"><a href="#懂婚姻" class="headerlink" title="懂婚姻"></a>懂婚姻</h2><p>忍，忠一。对于不婚主义，当然也没什么想多说的了。</p>
+<h2 id="懂失意"><a href="#懂失意" class="headerlink" title="懂失意"></a>懂失意</h2><p>每一次失恋，只不过是在为真爱让路。还是那句勉强不来，我爱你，所以我祝你一生如意，即使陪着你的人，不是我。<br>做自己想做的事，不要管他人怎么想。只关心自己在乎的人。</p>
+<h2 id="懂阅读"><a href="#懂阅读" class="headerlink" title="懂阅读"></a>懂阅读</h2><p>What Why How。一直阅读下去，不要求快，要求精。</p>
+<h2 id="懂情趣"><a href="#懂情趣" class="headerlink" title="懂情趣"></a>懂情趣</h2><p>介绍了他与妻子的日常 sweet，告诉我们不分手，就不知道世界上还有那么多人值得我们去爱。如果找到了，是我的幸运，如果找不到，我也有能力让自己快乐地活着。<br>高情商地活着，会发觉世界是那么美好。</p>
+<h2 id="懂交际"><a href="#懂交际" class="headerlink" title="懂交际"></a>懂交际</h2><p>跟正经人交往，跟不同人要有不同方式去与之交往，拒绝别人也是一门艺术。如果没有厚脸皮去找别人还钱，干脆别借。</p>
+<h2 id="懂人性"><a href="#懂人性" class="headerlink" title="懂人性"></a>懂人性</h2><p>只能说我可能在人性方面持怀疑态度，管不了别人，那么就只能管好自己，别做个恶俗的人。</p>
+<h2 id="懂善恶"><a href="#懂善恶" class="headerlink" title="懂善恶"></a>懂善恶</h2><p>有些人在你生命中出现，就是为了给你上一课。何为善何为恶，我宁愿相信他人的话，因为人与人之间的信任本来就是有一方愿意相信，另一方才会不负此信。<br>即使被骗，也是告诉我们下次同样的坑，别再跳了。但别因为入了一次坑，就不再相信了，善人始终存在。<br>上帝让右手成为右手，就是对右手最高的奖赏；同理，上帝让善人成为善人，也就是对善人的最高奖赏。<br>这让我想起，有次在外，洗手间里没有纸巾，原本是想问旁边的好朋友有没有纸巾的，结果旁边一位陌生女子听见了，立刻拿出包纸巾给我，此等善举，让我倍感荣幸。<br>而善良还需要有原则，否则害人害己。</p>
+<h2 id="懂财富"><a href="#懂财富" class="headerlink" title="懂财富"></a>懂财富</h2><p>穷人之所以穷，是思维的匮乏。要想富起来，不能只在自己身体上投资，而要在大局上有思维的开拓。看透问题的本质。<br>时间是有限，在有限时间内如何快速致富？找到一门自己感兴趣的学科，学以致用，发散思维，与社会息息相关的行业，去做。</p>
+<h2 id="懂社会"><a href="#懂社会" class="headerlink" title="懂社会"></a>懂社会</h2><p>要有抱负，一步一个脚印。要有自己独立的人格，要能为自己所做的事情负责。学会转化一种让自己幸福的能力，然后改变自己。</p>
+<h2 id="懂生死"><a href="#懂生死" class="headerlink" title="懂生死"></a>懂生死</h2><p>生死学里几个词：无死不生，向死而生，知死而后生。颇为有趣且发人深思。人就是因为知道有一天会死去，才会争取好好地活着。<br>我想，真到了那天，我会主动拥抱死亡。</p>
+<blockquote>
+<p>这世界上缺的不是完美的人，而是从心底给出的正义、真心、无畏和同情—这是今天看完《无问西东》后给我最感慨的话。生而为人，便要心之所向，无问西东。<br>大家都知道有因必有果，却不只因果皆由缘而起。叔本华跟尼采，有时间必好好读佳作。</p>
+</blockquote>
+<h2 id="懂远游"><a href="#懂远游" class="headerlink" title="懂远游"></a>懂远游</h2><p>这部分写了琢磨先生在西藏的经历，看过很多书，都是大家想去西藏的。也许去了那里，人真的能体会到人生的不易。<br>美国不如英国自律，日本对美食态度极佳，常把“对不起”挂在嘴边，不喜欢给别人添麻烦。</p>
+<h2 id="懂职场"><a href="#懂职场" class="headerlink" title="懂职场"></a>懂职场</h2><p>首先要懂得吃苦，然后要清楚自己，发掘自己的天赋所在。以终为始，聚焦所做。</p>
+<h2 id="懂教育"><a href="#懂教育" class="headerlink" title="懂教育"></a>懂教育</h2><p>我只知道，每一个出生在这世上的小孩都是纯粹的，如果不好好教育，长大后便不可能为国之栋梁。</p>
+<h2 id="懂娱乐、懂自由"><a href="#懂娱乐、懂自由" class="headerlink" title="懂娱乐、懂自由"></a>懂娱乐、懂自由</h2><p>人生有两个方向：一个方向是往大处拼搏，保持对事业的激情；一个方向是往小处生活，保持做人的温度。<br>每天睁开眼，对自己说声：欧耶</p>
+
+    </div>
+
+    
+    
+    
+    
+      <div>
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:24px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+      </div>
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>lidya
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://lidyaqf.github.io/2025/05/21/%E3%80%8A%E7%BB%88%E6%9C%89%E4%B8%80%E5%A4%A9%E4%BD%A0%E4%BC%9A%E6%87%82%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%20-%20%E7%90%A2%E7%A3%A8%E5%85%88%E7%94%9F/" title="《终有一天你会懂》琢磨先生 - 读书笔记">https://lidyaqf.github.io/2025/05/21/《终有一天你会懂》读书笔记 - 琢磨先生/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/04/18/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98/" rel="prev" title="前端面试题">
+      <i class="fa fa-chevron-left"></i> 前端面试题
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2025/06/26/%E7%9A%AE%E5%9B%8A%E6%84%9F%E6%82%9F/" rel="next" title="《皮囊》感悟">
+      《皮囊》感悟 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC82MDU2Mi8zNzAzMw=="></div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%87%82%E7%94%9F%E6%B4%BB"><span class="nav-number">1.</span> <span class="nav-text">懂生活</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%87%82%E7%88%B1%E6%83%85"><span class="nav-number">2.</span> <span class="nav-text">懂爱情</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%87%82%E5%85%B5%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text">懂兵法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%87%82%E5%A9%9A%E5%A7%BB"><span class="nav-number">4.</span> <span class="nav-text">懂婚姻</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%87%82%E5%A4%B1%E6%84%8F"><span class="nav-number">5.</span> <span class="nav-text">懂失意</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%87%82%E9%98%85%E8%AF%BB"><span class="nav-number">6.</span> <span class="nav-text">懂阅读</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%87%82%E6%83%85%E8%B6%A3"><span class="nav-number">7.</span> <span class="nav-text">懂情趣</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%87%82%E4%BA%A4%E9%99%85"><span class="nav-number">8.</span> <span class="nav-text">懂交际</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%87%82%E4%BA%BA%E6%80%A7"><span class="nav-number">9.</span> <span class="nav-text">懂人性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%87%82%E5%96%84%E6%81%B6"><span class="nav-number">10.</span> <span class="nav-text">懂善恶</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%87%82%E8%B4%A2%E5%AF%8C"><span class="nav-number">11.</span> <span class="nav-text">懂财富</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%87%82%E7%A4%BE%E4%BC%9A"><span class="nav-number">12.</span> <span class="nav-text">懂社会</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%87%82%E7%94%9F%E6%AD%BB"><span class="nav-number">13.</span> <span class="nav-text">懂生死</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%87%82%E8%BF%9C%E6%B8%B8"><span class="nav-number">14.</span> <span class="nav-text">懂远游</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%87%82%E8%81%8C%E5%9C%BA"><span class="nav-number">15.</span> <span class="nav-text">懂职场</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%87%82%E6%95%99%E8%82%B2"><span class="nav-number">16.</span> <span class="nav-text">懂教育</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%87%82%E5%A8%B1%E4%B9%90%E3%80%81%E6%87%82%E8%87%AA%E7%94%B1"><span class="nav-number">17.</span> <span class="nav-text">懂娱乐、懂自由</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="lidya"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">lidya</p>
+  <div class="site-description" itemprop="description">服人以诚不以言</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">lidya</span>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    if (location.pathname.startsWith('/ening/')) {
+      const item = document.querySelector('.menu-item-english');
+      if (item) item.style.display = 'none';
+    }
+  });
+</script>
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
+  window.livereOptions = {
+    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+<style>
+    .contain {
+      position: relative;
+      width: 100%;
+      height: 50px;
+      background: #f0f0f0;
+      overflow: hidden;
+    }
+  
+    .danmaku {
+      position: absolute;
+      white-space: nowrap;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 14px;
+      color: #333;
+      animation: moveLeft 15s linear forwards;
+    }
+  
+    .danmaku.paused {
+      animation-play-state: paused;
+    }
+  
+    @keyframes moveLeft {
+      from {
+        left: 100%;
+      }
+      to {
+        left: -100%;
+      }
+    }
+  </style>
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.svg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.svg">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+<meta name="baidu_union_verify" content="4c95743ab0ae1a7dcfbc5c20c004854b">
+
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noto Serif SC:300,300italic,400,400italic,700,700italic|Source Code Pro:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"lidyaqf.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"manual","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+
+
+
+
+
+  <meta name="description" content="Vue 中如何正确插入 &lt;script&gt; 脚本（含广告代码示例）在实际开发中，我们经常会接入第三方广告平台、统计工具或客服系统，而这些服务通常会提供一整段包含 &lt;script&gt; 标签的代码。但如果你在 Vue 的模板中（&lt;template&gt;）直接写 &lt;script&gt;，不仅不会生效，还可能直接报错。 本文将详细讲解 为什么不能在 Vue 模板里直接插入">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vue中插入脚本">
+<meta property="og:url" content="https://lidyaqf.github.io/2025/08/12/vue%E5%AE%9E%E7%8E%B0%E6%8F%92%E5%85%A5%E8%84%9A%E6%9C%AC/index.html">
+<meta property="og:site_name" content="枫叶白">
+<meta property="og:description" content="Vue 中如何正确插入 &lt;script&gt; 脚本（含广告代码示例）在实际开发中，我们经常会接入第三方广告平台、统计工具或客服系统，而这些服务通常会提供一整段包含 &lt;script&gt; 标签的代码。但如果你在 Vue 的模板中（&lt;template&gt;）直接写 &lt;script&gt;，不仅不会生效，还可能直接报错。 本文将详细讲解 为什么不能在 Vue 模板里直接插入">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-08-11T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-01-23T01:46:29.236Z">
+<meta property="article:author" content="lidya">
+<meta property="article:tag" content="Vue">
+<meta property="article:tag" content="script">
+<meta property="article:tag" content="广告代码">
+<meta property="article:tag" content="动态插入脚本">
+<meta property="article:tag" content="DOM 操作">
+<meta property="article:tag" content="第三方广告">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://lidyaqf.github.io/2025/08/12/vue%E5%AE%9E%E7%8E%B0%E6%8F%92%E5%85%A5%E8%84%9A%E6%9C%AC/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Vue中插入脚本 | 枫叶白</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">枫叶白</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-english">
+
+    <a href="/ening" rel="section"><i class="fa fa-language fa-fw"></i>English</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://lidyaqf.github.io/2025/08/12/vue%E5%AE%9E%E7%8E%B0%E6%8F%92%E5%85%A5%E8%84%9A%E6%9C%AC/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="lidya">
+      <meta itemprop="description" content="服人以诚不以言">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="枫叶白">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Vue中插入脚本
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2025-08-12 00:00:00" itemprop="dateCreated datePublished" datetime="2025-08-12T00:00:00+08:00">2025-08-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2026-01-23 09:46:29" itemprop="dateModified" datetime="2026-01-23T09:46:29+08:00">2026-01-23</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="Vue-中如何正确插入-脚本（含广告代码示例）"><a href="#Vue-中如何正确插入-脚本（含广告代码示例）" class="headerlink" title="Vue 中如何正确插入 &lt;script&gt; 脚本（含广告代码示例）"></a>Vue 中如何正确插入 <code>&lt;script&gt;</code> 脚本（含广告代码示例）</h1><p>在实际开发中，我们经常会接入第三方广告平台、统计工具或客服系统，而这些服务通常会提供一整段包含 <code>&lt;script&gt;</code> 标签的代码。<br>但如果你在 Vue 的模板中（<code>&lt;template&gt;</code>）直接写 <code>&lt;script&gt;</code>，不仅不会生效，还可能直接报错。</p>
+<p>本文将详细讲解 <strong>为什么不能在 Vue 模板里直接插入 <code>&lt;script&gt;</code></strong>，以及 <strong>如何正确动态插入脚本</strong>，并给出一个可直接使用的代码示例（以广告代码为例）。</p>
+<h2 id="一、为什么-Vue-中不能直接写-？"><a href="#一、为什么-Vue-中不能直接写-？" class="headerlink" title="一、为什么 Vue 中不能直接写 &lt;script&gt;？"></a>一、为什么 Vue 中不能直接写 <code>&lt;script&gt;</code>？</h2><p>Vue 单文件组件（SFC）结构清晰：</p>
+<ul>
+<li><code>&lt;template&gt;</code>：写结构</li>
+<li><code>&lt;script&gt;</code>：写逻辑</li>
+<li><code>&lt;style&gt;</code>：写样式</li>
+</ul>
+<p>在 <code>&lt;template&gt;</code> 中插入 <code>&lt;script&gt;</code> 会出现以下问题：</p>
+<ol>
+<li><strong>Vue 模板会自动移除或忽略 <code>&lt;script&gt;</code> 标签</strong>（当成普通文本）</li>
+<li>会破坏 Vue 的编译流程，可能直接报错</li>
+<li>导致第三方广告脚本、统计脚本完全无法执行</li>
+</ol>
+<p>因此，要让脚本正常工作，我们只能在组件的生命周期中 <strong>通过 DOM API 动态插入 <code>&lt;script&gt;</code> 标签</strong>。</p>
+<h2 id="二、错误示例：直接粘贴广告代码（不可行）"><a href="#二、错误示例：直接粘贴广告代码（不可行）" class="headerlink" title="二、错误示例：直接粘贴广告代码（不可行）"></a>二、错误示例：直接粘贴广告代码（不可行）</h2><p>例如你拿到的广告商提供的代码是这样的：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"> atOptions = &#123;</span></span><br><span class="line"><span class="language-javascript">  <span class="string">&#x27;key&#x27;</span> : <span class="string">&#x27;1523b7ddb936e560aadef64a851d500c&#x27;</span>,</span></span><br><span class="line"><span class="language-javascript">  <span class="string">&#x27;format&#x27;</span> : <span class="string">&#x27;iframe&#x27;</span>,</span></span><br><span class="line"><span class="language-javascript">  <span class="string">&#x27;height&#x27;</span> : <span class="number">250</span>,</span></span><br><span class="line"><span class="language-javascript">  <span class="string">&#x27;width&#x27;</span> : <span class="number">300</span>,</span></span><br><span class="line"><span class="language-javascript">  <span class="string">&#x27;params&#x27;</span> : &#123;&#125;</span></span><br><span class="line"><span class="language-javascript"> &#125;;</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span> <span class="attr">src</span>=<span class="string">&quot;//www.highperformanceformat.com/1523b7ddb936e560aadef64a851d500c/invoke.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>如果你把这些代码放进 Vue 的 <code>&lt;template&gt;</code> 区域，<strong>广告绝对不会显示</strong>。</p>
+<h2 id="三、正确做法：在-Vue-中动态插入脚本"><a href="#三、正确做法：在-Vue-中动态插入脚本" class="headerlink" title="三、正确做法：在 Vue 中动态插入脚本"></a>三、正确做法：在 Vue 中动态插入脚本</h2><p>核心思路：</p>
+<ol>
+<li>在模板中放一个容器（如 <code>&lt;div id=&quot;de_v&quot;&gt;&lt;/div&gt;</code>）</li>
+<li>在 <code>onMounted</code>（或 <code>mounted</code>）生命周期中创建 <code>&lt;script&gt;</code> 标签</li>
+<li>把参数脚本 + 外链脚本动态插进去</li>
+</ol>
+<h2 id="四、完整代码示例（Vue-3-）"><a href="#四、完整代码示例（Vue-3-）" class="headerlink" title="四、完整代码示例（Vue 3 + &lt;script setup&gt;）"></a>四、完整代码示例（Vue 3 + <code>&lt;script setup&gt;</code>）</h2><p>假设你的广告要插入到 id 为 <code>&quot;de_v&quot;</code> 的容器里：</p>
+<h3 id="template-部分"><a href="#template-部分" class="headerlink" title="template 部分"></a><strong>template 部分</strong></h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;de_v&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="script-部分"><a href="#script-部分" class="headerlink" title="script 部分"></a><strong>script 部分</strong></h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">&lt;script setup&gt;</span><br><span class="line">import &#123; onMounted &#125; from &quot;vue&quot;;</span><br><span class="line"></span><br><span class="line">onMounted(() =&gt; &#123;</span><br><span class="line">  const targetDiv = document.getElementById(&quot;de_v&quot;);</span><br><span class="line">  if (!targetDiv) return;</span><br><span class="line"></span><br><span class="line">  // 创建第一个 script（广告参数）</span><br><span class="line">  const script1 = document.createElement(&quot;script&quot;);</span><br><span class="line">  script1.type = &quot;text/javascript&quot;;</span><br><span class="line">  script1.innerHTML = `</span><br><span class="line">    atOptions = &#123;</span><br><span class="line">      &#x27;key&#x27; : &#x27;1523b7ddb936e560aadef64a851d500c&#x27;,</span><br><span class="line">      &#x27;format&#x27; : &#x27;iframe&#x27;,</span><br><span class="line">      &#x27;height&#x27; : 250,</span><br><span class="line">      &#x27;width&#x27; : 300,</span><br><span class="line">      &#x27;params&#x27; : &#123;&#125;</span><br><span class="line">    &#125;;</span><br><span class="line">  `;</span><br><span class="line"></span><br><span class="line">  // 创建第二个 script（外部广告脚本）</span><br><span class="line">  const script2 = document.createElement(&quot;script&quot;);</span><br><span class="line">  script2.type = &quot;text/javascript&quot;;</span><br><span class="line">  script2.src = &quot;//www.highperformanceformat.com/1523b7ddb936e560aadef64a851d500c/invoke.js&quot;;</span><br><span class="line"></span><br><span class="line">  // 插入脚本到容器内</span><br><span class="line">  targetDiv.appendChild(script1);</span><br><span class="line">  targetDiv.appendChild(script2);</span><br><span class="line">&#125;);</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="五、常见问题与注意事项"><a href="#五、常见问题与注意事项" class="headerlink" title="五、常见问题与注意事项"></a>五、常见问题与注意事项</h2><h3 id="1-组件多次挂载会重复插入脚本？"><a href="#1-组件多次挂载会重复插入脚本？" class="headerlink" title="1. 组件多次挂载会重复插入脚本？"></a>1. 组件多次挂载会重复插入脚本？</h3><p>如果组件会反复进入&#x2F;离开页面，建议：</p>
+<ul>
+<li>在插入前检查是否已添加脚本</li>
+<li>或在 <code>onUnmounted</code> 中移除它们</li>
+</ul>
+<h3 id="2-多个广告位怎么办？"><a href="#2-多个广告位怎么办？" class="headerlink" title="2. 多个广告位怎么办？"></a>2. 多个广告位怎么办？</h3><p>每个广告位使用 <strong>不同的容器 ID</strong> 即可，例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=&quot;ad1&quot;&gt;&lt;/div&gt;</span><br><span class="line">&lt;div id=&quot;ad2&quot;&gt;&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<p>脚本注入时改对应的 id 即可。</p>
+<h3 id="3-SSR-框架（Nuxt）如何处理？"><a href="#3-SSR-框架（Nuxt）如何处理？" class="headerlink" title="3. SSR 框架（Nuxt）如何处理？"></a>3. SSR 框架（Nuxt）如何处理？</h3><p>服务端无法访问 <code>document</code>，必须放到客户端生命周期中执行，例如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">onMounted</span>(<span class="function">() =&gt;</span> &#123; ... &#125;)</span><br></pre></td></tr></table></figure>
+
+<p>否则会报 <code>document is not defined</code>。</p>
+<h2 id="六、总结"><a href="#六、总结" class="headerlink" title="六、总结"></a>六、总结</h2><ul>
+<li>Vue 模板中不能直接写 <code>&lt;script&gt;</code>，否则脚本不会执行</li>
+<li>正确方式是在生命周期里 <strong>动态创建 script 标签</strong></li>
+<li>通过 <code>appendChild()</code> 可以正常加载广告脚本、统计脚本、第三方插件等</li>
+<li>本文提供的示例可直接用于实际项目</li>
+</ul>
+<p>只要按照本文方法插入脚本，不论是广告代码、统计代码还是第三方 SDK，都能正常在 Vue 环境中运行。</p>
+
+    </div>
+
+    
+    
+    
+    
+      <div>
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:24px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+      </div>
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>lidya
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://lidyaqf.github.io/2025/08/12/vue%E5%AE%9E%E7%8E%B0%E6%8F%92%E5%85%A5%E8%84%9A%E6%9C%AC/" title="Vue中插入脚本">https://lidyaqf.github.io/2025/08/12/vue实现插入脚本/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Vue/" rel="tag"># Vue</a>
+              <a href="/tags/script/" rel="tag"># script</a>
+              <a href="/tags/%E5%B9%BF%E5%91%8A%E4%BB%A3%E7%A0%81/" rel="tag"># 广告代码</a>
+              <a href="/tags/%E5%8A%A8%E6%80%81%E6%8F%92%E5%85%A5%E8%84%9A%E6%9C%AC/" rel="tag"># 动态插入脚本</a>
+              <a href="/tags/DOM-%E6%93%8D%E4%BD%9C/" rel="tag"># DOM 操作</a>
+              <a href="/tags/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%B9%BF%E5%91%8A/" rel="tag"># 第三方广告</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/07/29/%E8%8E%B7%E5%8F%96%E5%88%B0%E7%9A%84csv%E4%BF%9D%E5%AD%98%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="prev" title="获取到的csv保存数据库">
+      <i class="fa fa-chevron-left"></i> 获取到的csv保存数据库
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2025/08/13/%E5%A6%82%E4%BD%95%E8%84%B1%E7%A6%BB%E6%A1%86%E6%9E%B6%E5%BC%80%E5%8F%91/" rel="next" title="脱离框架开发">
+      脱离框架开发 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC82MDU2Mi8zNzAzMw=="></div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Vue-%E4%B8%AD%E5%A6%82%E4%BD%95%E6%AD%A3%E7%A1%AE%E6%8F%92%E5%85%A5-%E8%84%9A%E6%9C%AC%EF%BC%88%E5%90%AB%E5%B9%BF%E5%91%8A%E4%BB%A3%E7%A0%81%E7%A4%BA%E4%BE%8B%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">Vue 中如何正确插入 &lt;script&gt; 脚本（含广告代码示例）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E4%B8%BA%E4%BB%80%E4%B9%88-Vue-%E4%B8%AD%E4%B8%8D%E8%83%BD%E7%9B%B4%E6%8E%A5%E5%86%99-%EF%BC%9F"><span class="nav-number">1.1.</span> <span class="nav-text">一、为什么 Vue 中不能直接写 &lt;script&gt;？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E9%94%99%E8%AF%AF%E7%A4%BA%E4%BE%8B%EF%BC%9A%E7%9B%B4%E6%8E%A5%E7%B2%98%E8%B4%B4%E5%B9%BF%E5%91%8A%E4%BB%A3%E7%A0%81%EF%BC%88%E4%B8%8D%E5%8F%AF%E8%A1%8C%EF%BC%89"><span class="nav-number">1.2.</span> <span class="nav-text">二、错误示例：直接粘贴广告代码（不可行）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E6%AD%A3%E7%A1%AE%E5%81%9A%E6%B3%95%EF%BC%9A%E5%9C%A8-Vue-%E4%B8%AD%E5%8A%A8%E6%80%81%E6%8F%92%E5%85%A5%E8%84%9A%E6%9C%AC"><span class="nav-number">1.3.</span> <span class="nav-text">三、正确做法：在 Vue 中动态插入脚本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E5%AE%8C%E6%95%B4%E4%BB%A3%E7%A0%81%E7%A4%BA%E4%BE%8B%EF%BC%88Vue-3-%EF%BC%89"><span class="nav-number">1.4.</span> <span class="nav-text">四、完整代码示例（Vue 3 + &lt;script setup&gt;）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#template-%E9%83%A8%E5%88%86"><span class="nav-number">1.4.1.</span> <span class="nav-text">template 部分</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#script-%E9%83%A8%E5%88%86"><span class="nav-number">1.4.2.</span> <span class="nav-text">script 部分</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E4%B8%8E%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="nav-number">1.5.</span> <span class="nav-text">五、常见问题与注意事项</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E7%BB%84%E4%BB%B6%E5%A4%9A%E6%AC%A1%E6%8C%82%E8%BD%BD%E4%BC%9A%E9%87%8D%E5%A4%8D%E6%8F%92%E5%85%A5%E8%84%9A%E6%9C%AC%EF%BC%9F"><span class="nav-number">1.5.1.</span> <span class="nav-text">1. 组件多次挂载会重复插入脚本？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%A4%9A%E4%B8%AA%E5%B9%BF%E5%91%8A%E4%BD%8D%E6%80%8E%E4%B9%88%E5%8A%9E%EF%BC%9F"><span class="nav-number">1.5.2.</span> <span class="nav-text">2. 多个广告位怎么办？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-SSR-%E6%A1%86%E6%9E%B6%EF%BC%88Nuxt%EF%BC%89%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86%EF%BC%9F"><span class="nav-number">1.5.3.</span> <span class="nav-text">3. SSR 框架（Nuxt）如何处理？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E6%80%BB%E7%BB%93"><span class="nav-number">1.6.</span> <span class="nav-text">六、总结</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="lidya"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">lidya</p>
+  <div class="site-description" itemprop="description">服人以诚不以言</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">lidya</span>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    if (location.pathname.startsWith('/ening/')) {
+      const item = document.querySelector('.menu-item-english');
+      if (item) item.style.display = 'none';
+    }
+  });
+</script>
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
+  window.livereOptions = {
+    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+});
+</script>
+
+</body>
+</html>

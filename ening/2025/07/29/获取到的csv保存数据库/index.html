@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
@@ -59,15 +59,15 @@
 
 
 
-  <meta name="description" content="如果第三方接口获取到的数据，返回为csv文档时，可以先把csv文档保存到本地某路径，再通过fs的createReadStream读取数据，保存到本地数据库。 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465">
+  <meta name="description" content="Saving CSV Data from a Third-Party API into a DatabaseWhen data retrieved from a third-party API is returned in CSV format, a common and reliable approach is:  First, save the CSV file to a local path">
 <meta property="og:type" content="article">
-<meta property="og:title" content="获取到的csv保存数据库">
+<meta property="og:title" content="Saving Retrieved CSV Data into a Database">
 <meta property="og:url" content="https://lidyaqf.github.io/2025/07/29/%E8%8E%B7%E5%8F%96%E5%88%B0%E7%9A%84csv%E4%BF%9D%E5%AD%98%E6%95%B0%E6%8D%AE%E5%BA%93/index.html">
-<meta property="og:site_name" content="枫叶白">
-<meta property="og:description" content="如果第三方接口获取到的数据，返回为csv文档时，可以先把csv文档保存到本地某路径，再通过fs的createReadStream读取数据，保存到本地数据库。 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465">
-<meta property="og:locale" content="zh_CN">
+<meta property="og:site_name" content="My English Blog">
+<meta property="og:description" content="Saving CSV Data from a Third-Party API into a DatabaseWhen data retrieved from a third-party API is returned in CSV format, a common and reliable approach is:  First, save the CSV file to a local path">
+<meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-07-28T16:00:00.000Z">
-<meta property="article:modified_time" content="2025-07-29T02:03:03.188Z">
+<meta property="article:modified_time" content="2026-01-26T01:46:23.381Z">
 <meta property="article:author" content="lidya">
 <meta name="twitter:card" content="summary">
 
@@ -80,11 +80,11 @@
     sidebar: "",
     isHome : false,
     isPost : true,
-    lang   : 'zh-CN'
+    lang   : 'en'
   };
 </script>
 
-  <title>获取到的csv保存数据库 | 枫叶白</title>
+  <title>Saving Retrieved CSV Data into a Database | My English Blog</title>
   
 
 
@@ -124,7 +124,7 @@
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
+    <div class="toggle" aria-label="Toggle navigation bar">
       <span class="toggle-line toggle-line-first"></span>
       <span class="toggle-line toggle-line-middle"></span>
       <span class="toggle-line toggle-line-last"></span>
@@ -135,7 +135,7 @@
 
     <a href="/ening/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">枫叶白</h1>
+      <h1 class="site-title">My English Blog</h1>
       <span class="logo-line-after"><i></i></span>
     </a>
   </div>
@@ -154,22 +154,22 @@
   <ul id="menu" class="main-menu menu">
         <li class="menu-item menu-item-home">
 
-    <a href="/ening/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+    <a href="/ening/ening/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
 
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/ening/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+    <a href="/ening/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/ening/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+    <a href="/ening/ening/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/ening/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+    <a href="/ening/ening/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
 
   </li>
         <li class="menu-item menu-item-english">
@@ -177,8 +177,13 @@
     <a href="/ening/ening" rel="section"><i class="fa fa-language fa-fw"></i>English</a>
 
   </li>
+        <li class="menu-item menu-item-中文">
+
+    <a href="/ening/../" rel="section"><i class="fa fa-language fa-fw"></i>中文</a>
+
+  </li>
       <li class="menu-item menu-item-search">
-        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
       </li>
   </ul>
@@ -194,7 +199,7 @@
   </span>
   <div class="search-input-container">
     <input autocomplete="off" autocapitalize="off"
-           placeholder="搜索..." spellcheck="false"
+           placeholder="Searching..." spellcheck="false"
            type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
@@ -231,21 +236,21 @@
     
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://lidyaqf.github.io/2025/07/29/%E8%8E%B7%E5%8F%96%E5%88%B0%E7%9A%84csv%E4%BF%9D%E5%AD%98%E6%95%B0%E6%8D%AE%E5%BA%93/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/ening/images/avatar.jpg">
       <meta itemprop="name" content="lidya">
-      <meta itemprop="description" content="服人以诚不以言">
+      <meta itemprop="description" content="">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="枫叶白">
+      <meta itemprop="name" content="My English Blog">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          获取到的csv保存数据库
+          Saving Retrieved CSV Data into a Database
         </h1>
 
         <div class="post-meta">
@@ -253,27 +258,33 @@
               <span class="post-meta-item-icon">
                 <i class="far fa-calendar"></i>
               </span>
-              <span class="post-meta-item-text">发表于</span>
-              
+              <span class="post-meta-item-text">Posted on</span>
 
-              <time title="创建时间：2025-07-29 00:00:00 / 修改时间：10:03:03" itemprop="dateCreated datePublished" datetime="2025-07-29T00:00:00+08:00">2025-07-29</time>
+              <time title="Created: 2025-07-29 00:00:00" itemprop="dateCreated datePublished" datetime="2025-07-29T00:00:00+08:00">2025-07-29</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2026-01-26 09:46:23" itemprop="dateModified" datetime="2026-01-26T09:46:23+08:00">2026-01-26</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
-              <span class="post-meta-item-text">分类于</span>
+              <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/ening/categories/%E5%90%8E%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">后端</span></a>
+                  <a href="/ening/categories/Backend/" itemprop="url" rel="index"><span itemprop="name">Backend</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
-              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="post-meta-item-text">Views: </span>
               <span id="busuanzi_value_page_pv"></span>
             </span>
 
@@ -286,8 +297,14 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>如果第三方接口获取到的数据，返回为csv文档时，可以先把csv文档保存到本地某路径，再通过fs的createReadStream读取数据，保存到本地数据库。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">processConversations</span> = <span class="keyword">async</span> (<span class="params">dateObj</span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> username = <span class="string">&#x27;你的帐户名&#x27;</span>;</span><br><span class="line">  <span class="keyword">const</span> password = <span class="string">&#x27;密码&#x27;</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> year = dateObj.<span class="title function_">format</span>(<span class="string">&#x27;YYYY&#x27;</span>);</span><br><span class="line">  <span class="keyword">const</span> month = dateObj.<span class="title function_">format</span>(<span class="string">&#x27;MM&#x27;</span>);</span><br><span class="line">  <span class="keyword">const</span> day = dateObj.<span class="title function_">format</span>(<span class="string">&#x27;DD&#x27;</span>);</span><br><span class="line">  <span class="keyword">const</span> hour = dateObj.<span class="title function_">format</span>(<span class="string">&#x27;HH&#x27;</span>);</span><br><span class="line">  <span class="keyword">const</span> dateStr = <span class="string">`<span class="subst">$&#123;year&#125;</span>-<span class="subst">$&#123;month&#125;</span>-<span class="subst">$&#123;day&#125;</span>-<span class="subst">$&#123;hour&#125;</span>`</span>;</span><br><span class="line">  <span class="keyword">const</span> fileName = <span class="string">`路径后半部份`</span>;</span><br><span class="line">  <span class="keyword">const</span> url = <span class="string">`https://api/<span class="subst">$&#123;fileName&#125;</span>`</span>;</span><br><span class="line">  <span class="keyword">const</span> outputPath = <span class="string">`/tmp/conversations`</span>;</span><br><span class="line">  <span class="keyword">const</span> tableName = <span class="string">&#x27;test&#x27;</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="comment">// 下载 CSV</span></span><br><span class="line">    <span class="keyword">const</span> response = <span class="keyword">await</span> axios.<span class="title function_">get</span>(url, &#123;</span><br><span class="line">      <span class="attr">responseType</span>: <span class="string">&#x27;stream&#x27;</span>,</span><br><span class="line">      <span class="attr">headers</span>: &#123;</span><br><span class="line">        <span class="title class_">Authorization</span>: <span class="string">`Basic <span class="subst">$&#123;Buffer.<span class="keyword">from</span>(<span class="string">`<span class="subst">$&#123;username&#125;</span>:<span class="subst">$&#123;password&#125;</span>`</span>).toString(<span class="string">&#x27;base64&#x27;</span>)&#125;</span>`</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> writer = fs.<span class="title function_">createWriteStream</span>(outputPath);</span><br><span class="line">    response.<span class="property">data</span>.<span class="title function_">pipe</span>(writer);</span><br><span class="line">    <span class="keyword">await</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">      writer.<span class="title function_">on</span>(<span class="string">&#x27;finish&#x27;</span>, resolve);</span><br><span class="line">      writer.<span class="title function_">on</span>(<span class="string">&#x27;error&#x27;</span>, reject);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27; CSV 文件下载成功:&#x27;</span>, fileName);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> rows = [];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">await</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">      fs.<span class="title function_">createReadStream</span>(outputPath)</span><br><span class="line">        .<span class="title function_">pipe</span>(<span class="title function_">csv</span>())</span><br><span class="line">        .<span class="title function_">on</span>(<span class="string">&#x27;data&#x27;</span>, <span class="function">(<span class="params">row</span>) =&gt;</span> &#123;</span><br><span class="line">          rows.<span class="title function_">push</span>([</span><br><span class="line">            row[<span class="string">&#x27;DATE_TIME&#x27;</span>] ? <span class="title function_">dayjs</span>(row[<span class="string">&#x27;DATE_TIME&#x27;</span>]).<span class="title function_">format</span>(<span class="string">&#x27;YYYY-MM-DD HH:mm:ss&#x27;</span>) : <span class="literal">null</span>,</span><br><span class="line">            row[<span class="string">&#x27;CLID&#x27;</span>] || <span class="literal">null</span>,</span><br><span class="line">            row[<span class="string">&#x27;CLID_SOURCE&#x27;</span>] || <span class="literal">null</span></span><br><span class="line">          ]);</span><br><span class="line">        &#125;)</span><br><span class="line">        .<span class="title function_">on</span>(<span class="string">&#x27;end&#x27;</span>, resolve)</span><br><span class="line">        .<span class="title function_">on</span>(<span class="string">&#x27;error&#x27;</span>, reject);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (rows.<span class="property">length</span> === <span class="number">0</span>) &#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">warn</span>(<span class="string">`CSV 中没有数据: <span class="subst">$&#123;fileName&#125;</span>`</span>);</span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> insertSQL = <span class="string">`</span></span><br><span class="line"><span class="string">      INSERT INTO \`<span class="subst">$&#123;tableName&#125;</span>\` (</span></span><br><span class="line"><span class="string">        date_time, clid, clid_source</span></span><br><span class="line"><span class="string">      ) VALUES ?</span></span><br><span class="line"><span class="string">    `</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">await</span> <span class="title function_">query</span>(insertSQL, [rows]);</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`成功插入 <span class="subst">$&#123;rows.length&#125;</span> 条记录: <span class="subst">$&#123;fileName&#125;</span>`</span>);</span><br><span class="line">  &#125; <span class="keyword">catch</span> (error) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">`报错 (<span class="subst">$&#123;fileName&#125;</span>):`</span>, error.<span class="property">message</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+        <h2 id="Saving-CSV-Data-from-a-Third-Party-API-into-a-Database"><a href="#Saving-CSV-Data-from-a-Third-Party-API-into-a-Database" class="headerlink" title="Saving CSV Data from a Third-Party API into a Database"></a>Saving CSV Data from a Third-Party API into a Database</h2><p>When data retrieved from a third-party API is returned in <strong>CSV format</strong>, a common and reliable approach is:</p>
+<ol>
+<li>First, save the CSV file to a local path</li>
+<li>Then use <code>fs.createReadStream</code> to read the file</li>
+<li>Finally, parse the CSV content and store it in a local database</li>
+</ol>
+<p>Below is an example implementation:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">processConversations</span> = <span class="keyword">async</span> (<span class="params">dateObj</span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> username = <span class="string">&#x27;your_account_name&#x27;</span>;</span><br><span class="line">  <span class="keyword">const</span> password = <span class="string">&#x27;password&#x27;</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> year = dateObj.<span class="title function_">format</span>(<span class="string">&#x27;YYYY&#x27;</span>);</span><br><span class="line">  <span class="keyword">const</span> month = dateObj.<span class="title function_">format</span>(<span class="string">&#x27;MM&#x27;</span>);</span><br><span class="line">  <span class="keyword">const</span> day = dateObj.<span class="title function_">format</span>(<span class="string">&#x27;DD&#x27;</span>);</span><br><span class="line">  <span class="keyword">const</span> hour = dateObj.<span class="title function_">format</span>(<span class="string">&#x27;HH&#x27;</span>);</span><br><span class="line">  <span class="keyword">const</span> dateStr = <span class="string">`<span class="subst">$&#123;year&#125;</span>-<span class="subst">$&#123;month&#125;</span>-<span class="subst">$&#123;day&#125;</span>-<span class="subst">$&#123;hour&#125;</span>`</span>;</span><br><span class="line">  <span class="keyword">const</span> fileName = <span class="string">`partial_path`</span>;</span><br><span class="line">  <span class="keyword">const</span> url = <span class="string">`https://api/<span class="subst">$&#123;fileName&#125;</span>`</span>;</span><br><span class="line">  <span class="keyword">const</span> outputPath = <span class="string">`/tmp/conversations`</span>;</span><br><span class="line">  <span class="keyword">const</span> tableName = <span class="string">&#x27;test&#x27;</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="comment">// Download CSV</span></span><br><span class="line">    <span class="keyword">const</span> response = <span class="keyword">await</span> axios.<span class="title function_">get</span>(url, &#123;</span><br><span class="line">      <span class="attr">responseType</span>: <span class="string">&#x27;stream&#x27;</span>,</span><br><span class="line">      <span class="attr">headers</span>: &#123;</span><br><span class="line">        <span class="title class_">Authorization</span>: <span class="string">`Basic <span class="subst">$&#123;Buffer.<span class="keyword">from</span>(<span class="string">`<span class="subst">$&#123;username&#125;</span>:<span class="subst">$&#123;password&#125;</span>`</span>).toString(<span class="string">&#x27;base64&#x27;</span>)&#125;</span>`</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> writer = fs.<span class="title function_">createWriteStream</span>(outputPath);</span><br><span class="line">    response.<span class="property">data</span>.<span class="title function_">pipe</span>(writer);</span><br><span class="line">    <span class="keyword">await</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">      writer.<span class="title function_">on</span>(<span class="string">&#x27;finish&#x27;</span>, resolve);</span><br><span class="line">      writer.<span class="title function_">on</span>(<span class="string">&#x27;error&#x27;</span>, reject);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;CSV file downloaded successfully:&#x27;</span>, fileName);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> rows = [];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">await</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">      fs.<span class="title function_">createReadStream</span>(outputPath)</span><br><span class="line">        .<span class="title function_">pipe</span>(<span class="title function_">csv</span>())</span><br><span class="line">        .<span class="title function_">on</span>(<span class="string">&#x27;data&#x27;</span>, <span class="function">(<span class="params">row</span>) =&gt;</span> &#123;</span><br><span class="line">          rows.<span class="title function_">push</span>([</span><br><span class="line">            row[<span class="string">&#x27;DATE_TIME&#x27;</span>]</span><br><span class="line">              ? <span class="title function_">dayjs</span>(row[<span class="string">&#x27;DATE_TIME&#x27;</span>]).<span class="title function_">format</span>(<span class="string">&#x27;YYYY-MM-DD HH:mm:ss&#x27;</span>)</span><br><span class="line">              : <span class="literal">null</span>,</span><br><span class="line">            row[<span class="string">&#x27;CLID&#x27;</span>] || <span class="literal">null</span>,</span><br><span class="line">            row[<span class="string">&#x27;CLID_SOURCE&#x27;</span>] || <span class="literal">null</span></span><br><span class="line">          ]);</span><br><span class="line">        &#125;)</span><br><span class="line">        .<span class="title function_">on</span>(<span class="string">&#x27;end&#x27;</span>, resolve)</span><br><span class="line">        .<span class="title function_">on</span>(<span class="string">&#x27;error&#x27;</span>, reject);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (rows.<span class="property">length</span> === <span class="number">0</span>) &#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">warn</span>(<span class="string">`No data found in CSV: <span class="subst">$&#123;fileName&#125;</span>`</span>);</span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> insertSQL = <span class="string">`</span></span><br><span class="line"><span class="string">      INSERT INTO \`<span class="subst">$&#123;tableName&#125;</span>\` (</span></span><br><span class="line"><span class="string">        date_time, clid, clid_source</span></span><br><span class="line"><span class="string">      ) VALUES ?</span></span><br><span class="line"><span class="string">    `</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">await</span> <span class="title function_">query</span>(insertSQL, [rows]);</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`Successfully inserted <span class="subst">$&#123;rows.length&#125;</span> records: <span class="subst">$&#123;fileName&#125;</span>`</span>);</span><br><span class="line">  &#125; <span class="keyword">catch</span> (error) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">`Error (<span class="subst">$&#123;fileName&#125;</span>):`</span>, error.<span class="property">message</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
 
     </div>
@@ -309,14 +326,14 @@
 <div>
 <ul class="post-copyright">
   <li class="post-copyright-author">
-    <strong>本文作者： </strong>lidya
+    <strong>Post author:  </strong>lidya
   </li>
   <li class="post-copyright-link">
-    <strong>本文链接：</strong>
-    <a href="https://lidyaqf.github.io/2025/07/29/%E8%8E%B7%E5%8F%96%E5%88%B0%E7%9A%84csv%E4%BF%9D%E5%AD%98%E6%95%B0%E6%8D%AE%E5%BA%93/" title="获取到的csv保存数据库">https://lidyaqf.github.io/2025/07/29/获取到的csv保存数据库/</a>
+    <strong>Post link: </strong>
+    <a href="https://lidyaqf.github.io/2025/07/29/%E8%8E%B7%E5%8F%96%E5%88%B0%E7%9A%84csv%E4%BF%9D%E5%AD%98%E6%95%B0%E6%8D%AE%E5%BA%93/" title="Saving Retrieved CSV Data into a Database">https://lidyaqf.github.io/2025/07/29/获取到的csv保存数据库/</a>
   </li>
   <li class="post-copyright-license">
-    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
   </li>
 </ul>
 </div>
@@ -330,12 +347,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/ening/2025/07/27/%E7%B4%A2%E5%BC%95/" rel="prev" title="索引">
-      <i class="fa fa-chevron-left"></i> 索引
+    <a href="/ening/2025/07/27/%E7%B4%A2%E5%BC%95/" rel="prev" title="Index">
+      <i class="fa fa-chevron-left"></i> Index
     </a></div>
       <div class="post-nav-item">
-    <a href="/ening/2025/08/12/vue%E5%AE%9E%E7%8E%B0%E6%8F%92%E5%85%A5%E8%84%9A%E6%9C%AC/" rel="next" title="Vue中插入脚本">
-      Vue中插入脚本 <i class="fa fa-chevron-right"></i>
+    <a href="/ening/2025/08/12/vue%E5%AE%9E%E7%8E%B0%E6%8F%92%E5%85%A5%E8%84%9A%E6%9C%AC/" rel="next" title="Inserting Scripts in Vue">
+      Inserting Scripts in Vue <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -391,15 +408,16 @@
 
       <ul class="sidebar-nav motion-element">
         <li class="sidebar-nav-toc">
-          文章目录
+          Table of Contents
         </li>
         <li class="sidebar-nav-overview">
-          站点概览
+          Overview
         </li>
       </ul>
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Saving-CSV-Data-from-a-Third-Party-API-into-a-Database"><span class="nav-number">1.</span> <span class="nav-text">Saving CSV Data from a Third-Party API into a Database</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -408,28 +426,28 @@
     <img class="site-author-image" itemprop="image" alt="lidya"
       src="/ening/images/avatar.jpg">
   <p class="site-author-name" itemprop="name">lidya</p>
-  <div class="site-description" itemprop="description">服人以诚不以言</div>
+  <div class="site-description" itemprop="description"></div>
 </div>
 <div class="site-state-wrap motion-element">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
-          <a href="/ening/archives/">
+          <a href="/ening/ening/archives/">
         
-          <span class="site-state-item-count">32</span>
-          <span class="site-state-item-name">日志</span>
+          <span class="site-state-item-count">24</span>
+          <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-            <a href="/ening/categories/">
+            <a href="/ening/ening/categories/">
           
-        <span class="site-state-item-count">5</span>
-        <span class="site-state-item-name">分类</span></a>
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/ening/tags/">
           
-        <span class="site-state-item-count">17</span>
-        <span class="site-state-item-name">标签</span></a>
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
 </div>
@@ -476,7 +494,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-user"></i>
       </span>
-      <span class="site-uv" title="总访客量">
+      <span class="site-uv" title="Total Visitors">
         <span id="busuanzi_value_site_uv"></span>
       </span>
     </span>
@@ -485,7 +503,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-eye"></i>
       </span>
-      <span class="site-pv" title="总访问量">
+      <span class="site-pv" title="Total Views">
         <span id="busuanzi_value_site_pv"></span>
       </span>
     </span>

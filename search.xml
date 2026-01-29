@@ -1,0 +1,1278 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>ELK安装流程</title>
+    <url>/2025/04/11/ELK%E5%AE%89%E8%A3%85%E6%B5%81%E7%A8%8B/</url>
+    <content><![CDATA[使用 Docker 安装 ELK Stack（ElasticSearch、Logstash、Kibana）
+建议在 Docker 上安装，资源占用少。以下安装版本统一为 8.12.2，建议保持一致避免冲突。
+
+目录1、安装 ElasticSearch2、安装 Logstash3、安装 Kibana推荐
+
+1、安装 ElasticSearch
+拉取镜像：
+
+docker pull elasticsearch:8.12.2
+
+
+启动容器：
+
+docker run --name some-elasticsearch -p 9200:9200 -p 9300:9300 -e &quot;discovery.type=single-node&quot; -d elasticsearch:8.12.2
+
+
+进入容器内部：
+
+sudo docker exec -u 0 -it some-elasticsearch bash
+
+
+重启容器：
+
+docker restart some-elasticsearch
+
+
+2、安装 Logstash
+拉取镜像：
+
+docker pull docker.elastic.co/logstash/logstash:8.12.2
+
+
+启动容器：
+
+sudo docker run -it -p 5044:5044 -p 9600:9600 --name logstash -v /usr/share/logstash/piplines:/usr/share/logstash/config --privileged=true docker.elastic.co/logstash/logstash:8.12.2 /bin/bash
+
+
+使用 scp 命令将本机下载好的 jar 包（MySQL Connector）上传至虚拟机：
+
+scp &quot;/Users/Downloads/logstash-8.12.2/mysql-connector-j-8.4.0.jar&quot; 用户名@虚拟机IP:/home
+
+
+再将 jar 包从虚拟机移动到 logstash 容器中：
+
+docker cp ./mysql-connector-j-8.4.0.jar logstash:/usr/share/logstash
+
+
+进入容器内部：
+
+docker exec -u 0 -it logstash bash
+
+
+3、安装 Kibana
+拉取镜像：
+
+docker pull kibana:8.12.2
+
+
+启动容器：
+
+docker run --name some-kibana -p 9200:9200 -p 9300:9300 -e &quot;discovery.type=single-node&quot; -d elasticsearch:8.12.2
+
+
+进入容器：
+
+docker exec -u 0 -it some-kibana bash
+
+
+附：安装 Docker、Portainer 及相关命令sudo apt updatesudo apt install docker.io docker-composedocker -vsudo systemctl start dockersudo docker search portainerdocker pull portainer/portainersudo docker pull portainer/portainersudo docker run -d --name portainerUI -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock portainer/portainersudo docker start portainerUIsudo passwd root
+
+
+
+
+
+
+]]></content>
+      <categories>
+        <category>后端</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>H5与原生交互</title>
+    <url>/2025/07/04/H5%E4%B8%8E%E5%8E%9F%E7%94%9F%E4%BA%A4%E4%BA%92/</url>
+    <content><![CDATA[H5手机端日志工具(vconsole手机端)：&lt;script src=&quot;https://cdn.bootcdn.net/ajax/libs/vConsole/3.15.1/vconsole.min.js&quot;&gt;&lt;/script&gt;&lt;script&gt;  // 初始化 vConsole  var vConsole = new VConsole();  console.log(&#x27;vConsole is ready.&#x27;);&lt;/script&gt;
+
+第一种情况：传数据给原生端if (window.webkit != undefined) &#123;  //这是ios端定义的  window.webkit.messageHandlers.getUserInfo.postMessage(null);&#125; else &#123;  //这是android端定义的feedback  feedback.getUserInfo();&#125;if (window.webkit != undefined) &#123;  window.webkit.messageHandlers.feedback.postMessage(&#123;    title: &quot;测试分享的标题&quot;,    content: &quot;测试分享的内容&quot;,    url: &quot;https://github.com/maying1992&quot;,  &#125;);&#125; else &#123;  // try &#123;  //   result = feedback.getUserInfo();  // &#125; catch(err)&#123;  // &#125;  feedback.postMessage();&#125;
+
+第二种情况：获取原生端的数据created() &#123;  //window挂载  window.setUserInfo = this.setUserInfo;&#125;,setUserInfo(param) &#123;  const u = navigator.userAgent;  const isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端  const result = JSON.parse(param);  if (isiOS) &#123;    this.queryParams = result.userInfo.token;    //兼容原生端那边传过来的不统一值    if (      result.userInfo.userId == undefined ||      result.userInfo.userId == 0    ) &#123;      this.usrIdd = 0;    &#125; else &#123;      this.usrIdd = result.userInfo.userId;    &#125;    window.localStorage.setItem(&quot;lang&quot;, result.userInfo.language);  &#125; else &#123;    this.queryParams = result;    if (result.userId == undefined || result.userId == 0) &#123;      this.usrIdd = 0;    &#125; else &#123;      this.usrIdd = result.userId;    &#125;    window.localStorage.setItem(&quot;lang&quot;, result.language);  &#125;  this.$i18n.locale = localStorage.getItem(&quot;lang&quot;);  // let data = &#123;  //   &#x27;name&#x27; : &#x27;xiaoming&#x27;  // &#125;;  return localStorage.getItem(&quot;lang&quot;);&#125;
+
+当需要通过按钮跳转到app时：直接用 a 标签的 href 跳转，前提是原生应用定义了 myapp://*** 作为触发特定功能的URL，可参考 Instagram 的 H5 跳转 app 的竞品例子，instagram://**。一般跳不过去就是原生端不支持。
+]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>Hexo-Next-更改字体、代码可复制</title>
+    <url>/2025/08/18/Hexo-Next-%E6%9B%B4%E6%94%B9%E5%AD%97%E4%BD%93/</url>
+    <content><![CDATA[Next版本为7.8.0，找到 &#x2F;themes&#x2F;next&#x2F;_config.yml 文件，搜索 font 关键词，这里注意一定要将 font 里面的 enable 设置为true, 因为默认为false，然后设置 family 为自己想要的，如果family在其他平台找的，就需要修改host。(只是修改了family， 没修改enable就会不生效，所以一定一定要记得)
+font:  enable: true  # Uri of fonts host, e.g. https://fonts.googleapis.com (Default).  host:   # Font options:  # `external: true` will load this font family from `host` above.  # `family: Times New Roman`. Without any quotes.  # `size: x.x`. Use `em` as unit. Default: 1 (16px)  # Global font settings used for all elements inside &lt;body&gt;.  global:    external: true    family: Noto Serif SC    size:  # Font settings for site title (.site-title).  title:    external: true    family: Noto Serif SC    size:  # Font settings for headlines (&lt;h1&gt; to &lt;h6&gt;).  headings:    external: true    family: Noto Serif SC    size:  # Font settings for posts (.post-body).  posts:    external: true    family:  Noto Serif SC  # Font settings for &lt;code&gt; and code blocks.  codes:    external: true    family: Source Code Pro
+
+代码可复制，还是上面同一个文件，找到以下代码段，将copy_button的enable设置为true，启用就可以啦。show_result设置true后，复制完会显示一个勾。style对应的copy_button不同的样式，看个人喜好来～
+codeblock:  # Code Highlight theme  # Available values: normal | night | night eighties | night blue | night bright | solarized | solarized dark | galactic  # See: https://github.com/chriskempson/tomorrow-theme  highlight_theme: night eighties  # Add copy button on codeblock  copy_button:    enable: true    # Show text copy result.    show_result: true    # Available values: default | flat | mac    style: mac]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>ReactNative新架构</title>
+    <url>/2025/08/19/ReactNative%E6%96%B0%E6%9E%B6%E6%9E%84/</url>
+    <content><![CDATA[
+Fabric：同步渲染 UI，消除 Bridge 通信瓶颈
+TurboModules：按需加载原生模块，提升启动速度
+JSI（JavaScript Interface）：直接调用原生代码，替代异步 Bridge, Bridge是异步的、单线程的，会带来额外的开销；而JSI是同步的，更低开销、并发的。
+
+]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>GitLab CI/CD</title>
+    <url>/2025/04/10/gitlabci/</url>
+    <content><![CDATA[前端项目 GitLab CI&#x2F;CD 持续集成部署指南（Mac 环境）概要在日常开发过程中，我们经常需要将打包后的 dist 包手动发送给后端部署，效率低且容易出错。CI（Continuous Integration，持续集成）可以自动化这一过程，本文将介绍如何通过 GitLab CI 实现持续集成部署。
+
+一、安装 GitLab Runner请参考官方文档：GitLab Runner 安装指南
+
+二、本地注册 Runner
+打开你的 GitLab 项目页面，进入 Settings → CI&#x2F;CD，展开 Runners 部分。
+记住显示的 URL 和 token，用于后续注册。
+
+执行注册命令gitlab-runner register
+
+按照提示依次输入以下信息：
+
+GitLab CI Coordinator URL: https://gitlab.com
+GitLab CI Token: xxx（从项目中复制）
+Tags: my-tag,another-tag（自定义）
+Description: my-runner（自定义）
+Executor: shell（Mac 上建议选择 shell）
+
+注册完成后，回到 GitLab CI&#x2F;CD 设置页面，可看到 Runner 状态为绿色，说明已成功运行。如果不是绿色，请执行以下命令启动 Runner 服务：
+gitlab-runner run
+
+
+三、编写 .gitlab-ci.yml 文件并提交将以下内容保存为 .gitlab-ci.yml，并 push 到 GitLab：
+stages:  - deploydeploy_to_test:  stage: deploy  script:    - yarn    - rm -rf dist/    - yarn build    - ls -l -t ./dist/    - rsync -avz ./dist/ root@xxx.xx.xx.xxx:/dist
+
+
+这段 CI 脚本会自动打包项目，并使用 rsync 将 dist 目录部署到远程服务器。
+
+
+四、通过 Docker 实现 CI（可选）如果需要通过 Docker 实现更完整的 CI&#x2F;CD 流程，继续以下步骤：
+1. 安装 Docker（Mac）brew install --cask docker
+
+2. 拉取 GitLab 镜像docker pull drud/gitlab-ce:v0.29.1
+
+3. 创建 GitLab 容器docker run -d -p 8443:443 -p 8090:80 -p 8022:22 --restart always --name gitlab drud/gitlab-ce:v0.29.1
+
+说明：
+
+-p 8443:443：映射 HTTPS 端口
+-p 8090:80：映射 HTTP 端口
+-p 8022:22：映射 SSH 端口
+--restart always：容器崩溃或主机重启时自动恢复
+--name gitlab：容器命名为 gitlab
+
+访问地址：
+http://localhost:8090/
+
+
+五、Docker 模式下的 .gitlab-ci.yml 示例variables:  TEST_NAME: &quot;tips&quot;  OUT_PORT: &quot;8081&quot;  IN_PORT: &quot;8081&quot;stages:  - deploydeploy_to_test:  stage: deploy  before_script:    - if [ $(docker ps -aq --filter name=$CI_PROJECT_NAME) ]; then docker rm -f $CI_PROJECT_NAME; fi  script:    - docker build -f Dockerfile -t $TEST_NAME:latest .    - docker run -d -p $OUT_PORT:$IN_PORT --name $TEST_NAME $TEST_NAME:latest
+
+部署成功后，在 GitLab 的 CI&#x2F;CD Pipelines 页面可看到构建过程，在 Containers 页面会生成新容器，点击对应端口即可访问部署后的页面。
+
+
+
+
+
+]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+      <tags>
+        <tag>前端</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>google sheet同步表格数据</title>
+    <url>/2025/08/28/google%20sheet%E5%90%8C%E6%AD%A5%E8%A1%A8%E6%A0%BC%E6%95%B0%E6%8D%AE/</url>
+    <content><![CDATA[有个需求是根据一个表格的所有子表，同步到另个表格（包含子表）的数据，用google sheets里面的扩展程序里的apps 脚本功能，编写脚本。为什么要同步呢？因为原表默认是不可编辑的，打算同步过来后再进行编辑。sourceSpreadsheetId跟targetSpreadsheetId为google sheet 表格地址栏d后面的一串字符。
+function synchronizeSheetsToAnotherFile() &#123;  const sourceSpreadsheetId = &quot;id1&quot;;  const targetSpreadsheetId = &quot;id2&quot;; # 比如：1NOtSSvDwXrca8vqyZW6OqQJwGaCICMVguSz1-i72oqg  const sourceSpreadsheet = SpreadsheetApp.openById(sourceSpreadsheetId);  const targetSpreadsheet = SpreadsheetApp.openById(targetSpreadsheetId);  const sourceSheets = sourceSpreadsheet.getSheets();  sourceSheets.forEach(sheet =&gt; &#123;    const sheetName = sheet.getName();    let targetSheet = targetSpreadsheet.getSheetByName(sheetName);    if (!targetSheet) &#123;      targetSheet = targetSpreadsheet.insertSheet(sheetName);    &#125; else &#123;      targetSheet.clear();     &#125;    const range = sheet.getDataRange();    const displayValues = range.getDisplayValues();     const formats = range.getBackgrounds();            const fontWeights = range.getFontWeights();        const targetRange = targetSheet.getRange(1, 1, displayValues.length, displayValues[0].length);    targetRange.setValues(displayValues);     targetRange.setBackgrounds(formats);     targetRange.setFontWeights(fontWeights);    &#125;);&#125;]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>JavaScript 基础</title>
+    <url>/2025/07/02/js%E5%9F%BA%E7%A1%80/</url>
+    <content><![CDATA[JavaScript 基础总结（变量提升、严格模式）
+变量与函数提升规则
+变量提升：按顺序执行，变量声明提升但赋值不会提升。
+函数提升：整个函数体提升到全局作用域顶部。
+优先级：函数提升 &gt; 变量提升。
+
+console.log(a); // undefinedvar a = 2;foo(); // 正常调用function foo() &#123;  console.log(&quot;函数提升成功&quot;);&#125;
+
+
+使用 use strict 严格模式作用：
+避免创建意外的全局变量；
+禁止使用未声明变量，防止内存泄漏；
+this 默认绑定到 undefined 而非 window。
+
+function foo() &#123;  &quot;use strict&quot;;  console.log(this.a); // ❌ TypeError&#125;var a = 2;foo(); // 严格模式下 this 是 undefined，无法读取 this.a
+
+
+(function() &#123;  &quot;use strict&quot;;  foo(); // 严格模式下调用函数则不影响默认绑定&#125;)();function foo() &#123;  console.log(this.a);&#125;var a = 2;
+
+
+]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>react组件通信方式</title>
+    <url>/2025/08/25/react%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F/</url>
+    <content><![CDATA[
+通过Props和Props回调：用于父子组件的通信，子组件通过props接收父的数据，父组件将回调函数传给子组件，子组件调用这个回调函数，传数据给父组件。
+通过Context API：可以共享状态的API，不需要按层级去传递。
+Redux或Mobx：对于复杂的应用，可以用状态库来实现组件通信。
+事件订阅模式：使用EventEmitter或者第三方库来实现跨组件的事件发布订阅。
+Hooks：React的一些Hooks，比如useState，能实现不同组件的共享逻辑跟状态。
+
+]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>聊聊Node RPC</title>
+    <url>/2025/07/16/node%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%E7%82%B9/</url>
+    <content><![CDATA[什么是序列化在 TCP 通道里传输的数据只能是二进制形式的，所以将数据结构或对象转化成二进制的形式就叫序列化。反过来就叫反序列化，他们之间的规则就叫协议。
+RPC是什么全称是Remote Procedure Call， 中文名字叫远程过程调用。大部份的 RPC 是基于TCP的。具体实现流程如下：
+1、前端通过 Proxy 代理调用相应的接口, Proxy 将 RPC 的服务名，方法名，参数等信息转换成 RPC Request 对象，交给 RPC 框架2、RPC 框架通过 RPC 协议将 RPC Request 对象序列化成二进制形式3、RPC 通过 TCP 通道把二进制数据传递给后端4、后端将二进制数据反序列化成 RPC Request 对象5、后端将反序列化后的数据对应到自己写的方法内，传入参数，获取数据，将获取后的数据进行封装，封装成 RPC Response 交给 RPC 框架6、RPC 框架通过 RPC 协议将 RPC Response 对象序列化成二进制形式, 通过 TCP 通道传递给前端6、前端将收到的二进制数据反序列化成 RPC response 对象，将结果通过 Proxy 返回给业务代码
+]]></content>
+      <categories>
+        <category>后端</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>Vue中插入脚本</title>
+    <url>/2025/08/12/vue%E5%AE%9E%E7%8E%B0%E6%8F%92%E5%85%A5%E8%84%9A%E6%9C%AC/</url>
+    <content><![CDATA[Vue 中如何正确插入 &lt;script&gt; 脚本（含广告代码示例）在实际开发中，我们经常会接入第三方广告平台、统计工具或客服系统，而这些服务通常会提供一整段包含 &lt;script&gt; 标签的代码。但如果你在 Vue 的模板中（&lt;template&gt;）直接写 &lt;script&gt;，不仅不会生效，还可能直接报错。
+本文将详细讲解 为什么不能在 Vue 模板里直接插入 &lt;script&gt;，以及 如何正确动态插入脚本，并给出一个可直接使用的代码示例（以广告代码为例）。
+一、为什么 Vue 中不能直接写 &lt;script&gt;？Vue 单文件组件（SFC）结构清晰：
+
+&lt;template&gt;：写结构
+&lt;script&gt;：写逻辑
+&lt;style&gt;：写样式
+
+在 &lt;template&gt; 中插入 &lt;script&gt; 会出现以下问题：
+
+Vue 模板会自动移除或忽略 &lt;script&gt; 标签（当成普通文本）
+会破坏 Vue 的编译流程，可能直接报错
+导致第三方广告脚本、统计脚本完全无法执行
+
+因此，要让脚本正常工作，我们只能在组件的生命周期中 通过 DOM API 动态插入 &lt;script&gt; 标签。
+二、错误示例：直接粘贴广告代码（不可行）例如你拿到的广告商提供的代码是这样的：
+&lt;script type=&quot;text/javascript&quot;&gt; atOptions = &#123;  &#x27;key&#x27; : &#x27;1523b7ddb936e560aadef64a851d500c&#x27;,  &#x27;format&#x27; : &#x27;iframe&#x27;,  &#x27;height&#x27; : 250,  &#x27;width&#x27; : 300,  &#x27;params&#x27; : &#123;&#125; &#125;;&lt;/script&gt;&lt;script type=&quot;text/javascript&quot; src=&quot;//www.highperformanceformat.com/1523b7ddb936e560aadef64a851d500c/invoke.js&quot;&gt;&lt;/script&gt;
+
+如果你把这些代码放进 Vue 的 &lt;template&gt; 区域，广告绝对不会显示。
+三、正确做法：在 Vue 中动态插入脚本核心思路：
+
+在模板中放一个容器（如 &lt;div id=&quot;de_v&quot;&gt;&lt;/div&gt;）
+在 onMounted（或 mounted）生命周期中创建 &lt;script&gt; 标签
+把参数脚本 + 外链脚本动态插进去
+
+四、完整代码示例（Vue 3 + &lt;script setup&gt;）假设你的广告要插入到 id 为 &quot;de_v&quot; 的容器里：
+template 部分&lt;template&gt;  &lt;div id=&quot;de_v&quot;&gt;&lt;/div&gt;&lt;/template&gt;
+
+script 部分&lt;script setup&gt;import &#123; onMounted &#125; from &quot;vue&quot;;onMounted(() =&gt; &#123;  const targetDiv = document.getElementById(&quot;de_v&quot;);  if (!targetDiv) return;  // 创建第一个 script（广告参数）  const script1 = document.createElement(&quot;script&quot;);  script1.type = &quot;text/javascript&quot;;  script1.innerHTML = `    atOptions = &#123;      &#x27;key&#x27; : &#x27;1523b7ddb936e560aadef64a851d500c&#x27;,      &#x27;format&#x27; : &#x27;iframe&#x27;,      &#x27;height&#x27; : 250,      &#x27;width&#x27; : 300,      &#x27;params&#x27; : &#123;&#125;    &#125;;  `;  // 创建第二个 script（外部广告脚本）  const script2 = document.createElement(&quot;script&quot;);  script2.type = &quot;text/javascript&quot;;  script2.src = &quot;//www.highperformanceformat.com/1523b7ddb936e560aadef64a851d500c/invoke.js&quot;;  // 插入脚本到容器内  targetDiv.appendChild(script1);  targetDiv.appendChild(script2);&#125;);&lt;/script&gt;
+
+
+
+五、常见问题与注意事项1. 组件多次挂载会重复插入脚本？如果组件会反复进入&#x2F;离开页面，建议：
+
+在插入前检查是否已添加脚本
+或在 onUnmounted 中移除它们
+
+2. 多个广告位怎么办？每个广告位使用 不同的容器 ID 即可，例如：
+&lt;div id=&quot;ad1&quot;&gt;&lt;/div&gt;&lt;div id=&quot;ad2&quot;&gt;&lt;/div&gt;
+
+脚本注入时改对应的 id 即可。
+3. SSR 框架（Nuxt）如何处理？服务端无法访问 document，必须放到客户端生命周期中执行，例如：
+onMounted(() =&gt; &#123; ... &#125;)
+
+否则会报 document is not defined。
+六、总结
+Vue 模板中不能直接写 &lt;script&gt;，否则脚本不会执行
+正确方式是在生命周期里 动态创建 script 标签
+通过 appendChild() 可以正常加载广告脚本、统计脚本、第三方插件等
+本文提供的示例可直接用于实际项目
+
+只要按照本文方法插入脚本，不论是广告代码、统计代码还是第三方 SDK，都能正常在 Vue 环境中运行。
+]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+      <tags>
+        <tag>Vue</tag>
+        <tag>script</tag>
+        <tag>广告代码</tag>
+        <tag>动态插入脚本</tag>
+        <tag>DOM 操作</tag>
+        <tag>第三方广告</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《终有一天你会懂》琢磨先生 - 读书笔记</title>
+    <url>/2025/05/21/%E3%80%8A%E7%BB%88%E6%9C%89%E4%B8%80%E5%A4%A9%E4%BD%A0%E4%BC%9A%E6%87%82%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%20-%20%E7%90%A2%E7%A3%A8%E5%85%88%E7%94%9F/</url>
+    <content><![CDATA[
+
+全书的确包含了很多他自己的“偏见”，但我觉得他真实幽默，语言简单易懂，其实各个小标题就是告诉我们该做什么。
+懂生活生活从来不是你想怎样就能变成怎样的。生活中多发现美，多从他人角度看待事情，是好的。同时自己还要有自知之明。
+懂爱情谢耳朵说：人穷尽一生追寻另一个人类共度一生的事，我一直无法理解。或许我自己太有意思，无需他人陪伴。所以我祝你们在对方身上得到的快乐，与我给自己的一样多。靠另一个人永远无法让你摆脱孤独，只能靠自己对生活的热情。经营一段感情要的是理智，自由是不可剥夺的。这让我想起对前任，我曾经有查看过他的手机，我觉得挺不对，以后不会再出现这种事情了。
+懂兵法主要就是介绍女追男或男追女的技巧，以及如何经营好一段感情，就是大智慧。同时千万别因为家庭放弃自己的事业，不要跟公公婆婆住一起（但我的观点还是觉得因人而异），要有属于自己的兴趣爱好。
+懂婚姻忍，忠一。对于不婚主义，当然也没什么想多说的了。
+懂失意每一次失恋，只不过是在为真爱让路。还是那句勉强不来，我爱你，所以我祝你一生如意，即使陪着你的人，不是我。做自己想做的事，不要管他人怎么想。只关心自己在乎的人。
+懂阅读What Why How。一直阅读下去，不要求快，要求精。
+懂情趣介绍了他与妻子的日常 sweet，告诉我们不分手，就不知道世界上还有那么多人值得我们去爱。如果找到了，是我的幸运，如果找不到，我也有能力让自己快乐地活着。高情商地活着，会发觉世界是那么美好。
+懂交际跟正经人交往，跟不同人要有不同方式去与之交往，拒绝别人也是一门艺术。如果没有厚脸皮去找别人还钱，干脆别借。
+懂人性只能说我可能在人性方面持怀疑态度，管不了别人，那么就只能管好自己，别做个恶俗的人。
+懂善恶有些人在你生命中出现，就是为了给你上一课。何为善何为恶，我宁愿相信他人的话，因为人与人之间的信任本来就是有一方愿意相信，另一方才会不负此信。即使被骗，也是告诉我们下次同样的坑，别再跳了。但别因为入了一次坑，就不再相信了，善人始终存在。上帝让右手成为右手，就是对右手最高的奖赏；同理，上帝让善人成为善人，也就是对善人的最高奖赏。这让我想起，有次在外，洗手间里没有纸巾，原本是想问旁边的好朋友有没有纸巾的，结果旁边一位陌生女子听见了，立刻拿出包纸巾给我，此等善举，让我倍感荣幸。而善良还需要有原则，否则害人害己。
+懂财富穷人之所以穷，是思维的匮乏。要想富起来，不能只在自己身体上投资，而要在大局上有思维的开拓。看透问题的本质。时间是有限，在有限时间内如何快速致富？找到一门自己感兴趣的学科，学以致用，发散思维，与社会息息相关的行业，去做。
+懂社会要有抱负，一步一个脚印。要有自己独立的人格，要能为自己所做的事情负责。学会转化一种让自己幸福的能力，然后改变自己。
+懂生死生死学里几个词：无死不生，向死而生，知死而后生。颇为有趣且发人深思。人就是因为知道有一天会死去，才会争取好好地活着。我想，真到了那天，我会主动拥抱死亡。
+
+这世界上缺的不是完美的人，而是从心底给出的正义、真心、无畏和同情—这是今天看完《无问西东》后给我最感慨的话。生而为人，便要心之所向，无问西东。大家都知道有因必有果，却不只因果皆由缘而起。叔本华跟尼采，有时间必好好读佳作。
+
+懂远游这部分写了琢磨先生在西藏的经历，看过很多书，都是大家想去西藏的。也许去了那里，人真的能体会到人生的不易。美国不如英国自律，日本对美食态度极佳，常把“对不起”挂在嘴边，不喜欢给别人添麻烦。
+懂职场首先要懂得吃苦，然后要清楚自己，发掘自己的天赋所在。以终为始，聚焦所做。
+懂教育我只知道，每一个出生在这世上的小孩都是纯粹的，如果不好好教育，长大后便不可能为国之栋梁。
+懂娱乐、懂自由人生有两个方向：一个方向是往大处拼搏，保持对事业的激情；一个方向是往小处生活，保持做人的温度。每天睁开眼，对自己说声：欧耶
+]]></content>
+      <categories>
+        <category>读书感悟</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>redis</title>
+    <url>/2025/04/16/redis/</url>
+    <content><![CDATA[目录redis-token缓存jwt跟redis存token的区别redis相关知识推荐
+redis-token缓存
+redis.js创建
+const redis = require(&quot;redis&quot;);// Redis 链接的配置内容const client = redis.createClient(&#123;  socket: &#123;    host: &#x27;192.168.64.2&#x27;,  // Redis 服务器地址    port: 6379,             // Redis 端口  &#125;,  password: &#x27;123456&#x27;        // Redis 密码&#125;);// 连接到 Redisclient.connect()  .then(() =&gt; &#123;    console.log(&#x27;Connected to Redis&#x27;);  &#125;)  .catch((err) =&gt; &#123;    console.error(&#x27;Redis connection failed:&#x27;, err);  &#125;);// 处理连接错误client.on(&quot;error&quot;, (err) =&gt; &#123;  console.error(&#x27;Redis error:&#x27;, err);&#125;);// 定义 Redis 操作方法const redisOps = &#123;  // 创建值  set: async (key, value, expiration = null) =&gt; &#123;    try &#123;      value = JSON.stringify(value);      if (Number.isInteger(expiration) &amp;&amp; expiration &gt; 0) &#123;        // 如果设置了有效时间并且是整数，使用 SETEX 命令        await client.setEx(key, expiration, value);      &#125; else &#123;        // 否则直接使用 SET 命令        await client.set(key, value);      &#125;      console.log(`Key &quot;$&#123;key&#125;&quot; set successfully with expiration: $&#123;expiration || &#x27;no expiration&#x27;&#125;`);    &#125; catch (err) &#123;      console.error(&#x27;Error setting value:&#x27;, err);    &#125;  &#125;,  // 删除值  del: async (key) =&gt; &#123;    try &#123;      await client.del(key);      console.log(`Key &quot;$&#123;key&#125;&quot; deleted successfully`);    &#125; catch (err) &#123;      console.error(&#x27;Error deleting key:&#x27;, err);    &#125;  &#125;,  // 获取值  get: async (key) =&gt; &#123;    const result = await client.get(key);    console.log(&#x27;99999=&#x27;, result)    try &#123;      return result; // 尝试解析为 JSON    &#125; catch (error) &#123;      // 如果不是 JSON 格式，直接返回原始值      console.warn(`Warning: Value for key &quot;$&#123;key&#125;&quot; is not JSON formatted.`);      return result;    &#125;  &#125;,  // 获取键的 TTL  ttl: async (key) =&gt; &#123;    try &#123;      const timeLeft = await client.ttl(key);      console.log(`Key &quot;$&#123;key&#125;&quot; has TTL: $&#123;timeLeft&#125;`);      return timeLeft;    &#125; catch (err) &#123;      console.error(&#x27;Error getting TTL:&#x27;, err);      return err;    &#125;  &#125;,&#125;;module.exports = redisOps;
+
+
+
+redis的使用
+
+
+const redisOps = require(&quot;./redis.js&quot;);const moment = require(&#x27;moment-timezone&#x27;);let token = jwt.sign(&#123; id: user.userid, username: user.username &#125;, secretKey, &#123; expiresIn: &#x27;1h&#x27; &#125;);await redisOps.set(user.userid.toString(), token, 60 * 60)
+
+//token校验const verifyToken = async (ctx, next) =&gt; &#123;    const userid = ctx.headers[&#x27;cookie&#x27;];    const match = userid.match(/userid=(\d+)/);    const userId = match ? match[1] : null;        if (!userId) &#123;        ctx.status = 401;        console.log(&#x27;No token provided&#x27;);        ctx.body = &#123; message: &#x27;No token provided&#x27; &#125;;        return;    &#125;    try &#123;        const startTime = moment(); // 记录开始时间        const getuserid = await redisOps.get(userId)        const endTime = moment(); // 记录结束时间        const duration = moment.duration(endTime.diff(startTime)); // 计算持续时间              console.log(`Request completed in $&#123;duration.asMilliseconds()&#125; ms`); // 以毫秒为单位输出耗时        if(getuserid)&#123;            await next();        &#125;else &#123;            throw err;        &#125;           &#125; catch (err) &#123;        console.log(&#x27;Token verification failed:&#x27;, err.message);        ctx.status = 401;        ctx.body = &#123; message: &#x27;Failed to authenticate token&#x27; &#125;;    &#125;&#125;;
+
+
+
+jwt跟redis存token的区别
+
+
+维度
+JWT
+Redis
+
+
+
+性能
+- 无需查询数据库或访问外部存储，验证速度较快- 适用于简单的身份验证场景
+- 需要与 Redis 服务器进行通信，可能会有网络延迟- 适用于复杂的会话管理和存储需求
+
+
+redis相关知识
+redis本质上是一个key-value类型的内存数据库，性能最快的key-value数据库。
+
+正常情况是把数据存储在数据库 ，数据库把数据存在磁盘。但越上层的存储器存储效率越高，内存位于磁盘之上。而redis是一款基于内存的存储系统，数据都存在内存里，所以从redis读取数据会比从数据库读取要快。
+
+内存有限，存储不了太多数据。出现故障时，用主从复制、哨兵法。集群就是一套完整的redis多机解决方案。他有效解决了单机redis的所有问题。当你在集群中为某个节点配置从机的时候，主从节点间同步就是主从复制。主节点挂掉之后，从节点的选取，内部逻辑与哨兵机制相似。
+
+支持发布&#x2F;订阅模式，可以作为一个简单而高效的轻量级消息代理，用于实现消息队列、实时通知等。
+
+
+
+
+]]></content>
+      <categories>
+        <category>后端</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>初中英语教师资格作文课模版</title>
+    <url>/2025/07/14/%E5%88%9D%E4%B8%AD%E8%8B%B1%E8%AF%AD%E6%95%99%E8%B5%84%E4%BD%9C%E6%96%87%E6%A8%A1%E7%89%88/</url>
+    <content><![CDATA[开场问候Dear Judges, Now I’ll start the lesson. Good morning, Boys and girls. How are you today? Good? Fine? I’m fine, too. Before the class, Let’s sing a song together. If you can sing, sing along with me . “You are my sunshine, my only sunshine, you make me happy.” Do you feel better? Great, let’s start the lesson.At the beginning, I’ll show you a video, and you should try to answer the question: What can you see in the video? Who would like to try? Blair, please. You saw the girl had much fun. She had dinner and went shopping with friends. Thank you, Blair, you set a good example for us. You know so much about this topic. Do you want to learn more? Today, let’s learn a new lesson — How was your day off.
+导入OK, everyone, here is a passage. I’ll read it for you. You should listen carefully and tell me the main idea, OK? Here we go! …….OK, Please share your ideas. Jenny, you please. It talks about the Bermuda Triangle, where a number of planes and ships disappeared.Do you agree? I totally agree with her.
+PreBoys and girls, since we already know the content of the letter, Let’s look at the structure of the letter.There are 4 parts of it, right?The first one is to whom. We call it salutation&#x2F;ˌsalyəˈtāSH(ə)n&#x2F;, such as Hi Henry, Dear Lucy and so on. The second part is body part. You can write whatever you want. The third part, we often add complementary close&#x2F;wishes, such as ‘yours’, ‘sincerely’. The last part is from whom, we call it signature. Am I clear? So when we write a letter, we can imitate it. Brilliant!
+the first part is introduction. It’s a fun day last Saturday. The second part is main body, it’s about what they did in the morning, afternoon and so on. The third part is conclusion. So if we want to write out our everyday life, we can imitate this structure, OK?
+写前Before writing, let’s have a brainstorm. As Tom, what information can you write to reply to Nick’s letter? You can have a discussion in groups. 3 minutes for you. Stop! Who can try, this boy? You will write some activities during camping. Your ideas are wonderful. Bravo! Thank you.OK，I can see you all have many ideas. How about writing down your ideas with the structure we just learned. You have 2 minutes to design your outline.OK, time is up. Finished? I see all of you nod your heads. Very good!It’s time to finish the whole letter. While writing, you should pay attention to the grammar.We should use simple past tense to talk about the experience in the past.And for the signature, you should write”Tom”. If you have any problems, just raise your hands, and I will help you. Are you ready? Let’s do it.
+写后Have you finished your writing? Show me your hands. Well done. Next, go over your writing one more time and then exchange it with your group members.Try to check and correct the mistakes, got it? You have 2 minutes.Stop here.Who wants to share your writing? Cindy, please. Wow, good pronunciation. You state the story vividly. The logic is clear! OK, anyone else? Tony. Please. Oh, you want to present Tina’s article.Can you read it? Very good. Thank you, Tony. Guys, Let’s look at Tina’s work together. “Tom” went to a mountain for camping. I think her article is perfect. We can learn a lot from it. Boys and girls, you all did a good job!
+总结How time files! The class is almost over. Before ending our class, let’s have a summary. Who can summarize what we have learned this class? Fiona please. Very good. I hope you can apply what we have learned in your daily life so that we can improve our reading and speaking ability, right?Our homework is as follows: You should finish the exercise book and search for more information about ask your parents about their day off. Next class, we will share them together.
+Class is over, see you next time.
+]]></content>
+      <categories>
+        <category>教资</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>中小学信息技术教学模版</title>
+    <url>/2025/08/21/%E4%B8%AD%E5%B0%8F%E5%AD%A6%E4%BF%A1%E6%81%AF%E6%8A%80%E6%9C%AF%E6%95%99%E5%AD%A6%E6%A8%A1%E7%89%88/</url>
+    <content><![CDATA[《if-elif条件语句》逐字稿  &emsp;&emsp;同学们，老师刚才留意到班级上的值日表，周一到周五有好多勤劳的小蜜蜂呀。老师想问下周一值日的同学有哪些举下手？诶，老师看见了。那么同学们记住这些周一值日的同学了吗？是的，总共有六位。那如果以三个班为单位，给你一个名字，你能快速给出这名同学是星期几值日吗？你们有什么好办法吗？请你，对了，可以自己用绕口令等方式背下来。还有更好的办法吗？请你，对了，可以利用程序的方式输出出来。那该使用什么语句来表示多个条件呢？今天我们就一起来学习python中的另一种条件语句if-elif-else&emsp;&emsp;现在请大家同桌两人为一小组，先来分析if-elif-else怎么实现同学名字对应星期几值日的问题，时间是8分钟。开始吧，时间到了，刚才在巡视的过程中，大家都在认真的讨论，那哪个小组代表想来分享你们的成果，你来说，你说想要判断同学是哪天值日的，只要输入他的名字，根据名字找到对应星期几输出就行了。还有补充的吗？第五小组，你们来说，他说可以弄五个数组对应星期一到星期五，把每个人的名字放进去对应的数组里，然后判断输出。你补充的非常关键。请坐。非常好，请坐，大家分析的很正确，说明大家有充分预习本节课的内容。 &emsp;&emsp;接下来我们就综合大家的分析，请同学们自主思考，并画出流程图，时间是5分钟，开始吧，时间到了，请这位同学来展示你的流程图，你说首先输入学生的名字，假如小花在星期一的数组里，那么输出星期一，依次类推。现在请大家尝试写出多分支结构的语句，老师提示一下，条件子句的如果需要用elif来表示。我们请这位同学将他的答案写到黑板上，请同学们来看跟你写的一样吗？哪些地方需要修改？你说将最后一个elif应该写成else，是表达都不满足条件的话，执行else后面的语句。你说要注意缩进和冒号。大家观察的很仔细，希望同学们写的时候一定要认真。请大家利用学到的if-elif语句去编写刚才你们设计的算法。我看到大家都能准确的写出来了，并且都避免了刚才的问题。&emsp;&emsp;语句我们已经写出来了，那他的执行过程是什么呢？现在请同学们以同桌两人为一小组，进行讨论，一会我们请一名小组代表展示讲解，时间是7分钟，开始吧，我看到有同学在小声的讨论，时间到了，第二小组，请你们讲一讲执行过程，他结合流程图告诉我们，执行过程是依次判断输入的同学姓名符合哪个条件，如符合则输出，若都不符合则输出错误。他用图文的形式讲解，非常的直观。那现在我们就可以就着大屏幕上的流程图，总结出if-elif语句的执行过程是从if行开始依次对条件进行判断，如果正确则执行改条件下面的语句块，然后跳出if语句，如果不正确则对下一个条件进行判断，如果所有条件都不成立，则执行else下面的语句块。&emsp;&emsp;新知识我们已经学完了，现在请大家编写完整程序，实现上述的执行过程，学有余力的同学，请自己思考生活中有哪些需要对多个条件进行检测的事情，自主进行编写。我们请这些同学来进行展示，他们中有的从数学出发，编写了比较三个数，求最大数问题，还有的是从生活出发，编写了出租车计费的问题。大家编写的语句和格式都很规范。&emsp;&emsp;这堂课已经接近尾声了，这节课你都有哪些收获呢？大家说学会了if-elif的格式和执行过程，看来这节课的知识同学们都掌握了。其实编程离咱们的生活和学习很近，并且也没有想象中的那么难，老师希望同学们以后都可以像今天一样在课堂上积极思考，表达想法。&emsp;&emsp;最后布置一个小作业，请同学们对比三种if语句特点，整理成表格。&emsp;&emsp;这节课就上到这里，同学们再见。
+]]></content>
+      <categories>
+        <category>教资</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>初中英语教师资格语篇课模版</title>
+    <url>/2025/07/15/%E5%88%9D%E4%B8%AD%E8%8B%B1%E8%AF%AD%E6%95%99%E8%B5%84%E8%AF%AD%E7%AF%87%E8%AF%BE%E6%A8%A1%E6%9D%BF/</url>
+    <content><![CDATA[The intonation.（语调）Express the different feelings of the speaker.We often use the falling tone when we read a statement, a special question, an exclamatory or imperative sentence(祈使句、感叹句). We often use rising tone when we ask a Yes&#x2F;No question. We often use rising-falling tone to read an alternative question and a coordinate clause（选择疑问句、并列句）. There are two parts in a tag question（反义疑问句）. The first part is often in a falling tone and for second part, there are two cases. If we are not sure about the question, we often use a rising tone. If we are sure about that, we offen use a falling tone.We choose different intonations to express different feelings and moods.
+The word stress(单词重音)Read words more exactlyWhen we say a word with more than one syllable, some of the syllables need to be stressed.When we read two-syllable words, normally we stress the first syllable for nouns, and stress the second syllable for verbs. As for the multi-syllable words, we stress the third from the bottom.
+The sentence stress（句子重读）Draw attention to certain information.We usually stress the lexical words such as nouns, verbs, adjectives, adverbs and numbers. We don’t stress the function words such as a, the, is, of and so on. Besides, you can stress some information you want to emphasis.We should change it according to the situation and feelings of the speaker.
+The liaison&#x2F;ˈlēəˌzän,lēˈāˌzän&#x2F;&#x2F;Word linking.(连读)Speak English more fluently and naturally.In one sense group, we can read the two words together if the former word ends with a consonant&#x2F;ˈkänsənənt&#x2F;, a vowel or “r” sound, and the following word begins with a vowel. If the two words finish and start with the same consonant, we only read one of the consonants.The two words must be in one sense group.
+incomplete plosion&#x2F;‘pləʊʒ(ə)n&#x2F;（不完全爆破）Speak English more fluently and naturally.There are six plosive sounds &#x2F;t&#x2F; &#x2F;d&#x2F; &#x2F;p&#x2F; &#x2F;b&#x2F; &#x2F;k&#x2F; &#x2F;g&#x2F; in English.When two consonants of them are next to each other, we read the former sound silently.The two words must be in one sense group.
+Weak form(弱读)speak English more fluently and naturally.Some words often appear in a weak form such as function words, articles, auxiliary verbs and modal verbs.there are mainly three ways to change function words to weak forms. They are shortening, elision[ i’liʒən ] and vowel changed to schwa  [ʃwɑ:] sound.
+Assimilation(同化)We use it to speak English more fluently and naturally.As we can see, Two different sounds affect each other and become more alike.&#x2F;s+ j&#x2F; -&gt; &#x2F;F&#x2F;this year,&#x2F;d+j&#x2F; -&gt; &#x2F;d3&#x2F; would you
+Sense group(意群)We use it to make our expression more easily to understand.As we can see, a sentence may consists of several groups according to meaning or structure. Each group is called a sense group. It can be a word, a phrase, a clause. After a sense group, there should be a short pause.We should remind that we should change it according to the situation and feelings of the speaker.
+The pause(停顿)We use to speak English more fluently and naturally.As we can see, in a long sentence, we should pause several times according to the sense group. Normally, we pause based on meaning and grammatical structure.We should remind that there should be no pause in a sense group. Where to pause also depends on the situation and the feelings of the speaker.
+]]></content>
+      <categories>
+        <category>教资</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>初中英语教师资格面试模板（Reading）</title>
+    <url>/2025/07/09/%E5%88%9D%E4%B8%AD%E8%8B%B1%E8%AF%AD%E6%95%99%E8%B5%84%E9%9D%A2%E8%AF%95%E6%A8%A1%E6%9D%BF/</url>
+    <content><![CDATA[Reading&#x2F;Listening开场问候Dear Judges, Now I’ll start the lesson. Good morning, Boys and girls. How are you today? Good? Fine? I’m fine, too. Before the class, Let’s sing a song together. If you can sing, sing along with me . “You are my sunshine, my only sunshine, you make me happy.” Do you feel better? Great, let’s start the lesson.
+导入At the beginning, I’ll show you a video, and you should try to answer the question: What can you see in the video? Who would like to try? Blair, please. You see different cartoons, such as Snow White and Tom and Jerry.Thank you, Blair, you set a good example for us. You know so much about cartoons.Do you want to learn more? Today, let’s learn a new lesson — Cartoon.
+读前Before reading, To help you understand the passage better, let’s learn some words. Now, Look at the first one. Smart.Form example, Zhu Geliang is very smart and he can solve many problems. Can you understand now? Great! The next one cute. Look at the picture. What’s that? A cat. So cats are very cute and it’s very lovely. So cute means lovely. You are so cute. Cats are so cute. Birds are so cute, okay, wonderful How about the last one? Ivory. Here is a picture about ivory. It forms long teeth of elephants. Read after me, ivory, ivory. Well done! All of you did a good job.
+读中Now boys and girls, let’s have a prediction according to the title and the pictures on your book. Take a guess:What’s the passage mainly about? Try to think out as many answers as you can. OK, who wants to have a try?Justin, you please. The passage is about a cartoon Mickey Mouse. Nice try! Do you agree? OK, maybe you are right.Next, Let’s find out the truth in this passage.
+读后Let’s read it together.When you read, think about this question:What’s the passage mainly about? You should read quickly and check your prediction.Let’s begin.OK, guys, are you right? Wow, I heard John said he had the correct prediction.The passage tells us some information about Mickey Mouse. Oh, most of you are right! I am so proud of you.For the second time, you should read it carefully and catch some detail informations. After that, you should answer some true or false question. Okay? Let’s start. Time is up. The first one, It’s easy, right? Answer me together. It’s true. Then the second question. Lily, what’s your answer? It ’s false. Can you correct it ? Great. Thank you. The last one, boys come on. Eric please. It’s true.perfect.
+巩固We have done so many exercises.It’s time for fun. Let’s have a group discussion. Think about the topic: Introducing your favorite cartoon characters to group members. Work in group of 4 and discuss with your partners. Then show your work on the stage. You have 5 minutes to prepare.Are you ready? Go!  Time  is up. Which group goes first? Christina and your partners, please. Wow, your ideas are very creative and Your pronunciation is perfect.Let’s give them a big hand.
+总结How time files! The class is almost over. Before ending our class, let’s have a summary. Who can summarize what we have learned this class? Fiona please. Very good. I hope you can apply what we have learned in your daily life so that we can improve our reading and speaking ability, right?Our homework is as follows: You should finish the exercise book and search for more information about famous cartoons on the Internet. Next class, we will share them together.
+Class is over, see you next time.
+]]></content>
+      <categories>
+        <category>教资</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>初中英语教师资格语法课模版</title>
+    <url>/2025/07/11/%E5%88%9D%E4%B8%AD%E8%8B%B1%E8%AF%AD%E6%95%99%E8%B5%84%E8%AF%AD%E6%B3%95%E8%AF%BE%E6%A8%A1%E6%9D%BF/</url>
+    <content><![CDATA[Grammer开场问候Dear Judges, Now I’ll start the lesson. Good morning, Boys and girls. How are you today? Good? Fine? I’m fine, too. Before the class, Let’s sing a song together. If you can sing, sing along with me . “You are my sunshine, my only sunshine, you make me happy.” Do you feel better? Great, let’s start the lesson.
+导入基本跟上一篇一样，只是换了问题，根据材料的主题来问问题。比如：little prince and harry porter. Today, we’re going to learn a new grammar about it , the present perfect tense.
+PreNow boys and girls, let’s have a prediction according to the title and the conversation on your book. I will read for you.When you listen, think about this question: What’s the material mainly about? Try to think out as many answers as you can.(let’s begin,…..)OK, who wants to have a try?Justin, you please. The passage is about some books they have read. Nice try! Do you agree? OK, maybe you are right. You got the correct answer.
+WhileNow boys and girls, let’s have a prediction according to the title and the pictures on your book. Take a guess:What’s the passage mainly about? Try to think out as many answers as you can. OK, who wants to have a try?Justin, you please. The passage is about a cartoon Mickey Mouse. Nice try! Do you agree? OK, maybe you are right.Next, Let’s find out the truth in this passage.
+语法教学All right guys, it’s time to learn something new. Here are some sentences. (板书)Let’s look at the first one. Can you read it together? Yes,1……2…3….   Wonderful! It’s not difficult for you, right?Now, boys and girls, please try to find the similarity among these sentences? You can work in groups and share your ideas with each other. Here we go.So, did you find something in common? OK, who would like to try? Amanda, please. You have sharp eyes.Yes, they have the word “have&#x2F;has” and these are “yes&#x2F;no” questions.Yes, exactly!Now, let’s put all your views&#x2F;points together. Boys and girls, This is what we will learn today, the present perfect tense.We use it to talk about things that happened in the past but have a connection to the present in some way.As we can see, the main structure of this grammar is “has&#x2F;have done”, right? We often use “yet” in this grammar. But we should remind that normally the rules of past participle form are the same as the past form, such as live&#x2F;lived. However, there are some irregular verbs, such as, put&#x2F;put&#x2F;put, read&#x2F;read&#x2F;read. We make the negative sentences like this:”has&#x2F;have not done”.Clear? You are so smart!
+巩固practice makes perfect, so let’s do some exercises. Let’s “Fill in the blanks”. Now look at the Power Point. Please finish it as quickly as you can and we will check the answers later. Here we go.Have you finished? What’s your answer, Cindy? Have you found your pen yet?-No, I haven’t. Do you agree with Cindy? Good, next one? Mike? He has turned off the light! All right, I think you have mastered it.
+总结How time files! The class is almost over. Before ending our class, let’s have a summary. Who can summarize what we have learned this class? Fiona please. Very good. I hope you can apply what we have learned in your daily life so that we can improve our reading and speaking ability, right?Our homework is as follows: You should finish the exercise book and search for more information about famous cartoons on the Internet. Next class, we will share them together.
+Class is over, see you next time.
+其他语法模版The simple present tense(一般现在时)the things or actions that happen regularly.“Verb to be” has three forms: am&#x2F;is&#x2F;are. “Verb to do” has two forms: do&#x2F;does.If the subject(主语) is first person or plural form, we should use do, if not, we use does.For the third singular form, normally we add s to the end, such as help&#x2F;helps. The second type is to add es, such as guess&#x2F;guesses. And the last type is to change y to i and add es, such as study&#x2F;studies.
+ the simple past tense.(一般过去时)We use it to talk about the past events. (When)As we can see, “verb to be” has two forms:was&#x2F;were, and we have to the change the“verb to do” into past form, right? (Details)We should remind that normally we add ed&#x2F;d to the end, such as look&#x2F;looked,live&#x2F;lived. The second type is to double write the last letter and add ed, such asstop&#x2F;stopped. And the last type is to change y to i and add ed, such as study&#x2F;studied.There are also some irregular verbs, such as, put&#x2F;put, catch&#x2F;caught. 
+the simple future tense.(一般将来时中的will&#x2F;shall + do)We use it to talk about our intentions or make predictions. (When)As we can see, the main structure of this grammar is “will+do” , right?(Details)We should remind that We should use the original form of the verbs. We make thenegative sentence like this: “will not do”. If the subject is the first person, we canalso use ‘shall’ instead of ‘will’.
+the simple future tense.(一般将来时中的be going to + do)We use it to talk about things that happen in the future. (When)As we can see, the main structure of this grammar is “be going to do” , right?(Details)We should remind that We should use the original form of the verbs. We make thenegative sentence like this: “be not going to do”.
+the present progressive tense(现在进行时)We use it to talk about what people are doing or what’s going on. (When)As we can see, the main structure of this grammar is “be doing” , right? (Details)We should remind that “verb to be” has three forms: am&#x2F;is&#x2F;are.We make the negativesentences like this: “be not doing”.And we should change the verbs into ‘-ing’ form.Normally we add -ing to the end, such as look&#x2F;looking. The second type is to remove eand add -ing, such as write&#x2F;writing. And the last type is to double write the last letterand add -ing, such as get&#x2F;getting.
+the past progressive tense.(过去进行时)We use it to talk about the past events in certain time. (When)As we can see, the main structure of this grammar is “was&#x2F;were doing”, right? (Details)We should remind that we should change the verbs into -ing form. Normally we adding to the end, such as look&#x2F;looking. The second type is to remove ‘e’ and add “ing” ,such as write&#x2F;writing. And the last type is to double write the last letter and add ing,such as get&#x2F;getting. We make the negative sentences like this: “was&#x2F;were not doing”.
+the present perfect tense.（现在完成时）We use it to talk about things that happened in the past but have a connection to the present in some way.As we can see, the main structure of this grammar is “has&#x2F;have done”, right? We often use “yet” in this grammar. But we should remind that normally the rules of past participle form are the same as the past form, such as live&#x2F;lived. However, there are some irregular verbs, such as, put&#x2F;put&#x2F;put, read&#x2F;read&#x2F;read. We make the negative sentences like this:”has&#x2F;have not done”.
+the present passive voice.(一般现在时的被动语态)We use it to talk about the passive relationships between the subject and the object.(When)As we can see, the main structure of this grammar is “be+done”, right? (Details)We should remind that “verb to be” has three forms: am&#x2F;is&#x2F;are. We should use thepast participle form of transitive verbs. And there are some irregular verbs, such as,put&#x2F;put&#x2F;put, catch&#x2F;caught&#x2F;caught.We make the negative sentences like this: “be notdone”.
+the past passive voice.(一般过去时的被动语态)We use it to talk about the passive relationships between the subject and the object.(When)As we can see, the main structure of this grammar is “was&#x2F;were+done”, right? (Details)We should remind that we should use the past participle form of transitive verbs. Andthere are some irregular verbs, such as, put&#x2F;put&#x2F;put, catch&#x2F;caught&#x2F;caught.We make thenegative sentences like this: “w as&#x2F;were not done”.
+the attributive clause. （定语从句-名词之后出现）Describe the nouns more exactly.the relative pronouns(代词) should be used to link the main clause and the clause.They are ‘that&#x2F;which&#x2F;who&#x2F;whom&#x2F;whose’.’that&#x2F;which&#x2F;who’ can be used as subject(主语) or object(宾语) of a clause, ‘whom’ can be as object, whose can be as attributive(定语). ’That’ can be used to refer to the things or people, ‘which’ for things, ‘who&#x2F;whom’ for people.
+the objective clause.（宾语从句-谓语动词后面出现）express our thoughts more exactly.There are three kinds of objective clauses. The first one is with ‘that’, the second one is with ‘if&#x2F;whether’, the last one is with ‘wh-words’.The order of words in the objective clauses should be written in statements and the tense should be changed according to the main clause.
+The first conditional if.Talk about the things happen in certain condition.The main structure of this grammar is “First conditional if+will”(板书例句)The main clause is in the future tense. The clause is in the present tense.(主将从现) And the first conditional if can be put before or after the main clause.
+the imperative sentence.（祈使句）Ask for permission, order or warn sb (not) to do sth.The imperatives begin with the original form of the verbThe subject of the imperative is ‘you’ which is omitted. We make the negative sentences like this. “Don’t do sth”.
+There be sentences.we use it to Describe things or people.As we can see, The main structure of this grammar is There be something&#x2F;somebody in someplace&#x2F;sometime, right?But we should remind that “verb to be” has two forms: is&#x2F;are. We should change it according to the nouns after it. We make the negative sentences like this: “There is&#x2F; are not.”
+the nouns.(名词)Describe things or people.There are countable nouns and uncountable nouns, right?Countable nouns have two forms: the singular and the plural. Normally, we add s to the end, such as book&#x2F;books. The second type is to add es, such as class&#x2F;classes. And the last type is to change y to i and add es, such as family&#x2F;families. There are also some irregular nouns, such as man&#x2F;men, sheep&#x2F;sheep, child&#x2F;children.
+the comparatives.（比较级）Compare different objects or people.We usually add ‘er&#x2F;r’ to the end of adjectives or adverbs,  such as tall&#x2F;taller, slow&#x2F;slower, late&#x2F;later. And add ‘more’ before the multi-syllable words, such as ‘more beautiful’.There are some irregular changes, such as good&#x2F;better, bad&#x2F;worse.
+The superlatives.(最高级)Compare different objects or people.We usually add est&#x2F;st to the end of the adjectives or adverbs, such as tall&#x2F;tallest, slow&#x2F;slowest, late&#x2F;latest.And add ‘most’ before the words, such as most beautiful.There are some irregular changes, such as good&#x2F;best, bad&#x2F;worst. And we should add ‘the’ before the superlatives.
+Adverbs of frequency.(频率副词)Talk about how often we do things.There are always, usually, often, sometimes, hardly ever(seldom), never.If we put them in order, it will be like that always&gt;usually&gt;often&gt;sometimes&gt;hardly ever(seldom)&gt;never.
+The indefinite pronouns some and any.(普通不定代词)Refer to people or things.Normally some is used in statements(肯定句), any is used in negative statements or questions, right? They can both replace or modify the plural nouns and uncountable nouns.（可数名词复数以及不可数名词）If we want the answer to the question is yes, we can also use some in questions. For example, would you like some tea?
+The indefinite pronouns many and much.Refer to people or things.Many can replace or modify plural nouns, and much can replace or modify the uncountable nouns, right?We use “How many…” questions to ask about the plural nouns, and “How much…” question to ask about the uncountable nouns.
+the compound indefinite pronouns something, anything, nothing(复合不定代词)Refer to people or things.If the subject is something, anything… it is seen as singular(单数形式), right?We should put the adjectives after the indefinite pronouns. For example, something important.
+the modal verbs.(情态动词)Make inferences.(作出推断)The main structure of this grammar is “modal verbs + be”, right?Some modal verbs can be used for making inferences. They are must, can’t, could, may, might. We use must to show that we think something is probably true. And use may, might and could to show that we think something is possibly true. Use can’t to show that you are almost sure something is not true. 
+]]></content>
+      <categories>
+        <category>教资</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>前端面试题</title>
+    <url>/2025/04/18/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98/</url>
+    <content><![CDATA[
+  var、let、const 三者的区别?
+
+✅ 作用域
+var 定义的变量没有块作用域，可以跨块访问，但不能跨函数访问。
+let 定义的变量有块作用域，只能在声明的代码块中访问。
+const 定义的是常量，必须初始化，只能在声明的代码块中访问，且值不可更改。
+
+✅ 声明规则
+同一个变量名，只能用一种声明方式，否则会报错。
+
+✅ 结合 this 的区别
+
+
+特性
+var &#x2F; let &#x2F; const
+
+
+
+改变 this 指向
+✅ 可以
+
+
+第一个参数是 this 要指向的对象
+✅ 是
+
+
+没传对象或为 undefined/null
+默认指向全局 window
+
+
+参数传递
+apply 用数组，call 用参数列表，bind 可多次传参
+
+
+执行方式
+apply/call 立即执行，bind 返回新函数
+
+
+
+
+
+
+  什么是事件委托?
+
+
+
+事件委托，会把一个或者一组元素的事件委托到它的父层或者更外层元素上，真正绑定事件的是外层元素，而不是目标元素
+当事件响应到目标元素上时，会通过事件冒泡机制从而触发它的外层元素的绑定事件上，然后在外层元素上去执行函数
+
+
+
+
+  防抖跟节流的区别是什么？
+
+
+
+防抖：只执行最后一次。事件持续触发，但只有等事件停止触发后 n 秒后才执行函数。
+节流：控制执行频率。持续触发，每 n 秒执行一次函数。
+
+
+
+  Web 前端预防 SQL 注入的方法有哪些？
+
+
+参数化查询：使用预处理语句或参数化查询来避免 SQL 注入。
+验证用户输入：验证用户输入的数据，确保其符合预期格式，避免非法字符等。
+转义特殊字符：在使用用户输入的数据构造 SQL 语句时，对特殊字符进行转义，以防止注入。
+限制权限：限制用户的权限，使其不能执行不安全的 SQL 操作。
+白名单验证：白名单验证是指确保用户输入的数据只能是允许的值，避免非法数据的输入。
+审核代码：定期审核代码，以确保代码的安全性，特别是对于数据库连接和查询部分的代码。
+
+
+
+
+  http 和 https 的区别
+
+
+https 协议需要到 ca 申请证书，一般免费证书较少，因而需要一定费用。
+http 是超文本传输协议，信息是明文传输，https 则是具有安全性的 ssl 加密传输协议。
+http 和 https 使用的是完全不同的连接方式，用的端口也不一样，前者是 80，后者是 443。
+http 的连接很简单，是无状态的；HTTPS 协议是由 SSL+HTTP 协议构建的可进行加密传输、身份认证的网络协议，比 http 协议安全。
+
+
+
+
+  created跟mounted的区别
+
+
+created发生在mounted之前，此时DOM元素还没完全渲染出来，不过跟后端联调时候的请求可以放在这里，尽早获取到数据返回给变量。
+mounted这时候已经可以获取页面中的DOM元素了。
+
+
+
+
+  说说事件循环机制
+
+🔁 什么是事件循环？JavaScript 是单线程语言，执行代码时除了依赖调用栈，还依赖任务队列来控制异步代码的执行顺序。
+整个执行过程称为 事件循环（Event Loop）。
+🧠 事件循环的核心概念：
+一个线程中只有一个事件循环（主循环）。
+可以有多个任务队列，按类型分为：
+宏任务（Macro Task）
+微任务（Micro Task）
+
+
+
+
+⏱ 执行顺序是怎样的？执行顺序：
+
+
+宏任务 ➝ 微任务（清空） ➝ 下一个宏任务 ➝ 微任务（清空）… 依此循环
+
+
+执行一个宏任务（如 script 整体代码）
+在当前宏任务中执行所有产生的微任务
+若微任务中又产生新的微任务，继续执行，直到清空微任务队列
+开始下一轮宏任务循环
+
+
+🧩 宏任务（Macro Task）有哪些？
+script（整体代码）
+setTimeout
+setInterval
+setImmediate（Node.js）
+I/O 操作
+UI 渲染
+
+🧬 微任务（Micro Task）有哪些？
+process.nextTick（Node.js 专属，优先级更高）
+Promise.then / catch / finally
+async / await
+MutationObserver
+
+
+
+
+  说说 css 盒模型
+
+  css 中的盒子模型包括 IE 盒子模型和标准的 W3C 盒子模型
+  在标准的盒子模型中，width 指 content 部分的宽度，box-sizing:content-box(默认为content-box);
+  在 IE 盒子模型中，width 指的是 content+padding+border，box-sizing:border-box;
+  Box-sizing:padding-box 宽度包含了左右 padding+width
+
+
+
+  vue2 和 vue3 的区别
+
+
+双向数据绑定原理不同,vue2 使用 Es5 的 API defineProperty()对数据进行劫持, 只能监听某个属性,不能对整个对象监听;vue3 使用 ES6 的 proxy API 对数据代理, 可以监听整个对象和数组
+生命周期不同  vue2:beforeCreate、created 、beforeMount、mounted、beforeUpdate、updated、  beforeDestroy、destroyed  vue3:setup 、onBeforeMount 、 onMounted 、onBeforeUpdate 、onUpdated 、  onBeforeUnmount、onUnmounted
+vue2 必须有根标签,vue3 可以没有根标签,会默认将多个根标签包裹在 fragment虚拟标签中
+vue2 采用选项式 API,将函数和数据统一起来处理,将功能点切割了,当逻辑复杂时不利于代码阅读;vue3 采用组合式 API,将同一个功能的代码统一起来处理,使代码更有序,有利于代码的书写和维护
+vue2 和 vue3 匿名插槽不一样  具名插槽使用方式不同：vue2 使用 slot&#x3D;’’,vue3 使用 v-slot:’’  作用域插槽使用方式不同：vue2 中在父组件中使用 slot-scope&#x3D;”data”从子组件获取数据，vue3 中在父组件中使用 #data 或者 #default&#x3D;”{data}”获取
+
+
+
+
+
+
+
+
+
+
+]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>如何防御 XSS（跨站脚本攻击）：前端开发者必须掌握的安全实践</title>
+    <url>/2025/10/17/%E5%A6%82%E4%BD%95%E9%98%B2%E5%BE%A1%20XSS%EF%BC%88%E8%B7%A8%E7%AB%99%E8%84%9A%E6%9C%AC%E6%94%BB%E5%87%BB%EF%BC%89/</url>
+    <content><![CDATA[在 Web 开发中，XSS（Cross-Site Scripting，跨站脚本攻击） 是最常见、危害也非常大的安全漏洞之一。一旦网站存在 XSS 漏洞，攻击者就可能在用户浏览器中执行恶意脚本，进而窃取 Cookie、劫持会话、篡改页面内容，甚至控制用户账号。
+本文将从 原理 + 实战防御手段 的角度，系统讲解前端和全栈开发中 如何有效防御 XSS 攻击
+一、什么是 XSS 攻击？XSS 的本质是：
+
+攻击者将恶意 JavaScript 注入到网页中，并在其他用户的浏览器里执行。
+
+常见的 XSS 攻击类型包括：
+
+反射型 XSS：恶意脚本来自 URL 参数
+存储型 XSS：恶意脚本被存储在数据库中
+DOM 型 XSS：前端 JS 逻辑直接操作不可信数据
+
+不论是哪种形式，核心问题都在于：👉 用户输入被当作代码执行了
+二、输入验证和过滤（最基础也是最重要）永远不要相信用户输入。
+1. 前端层面的基本校验在前端可以做一些基础校验，例如：
+
+限制输入长度
+限制输入格式（如邮箱、手机号）
+过滤明显的危险字符
+
+示例（仅用于基础校验）：
+function sanitizeInput(input) &#123;  return input.replace(/[&lt;&gt;]/g, &#x27;&#x27;);&#125;
+
+⚠️ 注意：前端校验只能作为用户体验优化，不能作为最终安全防线。
+2. 后端必须做严格校验（关键）真正有效的输入验证 必须在后端完成：
+
+校验数据类型
+校验长度
+拒绝不符合业务规则的输入
+对 HTML 内容进行转义或白名单过滤
+
+推荐策略：
+
+默认拒绝
+白名单优先
+
+三、对输出进行编码（比过滤更重要）很多 XSS 漏洞并不是“输入有问题”，而是输出方式不安全。
+1. HTML 转义输出在将用户输入输出到页面时，应进行 HTML 编码：
+
+
+
+原字符
+转义后
+
+
+
+&lt;
+&amp;lt;
+
+
+&gt;
+&amp;gt;
+
+
+&quot;
+&amp;quot;
+
+
+&#39;
+&amp;#39;
+
+
+很多模板引擎（如 Vue、React、Handlebars）默认会做转义，不要轻易关闭。
+
+2. 避免危险 API尽量避免以下写法：
+element.innerHTML = userInput;
+
+推荐安全方式：
+element.textContent = userInput;
+
+或者：
+const el = document.createElement(&#x27;div&#x27;);el.textContent = userInput;container.appendChild(el);
+
+
+
+四、使用安全的 API 和框架机制现代前端框架本身已经内置了大量 XSS 防护机制。
+1. React &#x2F; Vue 的默认保护
+JSX &#x2F; 模板语法默认转义
+明确标注危险行为（如 v-html、dangerouslySetInnerHTML）
+
+⚠️ 一旦使用这些 API，就必须 100% 确保内容可信
+2. 避免在前端拼接 HTML 字符串错误示例：
+container.innerHTML = `&lt;div&gt;$&#123;userInput&#125;&lt;/div&gt;`;
+
+正确做法：
+const div = document.createElement(&#x27;div&#x27;);div.textContent = userInput;container.appendChild(div);
+
+
+
+五、使用内容安全策略（CSP）CSP（Content Security Policy） 是防御 XSS 的“终极武器”之一。
+1. CSP 能做什么？
+禁止内联脚本执行
+限制脚本来源
+阻止恶意第三方资源加载
+
+示例 HTTP 头：
+Content-Security-Policy:  default-src &#x27;self&#x27;;  script-src &#x27;self&#x27;;  object-src &#x27;none&#x27;;
+
+即使攻击者成功注入脚本，只要 CSP 生效，浏览器也会拒绝执行。
+2. 为什么 CSP 非常重要？因为它属于：
+
+浏览器层面的安全防护
+就算代码有疏漏，也能兜底
+
+六、使用 HttpOnly 和 Secure Cookie1. HttpOnly 的作用设置 Cookie 时加上 HttpOnly：
+Set-Cookie: sessionId=xxx; HttpOnly;
+
+这样可以：
+
+防止 JavaScript 读取 Cookie
+即使发生 XSS，也能降低会话被盗风险
+
+2. 配合 Secure 和 SameSite推荐同时使用：
+
+Secure
+SameSite=Strict 或 Lax
+
+提升整体安全等级。
+七、定期更新第三方库和依赖现实中的 XSS 漏洞，大量来自第三方依赖：
+
+旧版本 UI 组件
+不再维护的插件
+存在漏洞的 npm 包
+
+建议：
+
+定期更新依赖
+使用 npm audit
+关注安全公告
+
+八、良好的安全编程习惯最后，防御 XSS 不是“某一个技巧”，而是一整套习惯：
+
+不信任任何外部输入
+不随意使用 innerHTML
+不忽略安全警告
+安全优先于“图方便”
+
+九、总结
+XSS 是最常见、也是最危险的 Web 安全问题之一
+真正有效的防御需要 前端 + 后端 + 浏览器策略 三层配合
+输入校验只是开始，安全输出和 CSP 才是关键
+养成良好的安全编程习惯，比任何补丁都重要
+
+对于前端开发者来说，懂得如何防御 XSS，是走向专业的重要一步。
+]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+      <tags>
+        <tag>XSS</tag>
+        <tag>Web安全</tag>
+        <tag>前端安全</tag>
+        <tag>JavaScript</tag>
+        <tag>浏览器安全</tag>
+        <tag>网络安全</tag>
+        <tag>Web开发</tag>
+        <tag>安全编程</tag>
+        <tag>Content Security Policy</tag>
+        <tag>HttpOnly</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>宝塔安装puppeteer</title>
+    <url>/2025/09/02/%E5%AE%9D%E5%A1%94%E5%AE%89%E8%A3%85puppeteer/</url>
+    <content><![CDATA[centos8使用yum失败，切换镜像源，更改镜像源文件，尝试清除缓存并重新建立
+wget -O /etc/yum.repos.d/CentOS-Base.repo https://mirrors.aliyun.com/repo/Centos-8.reposudo yum clean allsudo yum makecache
+
+Centos8已不维护，只能找
+puppeteer报错下载依赖 参考链接：https://www.cnblogs.com/ilizhu/p/14504049.html报错sandbox：
+#添加启动参数const browser = await puppeteer.launch(&#123;args: [&#x27;--no-sandbox&#x27;, &#x27;--disable-setuid-sandbox&#x27;]&#125;);]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>前端骨架屏</title>
+    <url>/2025/07/07/%E5%89%8D%E7%AB%AF%E9%AA%A8%E6%9E%B6%E5%B1%8F/</url>
+    <content><![CDATA[Dps.config.js 中文说明文档本配置文件用以生成 Vue 应用的骨架屏。
+
+基本配置字段说明    const dpsConfig = &#123;    url: &#x27;file:///Users/myname/Desktop/project/pro/scaleTips/dist/index.html#/&#x27;,          // 待生成骨架屏页面的地址，用百度（https://baidu.com）试试也可以    output: &#123;        filepath: &#x27;/Users/myname/Desktop/project/pro&#x27;,        // 生成骨架屏的存放页面，一般为项目的入口页面        injectSelector: &#x27;#app&#x27;          // 生成的骨架屏插入页面的节点    &#125;,    // header: &#123;    //  height: 40,    //  background: &#x27;#1b9af4&#x27;    // &#125;,    // background: &#x27;#eee&#x27;,    // animation: &#x27;opacity 1s linear infinite;&#x27;,    //用于定制或排除某些节点的绘制行为    includeElement: function(node, draw) &#123;        // 定制某个节点画出来的样子，带上return false        if(node.id == &#x27;ui-alert&#x27;) &#123;            //跳过该节点及其子节点            return false;        &#125;        if(node.tagName.toLowerCase() === &#x27;img&#x27;) &#123;            // 对该图片生成宽100%，高8%，颜色为红色的色块            draw(&#123;                width: 100,                height: 8,                left: 0,                top: 0,                zIndex: 99999999,                background: &#x27;red&#x27;            &#125;);            return false;        &#125;     &#125;,    // writePageStructure: function(html) &#123;        // 自己处理生成的骨架屏        // fs.writeFileSync(filepath, html);        // console.log(html)    // &#125;,    init: function() &#123;        // 生成骨架屏之前的操作，比如删除干扰节点    &#125;&#125;module.exports = dpsConfig;
+
+
+
+]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>小程序验证码输入框自动聚焦下个输入框</title>
+    <url>/2025/07/21/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E9%AA%8C%E8%AF%81%E7%A0%81%E8%BE%93%E5%85%A5%E6%A1%86%E8%87%AA%E5%8A%A8%E8%81%9A%E7%84%A6%E4%B8%8B%E4%B8%AA%E8%BE%93%E5%85%A5%E6%A1%86/</url>
+    <content><![CDATA[最开始我想的是有多少个输入框，就放多少个input，做完会发现有各种bug。比如键盘突然消失、没聚焦下个输入框、操作不丝滑等。正确思路是一个输入框就够了，然后通过改变样式（间隔、高亮）来实现，就是表面看起来是六个输入框，本质上只有一个input
+正确解法：&lt;view class=&quot;w-80 h-100 rad-10 b-a-9 tc f-50&quot; v-for=&quot;(item,index)  in 6&quot;&gt;	&lt;input class=&quot;w-80 h-100 &quot; maxlength=&quot;1&quot; type=&quot;text&quot;    @input=&quot;inputListener(index)&quot;   :focus=&quot;focus &amp;&amp; (focusIndex == index)&quot;/&gt;&lt;/view&gt; 
+
+
+data()&#123;    return&#123;        focus: true,		code:[&#x27;&#x27;,&#x27;&#x27;,&#x27;&#x27;,&#x27;&#x27;,&#x27;&#x27;,&#x27;&#x27;],// 需要获取焦点的序号		focusIndex: 0    &#125;&#125;method:&#123;      // 输入时事件	inputListener(e) &#123;		if (this.focusIndex != e)this.focusIndex=e		if (e &lt; 6) &#123;					this.focus=true,					this.focusIndex=e + 1		&#125;else &#123;					this.focus=false		&#125;	&#125;,&#125;
+
+
+完整版可参考链接：https://blog.csdn.net/u011423258/article/details/106683068?spm=1001.2014.3001.5506
+]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>《当我谈跑步时，我谈些什么》读后感</title>
+    <url>/2025/06/26/%E5%BD%93%E6%88%91%E8%B0%88%E8%B7%91%E6%AD%A5%E6%97%B6/</url>
+    <content><![CDATA[《当我谈跑步时，我谈些什么》也就是看了这本书，才知道世界上会有另一个自己在做着自己喜欢的事情。看这本书之前，从没有看过村上君写的书。知道有这么一个火人，也知道那么多火书，但就是没怎么看过。可论及跑步呀，觉得能与之有所交流。一直跑下去，会不会就到月球上了呢？跑步并非为了长命百岁，而是在有限生命里让自己活得更轻松点罢了。
+惊喜于能发现村上君跑步时的想象力，天马行空我很喜欢，我也曾幻想过很多，也会跑着跑着就突然想起一句歌词，什么现在加快速度追幸福呀 blala……长跑需要耐力，但没有想象力可不行哟。当然前提是热爱跑步，一个不喜欢跑步的人，你说再多也无动于衷；一个热爱跑步的人，即使是雨天，也想要在停雨空隙去相遇另一个自己。人本孤独，但精神却能得到共鸣。
+想着未来一定会坚持跑下去，不管世界如何变化。自从有次在外一整天走了 30 公里，除了身体上晒伤的疼痛以外，我更喜欢的是精神世界的富足。没经历过，就没有话语权。可能我跟陈坤一样，是个悲观的极乐主义者，在世上积极活着，却也看透红尘。不以物喜，不以己悲。脉搏也降到一分钟 50 多次，看来还是很适合慢跑的。说这么多，主要还是兴趣使然。只要不限制我的自由，一切好说。
+想着来年，我也会参加马拉松，然后旁边的人都在为我加油，那该有多 happy。
+“我不是人，是一架纯粹的机器，所以什么也无须感觉，唯有向前奔跑。”
+极为像的一点就是我们都喜欢不停地奔跑，不是那种觉得自己快不行了就走几步，也不是适当的时候停下来看风景。可能每个人的见解不同。但我觉得能不停跑下去的人才是真正的王者。
+当抵达终点那一刻，会觉得怎么那么酷，一股自豪感涌上来，就好比中了彩票或是走了狗屎运。这是原则，亦是我的骄傲。
+噢对，好比尚三哥在终点等着我，然后我得意地笑了。
+]]></content>
+      <categories>
+        <category>读书感悟</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>手写 new：彻底搞懂 JavaScript new 运算符的实现原理</title>
+    <url>/2025/10/20/%E6%89%8B%E5%86%99New/</url>
+    <content><![CDATA[在 JavaScript 中，new 运算符是面试和日常开发中都会频繁遇到的知识点。很多人会用 new，但并不真正理解它背后到底发生了什么。
+本文将通过 手写 new 的实现，一步步拆解 new 运算符的底层逻辑，帮助你真正掌握 JavaScript 对象创建机制。
+一、new 运算符到底做了什么？当我们执行下面这行代码时：
+const person = new Person(&#x27;Alice&#x27;, 25);
+
+
+  JavaScript 实际上在背后做了 4 件事情：
+
+创建一个新的空对象
+将新对象的原型指向构造函数的 prototype
+执行构造函数，并将 this 绑定到新对象
+如果构造函数返回的是对象，则返回该对象；否则返回新对象
+
+  理解这 4 步，是理解 new 的关键。
+二、为什么要手写 new？手写 new 的好处有三点：
+
+加深对 原型链 和 this 指向 的理解
+几乎是 前端面试高频题
+有助于理解框架中对象创建的底层逻辑
+
+接下来我们直接上代码。
+三、手写 new 的完整实现function myNew(constructor, ...args) &#123;  // 1. 创建一个新对象，并将其原型指向构造函数的 prototype  const obj = Object.create(constructor.prototype);  // 2. 执行构造函数，将 this 绑定到新对象  const result = constructor.apply(obj, args);  // 3. 如果构造函数返回的是对象，则返回该对象  //    否则返回我们创建的新对象  return result instanceof Object ? result : obj;&#125;
+
+这段代码完整复现了 new 运算符的核心行为。
+四、逐行拆解实现逻辑1. Object.create 的作用const obj = Object.create(constructor.prototype);
+
+这一步等价于：
+obj.__proto__ === constructor.prototype
+
+也就是说：
+
+新对象可以访问构造函数原型上的方法
+原型链关系得以建立
+
+2. constructor.apply(obj, args)const result = constructor.apply(obj, args);
+
+这一步做了两件事：
+
+执行构造函数
+将构造函数内部的 this 指向新创建的对象
+
+也就是：
+this.name = name;this.age = age;
+
+实际上是在给 obj 添加属性。
+3. 为什么要判断返回值？return result instanceof Object ? result : obj;
+
+这是很多人容易忽略的一点。
+来看一个例子：
+function Test() &#123;  this.a = 1;  return &#123; b: 2 &#125;;&#125;const t = new Test();console.log(t); // &#123; b: 2 &#125;
+
+如果构造函数 显式返回一个对象，new 会返回这个对象，而不是 this。
+所以我们在 myNew 中必须处理这种情况。
+五、测试手写的 myNewfunction Person(name, age) &#123;  this.name = name;  this.age = age;&#125;const p1 = myNew(Person, &#x27;Alice&#x27;, 25);console.log(p1.name); // Aliceconsole.log(p1.age);  // 25console.log(p1 instanceof Person); // true
+
+结果完全符合原生 new 的行为。
+六、myNew 与 new 的对比总结
+
+
+行为
+new
+myNew
+
+
+
+创建新对象
+✅
+✅
+
+
+绑定原型
+✅
+✅
+
+
+绑定 this
+✅
+✅
+
+
+处理返回对象
+✅
+✅
+
+
+可以说，myNew 已经实现了 90% 的 new 运算符行为，足以应付面试和深入理解 JS 原理。
+七、常见面试追问Q1：为什么不能直接 const obj = &#123;&#125;？因为 &#123;&#125; 创建的对象原型是 Object.prototype，而 new 创建的对象原型必须是 构造函数的 prototype。
+Q2：constructor.apply 能不能换成 call？可以，只是参数形式不同：
+constructor.call(obj, ...args);
+
+
+
+Q3：instanceof 是如何工作的？p1 instanceof Person
+
+本质是沿着原型链查找：
+Person.prototype 是否在 p1 的原型链上
+
+
+
+八、总结
+new 并不是魔法，而是一套明确的执行流程
+手写 new 是理解 原型链 + this + 构造函数 的最佳方式
+掌握这个知识点，对学习 Vue、React、Node.js 都有帮助
+
+]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>手写 Promise.race（从原理到实战）</title>
+    <url>/2025/12/18/%E6%89%8B%E5%86%99Promise/</url>
+    <content><![CDATA[ 在前端面试和日常业务中，Promise.race 是一个非常常见但又容易被忽略的 API。它的规则很简单：
+
+多个 Promise 同时“赛跑”，谁先落地（fulfilled 或 rejected），整体 Promise 就跟着落地。
+
+这篇文章我们会：
+
+先讲清楚 Promise.race 的行为与典型使用场景
+再手写一个 myPromiseRace
+最后补充边界情况、优化点与面试常考问题
+
+1. Promise.race 是什么？Promise.race(iterable) 接收一个可迭代对象（通常是数组），返回一个新的 Promise：
+
+只要 任意一个 Promise 先 fulfilled，结果 Promise 就 fulfilled
+只要 任意一个 Promise 先 rejected，结果 Promise 就 rejected
+它不会等待全部结束，也不会“取消”其他 Promise（它们仍然会继续执行）
+
+2. 常见使用场景2.1 超时控制（最常见）比如请求接口超过 3 秒就当作超时处理：
+
+fetch(url) vs timeoutPromise(3000)
+谁先结束就用谁的结果
+
+2.2 多源请求兜底比如同一个资源从 CDN1&#x2F;CDN2 同时拉取，谁先成功就用谁。
+2.3 首屏竞速首屏数据、降级数据、缓存数据同时读取，谁先返回就先渲染。
+3. 手写 myPromiseRace你这版实现非常接近原生行为：
+
+校验 iterable
+遍历输入
+用 Promise.resolve 兼容非 Promise 值
+谁先 settle 就 resolve&#x2F;reject
+
+function myPromiseRace(promises) &#123;  return new Promise((resolve, reject) =&gt; &#123;    // 检查输入是否为可迭代对象    if (!promises || typeof promises[Symbol.iterator] !== &#x27;function&#x27;) &#123;      return reject(new TypeError(&#x27;Argument is not iterable&#x27;));    &#125;    // 遍历每个 Promise / 值    for (const promise of promises) &#123;      // 用 Promise.resolve 包一层，确保 thenable / 普通值都能被处理      Promise.resolve(promise)        .then(resolve)   // 谁先 fulfilled，整体就 fulfilled        .catch(reject);  // 谁先 rejected，整体就 rejected    &#125;  &#125;);&#125;
+
+
+
+4. 关键点拆解（为什么要 Promise.resolve？）Promise.race 的参数里不一定都是 Promise，可能是：
+
+普通值：Promise.race([1, 2, 3])
+thenable：&#123; then(resolve) &#123; resolve(123) &#125; &#125;
+
+使用 Promise.resolve(x) 的好处是：
+
+普通值会立刻变成 fulfilled Promise
+thenable 会被吸收并按 Promise 规则执行
+
+这也是符合原生 Promise.race 的行为。
+5. 更完整的版本：处理空 iterable
+原生 Promise.race([]) 会返回一个永远 pending 的 Promise。
+
+你现在的实现遇到空数组也会返回 pending（因为 for 循环不执行），这符合原生。
+如果你想更明确一点，可以加个计数，但不是必须。
+6. 更多测试用例6.1 测试（先 reject）const p1 = new Promise(res =&gt; setTimeout(() =&gt; res(&#x27;p1&#x27;), 1000));const p2 = new Promise(res =&gt; setTimeout(() =&gt; res(&#x27;p2&#x27;), 500));const p3 = new Promise((res, rej) =&gt; setTimeout(() =&gt; rej(&#x27;p3 error&#x27;), 300));myPromiseRace([p1, p2, p3])  .then(console.log)  .catch(console.error); // 输出: p3 error
+
+6.2 普通值参与竞速（会立刻赢）myPromiseRace([Promise.resolve(&#x27;A&#x27;), 123, new Promise(res =&gt; setTimeout(() =&gt; res(&#x27;B&#x27;), 10))])  .then(console.log)  .catch(console.error);// 输出：123（普通值最快）
+
+6.3 空数组：永远 pendingconst p = myPromiseRace([]);setTimeout(() =&gt; console.log(&#x27;still pending...&#x27;), 1000);// 1 秒后输出 still pending...，race 本身没有结果
+
+
+
+7. 实战：用 race 做请求超时function timeout(ms) &#123;  return new Promise((_, reject) =&gt; &#123;    setTimeout(() =&gt; reject(new Error(`Timeout after $&#123;ms&#125;ms`)), ms);  &#125;);&#125;async function fetchWithTimeout(url, ms = 3000) &#123;  return myPromiseRace([fetch(url), timeout(ms)]);&#125;// 用法fetchWithTimeout(&#x27;https://example.com/api&#x27;, 2000)  .then(res =&gt; res.json())  .then(data =&gt; console.log(&#x27;data:&#x27;, data))  .catch(err =&gt; console.error(&#x27;error:&#x27;, err.message));
+
+
+
+8. 面试常问点（加分项）
+Q：race 能取消其他 Promise 吗？不能。Promise 本身不支持取消，除非你用 AbortController（fetch）或自己设计可取消任务。
+
+Q：race 里放普通值会怎样？会被 Promise.resolve 包装成 fulfilled Promise，通常会立刻“获胜”。
+
+Q：race 和 any&#x2F;allSettled 有什么区别？
+
+race：谁先 settle 用谁
+any：谁先 fulfilled 用谁（全部 rejected 才 rejected）
+allSettled：等全部结束，返回每个结果状态
+
+
+
+9. 总结手写 Promise.race 的核心只有一句话：
+
+遍历 iterable，把每个元素 Promise.resolve 后接上同一个 resolve&#x2F;reject，谁先 settle 就定局。
+
+]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>2022应届毕业生办理深户流程</title>
+    <url>/2025/07/01/%E6%B7%B1%E6%88%B7%E5%8A%9E%E7%90%86%E6%B5%81%E7%A8%8B/</url>
+    <content><![CDATA[
+
+1. 登录广东政务服务网申请毕业生接收
+打开 广东政务服务网
+搜索“人才引进” → 选择“接收毕业生”
+填写个人资料后，下载电子版《申请书》
+
+2. 报到证改派
+每个地区流程略有不同，建议致电报到证抬头地区的人社局咨询
+示例：汕尾市城区 → 在广东政务服务网搜索“档案转出” → 点击在线办理
+上传报到证、申请表等资料到“调函”栏目
+不久后，工作人员会联系确认是否需要电子版“同意改派”文件（推荐选择电子版）, 她会把电子版的“同意改派”发到我们填的邮箱里。
+
+其他地区如潮州市：可直接在广东政务服务网搜索“报到证改派”在线办理
+3. 上传材料至“广东就业创业”小程序
+打开小程序，选择应届生接收模块
+上传材料：电子版“同意改派”的报到证、申请表、三方协议等
+等待校方审核通过
+
+4. 返回广东政务服务网上传最终材料
+上传审核通过后的报到证等资料
+审核通过后会收到含有“指标卡”的短信通知
+
+5. 在“深圳本地宝”预约现场办理
+打开“深圳本地宝”微信公众号，搜索“大学生”
+进入现场办理流程 → 点击“户政预约” → 选择“普通户政预约”
+预约业务选择“接收应届生户籍迁入”
+选择时间和地点并预约成功后，带好上述资料和以下材料前往办理：
+户口本
+身份证及二代回执
+一寸白底照片
+
+
+
+6. 第一次现场办理后领取档案袋
+办理后工作人员会发放档案袋
+需在五个工作日后再次前往办理
+
+7. 第二次预约并完成迁户手续
+提前预约，带齐上次材料再次前往办理
+办理成功后可选择身份证邮寄
+
+
+备注： 整个流程较为繁琐，建议提前准备资料并留意预约时间。
+]]></content>
+      <categories>
+        <category>其他</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>《皮囊》感悟</title>
+    <url>/2025/06/26/%E7%9A%AE%E5%9B%8A%E6%84%9F%E6%82%9F/</url>
+    <content><![CDATA[阿太阿太倔强坚强，豁达的心态值得人学习。父亲最强大的地方就是娶了我的母亲。一个伟大的女人。真正的女人就是应该要积极乐观面对一切，用自己的双手打造自己想要的未来。
+虽然有偷窃，但也是生活所迫，为了生存，为了家人，放下面子干一些违心事，又何尝不是一种积极的心态呢？而不是一哭二闹三上吊。
+想来作者能有如此作为，跟他伟大的母亲脱不了干系。
+那可爱的母亲呀！为了父亲的面子，为了父亲开心，都坚持要把房子建完，这何尝不是一种力量，向往心之所向，佩服这种勇气。
+其实最了解父亲的人是母亲，母亲知道父亲好面子，爱情不就是这样吗？你不用说，我懂，我懂你懂我，所以我们才会在一起这么久。
+张美丽从哪里跌倒，就从哪里爬起来。仿佛看见一个追求真爱，为爱为自己想要的东西不懈努力的人，虽说最终还是被迫性解放了自己，但她曾经的所作所为仍让我敬佩。
+舆论的力量是强大的，但比其而言，张美丽的内心力量更强大。
+]]></content>
+      <categories>
+        <category>读书感悟</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>ReactNative自定义滑动条</title>
+    <url>/2025/07/22/ReactNative%E8%87%AA%E5%AE%9A%E4%B9%89%E6%BB%91%E5%8A%A8%E6%9D%A1/</url>
+    <content><![CDATA[测试、UI要求的会比较高，比如滑动图标改成自定义图片等，所以传统的@react-native-community&#x2F;slider已经不能满足所需，所以采取自定义形式，在网上找了很久才发现的一个宝藏依赖：https://github.com/miblanchard/react-native-slider
+组件代码如下：import React, &#123; PureComponent &#125; from &#x27;react&#x27;;import &#123;    Animated,    Easing,    I18nManager,    Image,    ImageSourcePropType,    LayoutChangeEvent,    PanResponder,    PanResponderInstance,    View,    ViewStyle,&#125; from &#x27;react-native&#x27;;// stylesimport &#123; defaultStyles as styles &#125; from &#x27;./styles&#x27;;import type &#123; Dimensions, SliderProps, SliderState &#125; from &#x27;./types&#x27;;type RectReturn = &#123;    containsPoint: (nativeX: number, nativeY: number) =&gt; boolean;    height: number;    trackDistanceToPoint: (nativeX: number) =&gt; number;    width: number;    x: number;    y: number;&#125;;const Rect = (&#123;    height,    width,    x,    y,&#125;: &#123;    height: number;    width: number;    x: number;    y: number;&#125;) =&gt; (&#123;    containsPoint: (nativeX: number, nativeY: number) =&gt;        nativeX &gt;= x &amp;&amp;        nativeY &gt;= y &amp;&amp;        nativeX &lt;= x + width &amp;&amp;        nativeY &lt;= y + height,    height,    trackDistanceToPoint: (nativeX: number) =&gt; &#123;        if (nativeX &lt; x) &#123;            return x - nativeX;        &#125;        if (nativeX &gt; x + width) &#123;            return nativeX - (x + width);        &#125;        return 0;    &#125;,    width,    x,    y,&#125;);const DEFAULT_ANIMATION_CONFIGS = &#123;    spring: &#123;        friction: 7,        tension: 100,    &#125;,    timing: &#123;        duration: 150,        easing: Easing.inOut(Easing.ease),        delay: 0,    &#125;,&#125;;const normalizeValue = (    props: SliderProps,    value?: number | Array&lt;number&gt;,): Array&lt;number&gt; =&gt; &#123;    if (!value || (Array.isArray(value) &amp;&amp; value.length === 0)) &#123;        return [0];    &#125;    const &#123;maximumValue, minimumValue&#125; = props;    const getBetweenValue = (inputValue: number) =&gt;        Math.max(Math.min(inputValue, maximumValue), minimumValue);    if (!Array.isArray(value)) &#123;        return [getBetweenValue(value)];    &#125;    return value.map(getBetweenValue).sort((a, b) =&gt; a - b);&#125;;const updateValues = (&#123;    values,    newValues = values,&#125;: &#123;    values: number | Array&lt;number&gt; | Animated.Value | Array&lt;Animated.Value&gt;;    newValues?: number | Array&lt;number&gt; | Animated.Value | Array&lt;Animated.Value&gt;;&#125;): Animated.Value[] =&gt; &#123;    if (        Array.isArray(newValues) &amp;&amp;        Array.isArray(values) &amp;&amp;        newValues.length !== values.length    ) &#123;        return updateValues(&#123;values: newValues&#125;);    &#125;    if (Array.isArray(values) &amp;&amp; Array.isArray(newValues)) &#123;        return values?.map((value: number | Animated.Value, index: number) =&gt; &#123;            let valueToSet = newValues[index];            if (value instanceof Animated.Value) &#123;                if (valueToSet instanceof Animated.Value) &#123;                    valueToSet = valueToSet.__getValue();                &#125;                value.setValue(valueToSet);                return value;            &#125;            if (valueToSet instanceof Animated.Value) &#123;                return valueToSet;            &#125;            return new Animated.Value(valueToSet);        &#125;);    &#125;    return [new Animated.Value(0)];&#125;;const indexOfLowest = (values: Array&lt;number&gt;): number =&gt; &#123;    let lowestIndex = 0;    values.forEach((value, index, array) =&gt; &#123;        if (value &lt; array[lowestIndex]) &#123;            lowestIndex = index;        &#125;    &#125;);    return lowestIndex;&#125;;export class Slider extends PureComponent&lt;SliderProps, SliderState&gt; &#123;    constructor(props: SliderProps) &#123;        super(props);        this._panResponder = PanResponder.create(&#123;            onStartShouldSetPanResponder:                this._handleStartShouldSetPanResponder,            onMoveShouldSetPanResponder: this._handleMoveShouldSetPanResponder,            onPanResponderGrant: this._handlePanResponderGrant,            onPanResponderMove: this._handlePanResponderMove,            onPanResponderRelease: this._handlePanResponderEnd,            onPanResponderTerminationRequest:                this._handlePanResponderRequestEnd,            onPanResponderTerminate: this._handlePanResponderEnd,        &#125;);        this.state = &#123;            allMeasured: false,            containerSize: &#123;                width: 0,                height: 0,            &#125;,            thumbSize: &#123;                width: 0,                height: 0,            &#125;,            trackMarksValues: updateValues(&#123;                values: normalizeValue(this.props, this.props.trackMarks),            &#125;),            values: updateValues(&#123;                values: normalizeValue(                    this.props,                    this.props.value instanceof Animated.Value                        ? this.props.value.__getValue()                        : this.props.value,                ),            &#125;),        &#125;;    &#125;    static defaultProps = &#123;        animationType: &#x27;timing&#x27;,        debugTouchArea: false,        trackMarks: [],        maximumTrackTintColor: &#x27;#b3b3b3&#x27;,        maximumValue: 1,        minimumTrackTintColor: &#x27;#3f3f3f&#x27;,        minimumValue: 0,        step: 0,        thumbTintColor: &#x27;#343434&#x27;,        trackClickable: true,        value: 0,        vertical: false,    &#125;;    static getDerivedStateFromProps(props: SliderProps, state: SliderState) &#123;        if (            props.trackMarks &amp;&amp;            !!state.trackMarksValues &amp;&amp;            state.trackMarksValues.length &gt; 0        ) &#123;            const newTrackMarkValues = normalizeValue(props, props.trackMarks);            const statePatch = &#123;&#125; as SliderState;            if (                state.trackMarksValues            ) &#123;                statePatch.trackMarksValues = updateValues(&#123;                    values: state.trackMarksValues,                    newValues: newTrackMarkValues,                &#125;);            &#125;            return statePatch;        &#125;    &#125;    componentDidUpdate() &#123;        const newValues = normalizeValue(            this.props,            this.props.value instanceof Animated.Value                ? this.props.value.__getValue()                : this.props.value,        );        newValues.forEach((value, i) =&gt; &#123;            if (!this.state.values[i]) &#123;                this._setCurrentValue(value, i);            &#125; else if (value !== this.state.values[i].__getValue()) &#123;                if (this.props.animateTransitions) &#123;                    this._setCurrentValueAnimated(value, i);                &#125; else &#123;                    this._setCurrentValue(value, i);                &#125;            &#125;        &#125;);    &#125;    _getRawValues(        values: Array&lt;Animated.Value&gt; | Array&lt;Animated.AnimatedInterpolation&gt;,    ) &#123;        return values.map((value) =&gt; value.__getValue());    &#125;    _handleStartShouldSetPanResponder = (        e: any,    ): /* gestureState: GestureState */    boolean =&gt; this._thumbHitTest(e); // Should we become active when the user presses down on the thumb?    _handleMoveShouldSetPanResponder(): /* e, gestureState: GestureState */    boolean &#123;        // Should we become active when the user moves a touch over the thumb?        return false;    &#125;    _handlePanResponderGrant = (e: &#123;nativeEvent: any&#125;) =&gt; &#123;        const &#123;thumbSize&#125; = this.state;        const &#123;nativeEvent&#125; = e;        this._previousLeft = this.props.trackClickable            ? nativeEvent.locationX - thumbSize.width            : this._getThumbLeft(this._getCurrentValue(this._activeThumbIndex));        this.props?.onSlidingStart?.(this._getRawValues(this.state.values));    &#125;;    _handlePanResponderMove = (_e: any, gestureState: any) =&gt; &#123;        if (this.props.disabled) &#123;            return;        &#125;        this._setCurrentValue(            this._getValue(gestureState),            this._activeThumbIndex,            () =&gt; &#123;                this.props?.onValueChange?.(                    this._getRawValues(this.state.values),                );            &#125;,        );    &#125;;    _handlePanResponderRequestEnd = () =&gt;        /* e, gestureState: GestureState */        &#123;            // Should we allow another component to take over this pan?            return false;        &#125;;    _handlePanResponderEnd = (_e: any, gestureState: any) =&gt; &#123;        if (this.props.disabled) &#123;            return;        &#125;        this._setCurrentValue(            this._getValue(gestureState),            this._activeThumbIndex,            () =&gt; &#123;                if (this.props.trackClickable) &#123;                    this.props?.onValueChange?.(                        this._getRawValues(this.state.values),                    );                &#125;                this.props?.onSlidingComplete?.(                    this._getRawValues(this.state.values),                );            &#125;,        );        this._activeThumbIndex = 0;    &#125;;    _measureContainer = (e: LayoutChangeEvent) =&gt; &#123;        this._handleMeasure(&#x27;_containerSize&#x27;, e);    &#125;;    _measureTrack = (e: LayoutChangeEvent) =&gt; &#123;        this._handleMeasure(&#x27;_trackSize&#x27;, e);    &#125;;    _measureThumb = (e: LayoutChangeEvent) =&gt; &#123;        this._handleMeasure(&#x27;_thumbSize&#x27;, e);    &#125;;    _handleMeasure = (        name: &#x27;_containerSize&#x27; | &#x27;_trackSize&#x27; | &#x27;_thumbSize&#x27;,        e: LayoutChangeEvent,    ) =&gt; &#123;        const &#123;width, height&#125; = e.nativeEvent.layout;        const size = &#123;            width,            height,        &#125;;        const currentSize = this[name];        if (            currentSize &amp;&amp;            width === currentSize.width &amp;&amp;            height === currentSize.height        ) &#123;            return;        &#125;        this[name] = size;        if (this._containerSize &amp;&amp; this._thumbSize) &#123;            this.setState(&#123;                containerSize: this._containerSize,                thumbSize: this._thumbSize,                allMeasured: true,            &#125;);        &#125;    &#125;;    _getRatio = (value: number) =&gt; &#123;        const &#123;maximumValue, minimumValue&#125; = this.props;        return (value - minimumValue) / (maximumValue - minimumValue);    &#125;;    _getThumbLeft = (value: number) =&gt; &#123;        const &#123;containerSize, thumbSize&#125; = this.state;        const &#123;vertical&#125; = this.props;        const standardRatio = this._getRatio(value);        const ratio = I18nManager.isRTL ? 1 - standardRatio : standardRatio;        return ratio * ((vertical ? containerSize.height : containerSize.width) - thumbSize.width);    &#125;;    _getValue = (gestureState: &#123;dx: number, dy: number&#125;) =&gt; &#123;        const &#123;containerSize, thumbSize, values&#125; = this.state;        const &#123;maximumValue, minimumValue, step, vertical&#125; = this.props;        const length = containerSize.width - thumbSize.width;        const thumbLeft = vertical ? this._previousLeft + (gestureState.dy * -1) : this._previousLeft + gestureState.dx;        const nonRtlRatio = thumbLeft / length;        const ratio = I18nManager.isRTL ? 1 - nonRtlRatio : nonRtlRatio;        let minValue = minimumValue;        let maxValue = maximumValue;        const rawValues = this._getRawValues(values);        const buffer = step ? step : 0.1;        if (values.length === 2) &#123;            if (this._activeThumbIndex === 1) &#123;                minValue = rawValues[0] + buffer;            &#125; else &#123;                maxValue = rawValues[1] - buffer;            &#125;        &#125;        if (step) &#123;            return Math.max(                minValue,                Math.min(                    maxValue,                    minimumValue +                        Math.round(                            (ratio * (maximumValue - minimumValue)) / step,                        ) *                            step,                ),            );        &#125;        return Math.max(            minValue,            Math.min(                maxValue,                ratio * (maximumValue - minimumValue) + minimumValue,            ),        );    &#125;;    _getCurrentValue = (thumbIndex: number = 0) =&gt;        this.state.values[thumbIndex].__getValue();    _setCurrentValue = (        value: number,        thumbIndex: number | null | undefined,        callback?: () =&gt; void,    ) =&gt; &#123;        const safeIndex = thumbIndex ?? 0;        const animatedValue = this.state.values[safeIndex];        if (animatedValue) &#123;            animatedValue.setValue(value);            if (callback) &#123;                callback();            &#125;        &#125; else &#123;            this.setState((prevState: SliderState) =&gt; &#123;                const newValues = [...prevState.values];                newValues[safeIndex] = new Animated.Value(value);                return &#123;                    values: newValues,                &#125;;            &#125;, callback);        &#125;    &#125;;    _setCurrentValueAnimated = (value: number, thumbIndex: number = 0) =&gt; &#123;        const &#123;animationType&#125; = this.props;        const animationConfig = &#123;            ...DEFAULT_ANIMATION_CONFIGS[animationType],            ...this.props.animationConfig,            toValue: value,            useNativeDriver: false,        &#125;;        Animated[animationType](            this.state.values[thumbIndex],            animationConfig,        ).start();    &#125;;    _getTouchOverflowSize = (): &#123;        width: number;        height: number;    &#125; =&gt; &#123;        const &#123;allMeasured, containerSize, thumbSize&#125; = this.state;        const &#123;thumbTouchSize&#125; = this.props;        const size = &#123;            width: 40,            height: 40,        &#125;;        if (allMeasured) &#123;            size.width = Math.max(                0,                thumbTouchSize?.width || 0 - thumbSize.width,            );            size.height = Math.max(                0,                thumbTouchSize?.height || 0 - containerSize.height,            );        &#125;        return size;    &#125;;    _getTouchOverflowStyle = () =&gt; &#123;        const &#123;width, height&#125; = this._getTouchOverflowSize();        const touchOverflowStyle = &#123;&#125; as ViewStyle;        if (width !== undefined &amp;&amp; height !== undefined) &#123;            const verticalMargin = -height / 2;            touchOverflowStyle.marginTop = verticalMargin;            touchOverflowStyle.marginBottom = verticalMargin;            const horizontalMargin = -width / 2;            touchOverflowStyle.marginLeft = horizontalMargin;            touchOverflowStyle.marginRight = horizontalMargin;        &#125;        if (this.props.debugTouchArea === true) &#123;            touchOverflowStyle.backgroundColor = &#x27;orange&#x27;;            touchOverflowStyle.opacity = 0.5;        &#125;        return touchOverflowStyle;    &#125;;    _thumbHitTest = (e: &#123;nativeEvent: any&#125;) =&gt; &#123;        const &#123;nativeEvent&#125; = e;        const &#123;trackClickable&#125; = this.props;        const &#123;values&#125; = this.state;        const hitThumb = values.find((_, i) =&gt; &#123;            const thumbTouchRect = this._getThumbTouchRect(i);            const containsPoint = thumbTouchRect.containsPoint(                nativeEvent.locationX,                nativeEvent.locationY,            );            if (containsPoint) &#123;                this._activeThumbIndex = i;            &#125;            return containsPoint;        &#125;);        if (hitThumb) &#123;            return true;        &#125;        if (trackClickable) &#123;            // set the active thumb index            if (values.length === 1) &#123;                this._activeThumbIndex = 0;            &#125; else &#123;                // we will find the closest thumb and that will be the active thumb                const thumbDistances = values.map((_value, index) =&gt; &#123;                    const thumbTouchRect = this._getThumbTouchRect(index);                    return thumbTouchRect.trackDistanceToPoint(                        nativeEvent.locationX,                    );                &#125;);                this._activeThumbIndex = indexOfLowest(thumbDistances);            &#125;            return true;        &#125;        return false;    &#125;;    _getThumbTouchRect = (thumbIndex: number = 0): RectReturn =&gt; &#123;        const &#123;containerSize, thumbSize&#125; = this.state;        const &#123;thumbTouchSize&#125; = this.props;        const &#123;height, width&#125; = thumbTouchSize || &#123;height: 40, width: 40&#125;;        const touchOverflowSize = this._getTouchOverflowSize();        return Rect(&#123;            height,            width,            x:                touchOverflowSize.width / 2 +                this._getThumbLeft(this._getCurrentValue(thumbIndex)) +                (thumbSize.width - width) / 2,            y:                touchOverflowSize.height / 2 +                (containerSize.height - height) / 2,        &#125;);    &#125;;    _activeThumbIndex: number = 0;    _containerSize: Dimensions | null | undefined;    _panResponder: PanResponderInstance;    _previousLeft: number = 0;    _thumbSize: Dimensions | null | undefined;    _trackSize: Dimensions | null | undefined;    _renderDebugThumbTouchRect = (        thumbLeft: Animated.AnimatedInterpolation,        index: number,    ) =&gt; &#123;        const &#123;height, y, width&#125; = this._getThumbTouchRect() || &#123;&#125;;        const positionStyle = &#123;            height,            left: thumbLeft,            top: y,            width,        &#125;;        return (            &lt;Animated.View                key=&#123;`debug-thumb-$&#123;index&#125;`&#125;                pointerEvents=&quot;none&quot;                style=&#123;[styles.debugThumbTouchArea, positionStyle]&#125;            /&gt;        );    &#125;;    _renderThumbImage = (thumbIndex: number = 0) =&gt; &#123;        const &#123;thumbImage&#125; = this.props;        if (!thumbImage) &#123;            return null;        &#125;        return (            &lt;Image                source=&#123;                    (Array.isArray(thumbImage)                        ? thumbImage[thumbIndex]                        : thumbImage) as ImageSourcePropType                &#125;            /&gt;        );    &#125;;    render() &#123;        const &#123;            containerStyle,            debugTouchArea,            maximumTrackTintColor,            maximumValue,            minimumTrackTintColor,            minimumValue,            renderAboveThumbComponent,            renderTrackMarkComponent,            renderThumbComponent,            thumbStyle,            thumbTintColor,            trackStyle,            vertical,            ...other        &#125; = this.props;        const &#123;            allMeasured,            containerSize,            thumbSize,            trackMarksValues,            values,        &#125; = this.state;        const interpolatedThumbValues = values.map((value) =&gt;            value.interpolate(&#123;                inputRange: [minimumValue, maximumValue],                outputRange: I18nManager.isRTL                    ? [0, -(containerSize.width - thumbSize.width)]                    : [0, containerSize.width - thumbSize.width],            &#125;),        );        const interpolatedTrackValues = values.map((value) =&gt;            value.interpolate(&#123;                inputRange: [minimumValue, maximumValue],                outputRange: [0, containerSize.width - thumbSize.width],            &#125;),        );        const interpolatedTrackMarksValues =            trackMarksValues &amp;&amp;            trackMarksValues.map((v) =&gt;                v.interpolate(&#123;                    inputRange: [minimumValue, maximumValue],                    outputRange: I18nManager.isRTL                        ? [0, -(containerSize.width - thumbSize.width)]                        : [0, containerSize.width - thumbSize.width],                &#125;),            );        const valueVisibleStyle = &#123;&#125; as ViewStyle;        if (!allMeasured) &#123;            valueVisibleStyle.opacity = 0;        &#125;        const interpolatedRawValues = this._getRawValues(            interpolatedTrackValues,        );        const minThumbValue = new Animated.Value(            Math.min(...interpolatedRawValues),        );        const maxThumbValue = new Animated.Value(            Math.max(...interpolatedRawValues),        );        const minimumTrackStyle = &#123;            position: &#x27;absolute&#x27;,            left:                interpolatedTrackValues.length === 1                    ? new Animated.Value(0)                    : Animated.add(minThumbValue, thumbSize.width / 2),            width:                interpolatedTrackValues.length === 1                    ? Animated.add(                          interpolatedTrackValues[0],                          thumbSize.width / 2,                      )                    : Animated.add(                          Animated.multiply(minThumbValue, -1),                          maxThumbValue,                      ),            backgroundColor: minimumTrackTintColor,            ...valueVisibleStyle,        &#125; as ViewStyle;        const touchOverflowStyle = this._getTouchOverflowStyle();        return (            &lt;&gt;                &#123;renderAboveThumbComponent &amp;&amp; (                    &lt;View style=&#123;styles.aboveThumbComponentsContainer&#125;&gt;                        &#123;interpolatedThumbValues.map((value, i) =&gt; (                            &lt;Animated.View                                key=&#123;`slider-above-thumb-$&#123;i&#125;`&#125;                                style=&#123;[                                    styles.renderThumbComponent, // eslint-disable-next-line react-native/no-inline-styles                                    &#123;                                        bottom: 0,                                        transform: [                                            &#123;                                                translateX: value,                                            &#125;,                                            &#123;                                                translateY: 0,                                            &#125;,                                        ],                                        ...valueVisibleStyle,                                    &#125;,                                ]&#125;&gt;                                &#123;renderAboveThumbComponent(i)&#125;                            &lt;/Animated.View&gt;                        ))&#125;                    &lt;/View&gt;                )&#125;                &lt;View                    &#123;...other&#125;                    style=&#123;[styles.container, vertical ? &#123;transform: [&#123;rotate: &#x27;-90deg&#x27; &#125;]&#125; : &#123;&#125;, containerStyle]&#125;                    onLayout=&#123;this._measureContainer&#125;&gt;                    &lt;View                        renderToHardwareTextureAndroid                        style=&#123;[                            styles.track,                            &#123;                                backgroundColor: maximumTrackTintColor,                            &#125;,                            trackStyle,                        ]&#125;                        onLayout=&#123;this._measureTrack&#125;                    /&gt;                    &lt;Animated.View                        renderToHardwareTextureAndroid                        style=&#123;[styles.track, trackStyle, minimumTrackStyle]&#125;                    /&gt;                    &#123;renderTrackMarkComponent &amp;&amp;                        interpolatedTrackMarksValues &amp;&amp;                        interpolatedTrackMarksValues.map((value, i) =&gt; (                            &lt;Animated.View                                key=&#123;`track-mark-$&#123;i&#125;`&#125;                                style=&#123;[                                    styles.renderThumbComponent,                                    &#123;                                        transform: [                                            &#123;                                                translateX: value,                                            &#125;,                                            &#123;                                                translateY: 0,                                            &#125;,                                        ],                                        ...valueVisibleStyle,                                    &#125;,                                ]&#125;&gt;                                &#123;renderTrackMarkComponent(i)&#125;                            &lt;/Animated.View&gt;                        ))&#125;                    &#123;interpolatedThumbValues.map((value, i) =&gt; (                        &lt;Animated.View                            key=&#123;`slider-thumb-$&#123;i&#125;`&#125;                            style=&#123;[                                renderThumbComponent                                    ? styles.renderThumbComponent                                    : styles.thumb,                                renderThumbComponent                                    ? &#123;&#125;                                    : &#123;                                          backgroundColor: thumbTintColor,                                          ...thumbStyle,                                      &#125;,                                &#123;                                    transform: [                                        &#123;                                            translateX: value,                                        &#125;,                                        &#123;                                            translateY: 0,                                        &#125;,                                    ],                                    ...valueVisibleStyle,                                &#125;,                            ]&#125;                            onLayout=&#123;this._measureThumb&#125;&gt;                            &#123;renderThumbComponent                                ? renderThumbComponent()                                : this._renderThumbImage(i)&#125;                        &lt;/Animated.View&gt;                    ))&#125;                    &lt;View                        style=&#123;[styles.touchArea, touchOverflowStyle]&#125;                        &#123;...this._panResponder.panHandlers&#125;&gt;                        &#123;!!debugTouchArea &amp;&amp;                            interpolatedThumbValues.map((value, i) =&gt;                                this._renderDebugThumbTouchRect(value, i),                            )&#125;                    &lt;/View&gt;                &lt;/View&gt;            &lt;/&gt;        );    &#125;&#125;
+
+
+导入部分：import &#123; Slider &#125; from &#x27;所放的上述组件路径&#x27;&lt;SliderminimumValue=&#123;1&#125;maximumValue=&#123;7&#125;  //可滑动范围为1到7minimumTrackTintColor=&quot;#0A79C3&quot; maximumTrackTintColor=&quot;#F3F3F3&quot;step=&#123;1&#125; //步长value=&#123;targetDay&#125; //默认值，例如4onValueChange=&#123;targetDays =&gt; dispatch(&#123;	type: &#x27;SetupWeekTarget/updateState&#x27;,	payload: &#123; targetDay: targetDays &#125;&#125;)&#125;  //滑动触发的事件trackStyle=&#123;&#123; height: 10, borderRadius: 12 &#125;&#125;  containerStyle=&#123;&#123; width: SCREEN_WIDTH - 90 &#125;&#125;thumbTintColor=&quot;transparent&quot;thumbImage=&#123;require(&#x27;图片路径&#x27;)&#125;/&gt;
+
+
+详细参数可参考链接：https://github.com/miblanchard/react-native-slider
+]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>遇见未知的自己</title>
+    <url>/2025/06/30/%E9%81%87%E8%A7%81%E6%9C%AA%E7%9F%A5%E7%9A%84%E8%87%AA%E5%B7%B1/</url>
+    <content><![CDATA[《遇见未知的自己》读书笔记何为“未知”？“自己”即指“真我”，从“我是谁”到后来的“从有到无”，整本书以若菱与一位智者老人的对话为主线，引申出许多深刻的生命观念。
+
+
+
+
+
+
+
+
+
+核心观点
+外面没有别人，只有你自己。所有的外境，其实都是内心的投射。
+
+与潜意识对话的黄金时刻想象自己已经实现目标的最佳时刻，是清晨将醒未醒、夜晚将睡未睡之间的那段时间，因为那时我们最接近潜意识。
+
+关键修炼：觉察、臣服、战胜胜肽（小我）
+
+觉察：关注当下的自己，不批判地观察情绪和反应。
+臣服：接受现实，而不是抗拒。
+胜肽小我：代表恐惧、比较、焦虑的内在声音，要学会看见并超越它。
+
+
+
+
+冥想、感恩、付出
+
+冥想时，要设想自己已经拥有渴望的生活。
+在实现之前就先学会感恩。
+保持利他、愿意付出的心态。
+
+
+
+
+
+少关心别人，多关心自己
+
+注意力回到自己身上，关注内在世界。
+当情绪上来时，觉察身体哪个部位最不舒服，了解内在信号。
+
+
+
+
+总结这本书不只是关于“找到自己是谁”，更是提醒我们“成为那个自己”。内在力量的唤醒，需要持续的觉察、练习与自我超越。
+]]></content>
+      <categories>
+        <category>读书感悟</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>获取到的csv保存数据库</title>
+    <url>/2025/07/29/%E8%8E%B7%E5%8F%96%E5%88%B0%E7%9A%84csv%E4%BF%9D%E5%AD%98%E6%95%B0%E6%8D%AE%E5%BA%93/</url>
+    <content><![CDATA[如果第三方接口获取到的数据，返回为csv文档时，可以先把csv文档保存到本地某路径，再通过fs的createReadStream读取数据，保存到本地数据库。
+const processConversations = async (dateObj) =&gt; &#123;  const username = &#x27;你的帐户名&#x27;;  const password = &#x27;密码&#x27;;  const year = dateObj.format(&#x27;YYYY&#x27;);  const month = dateObj.format(&#x27;MM&#x27;);  const day = dateObj.format(&#x27;DD&#x27;);  const hour = dateObj.format(&#x27;HH&#x27;);  const dateStr = `$&#123;year&#125;-$&#123;month&#125;-$&#123;day&#125;-$&#123;hour&#125;`;  const fileName = `路径后半部份`;  const url = `https://api/$&#123;fileName&#125;`;  const outputPath = `/tmp/conversations`;  const tableName = &#x27;test&#x27;;  try &#123;    // 下载 CSV    const response = await axios.get(url, &#123;      responseType: &#x27;stream&#x27;,      headers: &#123;        Authorization: `Basic $&#123;Buffer.from(`$&#123;username&#125;:$&#123;password&#125;`).toString(&#x27;base64&#x27;)&#125;`      &#125;    &#125;);    const writer = fs.createWriteStream(outputPath);    response.data.pipe(writer);    await new Promise((resolve, reject) =&gt; &#123;      writer.on(&#x27;finish&#x27;, resolve);      writer.on(&#x27;error&#x27;, reject);    &#125;);    console.log(&#x27; CSV 文件下载成功:&#x27;, fileName);    const rows = [];    await new Promise((resolve, reject) =&gt; &#123;      fs.createReadStream(outputPath)        .pipe(csv())        .on(&#x27;data&#x27;, (row) =&gt; &#123;          rows.push([            row[&#x27;DATE_TIME&#x27;] ? dayjs(row[&#x27;DATE_TIME&#x27;]).format(&#x27;YYYY-MM-DD HH:mm:ss&#x27;) : null,            row[&#x27;CLID&#x27;] || null,            row[&#x27;CLID_SOURCE&#x27;] || null          ]);        &#125;)        .on(&#x27;end&#x27;, resolve)        .on(&#x27;error&#x27;, reject);    &#125;);    if (rows.length === 0) &#123;      console.warn(`CSV 中没有数据: $&#123;fileName&#125;`);      return;    &#125;    const insertSQL = `      INSERT INTO \`$&#123;tableName&#125;\` (        date_time, clid, clid_source      ) VALUES ?    `;    await query(insertSQL, [rows]);    console.log(`成功插入 $&#123;rows.length&#125; 条记录: $&#123;fileName&#125;`);  &#125; catch (error) &#123;    console.error(`报错 ($&#123;fileName&#125;):`, error.message);  &#125;&#125;;
+
+]]></content>
+      <categories>
+        <category>后端</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>脱离框架开发</title>
+    <url>/2025/08/13/%E5%A6%82%E4%BD%95%E8%84%B1%E7%A6%BB%E6%A1%86%E6%9E%B6%E5%BC%80%E5%8F%91/</url>
+    <content><![CDATA[前端脱离框架去开发，就是不使用任何前端框架（Vue、React等）的情况下，直接用js、html和css去开发web。这意味更能深入了解前端底层原理和机制，避免依赖框架。
+在面对静态且不做过多功能的低项目下，其实脱离框架就已经足够了。框架编写的代码必须要进行编译才能在浏览器中渲染，所以便有了webpack。像Vue的出现就是为了解决一些痛点问题，比如双向数据流、自动响应式更新等，但我们又不得不遵守他们框架内的一些语法，随着vue的升级，我们也要不停学习更新的框架内容。框架本身是有利于开发的，但面对一些简单的问题时，不用框架反而是明智的。根据需求而决定去不去用框架进行下一步的开发。
+当开发多个类似的网站，没有打包过的代码放上服务器，能直接在服务器改源代码。而使用框架后打包的源码放在服务器中，要修改却只能本地修改，反而更浪费时间。当熟悉纯js开发后，还能开发一些工具以及框架出来。
+]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>索引</title>
+    <url>/2025/07/27/%E7%B4%A2%E5%BC%95/</url>
+    <content><![CDATA[索引的作用当想要快速查找到自己想要的数据时，可以用索引。通过索引，可以在检索数据时直接定位到，省去时间，就好比一本书前面的目录，能让你快速找到自己想看的内容。如果索引包含多列，那么按照从左到右的顺序，即最左前缀列来进行。
+索引的类型
+唯一索引：对某些列（比如身份证）添加唯一索引，不能出现两条身份证相同的记录，通过 UNIQUE 关键字我们就添加了一个唯一索引。
+
+ADD UNIQUE INDEX uni_sf (sf);
+
+也可以给列添加唯一约束，而不创建唯一索引，列具有唯一性。
+ADD CONSTRAINT uni_name UNIQUE (name);
+
+
+主键索引： 主键一旦创建，就会自动带上索引。这也是为什么主键搜索数据会更快的原因。一个表只能有一个主键，一个主键可以包含多列，即联合主键。
+
+ALTER TABLE table_name ADD PRIMARY KEY (column);
+
+
+普通索引： 任何一列都可以创建索引，建议只在自己经常想要检索的列上加索引，不要全部加，会耗性能。
+
+ALTER TABLE table_name ADD INDEX index_name (column);
+
+]]></content>
+      <categories>
+        <category>后端</category>
+      </categories>
+  </entry>
+</search>

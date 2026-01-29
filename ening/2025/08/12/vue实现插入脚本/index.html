@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
@@ -59,22 +59,22 @@
 
 
 
-  <meta name="description" content="Vue 中如何正确插入 &lt;script&gt; 脚本（含广告代码示例）在实际开发中，我们经常会接入第三方广告平台、统计工具或客服系统，而这些服务通常会提供一整段包含 &lt;script&gt; 标签的代码。但如果你在 Vue 的模板中（&lt;template&gt;）直接写 &lt;script&gt;，不仅不会生效，还可能直接报错。 本文将详细讲解 为什么不能在 Vue 模板里直接插入">
+  <meta name="description" content="How to Properly Insert &lt;script&gt; Code in Vue (Including Ad Code Examples)In real-world development, we often need to integrate third-party services such as advertising platforms, analytics tools,">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Vue中插入脚本">
+<meta property="og:title" content="Inserting Scripts in Vue">
 <meta property="og:url" content="https://lidyaqf.github.io/2025/08/12/vue%E5%AE%9E%E7%8E%B0%E6%8F%92%E5%85%A5%E8%84%9A%E6%9C%AC/index.html">
-<meta property="og:site_name" content="枫叶白">
-<meta property="og:description" content="Vue 中如何正确插入 &lt;script&gt; 脚本（含广告代码示例）在实际开发中，我们经常会接入第三方广告平台、统计工具或客服系统，而这些服务通常会提供一整段包含 &lt;script&gt; 标签的代码。但如果你在 Vue 的模板中（&lt;template&gt;）直接写 &lt;script&gt;，不仅不会生效，还可能直接报错。 本文将详细讲解 为什么不能在 Vue 模板里直接插入">
-<meta property="og:locale" content="zh_CN">
+<meta property="og:site_name" content="My English Blog">
+<meta property="og:description" content="How to Properly Insert &lt;script&gt; Code in Vue (Including Ad Code Examples)In real-world development, we often need to integrate third-party services such as advertising platforms, analytics tools,">
+<meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-08-11T16:00:00.000Z">
-<meta property="article:modified_time" content="2026-01-23T01:46:29.236Z">
+<meta property="article:modified_time" content="2026-01-23T01:46:33.508Z">
 <meta property="article:author" content="lidya">
 <meta property="article:tag" content="Vue">
 <meta property="article:tag" content="script">
-<meta property="article:tag" content="广告代码">
-<meta property="article:tag" content="动态插入脚本">
-<meta property="article:tag" content="DOM 操作">
-<meta property="article:tag" content="第三方广告">
+<meta property="article:tag" content="ad code">
+<meta property="article:tag" content="dynamic script injection">
+<meta property="article:tag" content="DOM manipulation">
+<meta property="article:tag" content="third-party ads">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="https://lidyaqf.github.io/2025/08/12/vue%E5%AE%9E%E7%8E%B0%E6%8F%92%E5%85%A5%E8%84%9A%E6%9C%AC/">
@@ -86,11 +86,11 @@
     sidebar: "",
     isHome : false,
     isPost : true,
-    lang   : 'zh-CN'
+    lang   : 'en'
   };
 </script>
 
-  <title>Vue中插入脚本 | 枫叶白</title>
+  <title>Inserting Scripts in Vue | My English Blog</title>
   
 
 
@@ -130,7 +130,7 @@
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
+    <div class="toggle" aria-label="Toggle navigation bar">
       <span class="toggle-line toggle-line-first"></span>
       <span class="toggle-line toggle-line-middle"></span>
       <span class="toggle-line toggle-line-last"></span>
@@ -141,7 +141,7 @@
 
     <a href="/ening/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">枫叶白</h1>
+      <h1 class="site-title">My English Blog</h1>
       <span class="logo-line-after"><i></i></span>
     </a>
   </div>
@@ -160,22 +160,22 @@
   <ul id="menu" class="main-menu menu">
         <li class="menu-item menu-item-home">
 
-    <a href="/ening/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+    <a href="/ening/ening/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
 
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/ening/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+    <a href="/ening/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/ening/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+    <a href="/ening/ening/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/ening/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+    <a href="/ening/ening/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
 
   </li>
         <li class="menu-item menu-item-english">
@@ -183,8 +183,13 @@
     <a href="/ening/ening" rel="section"><i class="fa fa-language fa-fw"></i>English</a>
 
   </li>
+        <li class="menu-item menu-item-中文">
+
+    <a href="/ening/../" rel="section"><i class="fa fa-language fa-fw"></i>中文</a>
+
+  </li>
       <li class="menu-item menu-item-search">
-        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
       </li>
   </ul>
@@ -200,7 +205,7 @@
   </span>
   <div class="search-input-container">
     <input autocomplete="off" autocapitalize="off"
-           placeholder="搜索..." spellcheck="false"
+           placeholder="Searching..." spellcheck="false"
            type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
@@ -237,21 +242,21 @@
     
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://lidyaqf.github.io/2025/08/12/vue%E5%AE%9E%E7%8E%B0%E6%8F%92%E5%85%A5%E8%84%9A%E6%9C%AC/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/ening/images/avatar.jpg">
       <meta itemprop="name" content="lidya">
-      <meta itemprop="description" content="服人以诚不以言">
+      <meta itemprop="description" content="">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="枫叶白">
+      <meta itemprop="name" content="My English Blog">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Vue中插入脚本
+          Inserting Scripts in Vue
         </h1>
 
         <div class="post-meta">
@@ -259,33 +264,33 @@
               <span class="post-meta-item-icon">
                 <i class="far fa-calendar"></i>
               </span>
-              <span class="post-meta-item-text">发表于</span>
+              <span class="post-meta-item-text">Posted on</span>
 
-              <time title="创建时间：2025-08-12 00:00:00" itemprop="dateCreated datePublished" datetime="2025-08-12T00:00:00+08:00">2025-08-12</time>
+              <time title="Created: 2025-08-12 00:00:00" itemprop="dateCreated datePublished" datetime="2025-08-12T00:00:00+08:00">2025-08-12</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2026-01-23 09:46:29" itemprop="dateModified" datetime="2026-01-23T09:46:29+08:00">2026-01-23</time>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2026-01-23 09:46:33" itemprop="dateModified" datetime="2026-01-23T09:46:33+08:00">2026-01-23</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
-              <span class="post-meta-item-text">分类于</span>
+              <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/ening/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
+                  <a href="/ening/categories/Frontend/" itemprop="url" rel="index"><span itemprop="name">Frontend</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
-              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="post-meta-item-text">Views: </span>
               <span id="busuanzi_value_page_pv"></span>
             </span>
 
@@ -298,58 +303,70 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="Vue-中如何正确插入-脚本（含广告代码示例）"><a href="#Vue-中如何正确插入-脚本（含广告代码示例）" class="headerlink" title="Vue 中如何正确插入 &lt;script&gt; 脚本（含广告代码示例）"></a>Vue 中如何正确插入 <code>&lt;script&gt;</code> 脚本（含广告代码示例）</h1><p>在实际开发中，我们经常会接入第三方广告平台、统计工具或客服系统，而这些服务通常会提供一整段包含 <code>&lt;script&gt;</code> 标签的代码。<br>但如果你在 Vue 的模板中（<code>&lt;template&gt;</code>）直接写 <code>&lt;script&gt;</code>，不仅不会生效，还可能直接报错。</p>
-<p>本文将详细讲解 <strong>为什么不能在 Vue 模板里直接插入 <code>&lt;script&gt;</code></strong>，以及 <strong>如何正确动态插入脚本</strong>，并给出一个可直接使用的代码示例（以广告代码为例）。</p>
-<h2 id="一、为什么-Vue-中不能直接写-？"><a href="#一、为什么-Vue-中不能直接写-？" class="headerlink" title="一、为什么 Vue 中不能直接写 &lt;script&gt;？"></a>一、为什么 Vue 中不能直接写 <code>&lt;script&gt;</code>？</h2><p>Vue 单文件组件（SFC）结构清晰：</p>
+        <h1 id="How-to-Properly-Insert-Code-in-Vue-Including-Ad-Code-Examples"><a href="#How-to-Properly-Insert-Code-in-Vue-Including-Ad-Code-Examples" class="headerlink" title="How to Properly Insert &lt;script&gt; Code in Vue (Including Ad Code Examples)"></a>How to Properly Insert <code>&lt;script&gt;</code> Code in Vue (Including Ad Code Examples)</h1><p>In real-world development, we often need to integrate third-party services such as advertising platforms, analytics tools, or customer support widgets. These services usually provide a block of code that includes <code>&lt;script&gt;</code> tags.</p>
+<p>However, if you try to place <code>&lt;script&gt;</code> tags directly inside a Vue template (<code>&lt;template&gt;</code>), they will not work—and may even cause errors.</p>
+<p>This article explains <strong>why <code>&lt;script&gt;</code> tags cannot be directly used inside Vue templates</strong>, and <strong>how to correctly inject scripts dynamically</strong>, with a ready-to-use example (using ad code as a case study).</p>
+<hr>
+<h2 id="1-Why-You-Can’t-Write-Directly-in-a-Vue-Template"><a href="#1-Why-You-Can’t-Write-Directly-in-a-Vue-Template" class="headerlink" title="1. Why You Can’t Write &lt;script&gt; Directly in a Vue Template"></a>1. Why You Can’t Write <code>&lt;script&gt;</code> Directly in a Vue Template</h2><p>Vue Single File Components (SFC) have a clear structure:</p>
 <ul>
-<li><code>&lt;template&gt;</code>：写结构</li>
-<li><code>&lt;script&gt;</code>：写逻辑</li>
-<li><code>&lt;style&gt;</code>：写样式</li>
+<li><code>&lt;template&gt;</code>: markup &#x2F; structure</li>
+<li><code>&lt;script&gt;</code>: logic</li>
+<li><code>&lt;style&gt;</code>: styles</li>
 </ul>
-<p>在 <code>&lt;template&gt;</code> 中插入 <code>&lt;script&gt;</code> 会出现以下问题：</p>
+<p>Placing <code>&lt;script&gt;</code> tags inside <code>&lt;template&gt;</code> causes several problems:</p>
 <ol>
-<li><strong>Vue 模板会自动移除或忽略 <code>&lt;script&gt;</code> 标签</strong>（当成普通文本）</li>
-<li>会破坏 Vue 的编译流程，可能直接报错</li>
-<li>导致第三方广告脚本、统计脚本完全无法执行</li>
+<li><strong>Vue treats <code>&lt;script&gt;</code> tags as plain text or strips them out</strong></li>
+<li>It breaks Vue’s compilation process and may throw errors</li>
+<li>Third-party scripts (ads, analytics, trackers) will not execute at all</li>
 </ol>
-<p>因此，要让脚本正常工作，我们只能在组件的生命周期中 <strong>通过 DOM API 动态插入 <code>&lt;script&gt;</code> 标签</strong>。</p>
-<h2 id="二、错误示例：直接粘贴广告代码（不可行）"><a href="#二、错误示例：直接粘贴广告代码（不可行）" class="headerlink" title="二、错误示例：直接粘贴广告代码（不可行）"></a>二、错误示例：直接粘贴广告代码（不可行）</h2><p>例如你拿到的广告商提供的代码是这样的：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"> atOptions = &#123;</span></span><br><span class="line"><span class="language-javascript">  <span class="string">&#x27;key&#x27;</span> : <span class="string">&#x27;1523b7ddb936e560aadef64a851d500c&#x27;</span>,</span></span><br><span class="line"><span class="language-javascript">  <span class="string">&#x27;format&#x27;</span> : <span class="string">&#x27;iframe&#x27;</span>,</span></span><br><span class="line"><span class="language-javascript">  <span class="string">&#x27;height&#x27;</span> : <span class="number">250</span>,</span></span><br><span class="line"><span class="language-javascript">  <span class="string">&#x27;width&#x27;</span> : <span class="number">300</span>,</span></span><br><span class="line"><span class="language-javascript">  <span class="string">&#x27;params&#x27;</span> : &#123;&#125;</span></span><br><span class="line"><span class="language-javascript"> &#125;;</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span> <span class="attr">src</span>=<span class="string">&quot;//www.highperformanceformat.com/1523b7ddb936e560aadef64a851d500c/invoke.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>Therefore, to make external scripts work properly, they must be <strong>dynamically injected using DOM APIs during the component lifecycle</strong>.</p>
+<hr>
+<h2 id="2-Incorrect-Example-Pasting-Ad-Code-Directly-This-Will-NOT-Work"><a href="#2-Incorrect-Example-Pasting-Ad-Code-Directly-This-Will-NOT-Work" class="headerlink" title="2. Incorrect Example: Pasting Ad Code Directly (This Will NOT Work)"></a>2. Incorrect Example: Pasting Ad Code Directly (This Will NOT Work)</h2><p>Suppose an ad network provides the following code:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">  atOptions = &#123;</span></span><br><span class="line"><span class="language-javascript">    <span class="string">&#x27;key&#x27;</span> : <span class="string">&#x27;1523b7ddb936e560aadef64a851d500c&#x27;</span>,</span></span><br><span class="line"><span class="language-javascript">    <span class="string">&#x27;format&#x27;</span> : <span class="string">&#x27;iframe&#x27;</span>,</span></span><br><span class="line"><span class="language-javascript">    <span class="string">&#x27;height&#x27;</span> : <span class="number">250</span>,</span></span><br><span class="line"><span class="language-javascript">    <span class="string">&#x27;width&#x27;</span> : <span class="number">300</span>,</span></span><br><span class="line"><span class="language-javascript">    <span class="string">&#x27;params&#x27;</span> : &#123;&#125;</span></span><br><span class="line"><span class="language-javascript">  &#125;;</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span></span></span><br><span class="line"><span class="tag">  <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span></span></span><br><span class="line"><span class="tag">  <span class="attr">src</span>=<span class="string">&quot;//www.highperformanceformat.com/1523b7ddb936e560aadef64a851d500c/invoke.js&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
-<p>如果你把这些代码放进 Vue 的 <code>&lt;template&gt;</code> 区域，<strong>广告绝对不会显示</strong>。</p>
-<h2 id="三、正确做法：在-Vue-中动态插入脚本"><a href="#三、正确做法：在-Vue-中动态插入脚本" class="headerlink" title="三、正确做法：在 Vue 中动态插入脚本"></a>三、正确做法：在 Vue 中动态插入脚本</h2><p>核心思路：</p>
+<p>If you paste this code directly into a Vue <code>&lt;template&gt;</code>, <strong>the advertisement will never render</strong>.</p>
+<hr>
+<h2 id="3-The-Correct-Approach-Dynamically-Inject-Scripts-in-Vue"><a href="#3-The-Correct-Approach-Dynamically-Inject-Scripts-in-Vue" class="headerlink" title="3. The Correct Approach: Dynamically Inject Scripts in Vue"></a>3. The Correct Approach: Dynamically Inject Scripts in Vue</h2><p>The core idea is simple:</p>
 <ol>
-<li>在模板中放一个容器（如 <code>&lt;div id=&quot;de_v&quot;&gt;&lt;/div&gt;</code>）</li>
-<li>在 <code>onMounted</code>（或 <code>mounted</code>）生命周期中创建 <code>&lt;script&gt;</code> 标签</li>
-<li>把参数脚本 + 外链脚本动态插进去</li>
+<li>Place a container element in the template (e.g. <code>&lt;div id=&quot;de_v&quot;&gt;&lt;/div&gt;</code>)</li>
+<li>Use the <code>onMounted</code> (or <code>mounted</code>) lifecycle hook</li>
+<li>Create <code>&lt;script&gt;</code> elements via JavaScript</li>
+<li>Append them to the DOM</li>
 </ol>
-<h2 id="四、完整代码示例（Vue-3-）"><a href="#四、完整代码示例（Vue-3-）" class="headerlink" title="四、完整代码示例（Vue 3 + &lt;script setup&gt;）"></a>四、完整代码示例（Vue 3 + <code>&lt;script setup&gt;</code>）</h2><p>假设你的广告要插入到 id 为 <code>&quot;de_v&quot;</code> 的容器里：</p>
-<h3 id="template-部分"><a href="#template-部分" class="headerlink" title="template 部分"></a><strong>template 部分</strong></h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;de_v&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="4-Complete-Example-Vue-3"><a href="#4-Complete-Example-Vue-3" class="headerlink" title="4. Complete Example (Vue 3 + &lt;script setup&gt;)"></a>4. Complete Example (Vue 3 + <code>&lt;script setup&gt;</code>)</h2><p>Assume the ad should be rendered inside a container with the ID <code>&quot;de_v&quot;</code>.</p>
+<h3 id="Template-Section"><a href="#Template-Section" class="headerlink" title="Template Section"></a><strong>Template Section</strong></h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;de_v&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
-<h3 id="script-部分"><a href="#script-部分" class="headerlink" title="script 部分"></a><strong>script 部分</strong></h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">&lt;script setup&gt;</span><br><span class="line">import &#123; onMounted &#125; from &quot;vue&quot;;</span><br><span class="line"></span><br><span class="line">onMounted(() =&gt; &#123;</span><br><span class="line">  const targetDiv = document.getElementById(&quot;de_v&quot;);</span><br><span class="line">  if (!targetDiv) return;</span><br><span class="line"></span><br><span class="line">  // 创建第一个 script（广告参数）</span><br><span class="line">  const script1 = document.createElement(&quot;script&quot;);</span><br><span class="line">  script1.type = &quot;text/javascript&quot;;</span><br><span class="line">  script1.innerHTML = `</span><br><span class="line">    atOptions = &#123;</span><br><span class="line">      &#x27;key&#x27; : &#x27;1523b7ddb936e560aadef64a851d500c&#x27;,</span><br><span class="line">      &#x27;format&#x27; : &#x27;iframe&#x27;,</span><br><span class="line">      &#x27;height&#x27; : 250,</span><br><span class="line">      &#x27;width&#x27; : 300,</span><br><span class="line">      &#x27;params&#x27; : &#123;&#125;</span><br><span class="line">    &#125;;</span><br><span class="line">  `;</span><br><span class="line"></span><br><span class="line">  // 创建第二个 script（外部广告脚本）</span><br><span class="line">  const script2 = document.createElement(&quot;script&quot;);</span><br><span class="line">  script2.type = &quot;text/javascript&quot;;</span><br><span class="line">  script2.src = &quot;//www.highperformanceformat.com/1523b7ddb936e560aadef64a851d500c/invoke.js&quot;;</span><br><span class="line"></span><br><span class="line">  // 插入脚本到容器内</span><br><span class="line">  targetDiv.appendChild(script1);</span><br><span class="line">  targetDiv.appendChild(script2);</span><br><span class="line">&#125;);</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="Script-Section"><a href="#Script-Section" class="headerlink" title="Script Section"></a><strong>Script Section</strong></h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">&lt;script setup&gt;</span><br><span class="line">import &#123; onMounted &#125; from &quot;vue&quot;;</span><br><span class="line"></span><br><span class="line">onMounted(() =&gt; &#123;</span><br><span class="line">  const targetDiv = document.getElementById(&quot;de_v&quot;);</span><br><span class="line">  if (!targetDiv) return;</span><br><span class="line"></span><br><span class="line">  // Create the first script (ad configuration)</span><br><span class="line">  const script1 = document.createElement(&quot;script&quot;);</span><br><span class="line">  script1.type = &quot;text/javascript&quot;;</span><br><span class="line">  script1.innerHTML = `</span><br><span class="line">    atOptions = &#123;</span><br><span class="line">      &#x27;key&#x27; : &#x27;1523b7ddb936e560aadef64a851d500c&#x27;,</span><br><span class="line">      &#x27;format&#x27; : &#x27;iframe&#x27;,</span><br><span class="line">      &#x27;height&#x27; : 250,</span><br><span class="line">      &#x27;width&#x27; : 300,</span><br><span class="line">      &#x27;params&#x27; : &#123;&#125;</span><br><span class="line">    &#125;;</span><br><span class="line">  `;</span><br><span class="line"></span><br><span class="line">  // Create the second script (external ad script)</span><br><span class="line">  const script2 = document.createElement(&quot;script&quot;);</span><br><span class="line">  script2.type = &quot;text/javascript&quot;;</span><br><span class="line">  script2.src =</span><br><span class="line">    &quot;//www.highperformanceformat.com/1523b7ddb936e560aadef64a851d500c/invoke.js&quot;;</span><br><span class="line"></span><br><span class="line">  // Append scripts to the container</span><br><span class="line">  targetDiv.appendChild(script1);</span><br><span class="line">  targetDiv.appendChild(script2);</span><br><span class="line">&#125;);</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
 
-
-
-<h2 id="五、常见问题与注意事项"><a href="#五、常见问题与注意事项" class="headerlink" title="五、常见问题与注意事项"></a>五、常见问题与注意事项</h2><h3 id="1-组件多次挂载会重复插入脚本？"><a href="#1-组件多次挂载会重复插入脚本？" class="headerlink" title="1. 组件多次挂载会重复插入脚本？"></a>1. 组件多次挂载会重复插入脚本？</h3><p>如果组件会反复进入&#x2F;离开页面，建议：</p>
+<hr>
+<h2 id="5-Common-Issues-and-Notes"><a href="#5-Common-Issues-and-Notes" class="headerlink" title="5. Common Issues and Notes"></a>5. Common Issues and Notes</h2><h3 id="1-Will-the-script-be-injected-multiple-times"><a href="#1-Will-the-script-be-injected-multiple-times" class="headerlink" title="1. Will the script be injected multiple times?"></a>1. Will the script be injected multiple times?</h3><p>If the component is mounted and unmounted repeatedly, the scripts may be injected multiple times.</p>
+<p>Solutions:</p>
 <ul>
-<li>在插入前检查是否已添加脚本</li>
-<li>或在 <code>onUnmounted</code> 中移除它们</li>
+<li>Check whether the script already exists before inserting</li>
+<li>Or remove the scripts in <code>onUnmounted</code></li>
 </ul>
-<h3 id="2-多个广告位怎么办？"><a href="#2-多个广告位怎么办？" class="headerlink" title="2. 多个广告位怎么办？"></a>2. 多个广告位怎么办？</h3><p>每个广告位使用 <strong>不同的容器 ID</strong> 即可，例如：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=&quot;ad1&quot;&gt;&lt;/div&gt;</span><br><span class="line">&lt;div id=&quot;ad2&quot;&gt;&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="2-How-to-Handle-Multiple-Ad-Slots"><a href="#2-How-to-Handle-Multiple-Ad-Slots" class="headerlink" title="2. How to Handle Multiple Ad Slots?"></a>2. How to Handle Multiple Ad Slots?</h3><p>Use <strong>different container IDs</strong> for each ad slot, for example:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;ad1&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;ad2&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
-<p>脚本注入时改对应的 id 即可。</p>
-<h3 id="3-SSR-框架（Nuxt）如何处理？"><a href="#3-SSR-框架（Nuxt）如何处理？" class="headerlink" title="3. SSR 框架（Nuxt）如何处理？"></a>3. SSR 框架（Nuxt）如何处理？</h3><p>服务端无法访问 <code>document</code>，必须放到客户端生命周期中执行，例如：</p>
+<p>Then inject scripts into the corresponding container.</p>
+<hr>
+<h3 id="3-What-About-SSR-Frameworks-Nuxt"><a href="#3-What-About-SSR-Frameworks-Nuxt" class="headerlink" title="3. What About SSR Frameworks (Nuxt)?"></a>3. What About SSR Frameworks (Nuxt)?</h3><p>On the server side, <code>document</code> is not available.</p>
+<p>You <strong>must</strong> run the script injection code on the client side only:</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">onMounted</span>(<span class="function">() =&gt;</span> &#123; ... &#125;)</span><br></pre></td></tr></table></figure>
 
-<p>否则会报 <code>document is not defined</code>。</p>
-<h2 id="六、总结"><a href="#六、总结" class="headerlink" title="六、总结"></a>六、总结</h2><ul>
-<li>Vue 模板中不能直接写 <code>&lt;script&gt;</code>，否则脚本不会执行</li>
-<li>正确方式是在生命周期里 <strong>动态创建 script 标签</strong></li>
-<li>通过 <code>appendChild()</code> 可以正常加载广告脚本、统计脚本、第三方插件等</li>
-<li>本文提供的示例可直接用于实际项目</li>
+<p>Otherwise, you will encounter:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">document is not defined</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="6-Summary"><a href="#6-Summary" class="headerlink" title="6. Summary"></a>6. Summary</h2><ul>
+<li>You cannot directly place <code>&lt;script&gt;</code> tags inside Vue templates</li>
+<li>The correct solution is to <strong>dynamically create and inject scripts during the component lifecycle</strong></li>
+<li>Using <code>appendChild()</code> ensures third-party scripts execute properly</li>
+<li>This approach works for ads, analytics, tracking pixels, and external SDKs</li>
 </ul>
-<p>只要按照本文方法插入脚本，不论是广告代码、统计代码还是第三方 SDK，都能正常在 Vue 环境中运行。</p>
+<p>By following the method described above, third-party scripts will run correctly in Vue-based applications.</p>
 
     </div>
 
@@ -370,14 +387,14 @@
 <div>
 <ul class="post-copyright">
   <li class="post-copyright-author">
-    <strong>本文作者： </strong>lidya
+    <strong>Post author:  </strong>lidya
   </li>
   <li class="post-copyright-link">
-    <strong>本文链接：</strong>
-    <a href="https://lidyaqf.github.io/2025/08/12/vue%E5%AE%9E%E7%8E%B0%E6%8F%92%E5%85%A5%E8%84%9A%E6%9C%AC/" title="Vue中插入脚本">https://lidyaqf.github.io/2025/08/12/vue实现插入脚本/</a>
+    <strong>Post link: </strong>
+    <a href="https://lidyaqf.github.io/2025/08/12/vue%E5%AE%9E%E7%8E%B0%E6%8F%92%E5%85%A5%E8%84%9A%E6%9C%AC/" title="Inserting Scripts in Vue">https://lidyaqf.github.io/2025/08/12/vue实现插入脚本/</a>
   </li>
   <li class="post-copyright-license">
-    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
   </li>
 </ul>
 </div>
@@ -387,10 +404,10 @@
           <div class="post-tags">
               <a href="/ening/tags/Vue/" rel="tag"># Vue</a>
               <a href="/ening/tags/script/" rel="tag"># script</a>
-              <a href="/ening/tags/%E5%B9%BF%E5%91%8A%E4%BB%A3%E7%A0%81/" rel="tag"># 广告代码</a>
-              <a href="/ening/tags/%E5%8A%A8%E6%80%81%E6%8F%92%E5%85%A5%E8%84%9A%E6%9C%AC/" rel="tag"># 动态插入脚本</a>
-              <a href="/ening/tags/DOM-%E6%93%8D%E4%BD%9C/" rel="tag"># DOM 操作</a>
-              <a href="/ening/tags/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%B9%BF%E5%91%8A/" rel="tag"># 第三方广告</a>
+              <a href="/ening/tags/ad-code/" rel="tag"># ad code</a>
+              <a href="/ening/tags/dynamic-script-injection/" rel="tag"># dynamic script injection</a>
+              <a href="/ening/tags/DOM-manipulation/" rel="tag"># DOM manipulation</a>
+              <a href="/ening/tags/third-party-ads/" rel="tag"># third-party ads</a>
           </div>
 
         
@@ -399,12 +416,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/ening/2025/07/29/%E8%8E%B7%E5%8F%96%E5%88%B0%E7%9A%84csv%E4%BF%9D%E5%AD%98%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="prev" title="获取到的csv保存数据库">
-      <i class="fa fa-chevron-left"></i> 获取到的csv保存数据库
+    <a href="/ening/2025/07/29/%E8%8E%B7%E5%8F%96%E5%88%B0%E7%9A%84csv%E4%BF%9D%E5%AD%98%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="prev" title="Saving Retrieved CSV Data into a Database">
+      <i class="fa fa-chevron-left"></i> Saving Retrieved CSV Data into a Database
     </a></div>
       <div class="post-nav-item">
-    <a href="/ening/2025/08/13/%E5%A6%82%E4%BD%95%E8%84%B1%E7%A6%BB%E6%A1%86%E6%9E%B6%E5%BC%80%E5%8F%91/" rel="next" title="脱离框架开发">
-      脱离框架开发 <i class="fa fa-chevron-right"></i>
+    <a href="/ening/2025/08/13/%E5%A6%82%E4%BD%95%E8%84%B1%E7%A6%BB%E6%A1%86%E6%9E%B6%E5%BC%80%E5%8F%91/" rel="next" title="Developing Without Frameworks">
+      Developing Without Frameworks <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -460,16 +477,16 @@
 
       <ul class="sidebar-nav motion-element">
         <li class="sidebar-nav-toc">
-          文章目录
+          Table of Contents
         </li>
         <li class="sidebar-nav-overview">
-          站点概览
+          Overview
         </li>
       </ul>
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Vue-%E4%B8%AD%E5%A6%82%E4%BD%95%E6%AD%A3%E7%A1%AE%E6%8F%92%E5%85%A5-%E8%84%9A%E6%9C%AC%EF%BC%88%E5%90%AB%E5%B9%BF%E5%91%8A%E4%BB%A3%E7%A0%81%E7%A4%BA%E4%BE%8B%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">Vue 中如何正确插入 &lt;script&gt; 脚本（含广告代码示例）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E4%B8%BA%E4%BB%80%E4%B9%88-Vue-%E4%B8%AD%E4%B8%8D%E8%83%BD%E7%9B%B4%E6%8E%A5%E5%86%99-%EF%BC%9F"><span class="nav-number">1.1.</span> <span class="nav-text">一、为什么 Vue 中不能直接写 &lt;script&gt;？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E9%94%99%E8%AF%AF%E7%A4%BA%E4%BE%8B%EF%BC%9A%E7%9B%B4%E6%8E%A5%E7%B2%98%E8%B4%B4%E5%B9%BF%E5%91%8A%E4%BB%A3%E7%A0%81%EF%BC%88%E4%B8%8D%E5%8F%AF%E8%A1%8C%EF%BC%89"><span class="nav-number">1.2.</span> <span class="nav-text">二、错误示例：直接粘贴广告代码（不可行）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E6%AD%A3%E7%A1%AE%E5%81%9A%E6%B3%95%EF%BC%9A%E5%9C%A8-Vue-%E4%B8%AD%E5%8A%A8%E6%80%81%E6%8F%92%E5%85%A5%E8%84%9A%E6%9C%AC"><span class="nav-number">1.3.</span> <span class="nav-text">三、正确做法：在 Vue 中动态插入脚本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E5%AE%8C%E6%95%B4%E4%BB%A3%E7%A0%81%E7%A4%BA%E4%BE%8B%EF%BC%88Vue-3-%EF%BC%89"><span class="nav-number">1.4.</span> <span class="nav-text">四、完整代码示例（Vue 3 + &lt;script setup&gt;）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#template-%E9%83%A8%E5%88%86"><span class="nav-number">1.4.1.</span> <span class="nav-text">template 部分</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#script-%E9%83%A8%E5%88%86"><span class="nav-number">1.4.2.</span> <span class="nav-text">script 部分</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E4%B8%8E%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="nav-number">1.5.</span> <span class="nav-text">五、常见问题与注意事项</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E7%BB%84%E4%BB%B6%E5%A4%9A%E6%AC%A1%E6%8C%82%E8%BD%BD%E4%BC%9A%E9%87%8D%E5%A4%8D%E6%8F%92%E5%85%A5%E8%84%9A%E6%9C%AC%EF%BC%9F"><span class="nav-number">1.5.1.</span> <span class="nav-text">1. 组件多次挂载会重复插入脚本？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%A4%9A%E4%B8%AA%E5%B9%BF%E5%91%8A%E4%BD%8D%E6%80%8E%E4%B9%88%E5%8A%9E%EF%BC%9F"><span class="nav-number">1.5.2.</span> <span class="nav-text">2. 多个广告位怎么办？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-SSR-%E6%A1%86%E6%9E%B6%EF%BC%88Nuxt%EF%BC%89%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86%EF%BC%9F"><span class="nav-number">1.5.3.</span> <span class="nav-text">3. SSR 框架（Nuxt）如何处理？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E6%80%BB%E7%BB%93"><span class="nav-number">1.6.</span> <span class="nav-text">六、总结</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#How-to-Properly-Insert-Code-in-Vue-Including-Ad-Code-Examples"><span class="nav-number">1.</span> <span class="nav-text">How to Properly Insert &lt;script&gt; Code in Vue (Including Ad Code Examples)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Why-You-Can%E2%80%99t-Write-Directly-in-a-Vue-Template"><span class="nav-number">1.1.</span> <span class="nav-text">1. Why You Can’t Write &lt;script&gt; Directly in a Vue Template</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Incorrect-Example-Pasting-Ad-Code-Directly-This-Will-NOT-Work"><span class="nav-number">1.2.</span> <span class="nav-text">2. Incorrect Example: Pasting Ad Code Directly (This Will NOT Work)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-The-Correct-Approach-Dynamically-Inject-Scripts-in-Vue"><span class="nav-number">1.3.</span> <span class="nav-text">3. The Correct Approach: Dynamically Inject Scripts in Vue</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-Complete-Example-Vue-3"><span class="nav-number">1.4.</span> <span class="nav-text">4. Complete Example (Vue 3 + &lt;script setup&gt;)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Template-Section"><span class="nav-number">1.4.1.</span> <span class="nav-text">Template Section</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Script-Section"><span class="nav-number">1.4.2.</span> <span class="nav-text">Script Section</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-Common-Issues-and-Notes"><span class="nav-number">1.5.</span> <span class="nav-text">5. Common Issues and Notes</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Will-the-script-be-injected-multiple-times"><span class="nav-number">1.5.1.</span> <span class="nav-text">1. Will the script be injected multiple times?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-How-to-Handle-Multiple-Ad-Slots"><span class="nav-number">1.5.2.</span> <span class="nav-text">2. How to Handle Multiple Ad Slots?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-What-About-SSR-Frameworks-Nuxt"><span class="nav-number">1.5.3.</span> <span class="nav-text">3. What About SSR Frameworks (Nuxt)?</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-Summary"><span class="nav-number">1.6.</span> <span class="nav-text">6. Summary</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -478,28 +495,28 @@
     <img class="site-author-image" itemprop="image" alt="lidya"
       src="/ening/images/avatar.jpg">
   <p class="site-author-name" itemprop="name">lidya</p>
-  <div class="site-description" itemprop="description">服人以诚不以言</div>
+  <div class="site-description" itemprop="description"></div>
 </div>
 <div class="site-state-wrap motion-element">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
-          <a href="/ening/archives/">
+          <a href="/ening/ening/archives/">
         
-          <span class="site-state-item-count">32</span>
-          <span class="site-state-item-name">日志</span>
+          <span class="site-state-item-count">24</span>
+          <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-            <a href="/ening/categories/">
+            <a href="/ening/ening/categories/">
           
-        <span class="site-state-item-count">5</span>
-        <span class="site-state-item-name">分类</span></a>
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/ening/tags/">
           
-        <span class="site-state-item-count">17</span>
-        <span class="site-state-item-name">标签</span></a>
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
 </div>
@@ -546,7 +563,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-user"></i>
       </span>
-      <span class="site-uv" title="总访客量">
+      <span class="site-uv" title="Total Visitors">
         <span id="busuanzi_value_site_uv"></span>
       </span>
     </span>
@@ -555,7 +572,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-eye"></i>
       </span>
-      <span class="site-pv" title="总访问量">
+      <span class="site-pv" title="Total Views">
         <span id="busuanzi_value_site_pv"></span>
       </span>
     </span>

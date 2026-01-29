@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
@@ -59,15 +59,15 @@
 
 
 
-  <meta name="description" content="使用 Docker 安装 ELK Stack（ElasticSearch、Logstash、Kibana） 建议在 Docker 上安装，资源占用少。以下安装版本统一为 8.12.2，建议保持一致避免冲突。  目录1、安装 ElasticSearch2、安装 Logstash3、安装 Kibana推荐  1、安装 ElasticSearch 拉取镜像：  1docker pull elastics">
+  <meta name="description" content="Installing ELK Stack (ElasticSearch, Logstash, Kibana) with Docker It is recommended to install on Docker due to lower resource consumption. The installation version used below is 8.12.2. Please use t">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ELK安装流程">
+<meta property="og:title" content="ELK Installation Guide">
 <meta property="og:url" content="https://lidyaqf.github.io/2025/04/11/ELK%E5%AE%89%E8%A3%85%E6%B5%81%E7%A8%8B/index.html">
-<meta property="og:site_name" content="枫叶白">
-<meta property="og:description" content="使用 Docker 安装 ELK Stack（ElasticSearch、Logstash、Kibana） 建议在 Docker 上安装，资源占用少。以下安装版本统一为 8.12.2，建议保持一致避免冲突。  目录1、安装 ElasticSearch2、安装 Logstash3、安装 Kibana推荐  1、安装 ElasticSearch 拉取镜像：  1docker pull elastics">
-<meta property="og:locale" content="zh_CN">
+<meta property="og:site_name" content="My English Blog">
+<meta property="og:description" content="Installing ELK Stack (ElasticSearch, Logstash, Kibana) with Docker It is recommended to install on Docker due to lower resource consumption. The installation version used below is 8.12.2. Please use t">
+<meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-04-11T09:16:46.000Z">
-<meta property="article:modified_time" content="2025-07-02T08:36:03.704Z">
+<meta property="article:modified_time" content="2025-07-02T08:51:37.689Z">
 <meta property="article:author" content="lidya">
 <meta name="twitter:card" content="summary">
 
@@ -80,11 +80,11 @@
     sidebar: "",
     isHome : false,
     isPost : true,
-    lang   : 'zh-CN'
+    lang   : 'en'
   };
 </script>
 
-  <title>ELK安装流程 | 枫叶白</title>
+  <title>ELK Installation Guide | My English Blog</title>
   
 
 
@@ -124,7 +124,7 @@
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
+    <div class="toggle" aria-label="Toggle navigation bar">
       <span class="toggle-line toggle-line-first"></span>
       <span class="toggle-line toggle-line-middle"></span>
       <span class="toggle-line toggle-line-last"></span>
@@ -135,7 +135,7 @@
 
     <a href="/ening/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">枫叶白</h1>
+      <h1 class="site-title">My English Blog</h1>
       <span class="logo-line-after"><i></i></span>
     </a>
   </div>
@@ -154,22 +154,22 @@
   <ul id="menu" class="main-menu menu">
         <li class="menu-item menu-item-home">
 
-    <a href="/ening/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+    <a href="/ening/ening/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
 
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/ening/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+    <a href="/ening/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/ening/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+    <a href="/ening/ening/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/ening/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+    <a href="/ening/ening/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
 
   </li>
         <li class="menu-item menu-item-english">
@@ -177,8 +177,13 @@
     <a href="/ening/ening" rel="section"><i class="fa fa-language fa-fw"></i>English</a>
 
   </li>
+        <li class="menu-item menu-item-中文">
+
+    <a href="/ening/../" rel="section"><i class="fa fa-language fa-fw"></i>中文</a>
+
+  </li>
       <li class="menu-item menu-item-search">
-        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
       </li>
   </ul>
@@ -194,7 +199,7 @@
   </span>
   <div class="search-input-container">
     <input autocomplete="off" autocapitalize="off"
-           placeholder="搜索..." spellcheck="false"
+           placeholder="Searching..." spellcheck="false"
            type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
@@ -231,21 +236,21 @@
     
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://lidyaqf.github.io/2025/04/11/ELK%E5%AE%89%E8%A3%85%E6%B5%81%E7%A8%8B/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/ening/images/avatar.jpg">
       <meta itemprop="name" content="lidya">
-      <meta itemprop="description" content="服人以诚不以言">
+      <meta itemprop="description" content="">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="枫叶白">
+      <meta itemprop="name" content="My English Blog">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          ELK安装流程
+          ELK Installation Guide
         </h1>
 
         <div class="post-meta">
@@ -253,33 +258,33 @@
               <span class="post-meta-item-icon">
                 <i class="far fa-calendar"></i>
               </span>
-              <span class="post-meta-item-text">发表于</span>
+              <span class="post-meta-item-text">Posted on</span>
 
-              <time title="创建时间：2025-04-11 17:16:46" itemprop="dateCreated datePublished" datetime="2025-04-11T17:16:46+08:00">2025-04-11</time>
+              <time title="Created: 2025-04-11 17:16:46" itemprop="dateCreated datePublished" datetime="2025-04-11T17:16:46+08:00">2025-04-11</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2025-07-02 16:36:03" itemprop="dateModified" datetime="2025-07-02T16:36:03+08:00">2025-07-02</time>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-07-02 16:51:37" itemprop="dateModified" datetime="2025-07-02T16:51:37+08:00">2025-07-02</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
-              <span class="post-meta-item-text">分类于</span>
+              <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/ening/categories/%E5%90%8E%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">后端</span></a>
+                  <a href="/ening/categories/Backend/" itemprop="url" rel="index"><span itemprop="name">Backend</span></a>
                 </span>
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
-              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="post-meta-item-text">Views: </span>
               <span id="busuanzi_value_page_pv"></span>
             </span>
 
@@ -292,80 +297,76 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="使用-Docker-安装-ELK-Stack（ElasticSearch、Logstash、Kibana）"><a href="#使用-Docker-安装-ELK-Stack（ElasticSearch、Logstash、Kibana）" class="headerlink" title="使用 Docker 安装 ELK Stack（ElasticSearch、Logstash、Kibana）"></a>使用 Docker 安装 ELK Stack（ElasticSearch、Logstash、Kibana）</h1><blockquote>
-<p>建议在 Docker 上安装，资源占用少。以下安装版本统一为 <strong>8.12.2</strong>，建议保持一致避免冲突。</p>
+        <h1 id="Installing-ELK-Stack-ElasticSearch-Logstash-Kibana-with-Docker"><a href="#Installing-ELK-Stack-ElasticSearch-Logstash-Kibana-with-Docker" class="headerlink" title="Installing ELK Stack (ElasticSearch, Logstash, Kibana) with Docker"></a>Installing ELK Stack (ElasticSearch, Logstash, Kibana) with Docker</h1><blockquote>
+<p>It is recommended to install on Docker due to lower resource consumption. The installation version used below is <strong>8.12.2</strong>. Please use the same version to avoid conflicts.</p>
 </blockquote>
-<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><p><a href="#1%E3%80%81%E5%AE%89%E8%A3%85-ElasticSearch">1、安装 ElasticSearch</a><br><a href="#2%E3%80%81%E5%AE%89%E8%A3%85-Logstash">2、安装 Logstash</a><br><a href="#3%E3%80%81%E5%AE%89%E8%A3%85-Kibana">3、安装 Kibana</a><br><a href="#%E6%8E%A8%E8%8D%90">推荐</a></p>
+<h2 id="Table-of-Contents"><a href="#Table-of-Contents" class="headerlink" title="Table of Contents"></a>Table of Contents</h2><p><a href="#1-install-elasticsearch">1. Install ElasticSearch</a><br><a href="#2-install-logstash">2. Install Logstash</a><br><a href="#3-install-kibana">3. Install Kibana</a><br><a href="#recommendations">Recommendations</a></p>
 <hr>
-<h2 id="1、安装-ElasticSearch"><a href="#1、安装-ElasticSearch" class="headerlink" title="1、安装 ElasticSearch"></a>1、安装 ElasticSearch</h2><ul>
-<li>拉取镜像：</li>
+<h2 id="1-Install-ElasticSearch"><a href="#1-Install-ElasticSearch" class="headerlink" title="1. Install ElasticSearch"></a>1. Install ElasticSearch</h2><ul>
+<li>Pull the image:</li>
 </ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull elasticsearch:8.12.2</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">docker pull elasticsearch:8.12.2</span><br><span class="line">````</span><br><span class="line"></span><br><span class="line">* Start the container:</span><br><span class="line"></span><br><span class="line">```bash</span><br><span class="line">docker run --name some-elasticsearch -p 9200:9200 -p 9300:9300 -e <span class="string">&quot;discovery.type=single-node&quot;</span> -d elasticsearch:8.12.2</span><br></pre></td></tr></table></figure>
 
 <ul>
-<li>启动容器：</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run --name some-elasticsearch -p 9200:9200 -p 9300:9300 -e <span class="string">&quot;discovery.type=single-node&quot;</span> -d elasticsearch:8.12.2</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>进入容器内部：</li>
+<li>Enter the container:</li>
 </ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> docker <span class="built_in">exec</span> -u 0 -it some-elasticsearch bash</span><br></pre></td></tr></table></figure>
 
 <ul>
-<li>重启容器：</li>
+<li>Restart the container:</li>
 </ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker restart some-elasticsearch</span><br></pre></td></tr></table></figure>
 
 <hr>
-<h2 id="2、安装-Logstash"><a href="#2、安装-Logstash" class="headerlink" title="2、安装 Logstash"></a>2、安装 Logstash</h2><ul>
-<li>拉取镜像：</li>
+<h2 id="2-Install-Logstash"><a href="#2-Install-Logstash" class="headerlink" title="2. Install Logstash"></a>2. Install Logstash</h2><ul>
+<li>Pull the image:</li>
 </ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull docker.elastic.co/logstash/logstash:8.12.2</span><br></pre></td></tr></table></figure>
 
 <ul>
-<li>启动容器：</li>
+<li>Start the container:</li>
 </ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> docker run -it -p 5044:5044 -p 9600:9600 --name logstash -v /usr/share/logstash/piplines:/usr/share/logstash/config --privileged=<span class="literal">true</span> docker.elastic.co/logstash/logstash:8.12.2 /bin/bash</span><br></pre></td></tr></table></figure>
 
 <ul>
-<li>使用 <code>scp</code> 命令将本机下载好的 jar 包（MySQL Connector）上传至虚拟机：</li>
+<li>Use <code>scp</code> to upload the MySQL Connector JAR file to the virtual machine:</li>
 </ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scp <span class="string">&quot;/Users/Downloads/logstash-8.12.2/mysql-connector-j-8.4.0.jar&quot;</span> 用户名@虚拟机IP:/home</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scp <span class="string">&quot;/Users/Downloads/logstash-8.12.2/mysql-connector-j-8.4.0.jar&quot;</span> username@VM-IP:/home</span><br></pre></td></tr></table></figure>
 
 <ul>
-<li>再将 jar 包从虚拟机移动到 logstash 容器中：</li>
+<li>Move the JAR file from the VM to the Logstash container:</li>
 </ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="built_in">cp</span> ./mysql-connector-j-8.4.0.jar logstash:/usr/share/logstash</span><br></pre></td></tr></table></figure>
 
 <ul>
-<li>进入容器内部：</li>
+<li>Enter the container:</li>
 </ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="built_in">exec</span> -u 0 -it logstash bash</span><br></pre></td></tr></table></figure>
 
 <hr>
-<h2 id="3、安装-Kibana"><a href="#3、安装-Kibana" class="headerlink" title="3、安装 Kibana"></a>3、安装 Kibana</h2><ul>
-<li>拉取镜像：</li>
+<h2 id="3-Install-Kibana"><a href="#3-Install-Kibana" class="headerlink" title="3. Install Kibana"></a>3. Install Kibana</h2><ul>
+<li>Pull the image:</li>
 </ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull kibana:8.12.2</span><br></pre></td></tr></table></figure>
 
 <ul>
-<li>启动容器：</li>
+<li>Start the container:</li>
 </ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run --name some-kibana -p 9200:9200 -p 9300:9300 -e <span class="string">&quot;discovery.type=single-node&quot;</span> -d elasticsearch:8.12.2</span><br></pre></td></tr></table></figure>
 
 <ul>
-<li>进入容器：</li>
+<li>Enter the container:</li>
 </ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="built_in">exec</span> -u 0 -it some-kibana bash</span><br></pre></td></tr></table></figure>
 
 <hr>
-<h2 id="附：安装-Docker、Portainer-及相关命令"><a href="#附：安装-Docker、Portainer-及相关命令" class="headerlink" title="附：安装 Docker、Portainer 及相关命令"></a>附：安装 Docker、Portainer 及相关命令</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt update</span><br><span class="line"><span class="built_in">sudo</span> apt install docker.io docker-compose</span><br><span class="line">docker -v</span><br><span class="line"><span class="built_in">sudo</span> systemctl start docker</span><br><span class="line"></span><br><span class="line"><span class="built_in">sudo</span> docker search portainer</span><br><span class="line">docker pull portainer/portainer</span><br><span class="line"><span class="built_in">sudo</span> docker pull portainer/portainer</span><br><span class="line"><span class="built_in">sudo</span> docker run -d --name portainerUI -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock portainer/portainer</span><br><span class="line"></span><br><span class="line"><span class="built_in">sudo</span> docker start portainerUI</span><br><span class="line"><span class="built_in">sudo</span> passwd root</span><br></pre></td></tr></table></figure>
+<h2 id="Additional-Install-Docker-Portainer-and-Related-Commands"><a href="#Additional-Install-Docker-Portainer-and-Related-Commands" class="headerlink" title="Additional: Install Docker, Portainer, and Related Commands"></a>Additional: Install Docker, Portainer, and Related Commands</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt update</span><br><span class="line"><span class="built_in">sudo</span> apt install docker.io docker-compose</span><br><span class="line">docker -v</span><br><span class="line"><span class="built_in">sudo</span> systemctl start docker</span><br><span class="line"></span><br><span class="line"><span class="built_in">sudo</span> docker search portainer</span><br><span class="line">docker pull portainer/portainer</span><br><span class="line"><span class="built_in">sudo</span> docker pull portainer/portainer</span><br><span class="line"><span class="built_in">sudo</span> docker run -d --name portainerUI -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock portainer/portainer</span><br><span class="line"></span><br><span class="line"><span class="built_in">sudo</span> docker start portainerUI</span><br><span class="line"><span class="built_in">sudo</span> passwd root</span><br></pre></td></tr></table></figure>
 
 <hr>
-<!-- ## 推荐 -->
+<!-- ## Recommendations -->
 
-<!-- - [娱乐一下](https://edunextgen1.com) -->
+<!-- * [Just for Fun](https://edunextgen1.com) -->
+
 
 
     </div>
@@ -387,14 +388,14 @@
 <div>
 <ul class="post-copyright">
   <li class="post-copyright-author">
-    <strong>本文作者： </strong>lidya
+    <strong>Post author:  </strong>lidya
   </li>
   <li class="post-copyright-link">
-    <strong>本文链接：</strong>
-    <a href="https://lidyaqf.github.io/2025/04/11/ELK%E5%AE%89%E8%A3%85%E6%B5%81%E7%A8%8B/" title="ELK安装流程">https://lidyaqf.github.io/2025/04/11/ELK安装流程/</a>
+    <strong>Post link: </strong>
+    <a href="https://lidyaqf.github.io/2025/04/11/ELK%E5%AE%89%E8%A3%85%E6%B5%81%E7%A8%8B/" title="ELK Installation Guide">https://lidyaqf.github.io/2025/04/11/ELK安装流程/</a>
   </li>
   <li class="post-copyright-license">
-    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
   </li>
 </ul>
 </div>
@@ -412,8 +413,8 @@
       <i class="fa fa-chevron-left"></i> GitLab CI/CD
     </a></div>
       <div class="post-nav-item">
-    <a href="/ening/2025/04/16/redis/" rel="next" title="redis">
-      redis <i class="fa fa-chevron-right"></i>
+    <a href="/ening/2025/04/18/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98/" rel="next" title="Frontend Interview Questions">
+      Frontend Interview Questions <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -469,16 +470,16 @@
 
       <ul class="sidebar-nav motion-element">
         <li class="sidebar-nav-toc">
-          文章目录
+          Table of Contents
         </li>
         <li class="sidebar-nav-overview">
-          站点概览
+          Overview
         </li>
       </ul>
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-Docker-%E5%AE%89%E8%A3%85-ELK-Stack%EF%BC%88ElasticSearch%E3%80%81Logstash%E3%80%81Kibana%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">使用 Docker 安装 ELK Stack（ElasticSearch、Logstash、Kibana）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%AE%E5%BD%95"><span class="nav-number">1.1.</span> <span class="nav-text">目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1%E3%80%81%E5%AE%89%E8%A3%85-ElasticSearch"><span class="nav-number">1.2.</span> <span class="nav-text">1、安装 ElasticSearch</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2%E3%80%81%E5%AE%89%E8%A3%85-Logstash"><span class="nav-number">1.3.</span> <span class="nav-text">2、安装 Logstash</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3%E3%80%81%E5%AE%89%E8%A3%85-Kibana"><span class="nav-number">1.4.</span> <span class="nav-text">3、安装 Kibana</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%99%84%EF%BC%9A%E5%AE%89%E8%A3%85-Docker%E3%80%81Portainer-%E5%8F%8A%E7%9B%B8%E5%85%B3%E5%91%BD%E4%BB%A4"><span class="nav-number">1.5.</span> <span class="nav-text">附：安装 Docker、Portainer 及相关命令</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Installing-ELK-Stack-ElasticSearch-Logstash-Kibana-with-Docker"><span class="nav-number">1.</span> <span class="nav-text">Installing ELK Stack (ElasticSearch, Logstash, Kibana) with Docker</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Table-of-Contents"><span class="nav-number">1.1.</span> <span class="nav-text">Table of Contents</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Install-ElasticSearch"><span class="nav-number">1.2.</span> <span class="nav-text">1. Install ElasticSearch</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Install-Logstash"><span class="nav-number">1.3.</span> <span class="nav-text">2. Install Logstash</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Install-Kibana"><span class="nav-number">1.4.</span> <span class="nav-text">3. Install Kibana</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Additional-Install-Docker-Portainer-and-Related-Commands"><span class="nav-number">1.5.</span> <span class="nav-text">Additional: Install Docker, Portainer, and Related Commands</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -487,28 +488,28 @@
     <img class="site-author-image" itemprop="image" alt="lidya"
       src="/ening/images/avatar.jpg">
   <p class="site-author-name" itemprop="name">lidya</p>
-  <div class="site-description" itemprop="description">服人以诚不以言</div>
+  <div class="site-description" itemprop="description"></div>
 </div>
 <div class="site-state-wrap motion-element">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
-          <a href="/ening/archives/">
+          <a href="/ening/ening/archives/">
         
-          <span class="site-state-item-count">32</span>
-          <span class="site-state-item-name">日志</span>
+          <span class="site-state-item-count">24</span>
+          <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-            <a href="/ening/categories/">
+            <a href="/ening/ening/categories/">
           
-        <span class="site-state-item-count">5</span>
-        <span class="site-state-item-name">分类</span></a>
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/ening/tags/">
           
-        <span class="site-state-item-count">17</span>
-        <span class="site-state-item-name">标签</span></a>
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
 </div>
@@ -555,7 +556,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-user"></i>
       </span>
-      <span class="site-uv" title="总访客量">
+      <span class="site-uv" title="Total Visitors">
         <span id="busuanzi_value_site_uv"></span>
       </span>
     </span>
@@ -564,7 +565,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-eye"></i>
       </span>
-      <span class="site-pv" title="总访问量">
+      <span class="site-pv" title="Total Views">
         <span id="busuanzi_value_site_pv"></span>
       </span>
     </span>
