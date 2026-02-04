@@ -1,6 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Hexo-Next – Change Fonts &amp; Enable Code Copy</title>
+    <url>/ening/2025/08/18/Hexo-Next-%E6%9B%B4%E6%94%B9%E5%AD%97%E4%BD%93/</url>
+    <content><![CDATA[
+The Next theme version used here is 7.8.0.
+First, locate the file:
+/themes/next/_config.yml
+
+Search for the keyword font.⚠️ Important: You must set enable inside font to true, because the default value is false.If you only modify the family without enabling it, the font change will not take effect — so make sure you don’t miss this step.
+If the font family is sourced from an external platform, you also need to configure the host.
+font:  enable: true  # Uri of fonts host, e.g. https://fonts.googleapis.com (Default).  host:   # Font options:  # `external: true` will load this font family from `host` above.  # `family: Times New Roman`. Without any quotes.  # `size: x.x`. Use `em` as unit. Default: 1 (16px)  # Global font settings used for all elements inside &lt;body&gt;.  global:    external: true    family: Noto Serif SC    size:  # Font settings for site title (.site-title).  title:    external: true    family: Noto Serif SC    size:  # Font settings for headlines (&lt;h1&gt; to &lt;h6&gt;).  headings:    external: true    family: Noto Serif SC    size:  # Font settings for posts (.post-body).  posts:    external: true    family: Noto Serif SC  # Font settings for &lt;code&gt; and code blocks.  codes:    external: true    family: Source Code Pro
+
+
+Enable Copy Button for Code BlocksIn the same _config.yml file, locate the following configuration section.
+Set copy_button.enable to true to enable the copy feature.
+
+When show_result is set to true, a checkmark will be shown after copying.
+The style option controls the appearance of the copy button. Choose based on your preference.
+
+codeblock:  # Code Highlight theme  # Available values: normal | night | night eighties | night blue | night bright | solarized | solarized dark | galactic  # See: https://github.com/chriskempson/tomorrow-theme  highlight_theme: night eighties  # Add copy button on codeblock  copy_button:    enable: true    # Show text copy result.    show_result: true    # Available values: default | flat | mac    style: mac
+]]></content>
+      <categories>
+        <category>Frontend</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>React Native New Architecture</title>
+    <url>/ening/2025/08/19/ReactNative%E6%96%B0%E6%9E%B6%E6%9E%84/</url>
+    <content><![CDATA[
+Fabric: Enables synchronous UI rendering, eliminating the communication bottleneck of the Bridge.
+TurboModules: Loads native modules on demand, improving app startup performance.
+JSI (JavaScript Interface): Allows JavaScript to directly call native code, replacing the asynchronous Bridge. The Bridge is asynchronous and single-threaded, which introduces additional overhead; JSI, by contrast, is synchronous, lower-overhead, and supports concurrency.
+
+]]></content>
+      <categories>
+        <category>Frontend</category>
+      </categories>
+  </entry>
+  <entry>
     <title>ELK Installation Guide</title>
     <url>/ening/2025/04/11/ELK%E5%AE%89%E8%A3%85%E6%B5%81%E7%A8%8B/</url>
     <content><![CDATA[Installing ELK Stack (ElasticSearch, Logstash, Kibana) with Docker
@@ -77,44 +115,6 @@ Additional: Install Docker, Portainer, and Related Commandssudo apt updatesudo a
 ]]></content>
       <categories>
         <category>Backend</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>Hexo-Next – Change Fonts &amp; Enable Code Copy</title>
-    <url>/ening/2025/08/18/Hexo-Next-%E6%9B%B4%E6%94%B9%E5%AD%97%E4%BD%93/</url>
-    <content><![CDATA[
-The Next theme version used here is 7.8.0.
-First, locate the file:
-/themes/next/_config.yml
-
-Search for the keyword font.⚠️ Important: You must set enable inside font to true, because the default value is false.If you only modify the family without enabling it, the font change will not take effect — so make sure you don’t miss this step.
-If the font family is sourced from an external platform, you also need to configure the host.
-font:  enable: true  # Uri of fonts host, e.g. https://fonts.googleapis.com (Default).  host:   # Font options:  # `external: true` will load this font family from `host` above.  # `family: Times New Roman`. Without any quotes.  # `size: x.x`. Use `em` as unit. Default: 1 (16px)  # Global font settings used for all elements inside &lt;body&gt;.  global:    external: true    family: Noto Serif SC    size:  # Font settings for site title (.site-title).  title:    external: true    family: Noto Serif SC    size:  # Font settings for headlines (&lt;h1&gt; to &lt;h6&gt;).  headings:    external: true    family: Noto Serif SC    size:  # Font settings for posts (.post-body).  posts:    external: true    family: Noto Serif SC  # Font settings for &lt;code&gt; and code blocks.  codes:    external: true    family: Source Code Pro
-
-
-Enable Copy Button for Code BlocksIn the same _config.yml file, locate the following configuration section.
-Set copy_button.enable to true to enable the copy feature.
-
-When show_result is set to true, a checkmark will be shown after copying.
-The style option controls the appearance of the copy button. Choose based on your preference.
-
-codeblock:  # Code Highlight theme  # Available values: normal | night | night eighties | night blue | night bright | solarized | solarized dark | galactic  # See: https://github.com/chriskempson/tomorrow-theme  highlight_theme: night eighties  # Add copy button on codeblock  copy_button:    enable: true    # Show text copy result.    show_result: true    # Available values: default | flat | mac    style: mac
-]]></content>
-      <categories>
-        <category>Frontend</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>React Native New Architecture</title>
-    <url>/ening/2025/08/19/ReactNative%E6%96%B0%E6%9E%B6%E6%9E%84/</url>
-    <content><![CDATA[
-Fabric: Enables synchronous UI rendering, eliminating the communication bottleneck of the Bridge.
-TurboModules: Loads native modules on demand, improving app startup performance.
-JSI (JavaScript Interface): Allows JavaScript to directly call native code, replacing the asynchronous Bridge. The Bridge is asynchronous and single-threaded, which introduces additional overhead; JSI, by contrast, is synchronous, lower-overhead, and supports concurrency.
-
-]]></content>
-      <categories>
-        <category>Frontend</category>
       </categories>
   </entry>
   <entry>
@@ -260,24 +260,10 @@ After receiving the binary data, the frontend deserializes it into an RPC Respon
       </categories>
   </entry>
   <entry>
-    <title>React Component Communication Methods</title>
-    <url>/ening/2025/08/25/react%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F/</url>
-    <content><![CDATA[
-Props and Callback Props:Used for parent–child component communication. Child components receive data from parents via props. Parents pass callback functions to children, and children invoke these callbacks to send data back to the parent.
-
-Context API:An API for sharing state across components without the need to pass props down through every level of the component tree.
-
-Redux or MobX:For complex applications, state management libraries can be used to handle communication and shared state between components.
-
-Event Subscription Pattern:Uses mechanisms such as EventEmitter or third-party libraries to implement publish–subscribe patterns for communication between non-related components.
-
-Hooks:Some React Hooks, such as useState, can be used to share logic and state between components through custom hooks.
-
-
+    <title>Hello English</title>
+    <url>/ening/2024/08/16/redis-en/</url>
+    <content><![CDATA[This is an English post.
 ]]></content>
-      <categories>
-        <category>Frontend</category>
-      </categories>
   </entry>
   <entry>
     <title>One Day You&#39;ll Understand - Reading Notes by Mr. Zhuomo</title>
@@ -312,10 +298,24 @@ Understanding Entertainment &amp; FreedomLife has two paths: one for career ambi
       </tags>
   </entry>
   <entry>
-    <title>Hello English</title>
-    <url>/ening/2024/08/16/redis-en/</url>
-    <content><![CDATA[This is an English post.
+    <title>React Component Communication Methods</title>
+    <url>/ening/2025/08/25/react%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F/</url>
+    <content><![CDATA[
+Props and Callback Props:Used for parent–child component communication. Child components receive data from parents via props. Parents pass callback functions to children, and children invoke these callbacks to send data back to the parent.
+
+Context API:An API for sharing state across components without the need to pass props down through every level of the component tree.
+
+Redux or MobX:For complex applications, state management libraries can be used to handle communication and shared state between components.
+
+Event Subscription Pattern:Uses mechanisms such as EventEmitter or third-party libraries to implement publish–subscribe patterns for communication between non-related components.
+
+Hooks:Some React Hooks, such as useState, can be used to share logic and state between components through custom hooks.
+
+
 ]]></content>
+      <categories>
+        <category>Frontend</category>
+      </categories>
   </entry>
   <entry>
     <title>Information Technology Teaching Template for Primary and Secondary Schools</title>
@@ -520,6 +520,19 @@ Scoped slot: Vue 2 uses slot-scope=&quot;data&quot;, Vue 3 uses #data or #defaul
       </tags>
   </entry>
   <entry>
+    <title>Developing Without Frameworks</title>
+    <url>/ening/2025/08/13/%E5%A6%82%E4%BD%95%E8%84%B1%E7%A6%BB%E6%A1%86%E6%9E%B6%E5%BC%80%E5%8F%91/</url>
+    <content><![CDATA[
+Developing frontend applications without frameworks means building web projects without using any frontend frameworks such as Vue or React, and instead relying directly on JavaScript, HTML, and CSS. This approach allows developers to gain a deeper understanding of the underlying principles and mechanisms of frontend development, while avoiding over-reliance on frameworks.
+For static projects or low-complexity applications with limited functionality, developing without a framework is often more than sufficient. Code written with frameworks must be compiled before it can be rendered in the browser, which is why tools like Webpack exist. Frameworks such as Vue were created to solve specific pain points—like two-way data binding and automatic reactive updates—but they also require developers to follow framework-specific syntax and conventions. As frameworks evolve, developers must continuously learn and adapt to new versions.
+Frameworks are undoubtedly beneficial for development efficiency, but for simple requirements, avoiding a framework can actually be the wiser choice. Whether or not to use a framework should always be decided based on the actual project requirements.
+When developing multiple similar websites, unbundled code can be uploaded directly to the server and modified in place. In contrast, when using a framework, only the compiled output is deployed, and any changes require local modification and rebuilding, which can be more time-consuming. After becoming proficient in pure JavaScript development, developers can even go on to build their own tools or frameworks.
+]]></content>
+      <categories>
+        <category>Frontend</category>
+      </categories>
+  </entry>
+  <entry>
     <title>How to Prevent XSS</title>
     <url>/ening/2025/10/17/%E5%A6%82%E4%BD%95%E9%98%B2%E5%BE%A1%20XSS%EF%BC%88%E8%B7%A8%E7%AB%99%E8%84%9A%E6%9C%AC%E6%94%BB%E5%87%BB%EF%BC%89/</url>
     <content><![CDATA[In web development, XSS (Cross-Site Scripting) is one of the most common and most dangerous security vulnerabilities.Once a website contains an XSS flaw, attackers may execute malicious scripts in users’ browsers, allowing them to steal cookies, hijack sessions, deface pages, or even take over user accounts.
@@ -702,29 +715,6 @@ Solution: Disable sandbox when launching Puppeteer// Add launch arguments to dis
       </categories>
   </entry>
   <entry>
-    <title>Reflections on *What I Talk About When I Talk About Running*</title>
-    <url>/ening/2025/06/26/%E5%BD%93%E6%88%91%E8%B0%88%E8%B7%91%E6%AD%A5%E6%97%B6/</url>
-    <content><![CDATA[What I Talk About When I Talk About RunningIt was through this book that I realized there could be another version of myself out there, doing something I love. Before reading this book, I had never read anything by Murakami. I knew he was popular and had many famous books, but I hadn’t really paid attention. But when it comes to running, I felt there could be a connection.
-If I keep running, will I eventually reach the moon? Running isn’t about living longer, but about making life feel easier and lighter within the time we have.
-I was surprised by Murakami’s imagination while running—so free and boundless. I really enjoy that. I’ve imagined many things too, like suddenly recalling a lyric while running—something like “speeding up to chase happiness,” blabla… Long-distance running requires endurance, but also imagination. Of course, the premise is loving to run. If someone doesn’t like running, no matter how much you say, it won’t matter. But if someone does love it, they’ll even want to meet another version of themselves during a break in the rain. Humans are inherently lonely, but the spirit can resonate with others.
-I plan to keep running no matter how the world changes. Once, I walked 30 kilometers in one day. Despite the sunburn, I loved the spiritual fulfillment more. If you haven’t experienced it, you have no voice. Maybe I’m like Chen Kun—a pessimistic optimist. I live actively in this world, but I also see through its illusions. Neither joyful because of things, nor sorrowful because of myself.
-My pulse has dropped to just over 50 beats per minute. Seems like I’m built for jogging. After all, it’s about interest. As long as my freedom isn’t restricted, anything is acceptable.
-I hope next year I’ll join a marathon, with people cheering me on. That would be so happy.
-
-“I’m not a person, but a pure machine. So I don’t need to feel anything, just keep running forward.”
-
-What’s most similar is that we both love to run non-stop. Not the type who walks when tired or stops to enjoy the scenery. Maybe people have different views, but I think the true king is the one who can keep running without stopping.
-When reaching the finish line, I’d feel so cool, a rush of pride, like winning the lottery or getting incredibly lucky. It’s a principle—and also my pride.
-Oh, right—just like Brother Shang waiting at the finish line, and I’d smile proudly.
-]]></content>
-      <categories>
-        <category>Reading</category>
-      </categories>
-      <tags>
-        <tag>Reading</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Fully Understanding How the JavaScript `new` Operator Works</title>
     <url>/ening/2025/12/17/%E6%89%8B%E5%86%99New/</url>
     <content><![CDATA[In JavaScript, the new operator is a core concept that frequently appears in both interviews and everyday development.Many developers use new regularly, but few truly understand what actually happens behind the scenes.
@@ -837,6 +827,29 @@ If you can both write and explain this implementation,90% of interviewers will c
       </categories>
   </entry>
   <entry>
+    <title>Reflections on *What I Talk About When I Talk About Running*</title>
+    <url>/ening/2025/06/26/%E5%BD%93%E6%88%91%E8%B0%88%E8%B7%91%E6%AD%A5%E6%97%B6/</url>
+    <content><![CDATA[What I Talk About When I Talk About RunningIt was through this book that I realized there could be another version of myself out there, doing something I love. Before reading this book, I had never read anything by Murakami. I knew he was popular and had many famous books, but I hadn’t really paid attention. But when it comes to running, I felt there could be a connection.
+If I keep running, will I eventually reach the moon? Running isn’t about living longer, but about making life feel easier and lighter within the time we have.
+I was surprised by Murakami’s imagination while running—so free and boundless. I really enjoy that. I’ve imagined many things too, like suddenly recalling a lyric while running—something like “speeding up to chase happiness,” blabla… Long-distance running requires endurance, but also imagination. Of course, the premise is loving to run. If someone doesn’t like running, no matter how much you say, it won’t matter. But if someone does love it, they’ll even want to meet another version of themselves during a break in the rain. Humans are inherently lonely, but the spirit can resonate with others.
+I plan to keep running no matter how the world changes. Once, I walked 30 kilometers in one day. Despite the sunburn, I loved the spiritual fulfillment more. If you haven’t experienced it, you have no voice. Maybe I’m like Chen Kun—a pessimistic optimist. I live actively in this world, but I also see through its illusions. Neither joyful because of things, nor sorrowful because of myself.
+My pulse has dropped to just over 50 beats per minute. Seems like I’m built for jogging. After all, it’s about interest. As long as my freedom isn’t restricted, anything is acceptable.
+I hope next year I’ll join a marathon, with people cheering me on. That would be so happy.
+
+“I’m not a person, but a pure machine. So I don’t need to feel anything, just keep running forward.”
+
+What’s most similar is that we both love to run non-stop. Not the type who walks when tired or stops to enjoy the scenery. Maybe people have different views, but I think the true king is the one who can keep running without stopping.
+When reaching the finish line, I’d feel so cool, a rush of pride, like winning the lottery or getting incredibly lucky. It’s a principle—and also my pride.
+Oh, right—just like Brother Shang waiting at the finish line, and I’d smile proudly.
+]]></content>
+      <categories>
+        <category>Reading</category>
+      </categories>
+      <tags>
+        <tag>Reading</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Reflections on *Skin*</title>
     <url>/ening/2025/06/26/%E7%9A%AE%E5%9B%8A%E6%84%9F%E6%82%9F/</url>
     <content><![CDATA[Aunt TaiAunt Tai is strong-willed and resilient. Her optimistic attitude is something worth learning from. The greatest thing my father ever did was marrying my mother—a truly great woman. A real woman should face everything with positivity and build the future she desires with her own hands.
@@ -855,16 +868,73 @@ Public opinion is powerful, but Zhang Meili’s inner strength is even more powe
       </tags>
   </entry>
   <entry>
-    <title>Developing Without Frameworks</title>
-    <url>/ening/2025/08/13/%E5%A6%82%E4%BD%95%E8%84%B1%E7%A6%BB%E6%A1%86%E6%9E%B6%E5%BC%80%E5%8F%91/</url>
-    <content><![CDATA[
-Developing frontend applications without frameworks means building web projects without using any frontend frameworks such as Vue or React, and instead relying directly on JavaScript, HTML, and CSS. This approach allows developers to gain a deeper understanding of the underlying principles and mechanisms of frontend development, while avoiding over-reliance on frameworks.
-For static projects or low-complexity applications with limited functionality, developing without a framework is often more than sufficient. Code written with frameworks must be compiled before it can be rendered in the browser, which is why tools like Webpack exist. Frameworks such as Vue were created to solve specific pain points—like two-way data binding and automatic reactive updates—but they also require developers to follow framework-specific syntax and conventions. As frameworks evolve, developers must continuously learn and adapt to new versions.
-Frameworks are undoubtedly beneficial for development efficiency, but for simple requirements, avoiding a framework can actually be the wiser choice. Whether or not to use a framework should always be decided based on the actual project requirements.
-When developing multiple similar websites, unbundled code can be uploaded directly to the server and modified in place. In contrast, when using a framework, only the compiled output is deployed, and any changes require local modification and rebuilding, which can be more time-consuming. After becoming proficient in pure JavaScript development, developers can even go on to build their own tools or frameworks.
+    <title>Encountering the Unknown Self</title>
+    <url>/ening/2025/06/30/%E9%81%87%E8%A7%81%E6%9C%AA%E7%9F%A5%E7%9A%84%E8%87%AA%E5%B7%B1/</url>
+    <content><![CDATA[Notes on Encountering the Unknown SelfWhat is the “Unknown”?The “self” refers to the “true self.” From the question “Who am I?” to the concept of “from existence to non-existence,” the entire book is structured around dialogues between Ruoling and a wise elder, revealing many profound life concepts.
+
+Core Concepts
+There is no one outside—only yourself.All external situations are actually projections of your inner world.
+
+Golden Moments to Talk with the SubconsciousThe best times to imagine you’ve already achieved your goals are the moments between waking and sleeping—early morning just before fully waking up, or late at night before falling asleep. These times are when we are closest to our subconscious.
+
+Key Practices: Awareness, Surrender, Overcoming the Peptide Self (Ego)
+
+Awareness: Focus on your present self. Observe your emotions and reactions without judgment.
+Surrender: Accept reality instead of resisting it.
+Peptide Self (Ego): Represents inner voices of fear, comparison, and anxiety. Learn to recognize and transcend them.
+
+
+Meditation, Gratitude, Giving
+
+During meditation, visualize yourself already living your desired life.
+Be grateful even before your goals are achieved.
+Maintain a selfless, giving mindset.
+
+
+Care Less About Others, Care More About Yourself
+
+Bring your attention back to yourself and your inner world.
+When emotions arise, be aware of which part of your body feels uncomfortable and understand its message.
+
+
+
+
+ConclusionThis book is not only about discovering “who you are,” but also about reminding you to “become that true self.” Awakening inner strength requires continuous awareness, practice, and transcending the ego.
 ]]></content>
       <categories>
-        <category>Frontend</category>
+        <category>Reading</category>
+      </categories>
+      <tags>
+        <tag>Personal Growth</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Index</title>
+    <url>/ening/2025/07/27/%E7%B4%A2%E5%BC%95/</url>
+    <content><![CDATA[The Role of IndexesWhen you want to quickly find the data you need, you can use indexes.With indexes, the database can directly locate the required data during retrieval, saving time—much like the table of contents at the front of a book, which helps you quickly find what you want to read.
+If an index contains multiple columns, it follows the leftmost prefix rule, meaning it is used from left to right, starting with the leftmost column.
+Types of Indexes1. Unique IndexA unique index can be added to certain columns (such as an ID number) to ensure that no two records have the same value. By using the UNIQUE keyword, we can create a unique index.
+ADD UNIQUE INDEX uni_sf (sf);
+
+You can also add a unique constraint to a column without explicitly creating a unique index. In this case, the column is still required to have unique values.
+ADD CONSTRAINT uni_name UNIQUE (name);
+
+
+
+2. Primary Key IndexOnce a primary key is created, an index is automatically created for it. This is why searching data by the primary key is faster.
+A table can have only one primary key, but a primary key can consist of multiple columns, which is known as a composite (or joint) primary key.
+ALTER TABLE table_name ADD PRIMARY KEY (column);
+
+
+
+3. Normal (Non-unique) IndexAny column can have an index created on it. It is recommended to add indexes only to columns that are frequently queried. Avoid adding indexes to every column, as this can negatively impact performance.
+ALTER TABLE table_name ADD INDEX index_name (column);
+
+
+
+]]></content>
+      <categories>
+        <category>Backend</category>
       </categories>
   </entry>
   <entry>
@@ -957,76 +1027,6 @@ Iterate over the iterable, wrap each item with Promise.resolve, attach the same 
 ]]></content>
       <categories>
         <category>Frontend</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>Encountering the Unknown Self</title>
-    <url>/ening/2025/06/30/%E9%81%87%E8%A7%81%E6%9C%AA%E7%9F%A5%E7%9A%84%E8%87%AA%E5%B7%B1/</url>
-    <content><![CDATA[Notes on Encountering the Unknown SelfWhat is the “Unknown”?The “self” refers to the “true self.” From the question “Who am I?” to the concept of “from existence to non-existence,” the entire book is structured around dialogues between Ruoling and a wise elder, revealing many profound life concepts.
-
-Core Concepts
-There is no one outside—only yourself.All external situations are actually projections of your inner world.
-
-Golden Moments to Talk with the SubconsciousThe best times to imagine you’ve already achieved your goals are the moments between waking and sleeping—early morning just before fully waking up, or late at night before falling asleep. These times are when we are closest to our subconscious.
-
-Key Practices: Awareness, Surrender, Overcoming the Peptide Self (Ego)
-
-Awareness: Focus on your present self. Observe your emotions and reactions without judgment.
-Surrender: Accept reality instead of resisting it.
-Peptide Self (Ego): Represents inner voices of fear, comparison, and anxiety. Learn to recognize and transcend them.
-
-
-Meditation, Gratitude, Giving
-
-During meditation, visualize yourself already living your desired life.
-Be grateful even before your goals are achieved.
-Maintain a selfless, giving mindset.
-
-
-Care Less About Others, Care More About Yourself
-
-Bring your attention back to yourself and your inner world.
-When emotions arise, be aware of which part of your body feels uncomfortable and understand its message.
-
-
-
-
-ConclusionThis book is not only about discovering “who you are,” but also about reminding you to “become that true self.” Awakening inner strength requires continuous awareness, practice, and transcending the ego.
-]]></content>
-      <categories>
-        <category>Reading</category>
-      </categories>
-      <tags>
-        <tag>Personal Growth</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Index</title>
-    <url>/ening/2025/07/27/%E7%B4%A2%E5%BC%95/</url>
-    <content><![CDATA[The Role of IndexesWhen you want to quickly find the data you need, you can use indexes.With indexes, the database can directly locate the required data during retrieval, saving time—much like the table of contents at the front of a book, which helps you quickly find what you want to read.
-If an index contains multiple columns, it follows the leftmost prefix rule, meaning it is used from left to right, starting with the leftmost column.
-Types of Indexes1. Unique IndexA unique index can be added to certain columns (such as an ID number) to ensure that no two records have the same value. By using the UNIQUE keyword, we can create a unique index.
-ADD UNIQUE INDEX uni_sf (sf);
-
-You can also add a unique constraint to a column without explicitly creating a unique index. In this case, the column is still required to have unique values.
-ADD CONSTRAINT uni_name UNIQUE (name);
-
-
-
-2. Primary Key IndexOnce a primary key is created, an index is automatically created for it. This is why searching data by the primary key is faster.
-A table can have only one primary key, but a primary key can consist of multiple columns, which is known as a composite (or joint) primary key.
-ALTER TABLE table_name ADD PRIMARY KEY (column);
-
-
-
-3. Normal (Non-unique) IndexAny column can have an index created on it. It is recommended to add indexes only to columns that are frequently queried. Avoid adding indexes to every column, as this can negatively impact performance.
-ALTER TABLE table_name ADD INDEX index_name (column);
-
-
-
-]]></content>
-      <categories>
-        <category>Backend</category>
       </categories>
   </entry>
   <entry>
