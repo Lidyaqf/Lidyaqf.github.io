@@ -1,44 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Hexo-Next – Change Fonts &amp; Enable Code Copy</title>
-    <url>/ening/2025/08/18/Hexo-Next-%E6%9B%B4%E6%94%B9%E5%AD%97%E4%BD%93/</url>
-    <content><![CDATA[
-The Next theme version used here is 7.8.0.
-First, locate the file:
-/themes/next/_config.yml
-
-Search for the keyword font.⚠️ Important: You must set enable inside font to true, because the default value is false.If you only modify the family without enabling it, the font change will not take effect — so make sure you don’t miss this step.
-If the font family is sourced from an external platform, you also need to configure the host.
-font:  enable: true  # Uri of fonts host, e.g. https://fonts.googleapis.com (Default).  host:   # Font options:  # `external: true` will load this font family from `host` above.  # `family: Times New Roman`. Without any quotes.  # `size: x.x`. Use `em` as unit. Default: 1 (16px)  # Global font settings used for all elements inside &lt;body&gt;.  global:    external: true    family: Noto Serif SC    size:  # Font settings for site title (.site-title).  title:    external: true    family: Noto Serif SC    size:  # Font settings for headlines (&lt;h1&gt; to &lt;h6&gt;).  headings:    external: true    family: Noto Serif SC    size:  # Font settings for posts (.post-body).  posts:    external: true    family: Noto Serif SC  # Font settings for &lt;code&gt; and code blocks.  codes:    external: true    family: Source Code Pro
-
-
-Enable Copy Button for Code BlocksIn the same _config.yml file, locate the following configuration section.
-Set copy_button.enable to true to enable the copy feature.
-
-When show_result is set to true, a checkmark will be shown after copying.
-The style option controls the appearance of the copy button. Choose based on your preference.
-
-codeblock:  # Code Highlight theme  # Available values: normal | night | night eighties | night blue | night bright | solarized | solarized dark | galactic  # See: https://github.com/chriskempson/tomorrow-theme  highlight_theme: night eighties  # Add copy button on codeblock  copy_button:    enable: true    # Show text copy result.    show_result: true    # Available values: default | flat | mac    style: mac
-]]></content>
-      <categories>
-        <category>Frontend</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>React Native New Architecture</title>
-    <url>/ening/2025/08/19/ReactNative%E6%96%B0%E6%9E%B6%E6%9E%84/</url>
-    <content><![CDATA[
-Fabric: Enables synchronous UI rendering, eliminating the communication bottleneck of the Bridge.
-TurboModules: Loads native modules on demand, improving app startup performance.
-JSI (JavaScript Interface): Allows JavaScript to directly call native code, replacing the asynchronous Bridge. The Bridge is asynchronous and single-threaded, which introduces additional overhead; JSI, by contrast, is synchronous, lower-overhead, and supports concurrency.
-
-]]></content>
-      <categories>
-        <category>Frontend</category>
-      </categories>
-  </entry>
-  <entry>
     <title>ELK Installation Guide</title>
     <url>/ening/2025/04/11/ELK%E5%AE%89%E8%A3%85%E6%B5%81%E7%A8%8B/</url>
     <content><![CDATA[Installing ELK Stack (ElasticSearch, Logstash, Kibana) with Docker
@@ -118,6 +80,44 @@ Additional: Install Docker, Portainer, and Related Commandssudo apt updatesudo a
       </categories>
   </entry>
   <entry>
+    <title>Hexo-Next – Change Fonts &amp; Enable Code Copy</title>
+    <url>/ening/2025/08/18/Hexo-Next-%E6%9B%B4%E6%94%B9%E5%AD%97%E4%BD%93/</url>
+    <content><![CDATA[
+The Next theme version used here is 7.8.0.
+First, locate the file:
+/themes/next/_config.yml
+
+Search for the keyword font.⚠️ Important: You must set enable inside font to true, because the default value is false.If you only modify the family without enabling it, the font change will not take effect — so make sure you don’t miss this step.
+If the font family is sourced from an external platform, you also need to configure the host.
+font:  enable: true  # Uri of fonts host, e.g. https://fonts.googleapis.com (Default).  host:   # Font options:  # `external: true` will load this font family from `host` above.  # `family: Times New Roman`. Without any quotes.  # `size: x.x`. Use `em` as unit. Default: 1 (16px)  # Global font settings used for all elements inside &lt;body&gt;.  global:    external: true    family: Noto Serif SC    size:  # Font settings for site title (.site-title).  title:    external: true    family: Noto Serif SC    size:  # Font settings for headlines (&lt;h1&gt; to &lt;h6&gt;).  headings:    external: true    family: Noto Serif SC    size:  # Font settings for posts (.post-body).  posts:    external: true    family: Noto Serif SC  # Font settings for &lt;code&gt; and code blocks.  codes:    external: true    family: Source Code Pro
+
+
+Enable Copy Button for Code BlocksIn the same _config.yml file, locate the following configuration section.
+Set copy_button.enable to true to enable the copy feature.
+
+When show_result is set to true, a checkmark will be shown after copying.
+The style option controls the appearance of the copy button. Choose based on your preference.
+
+codeblock:  # Code Highlight theme  # Available values: normal | night | night eighties | night blue | night bright | solarized | solarized dark | galactic  # See: https://github.com/chriskempson/tomorrow-theme  highlight_theme: night eighties  # Add copy button on codeblock  copy_button:    enable: true    # Show text copy result.    show_result: true    # Available values: default | flat | mac    style: mac
+]]></content>
+      <categories>
+        <category>Frontend</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>React Native New Architecture</title>
+    <url>/ening/2025/08/19/ReactNative%E6%96%B0%E6%9E%B6%E6%9E%84/</url>
+    <content><![CDATA[
+Fabric: Enables synchronous UI rendering, eliminating the communication bottleneck of the Bridge.
+TurboModules: Loads native modules on demand, improving app startup performance.
+JSI (JavaScript Interface): Allows JavaScript to directly call native code, replacing the asynchronous Bridge. The Bridge is asynchronous and single-threaded, which introduces additional overhead; JSI, by contrast, is synchronous, lower-overhead, and supports concurrency.
+
+]]></content>
+      <categories>
+        <category>Frontend</category>
+      </categories>
+  </entry>
+  <entry>
     <title>React Native Custom Slider</title>
     <url>/ening/2025/07/22/ReactNative%E8%87%AA%E5%AE%9A%E4%B9%89%E6%BB%91%E5%8A%A8%E6%9D%A1/</url>
     <content><![CDATA[
@@ -127,6 +127,20 @@ Component Codeimport React, &#123; PureComponent &#125; from &#x27;react&#x27;;i
 How to Use (Import)import &#123; Slider &#125; from &#x27;path-to-the-component-above&#x27;;&lt;Slider  minimumValue=&#123;1&#125;  maximumValue=&#123;7&#125; // sliding range: 1 to 7  minimumTrackTintColor=&quot;#0A79C3&quot;  maximumTrackTintColor=&quot;#F3F3F3&quot;  step=&#123;1&#125; // step size  value=&#123;targetDay&#125; // default value, e.g. 4  onValueChange=&#123;targetDays =&gt;    dispatch(&#123;      type: &#x27;SetupWeekTarget/updateState&#x27;,      payload: &#123; targetDay: targetDays &#125;    &#125;)  &#125; // triggered when sliding  trackStyle=&#123;&#123; height: 10, borderRadius: 12 &#125;&#125;  containerStyle=&#123;&#123; width: SCREEN_WIDTH - 90 &#125;&#125;  thumbTintColor=&quot;transparent&quot;  thumbImage=&#123;require(&#x27;path-to-your-image&#x27;)&#125;  /&gt;
 
 More ParametersFor the full list of available props and detailed documentation, please refer to:https://github.com/miblanchard/react-native-slider
+]]></content>
+      <categories>
+        <category>Frontend</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>Sync Google Sheets Data Between Spreadsheets</title>
+    <url>/ening/2025/08/28/google%20sheet%E5%90%8C%E6%AD%A5%E8%A1%A8%E6%A0%BC%E6%95%B0%E6%8D%AE/</url>
+    <content><![CDATA[Sync Google Sheets Data Across Multiple SheetsThere is a requirement to synchronize all sheets from one Google Spreadsheet to another spreadsheet (including all sub-sheets).
+This is implemented using Google Sheets → Extensions → Apps Script.
+Why synchronization is neededThe source spreadsheet is read-only by default.By synchronizing its data into another spreadsheet, the copied sheets can then be edited freely.
+sourceSpreadsheetId and targetSpreadsheetId are the IDs from the Google Sheets URL —they are the long strings after /d/ in the address bar.
+Apps Script Code Examplefunction synchronizeSheetsToAnotherFile() &#123;  const sourceSpreadsheetId = &quot;id1&quot;;  const targetSpreadsheetId = &quot;id2&quot;;   // Example: 1NOtSSvDwXrca8vqyZW6OqQJwGaCICMVguSz1-i72oqg  const sourceSpreadsheet = SpreadsheetApp.openById(sourceSpreadsheetId);  const targetSpreadsheet = SpreadsheetApp.openById(targetSpreadsheetId);  const sourceSheets = sourceSpreadsheet.getSheets();  sourceSheets.forEach(sheet =&gt; &#123;    const sheetName = sheet.getName();    let targetSheet = targetSpreadsheet.getSheetByName(sheetName);    if (!targetSheet) &#123;      targetSheet = targetSpreadsheet.insertSheet(sheetName);    &#125; else &#123;      targetSheet.clear();    &#125;    const range = sheet.getDataRange();    const displayValues = range.getDisplayValues();     const formats = range.getBackgrounds();            const fontWeights = range.getFontWeights();        const targetRange = targetSheet.getRange(      1,      1,      displayValues.length,      displayValues[0].length    );    targetRange.setValues(displayValues);    targetRange.setBackgrounds(formats);    targetRange.setFontWeights(fontWeights);  &#125;);&#125;
+
 ]]></content>
       <categories>
         <category>Frontend</category>
@@ -199,20 +213,6 @@ After successful deployment, you can view the build process on the GitLab CI&#x2
       </tags>
   </entry>
   <entry>
-    <title>Sync Google Sheets Data Between Spreadsheets</title>
-    <url>/ening/2025/08/28/google%20sheet%E5%90%8C%E6%AD%A5%E8%A1%A8%E6%A0%BC%E6%95%B0%E6%8D%AE/</url>
-    <content><![CDATA[Sync Google Sheets Data Across Multiple SheetsThere is a requirement to synchronize all sheets from one Google Spreadsheet to another spreadsheet (including all sub-sheets).
-This is implemented using Google Sheets → Extensions → Apps Script.
-Why synchronization is neededThe source spreadsheet is read-only by default.By synchronizing its data into another spreadsheet, the copied sheets can then be edited freely.
-sourceSpreadsheetId and targetSpreadsheetId are the IDs from the Google Sheets URL —they are the long strings after /d/ in the address bar.
-Apps Script Code Examplefunction synchronizeSheetsToAnotherFile() &#123;  const sourceSpreadsheetId = &quot;id1&quot;;  const targetSpreadsheetId = &quot;id2&quot;;   // Example: 1NOtSSvDwXrca8vqyZW6OqQJwGaCICMVguSz1-i72oqg  const sourceSpreadsheet = SpreadsheetApp.openById(sourceSpreadsheetId);  const targetSpreadsheet = SpreadsheetApp.openById(targetSpreadsheetId);  const sourceSheets = sourceSpreadsheet.getSheets();  sourceSheets.forEach(sheet =&gt; &#123;    const sheetName = sheet.getName();    let targetSheet = targetSpreadsheet.getSheetByName(sheetName);    if (!targetSheet) &#123;      targetSheet = targetSpreadsheet.insertSheet(sheetName);    &#125; else &#123;      targetSheet.clear();    &#125;    const range = sheet.getDataRange();    const displayValues = range.getDisplayValues();     const formats = range.getBackgrounds();            const fontWeights = range.getFontWeights();        const targetRange = targetSheet.getRange(      1,      1,      displayValues.length,      displayValues[0].length    );    targetRange.setValues(displayValues);    targetRange.setBackgrounds(formats);    targetRange.setFontWeights(fontWeights);  &#125;);&#125;
-
-]]></content>
-      <categories>
-        <category>Frontend</category>
-      </categories>
-  </entry>
-  <entry>
     <title>JavaScript Basics</title>
     <url>/ening/2025/12/02/js%E5%9F%BA%E7%A1%80/</url>
     <content><![CDATA[JavaScript Basics Summary (Hoisting, Strict Mode)
@@ -233,26 +233,6 @@ function foo() &#123;  &quot;use strict&quot;;  console.log(this.a); // ❌ Type
 
 
 (function() &#123;  &quot;use strict&quot;;  foo(); // calling foo here doesn&#x27;t change its default binding&#125;)();function foo() &#123;  console.log(this.a);&#125;var a = 2;
-]]></content>
-      <categories>
-        <category>Frontend</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>React Component Communication Methods</title>
-    <url>/ening/2025/08/25/react%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F/</url>
-    <content><![CDATA[
-Props and Callback Props:Used for parent–child component communication. Child components receive data from parents via props. Parents pass callback functions to children, and children invoke these callbacks to send data back to the parent.
-
-Context API:An API for sharing state across components without the need to pass props down through every level of the component tree.
-
-Redux or MobX:For complex applications, state management libraries can be used to handle communication and shared state between components.
-
-Event Subscription Pattern:Uses mechanisms such as EventEmitter or third-party libraries to implement publish–subscribe patterns for communication between non-related components.
-
-Hooks:Some React Hooks, such as useState, can be used to share logic and state between components through custom hooks.
-
-
 ]]></content>
       <categories>
         <category>Frontend</category>
@@ -286,6 +266,26 @@ After receiving the binary data, the frontend deserializes it into an RPC Respon
 ]]></content>
   </entry>
   <entry>
+    <title>React Component Communication Methods</title>
+    <url>/ening/2025/08/25/react%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F/</url>
+    <content><![CDATA[
+Props and Callback Props:Used for parent–child component communication. Child components receive data from parents via props. Parents pass callback functions to children, and children invoke these callbacks to send data back to the parent.
+
+Context API:An API for sharing state across components without the need to pass props down through every level of the component tree.
+
+Redux or MobX:For complex applications, state management libraries can be used to handle communication and shared state between components.
+
+Event Subscription Pattern:Uses mechanisms such as EventEmitter or third-party libraries to implement publish–subscribe patterns for communication between non-related components.
+
+Hooks:Some React Hooks, such as useState, can be used to share logic and state between components through custom hooks.
+
+
+]]></content>
+      <categories>
+        <category>Frontend</category>
+      </categories>
+  </entry>
+  <entry>
     <title>One Day You&#39;ll Understand - Reading Notes by Mr. Zhuomo</title>
     <url>/ening/2025/05/21/%E3%80%8A%E7%BB%88%E6%9C%89%E4%B8%80%E5%A4%A9%E4%BD%A0%E4%BC%9A%E6%87%82%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%20-%20%E7%90%A2%E7%A3%A8%E5%85%88%E7%94%9F/</url>
     <content><![CDATA[The book does contain a lot of his own “biases,” but I find him authentic and humorous. His language is simple and understandable, and each subtitle essentially tells us what we should do.
@@ -316,23 +316,6 @@ Understanding Entertainment &amp; FreedomLife has two paths: one for career ambi
       <tags>
         <tag>Reading</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>Information Technology Teaching Template for Primary and Secondary Schools</title>
-    <url>/ening/2025/08/21/%E4%B8%AD%E5%B0%8F%E5%AD%A6%E4%BF%A1%E6%81%AF%E6%8A%80%E6%9C%AF%E6%95%99%E5%AD%A6%E6%A8%A1%E7%89%88/</url>
-    <content><![CDATA[Verbatim Teaching Script: “if-elif Conditional Statements”    Students, just now the teacher noticed the class duty roster. From Monday to Friday, there are many diligent “little bees” on duty. I’d like to ask: which students are on duty on Monday? Please raise your hands. Yes, I see you. Now, students, do you remember who the students on duty on Monday are? That’s right, there are six students in total.
-    Now suppose we take three classes as a unit and give you a student’s name. Can you quickly tell which day of the week this student is on duty? Do you have any good ideas? You there—yes, you mentioned memorizing it with a rhyme or mnemonic. Are there any better methods? You—right, we can use a program to output the result. So, what kind of statement should we use to represent multiple conditions? Today, we are going to learn another conditional statement in Python: if-elif-else.
-    Next, please work in pairs with your desk mates. Analyze how to use if-elif-else to solve the problem of matching student names to duty days. You have 8 minutes. Begin.Time’s up. While walking around, I saw everyone actively discussing. Which group would like to share your ideas? You, please. You said that we can input a student’s name and determine which day they are on duty by matching the name and outputting the corresponding weekday. Any additions? Group Five, please share. They suggested creating five arrays corresponding to Monday through Friday, placing each student’s name into the appropriate array, and then judging which day to output. That’s a very important point. Please sit down. Excellent work. It’s clear that everyone has previewed today’s lesson well.
-    Next, let’s integrate everyone’s ideas. Please think independently and draw a flowchart. You have 5 minutes. Begin.Time’s up. This student, please come up and present your flowchart. You explained that first we input the student’s name. If Xiaohua is in Monday’s array, then output Monday, and so on. Now, please try to write a multi-branch conditional statement. Here’s a hint from the teacher: use elif for additional conditional clauses. Let’s ask this student to write their answer on the blackboard. Students, compare it with your own code. Which parts need modification? You said the final elif should be changed to else, to indicate that when none of the conditions are met, the statements under else are executed. You also mentioned paying attention to indentation and colons. Very careful observations. I hope everyone writes carefully when coding. Now please use the if-elif statements you’ve learned to implement the algorithm you designed. I see that everyone has written it correctly and avoided the earlier issues.
-    Now that we’ve written the statements, what is their execution process? Please discuss this in pairs. In a moment, we’ll ask one group to explain. You have 7 minutes. Begin.I see students discussing quietly. Time’s up. Group Two, please explain the execution process. They used the flowchart to explain that the program checks each condition in order. If a condition is satisfied, it outputs the result; if none are satisfied, it outputs an error message. Their explanation combined diagrams and text and was very clear. Based on the flowchart on the screen, we can summarize the execution process of if-elif statements: the program starts from the if condition and checks conditions one by one. If a condition is true, the corresponding block of code is executed and the program exits the if structure. If the condition is false, it moves on to the next condition. If all conditions are false, the else block is executed.
-    Now that we’ve finished learning the new knowledge, please write a complete program that implements this process. Students who finish early may think about real-life situations that require checking multiple conditions and write corresponding programs. Let’s invite some students to present their work. Some students approached the problem from a mathematics perspective, writing a program to compare three numbers and find the maximum. Others took inspiration from daily life and wrote a taxi fare calculation program. All of your programs were well-structured and correctly formatted.
-    As today’s lesson comes to an end, what have you learned from this class? You said that you’ve learned the format and execution process of if-elif statements. It seems everyone has mastered today’s content. In fact, programming is very close to our daily life and studies, and it’s not as difficult as it may seem. The teacher hopes that you will continue to think actively and express your ideas in class just like today.
-    Finally, here is a homework assignment: please compare the characteristics of the three types of if statements and organize them into a table.
-    That’s all for today’s lesson. Goodbye, students.
-]]></content>
-      <categories>
-        <category>Teacher Certification</category>
-      </categories>
   </entry>
   <entry>
     <title>Frontend Interview Questions</title>
@@ -520,6 +503,23 @@ Scoped slot: Vue 2 uses slot-scope=&quot;data&quot;, Vue 3 uses #data or #defaul
       </tags>
   </entry>
   <entry>
+    <title>Information Technology Teaching Template for Primary and Secondary Schools</title>
+    <url>/ening/2025/08/21/%E4%B8%AD%E5%B0%8F%E5%AD%A6%E4%BF%A1%E6%81%AF%E6%8A%80%E6%9C%AF%E6%95%99%E5%AD%A6%E6%A8%A1%E7%89%88/</url>
+    <content><![CDATA[Verbatim Teaching Script: “if-elif Conditional Statements”    Students, just now the teacher noticed the class duty roster. From Monday to Friday, there are many diligent “little bees” on duty. I’d like to ask: which students are on duty on Monday? Please raise your hands. Yes, I see you. Now, students, do you remember who the students on duty on Monday are? That’s right, there are six students in total.
+    Now suppose we take three classes as a unit and give you a student’s name. Can you quickly tell which day of the week this student is on duty? Do you have any good ideas? You there—yes, you mentioned memorizing it with a rhyme or mnemonic. Are there any better methods? You—right, we can use a program to output the result. So, what kind of statement should we use to represent multiple conditions? Today, we are going to learn another conditional statement in Python: if-elif-else.
+    Next, please work in pairs with your desk mates. Analyze how to use if-elif-else to solve the problem of matching student names to duty days. You have 8 minutes. Begin.Time’s up. While walking around, I saw everyone actively discussing. Which group would like to share your ideas? You, please. You said that we can input a student’s name and determine which day they are on duty by matching the name and outputting the corresponding weekday. Any additions? Group Five, please share. They suggested creating five arrays corresponding to Monday through Friday, placing each student’s name into the appropriate array, and then judging which day to output. That’s a very important point. Please sit down. Excellent work. It’s clear that everyone has previewed today’s lesson well.
+    Next, let’s integrate everyone’s ideas. Please think independently and draw a flowchart. You have 5 minutes. Begin.Time’s up. This student, please come up and present your flowchart. You explained that first we input the student’s name. If Xiaohua is in Monday’s array, then output Monday, and so on. Now, please try to write a multi-branch conditional statement. Here’s a hint from the teacher: use elif for additional conditional clauses. Let’s ask this student to write their answer on the blackboard. Students, compare it with your own code. Which parts need modification? You said the final elif should be changed to else, to indicate that when none of the conditions are met, the statements under else are executed. You also mentioned paying attention to indentation and colons. Very careful observations. I hope everyone writes carefully when coding. Now please use the if-elif statements you’ve learned to implement the algorithm you designed. I see that everyone has written it correctly and avoided the earlier issues.
+    Now that we’ve written the statements, what is their execution process? Please discuss this in pairs. In a moment, we’ll ask one group to explain. You have 7 minutes. Begin.I see students discussing quietly. Time’s up. Group Two, please explain the execution process. They used the flowchart to explain that the program checks each condition in order. If a condition is satisfied, it outputs the result; if none are satisfied, it outputs an error message. Their explanation combined diagrams and text and was very clear. Based on the flowchart on the screen, we can summarize the execution process of if-elif statements: the program starts from the if condition and checks conditions one by one. If a condition is true, the corresponding block of code is executed and the program exits the if structure. If the condition is false, it moves on to the next condition. If all conditions are false, the else block is executed.
+    Now that we’ve finished learning the new knowledge, please write a complete program that implements this process. Students who finish early may think about real-life situations that require checking multiple conditions and write corresponding programs. Let’s invite some students to present their work. Some students approached the problem from a mathematics perspective, writing a program to compare three numbers and find the maximum. Others took inspiration from daily life and wrote a taxi fare calculation program. All of your programs were well-structured and correctly formatted.
+    As today’s lesson comes to an end, what have you learned from this class? You said that you’ve learned the format and execution process of if-elif statements. It seems everyone has mastered today’s content. In fact, programming is very close to our daily life and studies, and it’s not as difficult as it may seem. The teacher hopes that you will continue to think actively and express your ideas in class just like today.
+    Finally, here is a homework assignment: please compare the characteristics of the three types of if statements and organize them into a table.
+    That’s all for today’s lesson. Goodbye, students.
+]]></content>
+      <categories>
+        <category>Teacher Certification</category>
+      </categories>
+  </entry>
+  <entry>
     <title>How to Prevent XSS</title>
     <url>/ening/2025/10/17/%E5%A6%82%E4%BD%95%E9%98%B2%E5%BE%A1%20XSS%EF%BC%88%E8%B7%A8%E7%AB%99%E8%84%9A%E6%9C%AC%E6%94%BB%E5%87%BB%EF%BC%89/</url>
     <content><![CDATA[In web development, XSS (Cross-Site Scripting) is one of the most common and most dangerous security vulnerabilities.Once a website contains an XSS flaw, attackers may execute malicious scripts in users’ browsers, allowing them to steal cookies, hijack sessions, deface pages, or even take over user accounts.
@@ -677,19 +677,6 @@ For frontend developers,understanding how to prevent XSS is a key step toward tr
         <tag>Content Security Policy</tag>
         <tag>HttpOnly</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>Developing Without Frameworks</title>
-    <url>/ening/2025/08/13/%E5%A6%82%E4%BD%95%E8%84%B1%E7%A6%BB%E6%A1%86%E6%9E%B6%E5%BC%80%E5%8F%91/</url>
-    <content><![CDATA[
-Developing frontend applications without frameworks means building web projects without using any frontend frameworks such as Vue or React, and instead relying directly on JavaScript, HTML, and CSS. This approach allows developers to gain a deeper understanding of the underlying principles and mechanisms of frontend development, while avoiding over-reliance on frameworks.
-For static projects or low-complexity applications with limited functionality, developing without a framework is often more than sufficient. Code written with frameworks must be compiled before it can be rendered in the browser, which is why tools like Webpack exist. Frameworks such as Vue were created to solve specific pain points—like two-way data binding and automatic reactive updates—but they also require developers to follow framework-specific syntax and conventions. As frameworks evolve, developers must continuously learn and adapt to new versions.
-Frameworks are undoubtedly beneficial for development efficiency, but for simple requirements, avoiding a framework can actually be the wiser choice. Whether or not to use a framework should always be decided based on the actual project requirements.
-When developing multiple similar websites, unbundled code can be uploaded directly to the server and modified in place. In contrast, when using a framework, only the compiled output is deployed, and any changes require local modification and rebuilding, which can be more time-consuming. After becoming proficient in pure JavaScript development, developers can even go on to build their own tools or frameworks.
-]]></content>
-      <categories>
-        <category>Frontend</category>
-      </categories>
   </entry>
   <entry>
     <title>Installing Puppeteer on Baota Panel</title>
@@ -960,45 +947,17 @@ Public opinion is powerful, but Zhang Meili’s inner strength is even more powe
       </tags>
   </entry>
   <entry>
-    <title>Encountering the Unknown Self</title>
-    <url>/ening/2025/06/30/%E9%81%87%E8%A7%81%E6%9C%AA%E7%9F%A5%E7%9A%84%E8%87%AA%E5%B7%B1/</url>
-    <content><![CDATA[Notes on Encountering the Unknown SelfWhat is the “Unknown”?The “self” refers to the “true self.” From the question “Who am I?” to the concept of “from existence to non-existence,” the entire book is structured around dialogues between Ruoling and a wise elder, revealing many profound life concepts.
-
-Core Concepts
-There is no one outside—only yourself.All external situations are actually projections of your inner world.
-
-Golden Moments to Talk with the SubconsciousThe best times to imagine you’ve already achieved your goals are the moments between waking and sleeping—early morning just before fully waking up, or late at night before falling asleep. These times are when we are closest to our subconscious.
-
-Key Practices: Awareness, Surrender, Overcoming the Peptide Self (Ego)
-
-Awareness: Focus on your present self. Observe your emotions and reactions without judgment.
-Surrender: Accept reality instead of resisting it.
-Peptide Self (Ego): Represents inner voices of fear, comparison, and anxiety. Learn to recognize and transcend them.
-
-
-Meditation, Gratitude, Giving
-
-During meditation, visualize yourself already living your desired life.
-Be grateful even before your goals are achieved.
-Maintain a selfless, giving mindset.
-
-
-Care Less About Others, Care More About Yourself
-
-Bring your attention back to yourself and your inner world.
-When emotions arise, be aware of which part of your body feels uncomfortable and understand its message.
-
-
-
-
-ConclusionThis book is not only about discovering “who you are,” but also about reminding you to “become that true self.” Awakening inner strength requires continuous awareness, practice, and transcending the ego.
+    <title>Developing Without Frameworks</title>
+    <url>/ening/2025/08/13/%E5%A6%82%E4%BD%95%E8%84%B1%E7%A6%BB%E6%A1%86%E6%9E%B6%E5%BC%80%E5%8F%91/</url>
+    <content><![CDATA[
+Developing frontend applications without frameworks means building web projects without using any frontend frameworks such as Vue or React, and instead relying directly on JavaScript, HTML, and CSS. This approach allows developers to gain a deeper understanding of the underlying principles and mechanisms of frontend development, while avoiding over-reliance on frameworks.
+For static projects or low-complexity applications with limited functionality, developing without a framework is often more than sufficient. Code written with frameworks must be compiled before it can be rendered in the browser, which is why tools like Webpack exist. Frameworks such as Vue were created to solve specific pain points—like two-way data binding and automatic reactive updates—but they also require developers to follow framework-specific syntax and conventions. As frameworks evolve, developers must continuously learn and adapt to new versions.
+Frameworks are undoubtedly beneficial for development efficiency, but for simple requirements, avoiding a framework can actually be the wiser choice. Whether or not to use a framework should always be decided based on the actual project requirements.
+When developing multiple similar websites, unbundled code can be uploaded directly to the server and modified in place. In contrast, when using a framework, only the compiled output is deployed, and any changes require local modification and rebuilding, which can be more time-consuming. After becoming proficient in pure JavaScript development, developers can even go on to build their own tools or frameworks.
 ]]></content>
       <categories>
-        <category>Reading</category>
+        <category>Frontend</category>
       </categories>
-      <tags>
-        <tag>Personal Growth</tag>
-      </tags>
   </entry>
   <entry>
     <title>Saving Retrieved CSV Data into a Database</title>
@@ -1125,5 +1084,46 @@ ALTER TABLE table_name ADD INDEX index_name (column);
       <categories>
         <category>Backend</category>
       </categories>
+  </entry>
+  <entry>
+    <title>Encountering the Unknown Self</title>
+    <url>/ening/2025/06/30/%E9%81%87%E8%A7%81%E6%9C%AA%E7%9F%A5%E7%9A%84%E8%87%AA%E5%B7%B1/</url>
+    <content><![CDATA[Notes on Encountering the Unknown SelfWhat is the “Unknown”?The “self” refers to the “true self.” From the question “Who am I?” to the concept of “from existence to non-existence,” the entire book is structured around dialogues between Ruoling and a wise elder, revealing many profound life concepts.
+
+Core Concepts
+There is no one outside—only yourself.All external situations are actually projections of your inner world.
+
+Golden Moments to Talk with the SubconsciousThe best times to imagine you’ve already achieved your goals are the moments between waking and sleeping—early morning just before fully waking up, or late at night before falling asleep. These times are when we are closest to our subconscious.
+
+Key Practices: Awareness, Surrender, Overcoming the Peptide Self (Ego)
+
+Awareness: Focus on your present self. Observe your emotions and reactions without judgment.
+Surrender: Accept reality instead of resisting it.
+Peptide Self (Ego): Represents inner voices of fear, comparison, and anxiety. Learn to recognize and transcend them.
+
+
+Meditation, Gratitude, Giving
+
+During meditation, visualize yourself already living your desired life.
+Be grateful even before your goals are achieved.
+Maintain a selfless, giving mindset.
+
+
+Care Less About Others, Care More About Yourself
+
+Bring your attention back to yourself and your inner world.
+When emotions arise, be aware of which part of your body feels uncomfortable and understand its message.
+
+
+
+
+ConclusionThis book is not only about discovering “who you are,” but also about reminding you to “become that true self.” Awakening inner strength requires continuous awareness, practice, and transcending the ego.
+]]></content>
+      <categories>
+        <category>Reading</category>
+      </categories>
+      <tags>
+        <tag>Personal Growth</tag>
+      </tags>
   </entry>
 </search>
