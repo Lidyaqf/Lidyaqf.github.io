@@ -1,19 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>React Native New Architecture</title>
-    <url>/ening/2025/08/19/ReactNative%E6%96%B0%E6%9E%B6%E6%9E%84/</url>
-    <content><![CDATA[
-Fabric: Enables synchronous UI rendering, eliminating the communication bottleneck of the Bridge.
-TurboModules: Loads native modules on demand, improving app startup performance.
-JSI (JavaScript Interface): Allows JavaScript to directly call native code, replacing the asynchronous Bridge. The Bridge is asynchronous and single-threaded, which introduces additional overhead; JSI, by contrast, is synchronous, lower-overhead, and supports concurrency.
-
-]]></content>
-      <categories>
-        <category>Frontend</category>
-      </categories>
-  </entry>
-  <entry>
     <title>ELK Installation Guide</title>
     <url>/ening/2025/04/11/ELK%E5%AE%89%E8%A3%85%E6%B5%81%E7%A8%8B/</url>
     <content><![CDATA[Installing ELK Stack (ElasticSearch, Logstash, Kibana) with Docker
@@ -93,6 +80,44 @@ Additional: Install Docker, Portainer, and Related Commandssudo apt updatesudo a
       </categories>
   </entry>
   <entry>
+    <title>Hexo-Next – Change Fonts &amp; Enable Code Copy</title>
+    <url>/ening/2025/08/18/Hexo-Next-%E6%9B%B4%E6%94%B9%E5%AD%97%E4%BD%93/</url>
+    <content><![CDATA[
+The Next theme version used here is 7.8.0.
+First, locate the file:
+/themes/next/_config.yml
+
+Search for the keyword font.⚠️ Important: You must set enable inside font to true, because the default value is false.If you only modify the family without enabling it, the font change will not take effect — so make sure you don’t miss this step.
+If the font family is sourced from an external platform, you also need to configure the host.
+font:  enable: true  # Uri of fonts host, e.g. https://fonts.googleapis.com (Default).  host:   # Font options:  # `external: true` will load this font family from `host` above.  # `family: Times New Roman`. Without any quotes.  # `size: x.x`. Use `em` as unit. Default: 1 (16px)  # Global font settings used for all elements inside &lt;body&gt;.  global:    external: true    family: Noto Serif SC    size:  # Font settings for site title (.site-title).  title:    external: true    family: Noto Serif SC    size:  # Font settings for headlines (&lt;h1&gt; to &lt;h6&gt;).  headings:    external: true    family: Noto Serif SC    size:  # Font settings for posts (.post-body).  posts:    external: true    family: Noto Serif SC  # Font settings for &lt;code&gt; and code blocks.  codes:    external: true    family: Source Code Pro
+
+
+Enable Copy Button for Code BlocksIn the same _config.yml file, locate the following configuration section.
+Set copy_button.enable to true to enable the copy feature.
+
+When show_result is set to true, a checkmark will be shown after copying.
+The style option controls the appearance of the copy button. Choose based on your preference.
+
+codeblock:  # Code Highlight theme  # Available values: normal | night | night eighties | night blue | night bright | solarized | solarized dark | galactic  # See: https://github.com/chriskempson/tomorrow-theme  highlight_theme: night eighties  # Add copy button on codeblock  copy_button:    enable: true    # Show text copy result.    show_result: true    # Available values: default | flat | mac    style: mac
+]]></content>
+      <categories>
+        <category>Frontend</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>React Native New Architecture</title>
+    <url>/ening/2025/08/19/ReactNative%E6%96%B0%E6%9E%B6%E6%9E%84/</url>
+    <content><![CDATA[
+Fabric: Enables synchronous UI rendering, eliminating the communication bottleneck of the Bridge.
+TurboModules: Loads native modules on demand, improving app startup performance.
+JSI (JavaScript Interface): Allows JavaScript to directly call native code, replacing the asynchronous Bridge. The Bridge is asynchronous and single-threaded, which introduces additional overhead; JSI, by contrast, is synchronous, lower-overhead, and supports concurrency.
+
+]]></content>
+      <categories>
+        <category>Frontend</category>
+      </categories>
+  </entry>
+  <entry>
     <title>GitLab CI/CD</title>
     <url>/ening/2025/04/10/gitlabci/</url>
     <content><![CDATA[GitLab CI&#x2F;CD Guide for Frontend Projects (Mac Environment)OverviewIn daily development, we often manually send the built dist package to the backend for deployment, which is inefficient and error-prone. CI (Continuous Integration) automates this process. This guide shows how to use GitLab CI to implement continuous integration and deployment.
@@ -159,6 +184,20 @@ After successful deployment, you can view the build process on the GitLab CI&#x2
       </tags>
   </entry>
   <entry>
+    <title>Sync Google Sheets Data Between Spreadsheets</title>
+    <url>/ening/2025/08/28/google%20sheet%E5%90%8C%E6%AD%A5%E8%A1%A8%E6%A0%BC%E6%95%B0%E6%8D%AE/</url>
+    <content><![CDATA[Sync Google Sheets Data Across Multiple SheetsThere is a requirement to synchronize all sheets from one Google Spreadsheet to another spreadsheet (including all sub-sheets).
+This is implemented using Google Sheets → Extensions → Apps Script.
+Why synchronization is neededThe source spreadsheet is read-only by default.By synchronizing its data into another spreadsheet, the copied sheets can then be edited freely.
+sourceSpreadsheetId and targetSpreadsheetId are the IDs from the Google Sheets URL —they are the long strings after /d/ in the address bar.
+Apps Script Code Examplefunction synchronizeSheetsToAnotherFile() &#123;  const sourceSpreadsheetId = &quot;id1&quot;;  const targetSpreadsheetId = &quot;id2&quot;;   // Example: 1NOtSSvDwXrca8vqyZW6OqQJwGaCICMVguSz1-i72oqg  const sourceSpreadsheet = SpreadsheetApp.openById(sourceSpreadsheetId);  const targetSpreadsheet = SpreadsheetApp.openById(targetSpreadsheetId);  const sourceSheets = sourceSpreadsheet.getSheets();  sourceSheets.forEach(sheet =&gt; &#123;    const sheetName = sheet.getName();    let targetSheet = targetSpreadsheet.getSheetByName(sheetName);    if (!targetSheet) &#123;      targetSheet = targetSpreadsheet.insertSheet(sheetName);    &#125; else &#123;      targetSheet.clear();    &#125;    const range = sheet.getDataRange();    const displayValues = range.getDisplayValues();     const formats = range.getBackgrounds();            const fontWeights = range.getFontWeights();        const targetRange = targetSheet.getRange(      1,      1,      displayValues.length,      displayValues[0].length    );    targetRange.setValues(displayValues);    targetRange.setBackgrounds(formats);    targetRange.setFontWeights(fontWeights);  &#125;);&#125;
+
+]]></content>
+      <categories>
+        <category>Frontend</category>
+      </categories>
+  </entry>
+  <entry>
     <title>JavaScript Basics</title>
     <url>/ening/2025/12/02/js%E5%9F%BA%E7%A1%80/</url>
     <content><![CDATA[JavaScript Basics Summary (Hoisting, Strict Mode)
@@ -179,41 +218,6 @@ function foo() &#123;  &quot;use strict&quot;;  console.log(this.a); // ❌ Type
 
 
 (function() &#123;  &quot;use strict&quot;;  foo(); // calling foo here doesn&#x27;t change its default binding&#125;)();function foo() &#123;  console.log(this.a);&#125;var a = 2;
-]]></content>
-      <categories>
-        <category>Frontend</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>React Native Custom Slider</title>
-    <url>/ening/2025/07/22/ReactNative%E8%87%AA%E5%AE%9A%E4%B9%89%E6%BB%91%E5%8A%A8%E6%9D%A1/</url>
-    <content><![CDATA[
-For testing and high UI requirements (for example, replacing the thumb with a custom image), the traditional @react-native-community/slider can no longer meet the needs. So I switched to a custom approach. After searching for a long time, I finally found a great library:https://github.com/miblanchard/react-native-slider
-Component Codeimport React, &#123; PureComponent &#125; from &#x27;react&#x27;;import &#123;    Animated,    Easing,    I18nManager,    Image,    ImageSourcePropType,    LayoutChangeEvent,    PanResponder,    PanResponderInstance,    View,    ViewStyle,&#125; from &#x27;react-native&#x27;;// stylesimport &#123; defaultStyles as styles &#125; from &#x27;./styles&#x27;;import type &#123; Dimensions, SliderProps, SliderState &#125; from &#x27;./types&#x27;;type RectReturn = &#123;    containsPoint: (nativeX: number, nativeY: number) =&gt; boolean;    height: number;    trackDistanceToPoint: (nativeX: number) =&gt; number;    width: number;    x: number;    y: number;&#125;;const Rect = (&#123;    height,    width,    x,    y,&#125;: &#123;    height: number;    width: number;    x: number;    y: number;&#125;) =&gt; (&#123;    containsPoint: (nativeX: number, nativeY: number) =&gt;        nativeX &gt;= x &amp;&amp;        nativeY &gt;= y &amp;&amp;        nativeX &lt;= x + width &amp;&amp;        nativeY &lt;= y + height,    height,    trackDistanceToPoint: (nativeX: number) =&gt; &#123;        if (nativeX &lt; x) &#123;            return x - nativeX;        &#125;        if (nativeX &gt; x + width) &#123;            return nativeX - (x + width);        &#125;        return 0;    &#125;,    width,    x,    y,&#125;);const DEFAULT_ANIMATION_CONFIGS = &#123;    spring: &#123;        friction: 7,        tension: 100,    &#125;,    timing: &#123;        duration: 150,        easing: Easing.inOut(Easing.ease),        delay: 0,    &#125;,&#125;;const normalizeValue = (    props: SliderProps,    value?: number | Array&lt;number&gt;,): Array&lt;number&gt; =&gt; &#123;    if (!value || (Array.isArray(value) &amp;&amp; value.length === 0)) &#123;        return [0];    &#125;    const &#123; maximumValue, minimumValue &#125; = props;    const getBetweenValue = (inputValue: number) =&gt;        Math.max(Math.min(inputValue, maximumValue), minimumValue);    if (!Array.isArray(value)) &#123;        return [getBetweenValue(value)];    &#125;    return value.map(getBetweenValue).sort((a, b) =&gt; a - b);&#125;;const updateValues = (&#123;    values,    newValues = values,&#125;: &#123;    values: number | Array&lt;number&gt; | Animated.Value | Array&lt;Animated.Value&gt;;    newValues?: number | Array&lt;number&gt; | Animated.Value | Array&lt;Animated.Value&gt;;&#125;): Animated.Value[] =&gt; &#123;    if (        Array.isArray(newValues) &amp;&amp;        Array.isArray(values) &amp;&amp;        newValues.length !== values.length    ) &#123;        return updateValues(&#123; values: newValues &#125;);    &#125;    if (Array.isArray(values) &amp;&amp; Array.isArray(newValues)) &#123;        return values?.map((value: number | Animated.Value, index: number) =&gt; &#123;            let valueToSet = newValues[index];            if (value instanceof Animated.Value) &#123;                if (valueToSet instanceof Animated.Value) &#123;                    valueToSet = valueToSet.__getValue();                &#125;                value.setValue(valueToSet);                return value;            &#125;            if (valueToSet instanceof Animated.Value) &#123;                return valueToSet;            &#125;            return new Animated.Value(valueToSet);        &#125;);    &#125;    return [new Animated.Value(0)];&#125;;const indexOfLowest = (values: Array&lt;number&gt;): number =&gt; &#123;    let lowestIndex = 0;    values.forEach((value, index, array) =&gt; &#123;        if (value &lt; array[lowestIndex]) &#123;            lowestIndex = index;        &#125;    &#125;);    return lowestIndex;&#125;;export class Slider extends PureComponent&lt;SliderProps, SliderState&gt; &#123;    constructor(props: SliderProps) &#123;        super(props);        this._panResponder = PanResponder.create(&#123;            onStartShouldSetPanResponder:                this._handleStartShouldSetPanResponder,            onMoveShouldSetPanResponder: this._handleMoveShouldSetPanResponder,            onPanResponderGrant: this._handlePanResponderGrant,            onPanResponderMove: this._handlePanResponderMove,            onPanResponderRelease: this._handlePanResponderEnd,            onPanResponderTerminationRequest:                this._handlePanResponderRequestEnd,            onPanResponderTerminate: this._handlePanResponderEnd,        &#125;);        this.state = &#123;            allMeasured: false,            containerSize: &#123;                width: 0,                height: 0,            &#125;,            thumbSize: &#123;                width: 0,                height: 0,            &#125;,            trackMarksValues: updateValues(&#123;                values: normalizeValue(this.props, this.props.trackMarks),            &#125;),            values: updateValues(&#123;                values: normalizeValue(                    this.props,                    this.props.value instanceof Animated.Value                        ? this.props.value.__getValue()                        : this.props.value,                ),            &#125;),        &#125;;    &#125;    static defaultProps = &#123;        animationType: &#x27;timing&#x27;,        debugTouchArea: false,        trackMarks: [],        maximumTrackTintColor: &#x27;#b3b3b3&#x27;,        maximumValue: 1,        minimumTrackTintColor: &#x27;#3f3f3f&#x27;,        minimumValue: 0,        step: 0,        thumbTintColor: &#x27;#343434&#x27;,        trackClickable: true,        value: 0,        vertical: false,    &#125;;    static getDerivedStateFromProps(props: SliderProps, state: SliderState) &#123;        if (            props.trackMarks &amp;&amp;            !!state.trackMarksValues &amp;&amp;            state.trackMarksValues.length &gt; 0        ) &#123;            const newTrackMarkValues = normalizeValue(props, props.trackMarks);            const statePatch = &#123;&#125; as SliderState;            if (state.trackMarksValues) &#123;                statePatch.trackMarksValues = updateValues(&#123;                    values: state.trackMarksValues,                    newValues: newTrackMarkValues,                &#125;);            &#125;            return statePatch;        &#125;    &#125;    componentDidUpdate() &#123;        const newValues = normalizeValue(            this.props,            this.props.value instanceof Animated.Value                ? this.props.value.__getValue()                : this.props.value,        );        newValues.forEach((value, i) =&gt; &#123;            if (!this.state.values[i]) &#123;                this._setCurrentValue(value, i);            &#125; else if (value !== this.state.values[i].__getValue()) &#123;                if (this.props.animateTransitions) &#123;                    this._setCurrentValueAnimated(value, i);                &#125; else &#123;                    this._setCurrentValue(value, i);                &#125;            &#125;        &#125;);    &#125;    _getRawValues(        values: Array&lt;Animated.Value&gt; | Array&lt;Animated.AnimatedInterpolation&gt;,    ) &#123;        return values.map((value) =&gt; value.__getValue());    &#125;    _handleStartShouldSetPanResponder = (e: any): boolean =&gt;        this._thumbHitTest(e);    _handleMoveShouldSetPanResponder(): boolean &#123;        return false;    &#125;    _handlePanResponderGrant = (e: &#123; nativeEvent: any &#125;) =&gt; &#123;        const &#123; thumbSize &#125; = this.state;        const &#123; nativeEvent &#125; = e;        this._previousLeft = this.props.trackClickable            ? nativeEvent.locationX - thumbSize.width            : this._getThumbLeft(this._getCurrentValue(this._activeThumbIndex));        this.props?.onSlidingStart?.(this._getRawValues(this.state.values));    &#125;;    _handlePanResponderMove = (_e: any, gestureState: any) =&gt; &#123;        if (this.props.disabled) &#123;            return;        &#125;        this._setCurrentValue(            this._getValue(gestureState),            this._activeThumbIndex,            () =&gt; &#123;                this.props?.onValueChange?.(                    this._getRawValues(this.state.values),                );            &#125;,        );    &#125;;    _handlePanResponderRequestEnd = () =&gt; &#123;        return false;    &#125;;    _handlePanResponderEnd = (_e: any, gestureState: any) =&gt; &#123;        if (this.props.disabled) &#123;            return;        &#125;        this._setCurrentValue(            this._getValue(gestureState),            this._activeThumbIndex,            () =&gt; &#123;                if (this.props.trackClickable) &#123;                    this.props?.onValueChange?.(                        this._getRawValues(this.state.values),                    );                &#125;                this.props?.onSlidingComplete?.(                    this._getRawValues(this.state.values),                );            &#125;,        );        this._activeThumbIndex = 0;    &#125;;    _measureContainer = (e: LayoutChangeEvent) =&gt; &#123;        this._handleMeasure(&#x27;_containerSize&#x27;, e);    &#125;;    _measureTrack = (e: LayoutChangeEvent) =&gt; &#123;        this._handleMeasure(&#x27;_trackSize&#x27;, e);    &#125;;    _measureThumb = (e: LayoutChangeEvent) =&gt; &#123;        this._handleMeasure(&#x27;_thumbSize&#x27;, e);    &#125;;    _handleMeasure = (        name: &#x27;_containerSize&#x27; | &#x27;_trackSize&#x27; | &#x27;_thumbSize&#x27;,        e: LayoutChangeEvent,    ) =&gt; &#123;        const &#123; width, height &#125; = e.nativeEvent.layout;        const size = &#123; width, height &#125;;        const currentSize = this[name];        if (            currentSize &amp;&amp;            width === currentSize.width &amp;&amp;            height === currentSize.height        ) &#123;            return;        &#125;        this[name] = size;        if (this._containerSize &amp;&amp; this._thumbSize) &#123;            this.setState(&#123;                containerSize: this._containerSize,                thumbSize: this._thumbSize,                allMeasured: true,            &#125;);        &#125;    &#125;;    _getRatio = (value: number) =&gt; &#123;        const &#123; maximumValue, minimumValue &#125; = this.props;        return (value - minimumValue) / (maximumValue - minimumValue);    &#125;;    _getThumbLeft = (value: number) =&gt; &#123;        const &#123; containerSize, thumbSize &#125; = this.state;        const &#123; vertical &#125; = this.props;        const standardRatio = this._getRatio(value);        const ratio = I18nManager.isRTL ? 1 - standardRatio : standardRatio;        return (            ratio *            ((vertical ? containerSize.height : containerSize.width) -                thumbSize.width)        );    &#125;;    _getValue = (gestureState: &#123; dx: number; dy: number &#125;) =&gt; &#123;        const &#123; containerSize, thumbSize, values &#125; = this.state;        const &#123; maximumValue, minimumValue, step, vertical &#125; = this.props;        const length = containerSize.width - thumbSize.width;        const thumbLeft = vertical            ? this._previousLeft + gestureState.dy * -1            : this._previousLeft + gestureState.dx;        const nonRtlRatio = thumbLeft / length;        const ratio = I18nManager.isRTL ? 1 - nonRtlRatio : nonRtlRatio;        let minValue = minimumValue;        let maxValue = maximumValue;        const rawValues = this._getRawValues(values);        const buffer = step ? step : 0.1;        if (values.length === 2) &#123;            if (this._activeThumbIndex === 1) &#123;                minValue = rawValues[0] + buffer;            &#125; else &#123;                maxValue = rawValues[1] - buffer;            &#125;        &#125;        if (step) &#123;            return Math.max(                minValue,                Math.min(                    maxValue,                    minimumValue +                        Math.round(                            (ratio * (maximumValue - minimumValue)) / step,                        ) *                            step,                ),            );        &#125;        return Math.max(            minValue,            Math.min(                maxValue,                ratio * (maximumValue - minimumValue) + minimumValue,            ),        );    &#125;;    _getCurrentValue = (thumbIndex: number = 0) =&gt;        this.state.values[thumbIndex].__getValue();    _setCurrentValue = (        value: number,        thumbIndex: number | null | undefined,        callback?: () =&gt; void,    ) =&gt; &#123;        const safeIndex = thumbIndex ?? 0;        const animatedValue = this.state.values[safeIndex];        if (animatedValue) &#123;            animatedValue.setValue(value);            callback?.();        &#125; else &#123;            this.setState((prevState: SliderState) =&gt; &#123;                const newValues = [...prevState.values];                newValues[safeIndex] = new Animated.Value(value);                return &#123; values: newValues &#125;;            &#125;, callback);        &#125;    &#125;;    _setCurrentValueAnimated = (value: number, thumbIndex: number = 0) =&gt; &#123;        const &#123; animationType &#125; = this.props;        const animationConfig = &#123;            ...DEFAULT_ANIMATION_CONFIGS[animationType],            ...this.props.animationConfig,            toValue: value,            useNativeDriver: false,        &#125;;        Animated[animationType](this.state.values[thumbIndex], animationConfig).start();    &#125;;    _getTouchOverflowSize = (): &#123; width: number; height: number &#125; =&gt; &#123;        const &#123; allMeasured, containerSize, thumbSize &#125; = this.state;        const &#123; thumbTouchSize &#125; = this.props;        const size = &#123; width: 40, height: 40 &#125;;        if (allMeasured) &#123;            size.width = Math.max(0, (thumbTouchSize?.width || 0) - thumbSize.width);            size.height = Math.max(0, (thumbTouchSize?.height || 0) - containerSize.height);        &#125;        return size;    &#125;;    _getTouchOverflowStyle = () =&gt; &#123;        const &#123; width, height &#125; = this._getTouchOverflowSize();        const touchOverflowStyle = &#123;&#125; as ViewStyle;        if (width !== undefined &amp;&amp; height !== undefined) &#123;            const verticalMargin = -height / 2;            touchOverflowStyle.marginTop = verticalMargin;            touchOverflowStyle.marginBottom = verticalMargin;            const horizontalMargin = -width / 2;            touchOverflowStyle.marginLeft = horizontalMargin;            touchOverflowStyle.marginRight = horizontalMargin;        &#125;        if (this.props.debugTouchArea === true) &#123;            touchOverflowStyle.backgroundColor = &#x27;orange&#x27;;            touchOverflowStyle.opacity = 0.5;        &#125;        return touchOverflowStyle;    &#125;;    _thumbHitTest = (e: &#123; nativeEvent: any &#125;) =&gt; &#123;        const &#123; nativeEvent &#125; = e;        const &#123; trackClickable &#125; = this.props;        const &#123; values &#125; = this.state;        const hitThumb = values.find((_, i) =&gt; &#123;            const thumbTouchRect = this._getThumbTouchRect(i);            const containsPoint = thumbTouchRect.containsPoint(                nativeEvent.locationX,                nativeEvent.locationY,            );            if (containsPoint) &#123;                this._activeThumbIndex = i;            &#125;            return containsPoint;        &#125;);        if (hitThumb) &#123;            return true;        &#125;        if (trackClickable) &#123;            if (values.length === 1) &#123;                this._activeThumbIndex = 0;            &#125; else &#123;                const thumbDistances = values.map((_value, index) =&gt; &#123;                    const thumbTouchRect = this._getThumbTouchRect(index);                    return thumbTouchRect.trackDistanceToPoint(nativeEvent.locationX);                &#125;);                this._activeThumbIndex = indexOfLowest(thumbDistances);            &#125;            return true;        &#125;        return false;    &#125;;    _getThumbTouchRect = (thumbIndex: number = 0): RectReturn =&gt; &#123;        const &#123; containerSize, thumbSize &#125; = this.state;        const &#123; thumbTouchSize &#125; = this.props;        const &#123; height, width &#125; = thumbTouchSize || &#123; height: 40, width: 40 &#125;;        const touchOverflowSize = this._getTouchOverflowSize();        return Rect(&#123;            height,            width,            x:                touchOverflowSize.width / 2 +                this._getThumbLeft(this._getCurrentValue(thumbIndex)) +                (thumbSize.width - width) / 2,            y:                touchOverflowSize.height / 2 +                (containerSize.height - height) / 2,        &#125;);    &#125;;    _activeThumbIndex: number = 0;    _containerSize: Dimensions | null | undefined;    _panResponder: PanResponderInstance;    _previousLeft: number = 0;    _thumbSize: Dimensions | null | undefined;    _trackSize: Dimensions | null | undefined;    _renderDebugThumbTouchRect = (        thumbLeft: Animated.AnimatedInterpolation,        index: number,    ) =&gt; &#123;        const &#123; height, y, width &#125; = this._getThumbTouchRect() || &#123;&#125;;        const positionStyle = &#123; height, left: thumbLeft, top: y, width &#125;;        return (            &lt;Animated.View                key=&#123;`debug-thumb-$&#123;index&#125;`&#125;                pointerEvents=&quot;none&quot;                style=&#123;[styles.debugThumbTouchArea, positionStyle]&#125;            /&gt;        );    &#125;;    _renderThumbImage = (thumbIndex: number = 0) =&gt; &#123;        const &#123; thumbImage &#125; = this.props;        if (!thumbImage) return null;        return (            &lt;Image                source=&#123;                    (Array.isArray(thumbImage)                        ? thumbImage[thumbIndex]                        : thumbImage) as ImageSourcePropType                &#125;            /&gt;        );    &#125;;    render() &#123;        const &#123;            containerStyle,            debugTouchArea,            maximumTrackTintColor,            maximumValue,            minimumTrackTintColor,            minimumValue,            renderAboveThumbComponent,            renderTrackMarkComponent,            renderThumbComponent,            thumbStyle,            thumbTintColor,            trackStyle,            vertical,            ...other        &#125; = this.props;        const &#123;            allMeasured,            containerSize,            thumbSize,            trackMarksValues,            values,        &#125; = this.state;        const interpolatedThumbValues = values.map((value) =&gt;            value.interpolate(&#123;                inputRange: [minimumValue, maximumValue],                outputRange: I18nManager.isRTL                    ? [0, -(containerSize.width - thumbSize.width)]                    : [0, containerSize.width - thumbSize.width],            &#125;),        );        const interpolatedTrackValues = values.map((value) =&gt;            value.interpolate(&#123;                inputRange: [minimumValue, maximumValue],                outputRange: [0, containerSize.width - thumbSize.width],            &#125;),        );        const interpolatedTrackMarksValues =            trackMarksValues &amp;&amp;            trackMarksValues.map((v) =&gt;                v.interpolate(&#123;                    inputRange: [minimumValue, maximumValue],                    outputRange: I18nManager.isRTL                        ? [0, -(containerSize.width - thumbSize.width)]                        : [0, containerSize.width - thumbSize.width],                &#125;),            );        const valueVisibleStyle = &#123;&#125; as ViewStyle;        if (!allMeasured) valueVisibleStyle.opacity = 0;        const interpolatedRawValues = this._getRawValues(interpolatedTrackValues);        const minThumbValue = new Animated.Value(Math.min(...interpolatedRawValues));        const maxThumbValue = new Animated.Value(Math.max(...interpolatedRawValues));        const minimumTrackStyle = &#123;            position: &#x27;absolute&#x27;,            left:                interpolatedTrackValues.length === 1                    ? new Animated.Value(0)                    : Animated.add(minThumbValue, thumbSize.width / 2),            width:                interpolatedTrackValues.length === 1                    ? Animated.add(interpolatedTrackValues[0], thumbSize.width / 2)                    : Animated.add(Animated.multiply(minThumbValue, -1), maxThumbValue),            backgroundColor: minimumTrackTintColor,            ...valueVisibleStyle,        &#125; as ViewStyle;        const touchOverflowStyle = this._getTouchOverflowStyle();        return (            &lt;&gt;                &#123;renderAboveThumbComponent &amp;&amp; (                    &lt;View style=&#123;styles.aboveThumbComponentsContainer&#125;&gt;                        &#123;interpolatedThumbValues.map((value, i) =&gt; (                            &lt;Animated.View                                key=&#123;`slider-above-thumb-$&#123;i&#125;`&#125;                                style=&#123;[                                    styles.renderThumbComponent,                                    &#123;                                        bottom: 0,                                        transform: [                                            &#123; translateX: value &#125;,                                            &#123; translateY: 0 &#125;,                                        ],                                        ...valueVisibleStyle,                                    &#125;,                                ]&#125;&gt;                                &#123;renderAboveThumbComponent(i)&#125;                            &lt;/Animated.View&gt;                        ))&#125;                    &lt;/View&gt;                )&#125;                &lt;View                    &#123;...other&#125;                    style=&#123;[                        styles.container,                        vertical ? &#123; transform: [&#123; rotate: &#x27;-90deg&#x27; &#125;] &#125; : &#123;&#125;,                        containerStyle,                    ]&#125;                    onLayout=&#123;this._measureContainer&#125;&gt;                    &lt;View                        renderToHardwareTextureAndroid                        style=&#123;[                            styles.track,                            &#123; backgroundColor: maximumTrackTintColor &#125;,                            trackStyle,                        ]&#125;                        onLayout=&#123;this._measureTrack&#125;                    /&gt;                    &lt;Animated.View                        renderToHardwareTextureAndroid                        style=&#123;[styles.track, trackStyle, minimumTrackStyle]&#125;                    /&gt;                    &#123;renderTrackMarkComponent &amp;&amp;                        interpolatedTrackMarksValues &amp;&amp;                        interpolatedTrackMarksValues.map((value, i) =&gt; (                            &lt;Animated.View                                key=&#123;`track-mark-$&#123;i&#125;`&#125;                                style=&#123;[                                    styles.renderThumbComponent,                                    &#123;                                        transform: [                                            &#123; translateX: value &#125;,                                            &#123; translateY: 0 &#125;,                                        ],                                        ...valueVisibleStyle,                                    &#125;,                                ]&#125;&gt;                                &#123;renderTrackMarkComponent(i)&#125;                            &lt;/Animated.View&gt;                        ))&#125;                    &#123;interpolatedThumbValues.map((value, i) =&gt; (                        &lt;Animated.View                            key=&#123;`slider-thumb-$&#123;i&#125;`&#125;                            style=&#123;[                                renderThumbComponent                                    ? styles.renderThumbComponent                                    : styles.thumb,                                renderThumbComponent                                    ? &#123;&#125;                                    : &#123; backgroundColor: thumbTintColor, ...thumbStyle &#125;,                                &#123;                                    transform: [                                        &#123; translateX: value &#125;,                                        &#123; translateY: 0 &#125;,                                    ],                                    ...valueVisibleStyle,                                &#125;,                            ]&#125;                            onLayout=&#123;this._measureThumb&#125;&gt;                            &#123;renderThumbComponent ? renderThumbComponent() : this._renderThumbImage(i)&#125;                        &lt;/Animated.View&gt;                    ))&#125;                    &lt;View                        style=&#123;[styles.touchArea, touchOverflowStyle]&#125;                        &#123;...this._panResponder.panHandlers&#125;&gt;                        &#123;!!debugTouchArea &amp;&amp;                            interpolatedThumbValues.map((value, i) =&gt;                                this._renderDebugThumbTouchRect(value, i),                            )&#125;                    &lt;/View&gt;                &lt;/View&gt;            &lt;/&gt;        );    &#125;&#125;
-
-How to Use (Import)import &#123; Slider &#125; from &#x27;path-to-the-component-above&#x27;;&lt;Slider  minimumValue=&#123;1&#125;  maximumValue=&#123;7&#125; // sliding range: 1 to 7  minimumTrackTintColor=&quot;#0A79C3&quot;  maximumTrackTintColor=&quot;#F3F3F3&quot;  step=&#123;1&#125; // step size  value=&#123;targetDay&#125; // default value, e.g. 4  onValueChange=&#123;targetDays =&gt;    dispatch(&#123;      type: &#x27;SetupWeekTarget/updateState&#x27;,      payload: &#123; targetDay: targetDays &#125;    &#125;)  &#125; // triggered when sliding  trackStyle=&#123;&#123; height: 10, borderRadius: 12 &#125;&#125;  containerStyle=&#123;&#123; width: SCREEN_WIDTH - 90 &#125;&#125;  thumbTintColor=&quot;transparent&quot;  thumbImage=&#123;require(&#x27;path-to-your-image&#x27;)&#125;  /&gt;
-
-More ParametersFor the full list of available props and detailed documentation, please refer to:https://github.com/miblanchard/react-native-slider
-]]></content>
-      <categories>
-        <category>Frontend</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>React Component Communication Methods</title>
-    <url>/ening/2025/08/25/react%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F/</url>
-    <content><![CDATA[
-Props and Callback Props:Used for parent–child component communication. Child components receive data from parents via props. Parents pass callback functions to children, and children invoke these callbacks to send data back to the parent.
-
-Context API:An API for sharing state across components without the need to pass props down through every level of the component tree.
-
-Redux or MobX:For complex applications, state management libraries can be used to handle communication and shared state between components.
-
-Event Subscription Pattern:Uses mechanisms such as EventEmitter or third-party libraries to implement publish–subscribe patterns for communication between non-related components.
-
-Hooks:Some React Hooks, such as useState, can be used to share logic and state between components through custom hooks.
-
-
 ]]></content>
       <categories>
         <category>Frontend</category>
@@ -241,10 +245,45 @@ After receiving the binary data, the frontend deserializes it into an RPC Respon
       </categories>
   </entry>
   <entry>
+    <title>React Component Communication Methods</title>
+    <url>/ening/2025/08/25/react%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F/</url>
+    <content><![CDATA[
+Props and Callback Props:Used for parent–child component communication. Child components receive data from parents via props. Parents pass callback functions to children, and children invoke these callbacks to send data back to the parent.
+
+Context API:An API for sharing state across components without the need to pass props down through every level of the component tree.
+
+Redux or MobX:For complex applications, state management libraries can be used to handle communication and shared state between components.
+
+Event Subscription Pattern:Uses mechanisms such as EventEmitter or third-party libraries to implement publish–subscribe patterns for communication between non-related components.
+
+Hooks:Some React Hooks, such as useState, can be used to share logic and state between components through custom hooks.
+
+
+]]></content>
+      <categories>
+        <category>Frontend</category>
+      </categories>
+  </entry>
+  <entry>
     <title>Hello English</title>
     <url>/ening/2024/08/16/redis-en/</url>
     <content><![CDATA[This is an English post.
 ]]></content>
+  </entry>
+  <entry>
+    <title>React Native Custom Slider</title>
+    <url>/ening/2025/07/22/ReactNative%E8%87%AA%E5%AE%9A%E4%B9%89%E6%BB%91%E5%8A%A8%E6%9D%A1/</url>
+    <content><![CDATA[
+For testing and high UI requirements (for example, replacing the thumb with a custom image), the traditional @react-native-community/slider can no longer meet the needs. So I switched to a custom approach. After searching for a long time, I finally found a great library:https://github.com/miblanchard/react-native-slider
+Component Codeimport React, &#123; PureComponent &#125; from &#x27;react&#x27;;import &#123;    Animated,    Easing,    I18nManager,    Image,    ImageSourcePropType,    LayoutChangeEvent,    PanResponder,    PanResponderInstance,    View,    ViewStyle,&#125; from &#x27;react-native&#x27;;// stylesimport &#123; defaultStyles as styles &#125; from &#x27;./styles&#x27;;import type &#123; Dimensions, SliderProps, SliderState &#125; from &#x27;./types&#x27;;type RectReturn = &#123;    containsPoint: (nativeX: number, nativeY: number) =&gt; boolean;    height: number;    trackDistanceToPoint: (nativeX: number) =&gt; number;    width: number;    x: number;    y: number;&#125;;const Rect = (&#123;    height,    width,    x,    y,&#125;: &#123;    height: number;    width: number;    x: number;    y: number;&#125;) =&gt; (&#123;    containsPoint: (nativeX: number, nativeY: number) =&gt;        nativeX &gt;= x &amp;&amp;        nativeY &gt;= y &amp;&amp;        nativeX &lt;= x + width &amp;&amp;        nativeY &lt;= y + height,    height,    trackDistanceToPoint: (nativeX: number) =&gt; &#123;        if (nativeX &lt; x) &#123;            return x - nativeX;        &#125;        if (nativeX &gt; x + width) &#123;            return nativeX - (x + width);        &#125;        return 0;    &#125;,    width,    x,    y,&#125;);const DEFAULT_ANIMATION_CONFIGS = &#123;    spring: &#123;        friction: 7,        tension: 100,    &#125;,    timing: &#123;        duration: 150,        easing: Easing.inOut(Easing.ease),        delay: 0,    &#125;,&#125;;const normalizeValue = (    props: SliderProps,    value?: number | Array&lt;number&gt;,): Array&lt;number&gt; =&gt; &#123;    if (!value || (Array.isArray(value) &amp;&amp; value.length === 0)) &#123;        return [0];    &#125;    const &#123; maximumValue, minimumValue &#125; = props;    const getBetweenValue = (inputValue: number) =&gt;        Math.max(Math.min(inputValue, maximumValue), minimumValue);    if (!Array.isArray(value)) &#123;        return [getBetweenValue(value)];    &#125;    return value.map(getBetweenValue).sort((a, b) =&gt; a - b);&#125;;const updateValues = (&#123;    values,    newValues = values,&#125;: &#123;    values: number | Array&lt;number&gt; | Animated.Value | Array&lt;Animated.Value&gt;;    newValues?: number | Array&lt;number&gt; | Animated.Value | Array&lt;Animated.Value&gt;;&#125;): Animated.Value[] =&gt; &#123;    if (        Array.isArray(newValues) &amp;&amp;        Array.isArray(values) &amp;&amp;        newValues.length !== values.length    ) &#123;        return updateValues(&#123; values: newValues &#125;);    &#125;    if (Array.isArray(values) &amp;&amp; Array.isArray(newValues)) &#123;        return values?.map((value: number | Animated.Value, index: number) =&gt; &#123;            let valueToSet = newValues[index];            if (value instanceof Animated.Value) &#123;                if (valueToSet instanceof Animated.Value) &#123;                    valueToSet = valueToSet.__getValue();                &#125;                value.setValue(valueToSet);                return value;            &#125;            if (valueToSet instanceof Animated.Value) &#123;                return valueToSet;            &#125;            return new Animated.Value(valueToSet);        &#125;);    &#125;    return [new Animated.Value(0)];&#125;;const indexOfLowest = (values: Array&lt;number&gt;): number =&gt; &#123;    let lowestIndex = 0;    values.forEach((value, index, array) =&gt; &#123;        if (value &lt; array[lowestIndex]) &#123;            lowestIndex = index;        &#125;    &#125;);    return lowestIndex;&#125;;export class Slider extends PureComponent&lt;SliderProps, SliderState&gt; &#123;    constructor(props: SliderProps) &#123;        super(props);        this._panResponder = PanResponder.create(&#123;            onStartShouldSetPanResponder:                this._handleStartShouldSetPanResponder,            onMoveShouldSetPanResponder: this._handleMoveShouldSetPanResponder,            onPanResponderGrant: this._handlePanResponderGrant,            onPanResponderMove: this._handlePanResponderMove,            onPanResponderRelease: this._handlePanResponderEnd,            onPanResponderTerminationRequest:                this._handlePanResponderRequestEnd,            onPanResponderTerminate: this._handlePanResponderEnd,        &#125;);        this.state = &#123;            allMeasured: false,            containerSize: &#123;                width: 0,                height: 0,            &#125;,            thumbSize: &#123;                width: 0,                height: 0,            &#125;,            trackMarksValues: updateValues(&#123;                values: normalizeValue(this.props, this.props.trackMarks),            &#125;),            values: updateValues(&#123;                values: normalizeValue(                    this.props,                    this.props.value instanceof Animated.Value                        ? this.props.value.__getValue()                        : this.props.value,                ),            &#125;),        &#125;;    &#125;    static defaultProps = &#123;        animationType: &#x27;timing&#x27;,        debugTouchArea: false,        trackMarks: [],        maximumTrackTintColor: &#x27;#b3b3b3&#x27;,        maximumValue: 1,        minimumTrackTintColor: &#x27;#3f3f3f&#x27;,        minimumValue: 0,        step: 0,        thumbTintColor: &#x27;#343434&#x27;,        trackClickable: true,        value: 0,        vertical: false,    &#125;;    static getDerivedStateFromProps(props: SliderProps, state: SliderState) &#123;        if (            props.trackMarks &amp;&amp;            !!state.trackMarksValues &amp;&amp;            state.trackMarksValues.length &gt; 0        ) &#123;            const newTrackMarkValues = normalizeValue(props, props.trackMarks);            const statePatch = &#123;&#125; as SliderState;            if (state.trackMarksValues) &#123;                statePatch.trackMarksValues = updateValues(&#123;                    values: state.trackMarksValues,                    newValues: newTrackMarkValues,                &#125;);            &#125;            return statePatch;        &#125;    &#125;    componentDidUpdate() &#123;        const newValues = normalizeValue(            this.props,            this.props.value instanceof Animated.Value                ? this.props.value.__getValue()                : this.props.value,        );        newValues.forEach((value, i) =&gt; &#123;            if (!this.state.values[i]) &#123;                this._setCurrentValue(value, i);            &#125; else if (value !== this.state.values[i].__getValue()) &#123;                if (this.props.animateTransitions) &#123;                    this._setCurrentValueAnimated(value, i);                &#125; else &#123;                    this._setCurrentValue(value, i);                &#125;            &#125;        &#125;);    &#125;    _getRawValues(        values: Array&lt;Animated.Value&gt; | Array&lt;Animated.AnimatedInterpolation&gt;,    ) &#123;        return values.map((value) =&gt; value.__getValue());    &#125;    _handleStartShouldSetPanResponder = (e: any): boolean =&gt;        this._thumbHitTest(e);    _handleMoveShouldSetPanResponder(): boolean &#123;        return false;    &#125;    _handlePanResponderGrant = (e: &#123; nativeEvent: any &#125;) =&gt; &#123;        const &#123; thumbSize &#125; = this.state;        const &#123; nativeEvent &#125; = e;        this._previousLeft = this.props.trackClickable            ? nativeEvent.locationX - thumbSize.width            : this._getThumbLeft(this._getCurrentValue(this._activeThumbIndex));        this.props?.onSlidingStart?.(this._getRawValues(this.state.values));    &#125;;    _handlePanResponderMove = (_e: any, gestureState: any) =&gt; &#123;        if (this.props.disabled) &#123;            return;        &#125;        this._setCurrentValue(            this._getValue(gestureState),            this._activeThumbIndex,            () =&gt; &#123;                this.props?.onValueChange?.(                    this._getRawValues(this.state.values),                );            &#125;,        );    &#125;;    _handlePanResponderRequestEnd = () =&gt; &#123;        return false;    &#125;;    _handlePanResponderEnd = (_e: any, gestureState: any) =&gt; &#123;        if (this.props.disabled) &#123;            return;        &#125;        this._setCurrentValue(            this._getValue(gestureState),            this._activeThumbIndex,            () =&gt; &#123;                if (this.props.trackClickable) &#123;                    this.props?.onValueChange?.(                        this._getRawValues(this.state.values),                    );                &#125;                this.props?.onSlidingComplete?.(                    this._getRawValues(this.state.values),                );            &#125;,        );        this._activeThumbIndex = 0;    &#125;;    _measureContainer = (e: LayoutChangeEvent) =&gt; &#123;        this._handleMeasure(&#x27;_containerSize&#x27;, e);    &#125;;    _measureTrack = (e: LayoutChangeEvent) =&gt; &#123;        this._handleMeasure(&#x27;_trackSize&#x27;, e);    &#125;;    _measureThumb = (e: LayoutChangeEvent) =&gt; &#123;        this._handleMeasure(&#x27;_thumbSize&#x27;, e);    &#125;;    _handleMeasure = (        name: &#x27;_containerSize&#x27; | &#x27;_trackSize&#x27; | &#x27;_thumbSize&#x27;,        e: LayoutChangeEvent,    ) =&gt; &#123;        const &#123; width, height &#125; = e.nativeEvent.layout;        const size = &#123; width, height &#125;;        const currentSize = this[name];        if (            currentSize &amp;&amp;            width === currentSize.width &amp;&amp;            height === currentSize.height        ) &#123;            return;        &#125;        this[name] = size;        if (this._containerSize &amp;&amp; this._thumbSize) &#123;            this.setState(&#123;                containerSize: this._containerSize,                thumbSize: this._thumbSize,                allMeasured: true,            &#125;);        &#125;    &#125;;    _getRatio = (value: number) =&gt; &#123;        const &#123; maximumValue, minimumValue &#125; = this.props;        return (value - minimumValue) / (maximumValue - minimumValue);    &#125;;    _getThumbLeft = (value: number) =&gt; &#123;        const &#123; containerSize, thumbSize &#125; = this.state;        const &#123; vertical &#125; = this.props;        const standardRatio = this._getRatio(value);        const ratio = I18nManager.isRTL ? 1 - standardRatio : standardRatio;        return (            ratio *            ((vertical ? containerSize.height : containerSize.width) -                thumbSize.width)        );    &#125;;    _getValue = (gestureState: &#123; dx: number; dy: number &#125;) =&gt; &#123;        const &#123; containerSize, thumbSize, values &#125; = this.state;        const &#123; maximumValue, minimumValue, step, vertical &#125; = this.props;        const length = containerSize.width - thumbSize.width;        const thumbLeft = vertical            ? this._previousLeft + gestureState.dy * -1            : this._previousLeft + gestureState.dx;        const nonRtlRatio = thumbLeft / length;        const ratio = I18nManager.isRTL ? 1 - nonRtlRatio : nonRtlRatio;        let minValue = minimumValue;        let maxValue = maximumValue;        const rawValues = this._getRawValues(values);        const buffer = step ? step : 0.1;        if (values.length === 2) &#123;            if (this._activeThumbIndex === 1) &#123;                minValue = rawValues[0] + buffer;            &#125; else &#123;                maxValue = rawValues[1] - buffer;            &#125;        &#125;        if (step) &#123;            return Math.max(                minValue,                Math.min(                    maxValue,                    minimumValue +                        Math.round(                            (ratio * (maximumValue - minimumValue)) / step,                        ) *                            step,                ),            );        &#125;        return Math.max(            minValue,            Math.min(                maxValue,                ratio * (maximumValue - minimumValue) + minimumValue,            ),        );    &#125;;    _getCurrentValue = (thumbIndex: number = 0) =&gt;        this.state.values[thumbIndex].__getValue();    _setCurrentValue = (        value: number,        thumbIndex: number | null | undefined,        callback?: () =&gt; void,    ) =&gt; &#123;        const safeIndex = thumbIndex ?? 0;        const animatedValue = this.state.values[safeIndex];        if (animatedValue) &#123;            animatedValue.setValue(value);            callback?.();        &#125; else &#123;            this.setState((prevState: SliderState) =&gt; &#123;                const newValues = [...prevState.values];                newValues[safeIndex] = new Animated.Value(value);                return &#123; values: newValues &#125;;            &#125;, callback);        &#125;    &#125;;    _setCurrentValueAnimated = (value: number, thumbIndex: number = 0) =&gt; &#123;        const &#123; animationType &#125; = this.props;        const animationConfig = &#123;            ...DEFAULT_ANIMATION_CONFIGS[animationType],            ...this.props.animationConfig,            toValue: value,            useNativeDriver: false,        &#125;;        Animated[animationType](this.state.values[thumbIndex], animationConfig).start();    &#125;;    _getTouchOverflowSize = (): &#123; width: number; height: number &#125; =&gt; &#123;        const &#123; allMeasured, containerSize, thumbSize &#125; = this.state;        const &#123; thumbTouchSize &#125; = this.props;        const size = &#123; width: 40, height: 40 &#125;;        if (allMeasured) &#123;            size.width = Math.max(0, (thumbTouchSize?.width || 0) - thumbSize.width);            size.height = Math.max(0, (thumbTouchSize?.height || 0) - containerSize.height);        &#125;        return size;    &#125;;    _getTouchOverflowStyle = () =&gt; &#123;        const &#123; width, height &#125; = this._getTouchOverflowSize();        const touchOverflowStyle = &#123;&#125; as ViewStyle;        if (width !== undefined &amp;&amp; height !== undefined) &#123;            const verticalMargin = -height / 2;            touchOverflowStyle.marginTop = verticalMargin;            touchOverflowStyle.marginBottom = verticalMargin;            const horizontalMargin = -width / 2;            touchOverflowStyle.marginLeft = horizontalMargin;            touchOverflowStyle.marginRight = horizontalMargin;        &#125;        if (this.props.debugTouchArea === true) &#123;            touchOverflowStyle.backgroundColor = &#x27;orange&#x27;;            touchOverflowStyle.opacity = 0.5;        &#125;        return touchOverflowStyle;    &#125;;    _thumbHitTest = (e: &#123; nativeEvent: any &#125;) =&gt; &#123;        const &#123; nativeEvent &#125; = e;        const &#123; trackClickable &#125; = this.props;        const &#123; values &#125; = this.state;        const hitThumb = values.find((_, i) =&gt; &#123;            const thumbTouchRect = this._getThumbTouchRect(i);            const containsPoint = thumbTouchRect.containsPoint(                nativeEvent.locationX,                nativeEvent.locationY,            );            if (containsPoint) &#123;                this._activeThumbIndex = i;            &#125;            return containsPoint;        &#125;);        if (hitThumb) &#123;            return true;        &#125;        if (trackClickable) &#123;            if (values.length === 1) &#123;                this._activeThumbIndex = 0;            &#125; else &#123;                const thumbDistances = values.map((_value, index) =&gt; &#123;                    const thumbTouchRect = this._getThumbTouchRect(index);                    return thumbTouchRect.trackDistanceToPoint(nativeEvent.locationX);                &#125;);                this._activeThumbIndex = indexOfLowest(thumbDistances);            &#125;            return true;        &#125;        return false;    &#125;;    _getThumbTouchRect = (thumbIndex: number = 0): RectReturn =&gt; &#123;        const &#123; containerSize, thumbSize &#125; = this.state;        const &#123; thumbTouchSize &#125; = this.props;        const &#123; height, width &#125; = thumbTouchSize || &#123; height: 40, width: 40 &#125;;        const touchOverflowSize = this._getTouchOverflowSize();        return Rect(&#123;            height,            width,            x:                touchOverflowSize.width / 2 +                this._getThumbLeft(this._getCurrentValue(thumbIndex)) +                (thumbSize.width - width) / 2,            y:                touchOverflowSize.height / 2 +                (containerSize.height - height) / 2,        &#125;);    &#125;;    _activeThumbIndex: number = 0;    _containerSize: Dimensions | null | undefined;    _panResponder: PanResponderInstance;    _previousLeft: number = 0;    _thumbSize: Dimensions | null | undefined;    _trackSize: Dimensions | null | undefined;    _renderDebugThumbTouchRect = (        thumbLeft: Animated.AnimatedInterpolation,        index: number,    ) =&gt; &#123;        const &#123; height, y, width &#125; = this._getThumbTouchRect() || &#123;&#125;;        const positionStyle = &#123; height, left: thumbLeft, top: y, width &#125;;        return (            &lt;Animated.View                key=&#123;`debug-thumb-$&#123;index&#125;`&#125;                pointerEvents=&quot;none&quot;                style=&#123;[styles.debugThumbTouchArea, positionStyle]&#125;            /&gt;        );    &#125;;    _renderThumbImage = (thumbIndex: number = 0) =&gt; &#123;        const &#123; thumbImage &#125; = this.props;        if (!thumbImage) return null;        return (            &lt;Image                source=&#123;                    (Array.isArray(thumbImage)                        ? thumbImage[thumbIndex]                        : thumbImage) as ImageSourcePropType                &#125;            /&gt;        );    &#125;;    render() &#123;        const &#123;            containerStyle,            debugTouchArea,            maximumTrackTintColor,            maximumValue,            minimumTrackTintColor,            minimumValue,            renderAboveThumbComponent,            renderTrackMarkComponent,            renderThumbComponent,            thumbStyle,            thumbTintColor,            trackStyle,            vertical,            ...other        &#125; = this.props;        const &#123;            allMeasured,            containerSize,            thumbSize,            trackMarksValues,            values,        &#125; = this.state;        const interpolatedThumbValues = values.map((value) =&gt;            value.interpolate(&#123;                inputRange: [minimumValue, maximumValue],                outputRange: I18nManager.isRTL                    ? [0, -(containerSize.width - thumbSize.width)]                    : [0, containerSize.width - thumbSize.width],            &#125;),        );        const interpolatedTrackValues = values.map((value) =&gt;            value.interpolate(&#123;                inputRange: [minimumValue, maximumValue],                outputRange: [0, containerSize.width - thumbSize.width],            &#125;),        );        const interpolatedTrackMarksValues =            trackMarksValues &amp;&amp;            trackMarksValues.map((v) =&gt;                v.interpolate(&#123;                    inputRange: [minimumValue, maximumValue],                    outputRange: I18nManager.isRTL                        ? [0, -(containerSize.width - thumbSize.width)]                        : [0, containerSize.width - thumbSize.width],                &#125;),            );        const valueVisibleStyle = &#123;&#125; as ViewStyle;        if (!allMeasured) valueVisibleStyle.opacity = 0;        const interpolatedRawValues = this._getRawValues(interpolatedTrackValues);        const minThumbValue = new Animated.Value(Math.min(...interpolatedRawValues));        const maxThumbValue = new Animated.Value(Math.max(...interpolatedRawValues));        const minimumTrackStyle = &#123;            position: &#x27;absolute&#x27;,            left:                interpolatedTrackValues.length === 1                    ? new Animated.Value(0)                    : Animated.add(minThumbValue, thumbSize.width / 2),            width:                interpolatedTrackValues.length === 1                    ? Animated.add(interpolatedTrackValues[0], thumbSize.width / 2)                    : Animated.add(Animated.multiply(minThumbValue, -1), maxThumbValue),            backgroundColor: minimumTrackTintColor,            ...valueVisibleStyle,        &#125; as ViewStyle;        const touchOverflowStyle = this._getTouchOverflowStyle();        return (            &lt;&gt;                &#123;renderAboveThumbComponent &amp;&amp; (                    &lt;View style=&#123;styles.aboveThumbComponentsContainer&#125;&gt;                        &#123;interpolatedThumbValues.map((value, i) =&gt; (                            &lt;Animated.View                                key=&#123;`slider-above-thumb-$&#123;i&#125;`&#125;                                style=&#123;[                                    styles.renderThumbComponent,                                    &#123;                                        bottom: 0,                                        transform: [                                            &#123; translateX: value &#125;,                                            &#123; translateY: 0 &#125;,                                        ],                                        ...valueVisibleStyle,                                    &#125;,                                ]&#125;&gt;                                &#123;renderAboveThumbComponent(i)&#125;                            &lt;/Animated.View&gt;                        ))&#125;                    &lt;/View&gt;                )&#125;                &lt;View                    &#123;...other&#125;                    style=&#123;[                        styles.container,                        vertical ? &#123; transform: [&#123; rotate: &#x27;-90deg&#x27; &#125;] &#125; : &#123;&#125;,                        containerStyle,                    ]&#125;                    onLayout=&#123;this._measureContainer&#125;&gt;                    &lt;View                        renderToHardwareTextureAndroid                        style=&#123;[                            styles.track,                            &#123; backgroundColor: maximumTrackTintColor &#125;,                            trackStyle,                        ]&#125;                        onLayout=&#123;this._measureTrack&#125;                    /&gt;                    &lt;Animated.View                        renderToHardwareTextureAndroid                        style=&#123;[styles.track, trackStyle, minimumTrackStyle]&#125;                    /&gt;                    &#123;renderTrackMarkComponent &amp;&amp;                        interpolatedTrackMarksValues &amp;&amp;                        interpolatedTrackMarksValues.map((value, i) =&gt; (                            &lt;Animated.View                                key=&#123;`track-mark-$&#123;i&#125;`&#125;                                style=&#123;[                                    styles.renderThumbComponent,                                    &#123;                                        transform: [                                            &#123; translateX: value &#125;,                                            &#123; translateY: 0 &#125;,                                        ],                                        ...valueVisibleStyle,                                    &#125;,                                ]&#125;&gt;                                &#123;renderTrackMarkComponent(i)&#125;                            &lt;/Animated.View&gt;                        ))&#125;                    &#123;interpolatedThumbValues.map((value, i) =&gt; (                        &lt;Animated.View                            key=&#123;`slider-thumb-$&#123;i&#125;`&#125;                            style=&#123;[                                renderThumbComponent                                    ? styles.renderThumbComponent                                    : styles.thumb,                                renderThumbComponent                                    ? &#123;&#125;                                    : &#123; backgroundColor: thumbTintColor, ...thumbStyle &#125;,                                &#123;                                    transform: [                                        &#123; translateX: value &#125;,                                        &#123; translateY: 0 &#125;,                                    ],                                    ...valueVisibleStyle,                                &#125;,                            ]&#125;                            onLayout=&#123;this._measureThumb&#125;&gt;                            &#123;renderThumbComponent ? renderThumbComponent() : this._renderThumbImage(i)&#125;                        &lt;/Animated.View&gt;                    ))&#125;                    &lt;View                        style=&#123;[styles.touchArea, touchOverflowStyle]&#125;                        &#123;...this._panResponder.panHandlers&#125;&gt;                        &#123;!!debugTouchArea &amp;&amp;                            interpolatedThumbValues.map((value, i) =&gt;                                this._renderDebugThumbTouchRect(value, i),                            )&#125;                    &lt;/View&gt;                &lt;/View&gt;            &lt;/&gt;        );    &#125;&#125;
+
+How to Use (Import)import &#123; Slider &#125; from &#x27;path-to-the-component-above&#x27;;&lt;Slider  minimumValue=&#123;1&#125;  maximumValue=&#123;7&#125; // sliding range: 1 to 7  minimumTrackTintColor=&quot;#0A79C3&quot;  maximumTrackTintColor=&quot;#F3F3F3&quot;  step=&#123;1&#125; // step size  value=&#123;targetDay&#125; // default value, e.g. 4  onValueChange=&#123;targetDays =&gt;    dispatch(&#123;      type: &#x27;SetupWeekTarget/updateState&#x27;,      payload: &#123; targetDay: targetDays &#125;    &#125;)  &#125; // triggered when sliding  trackStyle=&#123;&#123; height: 10, borderRadius: 12 &#125;&#125;  containerStyle=&#123;&#123; width: SCREEN_WIDTH - 90 &#125;&#125;  thumbTintColor=&quot;transparent&quot;  thumbImage=&#123;require(&#x27;path-to-your-image&#x27;)&#125;  /&gt;
+
+More ParametersFor the full list of available props and detailed documentation, please refer to:https://github.com/miblanchard/react-native-slider
+]]></content>
+      <categories>
+        <category>Frontend</category>
+      </categories>
   </entry>
   <entry>
     <title>One Day You&#39;ll Understand - Reading Notes by Mr. Zhuomo</title>
@@ -294,259 +333,6 @@ Understanding Entertainment &amp; FreedomLife has two paths: one for career ambi
       <categories>
         <category>Teacher Certification</category>
       </categories>
-  </entry>
-  <entry>
-    <title>Inserting Scripts in Vue</title>
-    <url>/ening/2025/08/12/vue%E5%AE%9E%E7%8E%B0%E6%8F%92%E5%85%A5%E8%84%9A%E6%9C%AC/</url>
-    <content><![CDATA[How to Properly Insert &lt;script&gt; Code in Vue (Including Ad Code Examples)In real-world development, we often need to integrate third-party services such as advertising platforms, analytics tools, or customer support widgets. These services usually provide a block of code that includes &lt;script&gt; tags.
-However, if you try to place &lt;script&gt; tags directly inside a Vue template (&lt;template&gt;), they will not work—and may even cause errors.
-This article explains why &lt;script&gt; tags cannot be directly used inside Vue templates, and how to correctly inject scripts dynamically, with a ready-to-use example (using ad code as a case study).
-
-1. Why You Can’t Write &lt;script&gt; Directly in a Vue TemplateVue Single File Components (SFC) have a clear structure:
-
-&lt;template&gt;: markup &#x2F; structure
-&lt;script&gt;: logic
-&lt;style&gt;: styles
-
-Placing &lt;script&gt; tags inside &lt;template&gt; causes several problems:
-
-Vue treats &lt;script&gt; tags as plain text or strips them out
-It breaks Vue’s compilation process and may throw errors
-Third-party scripts (ads, analytics, trackers) will not execute at all
-
-Therefore, to make external scripts work properly, they must be dynamically injected using DOM APIs during the component lifecycle.
-
-2. Incorrect Example: Pasting Ad Code Directly (This Will NOT Work)Suppose an ad network provides the following code:
-&lt;script type=&quot;text/javascript&quot;&gt;  atOptions = &#123;    &#x27;key&#x27; : &#x27;1523b7ddb936e560aadef64a851d500c&#x27;,    &#x27;format&#x27; : &#x27;iframe&#x27;,    &#x27;height&#x27; : 250,    &#x27;width&#x27; : 300,    &#x27;params&#x27; : &#123;&#125;  &#125;;&lt;/script&gt;&lt;script  type=&quot;text/javascript&quot;  src=&quot;//www.highperformanceformat.com/1523b7ddb936e560aadef64a851d500c/invoke.js&quot;&gt;&lt;/script&gt;
-
-If you paste this code directly into a Vue &lt;template&gt;, the advertisement will never render.
-
-3. The Correct Approach: Dynamically Inject Scripts in VueThe core idea is simple:
-
-Place a container element in the template (e.g. &lt;div id=&quot;de_v&quot;&gt;&lt;/div&gt;)
-Use the onMounted (or mounted) lifecycle hook
-Create &lt;script&gt; elements via JavaScript
-Append them to the DOM
-
-
-4. Complete Example (Vue 3 + &lt;script setup&gt;)Assume the ad should be rendered inside a container with the ID &quot;de_v&quot;.
-Template Section&lt;template&gt;  &lt;div id=&quot;de_v&quot;&gt;&lt;/div&gt;&lt;/template&gt;
-
-Script Section&lt;script setup&gt;import &#123; onMounted &#125; from &quot;vue&quot;;onMounted(() =&gt; &#123;  const targetDiv = document.getElementById(&quot;de_v&quot;);  if (!targetDiv) return;  // Create the first script (ad configuration)  const script1 = document.createElement(&quot;script&quot;);  script1.type = &quot;text/javascript&quot;;  script1.innerHTML = `    atOptions = &#123;      &#x27;key&#x27; : &#x27;1523b7ddb936e560aadef64a851d500c&#x27;,      &#x27;format&#x27; : &#x27;iframe&#x27;,      &#x27;height&#x27; : 250,      &#x27;width&#x27; : 300,      &#x27;params&#x27; : &#123;&#125;    &#125;;  `;  // Create the second script (external ad script)  const script2 = document.createElement(&quot;script&quot;);  script2.type = &quot;text/javascript&quot;;  script2.src =    &quot;//www.highperformanceformat.com/1523b7ddb936e560aadef64a851d500c/invoke.js&quot;;  // Append scripts to the container  targetDiv.appendChild(script1);  targetDiv.appendChild(script2);&#125;);&lt;/script&gt;
-
-
-5. Common Issues and Notes1. Will the script be injected multiple times?If the component is mounted and unmounted repeatedly, the scripts may be injected multiple times.
-Solutions:
-
-Check whether the script already exists before inserting
-Or remove the scripts in onUnmounted
-
-
-2. How to Handle Multiple Ad Slots?Use different container IDs for each ad slot, for example:
-&lt;div id=&quot;ad1&quot;&gt;&lt;/div&gt;&lt;div id=&quot;ad2&quot;&gt;&lt;/div&gt;
-
-Then inject scripts into the corresponding container.
-
-3. What About SSR Frameworks (Nuxt)?On the server side, document is not available.
-You must run the script injection code on the client side only:
-onMounted(() =&gt; &#123; ... &#125;)
-
-Otherwise, you will encounter:
-document is not defined
-
-
-6. Summary
-You cannot directly place &lt;script&gt; tags inside Vue templates
-The correct solution is to dynamically create and inject scripts during the component lifecycle
-Using appendChild() ensures third-party scripts execute properly
-This approach works for ads, analytics, tracking pixels, and external SDKs
-
-By following the method described above, third-party scripts will run correctly in Vue-based applications.
-]]></content>
-      <categories>
-        <category>Frontend</category>
-      </categories>
-      <tags>
-        <tag>Vue</tag>
-        <tag>script</tag>
-        <tag>ad code</tag>
-        <tag>dynamic script injection</tag>
-        <tag>DOM manipulation</tag>
-        <tag>third-party ads</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Sync Google Sheets Data Between Spreadsheets</title>
-    <url>/ening/2025/08/28/google%20sheet%E5%90%8C%E6%AD%A5%E8%A1%A8%E6%A0%BC%E6%95%B0%E6%8D%AE/</url>
-    <content><![CDATA[Sync Google Sheets Data Across Multiple SheetsThere is a requirement to synchronize all sheets from one Google Spreadsheet to another spreadsheet (including all sub-sheets).
-This is implemented using Google Sheets → Extensions → Apps Script.
-Why synchronization is neededThe source spreadsheet is read-only by default.By synchronizing its data into another spreadsheet, the copied sheets can then be edited freely.
-sourceSpreadsheetId and targetSpreadsheetId are the IDs from the Google Sheets URL —they are the long strings after /d/ in the address bar.
-Apps Script Code Examplefunction synchronizeSheetsToAnotherFile() &#123;  const sourceSpreadsheetId = &quot;id1&quot;;  const targetSpreadsheetId = &quot;id2&quot;;   // Example: 1NOtSSvDwXrca8vqyZW6OqQJwGaCICMVguSz1-i72oqg  const sourceSpreadsheet = SpreadsheetApp.openById(sourceSpreadsheetId);  const targetSpreadsheet = SpreadsheetApp.openById(targetSpreadsheetId);  const sourceSheets = sourceSpreadsheet.getSheets();  sourceSheets.forEach(sheet =&gt; &#123;    const sheetName = sheet.getName();    let targetSheet = targetSpreadsheet.getSheetByName(sheetName);    if (!targetSheet) &#123;      targetSheet = targetSpreadsheet.insertSheet(sheetName);    &#125; else &#123;      targetSheet.clear();    &#125;    const range = sheet.getDataRange();    const displayValues = range.getDisplayValues();     const formats = range.getBackgrounds();            const fontWeights = range.getFontWeights();        const targetRange = targetSheet.getRange(      1,      1,      displayValues.length,      displayValues[0].length    );    targetRange.setValues(displayValues);    targetRange.setBackgrounds(formats);    targetRange.setFontWeights(fontWeights);  &#125;);&#125;
-
-]]></content>
-      <categories>
-        <category>Frontend</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>How to Prevent XSS</title>
-    <url>/ening/2025/10/17/%E5%A6%82%E4%BD%95%E9%98%B2%E5%BE%A1%20XSS%EF%BC%88%E8%B7%A8%E7%AB%99%E8%84%9A%E6%9C%AC%E6%94%BB%E5%87%BB%EF%BC%89/</url>
-    <content><![CDATA[In web development, XSS (Cross-Site Scripting) is one of the most common and most dangerous security vulnerabilities.Once a website contains an XSS flaw, attackers may execute malicious scripts in users’ browsers, allowing them to steal cookies, hijack sessions, deface pages, or even take over user accounts.
-This article explains how to effectively defend against XSS attacks from both a theoretical and practical perspective, covering frontend and full-stack security best practices.
-1. What Is an XSS Attack?The essence of XSS is simple:
-
-An attacker injects malicious JavaScript into a webpage, which is then executed in other users’ browsers.
-
-Common types of XSS attacks include:
-
-Reflected XSS: malicious scripts are delivered through URL parameters
-Stored XSS: malicious scripts are stored in a database and served to users
-DOM-based XSS: frontend JavaScript logic directly handles untrusted data
-
-No matter the type, the root cause is the same:👉 User input is treated as executable code.
-2. Input Validation and Filtering (The Most Basic Defense)Never trust user input.
-1. Basic Frontend ValidationOn the frontend, basic validation can improve user experience, such as:
-
-Limiting input length
-Enforcing input formats (e.g., email, phone numbers)
-Filtering obviously dangerous characters
-
-Example (for basic validation only):
-function sanitizeInput(input) &#123;  return input.replace(/[&lt;&gt;]/g, &#x27;&#x27;);&#125;
-
-⚠️ Important:Frontend validation is not a security boundary and should never be relied on alone.
-2. Strict Backend Validation (Critical)Effective input validation must be performed on the server side:
-
-Validate data types
-Enforce length constraints
-Reject inputs that violate business rules
-Escape or sanitize HTML content using whitelists
-
-Recommended principles:
-
-Deny by default
-Whitelist over blacklist
-
-3. Output Encoding (More Important Than Input Filtering)Many XSS vulnerabilities occur not because input is unsafe, but because output is handled incorrectly.
-1. HTML Escaping on OutputWhen rendering user input, always encode HTML characters:
-
-
-
-Character
-Escaped Form
-
-
-
-&lt;
-&amp;lt;
-
-
-&gt;
-&amp;gt;
-
-
-&quot;
-&amp;quot;
-
-
-&#39;
-&amp;#39;
-
-
-Most modern template engines (Vue, React, Handlebars) escape output by default.Do not disable this behavior unless absolutely necessary.
-2. Avoid Dangerous APIsAvoid patterns like:
-element.innerHTML = userInput;
-
-Safer alternatives include:
-element.textContent = userInput;
-
-Or:
-const el = document.createElement(&#x27;div&#x27;);el.textContent = userInput;container.appendChild(el);
-
-
-
-4. Use Safe APIs and Framework ProtectionsModern frontend frameworks include built-in XSS protections.
-1. Default Protections in React and Vue
-JSX and template syntax escape output by default
-Dangerous APIs are explicitly labeled (e.g., v-html, dangerouslySetInnerHTML)
-
-⚠️ If you use these APIs, you must ensure the content is 100% trusted.
-2. Avoid String-Based HTML Construction❌ Unsafe example:
-container.innerHTML = `&lt;div&gt;$&#123;userInput&#125;&lt;/div&gt;`;
-
-✅ Safe alternative:
-const div = document.createElement(&#x27;div&#x27;);div.textContent = userInput;container.appendChild(div);
-
-
-
-5. Use Content Security Policy (CSP)Content Security Policy (CSP) is one of the most powerful defenses against XSS.
-1. What CSP Can Do
-Block inline script execution
-Restrict allowed script sources
-Prevent loading malicious third-party resources
-
-Example HTTP header:
-Content-Security-Policy:  default-src &#x27;self&#x27;;  script-src &#x27;self&#x27;;  object-src &#x27;none&#x27;;
-
-Even if an attacker injects a script, CSP can prevent the browser from executing it.
-2. Why CSP Is So ImportantBecause it provides:
-
-Browser-level protection
-A strong fallback even when application code has flaws
-
-6. Use HttpOnly and Secure Cookies1. Purpose of HttpOnlyWhen setting cookies, add the HttpOnly flag:
-Set-Cookie: sessionId=xxx; HttpOnly;
-
-This prevents JavaScript from accessing cookies, reducing the impact of XSS attacks.
-2. Combine with Secure and SameSiteFor stronger protection, also use:
-
-Secure
-SameSite=Strict or Lax
-
-This significantly improves session security.
-7. Keep Third-Party Libraries Up to DateIn real-world projects, many XSS vulnerabilities come from third-party dependencies:
-
-Outdated UI components
-Unmaintained plugins
-Vulnerable npm packages
-
-Best practices:
-
-Update dependencies regularly
-Use npm audit
-Monitor security advisories
-
-8. Develop Secure Coding HabitsPreventing XSS is not about a single technique, but about consistent habits:
-
-Never trust external input
-Avoid innerHTML unless necessary
-Do not ignore security warnings
-Prioritize security over convenience
-
-9. Summary
-XSS is one of the most common and dangerous web security threats
-Effective protection requires frontend, backend, and browser-level defenses
-Input validation is only the beginning—safe output handling and CSP are critical
-Good security habits are more valuable than any single patch
-
-For frontend developers,understanding how to prevent XSS is a key step toward true professionalism.
-]]></content>
-      <categories>
-        <category>Frontend</category>
-      </categories>
-      <tags>
-        <tag>XSS</tag>
-        <tag>Web Security</tag>
-        <tag>Frontend Security</tag>
-        <tag>JavaScript</tag>
-        <tag>Browser Security</tag>
-        <tag>Cybersecurity</tag>
-        <tag>Web Development</tag>
-        <tag>Secure Coding</tag>
-        <tag>Content Security Policy</tag>
-        <tag>HttpOnly</tag>
-      </tags>
   </entry>
   <entry>
     <title>Frontend Interview Questions</title>
@@ -734,42 +520,163 @@ Scoped slot: Vue 2 uses slot-scope=&quot;data&quot;, Vue 3 uses #data or #defaul
       </tags>
   </entry>
   <entry>
-    <title>Developing Without Frameworks</title>
-    <url>/ening/2025/08/13/%E5%A6%82%E4%BD%95%E8%84%B1%E7%A6%BB%E6%A1%86%E6%9E%B6%E5%BC%80%E5%8F%91/</url>
-    <content><![CDATA[
-Developing frontend applications without frameworks means building web projects without using any frontend frameworks such as Vue or React, and instead relying directly on JavaScript, HTML, and CSS. This approach allows developers to gain a deeper understanding of the underlying principles and mechanisms of frontend development, while avoiding over-reliance on frameworks.
-For static projects or low-complexity applications with limited functionality, developing without a framework is often more than sufficient. Code written with frameworks must be compiled before it can be rendered in the browser, which is why tools like Webpack exist. Frameworks such as Vue were created to solve specific pain points—like two-way data binding and automatic reactive updates—but they also require developers to follow framework-specific syntax and conventions. As frameworks evolve, developers must continuously learn and adapt to new versions.
-Frameworks are undoubtedly beneficial for development efficiency, but for simple requirements, avoiding a framework can actually be the wiser choice. Whether or not to use a framework should always be decided based on the actual project requirements.
-When developing multiple similar websites, unbundled code can be uploaded directly to the server and modified in place. In contrast, when using a framework, only the compiled output is deployed, and any changes require local modification and rebuilding, which can be more time-consuming. After becoming proficient in pure JavaScript development, developers can even go on to build their own tools or frameworks.
+    <title>How to Prevent XSS</title>
+    <url>/ening/2025/10/17/%E5%A6%82%E4%BD%95%E9%98%B2%E5%BE%A1%20XSS%EF%BC%88%E8%B7%A8%E7%AB%99%E8%84%9A%E6%9C%AC%E6%94%BB%E5%87%BB%EF%BC%89/</url>
+    <content><![CDATA[In web development, XSS (Cross-Site Scripting) is one of the most common and most dangerous security vulnerabilities.Once a website contains an XSS flaw, attackers may execute malicious scripts in users’ browsers, allowing them to steal cookies, hijack sessions, deface pages, or even take over user accounts.
+This article explains how to effectively defend against XSS attacks from both a theoretical and practical perspective, covering frontend and full-stack security best practices.
+1. What Is an XSS Attack?The essence of XSS is simple:
+
+An attacker injects malicious JavaScript into a webpage, which is then executed in other users’ browsers.
+
+Common types of XSS attacks include:
+
+Reflected XSS: malicious scripts are delivered through URL parameters
+Stored XSS: malicious scripts are stored in a database and served to users
+DOM-based XSS: frontend JavaScript logic directly handles untrusted data
+
+No matter the type, the root cause is the same:👉 User input is treated as executable code.
+2. Input Validation and Filtering (The Most Basic Defense)Never trust user input.
+1. Basic Frontend ValidationOn the frontend, basic validation can improve user experience, such as:
+
+Limiting input length
+Enforcing input formats (e.g., email, phone numbers)
+Filtering obviously dangerous characters
+
+Example (for basic validation only):
+function sanitizeInput(input) &#123;  return input.replace(/[&lt;&gt;]/g, &#x27;&#x27;);&#125;
+
+⚠️ Important:Frontend validation is not a security boundary and should never be relied on alone.
+2. Strict Backend Validation (Critical)Effective input validation must be performed on the server side:
+
+Validate data types
+Enforce length constraints
+Reject inputs that violate business rules
+Escape or sanitize HTML content using whitelists
+
+Recommended principles:
+
+Deny by default
+Whitelist over blacklist
+
+3. Output Encoding (More Important Than Input Filtering)Many XSS vulnerabilities occur not because input is unsafe, but because output is handled incorrectly.
+1. HTML Escaping on OutputWhen rendering user input, always encode HTML characters:
+
+
+
+Character
+Escaped Form
+
+
+
+&lt;
+&amp;lt;
+
+
+&gt;
+&amp;gt;
+
+
+&quot;
+&amp;quot;
+
+
+&#39;
+&amp;#39;
+
+
+Most modern template engines (Vue, React, Handlebars) escape output by default.Do not disable this behavior unless absolutely necessary.
+2. Avoid Dangerous APIsAvoid patterns like:
+element.innerHTML = userInput;
+
+Safer alternatives include:
+element.textContent = userInput;
+
+Or:
+const el = document.createElement(&#x27;div&#x27;);el.textContent = userInput;container.appendChild(el);
+
+
+
+4. Use Safe APIs and Framework ProtectionsModern frontend frameworks include built-in XSS protections.
+1. Default Protections in React and Vue
+JSX and template syntax escape output by default
+Dangerous APIs are explicitly labeled (e.g., v-html, dangerouslySetInnerHTML)
+
+⚠️ If you use these APIs, you must ensure the content is 100% trusted.
+2. Avoid String-Based HTML Construction❌ Unsafe example:
+container.innerHTML = `&lt;div&gt;$&#123;userInput&#125;&lt;/div&gt;`;
+
+✅ Safe alternative:
+const div = document.createElement(&#x27;div&#x27;);div.textContent = userInput;container.appendChild(div);
+
+
+
+5. Use Content Security Policy (CSP)Content Security Policy (CSP) is one of the most powerful defenses against XSS.
+1. What CSP Can Do
+Block inline script execution
+Restrict allowed script sources
+Prevent loading malicious third-party resources
+
+Example HTTP header:
+Content-Security-Policy:  default-src &#x27;self&#x27;;  script-src &#x27;self&#x27;;  object-src &#x27;none&#x27;;
+
+Even if an attacker injects a script, CSP can prevent the browser from executing it.
+2. Why CSP Is So ImportantBecause it provides:
+
+Browser-level protection
+A strong fallback even when application code has flaws
+
+6. Use HttpOnly and Secure Cookies1. Purpose of HttpOnlyWhen setting cookies, add the HttpOnly flag:
+Set-Cookie: sessionId=xxx; HttpOnly;
+
+This prevents JavaScript from accessing cookies, reducing the impact of XSS attacks.
+2. Combine with Secure and SameSiteFor stronger protection, also use:
+
+Secure
+SameSite=Strict or Lax
+
+This significantly improves session security.
+7. Keep Third-Party Libraries Up to DateIn real-world projects, many XSS vulnerabilities come from third-party dependencies:
+
+Outdated UI components
+Unmaintained plugins
+Vulnerable npm packages
+
+Best practices:
+
+Update dependencies regularly
+Use npm audit
+Monitor security advisories
+
+8. Develop Secure Coding HabitsPreventing XSS is not about a single technique, but about consistent habits:
+
+Never trust external input
+Avoid innerHTML unless necessary
+Do not ignore security warnings
+Prioritize security over convenience
+
+9. Summary
+XSS is one of the most common and dangerous web security threats
+Effective protection requires frontend, backend, and browser-level defenses
+Input validation is only the beginning—safe output handling and CSP are critical
+Good security habits are more valuable than any single patch
+
+For frontend developers,understanding how to prevent XSS is a key step toward true professionalism.
 ]]></content>
       <categories>
         <category>Frontend</category>
       </categories>
-  </entry>
-  <entry>
-    <title>Hexo-Next – Change Fonts &amp; Enable Code Copy</title>
-    <url>/ening/2025/08/18/Hexo-Next-%E6%9B%B4%E6%94%B9%E5%AD%97%E4%BD%93/</url>
-    <content><![CDATA[
-The Next theme version used here is 7.8.0.
-First, locate the file:
-/themes/next/_config.yml
-
-Search for the keyword font.⚠️ Important: You must set enable inside font to true, because the default value is false.If you only modify the family without enabling it, the font change will not take effect — so make sure you don’t miss this step.
-If the font family is sourced from an external platform, you also need to configure the host.
-font:  enable: true  # Uri of fonts host, e.g. https://fonts.googleapis.com (Default).  host:   # Font options:  # `external: true` will load this font family from `host` above.  # `family: Times New Roman`. Without any quotes.  # `size: x.x`. Use `em` as unit. Default: 1 (16px)  # Global font settings used for all elements inside &lt;body&gt;.  global:    external: true    family: Noto Serif SC    size:  # Font settings for site title (.site-title).  title:    external: true    family: Noto Serif SC    size:  # Font settings for headlines (&lt;h1&gt; to &lt;h6&gt;).  headings:    external: true    family: Noto Serif SC    size:  # Font settings for posts (.post-body).  posts:    external: true    family: Noto Serif SC  # Font settings for &lt;code&gt; and code blocks.  codes:    external: true    family: Source Code Pro
-
-
-Enable Copy Button for Code BlocksIn the same _config.yml file, locate the following configuration section.
-Set copy_button.enable to true to enable the copy feature.
-
-When show_result is set to true, a checkmark will be shown after copying.
-The style option controls the appearance of the copy button. Choose based on your preference.
-
-codeblock:  # Code Highlight theme  # Available values: normal | night | night eighties | night blue | night bright | solarized | solarized dark | galactic  # See: https://github.com/chriskempson/tomorrow-theme  highlight_theme: night eighties  # Add copy button on codeblock  copy_button:    enable: true    # Show text copy result.    show_result: true    # Available values: default | flat | mac    style: mac
-]]></content>
-      <categories>
-        <category>Frontend</category>
-      </categories>
+      <tags>
+        <tag>XSS</tag>
+        <tag>Web Security</tag>
+        <tag>Frontend Security</tag>
+        <tag>JavaScript</tag>
+        <tag>Browser Security</tag>
+        <tag>Cybersecurity</tag>
+        <tag>Web Development</tag>
+        <tag>Secure Coding</tag>
+        <tag>Content Security Policy</tag>
+        <tag>HttpOnly</tag>
+      </tags>
   </entry>
   <entry>
     <title>Installing Puppeteer on Baota Panel</title>
@@ -793,6 +700,29 @@ Solution: Disable sandbox when launching Puppeteer// Add launch arguments to dis
       <categories>
         <category>Frontend</category>
       </categories>
+  </entry>
+  <entry>
+    <title>Reflections on *What I Talk About When I Talk About Running*</title>
+    <url>/ening/2025/06/26/%E5%BD%93%E6%88%91%E8%B0%88%E8%B7%91%E6%AD%A5%E6%97%B6/</url>
+    <content><![CDATA[What I Talk About When I Talk About RunningIt was through this book that I realized there could be another version of myself out there, doing something I love. Before reading this book, I had never read anything by Murakami. I knew he was popular and had many famous books, but I hadn’t really paid attention. But when it comes to running, I felt there could be a connection.
+If I keep running, will I eventually reach the moon? Running isn’t about living longer, but about making life feel easier and lighter within the time we have.
+I was surprised by Murakami’s imagination while running—so free and boundless. I really enjoy that. I’ve imagined many things too, like suddenly recalling a lyric while running—something like “speeding up to chase happiness,” blabla… Long-distance running requires endurance, but also imagination. Of course, the premise is loving to run. If someone doesn’t like running, no matter how much you say, it won’t matter. But if someone does love it, they’ll even want to meet another version of themselves during a break in the rain. Humans are inherently lonely, but the spirit can resonate with others.
+I plan to keep running no matter how the world changes. Once, I walked 30 kilometers in one day. Despite the sunburn, I loved the spiritual fulfillment more. If you haven’t experienced it, you have no voice. Maybe I’m like Chen Kun—a pessimistic optimist. I live actively in this world, but I also see through its illusions. Neither joyful because of things, nor sorrowful because of myself.
+My pulse has dropped to just over 50 beats per minute. Seems like I’m built for jogging. After all, it’s about interest. As long as my freedom isn’t restricted, anything is acceptable.
+I hope next year I’ll join a marathon, with people cheering me on. That would be so happy.
+
+“I’m not a person, but a pure machine. So I don’t need to feel anything, just keep running forward.”
+
+What’s most similar is that we both love to run non-stop. Not the type who walks when tired or stops to enjoy the scenery. Maybe people have different views, but I think the true king is the one who can keep running without stopping.
+When reaching the finish line, I’d feel so cool, a rush of pride, like winning the lottery or getting incredibly lucky. It’s a principle—and also my pride.
+Oh, right—just like Brother Shang waiting at the finish line, and I’d smile proudly.
+]]></content>
+      <categories>
+        <category>Reading</category>
+      </categories>
+      <tags>
+        <tag>Reading</tag>
+      </tags>
   </entry>
   <entry>
     <title>Fully Understanding How the JavaScript `new` Operator Works</title>
@@ -907,47 +837,6 @@ If you can both write and explain this implementation,90% of interviewers will c
       </categories>
   </entry>
   <entry>
-    <title>Reflections on *What I Talk About When I Talk About Running*</title>
-    <url>/ening/2025/06/26/%E5%BD%93%E6%88%91%E8%B0%88%E8%B7%91%E6%AD%A5%E6%97%B6/</url>
-    <content><![CDATA[What I Talk About When I Talk About RunningIt was through this book that I realized there could be another version of myself out there, doing something I love. Before reading this book, I had never read anything by Murakami. I knew he was popular and had many famous books, but I hadn’t really paid attention. But when it comes to running, I felt there could be a connection.
-If I keep running, will I eventually reach the moon? Running isn’t about living longer, but about making life feel easier and lighter within the time we have.
-I was surprised by Murakami’s imagination while running—so free and boundless. I really enjoy that. I’ve imagined many things too, like suddenly recalling a lyric while running—something like “speeding up to chase happiness,” blabla… Long-distance running requires endurance, but also imagination. Of course, the premise is loving to run. If someone doesn’t like running, no matter how much you say, it won’t matter. But if someone does love it, they’ll even want to meet another version of themselves during a break in the rain. Humans are inherently lonely, but the spirit can resonate with others.
-I plan to keep running no matter how the world changes. Once, I walked 30 kilometers in one day. Despite the sunburn, I loved the spiritual fulfillment more. If you haven’t experienced it, you have no voice. Maybe I’m like Chen Kun—a pessimistic optimist. I live actively in this world, but I also see through its illusions. Neither joyful because of things, nor sorrowful because of myself.
-My pulse has dropped to just over 50 beats per minute. Seems like I’m built for jogging. After all, it’s about interest. As long as my freedom isn’t restricted, anything is acceptable.
-I hope next year I’ll join a marathon, with people cheering me on. That would be so happy.
-
-“I’m not a person, but a pure machine. So I don’t need to feel anything, just keep running forward.”
-
-What’s most similar is that we both love to run non-stop. Not the type who walks when tired or stops to enjoy the scenery. Maybe people have different views, but I think the true king is the one who can keep running without stopping.
-When reaching the finish line, I’d feel so cool, a rush of pride, like winning the lottery or getting incredibly lucky. It’s a principle—and also my pride.
-Oh, right—just like Brother Shang waiting at the finish line, and I’d smile proudly.
-]]></content>
-      <categories>
-        <category>Reading</category>
-      </categories>
-      <tags>
-        <tag>Reading</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Reflections on *Skin*</title>
-    <url>/ening/2025/06/26/%E7%9A%AE%E5%9B%8A%E6%84%9F%E6%82%9F/</url>
-    <content><![CDATA[Aunt TaiAunt Tai is strong-willed and resilient. Her optimistic attitude is something worth learning from. The greatest thing my father ever did was marrying my mother—a truly great woman. A real woman should face everything with positivity and build the future she desires with her own hands.
-Although she resorted to stealing, it was driven by hardship—survival and family. Setting aside pride to do things against her will is, in a way, a form of strength. It’s not about crying and making a scene, but staying proactive in adversity.
-Thinking about it, the author’s achievements are inseparable from his great mother.
-Ah, that lovely mother! To preserve her husband’s dignity and happiness, she insisted on completing the house. Isn’t that a form of strength too? To follow her heart courageously is truly admirable.
-In fact, the person who understands my father the most is my mother. She knows his pride. Isn’t this what love is? You don’t need to say it—I understand. I understand you, and you understand me, and that’s why we’ve been together for so long.
-Zhang MeiliGet up from where you fell. Zhang Meili seems like someone who pursued true love and worked hard for what she desired. Though she was eventually forced to liberate herself sexually, I still respect her for everything she once did.
-Public opinion is powerful, but Zhang Meili’s inner strength is even more powerful.
-]]></content>
-      <categories>
-        <category>Reading</category>
-      </categories>
-      <tags>
-        <tag>Reading</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Handwriting Promise.race (From Theory to Practice)</title>
     <url>/ening/2025/12/18/%E6%89%8B%E5%86%99Promise/</url>
     <content><![CDATA[In frontend interviews and daily development, Promise.race is a very common yet often overlooked API. Its rule is simple:
@@ -1040,50 +929,102 @@ Iterate over the iterable, wrap each item with Promise.resolve, attach the same 
       </categories>
   </entry>
   <entry>
-    <title>Saving Retrieved CSV Data into a Database</title>
-    <url>/ening/2025/07/29/%E8%8E%B7%E5%8F%96%E5%88%B0%E7%9A%84csv%E4%BF%9D%E5%AD%98%E6%95%B0%E6%8D%AE%E5%BA%93/</url>
-    <content><![CDATA[Saving CSV Data from a Third-Party API into a DatabaseWhen data retrieved from a third-party API is returned in CSV format, a common and reliable approach is:
-
-First, save the CSV file to a local path
-Then use fs.createReadStream to read the file
-Finally, parse the CSV content and store it in a local database
-
-Below is an example implementation:
-const processConversations = async (dateObj) =&gt; &#123;  const username = &#x27;your_account_name&#x27;;  const password = &#x27;password&#x27;;  const year = dateObj.format(&#x27;YYYY&#x27;);  const month = dateObj.format(&#x27;MM&#x27;);  const day = dateObj.format(&#x27;DD&#x27;);  const hour = dateObj.format(&#x27;HH&#x27;);  const dateStr = `$&#123;year&#125;-$&#123;month&#125;-$&#123;day&#125;-$&#123;hour&#125;`;  const fileName = `partial_path`;  const url = `https://api/$&#123;fileName&#125;`;  const outputPath = `/tmp/conversations`;  const tableName = &#x27;test&#x27;;  try &#123;    // Download CSV    const response = await axios.get(url, &#123;      responseType: &#x27;stream&#x27;,      headers: &#123;        Authorization: `Basic $&#123;Buffer.from(`$&#123;username&#125;:$&#123;password&#125;`).toString(&#x27;base64&#x27;)&#125;`      &#125;    &#125;);    const writer = fs.createWriteStream(outputPath);    response.data.pipe(writer);    await new Promise((resolve, reject) =&gt; &#123;      writer.on(&#x27;finish&#x27;, resolve);      writer.on(&#x27;error&#x27;, reject);    &#125;);    console.log(&#x27;CSV file downloaded successfully:&#x27;, fileName);    const rows = [];    await new Promise((resolve, reject) =&gt; &#123;      fs.createReadStream(outputPath)        .pipe(csv())        .on(&#x27;data&#x27;, (row) =&gt; &#123;          rows.push([            row[&#x27;DATE_TIME&#x27;]              ? dayjs(row[&#x27;DATE_TIME&#x27;]).format(&#x27;YYYY-MM-DD HH:mm:ss&#x27;)              : null,            row[&#x27;CLID&#x27;] || null,            row[&#x27;CLID_SOURCE&#x27;] || null          ]);        &#125;)        .on(&#x27;end&#x27;, resolve)        .on(&#x27;error&#x27;, reject);    &#125;);    if (rows.length === 0) &#123;      console.warn(`No data found in CSV: $&#123;fileName&#125;`);      return;    &#125;    const insertSQL = `      INSERT INTO \`$&#123;tableName&#125;\` (        date_time, clid, clid_source      ) VALUES ?    `;    await query(insertSQL, [rows]);    console.log(`Successfully inserted $&#123;rows.length&#125; records: $&#123;fileName&#125;`);  &#125; catch (error) &#123;    console.error(`Error ($&#123;fileName&#125;):`, error.message);  &#125;&#125;;
-
+    <title>Reflections on *Skin*</title>
+    <url>/ening/2025/06/26/%E7%9A%AE%E5%9B%8A%E6%84%9F%E6%82%9F/</url>
+    <content><![CDATA[Aunt TaiAunt Tai is strong-willed and resilient. Her optimistic attitude is something worth learning from. The greatest thing my father ever did was marrying my mother—a truly great woman. A real woman should face everything with positivity and build the future she desires with her own hands.
+Although she resorted to stealing, it was driven by hardship—survival and family. Setting aside pride to do things against her will is, in a way, a form of strength. It’s not about crying and making a scene, but staying proactive in adversity.
+Thinking about it, the author’s achievements are inseparable from his great mother.
+Ah, that lovely mother! To preserve her husband’s dignity and happiness, she insisted on completing the house. Isn’t that a form of strength too? To follow her heart courageously is truly admirable.
+In fact, the person who understands my father the most is my mother. She knows his pride. Isn’t this what love is? You don’t need to say it—I understand. I understand you, and you understand me, and that’s why we’ve been together for so long.
+Zhang MeiliGet up from where you fell. Zhang Meili seems like someone who pursued true love and worked hard for what she desired. Though she was eventually forced to liberate herself sexually, I still respect her for everything she once did.
+Public opinion is powerful, but Zhang Meili’s inner strength is even more powerful.
 ]]></content>
       <categories>
-        <category>Backend</category>
+        <category>Reading</category>
       </categories>
+      <tags>
+        <tag>Reading</tag>
+      </tags>
   </entry>
   <entry>
-    <title>Index</title>
-    <url>/ening/2025/07/27/%E7%B4%A2%E5%BC%95/</url>
-    <content><![CDATA[The Role of IndexesWhen you want to quickly find the data you need, you can use indexes.With indexes, the database can directly locate the required data during retrieval, saving time—much like the table of contents at the front of a book, which helps you quickly find what you want to read.
-If an index contains multiple columns, it follows the leftmost prefix rule, meaning it is used from left to right, starting with the leftmost column.
-Types of Indexes1. Unique IndexA unique index can be added to certain columns (such as an ID number) to ensure that no two records have the same value. By using the UNIQUE keyword, we can create a unique index.
-ADD UNIQUE INDEX uni_sf (sf);
+    <title>Inserting Scripts in Vue</title>
+    <url>/ening/2025/08/12/vue%E5%AE%9E%E7%8E%B0%E6%8F%92%E5%85%A5%E8%84%9A%E6%9C%AC/</url>
+    <content><![CDATA[How to Properly Insert &lt;script&gt; Code in Vue (Including Ad Code Examples)In real-world development, we often need to integrate third-party services such as advertising platforms, analytics tools, or customer support widgets. These services usually provide a block of code that includes &lt;script&gt; tags.
+However, if you try to place &lt;script&gt; tags directly inside a Vue template (&lt;template&gt;), they will not work—and may even cause errors.
+This article explains why &lt;script&gt; tags cannot be directly used inside Vue templates, and how to correctly inject scripts dynamically, with a ready-to-use example (using ad code as a case study).
 
-You can also add a unique constraint to a column without explicitly creating a unique index. In this case, the column is still required to have unique values.
-ADD CONSTRAINT uni_name UNIQUE (name);
+1. Why You Can’t Write &lt;script&gt; Directly in a Vue TemplateVue Single File Components (SFC) have a clear structure:
+
+&lt;template&gt;: markup &#x2F; structure
+&lt;script&gt;: logic
+&lt;style&gt;: styles
+
+Placing &lt;script&gt; tags inside &lt;template&gt; causes several problems:
+
+Vue treats &lt;script&gt; tags as plain text or strips them out
+It breaks Vue’s compilation process and may throw errors
+Third-party scripts (ads, analytics, trackers) will not execute at all
+
+Therefore, to make external scripts work properly, they must be dynamically injected using DOM APIs during the component lifecycle.
+
+2. Incorrect Example: Pasting Ad Code Directly (This Will NOT Work)Suppose an ad network provides the following code:
+&lt;script type=&quot;text/javascript&quot;&gt;  atOptions = &#123;    &#x27;key&#x27; : &#x27;1523b7ddb936e560aadef64a851d500c&#x27;,    &#x27;format&#x27; : &#x27;iframe&#x27;,    &#x27;height&#x27; : 250,    &#x27;width&#x27; : 300,    &#x27;params&#x27; : &#123;&#125;  &#125;;&lt;/script&gt;&lt;script  type=&quot;text/javascript&quot;  src=&quot;//www.highperformanceformat.com/1523b7ddb936e560aadef64a851d500c/invoke.js&quot;&gt;&lt;/script&gt;
+
+If you paste this code directly into a Vue &lt;template&gt;, the advertisement will never render.
+
+3. The Correct Approach: Dynamically Inject Scripts in VueThe core idea is simple:
+
+Place a container element in the template (e.g. &lt;div id=&quot;de_v&quot;&gt;&lt;/div&gt;)
+Use the onMounted (or mounted) lifecycle hook
+Create &lt;script&gt; elements via JavaScript
+Append them to the DOM
 
 
+4. Complete Example (Vue 3 + &lt;script setup&gt;)Assume the ad should be rendered inside a container with the ID &quot;de_v&quot;.
+Template Section&lt;template&gt;  &lt;div id=&quot;de_v&quot;&gt;&lt;/div&gt;&lt;/template&gt;
 
-2. Primary Key IndexOnce a primary key is created, an index is automatically created for it. This is why searching data by the primary key is faster.
-A table can have only one primary key, but a primary key can consist of multiple columns, which is known as a composite (or joint) primary key.
-ALTER TABLE table_name ADD PRIMARY KEY (column);
-
-
-
-3. Normal (Non-unique) IndexAny column can have an index created on it. It is recommended to add indexes only to columns that are frequently queried. Avoid adding indexes to every column, as this can negatively impact performance.
-ALTER TABLE table_name ADD INDEX index_name (column);
+Script Section&lt;script setup&gt;import &#123; onMounted &#125; from &quot;vue&quot;;onMounted(() =&gt; &#123;  const targetDiv = document.getElementById(&quot;de_v&quot;);  if (!targetDiv) return;  // Create the first script (ad configuration)  const script1 = document.createElement(&quot;script&quot;);  script1.type = &quot;text/javascript&quot;;  script1.innerHTML = `    atOptions = &#123;      &#x27;key&#x27; : &#x27;1523b7ddb936e560aadef64a851d500c&#x27;,      &#x27;format&#x27; : &#x27;iframe&#x27;,      &#x27;height&#x27; : 250,      &#x27;width&#x27; : 300,      &#x27;params&#x27; : &#123;&#125;    &#125;;  `;  // Create the second script (external ad script)  const script2 = document.createElement(&quot;script&quot;);  script2.type = &quot;text/javascript&quot;;  script2.src =    &quot;//www.highperformanceformat.com/1523b7ddb936e560aadef64a851d500c/invoke.js&quot;;  // Append scripts to the container  targetDiv.appendChild(script1);  targetDiv.appendChild(script2);&#125;);&lt;/script&gt;
 
 
+5. Common Issues and Notes1. Will the script be injected multiple times?If the component is mounted and unmounted repeatedly, the scripts may be injected multiple times.
+Solutions:
 
+Check whether the script already exists before inserting
+Or remove the scripts in onUnmounted
+
+
+2. How to Handle Multiple Ad Slots?Use different container IDs for each ad slot, for example:
+&lt;div id=&quot;ad1&quot;&gt;&lt;/div&gt;&lt;div id=&quot;ad2&quot;&gt;&lt;/div&gt;
+
+Then inject scripts into the corresponding container.
+
+3. What About SSR Frameworks (Nuxt)?On the server side, document is not available.
+You must run the script injection code on the client side only:
+onMounted(() =&gt; &#123; ... &#125;)
+
+Otherwise, you will encounter:
+document is not defined
+
+
+6. Summary
+You cannot directly place &lt;script&gt; tags inside Vue templates
+The correct solution is to dynamically create and inject scripts during the component lifecycle
+Using appendChild() ensures third-party scripts execute properly
+This approach works for ads, analytics, tracking pixels, and external SDKs
+
+By following the method described above, third-party scripts will run correctly in Vue-based applications.
 ]]></content>
       <categories>
-        <category>Backend</category>
+        <category>Frontend</category>
       </categories>
+      <tags>
+        <tag>Vue</tag>
+        <tag>script</tag>
+        <tag>ad code</tag>
+        <tag>dynamic script injection</tag>
+        <tag>DOM manipulation</tag>
+        <tag>third-party ads</tag>
+      </tags>
   </entry>
   <entry>
     <title>Encountering the Unknown Self</title>
@@ -1125,5 +1066,64 @@ ConclusionThis book is not only about discovering “who you are,” but also ab
       <tags>
         <tag>Personal Growth</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>Saving Retrieved CSV Data into a Database</title>
+    <url>/ening/2025/07/29/%E8%8E%B7%E5%8F%96%E5%88%B0%E7%9A%84csv%E4%BF%9D%E5%AD%98%E6%95%B0%E6%8D%AE%E5%BA%93/</url>
+    <content><![CDATA[Saving CSV Data from a Third-Party API into a DatabaseWhen data retrieved from a third-party API is returned in CSV format, a common and reliable approach is:
+
+First, save the CSV file to a local path
+Then use fs.createReadStream to read the file
+Finally, parse the CSV content and store it in a local database
+
+Below is an example implementation:
+const processConversations = async (dateObj) =&gt; &#123;  const username = &#x27;your_account_name&#x27;;  const password = &#x27;password&#x27;;  const year = dateObj.format(&#x27;YYYY&#x27;);  const month = dateObj.format(&#x27;MM&#x27;);  const day = dateObj.format(&#x27;DD&#x27;);  const hour = dateObj.format(&#x27;HH&#x27;);  const dateStr = `$&#123;year&#125;-$&#123;month&#125;-$&#123;day&#125;-$&#123;hour&#125;`;  const fileName = `partial_path`;  const url = `https://api/$&#123;fileName&#125;`;  const outputPath = `/tmp/conversations`;  const tableName = &#x27;test&#x27;;  try &#123;    // Download CSV    const response = await axios.get(url, &#123;      responseType: &#x27;stream&#x27;,      headers: &#123;        Authorization: `Basic $&#123;Buffer.from(`$&#123;username&#125;:$&#123;password&#125;`).toString(&#x27;base64&#x27;)&#125;`      &#125;    &#125;);    const writer = fs.createWriteStream(outputPath);    response.data.pipe(writer);    await new Promise((resolve, reject) =&gt; &#123;      writer.on(&#x27;finish&#x27;, resolve);      writer.on(&#x27;error&#x27;, reject);    &#125;);    console.log(&#x27;CSV file downloaded successfully:&#x27;, fileName);    const rows = [];    await new Promise((resolve, reject) =&gt; &#123;      fs.createReadStream(outputPath)        .pipe(csv())        .on(&#x27;data&#x27;, (row) =&gt; &#123;          rows.push([            row[&#x27;DATE_TIME&#x27;]              ? dayjs(row[&#x27;DATE_TIME&#x27;]).format(&#x27;YYYY-MM-DD HH:mm:ss&#x27;)              : null,            row[&#x27;CLID&#x27;] || null,            row[&#x27;CLID_SOURCE&#x27;] || null          ]);        &#125;)        .on(&#x27;end&#x27;, resolve)        .on(&#x27;error&#x27;, reject);    &#125;);    if (rows.length === 0) &#123;      console.warn(`No data found in CSV: $&#123;fileName&#125;`);      return;    &#125;    const insertSQL = `      INSERT INTO \`$&#123;tableName&#125;\` (        date_time, clid, clid_source      ) VALUES ?    `;    await query(insertSQL, [rows]);    console.log(`Successfully inserted $&#123;rows.length&#125; records: $&#123;fileName&#125;`);  &#125; catch (error) &#123;    console.error(`Error ($&#123;fileName&#125;):`, error.message);  &#125;&#125;;
+
+]]></content>
+      <categories>
+        <category>Backend</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>Developing Without Frameworks</title>
+    <url>/ening/2025/08/13/%E5%A6%82%E4%BD%95%E8%84%B1%E7%A6%BB%E6%A1%86%E6%9E%B6%E5%BC%80%E5%8F%91/</url>
+    <content><![CDATA[
+Developing frontend applications without frameworks means building web projects without using any frontend frameworks such as Vue or React, and instead relying directly on JavaScript, HTML, and CSS. This approach allows developers to gain a deeper understanding of the underlying principles and mechanisms of frontend development, while avoiding over-reliance on frameworks.
+For static projects or low-complexity applications with limited functionality, developing without a framework is often more than sufficient. Code written with frameworks must be compiled before it can be rendered in the browser, which is why tools like Webpack exist. Frameworks such as Vue were created to solve specific pain points—like two-way data binding and automatic reactive updates—but they also require developers to follow framework-specific syntax and conventions. As frameworks evolve, developers must continuously learn and adapt to new versions.
+Frameworks are undoubtedly beneficial for development efficiency, but for simple requirements, avoiding a framework can actually be the wiser choice. Whether or not to use a framework should always be decided based on the actual project requirements.
+When developing multiple similar websites, unbundled code can be uploaded directly to the server and modified in place. In contrast, when using a framework, only the compiled output is deployed, and any changes require local modification and rebuilding, which can be more time-consuming. After becoming proficient in pure JavaScript development, developers can even go on to build their own tools or frameworks.
+]]></content>
+      <categories>
+        <category>Frontend</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>Index</title>
+    <url>/ening/2025/07/27/%E7%B4%A2%E5%BC%95/</url>
+    <content><![CDATA[The Role of IndexesWhen you want to quickly find the data you need, you can use indexes.With indexes, the database can directly locate the required data during retrieval, saving time—much like the table of contents at the front of a book, which helps you quickly find what you want to read.
+If an index contains multiple columns, it follows the leftmost prefix rule, meaning it is used from left to right, starting with the leftmost column.
+Types of Indexes1. Unique IndexA unique index can be added to certain columns (such as an ID number) to ensure that no two records have the same value. By using the UNIQUE keyword, we can create a unique index.
+ADD UNIQUE INDEX uni_sf (sf);
+
+You can also add a unique constraint to a column without explicitly creating a unique index. In this case, the column is still required to have unique values.
+ADD CONSTRAINT uni_name UNIQUE (name);
+
+
+
+2. Primary Key IndexOnce a primary key is created, an index is automatically created for it. This is why searching data by the primary key is faster.
+A table can have only one primary key, but a primary key can consist of multiple columns, which is known as a composite (or joint) primary key.
+ALTER TABLE table_name ADD PRIMARY KEY (column);
+
+
+
+3. Normal (Non-unique) IndexAny column can have an index created on it. It is recommended to add indexes only to columns that are frequently queried. Avoid adding indexes to every column, as this can negatively impact performance.
+ALTER TABLE table_name ADD INDEX index_name (column);
+
+
+
+]]></content>
+      <categories>
+        <category>Backend</category>
+      </categories>
   </entry>
 </search>
