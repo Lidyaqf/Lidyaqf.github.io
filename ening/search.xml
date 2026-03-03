@@ -118,21 +118,6 @@ JSI (JavaScript Interface): Allows JavaScript to directly call native code, repl
       </categories>
   </entry>
   <entry>
-    <title>React Native Custom Slider</title>
-    <url>/ening/2025/07/22/ReactNative%E8%87%AA%E5%AE%9A%E4%B9%89%E6%BB%91%E5%8A%A8%E6%9D%A1/</url>
-    <content><![CDATA[
-For testing and high UI requirements (for example, replacing the thumb with a custom image), the traditional @react-native-community/slider can no longer meet the needs. So I switched to a custom approach. After searching for a long time, I finally found a great library:https://github.com/miblanchard/react-native-slider
-Component Codeimport React, &#123; PureComponent &#125; from &#x27;react&#x27;;import &#123;    Animated,    Easing,    I18nManager,    Image,    ImageSourcePropType,    LayoutChangeEvent,    PanResponder,    PanResponderInstance,    View,    ViewStyle,&#125; from &#x27;react-native&#x27;;// stylesimport &#123; defaultStyles as styles &#125; from &#x27;./styles&#x27;;import type &#123; Dimensions, SliderProps, SliderState &#125; from &#x27;./types&#x27;;type RectReturn = &#123;    containsPoint: (nativeX: number, nativeY: number) =&gt; boolean;    height: number;    trackDistanceToPoint: (nativeX: number) =&gt; number;    width: number;    x: number;    y: number;&#125;;const Rect = (&#123;    height,    width,    x,    y,&#125;: &#123;    height: number;    width: number;    x: number;    y: number;&#125;) =&gt; (&#123;    containsPoint: (nativeX: number, nativeY: number) =&gt;        nativeX &gt;= x &amp;&amp;        nativeY &gt;= y &amp;&amp;        nativeX &lt;= x + width &amp;&amp;        nativeY &lt;= y + height,    height,    trackDistanceToPoint: (nativeX: number) =&gt; &#123;        if (nativeX &lt; x) &#123;            return x - nativeX;        &#125;        if (nativeX &gt; x + width) &#123;            return nativeX - (x + width);        &#125;        return 0;    &#125;,    width,    x,    y,&#125;);const DEFAULT_ANIMATION_CONFIGS = &#123;    spring: &#123;        friction: 7,        tension: 100,    &#125;,    timing: &#123;        duration: 150,        easing: Easing.inOut(Easing.ease),        delay: 0,    &#125;,&#125;;const normalizeValue = (    props: SliderProps,    value?: number | Array&lt;number&gt;,): Array&lt;number&gt; =&gt; &#123;    if (!value || (Array.isArray(value) &amp;&amp; value.length === 0)) &#123;        return [0];    &#125;    const &#123; maximumValue, minimumValue &#125; = props;    const getBetweenValue = (inputValue: number) =&gt;        Math.max(Math.min(inputValue, maximumValue), minimumValue);    if (!Array.isArray(value)) &#123;        return [getBetweenValue(value)];    &#125;    return value.map(getBetweenValue).sort((a, b) =&gt; a - b);&#125;;const updateValues = (&#123;    values,    newValues = values,&#125;: &#123;    values: number | Array&lt;number&gt; | Animated.Value | Array&lt;Animated.Value&gt;;    newValues?: number | Array&lt;number&gt; | Animated.Value | Array&lt;Animated.Value&gt;;&#125;): Animated.Value[] =&gt; &#123;    if (        Array.isArray(newValues) &amp;&amp;        Array.isArray(values) &amp;&amp;        newValues.length !== values.length    ) &#123;        return updateValues(&#123; values: newValues &#125;);    &#125;    if (Array.isArray(values) &amp;&amp; Array.isArray(newValues)) &#123;        return values?.map((value: number | Animated.Value, index: number) =&gt; &#123;            let valueToSet = newValues[index];            if (value instanceof Animated.Value) &#123;                if (valueToSet instanceof Animated.Value) &#123;                    valueToSet = valueToSet.__getValue();                &#125;                value.setValue(valueToSet);                return value;            &#125;            if (valueToSet instanceof Animated.Value) &#123;                return valueToSet;            &#125;            return new Animated.Value(valueToSet);        &#125;);    &#125;    return [new Animated.Value(0)];&#125;;const indexOfLowest = (values: Array&lt;number&gt;): number =&gt; &#123;    let lowestIndex = 0;    values.forEach((value, index, array) =&gt; &#123;        if (value &lt; array[lowestIndex]) &#123;            lowestIndex = index;        &#125;    &#125;);    return lowestIndex;&#125;;export class Slider extends PureComponent&lt;SliderProps, SliderState&gt; &#123;    constructor(props: SliderProps) &#123;        super(props);        this._panResponder = PanResponder.create(&#123;            onStartShouldSetPanResponder:                this._handleStartShouldSetPanResponder,            onMoveShouldSetPanResponder: this._handleMoveShouldSetPanResponder,            onPanResponderGrant: this._handlePanResponderGrant,            onPanResponderMove: this._handlePanResponderMove,            onPanResponderRelease: this._handlePanResponderEnd,            onPanResponderTerminationRequest:                this._handlePanResponderRequestEnd,            onPanResponderTerminate: this._handlePanResponderEnd,        &#125;);        this.state = &#123;            allMeasured: false,            containerSize: &#123;                width: 0,                height: 0,            &#125;,            thumbSize: &#123;                width: 0,                height: 0,            &#125;,            trackMarksValues: updateValues(&#123;                values: normalizeValue(this.props, this.props.trackMarks),            &#125;),            values: updateValues(&#123;                values: normalizeValue(                    this.props,                    this.props.value instanceof Animated.Value                        ? this.props.value.__getValue()                        : this.props.value,                ),            &#125;),        &#125;;    &#125;    static defaultProps = &#123;        animationType: &#x27;timing&#x27;,        debugTouchArea: false,        trackMarks: [],        maximumTrackTintColor: &#x27;#b3b3b3&#x27;,        maximumValue: 1,        minimumTrackTintColor: &#x27;#3f3f3f&#x27;,        minimumValue: 0,        step: 0,        thumbTintColor: &#x27;#343434&#x27;,        trackClickable: true,        value: 0,        vertical: false,    &#125;;    static getDerivedStateFromProps(props: SliderProps, state: SliderState) &#123;        if (            props.trackMarks &amp;&amp;            !!state.trackMarksValues &amp;&amp;            state.trackMarksValues.length &gt; 0        ) &#123;            const newTrackMarkValues = normalizeValue(props, props.trackMarks);            const statePatch = &#123;&#125; as SliderState;            if (state.trackMarksValues) &#123;                statePatch.trackMarksValues = updateValues(&#123;                    values: state.trackMarksValues,                    newValues: newTrackMarkValues,                &#125;);            &#125;            return statePatch;        &#125;    &#125;    componentDidUpdate() &#123;        const newValues = normalizeValue(            this.props,            this.props.value instanceof Animated.Value                ? this.props.value.__getValue()                : this.props.value,        );        newValues.forEach((value, i) =&gt; &#123;            if (!this.state.values[i]) &#123;                this._setCurrentValue(value, i);            &#125; else if (value !== this.state.values[i].__getValue()) &#123;                if (this.props.animateTransitions) &#123;                    this._setCurrentValueAnimated(value, i);                &#125; else &#123;                    this._setCurrentValue(value, i);                &#125;            &#125;        &#125;);    &#125;    _getRawValues(        values: Array&lt;Animated.Value&gt; | Array&lt;Animated.AnimatedInterpolation&gt;,    ) &#123;        return values.map((value) =&gt; value.__getValue());    &#125;    _handleStartShouldSetPanResponder = (e: any): boolean =&gt;        this._thumbHitTest(e);    _handleMoveShouldSetPanResponder(): boolean &#123;        return false;    &#125;    _handlePanResponderGrant = (e: &#123; nativeEvent: any &#125;) =&gt; &#123;        const &#123; thumbSize &#125; = this.state;        const &#123; nativeEvent &#125; = e;        this._previousLeft = this.props.trackClickable            ? nativeEvent.locationX - thumbSize.width            : this._getThumbLeft(this._getCurrentValue(this._activeThumbIndex));        this.props?.onSlidingStart?.(this._getRawValues(this.state.values));    &#125;;    _handlePanResponderMove = (_e: any, gestureState: any) =&gt; &#123;        if (this.props.disabled) &#123;            return;        &#125;        this._setCurrentValue(            this._getValue(gestureState),            this._activeThumbIndex,            () =&gt; &#123;                this.props?.onValueChange?.(                    this._getRawValues(this.state.values),                );            &#125;,        );    &#125;;    _handlePanResponderRequestEnd = () =&gt; &#123;        return false;    &#125;;    _handlePanResponderEnd = (_e: any, gestureState: any) =&gt; &#123;        if (this.props.disabled) &#123;            return;        &#125;        this._setCurrentValue(            this._getValue(gestureState),            this._activeThumbIndex,            () =&gt; &#123;                if (this.props.trackClickable) &#123;                    this.props?.onValueChange?.(                        this._getRawValues(this.state.values),                    );                &#125;                this.props?.onSlidingComplete?.(                    this._getRawValues(this.state.values),                );            &#125;,        );        this._activeThumbIndex = 0;    &#125;;    _measureContainer = (e: LayoutChangeEvent) =&gt; &#123;        this._handleMeasure(&#x27;_containerSize&#x27;, e);    &#125;;    _measureTrack = (e: LayoutChangeEvent) =&gt; &#123;        this._handleMeasure(&#x27;_trackSize&#x27;, e);    &#125;;    _measureThumb = (e: LayoutChangeEvent) =&gt; &#123;        this._handleMeasure(&#x27;_thumbSize&#x27;, e);    &#125;;    _handleMeasure = (        name: &#x27;_containerSize&#x27; | &#x27;_trackSize&#x27; | &#x27;_thumbSize&#x27;,        e: LayoutChangeEvent,    ) =&gt; &#123;        const &#123; width, height &#125; = e.nativeEvent.layout;        const size = &#123; width, height &#125;;        const currentSize = this[name];        if (            currentSize &amp;&amp;            width === currentSize.width &amp;&amp;            height === currentSize.height        ) &#123;            return;        &#125;        this[name] = size;        if (this._containerSize &amp;&amp; this._thumbSize) &#123;            this.setState(&#123;                containerSize: this._containerSize,                thumbSize: this._thumbSize,                allMeasured: true,            &#125;);        &#125;    &#125;;    _getRatio = (value: number) =&gt; &#123;        const &#123; maximumValue, minimumValue &#125; = this.props;        return (value - minimumValue) / (maximumValue - minimumValue);    &#125;;    _getThumbLeft = (value: number) =&gt; &#123;        const &#123; containerSize, thumbSize &#125; = this.state;        const &#123; vertical &#125; = this.props;        const standardRatio = this._getRatio(value);        const ratio = I18nManager.isRTL ? 1 - standardRatio : standardRatio;        return (            ratio *            ((vertical ? containerSize.height : containerSize.width) -                thumbSize.width)        );    &#125;;    _getValue = (gestureState: &#123; dx: number; dy: number &#125;) =&gt; &#123;        const &#123; containerSize, thumbSize, values &#125; = this.state;        const &#123; maximumValue, minimumValue, step, vertical &#125; = this.props;        const length = containerSize.width - thumbSize.width;        const thumbLeft = vertical            ? this._previousLeft + gestureState.dy * -1            : this._previousLeft + gestureState.dx;        const nonRtlRatio = thumbLeft / length;        const ratio = I18nManager.isRTL ? 1 - nonRtlRatio : nonRtlRatio;        let minValue = minimumValue;        let maxValue = maximumValue;        const rawValues = this._getRawValues(values);        const buffer = step ? step : 0.1;        if (values.length === 2) &#123;            if (this._activeThumbIndex === 1) &#123;                minValue = rawValues[0] + buffer;            &#125; else &#123;                maxValue = rawValues[1] - buffer;            &#125;        &#125;        if (step) &#123;            return Math.max(                minValue,                Math.min(                    maxValue,                    minimumValue +                        Math.round(                            (ratio * (maximumValue - minimumValue)) / step,                        ) *                            step,                ),            );        &#125;        return Math.max(            minValue,            Math.min(                maxValue,                ratio * (maximumValue - minimumValue) + minimumValue,            ),        );    &#125;;    _getCurrentValue = (thumbIndex: number = 0) =&gt;        this.state.values[thumbIndex].__getValue();    _setCurrentValue = (        value: number,        thumbIndex: number | null | undefined,        callback?: () =&gt; void,    ) =&gt; &#123;        const safeIndex = thumbIndex ?? 0;        const animatedValue = this.state.values[safeIndex];        if (animatedValue) &#123;            animatedValue.setValue(value);            callback?.();        &#125; else &#123;            this.setState((prevState: SliderState) =&gt; &#123;                const newValues = [...prevState.values];                newValues[safeIndex] = new Animated.Value(value);                return &#123; values: newValues &#125;;            &#125;, callback);        &#125;    &#125;;    _setCurrentValueAnimated = (value: number, thumbIndex: number = 0) =&gt; &#123;        const &#123; animationType &#125; = this.props;        const animationConfig = &#123;            ...DEFAULT_ANIMATION_CONFIGS[animationType],            ...this.props.animationConfig,            toValue: value,            useNativeDriver: false,        &#125;;        Animated[animationType](this.state.values[thumbIndex], animationConfig).start();    &#125;;    _getTouchOverflowSize = (): &#123; width: number; height: number &#125; =&gt; &#123;        const &#123; allMeasured, containerSize, thumbSize &#125; = this.state;        const &#123; thumbTouchSize &#125; = this.props;        const size = &#123; width: 40, height: 40 &#125;;        if (allMeasured) &#123;            size.width = Math.max(0, (thumbTouchSize?.width || 0) - thumbSize.width);            size.height = Math.max(0, (thumbTouchSize?.height || 0) - containerSize.height);        &#125;        return size;    &#125;;    _getTouchOverflowStyle = () =&gt; &#123;        const &#123; width, height &#125; = this._getTouchOverflowSize();        const touchOverflowStyle = &#123;&#125; as ViewStyle;        if (width !== undefined &amp;&amp; height !== undefined) &#123;            const verticalMargin = -height / 2;            touchOverflowStyle.marginTop = verticalMargin;            touchOverflowStyle.marginBottom = verticalMargin;            const horizontalMargin = -width / 2;            touchOverflowStyle.marginLeft = horizontalMargin;            touchOverflowStyle.marginRight = horizontalMargin;        &#125;        if (this.props.debugTouchArea === true) &#123;            touchOverflowStyle.backgroundColor = &#x27;orange&#x27;;            touchOverflowStyle.opacity = 0.5;        &#125;        return touchOverflowStyle;    &#125;;    _thumbHitTest = (e: &#123; nativeEvent: any &#125;) =&gt; &#123;        const &#123; nativeEvent &#125; = e;        const &#123; trackClickable &#125; = this.props;        const &#123; values &#125; = this.state;        const hitThumb = values.find((_, i) =&gt; &#123;            const thumbTouchRect = this._getThumbTouchRect(i);            const containsPoint = thumbTouchRect.containsPoint(                nativeEvent.locationX,                nativeEvent.locationY,            );            if (containsPoint) &#123;                this._activeThumbIndex = i;            &#125;            return containsPoint;        &#125;);        if (hitThumb) &#123;            return true;        &#125;        if (trackClickable) &#123;            if (values.length === 1) &#123;                this._activeThumbIndex = 0;            &#125; else &#123;                const thumbDistances = values.map((_value, index) =&gt; &#123;                    const thumbTouchRect = this._getThumbTouchRect(index);                    return thumbTouchRect.trackDistanceToPoint(nativeEvent.locationX);                &#125;);                this._activeThumbIndex = indexOfLowest(thumbDistances);            &#125;            return true;        &#125;        return false;    &#125;;    _getThumbTouchRect = (thumbIndex: number = 0): RectReturn =&gt; &#123;        const &#123; containerSize, thumbSize &#125; = this.state;        const &#123; thumbTouchSize &#125; = this.props;        const &#123; height, width &#125; = thumbTouchSize || &#123; height: 40, width: 40 &#125;;        const touchOverflowSize = this._getTouchOverflowSize();        return Rect(&#123;            height,            width,            x:                touchOverflowSize.width / 2 +                this._getThumbLeft(this._getCurrentValue(thumbIndex)) +                (thumbSize.width - width) / 2,            y:                touchOverflowSize.height / 2 +                (containerSize.height - height) / 2,        &#125;);    &#125;;    _activeThumbIndex: number = 0;    _containerSize: Dimensions | null | undefined;    _panResponder: PanResponderInstance;    _previousLeft: number = 0;    _thumbSize: Dimensions | null | undefined;    _trackSize: Dimensions | null | undefined;    _renderDebugThumbTouchRect = (        thumbLeft: Animated.AnimatedInterpolation,        index: number,    ) =&gt; &#123;        const &#123; height, y, width &#125; = this._getThumbTouchRect() || &#123;&#125;;        const positionStyle = &#123; height, left: thumbLeft, top: y, width &#125;;        return (            &lt;Animated.View                key=&#123;`debug-thumb-$&#123;index&#125;`&#125;                pointerEvents=&quot;none&quot;                style=&#123;[styles.debugThumbTouchArea, positionStyle]&#125;            /&gt;        );    &#125;;    _renderThumbImage = (thumbIndex: number = 0) =&gt; &#123;        const &#123; thumbImage &#125; = this.props;        if (!thumbImage) return null;        return (            &lt;Image                source=&#123;                    (Array.isArray(thumbImage)                        ? thumbImage[thumbIndex]                        : thumbImage) as ImageSourcePropType                &#125;            /&gt;        );    &#125;;    render() &#123;        const &#123;            containerStyle,            debugTouchArea,            maximumTrackTintColor,            maximumValue,            minimumTrackTintColor,            minimumValue,            renderAboveThumbComponent,            renderTrackMarkComponent,            renderThumbComponent,            thumbStyle,            thumbTintColor,            trackStyle,            vertical,            ...other        &#125; = this.props;        const &#123;            allMeasured,            containerSize,            thumbSize,            trackMarksValues,            values,        &#125; = this.state;        const interpolatedThumbValues = values.map((value) =&gt;            value.interpolate(&#123;                inputRange: [minimumValue, maximumValue],                outputRange: I18nManager.isRTL                    ? [0, -(containerSize.width - thumbSize.width)]                    : [0, containerSize.width - thumbSize.width],            &#125;),        );        const interpolatedTrackValues = values.map((value) =&gt;            value.interpolate(&#123;                inputRange: [minimumValue, maximumValue],                outputRange: [0, containerSize.width - thumbSize.width],            &#125;),        );        const interpolatedTrackMarksValues =            trackMarksValues &amp;&amp;            trackMarksValues.map((v) =&gt;                v.interpolate(&#123;                    inputRange: [minimumValue, maximumValue],                    outputRange: I18nManager.isRTL                        ? [0, -(containerSize.width - thumbSize.width)]                        : [0, containerSize.width - thumbSize.width],                &#125;),            );        const valueVisibleStyle = &#123;&#125; as ViewStyle;        if (!allMeasured) valueVisibleStyle.opacity = 0;        const interpolatedRawValues = this._getRawValues(interpolatedTrackValues);        const minThumbValue = new Animated.Value(Math.min(...interpolatedRawValues));        const maxThumbValue = new Animated.Value(Math.max(...interpolatedRawValues));        const minimumTrackStyle = &#123;            position: &#x27;absolute&#x27;,            left:                interpolatedTrackValues.length === 1                    ? new Animated.Value(0)                    : Animated.add(minThumbValue, thumbSize.width / 2),            width:                interpolatedTrackValues.length === 1                    ? Animated.add(interpolatedTrackValues[0], thumbSize.width / 2)                    : Animated.add(Animated.multiply(minThumbValue, -1), maxThumbValue),            backgroundColor: minimumTrackTintColor,            ...valueVisibleStyle,        &#125; as ViewStyle;        const touchOverflowStyle = this._getTouchOverflowStyle();        return (            &lt;&gt;                &#123;renderAboveThumbComponent &amp;&amp; (                    &lt;View style=&#123;styles.aboveThumbComponentsContainer&#125;&gt;                        &#123;interpolatedThumbValues.map((value, i) =&gt; (                            &lt;Animated.View                                key=&#123;`slider-above-thumb-$&#123;i&#125;`&#125;                                style=&#123;[                                    styles.renderThumbComponent,                                    &#123;                                        bottom: 0,                                        transform: [                                            &#123; translateX: value &#125;,                                            &#123; translateY: 0 &#125;,                                        ],                                        ...valueVisibleStyle,                                    &#125;,                                ]&#125;&gt;                                &#123;renderAboveThumbComponent(i)&#125;                            &lt;/Animated.View&gt;                        ))&#125;                    &lt;/View&gt;                )&#125;                &lt;View                    &#123;...other&#125;                    style=&#123;[                        styles.container,                        vertical ? &#123; transform: [&#123; rotate: &#x27;-90deg&#x27; &#125;] &#125; : &#123;&#125;,                        containerStyle,                    ]&#125;                    onLayout=&#123;this._measureContainer&#125;&gt;                    &lt;View                        renderToHardwareTextureAndroid                        style=&#123;[                            styles.track,                            &#123; backgroundColor: maximumTrackTintColor &#125;,                            trackStyle,                        ]&#125;                        onLayout=&#123;this._measureTrack&#125;                    /&gt;                    &lt;Animated.View                        renderToHardwareTextureAndroid                        style=&#123;[styles.track, trackStyle, minimumTrackStyle]&#125;                    /&gt;                    &#123;renderTrackMarkComponent &amp;&amp;                        interpolatedTrackMarksValues &amp;&amp;                        interpolatedTrackMarksValues.map((value, i) =&gt; (                            &lt;Animated.View                                key=&#123;`track-mark-$&#123;i&#125;`&#125;                                style=&#123;[                                    styles.renderThumbComponent,                                    &#123;                                        transform: [                                            &#123; translateX: value &#125;,                                            &#123; translateY: 0 &#125;,                                        ],                                        ...valueVisibleStyle,                                    &#125;,                                ]&#125;&gt;                                &#123;renderTrackMarkComponent(i)&#125;                            &lt;/Animated.View&gt;                        ))&#125;                    &#123;interpolatedThumbValues.map((value, i) =&gt; (                        &lt;Animated.View                            key=&#123;`slider-thumb-$&#123;i&#125;`&#125;                            style=&#123;[                                renderThumbComponent                                    ? styles.renderThumbComponent                                    : styles.thumb,                                renderThumbComponent                                    ? &#123;&#125;                                    : &#123; backgroundColor: thumbTintColor, ...thumbStyle &#125;,                                &#123;                                    transform: [                                        &#123; translateX: value &#125;,                                        &#123; translateY: 0 &#125;,                                    ],                                    ...valueVisibleStyle,                                &#125;,                            ]&#125;                            onLayout=&#123;this._measureThumb&#125;&gt;                            &#123;renderThumbComponent ? renderThumbComponent() : this._renderThumbImage(i)&#125;                        &lt;/Animated.View&gt;                    ))&#125;                    &lt;View                        style=&#123;[styles.touchArea, touchOverflowStyle]&#125;                        &#123;...this._panResponder.panHandlers&#125;&gt;                        &#123;!!debugTouchArea &amp;&amp;                            interpolatedThumbValues.map((value, i) =&gt;                                this._renderDebugThumbTouchRect(value, i),                            )&#125;                    &lt;/View&gt;                &lt;/View&gt;            &lt;/&gt;        );    &#125;&#125;
-
-How to Use (Import)import &#123; Slider &#125; from &#x27;path-to-the-component-above&#x27;;&lt;Slider  minimumValue=&#123;1&#125;  maximumValue=&#123;7&#125; // sliding range: 1 to 7  minimumTrackTintColor=&quot;#0A79C3&quot;  maximumTrackTintColor=&quot;#F3F3F3&quot;  step=&#123;1&#125; // step size  value=&#123;targetDay&#125; // default value, e.g. 4  onValueChange=&#123;targetDays =&gt;    dispatch(&#123;      type: &#x27;SetupWeekTarget/updateState&#x27;,      payload: &#123; targetDay: targetDays &#125;    &#125;)  &#125; // triggered when sliding  trackStyle=&#123;&#123; height: 10, borderRadius: 12 &#125;&#125;  containerStyle=&#123;&#123; width: SCREEN_WIDTH - 90 &#125;&#125;  thumbTintColor=&quot;transparent&quot;  thumbImage=&#123;require(&#x27;path-to-your-image&#x27;)&#125;  /&gt;
-
-More ParametersFor the full list of available props and detailed documentation, please refer to:https://github.com/miblanchard/react-native-slider
-]]></content>
-      <categories>
-        <category>Frontend</category>
-      </categories>
-  </entry>
-  <entry>
     <title>GitLab CI/CD</title>
     <url>/ening/2025/04/10/gitlabci/</url>
     <content><![CDATA[GitLab CI&#x2F;CD Guide for Frontend Projects (Mac Environment)OverviewIn daily development, we often manually send the built dist package to the backend for deployment, which is inefficient and error-prone. CI (Continuous Integration) automates this process. This guide shows how to use GitLab CI to implement continuous integration and deployment.
@@ -199,6 +184,21 @@ After successful deployment, you can view the build process on the GitLab CI&#x2
       </tags>
   </entry>
   <entry>
+    <title>React Native Custom Slider</title>
+    <url>/ening/2025/07/22/ReactNative%E8%87%AA%E5%AE%9A%E4%B9%89%E6%BB%91%E5%8A%A8%E6%9D%A1/</url>
+    <content><![CDATA[
+For testing and high UI requirements (for example, replacing the thumb with a custom image), the traditional @react-native-community/slider can no longer meet the needs. So I switched to a custom approach. After searching for a long time, I finally found a great library:https://github.com/miblanchard/react-native-slider
+Component Codeimport React, &#123; PureComponent &#125; from &#x27;react&#x27;;import &#123;    Animated,    Easing,    I18nManager,    Image,    ImageSourcePropType,    LayoutChangeEvent,    PanResponder,    PanResponderInstance,    View,    ViewStyle,&#125; from &#x27;react-native&#x27;;// stylesimport &#123; defaultStyles as styles &#125; from &#x27;./styles&#x27;;import type &#123; Dimensions, SliderProps, SliderState &#125; from &#x27;./types&#x27;;type RectReturn = &#123;    containsPoint: (nativeX: number, nativeY: number) =&gt; boolean;    height: number;    trackDistanceToPoint: (nativeX: number) =&gt; number;    width: number;    x: number;    y: number;&#125;;const Rect = (&#123;    height,    width,    x,    y,&#125;: &#123;    height: number;    width: number;    x: number;    y: number;&#125;) =&gt; (&#123;    containsPoint: (nativeX: number, nativeY: number) =&gt;        nativeX &gt;= x &amp;&amp;        nativeY &gt;= y &amp;&amp;        nativeX &lt;= x + width &amp;&amp;        nativeY &lt;= y + height,    height,    trackDistanceToPoint: (nativeX: number) =&gt; &#123;        if (nativeX &lt; x) &#123;            return x - nativeX;        &#125;        if (nativeX &gt; x + width) &#123;            return nativeX - (x + width);        &#125;        return 0;    &#125;,    width,    x,    y,&#125;);const DEFAULT_ANIMATION_CONFIGS = &#123;    spring: &#123;        friction: 7,        tension: 100,    &#125;,    timing: &#123;        duration: 150,        easing: Easing.inOut(Easing.ease),        delay: 0,    &#125;,&#125;;const normalizeValue = (    props: SliderProps,    value?: number | Array&lt;number&gt;,): Array&lt;number&gt; =&gt; &#123;    if (!value || (Array.isArray(value) &amp;&amp; value.length === 0)) &#123;        return [0];    &#125;    const &#123; maximumValue, minimumValue &#125; = props;    const getBetweenValue = (inputValue: number) =&gt;        Math.max(Math.min(inputValue, maximumValue), minimumValue);    if (!Array.isArray(value)) &#123;        return [getBetweenValue(value)];    &#125;    return value.map(getBetweenValue).sort((a, b) =&gt; a - b);&#125;;const updateValues = (&#123;    values,    newValues = values,&#125;: &#123;    values: number | Array&lt;number&gt; | Animated.Value | Array&lt;Animated.Value&gt;;    newValues?: number | Array&lt;number&gt; | Animated.Value | Array&lt;Animated.Value&gt;;&#125;): Animated.Value[] =&gt; &#123;    if (        Array.isArray(newValues) &amp;&amp;        Array.isArray(values) &amp;&amp;        newValues.length !== values.length    ) &#123;        return updateValues(&#123; values: newValues &#125;);    &#125;    if (Array.isArray(values) &amp;&amp; Array.isArray(newValues)) &#123;        return values?.map((value: number | Animated.Value, index: number) =&gt; &#123;            let valueToSet = newValues[index];            if (value instanceof Animated.Value) &#123;                if (valueToSet instanceof Animated.Value) &#123;                    valueToSet = valueToSet.__getValue();                &#125;                value.setValue(valueToSet);                return value;            &#125;            if (valueToSet instanceof Animated.Value) &#123;                return valueToSet;            &#125;            return new Animated.Value(valueToSet);        &#125;);    &#125;    return [new Animated.Value(0)];&#125;;const indexOfLowest = (values: Array&lt;number&gt;): number =&gt; &#123;    let lowestIndex = 0;    values.forEach((value, index, array) =&gt; &#123;        if (value &lt; array[lowestIndex]) &#123;            lowestIndex = index;        &#125;    &#125;);    return lowestIndex;&#125;;export class Slider extends PureComponent&lt;SliderProps, SliderState&gt; &#123;    constructor(props: SliderProps) &#123;        super(props);        this._panResponder = PanResponder.create(&#123;            onStartShouldSetPanResponder:                this._handleStartShouldSetPanResponder,            onMoveShouldSetPanResponder: this._handleMoveShouldSetPanResponder,            onPanResponderGrant: this._handlePanResponderGrant,            onPanResponderMove: this._handlePanResponderMove,            onPanResponderRelease: this._handlePanResponderEnd,            onPanResponderTerminationRequest:                this._handlePanResponderRequestEnd,            onPanResponderTerminate: this._handlePanResponderEnd,        &#125;);        this.state = &#123;            allMeasured: false,            containerSize: &#123;                width: 0,                height: 0,            &#125;,            thumbSize: &#123;                width: 0,                height: 0,            &#125;,            trackMarksValues: updateValues(&#123;                values: normalizeValue(this.props, this.props.trackMarks),            &#125;),            values: updateValues(&#123;                values: normalizeValue(                    this.props,                    this.props.value instanceof Animated.Value                        ? this.props.value.__getValue()                        : this.props.value,                ),            &#125;),        &#125;;    &#125;    static defaultProps = &#123;        animationType: &#x27;timing&#x27;,        debugTouchArea: false,        trackMarks: [],        maximumTrackTintColor: &#x27;#b3b3b3&#x27;,        maximumValue: 1,        minimumTrackTintColor: &#x27;#3f3f3f&#x27;,        minimumValue: 0,        step: 0,        thumbTintColor: &#x27;#343434&#x27;,        trackClickable: true,        value: 0,        vertical: false,    &#125;;    static getDerivedStateFromProps(props: SliderProps, state: SliderState) &#123;        if (            props.trackMarks &amp;&amp;            !!state.trackMarksValues &amp;&amp;            state.trackMarksValues.length &gt; 0        ) &#123;            const newTrackMarkValues = normalizeValue(props, props.trackMarks);            const statePatch = &#123;&#125; as SliderState;            if (state.trackMarksValues) &#123;                statePatch.trackMarksValues = updateValues(&#123;                    values: state.trackMarksValues,                    newValues: newTrackMarkValues,                &#125;);            &#125;            return statePatch;        &#125;    &#125;    componentDidUpdate() &#123;        const newValues = normalizeValue(            this.props,            this.props.value instanceof Animated.Value                ? this.props.value.__getValue()                : this.props.value,        );        newValues.forEach((value, i) =&gt; &#123;            if (!this.state.values[i]) &#123;                this._setCurrentValue(value, i);            &#125; else if (value !== this.state.values[i].__getValue()) &#123;                if (this.props.animateTransitions) &#123;                    this._setCurrentValueAnimated(value, i);                &#125; else &#123;                    this._setCurrentValue(value, i);                &#125;            &#125;        &#125;);    &#125;    _getRawValues(        values: Array&lt;Animated.Value&gt; | Array&lt;Animated.AnimatedInterpolation&gt;,    ) &#123;        return values.map((value) =&gt; value.__getValue());    &#125;    _handleStartShouldSetPanResponder = (e: any): boolean =&gt;        this._thumbHitTest(e);    _handleMoveShouldSetPanResponder(): boolean &#123;        return false;    &#125;    _handlePanResponderGrant = (e: &#123; nativeEvent: any &#125;) =&gt; &#123;        const &#123; thumbSize &#125; = this.state;        const &#123; nativeEvent &#125; = e;        this._previousLeft = this.props.trackClickable            ? nativeEvent.locationX - thumbSize.width            : this._getThumbLeft(this._getCurrentValue(this._activeThumbIndex));        this.props?.onSlidingStart?.(this._getRawValues(this.state.values));    &#125;;    _handlePanResponderMove = (_e: any, gestureState: any) =&gt; &#123;        if (this.props.disabled) &#123;            return;        &#125;        this._setCurrentValue(            this._getValue(gestureState),            this._activeThumbIndex,            () =&gt; &#123;                this.props?.onValueChange?.(                    this._getRawValues(this.state.values),                );            &#125;,        );    &#125;;    _handlePanResponderRequestEnd = () =&gt; &#123;        return false;    &#125;;    _handlePanResponderEnd = (_e: any, gestureState: any) =&gt; &#123;        if (this.props.disabled) &#123;            return;        &#125;        this._setCurrentValue(            this._getValue(gestureState),            this._activeThumbIndex,            () =&gt; &#123;                if (this.props.trackClickable) &#123;                    this.props?.onValueChange?.(                        this._getRawValues(this.state.values),                    );                &#125;                this.props?.onSlidingComplete?.(                    this._getRawValues(this.state.values),                );            &#125;,        );        this._activeThumbIndex = 0;    &#125;;    _measureContainer = (e: LayoutChangeEvent) =&gt; &#123;        this._handleMeasure(&#x27;_containerSize&#x27;, e);    &#125;;    _measureTrack = (e: LayoutChangeEvent) =&gt; &#123;        this._handleMeasure(&#x27;_trackSize&#x27;, e);    &#125;;    _measureThumb = (e: LayoutChangeEvent) =&gt; &#123;        this._handleMeasure(&#x27;_thumbSize&#x27;, e);    &#125;;    _handleMeasure = (        name: &#x27;_containerSize&#x27; | &#x27;_trackSize&#x27; | &#x27;_thumbSize&#x27;,        e: LayoutChangeEvent,    ) =&gt; &#123;        const &#123; width, height &#125; = e.nativeEvent.layout;        const size = &#123; width, height &#125;;        const currentSize = this[name];        if (            currentSize &amp;&amp;            width === currentSize.width &amp;&amp;            height === currentSize.height        ) &#123;            return;        &#125;        this[name] = size;        if (this._containerSize &amp;&amp; this._thumbSize) &#123;            this.setState(&#123;                containerSize: this._containerSize,                thumbSize: this._thumbSize,                allMeasured: true,            &#125;);        &#125;    &#125;;    _getRatio = (value: number) =&gt; &#123;        const &#123; maximumValue, minimumValue &#125; = this.props;        return (value - minimumValue) / (maximumValue - minimumValue);    &#125;;    _getThumbLeft = (value: number) =&gt; &#123;        const &#123; containerSize, thumbSize &#125; = this.state;        const &#123; vertical &#125; = this.props;        const standardRatio = this._getRatio(value);        const ratio = I18nManager.isRTL ? 1 - standardRatio : standardRatio;        return (            ratio *            ((vertical ? containerSize.height : containerSize.width) -                thumbSize.width)        );    &#125;;    _getValue = (gestureState: &#123; dx: number; dy: number &#125;) =&gt; &#123;        const &#123; containerSize, thumbSize, values &#125; = this.state;        const &#123; maximumValue, minimumValue, step, vertical &#125; = this.props;        const length = containerSize.width - thumbSize.width;        const thumbLeft = vertical            ? this._previousLeft + gestureState.dy * -1            : this._previousLeft + gestureState.dx;        const nonRtlRatio = thumbLeft / length;        const ratio = I18nManager.isRTL ? 1 - nonRtlRatio : nonRtlRatio;        let minValue = minimumValue;        let maxValue = maximumValue;        const rawValues = this._getRawValues(values);        const buffer = step ? step : 0.1;        if (values.length === 2) &#123;            if (this._activeThumbIndex === 1) &#123;                minValue = rawValues[0] + buffer;            &#125; else &#123;                maxValue = rawValues[1] - buffer;            &#125;        &#125;        if (step) &#123;            return Math.max(                minValue,                Math.min(                    maxValue,                    minimumValue +                        Math.round(                            (ratio * (maximumValue - minimumValue)) / step,                        ) *                            step,                ),            );        &#125;        return Math.max(            minValue,            Math.min(                maxValue,                ratio * (maximumValue - minimumValue) + minimumValue,            ),        );    &#125;;    _getCurrentValue = (thumbIndex: number = 0) =&gt;        this.state.values[thumbIndex].__getValue();    _setCurrentValue = (        value: number,        thumbIndex: number | null | undefined,        callback?: () =&gt; void,    ) =&gt; &#123;        const safeIndex = thumbIndex ?? 0;        const animatedValue = this.state.values[safeIndex];        if (animatedValue) &#123;            animatedValue.setValue(value);            callback?.();        &#125; else &#123;            this.setState((prevState: SliderState) =&gt; &#123;                const newValues = [...prevState.values];                newValues[safeIndex] = new Animated.Value(value);                return &#123; values: newValues &#125;;            &#125;, callback);        &#125;    &#125;;    _setCurrentValueAnimated = (value: number, thumbIndex: number = 0) =&gt; &#123;        const &#123; animationType &#125; = this.props;        const animationConfig = &#123;            ...DEFAULT_ANIMATION_CONFIGS[animationType],            ...this.props.animationConfig,            toValue: value,            useNativeDriver: false,        &#125;;        Animated[animationType](this.state.values[thumbIndex], animationConfig).start();    &#125;;    _getTouchOverflowSize = (): &#123; width: number; height: number &#125; =&gt; &#123;        const &#123; allMeasured, containerSize, thumbSize &#125; = this.state;        const &#123; thumbTouchSize &#125; = this.props;        const size = &#123; width: 40, height: 40 &#125;;        if (allMeasured) &#123;            size.width = Math.max(0, (thumbTouchSize?.width || 0) - thumbSize.width);            size.height = Math.max(0, (thumbTouchSize?.height || 0) - containerSize.height);        &#125;        return size;    &#125;;    _getTouchOverflowStyle = () =&gt; &#123;        const &#123; width, height &#125; = this._getTouchOverflowSize();        const touchOverflowStyle = &#123;&#125; as ViewStyle;        if (width !== undefined &amp;&amp; height !== undefined) &#123;            const verticalMargin = -height / 2;            touchOverflowStyle.marginTop = verticalMargin;            touchOverflowStyle.marginBottom = verticalMargin;            const horizontalMargin = -width / 2;            touchOverflowStyle.marginLeft = horizontalMargin;            touchOverflowStyle.marginRight = horizontalMargin;        &#125;        if (this.props.debugTouchArea === true) &#123;            touchOverflowStyle.backgroundColor = &#x27;orange&#x27;;            touchOverflowStyle.opacity = 0.5;        &#125;        return touchOverflowStyle;    &#125;;    _thumbHitTest = (e: &#123; nativeEvent: any &#125;) =&gt; &#123;        const &#123; nativeEvent &#125; = e;        const &#123; trackClickable &#125; = this.props;        const &#123; values &#125; = this.state;        const hitThumb = values.find((_, i) =&gt; &#123;            const thumbTouchRect = this._getThumbTouchRect(i);            const containsPoint = thumbTouchRect.containsPoint(                nativeEvent.locationX,                nativeEvent.locationY,            );            if (containsPoint) &#123;                this._activeThumbIndex = i;            &#125;            return containsPoint;        &#125;);        if (hitThumb) &#123;            return true;        &#125;        if (trackClickable) &#123;            if (values.length === 1) &#123;                this._activeThumbIndex = 0;            &#125; else &#123;                const thumbDistances = values.map((_value, index) =&gt; &#123;                    const thumbTouchRect = this._getThumbTouchRect(index);                    return thumbTouchRect.trackDistanceToPoint(nativeEvent.locationX);                &#125;);                this._activeThumbIndex = indexOfLowest(thumbDistances);            &#125;            return true;        &#125;        return false;    &#125;;    _getThumbTouchRect = (thumbIndex: number = 0): RectReturn =&gt; &#123;        const &#123; containerSize, thumbSize &#125; = this.state;        const &#123; thumbTouchSize &#125; = this.props;        const &#123; height, width &#125; = thumbTouchSize || &#123; height: 40, width: 40 &#125;;        const touchOverflowSize = this._getTouchOverflowSize();        return Rect(&#123;            height,            width,            x:                touchOverflowSize.width / 2 +                this._getThumbLeft(this._getCurrentValue(thumbIndex)) +                (thumbSize.width - width) / 2,            y:                touchOverflowSize.height / 2 +                (containerSize.height - height) / 2,        &#125;);    &#125;;    _activeThumbIndex: number = 0;    _containerSize: Dimensions | null | undefined;    _panResponder: PanResponderInstance;    _previousLeft: number = 0;    _thumbSize: Dimensions | null | undefined;    _trackSize: Dimensions | null | undefined;    _renderDebugThumbTouchRect = (        thumbLeft: Animated.AnimatedInterpolation,        index: number,    ) =&gt; &#123;        const &#123; height, y, width &#125; = this._getThumbTouchRect() || &#123;&#125;;        const positionStyle = &#123; height, left: thumbLeft, top: y, width &#125;;        return (            &lt;Animated.View                key=&#123;`debug-thumb-$&#123;index&#125;`&#125;                pointerEvents=&quot;none&quot;                style=&#123;[styles.debugThumbTouchArea, positionStyle]&#125;            /&gt;        );    &#125;;    _renderThumbImage = (thumbIndex: number = 0) =&gt; &#123;        const &#123; thumbImage &#125; = this.props;        if (!thumbImage) return null;        return (            &lt;Image                source=&#123;                    (Array.isArray(thumbImage)                        ? thumbImage[thumbIndex]                        : thumbImage) as ImageSourcePropType                &#125;            /&gt;        );    &#125;;    render() &#123;        const &#123;            containerStyle,            debugTouchArea,            maximumTrackTintColor,            maximumValue,            minimumTrackTintColor,            minimumValue,            renderAboveThumbComponent,            renderTrackMarkComponent,            renderThumbComponent,            thumbStyle,            thumbTintColor,            trackStyle,            vertical,            ...other        &#125; = this.props;        const &#123;            allMeasured,            containerSize,            thumbSize,            trackMarksValues,            values,        &#125; = this.state;        const interpolatedThumbValues = values.map((value) =&gt;            value.interpolate(&#123;                inputRange: [minimumValue, maximumValue],                outputRange: I18nManager.isRTL                    ? [0, -(containerSize.width - thumbSize.width)]                    : [0, containerSize.width - thumbSize.width],            &#125;),        );        const interpolatedTrackValues = values.map((value) =&gt;            value.interpolate(&#123;                inputRange: [minimumValue, maximumValue],                outputRange: [0, containerSize.width - thumbSize.width],            &#125;),        );        const interpolatedTrackMarksValues =            trackMarksValues &amp;&amp;            trackMarksValues.map((v) =&gt;                v.interpolate(&#123;                    inputRange: [minimumValue, maximumValue],                    outputRange: I18nManager.isRTL                        ? [0, -(containerSize.width - thumbSize.width)]                        : [0, containerSize.width - thumbSize.width],                &#125;),            );        const valueVisibleStyle = &#123;&#125; as ViewStyle;        if (!allMeasured) valueVisibleStyle.opacity = 0;        const interpolatedRawValues = this._getRawValues(interpolatedTrackValues);        const minThumbValue = new Animated.Value(Math.min(...interpolatedRawValues));        const maxThumbValue = new Animated.Value(Math.max(...interpolatedRawValues));        const minimumTrackStyle = &#123;            position: &#x27;absolute&#x27;,            left:                interpolatedTrackValues.length === 1                    ? new Animated.Value(0)                    : Animated.add(minThumbValue, thumbSize.width / 2),            width:                interpolatedTrackValues.length === 1                    ? Animated.add(interpolatedTrackValues[0], thumbSize.width / 2)                    : Animated.add(Animated.multiply(minThumbValue, -1), maxThumbValue),            backgroundColor: minimumTrackTintColor,            ...valueVisibleStyle,        &#125; as ViewStyle;        const touchOverflowStyle = this._getTouchOverflowStyle();        return (            &lt;&gt;                &#123;renderAboveThumbComponent &amp;&amp; (                    &lt;View style=&#123;styles.aboveThumbComponentsContainer&#125;&gt;                        &#123;interpolatedThumbValues.map((value, i) =&gt; (                            &lt;Animated.View                                key=&#123;`slider-above-thumb-$&#123;i&#125;`&#125;                                style=&#123;[                                    styles.renderThumbComponent,                                    &#123;                                        bottom: 0,                                        transform: [                                            &#123; translateX: value &#125;,                                            &#123; translateY: 0 &#125;,                                        ],                                        ...valueVisibleStyle,                                    &#125;,                                ]&#125;&gt;                                &#123;renderAboveThumbComponent(i)&#125;                            &lt;/Animated.View&gt;                        ))&#125;                    &lt;/View&gt;                )&#125;                &lt;View                    &#123;...other&#125;                    style=&#123;[                        styles.container,                        vertical ? &#123; transform: [&#123; rotate: &#x27;-90deg&#x27; &#125;] &#125; : &#123;&#125;,                        containerStyle,                    ]&#125;                    onLayout=&#123;this._measureContainer&#125;&gt;                    &lt;View                        renderToHardwareTextureAndroid                        style=&#123;[                            styles.track,                            &#123; backgroundColor: maximumTrackTintColor &#125;,                            trackStyle,                        ]&#125;                        onLayout=&#123;this._measureTrack&#125;                    /&gt;                    &lt;Animated.View                        renderToHardwareTextureAndroid                        style=&#123;[styles.track, trackStyle, minimumTrackStyle]&#125;                    /&gt;                    &#123;renderTrackMarkComponent &amp;&amp;                        interpolatedTrackMarksValues &amp;&amp;                        interpolatedTrackMarksValues.map((value, i) =&gt; (                            &lt;Animated.View                                key=&#123;`track-mark-$&#123;i&#125;`&#125;                                style=&#123;[                                    styles.renderThumbComponent,                                    &#123;                                        transform: [                                            &#123; translateX: value &#125;,                                            &#123; translateY: 0 &#125;,                                        ],                                        ...valueVisibleStyle,                                    &#125;,                                ]&#125;&gt;                                &#123;renderTrackMarkComponent(i)&#125;                            &lt;/Animated.View&gt;                        ))&#125;                    &#123;interpolatedThumbValues.map((value, i) =&gt; (                        &lt;Animated.View                            key=&#123;`slider-thumb-$&#123;i&#125;`&#125;                            style=&#123;[                                renderThumbComponent                                    ? styles.renderThumbComponent                                    : styles.thumb,                                renderThumbComponent                                    ? &#123;&#125;                                    : &#123; backgroundColor: thumbTintColor, ...thumbStyle &#125;,                                &#123;                                    transform: [                                        &#123; translateX: value &#125;,                                        &#123; translateY: 0 &#125;,                                    ],                                    ...valueVisibleStyle,                                &#125;,                            ]&#125;                            onLayout=&#123;this._measureThumb&#125;&gt;                            &#123;renderThumbComponent ? renderThumbComponent() : this._renderThumbImage(i)&#125;                        &lt;/Animated.View&gt;                    ))&#125;                    &lt;View                        style=&#123;[styles.touchArea, touchOverflowStyle]&#125;                        &#123;...this._panResponder.panHandlers&#125;&gt;                        &#123;!!debugTouchArea &amp;&amp;                            interpolatedThumbValues.map((value, i) =&gt;                                this._renderDebugThumbTouchRect(value, i),                            )&#125;                    &lt;/View&gt;                &lt;/View&gt;            &lt;/&gt;        );    &#125;&#125;
+
+How to Use (Import)import &#123; Slider &#125; from &#x27;path-to-the-component-above&#x27;;&lt;Slider  minimumValue=&#123;1&#125;  maximumValue=&#123;7&#125; // sliding range: 1 to 7  minimumTrackTintColor=&quot;#0A79C3&quot;  maximumTrackTintColor=&quot;#F3F3F3&quot;  step=&#123;1&#125; // step size  value=&#123;targetDay&#125; // default value, e.g. 4  onValueChange=&#123;targetDays =&gt;    dispatch(&#123;      type: &#x27;SetupWeekTarget/updateState&#x27;,      payload: &#123; targetDay: targetDays &#125;    &#125;)  &#125; // triggered when sliding  trackStyle=&#123;&#123; height: 10, borderRadius: 12 &#125;&#125;  containerStyle=&#123;&#123; width: SCREEN_WIDTH - 90 &#125;&#125;  thumbTintColor=&quot;transparent&quot;  thumbImage=&#123;require(&#x27;path-to-your-image&#x27;)&#125;  /&gt;
+
+More ParametersFor the full list of available props and detailed documentation, please refer to:https://github.com/miblanchard/react-native-slider
+]]></content>
+      <categories>
+        <category>Frontend</category>
+      </categories>
+  </entry>
+  <entry>
     <title>Sync Google Sheets Data Between Spreadsheets</title>
     <url>/ening/2025/08/28/google%20sheet%E5%90%8C%E6%AD%A5%E8%A1%A8%E6%A0%BC%E6%95%B0%E6%8D%AE/</url>
     <content><![CDATA[Sync Google Sheets Data Across Multiple SheetsThere is a requirement to synchronize all sheets from one Google Spreadsheet to another spreadsheet (including all sub-sheets).
@@ -207,32 +207,6 @@ Why synchronization is neededThe source spreadsheet is read-only by default.By s
 sourceSpreadsheetId and targetSpreadsheetId are the IDs from the Google Sheets URL —they are the long strings after /d/ in the address bar.
 Apps Script Code Examplefunction synchronizeSheetsToAnotherFile() &#123;  const sourceSpreadsheetId = &quot;id1&quot;;  const targetSpreadsheetId = &quot;id2&quot;;   // Example: 1NOtSSvDwXrca8vqyZW6OqQJwGaCICMVguSz1-i72oqg  const sourceSpreadsheet = SpreadsheetApp.openById(sourceSpreadsheetId);  const targetSpreadsheet = SpreadsheetApp.openById(targetSpreadsheetId);  const sourceSheets = sourceSpreadsheet.getSheets();  sourceSheets.forEach(sheet =&gt; &#123;    const sheetName = sheet.getName();    let targetSheet = targetSpreadsheet.getSheetByName(sheetName);    if (!targetSheet) &#123;      targetSheet = targetSpreadsheet.insertSheet(sheetName);    &#125; else &#123;      targetSheet.clear();    &#125;    const range = sheet.getDataRange();    const displayValues = range.getDisplayValues();     const formats = range.getBackgrounds();            const fontWeights = range.getFontWeights();        const targetRange = targetSheet.getRange(      1,      1,      displayValues.length,      displayValues[0].length    );    targetRange.setValues(displayValues);    targetRange.setBackgrounds(formats);    targetRange.setFontWeights(fontWeights);  &#125;);&#125;
 
-]]></content>
-      <categories>
-        <category>Frontend</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>JavaScript Basics</title>
-    <url>/ening/2025/12/02/js%E5%9F%BA%E7%A1%80/</url>
-    <content><![CDATA[JavaScript Basics Summary (Hoisting, Strict Mode)
-Rules for Variable and Function Hoisting
-Variable hoisting: Execution still happens in order; variable declarations are hoisted but assignments are not.
-Function hoisting: The entire function body is hoisted to the top of its scope.
-Priority: Function hoisting &gt; Variable hoisting.
-
-console.log(a); // undefinedvar a = 2;foo(); // works normallyfunction foo() &#123;  console.log(&quot;Function hoisting succeeded&quot;);&#125;
-
-
-Using Strict Mode with use strictWhat it does:
-Prevents creating accidental global variables;
-Disallows using undeclared variables, helping avoid memory leaks;
-Binds this to undefined by default instead of window.
-
-function foo() &#123;  &quot;use strict&quot;;  console.log(this.a); // ❌ TypeError&#125;var a = 2;foo(); // in strict mode, this is undefined, so this.a cannot be read
-
-
-(function() &#123;  &quot;use strict&quot;;  foo(); // calling foo here doesn&#x27;t change its default binding&#125;)();function foo() &#123;  console.log(this.a);&#125;var a = 2;
 ]]></content>
       <categories>
         <category>Frontend</category>
@@ -278,12 +252,6 @@ Hooks:Some React Hooks, such as useState, can be used to share logic and state b
       <categories>
         <category>Frontend</category>
       </categories>
-  </entry>
-  <entry>
-    <title>Hello English</title>
-    <url>/ening/2024/08/16/redis-en/</url>
-    <content><![CDATA[This is an English post.
-]]></content>
   </entry>
   <entry>
     <title>Inserting Scripts in Vue</title>
@@ -412,6 +380,32 @@ Understanding Entertainment &amp; FreedomLife has two paths: one for career ambi
 ]]></content>
       <categories>
         <category>Teacher Certification</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>JavaScript Basics</title>
+    <url>/ening/2025/12/02/js%E5%9F%BA%E7%A1%80/</url>
+    <content><![CDATA[JavaScript Basics Summary (Hoisting, Strict Mode)
+Rules for Variable and Function Hoisting
+Variable hoisting: Execution still happens in order; variable declarations are hoisted but assignments are not.
+Function hoisting: The entire function body is hoisted to the top of its scope.
+Priority: Function hoisting &gt; Variable hoisting.
+
+console.log(a); // undefinedvar a = 2;foo(); // works normallyfunction foo() &#123;  console.log(&quot;Function hoisting succeeded&quot;);&#125;
+
+
+Using Strict Mode with use strictWhat it does:
+Prevents creating accidental global variables;
+Disallows using undeclared variables, helping avoid memory leaks;
+Binds this to undefined by default instead of window.
+
+function foo() &#123;  &quot;use strict&quot;;  console.log(this.a); // ❌ TypeError&#125;var a = 2;foo(); // in strict mode, this is undefined, so this.a cannot be read
+
+
+(function() &#123;  &quot;use strict&quot;;  foo(); // calling foo here doesn&#x27;t change its default binding&#125;)();function foo() &#123;  console.log(this.a);&#125;var a = 2;
+]]></content>
+      <categories>
+        <category>Frontend</category>
       </categories>
   </entry>
   <entry>
@@ -831,112 +825,31 @@ Oh, right—just like Brother Shang waiting at the finish line, and I’d smile 
       </tags>
   </entry>
   <entry>
-    <title>Fully Understanding How the JavaScript `new` Operator Works</title>
-    <url>/ening/2025/12/17/%E6%89%8B%E5%86%99New/</url>
-    <content><![CDATA[In JavaScript, the new operator is a core concept that frequently appears in both interviews and everyday development.Many developers use new regularly, but few truly understand what actually happens behind the scenes.
-In this article, we’ll implement new by hand, breaking down its internal mechanics step by step to help you fully understand how JavaScript objects are created.
-1. What Does the new Operator Actually Do?When we execute the following line of code:
-const person = new Person(&#x27;Alice&#x27;, 25);
+    <title>Hello English</title>
+    <url>/ening/2024/08/16/redis-en/</url>
+    <content><![CDATA[This is an English post.
+]]></content>
+  </entry>
+  <entry>
+    <title>Auto-Focus Next Input in Mini Program Verification Code</title>
+    <url>/ening/2025/07/21/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E9%AA%8C%E8%AF%81%E7%A0%81%E8%BE%93%E5%85%A5%E6%A1%86%E8%87%AA%E5%8A%A8%E8%81%9A%E7%84%A6%E4%B8%8B%E4%B8%AA%E8%BE%93%E5%85%A5%E6%A1%86/</url>
+    <content><![CDATA[At first, I thought that if I needed six verification code boxes, I should simply create six &lt;input&gt; elements.
+However, after implementing it, I ran into various issues:
 
-JavaScript actually performs four steps internally:
+The cursor didn’t smoothly jump to the next input box
+The keyboard would suddenly disappear
+The overall typing experience felt clunky and not smooth
 
-Create a new empty object
-Set the object’s prototype to the constructor’s prototype
-Execute the constructor and bind this to the new object
-If the constructor returns an object, return it; otherwise return the new object
+The correct approach is actually to use only one real input field, and simulate multiple input boxes through styling (spacing, highlighting, etc.).
+Visually it looks like six input boxes, but in reality there is only one &lt;input&gt; element handling the input.
 
-Understanding these four steps is the key to understanding how new works.
-2. Why Implement new Manually?There are three main benefits to handwriting new:
+Correct Solution&lt;view class=&quot;w-80 h-100 rad-10 b-a-9 tc f-50&quot; v-for=&quot;(item,index) in 6&quot;&gt;  &lt;input    class=&quot;w-80 h-100&quot;    maxlength=&quot;1&quot;    type=&quot;text&quot;    @input=&quot;inputListener(index)&quot;    :focus=&quot;focus &amp;&amp; (focusIndex == index)&quot;  /&gt;&lt;/view&gt;
 
-Deepens your understanding of the prototype chain and this binding
-It is a high-frequency frontend interview question
-Helps you understand how frameworks create objects internally
-
-Let’s jump straight into the code.
-3. Handwriting the new Operatorfunction myNew(constructor, ...args) &#123;  // 1. Create a new object and link its prototype  const obj = Object.create(constructor.prototype);  // 2. Execute the constructor with `this` bound to the new object  const result = constructor.apply(obj, args);  // 3. If the constructor returns an object, return it  //    Otherwise, return the newly created object  return result instanceof Object ? result : obj;&#125;
-
-This implementation fully reproduces the core behavior of the new operator.
-4. Line-by-Line Breakdown1. The Role of Object.createconst obj = Object.create(constructor.prototype);
-
-This is equivalent to:
-obj.__proto__ === constructor.prototype
-
-Which means:
-
-The new object can access methods on the constructor’s prototype
-The prototype chain is properly established
-
-2. constructor.apply(obj, args)const result = constructor.apply(obj, args);
-
-This step does two things:
-
-Executes the constructor function
-Binds this inside the constructor to the new object
-
-So code like this:
-this.name = name;this.age = age;
-
-Actually assigns properties directly to obj.
-3. Why Do We Check the Return Value?return result instanceof Object ? result : obj;
-
-This is a detail many developers overlook.
-Consider this example:
-function Test() &#123;  this.a = 1;  return &#123; b: 2 &#125;;&#125;const t = new Test();console.log(t); // &#123; b: 2 &#125;
-
-If a constructor explicitly returns an object, the new operator returns that object instead of this.
-That’s why we must handle this case in our myNew implementation.
-5. Testing Our myNew Functionfunction Person(name, age) &#123;  this.name = name;  this.age = age;&#125;const p1 = myNew(Person, &#x27;Alice&#x27;, 25);console.log(p1.name); // Aliceconsole.log(p1.age);  // 25console.log(p1 instanceof Person); // true
-
-The behavior matches native new perfectly.
-6. Comparing myNew and Native new
+data() &#123;  return &#123;    focus: true,    code: [&#x27;&#x27;, &#x27;&#x27;, &#x27;&#x27;, &#x27;&#x27;, &#x27;&#x27;, &#x27;&#x27;], // Stores the verification code digits    focusIndex: 0 // Index of the input that should receive focus  &#125;&#125;,methods: &#123;  // Triggered when input changes  inputListener(index) &#123;    if (this.focusIndex !== index) &#123;      this.focusIndex = index    &#125;    if (index &lt; 6) &#123;      this.focus = true      this.focusIndex = index + 1    &#125; else &#123;      this.focus = false    &#125;  &#125;&#125;
 
 
-Behavior
-new
-myNew
-
-
-
-Create new object
-✅
-✅
-
-
-Bind prototype
-✅
-✅
-
-
-Bind this
-✅
-✅
-
-
-Handle returned object
-✅
-✅
-
-
-In practice, myNew reproduces about 90% of the real new operator’s behavior, which is more than sufficient for interviews and deep understanding.
-7. Common Interview Follow-Up QuestionsQ1: Why not simply use const obj = &#123;&#125;?Because objects created with &#123;&#125; have their prototype set to Object.prototype.Objects created with new must have their prototype set to the constructor’s prototype.
-Q2: Can constructor.apply be replaced with call?Yes. The only difference is how arguments are passed:
-constructor.call(obj, ...args);
-
-
-
-Q3: How does instanceof work?p1 instanceof Person
-
-Internally, JavaScript checks whether:
-Person.prototype exists in p1’s prototype chain
-
-
-
-8. Summary
-The new operator is not magic—it follows a well-defined execution process
-Handwriting new is one of the best ways to understand prototype chains, this, and constructors
-Mastering this concept helps when learning Vue, React, and Node.js internals
-
-If you can both write and explain this implementation,90% of interviewers will consider your JavaScript fundamentals solid.
+Complete VersionYou can refer to the full implementation here:
+https://blog.csdn.net/u011423258/article/details/106683068?spm=1001.2014.3001.5506
 ]]></content>
       <categories>
         <category>Frontend</category>
@@ -1082,23 +995,6 @@ ALTER TABLE table_name ADD INDEX index_name (column);
       </categories>
   </entry>
   <entry>
-    <title>Saving Retrieved CSV Data into a Database</title>
-    <url>/ening/2025/07/29/%E8%8E%B7%E5%8F%96%E5%88%B0%E7%9A%84csv%E4%BF%9D%E5%AD%98%E6%95%B0%E6%8D%AE%E5%BA%93/</url>
-    <content><![CDATA[Saving CSV Data from a Third-Party API into a DatabaseWhen data retrieved from a third-party API is returned in CSV format, a common and reliable approach is:
-
-First, save the CSV file to a local path
-Then use fs.createReadStream to read the file
-Finally, parse the CSV content and store it in a local database
-
-Below is an example implementation:
-const processConversations = async (dateObj) =&gt; &#123;  const username = &#x27;your_account_name&#x27;;  const password = &#x27;password&#x27;;  const year = dateObj.format(&#x27;YYYY&#x27;);  const month = dateObj.format(&#x27;MM&#x27;);  const day = dateObj.format(&#x27;DD&#x27;);  const hour = dateObj.format(&#x27;HH&#x27;);  const dateStr = `$&#123;year&#125;-$&#123;month&#125;-$&#123;day&#125;-$&#123;hour&#125;`;  const fileName = `partial_path`;  const url = `https://api/$&#123;fileName&#125;`;  const outputPath = `/tmp/conversations`;  const tableName = &#x27;test&#x27;;  try &#123;    // Download CSV    const response = await axios.get(url, &#123;      responseType: &#x27;stream&#x27;,      headers: &#123;        Authorization: `Basic $&#123;Buffer.from(`$&#123;username&#125;:$&#123;password&#125;`).toString(&#x27;base64&#x27;)&#125;`      &#125;    &#125;);    const writer = fs.createWriteStream(outputPath);    response.data.pipe(writer);    await new Promise((resolve, reject) =&gt; &#123;      writer.on(&#x27;finish&#x27;, resolve);      writer.on(&#x27;error&#x27;, reject);    &#125;);    console.log(&#x27;CSV file downloaded successfully:&#x27;, fileName);    const rows = [];    await new Promise((resolve, reject) =&gt; &#123;      fs.createReadStream(outputPath)        .pipe(csv())        .on(&#x27;data&#x27;, (row) =&gt; &#123;          rows.push([            row[&#x27;DATE_TIME&#x27;]              ? dayjs(row[&#x27;DATE_TIME&#x27;]).format(&#x27;YYYY-MM-DD HH:mm:ss&#x27;)              : null,            row[&#x27;CLID&#x27;] || null,            row[&#x27;CLID_SOURCE&#x27;] || null          ]);        &#125;)        .on(&#x27;end&#x27;, resolve)        .on(&#x27;error&#x27;, reject);    &#125;);    if (rows.length === 0) &#123;      console.warn(`No data found in CSV: $&#123;fileName&#125;`);      return;    &#125;    const insertSQL = `      INSERT INTO \`$&#123;tableName&#125;\` (        date_time, clid, clid_source      ) VALUES ?    `;    await query(insertSQL, [rows]);    console.log(`Successfully inserted $&#123;rows.length&#125; records: $&#123;fileName&#125;`);  &#125; catch (error) &#123;    console.error(`Error ($&#123;fileName&#125;):`, error.message);  &#125;&#125;;
-
-]]></content>
-      <categories>
-        <category>Backend</category>
-      </categories>
-  </entry>
-  <entry>
     <title>Encountering the Unknown Self</title>
     <url>/ening/2025/06/30/%E9%81%87%E8%A7%81%E6%9C%AA%E7%9F%A5%E7%9A%84%E8%87%AA%E5%B7%B1/</url>
     <content><![CDATA[Notes on Encountering the Unknown SelfWhat is the “Unknown”?The “self” refers to the “true self.” From the question “Who am I?” to the concept of “from existence to non-existence,” the entire book is structured around dialogues between Ruoling and a wise elder, revealing many profound life concepts.
@@ -1138,5 +1034,134 @@ ConclusionThis book is not only about discovering “who you are,” but also ab
       <tags>
         <tag>Personal Growth</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>Fully Understanding How the JavaScript `new` Operator Works</title>
+    <url>/ening/2025/12/17/%E6%89%8B%E5%86%99New/</url>
+    <content><![CDATA[In JavaScript, the new operator is a core concept that frequently appears in both interviews and everyday development.Many developers use new regularly, but few truly understand what actually happens behind the scenes.
+In this article, we’ll implement new by hand, breaking down its internal mechanics step by step to help you fully understand how JavaScript objects are created.
+1. What Does the new Operator Actually Do?When we execute the following line of code:
+const person = new Person(&#x27;Alice&#x27;, 25);
+
+JavaScript actually performs four steps internally:
+
+Create a new empty object
+Set the object’s prototype to the constructor’s prototype
+Execute the constructor and bind this to the new object
+If the constructor returns an object, return it; otherwise return the new object
+
+Understanding these four steps is the key to understanding how new works.
+2. Why Implement new Manually?There are three main benefits to handwriting new:
+
+Deepens your understanding of the prototype chain and this binding
+It is a high-frequency frontend interview question
+Helps you understand how frameworks create objects internally
+
+Let’s jump straight into the code.
+3. Handwriting the new Operatorfunction myNew(constructor, ...args) &#123;  // 1. Create a new object and link its prototype  const obj = Object.create(constructor.prototype);  // 2. Execute the constructor with `this` bound to the new object  const result = constructor.apply(obj, args);  // 3. If the constructor returns an object, return it  //    Otherwise, return the newly created object  return result instanceof Object ? result : obj;&#125;
+
+This implementation fully reproduces the core behavior of the new operator.
+4. Line-by-Line Breakdown1. The Role of Object.createconst obj = Object.create(constructor.prototype);
+
+This is equivalent to:
+obj.__proto__ === constructor.prototype
+
+Which means:
+
+The new object can access methods on the constructor’s prototype
+The prototype chain is properly established
+
+2. constructor.apply(obj, args)const result = constructor.apply(obj, args);
+
+This step does two things:
+
+Executes the constructor function
+Binds this inside the constructor to the new object
+
+So code like this:
+this.name = name;this.age = age;
+
+Actually assigns properties directly to obj.
+3. Why Do We Check the Return Value?return result instanceof Object ? result : obj;
+
+This is a detail many developers overlook.
+Consider this example:
+function Test() &#123;  this.a = 1;  return &#123; b: 2 &#125;;&#125;const t = new Test();console.log(t); // &#123; b: 2 &#125;
+
+If a constructor explicitly returns an object, the new operator returns that object instead of this.
+That’s why we must handle this case in our myNew implementation.
+5. Testing Our myNew Functionfunction Person(name, age) &#123;  this.name = name;  this.age = age;&#125;const p1 = myNew(Person, &#x27;Alice&#x27;, 25);console.log(p1.name); // Aliceconsole.log(p1.age);  // 25console.log(p1 instanceof Person); // true
+
+The behavior matches native new perfectly.
+6. Comparing myNew and Native new
+
+
+Behavior
+new
+myNew
+
+
+
+Create new object
+✅
+✅
+
+
+Bind prototype
+✅
+✅
+
+
+Bind this
+✅
+✅
+
+
+Handle returned object
+✅
+✅
+
+
+In practice, myNew reproduces about 90% of the real new operator’s behavior, which is more than sufficient for interviews and deep understanding.
+7. Common Interview Follow-Up QuestionsQ1: Why not simply use const obj = &#123;&#125;?Because objects created with &#123;&#125; have their prototype set to Object.prototype.Objects created with new must have their prototype set to the constructor’s prototype.
+Q2: Can constructor.apply be replaced with call?Yes. The only difference is how arguments are passed:
+constructor.call(obj, ...args);
+
+
+
+Q3: How does instanceof work?p1 instanceof Person
+
+Internally, JavaScript checks whether:
+Person.prototype exists in p1’s prototype chain
+
+
+
+8. Summary
+The new operator is not magic—it follows a well-defined execution process
+Handwriting new is one of the best ways to understand prototype chains, this, and constructors
+Mastering this concept helps when learning Vue, React, and Node.js internals
+
+If you can both write and explain this implementation,90% of interviewers will consider your JavaScript fundamentals solid.
+]]></content>
+      <categories>
+        <category>Frontend</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>Saving Retrieved CSV Data into a Database</title>
+    <url>/ening/2025/07/29/%E8%8E%B7%E5%8F%96%E5%88%B0%E7%9A%84csv%E4%BF%9D%E5%AD%98%E6%95%B0%E6%8D%AE%E5%BA%93/</url>
+    <content><![CDATA[Saving CSV Data from a Third-Party API into a DatabaseWhen data retrieved from a third-party API is returned in CSV format, a common and reliable approach is:
+
+First, save the CSV file to a local path
+Then use fs.createReadStream to read the file
+Finally, parse the CSV content and store it in a local database
+
+Below is an example implementation:
+const processConversations = async (dateObj) =&gt; &#123;  const username = &#x27;your_account_name&#x27;;  const password = &#x27;password&#x27;;  const year = dateObj.format(&#x27;YYYY&#x27;);  const month = dateObj.format(&#x27;MM&#x27;);  const day = dateObj.format(&#x27;DD&#x27;);  const hour = dateObj.format(&#x27;HH&#x27;);  const dateStr = `$&#123;year&#125;-$&#123;month&#125;-$&#123;day&#125;-$&#123;hour&#125;`;  const fileName = `partial_path`;  const url = `https://api/$&#123;fileName&#125;`;  const outputPath = `/tmp/conversations`;  const tableName = &#x27;test&#x27;;  try &#123;    // Download CSV    const response = await axios.get(url, &#123;      responseType: &#x27;stream&#x27;,      headers: &#123;        Authorization: `Basic $&#123;Buffer.from(`$&#123;username&#125;:$&#123;password&#125;`).toString(&#x27;base64&#x27;)&#125;`      &#125;    &#125;);    const writer = fs.createWriteStream(outputPath);    response.data.pipe(writer);    await new Promise((resolve, reject) =&gt; &#123;      writer.on(&#x27;finish&#x27;, resolve);      writer.on(&#x27;error&#x27;, reject);    &#125;);    console.log(&#x27;CSV file downloaded successfully:&#x27;, fileName);    const rows = [];    await new Promise((resolve, reject) =&gt; &#123;      fs.createReadStream(outputPath)        .pipe(csv())        .on(&#x27;data&#x27;, (row) =&gt; &#123;          rows.push([            row[&#x27;DATE_TIME&#x27;]              ? dayjs(row[&#x27;DATE_TIME&#x27;]).format(&#x27;YYYY-MM-DD HH:mm:ss&#x27;)              : null,            row[&#x27;CLID&#x27;] || null,            row[&#x27;CLID_SOURCE&#x27;] || null          ]);        &#125;)        .on(&#x27;end&#x27;, resolve)        .on(&#x27;error&#x27;, reject);    &#125;);    if (rows.length === 0) &#123;      console.warn(`No data found in CSV: $&#123;fileName&#125;`);      return;    &#125;    const insertSQL = `      INSERT INTO \`$&#123;tableName&#125;\` (        date_time, clid, clid_source      ) VALUES ?    `;    await query(insertSQL, [rows]);    console.log(`Successfully inserted $&#123;rows.length&#125; records: $&#123;fileName&#125;`);  &#125; catch (error) &#123;    console.error(`Error ($&#123;fileName&#125;):`, error.message);  &#125;&#125;;
+
+]]></content>
+      <categories>
+        <category>Backend</category>
+      </categories>
   </entry>
 </search>
