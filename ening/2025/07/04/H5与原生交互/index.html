@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+<style>
+    .contain {
+      position: relative;
+      width: 100%;
+      height: 50px;
+      background: #f0f0f0;
+      overflow: hidden;
+    }
+  
+    .danmaku {
+      position: absolute;
+      white-space: nowrap;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 14px;
+      color: #333;
+      animation: moveLeft 15s linear forwards;
+    }
+  
+    .danmaku.paused {
+      animation-play-state: paused;
+    }
+  
+    @keyframes moveLeft {
+      from {
+        left: 100%;
+      }
+      to {
+        left: -100%;
+      }
+    }
+  </style>
+  <link rel="apple-touch-icon" sizes="180x180" href="/ening/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/ening/images/favicon.svg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/ening/images/favicon.svg">
+  <link rel="mask-icon" href="/ening/images/logo.svg" color="#222">
+<meta name="baidu_union_verify" content="4c95743ab0ae1a7dcfbc5c20c004854b">
+
+
+<link rel="stylesheet" href="/ening/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noto Serif SC:300,300italic,400,400italic,700,700italic|Source Code Pro:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/ening/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"lidyaqf.github.io","root":"/ening/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"manual","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+
+
+
+
+
+  <meta name="description" content="When interacting with native applications, we usually cannot see the data returned or printed by the native side in our local environment. In this case, we need to use a debugging tool. A very useful">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Interaction Between H5 and Native">
+<meta property="og:url" content="https://lidyaqf.github.io/2025/07/04/H5%E4%B8%8E%E5%8E%9F%E7%94%9F%E4%BA%A4%E4%BA%92/index.html">
+<meta property="og:site_name" content="My English Blog">
+<meta property="og:description" content="When interacting with native applications, we usually cannot see the data returned or printed by the native side in our local environment. In this case, we need to use a debugging tool. A very useful">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-07-04T01:44:17.000Z">
+<meta property="article:modified_time" content="2026-03-05T02:18:23.263Z">
+<meta property="article:author" content="lidya">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://lidyaqf.github.io/2025/07/04/H5%E4%B8%8E%E5%8E%9F%E7%94%9F%E4%BA%A4%E4%BA%92/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Interaction Between H5 and Native | My English Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/ening/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">My English Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/ening/ening/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/ening/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/ening/ening/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/ening/ening/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-english">
+
+    <a href="/ening/ening" rel="section"><i class="fa fa-language fa-fw"></i>English</a>
+
+  </li>
+        <li class="menu-item menu-item-中文">
+
+    <a href="/ening/../" rel="section"><i class="fa fa-language fa-fw"></i>中文</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://lidyaqf.github.io/2025/07/04/H5%E4%B8%8E%E5%8E%9F%E7%94%9F%E4%BA%A4%E4%BA%92/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/ening/images/avatar.jpg">
+      <meta itemprop="name" content="lidya">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="My English Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Interaction Between H5 and Native
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2025-07-04 09:44:17" itemprop="dateCreated datePublished" datetime="2025-07-04T09:44:17+08:00">2025-07-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2026-03-05 10:18:23" itemprop="dateModified" datetime="2026-03-05T10:18:23+08:00">2026-03-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/ening/categories/Frontend/" itemprop="url" rel="index"><span itemprop="name">Frontend</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>When interacting with native applications, we usually cannot see the data returned or printed by the native side in our local environment. In this case, we need to use a debugging tool. A very useful tool is <strong>vConsole</strong>, which allows us to clearly view network requests, console logs, and other information. It is similar to the browser’s DevTools (F12 console). Below is how to integrate it:</p>
+<h2 id="H5-Mobile-Debugging-Tool-vConsole-for-Mobile"><a href="#H5-Mobile-Debugging-Tool-vConsole-for-Mobile" class="headerlink" title="H5 Mobile Debugging Tool (vConsole for Mobile)"></a>H5 Mobile Debugging Tool (vConsole for Mobile)</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://cdn.bootcdn.net/ajax/libs/vConsole/3.15.1/vconsole.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">  <span class="comment">// Initialize vConsole</span></span></span><br><span class="line"><span class="language-javascript">  <span class="keyword">var</span> vConsole = <span class="keyword">new</span> <span class="title class_">VConsole</span>();</span></span><br><span class="line"><span class="language-javascript">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;vConsole is ready.&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>If you want to interact with the native side, you also need to use <code>window</code>. There are two scenarios: sending data and receiving data. Different approaches are used for different cases.</p>
+<h2 id="Case-1-Sending-Data-to-the-Native-App"><a href="#Case-1-Sending-Data-to-the-Native-App" class="headerlink" title="Case 1: Sending Data to the Native App"></a>Case 1: Sending Data to the Native App</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="variable language_">window</span>.<span class="property">webkit</span> != <span class="literal">undefined</span>) &#123;</span><br><span class="line">  <span class="comment">// Defined on iOS side</span></span><br><span class="line">  <span class="variable language_">window</span>.<span class="property">webkit</span>.<span class="property">messageHandlers</span>.<span class="property">getUserInfo</span>.<span class="title function_">postMessage</span>(<span class="literal">null</span>);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  <span class="comment">// Defined on Android side</span></span><br><span class="line">  feedback.<span class="title function_">getUserInfo</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (<span class="variable language_">window</span>.<span class="property">webkit</span> != <span class="literal">undefined</span>) &#123;</span><br><span class="line">  <span class="variable language_">window</span>.<span class="property">webkit</span>.<span class="property">messageHandlers</span>.<span class="property">feedback</span>.<span class="title function_">postMessage</span>(&#123;</span><br><span class="line">    <span class="attr">title</span>: <span class="string">&quot;Test share title&quot;</span>,</span><br><span class="line">    <span class="attr">content</span>: <span class="string">&quot;Test share content&quot;</span>,</span><br><span class="line">    <span class="attr">url</span>: <span class="string">&quot;https://github.com/maying1992&quot;</span>,</span><br><span class="line">  &#125;);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  <span class="comment">// try &#123;</span></span><br><span class="line">  <span class="comment">//   result = feedback.getUserInfo();</span></span><br><span class="line">  <span class="comment">// &#125; catch(err)&#123;</span></span><br><span class="line">  <span class="comment">// &#125;</span></span><br><span class="line">  feedback.<span class="title function_">postMessage</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="Case-2-Receiving-Data-from-the-Native-App"><a href="#Case-2-Receiving-Data-from-the-Native-App" class="headerlink" title="Case 2: Receiving Data from the Native App"></a>Case 2: Receiving Data from the Native App</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">created</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="comment">// Attach method to window</span></span><br><span class="line">  <span class="variable language_">window</span>.<span class="property">setUserInfo</span> = <span class="variable language_">this</span>.<span class="property">setUserInfo</span>;</span><br><span class="line">&#125;,</span><br><span class="line"></span><br><span class="line"><span class="title function_">setUserInfo</span>(<span class="params">param</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> u = navigator.<span class="property">userAgent</span>;</span><br><span class="line">  <span class="keyword">const</span> isiOS = !!u.<span class="title function_">match</span>(<span class="regexp">/\(i[^;]+;( U;)? CPU.+Mac OS X/</span>); <span class="comment">// iOS detection</span></span><br><span class="line">  <span class="keyword">const</span> result = <span class="title class_">JSON</span>.<span class="title function_">parse</span>(param);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (isiOS) &#123;</span><br><span class="line"></span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">queryParams</span> = result.<span class="property">userInfo</span>.<span class="property">token</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Handle inconsistent values from native side</span></span><br><span class="line">    <span class="keyword">if</span> (</span><br><span class="line">      result.<span class="property">userInfo</span>.<span class="property">userId</span> == <span class="literal">undefined</span> ||</span><br><span class="line">      result.<span class="property">userInfo</span>.<span class="property">userId</span> == <span class="number">0</span></span><br><span class="line">    ) &#123;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">usrIdd</span> = <span class="number">0</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">usrIdd</span> = result.<span class="property">userInfo</span>.<span class="property">userId</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="variable language_">window</span>.<span class="property">localStorage</span>.<span class="title function_">setItem</span>(<span class="string">&quot;lang&quot;</span>, result.<span class="property">userInfo</span>.<span class="property">language</span>);</span><br><span class="line"></span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">queryParams</span> = result;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (result.<span class="property">userId</span> == <span class="literal">undefined</span> || result.<span class="property">userId</span> == <span class="number">0</span>) &#123;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">usrIdd</span> = <span class="number">0</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">usrIdd</span> = result.<span class="property">userId</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="variable language_">window</span>.<span class="property">localStorage</span>.<span class="title function_">setItem</span>(<span class="string">&quot;lang&quot;</span>, result.<span class="property">language</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">$i18n</span>.<span class="property">locale</span> = <span class="variable language_">localStorage</span>.<span class="title function_">getItem</span>(<span class="string">&quot;lang&quot;</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="variable language_">localStorage</span>.<span class="title function_">getItem</span>(<span class="string">&quot;lang&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="When-You-Need-to-Redirect-to-the-App-via-a-Button"><a href="#When-You-Need-to-Redirect-to-the-App-via-a-Button" class="headerlink" title="When You Need to Redirect to the App via a Button"></a>When You Need to Redirect to the App via a Button</h2><p>You can directly use an <code>&lt;a&gt;</code> tag with the <code>href</code> attribute to trigger the app, provided that the native application has defined a custom scheme such as:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">myapp</span>:<span class="comment">//***</span></span><br></pre></td></tr></table></figure>
+
+<p>This works similarly to how Instagram handles H5-to-app redirection using a scheme like:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">instagram</span>:<span class="comment">//**</span></span><br></pre></td></tr></table></figure>
+
+
+<p>If the redirect does not work, it usually means the native app does not support the corresponding URL scheme.</p>
+
+    </div>
+
+    
+    
+    
+    
+      <div>
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:24px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+      </div>
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:  </strong>lidya
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link: </strong>
+    <a href="https://lidyaqf.github.io/2025/07/04/H5%E4%B8%8E%E5%8E%9F%E7%94%9F%E4%BA%A4%E4%BA%92/" title="Interaction Between H5 and Native">https://lidyaqf.github.io/2025/07/04/H5与原生交互/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/ening/2025/06/30/%E9%81%87%E8%A7%81%E6%9C%AA%E7%9F%A5%E7%9A%84%E8%87%AA%E5%B7%B1/" rel="prev" title="Encountering the Unknown Self">
+      <i class="fa fa-chevron-left"></i> Encountering the Unknown Self
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/ening/2025/07/07/%E5%89%8D%E7%AB%AF%E9%AA%A8%E6%9E%B6%E5%B1%8F/" rel="next" title="Frontend Skeleton Screen">
+      Frontend Skeleton Screen <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC82MDU2Mi8zNzAzMw=="></div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#H5-Mobile-Debugging-Tool-vConsole-for-Mobile"><span class="nav-number">1.</span> <span class="nav-text">H5 Mobile Debugging Tool (vConsole for Mobile)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Case-1-Sending-Data-to-the-Native-App"><span class="nav-number">2.</span> <span class="nav-text">Case 1: Sending Data to the Native App</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Case-2-Receiving-Data-from-the-Native-App"><span class="nav-number">3.</span> <span class="nav-text">Case 2: Receiving Data from the Native App</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#When-You-Need-to-Redirect-to-the-App-via-a-Button"><span class="nav-number">4.</span> <span class="nav-text">When You Need to Redirect to the App via a Button</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="lidya"
+      src="/ening/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">lidya</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/ening/ening/archives/">
+        
+          <span class="site-state-item-count">27</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/ening/ening/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/ening/tags/">
+          
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">lidya</span>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    if (location.pathname.startsWith('/ening/')) {
+      const item = document.querySelector('.menu-item-english');
+      if (item) item.style.display = 'none';
+    }
+  });
+</script>
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/ening/lib/anime.min.js"></script>
+  <script src="/ening/lib/velocity/velocity.min.js"></script>
+  <script src="/ening/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/ening/js/utils.js"></script>
+
+<script src="/ening/js/motion.js"></script>
+
+
+<script src="/ening/js/schemes/pisces.js"></script>
+
+
+<script src="/ening/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/ening/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
+  window.livereOptions = {
+    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+});
+</script>
+
+</body>
+</html>
