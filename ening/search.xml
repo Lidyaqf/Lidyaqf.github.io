@@ -1,6 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Hexo-Next – Change Fonts &amp; Enable Code Copy</title>
+    <url>/ening/2025/08/18/Hexo-Next-%E6%9B%B4%E6%94%B9%E5%AD%97%E4%BD%93/</url>
+    <content><![CDATA[
+The Next theme version used here is 7.8.0.
+First, locate the file:
+/themes/next/_config.yml
+
+Search for the keyword font.⚠️ Important: You must set enable inside font to true, because the default value is false.If you only modify the family without enabling it, the font change will not take effect — so make sure you don’t miss this step.
+If the font family is sourced from an external platform, you also need to configure the host.
+font:  enable: true  # Uri of fonts host, e.g. https://fonts.googleapis.com (Default).  host:   # Font options:  # `external: true` will load this font family from `host` above.  # `family: Times New Roman`. Without any quotes.  # `size: x.x`. Use `em` as unit. Default: 1 (16px)  # Global font settings used for all elements inside &lt;body&gt;.  global:    external: true    family: Noto Serif SC    size:  # Font settings for site title (.site-title).  title:    external: true    family: Noto Serif SC    size:  # Font settings for headlines (&lt;h1&gt; to &lt;h6&gt;).  headings:    external: true    family: Noto Serif SC    size:  # Font settings for posts (.post-body).  posts:    external: true    family: Noto Serif SC  # Font settings for &lt;code&gt; and code blocks.  codes:    external: true    family: Source Code Pro
+
+
+Enable Copy Button for Code BlocksIn the same _config.yml file, locate the following configuration section.
+Set copy_button.enable to true to enable the copy feature.
+
+When show_result is set to true, a checkmark will be shown after copying.
+The style option controls the appearance of the copy button. Choose based on your preference.
+
+codeblock:  # Code Highlight theme  # Available values: normal | night | night eighties | night blue | night bright | solarized | solarized dark | galactic  # See: https://github.com/chriskempson/tomorrow-theme  highlight_theme: night eighties  # Add copy button on codeblock  copy_button:    enable: true    # Show text copy result.    show_result: true    # Available values: default | flat | mac    style: mac
+]]></content>
+      <categories>
+        <category>Frontend</category>
+      </categories>
+  </entry>
+  <entry>
     <title>ELK Installation Guide</title>
     <url>/ening/2025/04/11/ELK%E5%AE%89%E8%A3%85%E6%B5%81%E7%A8%8B/</url>
     <content><![CDATA[Installing ELK Stack (ElasticSearch, Logstash, Kibana) with Docker
@@ -106,31 +131,6 @@ If the redirect does not work, it usually means the native app does not support 
       </categories>
   </entry>
   <entry>
-    <title>Hexo-Next – Change Fonts &amp; Enable Code Copy</title>
-    <url>/ening/2025/08/18/Hexo-Next-%E6%9B%B4%E6%94%B9%E5%AD%97%E4%BD%93/</url>
-    <content><![CDATA[
-The Next theme version used here is 7.8.0.
-First, locate the file:
-/themes/next/_config.yml
-
-Search for the keyword font.⚠️ Important: You must set enable inside font to true, because the default value is false.If you only modify the family without enabling it, the font change will not take effect — so make sure you don’t miss this step.
-If the font family is sourced from an external platform, you also need to configure the host.
-font:  enable: true  # Uri of fonts host, e.g. https://fonts.googleapis.com (Default).  host:   # Font options:  # `external: true` will load this font family from `host` above.  # `family: Times New Roman`. Without any quotes.  # `size: x.x`. Use `em` as unit. Default: 1 (16px)  # Global font settings used for all elements inside &lt;body&gt;.  global:    external: true    family: Noto Serif SC    size:  # Font settings for site title (.site-title).  title:    external: true    family: Noto Serif SC    size:  # Font settings for headlines (&lt;h1&gt; to &lt;h6&gt;).  headings:    external: true    family: Noto Serif SC    size:  # Font settings for posts (.post-body).  posts:    external: true    family: Noto Serif SC  # Font settings for &lt;code&gt; and code blocks.  codes:    external: true    family: Source Code Pro
-
-
-Enable Copy Button for Code BlocksIn the same _config.yml file, locate the following configuration section.
-Set copy_button.enable to true to enable the copy feature.
-
-When show_result is set to true, a checkmark will be shown after copying.
-The style option controls the appearance of the copy button. Choose based on your preference.
-
-codeblock:  # Code Highlight theme  # Available values: normal | night | night eighties | night blue | night bright | solarized | solarized dark | galactic  # See: https://github.com/chriskempson/tomorrow-theme  highlight_theme: night eighties  # Add copy button on codeblock  copy_button:    enable: true    # Show text copy result.    show_result: true    # Available values: default | flat | mac    style: mac
-]]></content>
-      <categories>
-        <category>Frontend</category>
-      </categories>
-  </entry>
-  <entry>
     <title>React Native New Architecture</title>
     <url>/ening/2025/08/19/ReactNative%E6%96%B0%E6%9E%B6%E6%9E%84/</url>
     <content><![CDATA[
@@ -225,20 +225,6 @@ After successful deployment, you can view the build process on the GitLab CI&#x2
       </tags>
   </entry>
   <entry>
-    <title>Sync Google Sheets Data Between Spreadsheets</title>
-    <url>/ening/2025/08/28/google%20sheet%E5%90%8C%E6%AD%A5%E8%A1%A8%E6%A0%BC%E6%95%B0%E6%8D%AE/</url>
-    <content><![CDATA[Sync Google Sheets Data Across Multiple SheetsThere is a requirement to synchronize all sheets from one Google Spreadsheet to another spreadsheet (including all sub-sheets).
-This is implemented using Google Sheets → Extensions → Apps Script.
-Why synchronization is neededThe source spreadsheet is read-only by default.By synchronizing its data into another spreadsheet, the copied sheets can then be edited freely.
-sourceSpreadsheetId and targetSpreadsheetId are the IDs from the Google Sheets URL —they are the long strings after /d/ in the address bar.
-Apps Script Code Examplefunction synchronizeSheetsToAnotherFile() &#123;  const sourceSpreadsheetId = &quot;id1&quot;;  const targetSpreadsheetId = &quot;id2&quot;;   // Example: 1NOtSSvDwXrca8vqyZW6OqQJwGaCICMVguSz1-i72oqg  const sourceSpreadsheet = SpreadsheetApp.openById(sourceSpreadsheetId);  const targetSpreadsheet = SpreadsheetApp.openById(targetSpreadsheetId);  const sourceSheets = sourceSpreadsheet.getSheets();  sourceSheets.forEach(sheet =&gt; &#123;    const sheetName = sheet.getName();    let targetSheet = targetSpreadsheet.getSheetByName(sheetName);    if (!targetSheet) &#123;      targetSheet = targetSpreadsheet.insertSheet(sheetName);    &#125; else &#123;      targetSheet.clear();    &#125;    const range = sheet.getDataRange();    const displayValues = range.getDisplayValues();     const formats = range.getBackgrounds();            const fontWeights = range.getFontWeights();        const targetRange = targetSheet.getRange(      1,      1,      displayValues.length,      displayValues[0].length    );    targetRange.setValues(displayValues);    targetRange.setBackgrounds(formats);    targetRange.setFontWeights(fontWeights);  &#125;);&#125;
-
-]]></content>
-      <categories>
-        <category>Frontend</category>
-      </categories>
-  </entry>
-  <entry>
     <title>JavaScript Basics</title>
     <url>/ening/2025/12/02/js%E5%9F%BA%E7%A1%80/</url>
     <content><![CDATA[JavaScript Basics Summary (Hoisting, Strict Mode)
@@ -286,6 +272,20 @@ After receiving the binary data, the frontend deserializes it into an RPC Respon
       </categories>
   </entry>
   <entry>
+    <title>Sync Google Sheets Data Between Spreadsheets</title>
+    <url>/ening/2025/08/28/google%20sheet%E5%90%8C%E6%AD%A5%E8%A1%A8%E6%A0%BC%E6%95%B0%E6%8D%AE/</url>
+    <content><![CDATA[Sync Google Sheets Data Across Multiple SheetsThere is a requirement to synchronize all sheets from one Google Spreadsheet to another spreadsheet (including all sub-sheets).
+This is implemented using Google Sheets → Extensions → Apps Script.
+Why synchronization is neededThe source spreadsheet is read-only by default.By synchronizing its data into another spreadsheet, the copied sheets can then be edited freely.
+sourceSpreadsheetId and targetSpreadsheetId are the IDs from the Google Sheets URL —they are the long strings after /d/ in the address bar.
+Apps Script Code Examplefunction synchronizeSheetsToAnotherFile() &#123;  const sourceSpreadsheetId = &quot;id1&quot;;  const targetSpreadsheetId = &quot;id2&quot;;   // Example: 1NOtSSvDwXrca8vqyZW6OqQJwGaCICMVguSz1-i72oqg  const sourceSpreadsheet = SpreadsheetApp.openById(sourceSpreadsheetId);  const targetSpreadsheet = SpreadsheetApp.openById(targetSpreadsheetId);  const sourceSheets = sourceSpreadsheet.getSheets();  sourceSheets.forEach(sheet =&gt; &#123;    const sheetName = sheet.getName();    let targetSheet = targetSpreadsheet.getSheetByName(sheetName);    if (!targetSheet) &#123;      targetSheet = targetSpreadsheet.insertSheet(sheetName);    &#125; else &#123;      targetSheet.clear();    &#125;    const range = sheet.getDataRange();    const displayValues = range.getDisplayValues();     const formats = range.getBackgrounds();            const fontWeights = range.getFontWeights();        const targetRange = targetSheet.getRange(      1,      1,      displayValues.length,      displayValues[0].length    );    targetRange.setValues(displayValues);    targetRange.setBackgrounds(formats);    targetRange.setFontWeights(fontWeights);  &#125;);&#125;
+
+]]></content>
+      <categories>
+        <category>Frontend</category>
+      </categories>
+  </entry>
+  <entry>
     <title>React Component Communication Methods</title>
     <url>/ening/2025/08/25/react%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F/</url>
     <content><![CDATA[
@@ -304,6 +304,44 @@ Hooks:Some React Hooks, such as useState, can be used to share logic and state b
       <categories>
         <category>Frontend</category>
       </categories>
+  </entry>
+  <entry>
+    <title>Hello English</title>
+    <url>/ening/2024/08/16/redis-en/</url>
+    <content><![CDATA[This is an English post.
+]]></content>
+  </entry>
+  <entry>
+    <title>One Day You&#39;ll Understand - Reading Notes by Mr. Zhuomo</title>
+    <url>/ening/2025/05/21/%E3%80%8A%E7%BB%88%E6%9C%89%E4%B8%80%E5%A4%A9%E4%BD%A0%E4%BC%9A%E6%87%82%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%20-%20%E7%90%A2%E7%A3%A8%E5%85%88%E7%94%9F/</url>
+    <content><![CDATA[The book does contain a lot of his own “biases,” but I find him authentic and humorous. His language is simple and understandable, and each subtitle essentially tells us what we should do.
+Understanding LifeLife is never about what you want it to be. It’s good to discover beauty and to view things from others’ perspectives. At the same time, one should have self-awareness.
+Understanding LoveSheldon once said: “The pursuit of another human to spend life with is something I’ve never understood. Maybe I’m too interesting to need company. So I wish you the same joy with each other as I have with myself.”One can never escape loneliness through another person; only through passion for life. Managing a relationship requires rationality. Freedom is inalienable. I once checked my ex’s phone—I realized it was wrong and won’t do it again.
+Understanding StrategyThis section mainly introduces the strategies of courting and how to maintain a good relationship—true wisdom. Never sacrifice your career for family. Don’t live with in-laws (though I think it depends). Have your own hobbies.
+Understanding MarriageEndure and stay loyal. As for non-marriage beliefs, there’s nothing more to say.
+Understanding SetbacksEvery breakup is just making way for true love. Don’t force it. I love you, so I wish you well, even if I’m not the one by your side.Do what you want regardless of others’ opinions. Only care about those who matter to you.
+Understanding ReadingWhat, Why, How. Keep reading. Don’t chase speed, but depth.
+Understanding RomanceHe shares sweet daily stories with his wife. If you don’t break up, you won’t discover how many better people there are out there. If you find one—lucky. If not—you can still live happily on your own.Live with emotional intelligence and the world becomes beautiful.
+Understanding SocializingAssociate with decent people. Different people require different approaches. Rejecting others is an art. If you don’t have the guts to ask for your money back, don’t lend it.
+Understanding Human NatureI tend to be skeptical about human nature. You can’t control others, so just manage yourself. Don’t be vulgar.
+Understanding Good and EvilSome people enter your life just to teach you a lesson. Good or evil—I prefer believing in others, as trust is given before it’s earned.Even if deceived, it’s a lesson learned—don’t fall into the same trap again. But don’t stop trusting altogether; kind people still exist.God made the right hand a right hand as a reward; same for kind people—kindness is its own reward.I recall being in a restroom without tissue once. I was going to ask a friend, but a stranger overheard and handed me tissues. Such kindness moved me deeply.Kindness must come with principles—otherwise it may hurt others or yourself.
+Understanding WealthThe poor stay poor because of narrow thinking. To get rich, don’t just invest in your body—think bigger. See the essence of problems.Time is limited—how to get rich fast? Find a subject you love, apply it, think broadly, and work in fields closely tied to society.
+Understanding SocietyHave ambition. Take one step at a time. Build an independent personality. Be accountable for your actions. Learn to transform your ability to feel happiness—then change yourself.
+Understanding Life and DeathDeath studies include concepts like: No death, no life; face death to live; understand death to be reborn. Interesting and thought-provoking.Knowing that we will die is what pushes us to live fully. When the time comes, I think I’ll embrace death.
+
+What the world lacks isn’t perfect people, but justice, sincerity, courage, and compassion from the heart. — My biggest takeaway after watching Forever Young today.We all know cause and effect—but causes and effects come from relationships. Someday, I’ll read Schopenhauer and Nietzsche properly.
+
+Understanding TravelThis part recounts Mr. Zhuomo’s experiences in Tibet. Many dream of going there—maybe because it helps people truly understand life’s struggles.The US is less disciplined than the UK. Japan has great food culture and says “sorry” a lot—avoiding bothering others.
+Understanding CareerFirst learn to endure hardship. Then understand yourself and your talents. Begin with the end in mind and stay focused.
+Understanding EducationEvery child is born pure. Without proper education, they won’t become pillars of the nation.
+Understanding Entertainment &amp; FreedomLife has two paths: one for career ambition—keep passion; the other for living warmly—keep humanity.Open your eyes each day and tell yourself: Oh yeah!
+]]></content>
+      <categories>
+        <category>Reading</category>
+      </categories>
+      <tags>
+        <tag>Reading</tag>
+      </tags>
   </entry>
   <entry>
     <title>Inserting Scripts in Vue</title>
@@ -386,42 +424,34 @@ By following the method described above, third-party scripts will run correctly 
       </tags>
   </entry>
   <entry>
-    <title>Hello English</title>
-    <url>/ening/2024/08/16/redis-en/</url>
-    <content><![CDATA[This is an English post.
-]]></content>
-  </entry>
-  <entry>
-    <title>One Day You&#39;ll Understand - Reading Notes by Mr. Zhuomo</title>
-    <url>/ening/2025/05/21/%E3%80%8A%E7%BB%88%E6%9C%89%E4%B8%80%E5%A4%A9%E4%BD%A0%E4%BC%9A%E6%87%82%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%20-%20%E7%90%A2%E7%A3%A8%E5%85%88%E7%94%9F/</url>
-    <content><![CDATA[The book does contain a lot of his own “biases,” but I find him authentic and humorous. His language is simple and understandable, and each subtitle essentially tells us what we should do.
-Understanding LifeLife is never about what you want it to be. It’s good to discover beauty and to view things from others’ perspectives. At the same time, one should have self-awareness.
-Understanding LoveSheldon once said: “The pursuit of another human to spend life with is something I’ve never understood. Maybe I’m too interesting to need company. So I wish you the same joy with each other as I have with myself.”One can never escape loneliness through another person; only through passion for life. Managing a relationship requires rationality. Freedom is inalienable. I once checked my ex’s phone—I realized it was wrong and won’t do it again.
-Understanding StrategyThis section mainly introduces the strategies of courting and how to maintain a good relationship—true wisdom. Never sacrifice your career for family. Don’t live with in-laws (though I think it depends). Have your own hobbies.
-Understanding MarriageEndure and stay loyal. As for non-marriage beliefs, there’s nothing more to say.
-Understanding SetbacksEvery breakup is just making way for true love. Don’t force it. I love you, so I wish you well, even if I’m not the one by your side.Do what you want regardless of others’ opinions. Only care about those who matter to you.
-Understanding ReadingWhat, Why, How. Keep reading. Don’t chase speed, but depth.
-Understanding RomanceHe shares sweet daily stories with his wife. If you don’t break up, you won’t discover how many better people there are out there. If you find one—lucky. If not—you can still live happily on your own.Live with emotional intelligence and the world becomes beautiful.
-Understanding SocializingAssociate with decent people. Different people require different approaches. Rejecting others is an art. If you don’t have the guts to ask for your money back, don’t lend it.
-Understanding Human NatureI tend to be skeptical about human nature. You can’t control others, so just manage yourself. Don’t be vulgar.
-Understanding Good and EvilSome people enter your life just to teach you a lesson. Good or evil—I prefer believing in others, as trust is given before it’s earned.Even if deceived, it’s a lesson learned—don’t fall into the same trap again. But don’t stop trusting altogether; kind people still exist.God made the right hand a right hand as a reward; same for kind people—kindness is its own reward.I recall being in a restroom without tissue once. I was going to ask a friend, but a stranger overheard and handed me tissues. Such kindness moved me deeply.Kindness must come with principles—otherwise it may hurt others or yourself.
-Understanding WealthThe poor stay poor because of narrow thinking. To get rich, don’t just invest in your body—think bigger. See the essence of problems.Time is limited—how to get rich fast? Find a subject you love, apply it, think broadly, and work in fields closely tied to society.
-Understanding SocietyHave ambition. Take one step at a time. Build an independent personality. Be accountable for your actions. Learn to transform your ability to feel happiness—then change yourself.
-Understanding Life and DeathDeath studies include concepts like: No death, no life; face death to live; understand death to be reborn. Interesting and thought-provoking.Knowing that we will die is what pushes us to live fully. When the time comes, I think I’ll embrace death.
-
-What the world lacks isn’t perfect people, but justice, sincerity, courage, and compassion from the heart. — My biggest takeaway after watching Forever Young today.We all know cause and effect—but causes and effects come from relationships. Someday, I’ll read Schopenhauer and Nietzsche properly.
-
-Understanding TravelThis part recounts Mr. Zhuomo’s experiences in Tibet. Many dream of going there—maybe because it helps people truly understand life’s struggles.The US is less disciplined than the UK. Japan has great food culture and says “sorry” a lot—avoiding bothering others.
-Understanding CareerFirst learn to endure hardship. Then understand yourself and your talents. Begin with the end in mind and stay focused.
-Understanding EducationEvery child is born pure. Without proper education, they won’t become pillars of the nation.
-Understanding Entertainment &amp; FreedomLife has two paths: one for career ambition—keep passion; the other for living warmly—keep humanity.Open your eyes each day and tell yourself: Oh yeah!
+    <title>Information Technology Teaching Template for Primary and Secondary Schools</title>
+    <url>/ening/2025/08/21/%E4%B8%AD%E5%B0%8F%E5%AD%A6%E4%BF%A1%E6%81%AF%E6%8A%80%E6%9C%AF%E6%95%99%E5%AD%A6%E6%A8%A1%E7%89%88/</url>
+    <content><![CDATA[Verbatim Teaching Script: “if-elif Conditional Statements”    Students, just now the teacher noticed the class duty roster. From Monday to Friday, there are many diligent “little bees” on duty. I’d like to ask: which students are on duty on Monday? Please raise your hands. Yes, I see you. Now, students, do you remember who the students on duty on Monday are? That’s right, there are six students in total.
+    Now suppose we take three classes as a unit and give you a student’s name. Can you quickly tell which day of the week this student is on duty? Do you have any good ideas? You there—yes, you mentioned memorizing it with a rhyme or mnemonic. Are there any better methods? You—right, we can use a program to output the result. So, what kind of statement should we use to represent multiple conditions? Today, we are going to learn another conditional statement in Python: if-elif-else.
+    Next, please work in pairs with your desk mates. Analyze how to use if-elif-else to solve the problem of matching student names to duty days. You have 8 minutes. Begin.Time’s up. While walking around, I saw everyone actively discussing. Which group would like to share your ideas? You, please. You said that we can input a student’s name and determine which day they are on duty by matching the name and outputting the corresponding weekday. Any additions? Group Five, please share. They suggested creating five arrays corresponding to Monday through Friday, placing each student’s name into the appropriate array, and then judging which day to output. That’s a very important point. Please sit down. Excellent work. It’s clear that everyone has previewed today’s lesson well.
+    Next, let’s integrate everyone’s ideas. Please think independently and draw a flowchart. You have 5 minutes. Begin.Time’s up. This student, please come up and present your flowchart. You explained that first we input the student’s name. If Xiaohua is in Monday’s array, then output Monday, and so on. Now, please try to write a multi-branch conditional statement. Here’s a hint from the teacher: use elif for additional conditional clauses. Let’s ask this student to write their answer on the blackboard. Students, compare it with your own code. Which parts need modification? You said the final elif should be changed to else, to indicate that when none of the conditions are met, the statements under else are executed. You also mentioned paying attention to indentation and colons. Very careful observations. I hope everyone writes carefully when coding. Now please use the if-elif statements you’ve learned to implement the algorithm you designed. I see that everyone has written it correctly and avoided the earlier issues.
+    Now that we’ve written the statements, what is their execution process? Please discuss this in pairs. In a moment, we’ll ask one group to explain. You have 7 minutes. Begin.I see students discussing quietly. Time’s up. Group Two, please explain the execution process. They used the flowchart to explain that the program checks each condition in order. If a condition is satisfied, it outputs the result; if none are satisfied, it outputs an error message. Their explanation combined diagrams and text and was very clear. Based on the flowchart on the screen, we can summarize the execution process of if-elif statements: the program starts from the if condition and checks conditions one by one. If a condition is true, the corresponding block of code is executed and the program exits the if structure. If the condition is false, it moves on to the next condition. If all conditions are false, the else block is executed.
+    Now that we’ve finished learning the new knowledge, please write a complete program that implements this process. Students who finish early may think about real-life situations that require checking multiple conditions and write corresponding programs. Let’s invite some students to present their work. Some students approached the problem from a mathematics perspective, writing a program to compare three numbers and find the maximum. Others took inspiration from daily life and wrote a taxi fare calculation program. All of your programs were well-structured and correctly formatted.
+    As today’s lesson comes to an end, what have you learned from this class? You said that you’ve learned the format and execution process of if-elif statements. It seems everyone has mastered today’s content. In fact, programming is very close to our daily life and studies, and it’s not as difficult as it may seem. The teacher hopes that you will continue to think actively and express your ideas in class just like today.
+    Finally, here is a homework assignment: please compare the characteristics of the three types of if statements and organize them into a table.
+    That’s all for today’s lesson. Goodbye, students.
 ]]></content>
       <categories>
-        <category>Reading</category>
+        <category>Teacher Certification</category>
       </categories>
-      <tags>
-        <tag>Reading</tag>
-      </tags>
+  </entry>
+  <entry>
+    <title>Developing Without Frameworks</title>
+    <url>/ening/2025/08/13/%E5%A6%82%E4%BD%95%E8%84%B1%E7%A6%BB%E6%A1%86%E6%9E%B6%E5%BC%80%E5%8F%91/</url>
+    <content><![CDATA[
+Developing frontend applications without frameworks means building web projects without using any frontend frameworks such as Vue or React, and instead relying directly on JavaScript, HTML, and CSS. This approach allows developers to gain a deeper understanding of the underlying principles and mechanisms of frontend development, while avoiding over-reliance on frameworks.
+For static projects or low-complexity applications with limited functionality, developing without a framework is often more than sufficient. Code written with frameworks must be compiled before it can be rendered in the browser, which is why tools like Webpack exist. Frameworks such as Vue were created to solve specific pain points—like two-way data binding and automatic reactive updates—but they also require developers to follow framework-specific syntax and conventions. As frameworks evolve, developers must continuously learn and adapt to new versions.
+Frameworks are undoubtedly beneficial for development efficiency, but for simple requirements, avoiding a framework can actually be the wiser choice. Whether or not to use a framework should always be decided based on the actual project requirements.
+When developing multiple similar websites, unbundled code can be uploaded directly to the server and modified in place. In contrast, when using a framework, only the compiled output is deployed, and any changes require local modification and rebuilding, which can be more time-consuming. After becoming proficient in pure JavaScript development, developers can even go on to build their own tools or frameworks.
+]]></content>
+      <categories>
+        <category>Frontend</category>
+      </categories>
   </entry>
   <entry>
     <title>Frontend Interview Questions</title>
@@ -609,49 +639,6 @@ Scoped slot: Vue 2 uses slot-scope=&quot;data&quot;, Vue 3 uses #data or #defaul
       </tags>
   </entry>
   <entry>
-    <title>Information Technology Teaching Template for Primary and Secondary Schools</title>
-    <url>/ening/2025/08/21/%E4%B8%AD%E5%B0%8F%E5%AD%A6%E4%BF%A1%E6%81%AF%E6%8A%80%E6%9C%AF%E6%95%99%E5%AD%A6%E6%A8%A1%E7%89%88/</url>
-    <content><![CDATA[Verbatim Teaching Script: “if-elif Conditional Statements”    Students, just now the teacher noticed the class duty roster. From Monday to Friday, there are many diligent “little bees” on duty. I’d like to ask: which students are on duty on Monday? Please raise your hands. Yes, I see you. Now, students, do you remember who the students on duty on Monday are? That’s right, there are six students in total.
-    Now suppose we take three classes as a unit and give you a student’s name. Can you quickly tell which day of the week this student is on duty? Do you have any good ideas? You there—yes, you mentioned memorizing it with a rhyme or mnemonic. Are there any better methods? You—right, we can use a program to output the result. So, what kind of statement should we use to represent multiple conditions? Today, we are going to learn another conditional statement in Python: if-elif-else.
-    Next, please work in pairs with your desk mates. Analyze how to use if-elif-else to solve the problem of matching student names to duty days. You have 8 minutes. Begin.Time’s up. While walking around, I saw everyone actively discussing. Which group would like to share your ideas? You, please. You said that we can input a student’s name and determine which day they are on duty by matching the name and outputting the corresponding weekday. Any additions? Group Five, please share. They suggested creating five arrays corresponding to Monday through Friday, placing each student’s name into the appropriate array, and then judging which day to output. That’s a very important point. Please sit down. Excellent work. It’s clear that everyone has previewed today’s lesson well.
-    Next, let’s integrate everyone’s ideas. Please think independently and draw a flowchart. You have 5 minutes. Begin.Time’s up. This student, please come up and present your flowchart. You explained that first we input the student’s name. If Xiaohua is in Monday’s array, then output Monday, and so on. Now, please try to write a multi-branch conditional statement. Here’s a hint from the teacher: use elif for additional conditional clauses. Let’s ask this student to write their answer on the blackboard. Students, compare it with your own code. Which parts need modification? You said the final elif should be changed to else, to indicate that when none of the conditions are met, the statements under else are executed. You also mentioned paying attention to indentation and colons. Very careful observations. I hope everyone writes carefully when coding. Now please use the if-elif statements you’ve learned to implement the algorithm you designed. I see that everyone has written it correctly and avoided the earlier issues.
-    Now that we’ve written the statements, what is their execution process? Please discuss this in pairs. In a moment, we’ll ask one group to explain. You have 7 minutes. Begin.I see students discussing quietly. Time’s up. Group Two, please explain the execution process. They used the flowchart to explain that the program checks each condition in order. If a condition is satisfied, it outputs the result; if none are satisfied, it outputs an error message. Their explanation combined diagrams and text and was very clear. Based on the flowchart on the screen, we can summarize the execution process of if-elif statements: the program starts from the if condition and checks conditions one by one. If a condition is true, the corresponding block of code is executed and the program exits the if structure. If the condition is false, it moves on to the next condition. If all conditions are false, the else block is executed.
-    Now that we’ve finished learning the new knowledge, please write a complete program that implements this process. Students who finish early may think about real-life situations that require checking multiple conditions and write corresponding programs. Let’s invite some students to present their work. Some students approached the problem from a mathematics perspective, writing a program to compare three numbers and find the maximum. Others took inspiration from daily life and wrote a taxi fare calculation program. All of your programs were well-structured and correctly formatted.
-    As today’s lesson comes to an end, what have you learned from this class? You said that you’ve learned the format and execution process of if-elif statements. It seems everyone has mastered today’s content. In fact, programming is very close to our daily life and studies, and it’s not as difficult as it may seem. The teacher hopes that you will continue to think actively and express your ideas in class just like today.
-    Finally, here is a homework assignment: please compare the characteristics of the three types of if statements and organize them into a table.
-    That’s all for today’s lesson. Goodbye, students.
-]]></content>
-      <categories>
-        <category>Teacher Certification</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>Frontend Skeleton Screen</title>
-    <url>/ening/2025/07/07/%E5%89%8D%E7%AB%AF%E9%AA%A8%E6%9E%B6%E5%B1%8F/</url>
-    <content><![CDATA[
-When do you need to use a frontend skeleton screen? It is mainly used when the homepage has not fully loaded yet. You can display a skeleton screen first to avoid a blank screen, which would otherwise create a poor user experience. So how do you implement it? You need to configure Dps.config.js as shown below.
-In the configuration, the url field is the address of the page for which you want to generate the skeleton screen. You can even use a website like Baidu (https://baidu.com) for testing. The output field defines where the skeleton screen will be generated. The filepath specifies the page where the skeleton screen will be saved, usually the entry page of your project. The injectSelector specifies the DOM node where the skeleton screen will be injected.
-The includeElement option allows you to customize or exclude certain nodes during rendering. You can target nodes by id, or check the tagName and define how they should be rendered. The init function runs before generating the skeleton screen and can be used to remove interfering elements.
-Basic Configuration Field Descriptionconst dpsConfig = &#123;  url: &#x27;file:///Users/myname/Desktop/project/pro/scaleTips/dist/index.html#/&#x27;,  // The page URL for which the skeleton screen will be generated.  // You can also try using https://baidu.com  output: &#123;    filepath: &#x27;/Users/myname/Desktop/project/pro&#x27;,    // The file where the generated skeleton screen will be stored,    // usually the entry page of the project    injectSelector: &#x27;#app&#x27;    // The DOM node where the skeleton screen will be injected  &#125;,  // header: &#123;  //   height: 40,  //   background: &#x27;#1b9af4&#x27;  // &#125;,  // background: &#x27;#eee&#x27;,  // animation: &#x27;opacity 1s linear infinite;&#x27;,  // Used to customize or exclude certain nodes during rendering  includeElement: function(node, draw) &#123;    // Customize how a specific node is drawn, then return false    if (node.id == &#x27;ui-alert&#x27;) &#123;      // Skip this node and its children      return false;    &#125;    if (node.tagName.toLowerCase() === &#x27;img&#x27;) &#123;      // Replace the image with a red block (width 100%, height 8%)      draw(&#123;        width: 100,        height: 8,        left: 0,        top: 0,        zIndex: 99999999,        background: &#x27;red&#x27;      &#125;);      return false;    &#125;  &#125;,  // writePageStructure: function(html) &#123;  //   // Customize how the skeleton screen HTML is handled  //   // fs.writeFileSync(filepath, html);  //   // console.log(html)  // &#125;,  init: function() &#123;    // Operations before generating the skeleton screen,    // such as removing interfering elements  &#125;&#125;;module.exports = dpsConfig;
-]]></content>
-      <categories>
-        <category>Frontend</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>Developing Without Frameworks</title>
-    <url>/ening/2025/08/13/%E5%A6%82%E4%BD%95%E8%84%B1%E7%A6%BB%E6%A1%86%E6%9E%B6%E5%BC%80%E5%8F%91/</url>
-    <content><![CDATA[
-Developing frontend applications without frameworks means building web projects without using any frontend frameworks such as Vue or React, and instead relying directly on JavaScript, HTML, and CSS. This approach allows developers to gain a deeper understanding of the underlying principles and mechanisms of frontend development, while avoiding over-reliance on frameworks.
-For static projects or low-complexity applications with limited functionality, developing without a framework is often more than sufficient. Code written with frameworks must be compiled before it can be rendered in the browser, which is why tools like Webpack exist. Frameworks such as Vue were created to solve specific pain points—like two-way data binding and automatic reactive updates—but they also require developers to follow framework-specific syntax and conventions. As frameworks evolve, developers must continuously learn and adapt to new versions.
-Frameworks are undoubtedly beneficial for development efficiency, but for simple requirements, avoiding a framework can actually be the wiser choice. Whether or not to use a framework should always be decided based on the actual project requirements.
-When developing multiple similar websites, unbundled code can be uploaded directly to the server and modified in place. In contrast, when using a framework, only the compiled output is deployed, and any changes require local modification and rebuilding, which can be more time-consuming. After becoming proficient in pure JavaScript development, developers can even go on to build their own tools or frameworks.
-]]></content>
-      <categories>
-        <category>Frontend</category>
-      </categories>
-  </entry>
-  <entry>
     <title>How to Prevent XSS</title>
     <url>/ening/2025/10/17/%E5%A6%82%E4%BD%95%E9%98%B2%E5%BE%A1%20XSS%EF%BC%88%E8%B7%A8%E7%AB%99%E8%84%9A%E6%9C%AC%E6%94%BB%E5%87%BB%EF%BC%89/</url>
     <content><![CDATA[In web development, XSS (Cross-Site Scripting) is one of the most common and most dangerous security vulnerabilities.Once a website contains an XSS flaw, attackers may execute malicious scripts in users’ browsers, allowing them to steal cookies, hijack sessions, deface pages, or even take over user accounts.
@@ -811,6 +798,19 @@ For frontend developers,understanding how to prevent XSS is a key step toward tr
       </tags>
   </entry>
   <entry>
+    <title>Frontend Skeleton Screen</title>
+    <url>/ening/2025/07/07/%E5%89%8D%E7%AB%AF%E9%AA%A8%E6%9E%B6%E5%B1%8F/</url>
+    <content><![CDATA[
+When do you need to use a frontend skeleton screen? It is mainly used when the homepage has not fully loaded yet. You can display a skeleton screen first to avoid a blank screen, which would otherwise create a poor user experience. So how do you implement it? You need to configure Dps.config.js as shown below.
+In the configuration, the url field is the address of the page for which you want to generate the skeleton screen. You can even use a website like Baidu (https://baidu.com) for testing. The output field defines where the skeleton screen will be generated. The filepath specifies the page where the skeleton screen will be saved, usually the entry page of your project. The injectSelector specifies the DOM node where the skeleton screen will be injected.
+The includeElement option allows you to customize or exclude certain nodes during rendering. You can target nodes by id, or check the tagName and define how they should be rendered. The init function runs before generating the skeleton screen and can be used to remove interfering elements.
+Basic Configuration Field Descriptionconst dpsConfig = &#123;  url: &#x27;file:///Users/myname/Desktop/project/pro/scaleTips/dist/index.html#/&#x27;,  // The page URL for which the skeleton screen will be generated.  // You can also try using https://baidu.com  output: &#123;    filepath: &#x27;/Users/myname/Desktop/project/pro&#x27;,    // The file where the generated skeleton screen will be stored,    // usually the entry page of the project    injectSelector: &#x27;#app&#x27;    // The DOM node where the skeleton screen will be injected  &#125;,  // header: &#123;  //   height: 40,  //   background: &#x27;#1b9af4&#x27;  // &#125;,  // background: &#x27;#eee&#x27;,  // animation: &#x27;opacity 1s linear infinite;&#x27;,  // Used to customize or exclude certain nodes during rendering  includeElement: function(node, draw) &#123;    // Customize how a specific node is drawn, then return false    if (node.id == &#x27;ui-alert&#x27;) &#123;      // Skip this node and its children      return false;    &#125;    if (node.tagName.toLowerCase() === &#x27;img&#x27;) &#123;      // Replace the image with a red block (width 100%, height 8%)      draw(&#123;        width: 100,        height: 8,        left: 0,        top: 0,        zIndex: 99999999,        background: &#x27;red&#x27;      &#125;);      return false;    &#125;  &#125;,  // writePageStructure: function(html) &#123;  //   // Customize how the skeleton screen HTML is handled  //   // fs.writeFileSync(filepath, html);  //   // console.log(html)  // &#125;,  init: function() &#123;    // Operations before generating the skeleton screen,    // such as removing interfering elements  &#125;&#125;;module.exports = dpsConfig;
+]]></content>
+      <categories>
+        <category>Frontend</category>
+      </categories>
+  </entry>
+  <entry>
     <title>Installing Puppeteer on Baota Panel</title>
     <url>/ening/2025/09/02/%E5%AE%9D%E5%A1%94%E5%AE%89%E8%A3%85puppeteer/</url>
     <content><![CDATA[Installing Puppeteer on Baota (CentOS 8)When using CentOS 8, yum may fail because CentOS 8 is no longer officially maintained.To fix this, you need to switch the YUM mirror source, clear the cache, and rebuild it.
@@ -834,29 +834,114 @@ Solution: Disable sandbox when launching Puppeteer// Add launch arguments to dis
       </categories>
   </entry>
   <entry>
-    <title>Auto-Focus Next Input in Mini Program Verification Code</title>
-    <url>/ening/2025/07/21/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E9%AA%8C%E8%AF%81%E7%A0%81%E8%BE%93%E5%85%A5%E6%A1%86%E8%87%AA%E5%8A%A8%E8%81%9A%E7%84%A6%E4%B8%8B%E4%B8%AA%E8%BE%93%E5%85%A5%E6%A1%86/</url>
-    <content><![CDATA[At first, I thought that if I needed six verification code boxes, I should simply create six &lt;input&gt; elements.
-However, after implementing it, I ran into various issues:
+    <title>Handwriting Promise.race (From Theory to Practice)</title>
+    <url>/ening/2025/12/18/%E6%89%8B%E5%86%99Promise/</url>
+    <content><![CDATA[In frontend interviews and daily development, Promise.race is a very common yet often overlooked API. Its rule is simple:
 
-The cursor didn’t smoothly jump to the next input box
-The keyboard would suddenly disappear
-The overall typing experience felt clunky and not smooth
+Multiple Promises “race” against each other—whichever settles first (fulfilled or rejected) determines the final result.
 
-The correct approach is actually to use only one real input field, and simulate multiple input boxes through styling (spacing, highlighting, etc.).
-Visually it looks like six input boxes, but in reality there is only one &lt;input&gt; element handling the input.
+In this article, we will:
 
-Correct Solution&lt;view class=&quot;w-80 h-100 rad-10 b-a-9 tc f-50&quot; v-for=&quot;(item,index) in 6&quot;&gt;  &lt;input    class=&quot;w-80 h-100&quot;    maxlength=&quot;1&quot;    type=&quot;text&quot;    @input=&quot;inputListener(index)&quot;    :focus=&quot;focus &amp;&amp; (focusIndex == index)&quot;  /&gt;&lt;/view&gt;
+Clearly explain how Promise.race behaves and when to use it
+Implement a custom myPromiseRace from scratch
+Cover edge cases, optimizations, and common interview questions
 
-data() &#123;  return &#123;    focus: true,    code: [&#x27;&#x27;, &#x27;&#x27;, &#x27;&#x27;, &#x27;&#x27;, &#x27;&#x27;, &#x27;&#x27;], // Stores the verification code digits    focusIndex: 0 // Index of the input that should receive focus  &#125;&#125;,methods: &#123;  // Triggered when input changes  inputListener(index) &#123;    if (this.focusIndex !== index) &#123;      this.focusIndex = index    &#125;    if (index &lt; 6) &#123;      this.focus = true      this.focusIndex = index + 1    &#125; else &#123;      this.focus = false    &#125;  &#125;&#125;
+1. What Is Promise.race?Promise.race(iterable) accepts an iterable (usually an array) and returns a new Promise:
+
+If any Promise fulfills first, the returned Promise fulfills
+If any Promise rejects first, the returned Promise rejects
+It does not wait for all Promises to finish
+It does not cancel the remaining Promises—they continue running
+
+2. Common Use Cases2.1 Timeout Control (Most Common)For example, treat a request as failed if it takes longer than 3 seconds:
+
+fetch(url) vs timeoutPromise(3000)
+Whichever finishes first determines the result
+
+2.2 Multiple Data Sources (Fallback Strategy)Fetch the same resource from multiple CDNs (CDN1&#x2F;CDN2).Use whichever responds first.
+2.3 First-Render RacingLoad primary data, fallback data, and cached data simultaneously.Render the page as soon as the fastest result arrives.
+3. Implementing myPromiseRaceThis implementation closely matches native behavior:
+
+Validates that the input is iterable
+Iterates over all inputs
+Uses Promise.resolve to normalize non-Promise values
+Resolves or rejects as soon as one Promise settles
+
+function myPromiseRace(promises) &#123;  return new Promise((resolve, reject) =&gt; &#123;    // Validate iterable input    if (!promises || typeof promises[Symbol.iterator] !== &#x27;function&#x27;) &#123;      return reject(new TypeError(&#x27;Argument is not iterable&#x27;));    &#125;    // Iterate over each Promise or value    for (const promise of promises) &#123;      // Wrap with Promise.resolve to handle thenables and values      Promise.resolve(promise)        .then(resolve)   // First fulfilled wins        .catch(reject);  // First rejected wins    &#125;  &#125;);&#125;
 
 
-Complete VersionYou can refer to the full implementation here:
-https://blog.csdn.net/u011423258/article/details/106683068?spm=1001.2014.3001.5506
+
+4. Key Insight: Why Use Promise.resolve?The input to Promise.race does not have to be Promises. It may include:
+
+Plain values: Promise.race([1, 2, 3])
+Thenables: &#123; then(resolve) &#123; resolve(123) &#125; &#125;
+
+Using Promise.resolve(x) ensures:
+
+Plain values become immediately fulfilled Promises
+Thenables are properly assimilated into the Promise chain
+
+This behavior is consistent with the native Promise.race.
+5. Handling Empty Iterables
+Native Promise.race([]) returns a Promise that remains pending forever.
+
+Your current implementation behaves the same way, since the loop never executes.This matches the ECMAScript specification.
+You could add explicit handling, but it’s not required.
+6. Additional Test Cases6.1 Rejection Wins Firstconst p1 = new Promise(res =&gt; setTimeout(() =&gt; res(&#x27;p1&#x27;), 1000));const p2 = new Promise(res =&gt; setTimeout(() =&gt; res(&#x27;p2&#x27;), 500));const p3 = new Promise((res, rej) =&gt; setTimeout(() =&gt; rej(&#x27;p3 error&#x27;), 300));myPromiseRace([p1, p2, p3])  .then(console.log)  .catch(console.error); // Output: p3 error
+
+
+
+6.2 Plain Values Participate in the RacemyPromiseRace([  Promise.resolve(&#x27;A&#x27;),  123,  new Promise(res =&gt; setTimeout(() =&gt; res(&#x27;B&#x27;), 10))])  .then(console.log)  .catch(console.error);// Output: 123 (plain value wins immediately)
+
+
+
+6.3 Empty Array Remains Pendingconst p = myPromiseRace([]);setTimeout(() =&gt; console.log(&#x27;still pending...&#x27;), 1000);// After 1 second: &quot;still pending...&quot;
+
+
+
+7. Practical Example: Request Timeout with racefunction timeout(ms) &#123;  return new Promise((_, reject) =&gt; &#123;    setTimeout(() =&gt; reject(new Error(`Timeout after $&#123;ms&#125;ms`)), ms);  &#125;);&#125;async function fetchWithTimeout(url, ms = 3000) &#123;  return myPromiseRace([fetch(url), timeout(ms)]);&#125;// UsagefetchWithTimeout(&#x27;https://example.com/api&#x27;, 2000)  .then(res =&gt; res.json())  .then(data =&gt; console.log(&#x27;data:&#x27;, data))  .catch(err =&gt; console.error(&#x27;error:&#x27;, err.message));
+
+
+
+8. Common Interview Questions (Bonus Points)
+Q: Can Promise.race cancel the other Promises?No. Promises are not cancellable by default. Cancellation requires tools like AbortController or custom logic.
+
+Q: What happens if you pass a plain value into race?It is wrapped by Promise.resolve and usually wins immediately.
+
+Q: What’s the difference between race, any, and allSettled?
+
+race: settles as soon as the first Promise settles
+any: fulfills as soon as the first Promise fulfills (rejects only if all reject)
+allSettled: waits for all Promises and returns their final states
+
+
+
+9. SummaryThe core idea behind implementing Promise.race can be summarized in one sentence:
+
+Iterate over the iterable, wrap each item with Promise.resolve, attach the same resolve and reject, and let the first settled Promise decide the outcome.
+
 ]]></content>
       <categories>
         <category>Frontend</category>
       </categories>
+  </entry>
+  <entry>
+    <title>Reflections on *Skin*</title>
+    <url>/ening/2025/06/26/%E7%9A%AE%E5%9B%8A%E6%84%9F%E6%82%9F/</url>
+    <content><![CDATA[Aunt TaiAunt Tai is strong-willed and resilient. Her optimistic attitude is something worth learning from. The greatest thing my father ever did was marrying my mother—a truly great woman. A real woman should face everything with positivity and build the future she desires with her own hands.
+Although she resorted to stealing, it was driven by hardship—survival and family. Setting aside pride to do things against her will is, in a way, a form of strength. It’s not about crying and making a scene, but staying proactive in adversity.
+Thinking about it, the author’s achievements are inseparable from his great mother.
+Ah, that lovely mother! To preserve her husband’s dignity and happiness, she insisted on completing the house. Isn’t that a form of strength too? To follow her heart courageously is truly admirable.
+In fact, the person who understands my father the most is my mother. She knows his pride. Isn’t this what love is? You don’t need to say it—I understand. I understand you, and you understand me, and that’s why we’ve been together for so long.
+Zhang MeiliGet up from where you fell. Zhang Meili seems like someone who pursued true love and worked hard for what she desired. Though she was eventually forced to liberate herself sexually, I still respect her for everything she once did.
+Public opinion is powerful, but Zhang Meili’s inner strength is even more powerful.
+]]></content>
+      <categories>
+        <category>Reading</category>
+      </categories>
+      <tags>
+        <tag>Reading</tag>
+      </tags>
   </entry>
   <entry>
     <title>Fully Understanding How the JavaScript `new` Operator Works</title>
@@ -971,6 +1056,31 @@ If you can both write and explain this implementation,90% of interviewers will c
       </categories>
   </entry>
   <entry>
+    <title>Auto-Focus Next Input in Mini Program Verification Code</title>
+    <url>/ening/2025/07/21/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E9%AA%8C%E8%AF%81%E7%A0%81%E8%BE%93%E5%85%A5%E6%A1%86%E8%87%AA%E5%8A%A8%E8%81%9A%E7%84%A6%E4%B8%8B%E4%B8%AA%E8%BE%93%E5%85%A5%E6%A1%86/</url>
+    <content><![CDATA[At first, I thought that if I needed six verification code boxes, I should simply create six &lt;input&gt; elements.
+However, after implementing it, I ran into various issues:
+
+The cursor didn’t smoothly jump to the next input box
+The keyboard would suddenly disappear
+The overall typing experience felt clunky and not smooth
+
+The correct approach is actually to use only one real input field, and simulate multiple input boxes through styling (spacing, highlighting, etc.).
+Visually it looks like six input boxes, but in reality there is only one &lt;input&gt; element handling the input.
+
+Correct Solution&lt;view class=&quot;w-80 h-100 rad-10 b-a-9 tc f-50&quot; v-for=&quot;(item,index) in 6&quot;&gt;  &lt;input    class=&quot;w-80 h-100&quot;    maxlength=&quot;1&quot;    type=&quot;text&quot;    @input=&quot;inputListener(index)&quot;    :focus=&quot;focus &amp;&amp; (focusIndex == index)&quot;  /&gt;&lt;/view&gt;
+
+data() &#123;  return &#123;    focus: true,    code: [&#x27;&#x27;, &#x27;&#x27;, &#x27;&#x27;, &#x27;&#x27;, &#x27;&#x27;, &#x27;&#x27;], // Stores the verification code digits    focusIndex: 0 // Index of the input that should receive focus  &#125;&#125;,methods: &#123;  // Triggered when input changes  inputListener(index) &#123;    if (this.focusIndex !== index) &#123;      this.focusIndex = index    &#125;    if (index &lt; 6) &#123;      this.focus = true      this.focusIndex = index + 1    &#125; else &#123;      this.focus = false    &#125;  &#125;&#125;
+
+
+Complete VersionYou can refer to the full implementation here:
+https://blog.csdn.net/u011423258/article/details/106683068?spm=1001.2014.3001.5506
+]]></content>
+      <categories>
+        <category>Frontend</category>
+      </categories>
+  </entry>
+  <entry>
     <title>Reflections on *What I Talk About When I Talk About Running*</title>
     <url>/ening/2025/06/26/%E5%BD%93%E6%88%91%E8%B0%88%E8%B7%91%E6%AD%A5%E6%97%B6/</url>
     <content><![CDATA[What I Talk About When I Talk About RunningIt was through this book that I realized there could be another version of myself out there, doing something I love. Before reading this book, I had never read anything by Murakami. I knew he was popular and had many famous books, but I hadn’t really paid attention. But when it comes to running, I felt there could be a connection.
@@ -992,162 +1102,6 @@ Oh, right—just like Brother Shang waiting at the finish line, and I’d smile 
       <tags>
         <tag>Reading</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>Reflections on *Skin*</title>
-    <url>/ening/2025/06/26/%E7%9A%AE%E5%9B%8A%E6%84%9F%E6%82%9F/</url>
-    <content><![CDATA[Aunt TaiAunt Tai is strong-willed and resilient. Her optimistic attitude is something worth learning from. The greatest thing my father ever did was marrying my mother—a truly great woman. A real woman should face everything with positivity and build the future she desires with her own hands.
-Although she resorted to stealing, it was driven by hardship—survival and family. Setting aside pride to do things against her will is, in a way, a form of strength. It’s not about crying and making a scene, but staying proactive in adversity.
-Thinking about it, the author’s achievements are inseparable from his great mother.
-Ah, that lovely mother! To preserve her husband’s dignity and happiness, she insisted on completing the house. Isn’t that a form of strength too? To follow her heart courageously is truly admirable.
-In fact, the person who understands my father the most is my mother. She knows his pride. Isn’t this what love is? You don’t need to say it—I understand. I understand you, and you understand me, and that’s why we’ve been together for so long.
-Zhang MeiliGet up from where you fell. Zhang Meili seems like someone who pursued true love and worked hard for what she desired. Though she was eventually forced to liberate herself sexually, I still respect her for everything she once did.
-Public opinion is powerful, but Zhang Meili’s inner strength is even more powerful.
-]]></content>
-      <categories>
-        <category>Reading</category>
-      </categories>
-      <tags>
-        <tag>Reading</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Index</title>
-    <url>/ening/2025/07/27/%E7%B4%A2%E5%BC%95/</url>
-    <content><![CDATA[The Role of IndexesWhen you want to quickly find the data you need, you can use indexes.With indexes, the database can directly locate the required data during retrieval, saving time—much like the table of contents at the front of a book, which helps you quickly find what you want to read.
-If an index contains multiple columns, it follows the leftmost prefix rule, meaning it is used from left to right, starting with the leftmost column.
-Types of Indexes1. Unique IndexA unique index can be added to certain columns (such as an ID number) to ensure that no two records have the same value. By using the UNIQUE keyword, we can create a unique index.
-ADD UNIQUE INDEX uni_sf (sf);
-
-You can also add a unique constraint to a column without explicitly creating a unique index. In this case, the column is still required to have unique values.
-ADD CONSTRAINT uni_name UNIQUE (name);
-
-
-
-2. Primary Key IndexOnce a primary key is created, an index is automatically created for it. This is why searching data by the primary key is faster.
-A table can have only one primary key, but a primary key can consist of multiple columns, which is known as a composite (or joint) primary key.
-ALTER TABLE table_name ADD PRIMARY KEY (column);
-
-
-
-3. Normal (Non-unique) IndexAny column can have an index created on it. It is recommended to add indexes only to columns that are frequently queried. Avoid adding indexes to every column, as this can negatively impact performance.
-ALTER TABLE table_name ADD INDEX index_name (column);
-
-
-
-]]></content>
-      <categories>
-        <category>Backend</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>Handwriting Promise.race (From Theory to Practice)</title>
-    <url>/ening/2025/12/18/%E6%89%8B%E5%86%99Promise/</url>
-    <content><![CDATA[In frontend interviews and daily development, Promise.race is a very common yet often overlooked API. Its rule is simple:
-
-Multiple Promises “race” against each other—whichever settles first (fulfilled or rejected) determines the final result.
-
-In this article, we will:
-
-Clearly explain how Promise.race behaves and when to use it
-Implement a custom myPromiseRace from scratch
-Cover edge cases, optimizations, and common interview questions
-
-1. What Is Promise.race?Promise.race(iterable) accepts an iterable (usually an array) and returns a new Promise:
-
-If any Promise fulfills first, the returned Promise fulfills
-If any Promise rejects first, the returned Promise rejects
-It does not wait for all Promises to finish
-It does not cancel the remaining Promises—they continue running
-
-2. Common Use Cases2.1 Timeout Control (Most Common)For example, treat a request as failed if it takes longer than 3 seconds:
-
-fetch(url) vs timeoutPromise(3000)
-Whichever finishes first determines the result
-
-2.2 Multiple Data Sources (Fallback Strategy)Fetch the same resource from multiple CDNs (CDN1&#x2F;CDN2).Use whichever responds first.
-2.3 First-Render RacingLoad primary data, fallback data, and cached data simultaneously.Render the page as soon as the fastest result arrives.
-3. Implementing myPromiseRaceThis implementation closely matches native behavior:
-
-Validates that the input is iterable
-Iterates over all inputs
-Uses Promise.resolve to normalize non-Promise values
-Resolves or rejects as soon as one Promise settles
-
-function myPromiseRace(promises) &#123;  return new Promise((resolve, reject) =&gt; &#123;    // Validate iterable input    if (!promises || typeof promises[Symbol.iterator] !== &#x27;function&#x27;) &#123;      return reject(new TypeError(&#x27;Argument is not iterable&#x27;));    &#125;    // Iterate over each Promise or value    for (const promise of promises) &#123;      // Wrap with Promise.resolve to handle thenables and values      Promise.resolve(promise)        .then(resolve)   // First fulfilled wins        .catch(reject);  // First rejected wins    &#125;  &#125;);&#125;
-
-
-
-4. Key Insight: Why Use Promise.resolve?The input to Promise.race does not have to be Promises. It may include:
-
-Plain values: Promise.race([1, 2, 3])
-Thenables: &#123; then(resolve) &#123; resolve(123) &#125; &#125;
-
-Using Promise.resolve(x) ensures:
-
-Plain values become immediately fulfilled Promises
-Thenables are properly assimilated into the Promise chain
-
-This behavior is consistent with the native Promise.race.
-5. Handling Empty Iterables
-Native Promise.race([]) returns a Promise that remains pending forever.
-
-Your current implementation behaves the same way, since the loop never executes.This matches the ECMAScript specification.
-You could add explicit handling, but it’s not required.
-6. Additional Test Cases6.1 Rejection Wins Firstconst p1 = new Promise(res =&gt; setTimeout(() =&gt; res(&#x27;p1&#x27;), 1000));const p2 = new Promise(res =&gt; setTimeout(() =&gt; res(&#x27;p2&#x27;), 500));const p3 = new Promise((res, rej) =&gt; setTimeout(() =&gt; rej(&#x27;p3 error&#x27;), 300));myPromiseRace([p1, p2, p3])  .then(console.log)  .catch(console.error); // Output: p3 error
-
-
-
-6.2 Plain Values Participate in the RacemyPromiseRace([  Promise.resolve(&#x27;A&#x27;),  123,  new Promise(res =&gt; setTimeout(() =&gt; res(&#x27;B&#x27;), 10))])  .then(console.log)  .catch(console.error);// Output: 123 (plain value wins immediately)
-
-
-
-6.3 Empty Array Remains Pendingconst p = myPromiseRace([]);setTimeout(() =&gt; console.log(&#x27;still pending...&#x27;), 1000);// After 1 second: &quot;still pending...&quot;
-
-
-
-7. Practical Example: Request Timeout with racefunction timeout(ms) &#123;  return new Promise((_, reject) =&gt; &#123;    setTimeout(() =&gt; reject(new Error(`Timeout after $&#123;ms&#125;ms`)), ms);  &#125;);&#125;async function fetchWithTimeout(url, ms = 3000) &#123;  return myPromiseRace([fetch(url), timeout(ms)]);&#125;// UsagefetchWithTimeout(&#x27;https://example.com/api&#x27;, 2000)  .then(res =&gt; res.json())  .then(data =&gt; console.log(&#x27;data:&#x27;, data))  .catch(err =&gt; console.error(&#x27;error:&#x27;, err.message));
-
-
-
-8. Common Interview Questions (Bonus Points)
-Q: Can Promise.race cancel the other Promises?No. Promises are not cancellable by default. Cancellation requires tools like AbortController or custom logic.
-
-Q: What happens if you pass a plain value into race?It is wrapped by Promise.resolve and usually wins immediately.
-
-Q: What’s the difference between race, any, and allSettled?
-
-race: settles as soon as the first Promise settles
-any: fulfills as soon as the first Promise fulfills (rejects only if all reject)
-allSettled: waits for all Promises and returns their final states
-
-
-
-9. SummaryThe core idea behind implementing Promise.race can be summarized in one sentence:
-
-Iterate over the iterable, wrap each item with Promise.resolve, attach the same resolve and reject, and let the first settled Promise decide the outcome.
-
-]]></content>
-      <categories>
-        <category>Frontend</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>Saving Retrieved CSV Data into a Database</title>
-    <url>/ening/2025/07/29/%E8%8E%B7%E5%8F%96%E5%88%B0%E7%9A%84csv%E4%BF%9D%E5%AD%98%E6%95%B0%E6%8D%AE%E5%BA%93/</url>
-    <content><![CDATA[Saving CSV Data from a Third-Party API into a DatabaseWhen data retrieved from a third-party API is returned in CSV format, a common and reliable approach is:
-
-First, save the CSV file to a local path
-Then use fs.createReadStream to read the file
-Finally, parse the CSV content and store it in a local database
-
-Below is an example implementation:
-const processConversations = async (dateObj) =&gt; &#123;  const username = &#x27;your_account_name&#x27;;  const password = &#x27;password&#x27;;  const year = dateObj.format(&#x27;YYYY&#x27;);  const month = dateObj.format(&#x27;MM&#x27;);  const day = dateObj.format(&#x27;DD&#x27;);  const hour = dateObj.format(&#x27;HH&#x27;);  const dateStr = `$&#123;year&#125;-$&#123;month&#125;-$&#123;day&#125;-$&#123;hour&#125;`;  const fileName = `partial_path`;  const url = `https://api/$&#123;fileName&#125;`;  const outputPath = `/tmp/conversations`;  const tableName = &#x27;test&#x27;;  try &#123;    // Download CSV    const response = await axios.get(url, &#123;      responseType: &#x27;stream&#x27;,      headers: &#123;        Authorization: `Basic $&#123;Buffer.from(`$&#123;username&#125;:$&#123;password&#125;`).toString(&#x27;base64&#x27;)&#125;`      &#125;    &#125;);    const writer = fs.createWriteStream(outputPath);    response.data.pipe(writer);    await new Promise((resolve, reject) =&gt; &#123;      writer.on(&#x27;finish&#x27;, resolve);      writer.on(&#x27;error&#x27;, reject);    &#125;);    console.log(&#x27;CSV file downloaded successfully:&#x27;, fileName);    const rows = [];    await new Promise((resolve, reject) =&gt; &#123;      fs.createReadStream(outputPath)        .pipe(csv())        .on(&#x27;data&#x27;, (row) =&gt; &#123;          rows.push([            row[&#x27;DATE_TIME&#x27;]              ? dayjs(row[&#x27;DATE_TIME&#x27;]).format(&#x27;YYYY-MM-DD HH:mm:ss&#x27;)              : null,            row[&#x27;CLID&#x27;] || null,            row[&#x27;CLID_SOURCE&#x27;] || null          ]);        &#125;)        .on(&#x27;end&#x27;, resolve)        .on(&#x27;error&#x27;, reject);    &#125;);    if (rows.length === 0) &#123;      console.warn(`No data found in CSV: $&#123;fileName&#125;`);      return;    &#125;    const insertSQL = `      INSERT INTO \`$&#123;tableName&#125;\` (        date_time, clid, clid_source      ) VALUES ?    `;    await query(insertSQL, [rows]);    console.log(`Successfully inserted $&#123;rows.length&#125; records: $&#123;fileName&#125;`);  &#125; catch (error) &#123;    console.error(`Error ($&#123;fileName&#125;):`, error.message);  &#125;&#125;;
-
-]]></content>
-      <categories>
-        <category>Backend</category>
-      </categories>
   </entry>
   <entry>
     <title>Encountering the Unknown Self</title>
@@ -1189,5 +1143,51 @@ ConclusionThis book is not only about discovering “who you are,” but also ab
       <tags>
         <tag>Personal Growth</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>Index</title>
+    <url>/ening/2025/07/27/%E7%B4%A2%E5%BC%95/</url>
+    <content><![CDATA[The Role of IndexesWhen you want to quickly find the data you need, you can use indexes.With indexes, the database can directly locate the required data during retrieval, saving time—much like the table of contents at the front of a book, which helps you quickly find what you want to read.
+If an index contains multiple columns, it follows the leftmost prefix rule, meaning it is used from left to right, starting with the leftmost column.
+Types of Indexes1. Unique IndexA unique index can be added to certain columns (such as an ID number) to ensure that no two records have the same value. By using the UNIQUE keyword, we can create a unique index.
+ADD UNIQUE INDEX uni_sf (sf);
+
+You can also add a unique constraint to a column without explicitly creating a unique index. In this case, the column is still required to have unique values.
+ADD CONSTRAINT uni_name UNIQUE (name);
+
+
+
+2. Primary Key IndexOnce a primary key is created, an index is automatically created for it. This is why searching data by the primary key is faster.
+A table can have only one primary key, but a primary key can consist of multiple columns, which is known as a composite (or joint) primary key.
+ALTER TABLE table_name ADD PRIMARY KEY (column);
+
+
+
+3. Normal (Non-unique) IndexAny column can have an index created on it. It is recommended to add indexes only to columns that are frequently queried. Avoid adding indexes to every column, as this can negatively impact performance.
+ALTER TABLE table_name ADD INDEX index_name (column);
+
+
+
+]]></content>
+      <categories>
+        <category>Backend</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>Saving Retrieved CSV Data into a Database</title>
+    <url>/ening/2025/07/29/%E8%8E%B7%E5%8F%96%E5%88%B0%E7%9A%84csv%E4%BF%9D%E5%AD%98%E6%95%B0%E6%8D%AE%E5%BA%93/</url>
+    <content><![CDATA[Saving CSV Data from a Third-Party API into a DatabaseWhen data retrieved from a third-party API is returned in CSV format, a common and reliable approach is:
+
+First, save the CSV file to a local path
+Then use fs.createReadStream to read the file
+Finally, parse the CSV content and store it in a local database
+
+Below is an example implementation:
+const processConversations = async (dateObj) =&gt; &#123;  const username = &#x27;your_account_name&#x27;;  const password = &#x27;password&#x27;;  const year = dateObj.format(&#x27;YYYY&#x27;);  const month = dateObj.format(&#x27;MM&#x27;);  const day = dateObj.format(&#x27;DD&#x27;);  const hour = dateObj.format(&#x27;HH&#x27;);  const dateStr = `$&#123;year&#125;-$&#123;month&#125;-$&#123;day&#125;-$&#123;hour&#125;`;  const fileName = `partial_path`;  const url = `https://api/$&#123;fileName&#125;`;  const outputPath = `/tmp/conversations`;  const tableName = &#x27;test&#x27;;  try &#123;    // Download CSV    const response = await axios.get(url, &#123;      responseType: &#x27;stream&#x27;,      headers: &#123;        Authorization: `Basic $&#123;Buffer.from(`$&#123;username&#125;:$&#123;password&#125;`).toString(&#x27;base64&#x27;)&#125;`      &#125;    &#125;);    const writer = fs.createWriteStream(outputPath);    response.data.pipe(writer);    await new Promise((resolve, reject) =&gt; &#123;      writer.on(&#x27;finish&#x27;, resolve);      writer.on(&#x27;error&#x27;, reject);    &#125;);    console.log(&#x27;CSV file downloaded successfully:&#x27;, fileName);    const rows = [];    await new Promise((resolve, reject) =&gt; &#123;      fs.createReadStream(outputPath)        .pipe(csv())        .on(&#x27;data&#x27;, (row) =&gt; &#123;          rows.push([            row[&#x27;DATE_TIME&#x27;]              ? dayjs(row[&#x27;DATE_TIME&#x27;]).format(&#x27;YYYY-MM-DD HH:mm:ss&#x27;)              : null,            row[&#x27;CLID&#x27;] || null,            row[&#x27;CLID_SOURCE&#x27;] || null          ]);        &#125;)        .on(&#x27;end&#x27;, resolve)        .on(&#x27;error&#x27;, reject);    &#125;);    if (rows.length === 0) &#123;      console.warn(`No data found in CSV: $&#123;fileName&#125;`);      return;    &#125;    const insertSQL = `      INSERT INTO \`$&#123;tableName&#125;\` (        date_time, clid, clid_source      ) VALUES ?    `;    await query(insertSQL, [rows]);    console.log(`Successfully inserted $&#123;rows.length&#125; records: $&#123;fileName&#125;`);  &#125; catch (error) &#123;    console.error(`Error ($&#123;fileName&#125;):`, error.message);  &#125;&#125;;
+
+]]></content>
+      <categories>
+        <category>Backend</category>
+      </categories>
   </entry>
 </search>
