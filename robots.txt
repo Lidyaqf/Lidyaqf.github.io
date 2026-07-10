@@ -5,7 +5,7 @@ User-agent: Bingbot
 Crawl-delay: 10
 
 User-agent: Baiduspider
-Sitemap: https://lidyaqf.club/baidumap.xml
+Sitemap: https://kosasdiuow.top/baidumap.xml
 Crawl-delay: 5
 
 User-agent: *
@@ -21,4 +21,4 @@ Disallow: /*.jpeg$
 Disallow: /*.gif$
 Disallow: /*.png$
 Disallow: /*.bmp$
-Sitemap: https://lidyaqf.club/sitemap.xml
+Sitemap: https://kosasdiuow.top/sitemap.xml
