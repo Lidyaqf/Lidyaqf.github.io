@@ -11,14 +11,4 @@ Crawl-delay: 5
 User-agent: *
 Disallow: /friends/
 Disallow: /contact/
-Disallow: /js/
-Disallow: /css/
-Disallow: /libs/
-Disallow: /fonts/
-Disallow: /medias/
-Disallow: /*.jpg$
-Disallow: /*.jpeg$
-Disallow: /*.gif$
-Disallow: /*.png$
-Disallow: /*.bmp$
 Sitemap: https://kosasdiuow.top/sitemap.xml
