@@ -1253,6 +1253,17 @@ ALTER TABLE table_name ADD INDEX index_name (column);
       </categories>
   </entry>
   <entry>
+    <title>获取到的csv保存数据库</title>
+    <url>/posts/1193760521.html</url>
+    <content><![CDATA[最近接到一个需求，这个第三方接口获取到的数据，它的response为csv文档时，该如何处理？其实可以先把csv文档保存到本地某路径，再通过fs的createReadStream读取数据，保存到本地数据库。
+const processConversations = async (dateObj) =&gt; &#123;  const username = &#x27;你的帐户名&#x27;;  const password = &#x27;密码&#x27;;  const year = dateObj.format(&#x27;YYYY&#x27;);  const month = dateObj.format(&#x27;MM&#x27;);  const day = dateObj.format(&#x27;DD&#x27;);  const hour = dateObj.format(&#x27;HH&#x27;);  const dateStr = `$&#123;year&#125;-$&#123;month&#125;-$&#123;day&#125;-$&#123;hour&#125;`;  const fileName = `路径后半部份`;  const url = `https://api/$&#123;fileName&#125;`;  const outputPath = `/tmp/conversations`;  const tableName = &#x27;test&#x27;;  try &#123;    // 下载 CSV    const response = await axios.get(url, &#123;      responseType: &#x27;stream&#x27;,      headers: &#123;        Authorization: `Basic $&#123;Buffer.from(`$&#123;username&#125;:$&#123;password&#125;`).toString(&#x27;base64&#x27;)&#125;`      &#125;    &#125;);    const writer = fs.createWriteStream(outputPath);    response.data.pipe(writer);    await new Promise((resolve, reject) =&gt; &#123;      writer.on(&#x27;finish&#x27;, resolve);      writer.on(&#x27;error&#x27;, reject);    &#125;);    console.log(&#x27; CSV 文件下载成功:&#x27;, fileName);    const rows = [];    await new Promise((resolve, reject) =&gt; &#123;      fs.createReadStream(outputPath)        .pipe(csv())        .on(&#x27;data&#x27;, (row) =&gt; &#123;          rows.push([            row[&#x27;DATE_TIME&#x27;] ? dayjs(row[&#x27;DATE_TIME&#x27;]).format(&#x27;YYYY-MM-DD HH:mm:ss&#x27;) : null,            row[&#x27;CLID&#x27;] || null,            row[&#x27;CLID_SOURCE&#x27;] || null          ]);        &#125;)        .on(&#x27;end&#x27;, resolve)        .on(&#x27;error&#x27;, reject);    &#125;);    if (rows.length === 0) &#123;      console.warn(`CSV 中没有数据: $&#123;fileName&#125;`);      return;    &#125;    const insertSQL = `      INSERT INTO \`$&#123;tableName&#125;\` (        date_time, clid, clid_source      ) VALUES ?    `;    await query(insertSQL, [rows]);    console.log(`成功插入 $&#123;rows.length&#125; 条记录: $&#123;fileName&#125;`);  &#125; catch (error) &#123;    console.error(`报错 ($&#123;fileName&#125;):`, error.message);  &#125;&#125;;
+
+]]></content>
+      <categories>
+        <category>后端</category>
+      </categories>
+  </entry>
+  <entry>
     <title>遇见未知的自己</title>
     <url>/posts/1660666124.html</url>
     <content><![CDATA[《遇见未知的自己》读书笔记何为“未知”？“自己”即指“真我”，从“我是谁”到后来的“从有到无”，整本书以若菱与一位智者老人的对话为主线，引申出许多深刻的生命观念。
@@ -1301,17 +1312,6 @@ ALTER TABLE table_name ADD INDEX index_name (column);
 ]]></content>
       <categories>
         <category>读书感悟</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>获取到的csv保存数据库</title>
-    <url>/posts/1193760521.html</url>
-    <content><![CDATA[最近接到一个需求，这个第三方接口获取到的数据，它的response为csv文档时，该如何处理？其实可以先把csv文档保存到本地某路径，再通过fs的createReadStream读取数据，保存到本地数据库。
-const processConversations = async (dateObj) =&gt; &#123;  const username = &#x27;你的帐户名&#x27;;  const password = &#x27;密码&#x27;;  const year = dateObj.format(&#x27;YYYY&#x27;);  const month = dateObj.format(&#x27;MM&#x27;);  const day = dateObj.format(&#x27;DD&#x27;);  const hour = dateObj.format(&#x27;HH&#x27;);  const dateStr = `$&#123;year&#125;-$&#123;month&#125;-$&#123;day&#125;-$&#123;hour&#125;`;  const fileName = `路径后半部份`;  const url = `https://api/$&#123;fileName&#125;`;  const outputPath = `/tmp/conversations`;  const tableName = &#x27;test&#x27;;  try &#123;    // 下载 CSV    const response = await axios.get(url, &#123;      responseType: &#x27;stream&#x27;,      headers: &#123;        Authorization: `Basic $&#123;Buffer.from(`$&#123;username&#125;:$&#123;password&#125;`).toString(&#x27;base64&#x27;)&#125;`      &#125;    &#125;);    const writer = fs.createWriteStream(outputPath);    response.data.pipe(writer);    await new Promise((resolve, reject) =&gt; &#123;      writer.on(&#x27;finish&#x27;, resolve);      writer.on(&#x27;error&#x27;, reject);    &#125;);    console.log(&#x27; CSV 文件下载成功:&#x27;, fileName);    const rows = [];    await new Promise((resolve, reject) =&gt; &#123;      fs.createReadStream(outputPath)        .pipe(csv())        .on(&#x27;data&#x27;, (row) =&gt; &#123;          rows.push([            row[&#x27;DATE_TIME&#x27;] ? dayjs(row[&#x27;DATE_TIME&#x27;]).format(&#x27;YYYY-MM-DD HH:mm:ss&#x27;) : null,            row[&#x27;CLID&#x27;] || null,            row[&#x27;CLID_SOURCE&#x27;] || null          ]);        &#125;)        .on(&#x27;end&#x27;, resolve)        .on(&#x27;error&#x27;, reject);    &#125;);    if (rows.length === 0) &#123;      console.warn(`CSV 中没有数据: $&#123;fileName&#125;`);      return;    &#125;    const insertSQL = `      INSERT INTO \`$&#123;tableName&#125;\` (        date_time, clid, clid_source      ) VALUES ?    `;    await query(insertSQL, [rows]);    console.log(`成功插入 $&#123;rows.length&#125; 条记录: $&#123;fileName&#125;`);  &#125; catch (error) &#123;    console.error(`报错 ($&#123;fileName&#125;):`, error.message);  &#125;&#125;;
-
-]]></content>
-      <categories>
-        <category>后端</category>
       </categories>
   </entry>
 </search>
