@@ -126,22 +126,6 @@ JSI（JavaScript Interface）：直接调用原生代码，替代异步 Bridge, 
       </categories>
   </entry>
   <entry>
-    <title>ReactNative自定义滑动条</title>
-    <url>/posts/1147373329.html</url>
-    <content><![CDATA[测试、UI要求的会比较高，比如滑动图标改成自定义图片等，所以传统的@react-native-community&#x2F;slider已经不能满足所需，所以采取自定义形式，在网上找了很久才发现的一个宝藏依赖：https://github.com/miblanchard/react-native-slider
-组件代码如下：import React, &#123; PureComponent &#125; from &#x27;react&#x27;;import &#123;    Animated,    Easing,    I18nManager,    Image,    ImageSourcePropType,    LayoutChangeEvent,    PanResponder,    PanResponderInstance,    View,    ViewStyle,&#125; from &#x27;react-native&#x27;;// stylesimport &#123; defaultStyles as styles &#125; from &#x27;./styles&#x27;;import type &#123; Dimensions, SliderProps, SliderState &#125; from &#x27;./types&#x27;;type RectReturn = &#123;    containsPoint: (nativeX: number, nativeY: number) =&gt; boolean;    height: number;    trackDistanceToPoint: (nativeX: number) =&gt; number;    width: number;    x: number;    y: number;&#125;;const Rect = (&#123;    height,    width,    x,    y,&#125;: &#123;    height: number;    width: number;    x: number;    y: number;&#125;) =&gt; (&#123;    containsPoint: (nativeX: number, nativeY: number) =&gt;        nativeX &gt;= x &amp;&amp;        nativeY &gt;= y &amp;&amp;        nativeX &lt;= x + width &amp;&amp;        nativeY &lt;= y + height,    height,    trackDistanceToPoint: (nativeX: number) =&gt; &#123;        if (nativeX &lt; x) &#123;            return x - nativeX;        &#125;        if (nativeX &gt; x + width) &#123;            return nativeX - (x + width);        &#125;        return 0;    &#125;,    width,    x,    y,&#125;);const DEFAULT_ANIMATION_CONFIGS = &#123;    spring: &#123;        friction: 7,        tension: 100,    &#125;,    timing: &#123;        duration: 150,        easing: Easing.inOut(Easing.ease),        delay: 0,    &#125;,&#125;;const normalizeValue = (    props: SliderProps,    value?: number | Array&lt;number&gt;,): Array&lt;number&gt; =&gt; &#123;    if (!value || (Array.isArray(value) &amp;&amp; value.length === 0)) &#123;        return [0];    &#125;    const &#123;maximumValue, minimumValue&#125; = props;    const getBetweenValue = (inputValue: number) =&gt;        Math.max(Math.min(inputValue, maximumValue), minimumValue);    if (!Array.isArray(value)) &#123;        return [getBetweenValue(value)];    &#125;    return value.map(getBetweenValue).sort((a, b) =&gt; a - b);&#125;;const updateValues = (&#123;    values,    newValues = values,&#125;: &#123;    values: number | Array&lt;number&gt; | Animated.Value | Array&lt;Animated.Value&gt;;    newValues?: number | Array&lt;number&gt; | Animated.Value | Array&lt;Animated.Value&gt;;&#125;): Animated.Value[] =&gt; &#123;    if (        Array.isArray(newValues) &amp;&amp;        Array.isArray(values) &amp;&amp;        newValues.length !== values.length    ) &#123;        return updateValues(&#123;values: newValues&#125;);    &#125;    if (Array.isArray(values) &amp;&amp; Array.isArray(newValues)) &#123;        return values?.map((value: number | Animated.Value, index: number) =&gt; &#123;            let valueToSet = newValues[index];            if (value instanceof Animated.Value) &#123;                if (valueToSet instanceof Animated.Value) &#123;                    valueToSet = valueToSet.__getValue();                &#125;                value.setValue(valueToSet);                return value;            &#125;            if (valueToSet instanceof Animated.Value) &#123;                return valueToSet;            &#125;            return new Animated.Value(valueToSet);        &#125;);    &#125;    return [new Animated.Value(0)];&#125;;const indexOfLowest = (values: Array&lt;number&gt;): number =&gt; &#123;    let lowestIndex = 0;    values.forEach((value, index, array) =&gt; &#123;        if (value &lt; array[lowestIndex]) &#123;            lowestIndex = index;        &#125;    &#125;);    return lowestIndex;&#125;;export class Slider extends PureComponent&lt;SliderProps, SliderState&gt; &#123;    constructor(props: SliderProps) &#123;        super(props);        this._panResponder = PanResponder.create(&#123;            onStartShouldSetPanResponder:                this._handleStartShouldSetPanResponder,            onMoveShouldSetPanResponder: this._handleMoveShouldSetPanResponder,            onPanResponderGrant: this._handlePanResponderGrant,            onPanResponderMove: this._handlePanResponderMove,            onPanResponderRelease: this._handlePanResponderEnd,            onPanResponderTerminationRequest:                this._handlePanResponderRequestEnd,            onPanResponderTerminate: this._handlePanResponderEnd,        &#125;);        this.state = &#123;            allMeasured: false,            containerSize: &#123;                width: 0,                height: 0,            &#125;,            thumbSize: &#123;                width: 0,                height: 0,            &#125;,            trackMarksValues: updateValues(&#123;                values: normalizeValue(this.props, this.props.trackMarks),            &#125;),            values: updateValues(&#123;                values: normalizeValue(                    this.props,                    this.props.value instanceof Animated.Value                        ? this.props.value.__getValue()                        : this.props.value,                ),            &#125;),        &#125;;    &#125;    static defaultProps = &#123;        animationType: &#x27;timing&#x27;,        debugTouchArea: false,        trackMarks: [],        maximumTrackTintColor: &#x27;#b3b3b3&#x27;,        maximumValue: 1,        minimumTrackTintColor: &#x27;#3f3f3f&#x27;,        minimumValue: 0,        step: 0,        thumbTintColor: &#x27;#343434&#x27;,        trackClickable: true,        value: 0,        vertical: false,    &#125;;    static getDerivedStateFromProps(props: SliderProps, state: SliderState) &#123;        if (            props.trackMarks &amp;&amp;            !!state.trackMarksValues &amp;&amp;            state.trackMarksValues.length &gt; 0        ) &#123;            const newTrackMarkValues = normalizeValue(props, props.trackMarks);            const statePatch = &#123;&#125; as SliderState;            if (                state.trackMarksValues            ) &#123;                statePatch.trackMarksValues = updateValues(&#123;                    values: state.trackMarksValues,                    newValues: newTrackMarkValues,                &#125;);            &#125;            return statePatch;        &#125;    &#125;    componentDidUpdate() &#123;        const newValues = normalizeValue(            this.props,            this.props.value instanceof Animated.Value                ? this.props.value.__getValue()                : this.props.value,        );        newValues.forEach((value, i) =&gt; &#123;            if (!this.state.values[i]) &#123;                this._setCurrentValue(value, i);            &#125; else if (value !== this.state.values[i].__getValue()) &#123;                if (this.props.animateTransitions) &#123;                    this._setCurrentValueAnimated(value, i);                &#125; else &#123;                    this._setCurrentValue(value, i);                &#125;            &#125;        &#125;);    &#125;    _getRawValues(        values: Array&lt;Animated.Value&gt; | Array&lt;Animated.AnimatedInterpolation&gt;,    ) &#123;        return values.map((value) =&gt; value.__getValue());    &#125;    _handleStartShouldSetPanResponder = (        e: any,    ): /* gestureState: GestureState */    boolean =&gt; this._thumbHitTest(e); // Should we become active when the user presses down on the thumb?    _handleMoveShouldSetPanResponder(): /* e, gestureState: GestureState */    boolean &#123;        // Should we become active when the user moves a touch over the thumb?        return false;    &#125;    _handlePanResponderGrant = (e: &#123;nativeEvent: any&#125;) =&gt; &#123;        const &#123;thumbSize&#125; = this.state;        const &#123;nativeEvent&#125; = e;        this._previousLeft = this.props.trackClickable            ? nativeEvent.locationX - thumbSize.width            : this._getThumbLeft(this._getCurrentValue(this._activeThumbIndex));        this.props?.onSlidingStart?.(this._getRawValues(this.state.values));    &#125;;    _handlePanResponderMove = (_e: any, gestureState: any) =&gt; &#123;        if (this.props.disabled) &#123;            return;        &#125;        this._setCurrentValue(            this._getValue(gestureState),            this._activeThumbIndex,            () =&gt; &#123;                this.props?.onValueChange?.(                    this._getRawValues(this.state.values),                );            &#125;,        );    &#125;;    _handlePanResponderRequestEnd = () =&gt;        /* e, gestureState: GestureState */        &#123;            // Should we allow another component to take over this pan?            return false;        &#125;;    _handlePanResponderEnd = (_e: any, gestureState: any) =&gt; &#123;        if (this.props.disabled) &#123;            return;        &#125;        this._setCurrentValue(            this._getValue(gestureState),            this._activeThumbIndex,            () =&gt; &#123;                if (this.props.trackClickable) &#123;                    this.props?.onValueChange?.(                        this._getRawValues(this.state.values),                    );                &#125;                this.props?.onSlidingComplete?.(                    this._getRawValues(this.state.values),                );            &#125;,        );        this._activeThumbIndex = 0;    &#125;;    _measureContainer = (e: LayoutChangeEvent) =&gt; &#123;        this._handleMeasure(&#x27;_containerSize&#x27;, e);    &#125;;    _measureTrack = (e: LayoutChangeEvent) =&gt; &#123;        this._handleMeasure(&#x27;_trackSize&#x27;, e);    &#125;;    _measureThumb = (e: LayoutChangeEvent) =&gt; &#123;        this._handleMeasure(&#x27;_thumbSize&#x27;, e);    &#125;;    _handleMeasure = (        name: &#x27;_containerSize&#x27; | &#x27;_trackSize&#x27; | &#x27;_thumbSize&#x27;,        e: LayoutChangeEvent,    ) =&gt; &#123;        const &#123;width, height&#125; = e.nativeEvent.layout;        const size = &#123;            width,            height,        &#125;;        const currentSize = this[name];        if (            currentSize &amp;&amp;            width === currentSize.width &amp;&amp;            height === currentSize.height        ) &#123;            return;        &#125;        this[name] = size;        if (this._containerSize &amp;&amp; this._thumbSize) &#123;            this.setState(&#123;                containerSize: this._containerSize,                thumbSize: this._thumbSize,                allMeasured: true,            &#125;);        &#125;    &#125;;    _getRatio = (value: number) =&gt; &#123;        const &#123;maximumValue, minimumValue&#125; = this.props;        return (value - minimumValue) / (maximumValue - minimumValue);    &#125;;    _getThumbLeft = (value: number) =&gt; &#123;        const &#123;containerSize, thumbSize&#125; = this.state;        const &#123;vertical&#125; = this.props;        const standardRatio = this._getRatio(value);        const ratio = I18nManager.isRTL ? 1 - standardRatio : standardRatio;        return ratio * ((vertical ? containerSize.height : containerSize.width) - thumbSize.width);    &#125;;    _getValue = (gestureState: &#123;dx: number, dy: number&#125;) =&gt; &#123;        const &#123;containerSize, thumbSize, values&#125; = this.state;        const &#123;maximumValue, minimumValue, step, vertical&#125; = this.props;        const length = containerSize.width - thumbSize.width;        const thumbLeft = vertical ? this._previousLeft + (gestureState.dy * -1) : this._previousLeft + gestureState.dx;        const nonRtlRatio = thumbLeft / length;        const ratio = I18nManager.isRTL ? 1 - nonRtlRatio : nonRtlRatio;        let minValue = minimumValue;        let maxValue = maximumValue;        const rawValues = this._getRawValues(values);        const buffer = step ? step : 0.1;        if (values.length === 2) &#123;            if (this._activeThumbIndex === 1) &#123;                minValue = rawValues[0] + buffer;            &#125; else &#123;                maxValue = rawValues[1] - buffer;            &#125;        &#125;        if (step) &#123;            return Math.max(                minValue,                Math.min(                    maxValue,                    minimumValue +                        Math.round(                            (ratio * (maximumValue - minimumValue)) / step,                        ) *                            step,                ),            );        &#125;        return Math.max(            minValue,            Math.min(                maxValue,                ratio * (maximumValue - minimumValue) + minimumValue,            ),        );    &#125;;    _getCurrentValue = (thumbIndex: number = 0) =&gt;        this.state.values[thumbIndex].__getValue();    _setCurrentValue = (        value: number,        thumbIndex: number | null | undefined,        callback?: () =&gt; void,    ) =&gt; &#123;        const safeIndex = thumbIndex ?? 0;        const animatedValue = this.state.values[safeIndex];        if (animatedValue) &#123;            animatedValue.setValue(value);            if (callback) &#123;                callback();            &#125;        &#125; else &#123;            this.setState((prevState: SliderState) =&gt; &#123;                const newValues = [...prevState.values];                newValues[safeIndex] = new Animated.Value(value);                return &#123;                    values: newValues,                &#125;;            &#125;, callback);        &#125;    &#125;;    _setCurrentValueAnimated = (value: number, thumbIndex: number = 0) =&gt; &#123;        const &#123;animationType&#125; = this.props;        const animationConfig = &#123;            ...DEFAULT_ANIMATION_CONFIGS[animationType],            ...this.props.animationConfig,            toValue: value,            useNativeDriver: false,        &#125;;        Animated[animationType](            this.state.values[thumbIndex],            animationConfig,        ).start();    &#125;;    _getTouchOverflowSize = (): &#123;        width: number;        height: number;    &#125; =&gt; &#123;        const &#123;allMeasured, containerSize, thumbSize&#125; = this.state;        const &#123;thumbTouchSize&#125; = this.props;        const size = &#123;            width: 40,            height: 40,        &#125;;        if (allMeasured) &#123;            size.width = Math.max(                0,                thumbTouchSize?.width || 0 - thumbSize.width,            );            size.height = Math.max(                0,                thumbTouchSize?.height || 0 - containerSize.height,            );        &#125;        return size;    &#125;;    _getTouchOverflowStyle = () =&gt; &#123;        const &#123;width, height&#125; = this._getTouchOverflowSize();        const touchOverflowStyle = &#123;&#125; as ViewStyle;        if (width !== undefined &amp;&amp; height !== undefined) &#123;            const verticalMargin = -height / 2;            touchOverflowStyle.marginTop = verticalMargin;            touchOverflowStyle.marginBottom = verticalMargin;            const horizontalMargin = -width / 2;            touchOverflowStyle.marginLeft = horizontalMargin;            touchOverflowStyle.marginRight = horizontalMargin;        &#125;        if (this.props.debugTouchArea === true) &#123;            touchOverflowStyle.backgroundColor = &#x27;orange&#x27;;            touchOverflowStyle.opacity = 0.5;        &#125;        return touchOverflowStyle;    &#125;;    _thumbHitTest = (e: &#123;nativeEvent: any&#125;) =&gt; &#123;        const &#123;nativeEvent&#125; = e;        const &#123;trackClickable&#125; = this.props;        const &#123;values&#125; = this.state;        const hitThumb = values.find((_, i) =&gt; &#123;            const thumbTouchRect = this._getThumbTouchRect(i);            const containsPoint = thumbTouchRect.containsPoint(                nativeEvent.locationX,                nativeEvent.locationY,            );            if (containsPoint) &#123;                this._activeThumbIndex = i;            &#125;            return containsPoint;        &#125;);        if (hitThumb) &#123;            return true;        &#125;        if (trackClickable) &#123;            // set the active thumb index            if (values.length === 1) &#123;                this._activeThumbIndex = 0;            &#125; else &#123;                // we will find the closest thumb and that will be the active thumb                const thumbDistances = values.map((_value, index) =&gt; &#123;                    const thumbTouchRect = this._getThumbTouchRect(index);                    return thumbTouchRect.trackDistanceToPoint(                        nativeEvent.locationX,                    );                &#125;);                this._activeThumbIndex = indexOfLowest(thumbDistances);            &#125;            return true;        &#125;        return false;    &#125;;    _getThumbTouchRect = (thumbIndex: number = 0): RectReturn =&gt; &#123;        const &#123;containerSize, thumbSize&#125; = this.state;        const &#123;thumbTouchSize&#125; = this.props;        const &#123;height, width&#125; = thumbTouchSize || &#123;height: 40, width: 40&#125;;        const touchOverflowSize = this._getTouchOverflowSize();        return Rect(&#123;            height,            width,            x:                touchOverflowSize.width / 2 +                this._getThumbLeft(this._getCurrentValue(thumbIndex)) +                (thumbSize.width - width) / 2,            y:                touchOverflowSize.height / 2 +                (containerSize.height - height) / 2,        &#125;);    &#125;;    _activeThumbIndex: number = 0;    _containerSize: Dimensions | null | undefined;    _panResponder: PanResponderInstance;    _previousLeft: number = 0;    _thumbSize: Dimensions | null | undefined;    _trackSize: Dimensions | null | undefined;    _renderDebugThumbTouchRect = (        thumbLeft: Animated.AnimatedInterpolation,        index: number,    ) =&gt; &#123;        const &#123;height, y, width&#125; = this._getThumbTouchRect() || &#123;&#125;;        const positionStyle = &#123;            height,            left: thumbLeft,            top: y,            width,        &#125;;        return (            &lt;Animated.View                key=&#123;`debug-thumb-$&#123;index&#125;`&#125;                pointerEvents=&quot;none&quot;                style=&#123;[styles.debugThumbTouchArea, positionStyle]&#125;            /&gt;        );    &#125;;    _renderThumbImage = (thumbIndex: number = 0) =&gt; &#123;        const &#123;thumbImage&#125; = this.props;        if (!thumbImage) &#123;            return null;        &#125;        return (            &lt;Image                source=&#123;                    (Array.isArray(thumbImage)                        ? thumbImage[thumbIndex]                        : thumbImage) as ImageSourcePropType                &#125;            /&gt;        );    &#125;;    render() &#123;        const &#123;            containerStyle,            debugTouchArea,            maximumTrackTintColor,            maximumValue,            minimumTrackTintColor,            minimumValue,            renderAboveThumbComponent,            renderTrackMarkComponent,            renderThumbComponent,            thumbStyle,            thumbTintColor,            trackStyle,            vertical,            ...other        &#125; = this.props;        const &#123;            allMeasured,            containerSize,            thumbSize,            trackMarksValues,            values,        &#125; = this.state;        const interpolatedThumbValues = values.map((value) =&gt;            value.interpolate(&#123;                inputRange: [minimumValue, maximumValue],                outputRange: I18nManager.isRTL                    ? [0, -(containerSize.width - thumbSize.width)]                    : [0, containerSize.width - thumbSize.width],            &#125;),        );        const interpolatedTrackValues = values.map((value) =&gt;            value.interpolate(&#123;                inputRange: [minimumValue, maximumValue],                outputRange: [0, containerSize.width - thumbSize.width],            &#125;),        );        const interpolatedTrackMarksValues =            trackMarksValues &amp;&amp;            trackMarksValues.map((v) =&gt;                v.interpolate(&#123;                    inputRange: [minimumValue, maximumValue],                    outputRange: I18nManager.isRTL                        ? [0, -(containerSize.width - thumbSize.width)]                        : [0, containerSize.width - thumbSize.width],                &#125;),            );        const valueVisibleStyle = &#123;&#125; as ViewStyle;        if (!allMeasured) &#123;            valueVisibleStyle.opacity = 0;        &#125;        const interpolatedRawValues = this._getRawValues(            interpolatedTrackValues,        );        const minThumbValue = new Animated.Value(            Math.min(...interpolatedRawValues),        );        const maxThumbValue = new Animated.Value(            Math.max(...interpolatedRawValues),        );        const minimumTrackStyle = &#123;            position: &#x27;absolute&#x27;,            left:                interpolatedTrackValues.length === 1                    ? new Animated.Value(0)                    : Animated.add(minThumbValue, thumbSize.width / 2),            width:                interpolatedTrackValues.length === 1                    ? Animated.add(                          interpolatedTrackValues[0],                          thumbSize.width / 2,                      )                    : Animated.add(                          Animated.multiply(minThumbValue, -1),                          maxThumbValue,                      ),            backgroundColor: minimumTrackTintColor,            ...valueVisibleStyle,        &#125; as ViewStyle;        const touchOverflowStyle = this._getTouchOverflowStyle();        return (            &lt;&gt;                &#123;renderAboveThumbComponent &amp;&amp; (                    &lt;View style=&#123;styles.aboveThumbComponentsContainer&#125;&gt;                        &#123;interpolatedThumbValues.map((value, i) =&gt; (                            &lt;Animated.View                                key=&#123;`slider-above-thumb-$&#123;i&#125;`&#125;                                style=&#123;[                                    styles.renderThumbComponent, // eslint-disable-next-line react-native/no-inline-styles                                    &#123;                                        bottom: 0,                                        transform: [                                            &#123;                                                translateX: value,                                            &#125;,                                            &#123;                                                translateY: 0,                                            &#125;,                                        ],                                        ...valueVisibleStyle,                                    &#125;,                                ]&#125;&gt;                                &#123;renderAboveThumbComponent(i)&#125;                            &lt;/Animated.View&gt;                        ))&#125;                    &lt;/View&gt;                )&#125;                &lt;View                    &#123;...other&#125;                    style=&#123;[styles.container, vertical ? &#123;transform: [&#123;rotate: &#x27;-90deg&#x27; &#125;]&#125; : &#123;&#125;, containerStyle]&#125;                    onLayout=&#123;this._measureContainer&#125;&gt;                    &lt;View                        renderToHardwareTextureAndroid                        style=&#123;[                            styles.track,                            &#123;                                backgroundColor: maximumTrackTintColor,                            &#125;,                            trackStyle,                        ]&#125;                        onLayout=&#123;this._measureTrack&#125;                    /&gt;                    &lt;Animated.View                        renderToHardwareTextureAndroid                        style=&#123;[styles.track, trackStyle, minimumTrackStyle]&#125;                    /&gt;                    &#123;renderTrackMarkComponent &amp;&amp;                        interpolatedTrackMarksValues &amp;&amp;                        interpolatedTrackMarksValues.map((value, i) =&gt; (                            &lt;Animated.View                                key=&#123;`track-mark-$&#123;i&#125;`&#125;                                style=&#123;[                                    styles.renderThumbComponent,                                    &#123;                                        transform: [                                            &#123;                                                translateX: value,                                            &#125;,                                            &#123;                                                translateY: 0,                                            &#125;,                                        ],                                        ...valueVisibleStyle,                                    &#125;,                                ]&#125;&gt;                                &#123;renderTrackMarkComponent(i)&#125;                            &lt;/Animated.View&gt;                        ))&#125;                    &#123;interpolatedThumbValues.map((value, i) =&gt; (                        &lt;Animated.View                            key=&#123;`slider-thumb-$&#123;i&#125;`&#125;                            style=&#123;[                                renderThumbComponent                                    ? styles.renderThumbComponent                                    : styles.thumb,                                renderThumbComponent                                    ? &#123;&#125;                                    : &#123;                                          backgroundColor: thumbTintColor,                                          ...thumbStyle,                                      &#125;,                                &#123;                                    transform: [                                        &#123;                                            translateX: value,                                        &#125;,                                        &#123;                                            translateY: 0,                                        &#125;,                                    ],                                    ...valueVisibleStyle,                                &#125;,                            ]&#125;                            onLayout=&#123;this._measureThumb&#125;&gt;                            &#123;renderThumbComponent                                ? renderThumbComponent()                                : this._renderThumbImage(i)&#125;                        &lt;/Animated.View&gt;                    ))&#125;                    &lt;View                        style=&#123;[styles.touchArea, touchOverflowStyle]&#125;                        &#123;...this._panResponder.panHandlers&#125;&gt;                        &#123;!!debugTouchArea &amp;&amp;                            interpolatedThumbValues.map((value, i) =&gt;                                this._renderDebugThumbTouchRect(value, i),                            )&#125;                    &lt;/View&gt;                &lt;/View&gt;            &lt;/&gt;        );    &#125;&#125;
-
-
-导入部分：import &#123; Slider &#125; from &#x27;所放的上述组件路径&#x27;&lt;SliderminimumValue=&#123;1&#125;maximumValue=&#123;7&#125;  //可滑动范围为1到7minimumTrackTintColor=&quot;#0A79C3&quot; maximumTrackTintColor=&quot;#F3F3F3&quot;step=&#123;1&#125; //步长value=&#123;targetDay&#125; //默认值，例如4onValueChange=&#123;targetDays =&gt; dispatch(&#123;	type: &#x27;SetupWeekTarget/updateState&#x27;,	payload: &#123; targetDay: targetDays &#125;&#125;)&#125;  //滑动触发的事件trackStyle=&#123;&#123; height: 10, borderRadius: 12 &#125;&#125;  containerStyle=&#123;&#123; width: SCREEN_WIDTH - 90 &#125;&#125;thumbTintColor=&quot;transparent&quot;thumbImage=&#123;require(&#x27;图片路径&#x27;)&#125;/&gt;
-
-
-详细参数可参考链接：https://github.com/miblanchard/react-native-slider
-]]></content>
-      <categories>
-        <category>前端</category>
-      </categories>
-  </entry>
-  <entry>
     <title>GitLab CI/CD</title>
     <url>/posts/3033313343.html</url>
     <content><![CDATA[前端项目 GitLab CI&#x2F;CD 持续集成部署指南（Mac 环境）概要在日常开发过程中，我们经常需要将打包后的 dist 包手动发送给后端部署，效率低且容易出错。CI（Continuous Integration，持续集成）可以自动化这一过程，本文将介绍如何通过 GitLab CI 实现持续集成部署。
@@ -207,6 +191,22 @@ http://localhost:8090/
       <tags>
         <tag>前端</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>ReactNative自定义滑动条</title>
+    <url>/posts/1147373329.html</url>
+    <content><![CDATA[测试、UI要求的会比较高，比如滑动图标改成自定义图片等，所以传统的@react-native-community&#x2F;slider已经不能满足所需，所以采取自定义形式，在网上找了很久才发现的一个宝藏依赖：https://github.com/miblanchard/react-native-slider
+组件代码如下：import React, &#123; PureComponent &#125; from &#x27;react&#x27;;import &#123;    Animated,    Easing,    I18nManager,    Image,    ImageSourcePropType,    LayoutChangeEvent,    PanResponder,    PanResponderInstance,    View,    ViewStyle,&#125; from &#x27;react-native&#x27;;// stylesimport &#123; defaultStyles as styles &#125; from &#x27;./styles&#x27;;import type &#123; Dimensions, SliderProps, SliderState &#125; from &#x27;./types&#x27;;type RectReturn = &#123;    containsPoint: (nativeX: number, nativeY: number) =&gt; boolean;    height: number;    trackDistanceToPoint: (nativeX: number) =&gt; number;    width: number;    x: number;    y: number;&#125;;const Rect = (&#123;    height,    width,    x,    y,&#125;: &#123;    height: number;    width: number;    x: number;    y: number;&#125;) =&gt; (&#123;    containsPoint: (nativeX: number, nativeY: number) =&gt;        nativeX &gt;= x &amp;&amp;        nativeY &gt;= y &amp;&amp;        nativeX &lt;= x + width &amp;&amp;        nativeY &lt;= y + height,    height,    trackDistanceToPoint: (nativeX: number) =&gt; &#123;        if (nativeX &lt; x) &#123;            return x - nativeX;        &#125;        if (nativeX &gt; x + width) &#123;            return nativeX - (x + width);        &#125;        return 0;    &#125;,    width,    x,    y,&#125;);const DEFAULT_ANIMATION_CONFIGS = &#123;    spring: &#123;        friction: 7,        tension: 100,    &#125;,    timing: &#123;        duration: 150,        easing: Easing.inOut(Easing.ease),        delay: 0,    &#125;,&#125;;const normalizeValue = (    props: SliderProps,    value?: number | Array&lt;number&gt;,): Array&lt;number&gt; =&gt; &#123;    if (!value || (Array.isArray(value) &amp;&amp; value.length === 0)) &#123;        return [0];    &#125;    const &#123;maximumValue, minimumValue&#125; = props;    const getBetweenValue = (inputValue: number) =&gt;        Math.max(Math.min(inputValue, maximumValue), minimumValue);    if (!Array.isArray(value)) &#123;        return [getBetweenValue(value)];    &#125;    return value.map(getBetweenValue).sort((a, b) =&gt; a - b);&#125;;const updateValues = (&#123;    values,    newValues = values,&#125;: &#123;    values: number | Array&lt;number&gt; | Animated.Value | Array&lt;Animated.Value&gt;;    newValues?: number | Array&lt;number&gt; | Animated.Value | Array&lt;Animated.Value&gt;;&#125;): Animated.Value[] =&gt; &#123;    if (        Array.isArray(newValues) &amp;&amp;        Array.isArray(values) &amp;&amp;        newValues.length !== values.length    ) &#123;        return updateValues(&#123;values: newValues&#125;);    &#125;    if (Array.isArray(values) &amp;&amp; Array.isArray(newValues)) &#123;        return values?.map((value: number | Animated.Value, index: number) =&gt; &#123;            let valueToSet = newValues[index];            if (value instanceof Animated.Value) &#123;                if (valueToSet instanceof Animated.Value) &#123;                    valueToSet = valueToSet.__getValue();                &#125;                value.setValue(valueToSet);                return value;            &#125;            if (valueToSet instanceof Animated.Value) &#123;                return valueToSet;            &#125;            return new Animated.Value(valueToSet);        &#125;);    &#125;    return [new Animated.Value(0)];&#125;;const indexOfLowest = (values: Array&lt;number&gt;): number =&gt; &#123;    let lowestIndex = 0;    values.forEach((value, index, array) =&gt; &#123;        if (value &lt; array[lowestIndex]) &#123;            lowestIndex = index;        &#125;    &#125;);    return lowestIndex;&#125;;export class Slider extends PureComponent&lt;SliderProps, SliderState&gt; &#123;    constructor(props: SliderProps) &#123;        super(props);        this._panResponder = PanResponder.create(&#123;            onStartShouldSetPanResponder:                this._handleStartShouldSetPanResponder,            onMoveShouldSetPanResponder: this._handleMoveShouldSetPanResponder,            onPanResponderGrant: this._handlePanResponderGrant,            onPanResponderMove: this._handlePanResponderMove,            onPanResponderRelease: this._handlePanResponderEnd,            onPanResponderTerminationRequest:                this._handlePanResponderRequestEnd,            onPanResponderTerminate: this._handlePanResponderEnd,        &#125;);        this.state = &#123;            allMeasured: false,            containerSize: &#123;                width: 0,                height: 0,            &#125;,            thumbSize: &#123;                width: 0,                height: 0,            &#125;,            trackMarksValues: updateValues(&#123;                values: normalizeValue(this.props, this.props.trackMarks),            &#125;),            values: updateValues(&#123;                values: normalizeValue(                    this.props,                    this.props.value instanceof Animated.Value                        ? this.props.value.__getValue()                        : this.props.value,                ),            &#125;),        &#125;;    &#125;    static defaultProps = &#123;        animationType: &#x27;timing&#x27;,        debugTouchArea: false,        trackMarks: [],        maximumTrackTintColor: &#x27;#b3b3b3&#x27;,        maximumValue: 1,        minimumTrackTintColor: &#x27;#3f3f3f&#x27;,        minimumValue: 0,        step: 0,        thumbTintColor: &#x27;#343434&#x27;,        trackClickable: true,        value: 0,        vertical: false,    &#125;;    static getDerivedStateFromProps(props: SliderProps, state: SliderState) &#123;        if (            props.trackMarks &amp;&amp;            !!state.trackMarksValues &amp;&amp;            state.trackMarksValues.length &gt; 0        ) &#123;            const newTrackMarkValues = normalizeValue(props, props.trackMarks);            const statePatch = &#123;&#125; as SliderState;            if (                state.trackMarksValues            ) &#123;                statePatch.trackMarksValues = updateValues(&#123;                    values: state.trackMarksValues,                    newValues: newTrackMarkValues,                &#125;);            &#125;            return statePatch;        &#125;    &#125;    componentDidUpdate() &#123;        const newValues = normalizeValue(            this.props,            this.props.value instanceof Animated.Value                ? this.props.value.__getValue()                : this.props.value,        );        newValues.forEach((value, i) =&gt; &#123;            if (!this.state.values[i]) &#123;                this._setCurrentValue(value, i);            &#125; else if (value !== this.state.values[i].__getValue()) &#123;                if (this.props.animateTransitions) &#123;                    this._setCurrentValueAnimated(value, i);                &#125; else &#123;                    this._setCurrentValue(value, i);                &#125;            &#125;        &#125;);    &#125;    _getRawValues(        values: Array&lt;Animated.Value&gt; | Array&lt;Animated.AnimatedInterpolation&gt;,    ) &#123;        return values.map((value) =&gt; value.__getValue());    &#125;    _handleStartShouldSetPanResponder = (        e: any,    ): /* gestureState: GestureState */    boolean =&gt; this._thumbHitTest(e); // Should we become active when the user presses down on the thumb?    _handleMoveShouldSetPanResponder(): /* e, gestureState: GestureState */    boolean &#123;        // Should we become active when the user moves a touch over the thumb?        return false;    &#125;    _handlePanResponderGrant = (e: &#123;nativeEvent: any&#125;) =&gt; &#123;        const &#123;thumbSize&#125; = this.state;        const &#123;nativeEvent&#125; = e;        this._previousLeft = this.props.trackClickable            ? nativeEvent.locationX - thumbSize.width            : this._getThumbLeft(this._getCurrentValue(this._activeThumbIndex));        this.props?.onSlidingStart?.(this._getRawValues(this.state.values));    &#125;;    _handlePanResponderMove = (_e: any, gestureState: any) =&gt; &#123;        if (this.props.disabled) &#123;            return;        &#125;        this._setCurrentValue(            this._getValue(gestureState),            this._activeThumbIndex,            () =&gt; &#123;                this.props?.onValueChange?.(                    this._getRawValues(this.state.values),                );            &#125;,        );    &#125;;    _handlePanResponderRequestEnd = () =&gt;        /* e, gestureState: GestureState */        &#123;            // Should we allow another component to take over this pan?            return false;        &#125;;    _handlePanResponderEnd = (_e: any, gestureState: any) =&gt; &#123;        if (this.props.disabled) &#123;            return;        &#125;        this._setCurrentValue(            this._getValue(gestureState),            this._activeThumbIndex,            () =&gt; &#123;                if (this.props.trackClickable) &#123;                    this.props?.onValueChange?.(                        this._getRawValues(this.state.values),                    );                &#125;                this.props?.onSlidingComplete?.(                    this._getRawValues(this.state.values),                );            &#125;,        );        this._activeThumbIndex = 0;    &#125;;    _measureContainer = (e: LayoutChangeEvent) =&gt; &#123;        this._handleMeasure(&#x27;_containerSize&#x27;, e);    &#125;;    _measureTrack = (e: LayoutChangeEvent) =&gt; &#123;        this._handleMeasure(&#x27;_trackSize&#x27;, e);    &#125;;    _measureThumb = (e: LayoutChangeEvent) =&gt; &#123;        this._handleMeasure(&#x27;_thumbSize&#x27;, e);    &#125;;    _handleMeasure = (        name: &#x27;_containerSize&#x27; | &#x27;_trackSize&#x27; | &#x27;_thumbSize&#x27;,        e: LayoutChangeEvent,    ) =&gt; &#123;        const &#123;width, height&#125; = e.nativeEvent.layout;        const size = &#123;            width,            height,        &#125;;        const currentSize = this[name];        if (            currentSize &amp;&amp;            width === currentSize.width &amp;&amp;            height === currentSize.height        ) &#123;            return;        &#125;        this[name] = size;        if (this._containerSize &amp;&amp; this._thumbSize) &#123;            this.setState(&#123;                containerSize: this._containerSize,                thumbSize: this._thumbSize,                allMeasured: true,            &#125;);        &#125;    &#125;;    _getRatio = (value: number) =&gt; &#123;        const &#123;maximumValue, minimumValue&#125; = this.props;        return (value - minimumValue) / (maximumValue - minimumValue);    &#125;;    _getThumbLeft = (value: number) =&gt; &#123;        const &#123;containerSize, thumbSize&#125; = this.state;        const &#123;vertical&#125; = this.props;        const standardRatio = this._getRatio(value);        const ratio = I18nManager.isRTL ? 1 - standardRatio : standardRatio;        return ratio * ((vertical ? containerSize.height : containerSize.width) - thumbSize.width);    &#125;;    _getValue = (gestureState: &#123;dx: number, dy: number&#125;) =&gt; &#123;        const &#123;containerSize, thumbSize, values&#125; = this.state;        const &#123;maximumValue, minimumValue, step, vertical&#125; = this.props;        const length = containerSize.width - thumbSize.width;        const thumbLeft = vertical ? this._previousLeft + (gestureState.dy * -1) : this._previousLeft + gestureState.dx;        const nonRtlRatio = thumbLeft / length;        const ratio = I18nManager.isRTL ? 1 - nonRtlRatio : nonRtlRatio;        let minValue = minimumValue;        let maxValue = maximumValue;        const rawValues = this._getRawValues(values);        const buffer = step ? step : 0.1;        if (values.length === 2) &#123;            if (this._activeThumbIndex === 1) &#123;                minValue = rawValues[0] + buffer;            &#125; else &#123;                maxValue = rawValues[1] - buffer;            &#125;        &#125;        if (step) &#123;            return Math.max(                minValue,                Math.min(                    maxValue,                    minimumValue +                        Math.round(                            (ratio * (maximumValue - minimumValue)) / step,                        ) *                            step,                ),            );        &#125;        return Math.max(            minValue,            Math.min(                maxValue,                ratio * (maximumValue - minimumValue) + minimumValue,            ),        );    &#125;;    _getCurrentValue = (thumbIndex: number = 0) =&gt;        this.state.values[thumbIndex].__getValue();    _setCurrentValue = (        value: number,        thumbIndex: number | null | undefined,        callback?: () =&gt; void,    ) =&gt; &#123;        const safeIndex = thumbIndex ?? 0;        const animatedValue = this.state.values[safeIndex];        if (animatedValue) &#123;            animatedValue.setValue(value);            if (callback) &#123;                callback();            &#125;        &#125; else &#123;            this.setState((prevState: SliderState) =&gt; &#123;                const newValues = [...prevState.values];                newValues[safeIndex] = new Animated.Value(value);                return &#123;                    values: newValues,                &#125;;            &#125;, callback);        &#125;    &#125;;    _setCurrentValueAnimated = (value: number, thumbIndex: number = 0) =&gt; &#123;        const &#123;animationType&#125; = this.props;        const animationConfig = &#123;            ...DEFAULT_ANIMATION_CONFIGS[animationType],            ...this.props.animationConfig,            toValue: value,            useNativeDriver: false,        &#125;;        Animated[animationType](            this.state.values[thumbIndex],            animationConfig,        ).start();    &#125;;    _getTouchOverflowSize = (): &#123;        width: number;        height: number;    &#125; =&gt; &#123;        const &#123;allMeasured, containerSize, thumbSize&#125; = this.state;        const &#123;thumbTouchSize&#125; = this.props;        const size = &#123;            width: 40,            height: 40,        &#125;;        if (allMeasured) &#123;            size.width = Math.max(                0,                thumbTouchSize?.width || 0 - thumbSize.width,            );            size.height = Math.max(                0,                thumbTouchSize?.height || 0 - containerSize.height,            );        &#125;        return size;    &#125;;    _getTouchOverflowStyle = () =&gt; &#123;        const &#123;width, height&#125; = this._getTouchOverflowSize();        const touchOverflowStyle = &#123;&#125; as ViewStyle;        if (width !== undefined &amp;&amp; height !== undefined) &#123;            const verticalMargin = -height / 2;            touchOverflowStyle.marginTop = verticalMargin;            touchOverflowStyle.marginBottom = verticalMargin;            const horizontalMargin = -width / 2;            touchOverflowStyle.marginLeft = horizontalMargin;            touchOverflowStyle.marginRight = horizontalMargin;        &#125;        if (this.props.debugTouchArea === true) &#123;            touchOverflowStyle.backgroundColor = &#x27;orange&#x27;;            touchOverflowStyle.opacity = 0.5;        &#125;        return touchOverflowStyle;    &#125;;    _thumbHitTest = (e: &#123;nativeEvent: any&#125;) =&gt; &#123;        const &#123;nativeEvent&#125; = e;        const &#123;trackClickable&#125; = this.props;        const &#123;values&#125; = this.state;        const hitThumb = values.find((_, i) =&gt; &#123;            const thumbTouchRect = this._getThumbTouchRect(i);            const containsPoint = thumbTouchRect.containsPoint(                nativeEvent.locationX,                nativeEvent.locationY,            );            if (containsPoint) &#123;                this._activeThumbIndex = i;            &#125;            return containsPoint;        &#125;);        if (hitThumb) &#123;            return true;        &#125;        if (trackClickable) &#123;            // set the active thumb index            if (values.length === 1) &#123;                this._activeThumbIndex = 0;            &#125; else &#123;                // we will find the closest thumb and that will be the active thumb                const thumbDistances = values.map((_value, index) =&gt; &#123;                    const thumbTouchRect = this._getThumbTouchRect(index);                    return thumbTouchRect.trackDistanceToPoint(                        nativeEvent.locationX,                    );                &#125;);                this._activeThumbIndex = indexOfLowest(thumbDistances);            &#125;            return true;        &#125;        return false;    &#125;;    _getThumbTouchRect = (thumbIndex: number = 0): RectReturn =&gt; &#123;        const &#123;containerSize, thumbSize&#125; = this.state;        const &#123;thumbTouchSize&#125; = this.props;        const &#123;height, width&#125; = thumbTouchSize || &#123;height: 40, width: 40&#125;;        const touchOverflowSize = this._getTouchOverflowSize();        return Rect(&#123;            height,            width,            x:                touchOverflowSize.width / 2 +                this._getThumbLeft(this._getCurrentValue(thumbIndex)) +                (thumbSize.width - width) / 2,            y:                touchOverflowSize.height / 2 +                (containerSize.height - height) / 2,        &#125;);    &#125;;    _activeThumbIndex: number = 0;    _containerSize: Dimensions | null | undefined;    _panResponder: PanResponderInstance;    _previousLeft: number = 0;    _thumbSize: Dimensions | null | undefined;    _trackSize: Dimensions | null | undefined;    _renderDebugThumbTouchRect = (        thumbLeft: Animated.AnimatedInterpolation,        index: number,    ) =&gt; &#123;        const &#123;height, y, width&#125; = this._getThumbTouchRect() || &#123;&#125;;        const positionStyle = &#123;            height,            left: thumbLeft,            top: y,            width,        &#125;;        return (            &lt;Animated.View                key=&#123;`debug-thumb-$&#123;index&#125;`&#125;                pointerEvents=&quot;none&quot;                style=&#123;[styles.debugThumbTouchArea, positionStyle]&#125;            /&gt;        );    &#125;;    _renderThumbImage = (thumbIndex: number = 0) =&gt; &#123;        const &#123;thumbImage&#125; = this.props;        if (!thumbImage) &#123;            return null;        &#125;        return (            &lt;Image                source=&#123;                    (Array.isArray(thumbImage)                        ? thumbImage[thumbIndex]                        : thumbImage) as ImageSourcePropType                &#125;            /&gt;        );    &#125;;    render() &#123;        const &#123;            containerStyle,            debugTouchArea,            maximumTrackTintColor,            maximumValue,            minimumTrackTintColor,            minimumValue,            renderAboveThumbComponent,            renderTrackMarkComponent,            renderThumbComponent,            thumbStyle,            thumbTintColor,            trackStyle,            vertical,            ...other        &#125; = this.props;        const &#123;            allMeasured,            containerSize,            thumbSize,            trackMarksValues,            values,        &#125; = this.state;        const interpolatedThumbValues = values.map((value) =&gt;            value.interpolate(&#123;                inputRange: [minimumValue, maximumValue],                outputRange: I18nManager.isRTL                    ? [0, -(containerSize.width - thumbSize.width)]                    : [0, containerSize.width - thumbSize.width],            &#125;),        );        const interpolatedTrackValues = values.map((value) =&gt;            value.interpolate(&#123;                inputRange: [minimumValue, maximumValue],                outputRange: [0, containerSize.width - thumbSize.width],            &#125;),        );        const interpolatedTrackMarksValues =            trackMarksValues &amp;&amp;            trackMarksValues.map((v) =&gt;                v.interpolate(&#123;                    inputRange: [minimumValue, maximumValue],                    outputRange: I18nManager.isRTL                        ? [0, -(containerSize.width - thumbSize.width)]                        : [0, containerSize.width - thumbSize.width],                &#125;),            );        const valueVisibleStyle = &#123;&#125; as ViewStyle;        if (!allMeasured) &#123;            valueVisibleStyle.opacity = 0;        &#125;        const interpolatedRawValues = this._getRawValues(            interpolatedTrackValues,        );        const minThumbValue = new Animated.Value(            Math.min(...interpolatedRawValues),        );        const maxThumbValue = new Animated.Value(            Math.max(...interpolatedRawValues),        );        const minimumTrackStyle = &#123;            position: &#x27;absolute&#x27;,            left:                interpolatedTrackValues.length === 1                    ? new Animated.Value(0)                    : Animated.add(minThumbValue, thumbSize.width / 2),            width:                interpolatedTrackValues.length === 1                    ? Animated.add(                          interpolatedTrackValues[0],                          thumbSize.width / 2,                      )                    : Animated.add(                          Animated.multiply(minThumbValue, -1),                          maxThumbValue,                      ),            backgroundColor: minimumTrackTintColor,            ...valueVisibleStyle,        &#125; as ViewStyle;        const touchOverflowStyle = this._getTouchOverflowStyle();        return (            &lt;&gt;                &#123;renderAboveThumbComponent &amp;&amp; (                    &lt;View style=&#123;styles.aboveThumbComponentsContainer&#125;&gt;                        &#123;interpolatedThumbValues.map((value, i) =&gt; (                            &lt;Animated.View                                key=&#123;`slider-above-thumb-$&#123;i&#125;`&#125;                                style=&#123;[                                    styles.renderThumbComponent, // eslint-disable-next-line react-native/no-inline-styles                                    &#123;                                        bottom: 0,                                        transform: [                                            &#123;                                                translateX: value,                                            &#125;,                                            &#123;                                                translateY: 0,                                            &#125;,                                        ],                                        ...valueVisibleStyle,                                    &#125;,                                ]&#125;&gt;                                &#123;renderAboveThumbComponent(i)&#125;                            &lt;/Animated.View&gt;                        ))&#125;                    &lt;/View&gt;                )&#125;                &lt;View                    &#123;...other&#125;                    style=&#123;[styles.container, vertical ? &#123;transform: [&#123;rotate: &#x27;-90deg&#x27; &#125;]&#125; : &#123;&#125;, containerStyle]&#125;                    onLayout=&#123;this._measureContainer&#125;&gt;                    &lt;View                        renderToHardwareTextureAndroid                        style=&#123;[                            styles.track,                            &#123;                                backgroundColor: maximumTrackTintColor,                            &#125;,                            trackStyle,                        ]&#125;                        onLayout=&#123;this._measureTrack&#125;                    /&gt;                    &lt;Animated.View                        renderToHardwareTextureAndroid                        style=&#123;[styles.track, trackStyle, minimumTrackStyle]&#125;                    /&gt;                    &#123;renderTrackMarkComponent &amp;&amp;                        interpolatedTrackMarksValues &amp;&amp;                        interpolatedTrackMarksValues.map((value, i) =&gt; (                            &lt;Animated.View                                key=&#123;`track-mark-$&#123;i&#125;`&#125;                                style=&#123;[                                    styles.renderThumbComponent,                                    &#123;                                        transform: [                                            &#123;                                                translateX: value,                                            &#125;,                                            &#123;                                                translateY: 0,                                            &#125;,                                        ],                                        ...valueVisibleStyle,                                    &#125;,                                ]&#125;&gt;                                &#123;renderTrackMarkComponent(i)&#125;                            &lt;/Animated.View&gt;                        ))&#125;                    &#123;interpolatedThumbValues.map((value, i) =&gt; (                        &lt;Animated.View                            key=&#123;`slider-thumb-$&#123;i&#125;`&#125;                            style=&#123;[                                renderThumbComponent                                    ? styles.renderThumbComponent                                    : styles.thumb,                                renderThumbComponent                                    ? &#123;&#125;                                    : &#123;                                          backgroundColor: thumbTintColor,                                          ...thumbStyle,                                      &#125;,                                &#123;                                    transform: [                                        &#123;                                            translateX: value,                                        &#125;,                                        &#123;                                            translateY: 0,                                        &#125;,                                    ],                                    ...valueVisibleStyle,                                &#125;,                            ]&#125;                            onLayout=&#123;this._measureThumb&#125;&gt;                            &#123;renderThumbComponent                                ? renderThumbComponent()                                : this._renderThumbImage(i)&#125;                        &lt;/Animated.View&gt;                    ))&#125;                    &lt;View                        style=&#123;[styles.touchArea, touchOverflowStyle]&#125;                        &#123;...this._panResponder.panHandlers&#125;&gt;                        &#123;!!debugTouchArea &amp;&amp;                            interpolatedThumbValues.map((value, i) =&gt;                                this._renderDebugThumbTouchRect(value, i),                            )&#125;                    &lt;/View&gt;                &lt;/View&gt;            &lt;/&gt;        );    &#125;&#125;
+
+
+导入部分：import &#123; Slider &#125; from &#x27;所放的上述组件路径&#x27;&lt;SliderminimumValue=&#123;1&#125;maximumValue=&#123;7&#125;  //可滑动范围为1到7minimumTrackTintColor=&quot;#0A79C3&quot; maximumTrackTintColor=&quot;#F3F3F3&quot;step=&#123;1&#125; //步长value=&#123;targetDay&#125; //默认值，例如4onValueChange=&#123;targetDays =&gt; dispatch(&#123;	type: &#x27;SetupWeekTarget/updateState&#x27;,	payload: &#123; targetDay: targetDays &#125;&#125;)&#125;  //滑动触发的事件trackStyle=&#123;&#123; height: 10, borderRadius: 12 &#125;&#125;  containerStyle=&#123;&#123; width: SCREEN_WIDTH - 90 &#125;&#125;thumbTintColor=&quot;transparent&quot;thumbImage=&#123;require(&#x27;图片路径&#x27;)&#125;/&gt;
+
+
+详细参数可参考链接：https://github.com/miblanchard/react-native-slider
+]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
   </entry>
   <entry>
     <title>google sheet如何同步表格数据</title>
@@ -502,23 +502,6 @@ The pause(停顿)We use to speak English more fluently and naturally.As we can s
       </categories>
   </entry>
   <entry>
-    <title>笔者如何面对初中英语教师资格面试，含模板（Reading）～</title>
-    <url>/posts/1835380571.html</url>
-    <content><![CDATA[先谈一下面试时候的一些想法。首先，要做到把提前准备好的模版给记熟，以防见到面试官紧张忘记了。当然也可以平时多积累一些通用句，真正忘记时候还可以救场。其次，在考场拿到题目时，要懂得与当前一些节日、实事结合起来，这样导入时候也能更加有趣，同时能吸引到面试官。导入完之后问问题以及板书的时候都要假装是要在很多学生面前教书的，眼神给到四周，板书也要不完全挡住黑板。最后，一定要自信，自信的人真的会发光，加油～下面是我面试时候准备的一些模版～
-Reading&#x2F;Listening开场问候Dear Judges, Now I’ll start the lesson. Good morning, Boys and girls. How are you today? Good? Fine? I’m fine, too. Before the class, Let’s sing a song together. If you can sing, sing along with me . “You are my sunshine, my only sunshine, you make me happy.” Do you feel better? Great, let’s start the lesson.
-导入At the beginning, I’ll show you a video, and you should try to answer the question: What can you see in the video? Who would like to try? Blair, please. You see different cartoons, such as Snow White and Tom and Jerry.Thank you, Blair, you set a good example for us. You know so much about cartoons.Do you want to learn more? Today, let’s learn a new lesson — Cartoon.
-读前Before reading, To help you understand the passage better, let’s learn some words. Now, Look at the first one. Smart.Form example, Zhu Geliang is very smart and he can solve many problems. Can you understand now? Great! The next one cute. Look at the picture. What’s that? A cat. So cats are very cute and it’s very lovely. So cute means lovely. You are so cute. Cats are so cute. Birds are so cute, okay, wonderful How about the last one? Ivory. Here is a picture about ivory. It forms long teeth of elephants. Read after me, ivory, ivory. Well done! All of you did a good job.
-读中Now boys and girls, let’s have a prediction according to the title and the pictures on your book. Take a guess:What’s the passage mainly about? Try to think out as many answers as you can. OK, who wants to have a try?Justin, you please. The passage is about a cartoon Mickey Mouse. Nice try! Do you agree? OK, maybe you are right.Next, Let’s find out the truth in this passage.
-读后Let’s read it together.When you read, think about this question:What’s the passage mainly about? You should read quickly and check your prediction.Let’s begin.OK, guys, are you right? Wow, I heard John said he had the correct prediction.The passage tells us some information about Mickey Mouse. Oh, most of you are right! I am so proud of you.For the second time, you should read it carefully and catch some detail informations. After that, you should answer some true or false question. Okay? Let’s start. Time is up. The first one, It’s easy, right? Answer me together. It’s true. Then the second question. Lily, what’s your answer? It ’s false. Can you correct it ? Great. Thank you. The last one, boys come on. Eric please. It’s true.perfect.
-巩固We have done so many exercises.It’s time for fun. Let’s have a group discussion. Think about the topic: Introducing your favorite cartoon characters to group members. Work in group of 4 and discuss with your partners. Then show your work on the stage. You have 5 minutes to prepare.Are you ready? Go!  Time  is up. Which group goes first? Christina and your partners, please. Wow, your ideas are very creative and Your pronunciation is perfect.Let’s give them a big hand.
-总结How time files! The class is almost over. Before ending our class, let’s have a summary. Who can summarize what we have learned this class? Fiona please. Very good. I hope you can apply what we have learned in your daily life so that we can improve our reading and speaking ability, right?Our homework is as follows: You should finish the exercise book and search for more information about famous cartoons on the Internet. Next class, we will share them together.
-Class is over, see you next time.
-]]></content>
-      <categories>
-        <category>教资</category>
-      </categories>
-  </entry>
-  <entry>
     <title>前端按钮跳转到app</title>
     <url>/posts/4106547056.html</url>
     <content><![CDATA[有个公司需求是在前端页面，点击按钮能成功跳到公司的APP。跟原生同事联调时候，记得让他们把URL scheme:&#x2F;&#x2F;告诉你。下面的脚本是通过jquery方式去判断当前手机是android还是ios，展示对应的跳转按钮；然后监听按钮的点击事件，通过iframe的方式试图打开APP，如果能正常打开，会直接切换到APP，并自动阻止a标签的默认行为。否则会alert提示用户下载。
@@ -751,168 +734,21 @@ vue2 和 vue3 匿名插槽不一样  具名插槽使用方式不同：vue2 使�
       </categories>
   </entry>
   <entry>
-    <title>如何防御 XSS（跨站脚本攻击）：前端开发者必须掌握的安全实践</title>
-    <url>/posts/1588092017.html</url>
-    <content><![CDATA[在 Web 开发中，其实存在很多安全漏洞，其中跨站脚本攻击是最常见、危害也非常大的安全漏洞之一。一旦网站存在 XSS 漏洞，那么攻击者就会在用户浏览器中执行恶意脚本，进而窃取 Cookie、劫持会话、篡改页面内容，甚至控制用户账号。
-下面将从 原理 + 实战防御手段 的角度，系统讲解前端和全栈开发中 如何有效防御 XSS 攻击
-一、什么是 XSS 攻击？XSS 的本质是：
-
-攻击者将恶意 JavaScript 注入到网页中，并在其他用户的浏览器里执行。
-
-常见的 XSS 攻击类型包括：
-
-反射型 XSS：恶意脚本来自 URL 参数
-存储型 XSS：恶意脚本被存储在数据库中
-DOM 型 XSS：前端 JS 逻辑直接操作不可信数据
-
-不论是哪种形式，核心问题都在于：👉 用户输入被当作代码执行了
-二、输入验证和过滤（最基础也是最重要）永远不要相信用户输入。
-1. 前端层面的基本校验在前端可以做一些基础校验，例如：
-
-限制输入长度
-限制输入格式（如邮箱、手机号）
-过滤明显的危险字符
-
-示例（仅用于基础校验）：
-function sanitizeInput(input) &#123;  return input.replace(/[&lt;&gt;]/g, &#x27;&#x27;);&#125;
-
-⚠️ 注意：前端校验只能作为用户体验优化，不能作为最终安全防线。
-2. 后端必须做严格校验（关键）光是前端做个过滤是远远不够的，后端也需要做处理：
-
-校验数据类型
-校验长度
-拒绝不符合业务规则的输入
-对 HTML 内容进行转义或白名单过滤
-
-推荐策略：
-
-默认拒绝
-白名单优先
-
-三、对输出进行编码（比过滤更重要）很多 XSS 漏洞并不是输入有问题，而是输出方式不安全。
-1. HTML 转义输出在将用户输入输出到页面时，应进行 HTML 编码：
-
-
-
-原字符
-转义后
-
-
-
-&lt;
-&amp;lt;
-
-
-&gt;
-&amp;gt;
-
-
-&quot;
-&amp;quot;
-
-
-&#39;
-&amp;#39;
-
-
-很多模板引擎（如 Vue、React、Handlebars）默认会做转义，不要轻易关闭。
-
-2. 避免危险 API尽量避免以下写法：
-element.innerHTML = userInput;
-
-推荐安全方式：
-element.textContent = userInput;
-
-或者：
-const el = document.createElement(&#x27;div&#x27;);el.textContent = userInput;container.appendChild(el);
-
-
-
-四、使用安全的 API 和框架机制现代前端框架本身已经内置了大量 XSS 防护机制。
-1. React &#x2F; Vue 的默认保护
-JSX &#x2F; 模板语法默认转义
-明确标注危险行为（如 v-html、dangerouslySetInnerHTML）
-
-⚠️ 一旦使用这些 API，就必须 100% 确保内容可信
-2. 避免在前端拼接 HTML 字符串错误示例：
-container.innerHTML = `&lt;div&gt;$&#123;userInput&#125;&lt;/div&gt;`;
-
-正确做法：
-const div = document.createElement(&#x27;div&#x27;);div.textContent = userInput;container.appendChild(div);
-
-
-
-五、使用内容安全策略（CSP）CSP（Content Security Policy） 是防御 XSS 的“终极武器”之一。
-1. CSP 能做什么？
-禁止内联脚本执行
-限制脚本来源
-阻止恶意第三方资源加载
-
-示例 HTTP 头：
-Content-Security-Policy:  default-src &#x27;self&#x27;;  script-src &#x27;self&#x27;;  object-src &#x27;none&#x27;;
-
-即使攻击者成功注入脚本，只要 CSP 生效，浏览器也会拒绝执行。
-2. 为什么 CSP 非常重要？因为它属于：
-
-浏览器层面的安全防护
-就算代码有疏漏，也能兜底
-
-六、使用 HttpOnly 和 Secure Cookie1. HttpOnly 的作用设置 Cookie 时加上 HttpOnly：
-Set-Cookie: sessionId=xxx; HttpOnly;
-
-这样可以：
-
-防止 JavaScript 读取 Cookie
-即使发生 XSS，也能降低会话被盗风险
-
-2. 配合 Secure 和 SameSite推荐同时使用：
-
-Secure
-SameSite=Strict 或 Lax
-
-提升整体安全等级。
-七、定期更新第三方库和依赖现实中的 XSS 漏洞，大量来自第三方依赖：
-
-旧版本 UI 组件
-不再维护的插件
-存在漏洞的 npm 包
-
-建议：
-
-定期更新依赖
-使用 npm audit
-关注安全公告
-
-八、良好的安全编程习惯最后，防御 XSS 不是“某一个技巧”，而是一整套习惯：
-
-不信任任何外部输入
-不随意使用 innerHTML
-不忽略安全警告
-安全优先于“图方便”
-
-九、总结
-XSS 是最常见、也是最危险的 Web 安全问题之一
-真正有效的防御需要 前端 + 后端 + 浏览器策略 三层配合
-输入校验只是开始，安全输出和 CSP 才是关键
-养成良好的安全编程习惯，比任何补丁都重要
-
-对于前端开发者来说，懂得如何防御 XSS，是走向专业的重要一步。
+    <title>笔者如何面对初中英语教师资格面试，含模板（Reading）～</title>
+    <url>/posts/1835380571.html</url>
+    <content><![CDATA[先谈一下面试时候的一些想法。首先，要做到把提前准备好的模版给记熟，以防见到面试官紧张忘记了。当然也可以平时多积累一些通用句，真正忘记时候还可以救场。其次，在考场拿到题目时，要懂得与当前一些节日、实事结合起来，这样导入时候也能更加有趣，同时能吸引到面试官。导入完之后问问题以及板书的时候都要假装是要在很多学生面前教书的，眼神给到四周，板书也要不完全挡住黑板。最后，一定要自信，自信的人真的会发光，加油～下面是我面试时候准备的一些模版～
+Reading&#x2F;Listening开场问候Dear Judges, Now I’ll start the lesson. Good morning, Boys and girls. How are you today? Good? Fine? I’m fine, too. Before the class, Let’s sing a song together. If you can sing, sing along with me . “You are my sunshine, my only sunshine, you make me happy.” Do you feel better? Great, let’s start the lesson.
+导入At the beginning, I’ll show you a video, and you should try to answer the question: What can you see in the video? Who would like to try? Blair, please. You see different cartoons, such as Snow White and Tom and Jerry.Thank you, Blair, you set a good example for us. You know so much about cartoons.Do you want to learn more? Today, let’s learn a new lesson — Cartoon.
+读前Before reading, To help you understand the passage better, let’s learn some words. Now, Look at the first one. Smart.Form example, Zhu Geliang is very smart and he can solve many problems. Can you understand now? Great! The next one cute. Look at the picture. What’s that? A cat. So cats are very cute and it’s very lovely. So cute means lovely. You are so cute. Cats are so cute. Birds are so cute, okay, wonderful How about the last one? Ivory. Here is a picture about ivory. It forms long teeth of elephants. Read after me, ivory, ivory. Well done! All of you did a good job.
+读中Now boys and girls, let’s have a prediction according to the title and the pictures on your book. Take a guess:What’s the passage mainly about? Try to think out as many answers as you can. OK, who wants to have a try?Justin, you please. The passage is about a cartoon Mickey Mouse. Nice try! Do you agree? OK, maybe you are right.Next, Let’s find out the truth in this passage.
+读后Let’s read it together.When you read, think about this question:What’s the passage mainly about? You should read quickly and check your prediction.Let’s begin.OK, guys, are you right? Wow, I heard John said he had the correct prediction.The passage tells us some information about Mickey Mouse. Oh, most of you are right! I am so proud of you.For the second time, you should read it carefully and catch some detail informations. After that, you should answer some true or false question. Okay? Let’s start. Time is up. The first one, It’s easy, right? Answer me together. It’s true. Then the second question. Lily, what’s your answer? It ’s false. Can you correct it ? Great. Thank you. The last one, boys come on. Eric please. It’s true.perfect.
+巩固We have done so many exercises.It’s time for fun. Let’s have a group discussion. Think about the topic: Introducing your favorite cartoon characters to group members. Work in group of 4 and discuss with your partners. Then show your work on the stage. You have 5 minutes to prepare.Are you ready? Go!  Time  is up. Which group goes first? Christina and your partners, please. Wow, your ideas are very creative and Your pronunciation is perfect.Let’s give them a big hand.
+总结How time files! The class is almost over. Before ending our class, let’s have a summary. Who can summarize what we have learned this class? Fiona please. Very good. I hope you can apply what we have learned in your daily life so that we can improve our reading and speaking ability, right?Our homework is as follows: You should finish the exercise book and search for more information about famous cartoons on the Internet. Next class, we will share them together.
+Class is over, see you next time.
 ]]></content>
       <categories>
-        <category>前端</category>
+        <category>教资</category>
       </categories>
-      <tags>
-        <tag>XSS</tag>
-        <tag>Web安全</tag>
-        <tag>前端安全</tag>
-        <tag>JavaScript</tag>
-        <tag>浏览器安全</tag>
-        <tag>网络安全</tag>
-        <tag>Web开发</tag>
-        <tag>安全编程</tag>
-        <tag>Content Security Policy</tag>
-        <tag>HttpOnly</tag>
-      </tags>
   </entry>
   <entry>
     <title>宝塔安装puppeteer</title>
@@ -1157,6 +993,170 @@ allSettled：等全部结束，返回每个结果状态
       <categories>
         <category>前端</category>
       </categories>
+  </entry>
+  <entry>
+    <title>如何防御 XSS（跨站脚本攻击）：前端开发者必须掌握的安全实践</title>
+    <url>/posts/1588092017.html</url>
+    <content><![CDATA[在 Web 开发中，其实存在很多安全漏洞，其中跨站脚本攻击是最常见、危害也非常大的安全漏洞之一。一旦网站存在 XSS 漏洞，那么攻击者就会在用户浏览器中执行恶意脚本，进而窃取 Cookie、劫持会话、篡改页面内容，甚至控制用户账号。
+下面将从 原理 + 实战防御手段 的角度，系统讲解前端和全栈开发中 如何有效防御 XSS 攻击
+一、什么是 XSS 攻击？XSS 的本质是：
+
+攻击者将恶意 JavaScript 注入到网页中，并在其他用户的浏览器里执行。
+
+常见的 XSS 攻击类型包括：
+
+反射型 XSS：恶意脚本来自 URL 参数
+存储型 XSS：恶意脚本被存储在数据库中
+DOM 型 XSS：前端 JS 逻辑直接操作不可信数据
+
+不论是哪种形式，核心问题都在于：👉 用户输入被当作代码执行了
+二、输入验证和过滤（最基础也是最重要）永远不要相信用户输入。
+1. 前端层面的基本校验在前端可以做一些基础校验，例如：
+
+限制输入长度
+限制输入格式（如邮箱、手机号）
+过滤明显的危险字符
+
+示例（仅用于基础校验）：
+function sanitizeInput(input) &#123;  return input.replace(/[&lt;&gt;]/g, &#x27;&#x27;);&#125;
+
+⚠️ 注意：前端校验只能作为用户体验优化，不能作为最终安全防线。
+2. 后端必须做严格校验（关键）光是前端做个过滤是远远不够的，后端也需要做处理：
+
+校验数据类型
+校验长度
+拒绝不符合业务规则的输入
+对 HTML 内容进行转义或白名单过滤
+
+推荐策略：
+
+默认拒绝
+白名单优先
+
+三、对输出进行编码（比过滤更重要）很多 XSS 漏洞并不是输入有问题，而是输出方式不安全。
+1. HTML 转义输出在将用户输入输出到页面时，应进行 HTML 编码：
+
+
+
+原字符
+转义后
+
+
+
+&lt;
+&amp;lt;
+
+
+&gt;
+&amp;gt;
+
+
+&quot;
+&amp;quot;
+
+
+&#39;
+&amp;#39;
+
+
+很多模板引擎（如 Vue、React、Handlebars）默认会做转义，不要轻易关闭。
+
+2. 避免危险 API尽量避免以下写法：
+element.innerHTML = userInput;
+
+推荐安全方式：
+element.textContent = userInput;
+
+或者：
+const el = document.createElement(&#x27;div&#x27;);el.textContent = userInput;container.appendChild(el);
+
+
+
+四、使用安全的 API 和框架机制现代前端框架本身已经内置了大量 XSS 防护机制。
+1. React &#x2F; Vue 的默认保护
+JSX &#x2F; 模板语法默认转义
+明确标注危险行为（如 v-html、dangerouslySetInnerHTML）
+
+⚠️ 一旦使用这些 API，就必须 100% 确保内容可信
+2. 避免在前端拼接 HTML 字符串错误示例：
+container.innerHTML = `&lt;div&gt;$&#123;userInput&#125;&lt;/div&gt;`;
+
+正确做法：
+const div = document.createElement(&#x27;div&#x27;);div.textContent = userInput;container.appendChild(div);
+
+
+
+五、使用内容安全策略（CSP）CSP（Content Security Policy） 是防御 XSS 的“终极武器”之一。
+1. CSP 能做什么？
+禁止内联脚本执行
+限制脚本来源
+阻止恶意第三方资源加载
+
+示例 HTTP 头：
+Content-Security-Policy:  default-src &#x27;self&#x27;;  script-src &#x27;self&#x27;;  object-src &#x27;none&#x27;;
+
+即使攻击者成功注入脚本，只要 CSP 生效，浏览器也会拒绝执行。
+2. 为什么 CSP 非常重要？因为它属于：
+
+浏览器层面的安全防护
+就算代码有疏漏，也能兜底
+
+六、使用 HttpOnly 和 Secure Cookie1. HttpOnly 的作用设置 Cookie 时加上 HttpOnly：
+Set-Cookie: sessionId=xxx; HttpOnly;
+
+这样可以：
+
+防止 JavaScript 读取 Cookie
+即使发生 XSS，也能降低会话被盗风险
+
+2. 配合 Secure 和 SameSite推荐同时使用：
+
+Secure
+SameSite=Strict 或 Lax
+
+提升整体安全等级。
+七、定期更新第三方库和依赖现实中的 XSS 漏洞，大量来自第三方依赖：
+
+旧版本 UI 组件
+不再维护的插件
+存在漏洞的 npm 包
+
+建议：
+
+定期更新依赖
+使用 npm audit
+关注安全公告
+
+八、良好的安全编程习惯最后，防御 XSS 不是“某一个技巧”，而是一整套习惯：
+
+不信任任何外部输入
+不随意使用 innerHTML
+不忽略安全警告
+安全优先于“图方便”
+
+九、总结
+XSS 是最常见、也是最危险的 Web 安全问题之一
+真正有效的防御需要 前端 + 后端 + 浏览器策略 三层配合
+输入校验只是开始，安全输出和 CSP 才是关键
+养成良好的安全编程习惯，比任何补丁都重要
+
+对于前端开发者来说，懂得如何防御 XSS，是走向专业的重要一步。
+]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+      <tags>
+        <tag>XSS</tag>
+        <tag>Web安全</tag>
+        <tag>前端安全</tag>
+        <tag>JavaScript</tag>
+        <tag>浏览器安全</tag>
+        <tag>网络安全</tag>
+        <tag>Web开发</tag>
+        <tag>安全编程</tag>
+        <tag>Content Security Policy</tag>
+        <tag>HttpOnly</tag>
+      </tags>
   </entry>
   <entry>
     <title>2022应届毕业生办理深户流程</title>
