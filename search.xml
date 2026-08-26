@@ -1,23 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>H5与原生交互</title>
-    <url>/posts/2889543026.html</url>
-    <content><![CDATA[当需要与原生端进行交互时，我们本地其实看不见他们回传以及打印出来的数据。这时候就需要我们用到插件去实现，有个很好用的vconsole，能清楚地看见network、console等信息，跟我们浏览器的f12看见的控制台差不多，接下来会分享如何引入它：
-H5手机端日志工具(vconsole手机端)：&lt;script src=&quot;https://cdn.bootcdn.net/ajax/libs/vConsole/3.15.1/vconsole.min.js&quot;&gt;&lt;/script&gt;&lt;script&gt;  // 初始化 vConsole  var vConsole = new VConsole();  console.log(&#x27;vConsole is ready.&#x27;);&lt;/script&gt;
-
-如果想要与原生端去进行交互，还需要用到window才行，分两种情况，传数据以及获取数据，针对不同情况，我们会采取不同的措施：
-第一种情况：传数据给原生端if (window.webkit != undefined) &#123;  //这是ios端定义的  window.webkit.messageHandlers.getUserInfo.postMessage(null);&#125; else &#123;  //这是android端定义的feedback  feedback.getUserInfo();&#125;if (window.webkit != undefined) &#123;  window.webkit.messageHandlers.feedback.postMessage(&#123;    title: &quot;测试分享的标题&quot;,    content: &quot;测试分享的内容&quot;,    url: &quot;https://github.com/maying1992&quot;,  &#125;);&#125; else &#123;  // try &#123;  //   result = feedback.getUserInfo();  // &#125; catch(err)&#123;  // &#125;  feedback.postMessage();&#125;
-
-第二种情况：获取原生端的数据created() &#123;  //window挂载  window.setUserInfo = this.setUserInfo;&#125;,setUserInfo(param) &#123;  const u = navigator.userAgent;  const isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端  const result = JSON.parse(param);  if (isiOS) &#123;    this.queryParams = result.userInfo.token;    //兼容原生端那边传过来的不统一值    if (      result.userInfo.userId == undefined ||      result.userInfo.userId == 0    ) &#123;      this.usrIdd = 0;    &#125; else &#123;      this.usrIdd = result.userInfo.userId;    &#125;    window.localStorage.setItem(&quot;lang&quot;, result.userInfo.language);  &#125; else &#123;    this.queryParams = result;    if (result.userId == undefined || result.userId == 0) &#123;      this.usrIdd = 0;    &#125; else &#123;      this.usrIdd = result.userId;    &#125;    window.localStorage.setItem(&quot;lang&quot;, result.language);  &#125;  this.$i18n.locale = localStorage.getItem(&quot;lang&quot;);  // let data = &#123;  //   &#x27;name&#x27; : &#x27;xiaoming&#x27;  // &#125;;  return localStorage.getItem(&quot;lang&quot;);&#125;
-
-当需要通过按钮跳转到app时：直接用 a 标签的 href 跳转，前提是原生应用定义了 myapp://*** 作为触发特定功能的URL，可参考 Instagram 的 H5 跳转 app 的竞品例子，instagram://**。一般跳不过去就是原生端不支持。
-]]></content>
-      <categories>
-        <category>前端</category>
-      </categories>
-  </entry>
-  <entry>
     <title>ELK安装流程</title>
     <url>/posts/4098771896.html</url>
     <content><![CDATA[使用 Docker 安装 ELK Stack（ElasticSearch、Logstash、Kibana）
@@ -98,6 +81,23 @@ docker exec -u 0 -it some-kibana bash
 ]]></content>
       <categories>
         <category>后端</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>H5与原生交互</title>
+    <url>/posts/2889543026.html</url>
+    <content><![CDATA[当需要与原生端进行交互时，我们本地其实看不见他们回传以及打印出来的数据。这时候就需要我们用到插件去实现，有个很好用的vconsole，能清楚地看见network、console等信息，跟我们浏览器的f12看见的控制台差不多，接下来会分享如何引入它：
+H5手机端日志工具(vconsole手机端)：&lt;script src=&quot;https://cdn.bootcdn.net/ajax/libs/vConsole/3.15.1/vconsole.min.js&quot;&gt;&lt;/script&gt;&lt;script&gt;  // 初始化 vConsole  var vConsole = new VConsole();  console.log(&#x27;vConsole is ready.&#x27;);&lt;/script&gt;
+
+如果想要与原生端去进行交互，还需要用到window才行，分两种情况，传数据以及获取数据，针对不同情况，我们会采取不同的措施：
+第一种情况：传数据给原生端if (window.webkit != undefined) &#123;  //这是ios端定义的  window.webkit.messageHandlers.getUserInfo.postMessage(null);&#125; else &#123;  //这是android端定义的feedback  feedback.getUserInfo();&#125;if (window.webkit != undefined) &#123;  window.webkit.messageHandlers.feedback.postMessage(&#123;    title: &quot;测试分享的标题&quot;,    content: &quot;测试分享的内容&quot;,    url: &quot;https://github.com/maying1992&quot;,  &#125;);&#125; else &#123;  // try &#123;  //   result = feedback.getUserInfo();  // &#125; catch(err)&#123;  // &#125;  feedback.postMessage();&#125;
+
+第二种情况：获取原生端的数据created() &#123;  //window挂载  window.setUserInfo = this.setUserInfo;&#125;,setUserInfo(param) &#123;  const u = navigator.userAgent;  const isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端  const result = JSON.parse(param);  if (isiOS) &#123;    this.queryParams = result.userInfo.token;    //兼容原生端那边传过来的不统一值    if (      result.userInfo.userId == undefined ||      result.userInfo.userId == 0    ) &#123;      this.usrIdd = 0;    &#125; else &#123;      this.usrIdd = result.userInfo.userId;    &#125;    window.localStorage.setItem(&quot;lang&quot;, result.userInfo.language);  &#125; else &#123;    this.queryParams = result;    if (result.userId == undefined || result.userId == 0) &#123;      this.usrIdd = 0;    &#125; else &#123;      this.usrIdd = result.userId;    &#125;    window.localStorage.setItem(&quot;lang&quot;, result.language);  &#125;  this.$i18n.locale = localStorage.getItem(&quot;lang&quot;);  // let data = &#123;  //   &#x27;name&#x27; : &#x27;xiaoming&#x27;  // &#125;;  return localStorage.getItem(&quot;lang&quot;);&#125;
+
+当需要通过按钮跳转到app时：直接用 a 标签的 href 跳转，前提是原生应用定义了 myapp://*** 作为触发特定功能的URL，可参考 Instagram 的 H5 跳转 app 的竞品例子，instagram://**。一般跳不过去就是原生端不支持。
+]]></content>
+      <categories>
+        <category>前端</category>
       </categories>
   </entry>
   <entry>
@@ -247,82 +247,6 @@ function foo() &#123;  &quot;use strict&quot;;  console.log(this.a); // ❌ Type
       </categories>
   </entry>
   <entry>
-    <title>聊聊Node RPC</title>
-    <url>/posts/1680906009.html</url>
-    <content><![CDATA[什么是序列化在 TCP 通道里传输的数据只能是二进制形式的，所以将数据结构或对象转化成二进制的形式就叫序列化。反过来就叫反序列化，他们之间的规则就叫协议。
-RPC是什么全称是Remote Procedure Call， 中文名字叫远程过程调用。大部份的 RPC 是基于TCP的。具体实现流程如下：
-1、前端通过 Proxy 代理调用相应的接口, Proxy 将 RPC 的服务名，方法名，参数等信息转换成 RPC Request 对象，交给 RPC 框架2、RPC 框架通过 RPC 协议将 RPC Request 对象序列化成二进制形式3、RPC 通过 TCP 通道把二进制数据传递给后端4、后端将二进制数据反序列化成 RPC Request 对象5、后端将反序列化后的数据对应到自己写的方法内，传入参数，获取数据，将获取后的数据进行封装，封装成 RPC Response 交给 RPC 框架6、RPC 框架通过 RPC 协议将 RPC Response 对象序列化成二进制形式, 通过 TCP 通道传递给前端6、前端将收到的二进制数据反序列化成 RPC response 对象，将结果通过 Proxy 返回给业务代码
-]]></content>
-      <categories>
-        <category>后端</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>react组件通信方式</title>
-    <url>/posts/338223214.html</url>
-    <content><![CDATA[
-通过Props和Props回调：用于父子组件的通信，子组件通过props接收父的数据，父组件将回调函数传给子组件，子组件调用这个回调函数，传数据给父组件。
-通过Context API：可以共享状态的API，不需要按层级去传递。
-Redux或Mobx：对于复杂的应用，可以用状态库来实现组件通信。
-事件订阅模式：使用EventEmitter或者第三方库来实现跨组件的事件发布订阅。
-Hooks：React的一些Hooks，比如useState，能实现不同组件的共享逻辑跟状态。
-
-]]></content>
-      <categories>
-        <category>前端</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>redis</title>
-    <url>/posts/2066075671.html</url>
-    <content><![CDATA[目录redis-token缓存jwt跟redis存token的区别redis相关知识推荐
-redis-token缓存
-redis.js创建
-const redis = require(&quot;redis&quot;);// Redis 链接的配置内容const client = redis.createClient(&#123;  socket: &#123;    host: &#x27;192.168.64.2&#x27;,  // Redis 服务器地址    port: 6379,             // Redis 端口  &#125;,  password: &#x27;123456&#x27;        // Redis 密码&#125;);// 连接到 Redisclient.connect()  .then(() =&gt; &#123;    console.log(&#x27;Connected to Redis&#x27;);  &#125;)  .catch((err) =&gt; &#123;    console.error(&#x27;Redis connection failed:&#x27;, err);  &#125;);// 处理连接错误client.on(&quot;error&quot;, (err) =&gt; &#123;  console.error(&#x27;Redis error:&#x27;, err);&#125;);// 定义 Redis 操作方法const redisOps = &#123;  // 创建值  set: async (key, value, expiration = null) =&gt; &#123;    try &#123;      value = JSON.stringify(value);      if (Number.isInteger(expiration) &amp;&amp; expiration &gt; 0) &#123;        // 如果设置了有效时间并且是整数，使用 SETEX 命令        await client.setEx(key, expiration, value);      &#125; else &#123;        // 否则直接使用 SET 命令        await client.set(key, value);      &#125;      console.log(`Key &quot;$&#123;key&#125;&quot; set successfully with expiration: $&#123;expiration || &#x27;no expiration&#x27;&#125;`);    &#125; catch (err) &#123;      console.error(&#x27;Error setting value:&#x27;, err);    &#125;  &#125;,  // 删除值  del: async (key) =&gt; &#123;    try &#123;      await client.del(key);      console.log(`Key &quot;$&#123;key&#125;&quot; deleted successfully`);    &#125; catch (err) &#123;      console.error(&#x27;Error deleting key:&#x27;, err);    &#125;  &#125;,  // 获取值  get: async (key) =&gt; &#123;    const result = await client.get(key);    console.log(&#x27;99999=&#x27;, result)    try &#123;      return result; // 尝试解析为 JSON    &#125; catch (error) &#123;      // 如果不是 JSON 格式，直接返回原始值      console.warn(`Warning: Value for key &quot;$&#123;key&#125;&quot; is not JSON formatted.`);      return result;    &#125;  &#125;,  // 获取键的 TTL  ttl: async (key) =&gt; &#123;    try &#123;      const timeLeft = await client.ttl(key);      console.log(`Key &quot;$&#123;key&#125;&quot; has TTL: $&#123;timeLeft&#125;`);      return timeLeft;    &#125; catch (err) &#123;      console.error(&#x27;Error getting TTL:&#x27;, err);      return err;    &#125;  &#125;,&#125;;module.exports = redisOps;
-
-
-
-redis的使用
-
-
-const redisOps = require(&quot;./redis.js&quot;);const moment = require(&#x27;moment-timezone&#x27;);let token = jwt.sign(&#123; id: user.userid, username: user.username &#125;, secretKey, &#123; expiresIn: &#x27;1h&#x27; &#125;);await redisOps.set(user.userid.toString(), token, 60 * 60)
-
-//token校验const verifyToken = async (ctx, next) =&gt; &#123;    const userid = ctx.headers[&#x27;cookie&#x27;];    const match = userid.match(/userid=(\d+)/);    const userId = match ? match[1] : null;        if (!userId) &#123;        ctx.status = 401;        console.log(&#x27;No token provided&#x27;);        ctx.body = &#123; message: &#x27;No token provided&#x27; &#125;;        return;    &#125;    try &#123;        const startTime = moment(); // 记录开始时间        const getuserid = await redisOps.get(userId)        const endTime = moment(); // 记录结束时间        const duration = moment.duration(endTime.diff(startTime)); // 计算持续时间              console.log(`Request completed in $&#123;duration.asMilliseconds()&#125; ms`); // 以毫秒为单位输出耗时        if(getuserid)&#123;            await next();        &#125;else &#123;            throw err;        &#125;           &#125; catch (err) &#123;        console.log(&#x27;Token verification failed:&#x27;, err.message);        ctx.status = 401;        ctx.body = &#123; message: &#x27;Failed to authenticate token&#x27; &#125;;    &#125;&#125;;
-
-
-
-jwt跟redis存token的区别
-
-
-维度
-JWT
-Redis
-
-
-
-性能
-- 无需查询数据库或访问外部存储，验证速度较快- 适用于简单的身份验证场景
-- 需要与 Redis 服务器进行通信，可能会有网络延迟- 适用于复杂的会话管理和存储需求
-
-
-redis相关知识
-redis本质上是一个key-value类型的内存数据库，性能最快的key-value数据库。
-
-正常情况是把数据存储在数据库 ，数据库把数据存在磁盘。但越上层的存储器存储效率越高，内存位于磁盘之上。而redis是一款基于内存的存储系统，数据都存在内存里，所以从redis读取数据会比从数据库读取要快。
-
-内存有限，存储不了太多数据。出现故障时，用主从复制、哨兵法。集群就是一套完整的redis多机解决方案。他有效解决了单机redis的所有问题。当你在集群中为某个节点配置从机的时候，主从节点间同步就是主从复制。主节点挂掉之后，从节点的选取，内部逻辑与哨兵机制相似。
-
-支持发布&#x2F;订阅模式，可以作为一个简单而高效的轻量级消息代理，用于实现消息队列、实时通知等。
-
-
-
-
-]]></content>
-      <categories>
-        <category>后端</category>
-      </categories>
-  </entry>
-  <entry>
     <title>Vue中插入脚本</title>
     <url>/posts/3694904053.html</url>
     <content><![CDATA[Vue 中如何正确插入 &lt;script&gt; 脚本呢在实际开发中，我们经常会接入第三方广告平台、统计工具或客服系统，而这些服务通常会提供一整段包含 &lt;script&gt; 标签的代码。但如果你在 Vue 的模板中（&lt;template&gt;）直接写 &lt;script&gt;，不仅不会生效，还可能直接报错。
@@ -389,6 +313,71 @@ Vue 模板中不能直接写 &lt;script&gt;，否则脚本不会执行
         <tag>DOM 操作</tag>
         <tag>第三方广告</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>react组件通信方式</title>
+    <url>/posts/338223214.html</url>
+    <content><![CDATA[
+通过Props和Props回调：用于父子组件的通信，子组件通过props接收父的数据，父组件将回调函数传给子组件，子组件调用这个回调函数，传数据给父组件。
+通过Context API：可以共享状态的API，不需要按层级去传递。
+Redux或Mobx：对于复杂的应用，可以用状态库来实现组件通信。
+事件订阅模式：使用EventEmitter或者第三方库来实现跨组件的事件发布订阅。
+Hooks：React的一些Hooks，比如useState，能实现不同组件的共享逻辑跟状态。
+
+]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>redis</title>
+    <url>/posts/2066075671.html</url>
+    <content><![CDATA[目录redis-token缓存jwt跟redis存token的区别redis相关知识推荐
+redis-token缓存
+redis.js创建
+const redis = require(&quot;redis&quot;);// Redis 链接的配置内容const client = redis.createClient(&#123;  socket: &#123;    host: &#x27;192.168.64.2&#x27;,  // Redis 服务器地址    port: 6379,             // Redis 端口  &#125;,  password: &#x27;123456&#x27;        // Redis 密码&#125;);// 连接到 Redisclient.connect()  .then(() =&gt; &#123;    console.log(&#x27;Connected to Redis&#x27;);  &#125;)  .catch((err) =&gt; &#123;    console.error(&#x27;Redis connection failed:&#x27;, err);  &#125;);// 处理连接错误client.on(&quot;error&quot;, (err) =&gt; &#123;  console.error(&#x27;Redis error:&#x27;, err);&#125;);// 定义 Redis 操作方法const redisOps = &#123;  // 创建值  set: async (key, value, expiration = null) =&gt; &#123;    try &#123;      value = JSON.stringify(value);      if (Number.isInteger(expiration) &amp;&amp; expiration &gt; 0) &#123;        // 如果设置了有效时间并且是整数，使用 SETEX 命令        await client.setEx(key, expiration, value);      &#125; else &#123;        // 否则直接使用 SET 命令        await client.set(key, value);      &#125;      console.log(`Key &quot;$&#123;key&#125;&quot; set successfully with expiration: $&#123;expiration || &#x27;no expiration&#x27;&#125;`);    &#125; catch (err) &#123;      console.error(&#x27;Error setting value:&#x27;, err);    &#125;  &#125;,  // 删除值  del: async (key) =&gt; &#123;    try &#123;      await client.del(key);      console.log(`Key &quot;$&#123;key&#125;&quot; deleted successfully`);    &#125; catch (err) &#123;      console.error(&#x27;Error deleting key:&#x27;, err);    &#125;  &#125;,  // 获取值  get: async (key) =&gt; &#123;    const result = await client.get(key);    console.log(&#x27;99999=&#x27;, result)    try &#123;      return result; // 尝试解析为 JSON    &#125; catch (error) &#123;      // 如果不是 JSON 格式，直接返回原始值      console.warn(`Warning: Value for key &quot;$&#123;key&#125;&quot; is not JSON formatted.`);      return result;    &#125;  &#125;,  // 获取键的 TTL  ttl: async (key) =&gt; &#123;    try &#123;      const timeLeft = await client.ttl(key);      console.log(`Key &quot;$&#123;key&#125;&quot; has TTL: $&#123;timeLeft&#125;`);      return timeLeft;    &#125; catch (err) &#123;      console.error(&#x27;Error getting TTL:&#x27;, err);      return err;    &#125;  &#125;,&#125;;module.exports = redisOps;
+
+
+
+redis的使用
+
+
+const redisOps = require(&quot;./redis.js&quot;);const moment = require(&#x27;moment-timezone&#x27;);let token = jwt.sign(&#123; id: user.userid, username: user.username &#125;, secretKey, &#123; expiresIn: &#x27;1h&#x27; &#125;);await redisOps.set(user.userid.toString(), token, 60 * 60)
+
+//token校验const verifyToken = async (ctx, next) =&gt; &#123;    const userid = ctx.headers[&#x27;cookie&#x27;];    const match = userid.match(/userid=(\d+)/);    const userId = match ? match[1] : null;        if (!userId) &#123;        ctx.status = 401;        console.log(&#x27;No token provided&#x27;);        ctx.body = &#123; message: &#x27;No token provided&#x27; &#125;;        return;    &#125;    try &#123;        const startTime = moment(); // 记录开始时间        const getuserid = await redisOps.get(userId)        const endTime = moment(); // 记录结束时间        const duration = moment.duration(endTime.diff(startTime)); // 计算持续时间              console.log(`Request completed in $&#123;duration.asMilliseconds()&#125; ms`); // 以毫秒为单位输出耗时        if(getuserid)&#123;            await next();        &#125;else &#123;            throw err;        &#125;           &#125; catch (err) &#123;        console.log(&#x27;Token verification failed:&#x27;, err.message);        ctx.status = 401;        ctx.body = &#123; message: &#x27;Failed to authenticate token&#x27; &#125;;    &#125;&#125;;
+
+
+
+jwt跟redis存token的区别
+
+
+维度
+JWT
+Redis
+
+
+
+性能
+- 无需查询数据库或访问外部存储，验证速度较快- 适用于简单的身份验证场景
+- 需要与 Redis 服务器进行通信，可能会有网络延迟- 适用于复杂的会话管理和存储需求
+
+
+redis相关知识
+redis本质上是一个key-value类型的内存数据库，性能最快的key-value数据库。
+
+正常情况是把数据存储在数据库 ，数据库把数据存在磁盘。但越上层的存储器存储效率越高，内存位于磁盘之上。而redis是一款基于内存的存储系统，数据都存在内存里，所以从redis读取数据会比从数据库读取要快。
+
+内存有限，存储不了太多数据。出现故障时，用主从复制、哨兵法。集群就是一套完整的redis多机解决方案。他有效解决了单机redis的所有问题。当你在集群中为某个节点配置从机的时候，主从节点间同步就是主从复制。主节点挂掉之后，从节点的选取，内部逻辑与哨兵机制相似。
+
+支持发布&#x2F;订阅模式，可以作为一个简单而高效的轻量级消息代理，用于实现消息队列、实时通知等。
+
+
+
+
+]]></content>
+      <categories>
+        <category>后端</category>
+      </categories>
   </entry>
   <entry>
     <title>《终有一天你会懂》琢磨先生 - 读书笔记</title>
@@ -502,6 +491,17 @@ The pause(停顿)We use to speak English more fluently and naturally.As we can s
       </categories>
   </entry>
   <entry>
+    <title>聊聊Node RPC</title>
+    <url>/posts/1680906009.html</url>
+    <content><![CDATA[什么是序列化在 TCP 通道里传输的数据只能是二进制形式的，所以将数据结构或对象转化成二进制的形式就叫序列化。反过来就叫反序列化，他们之间的规则就叫协议。
+RPC是什么全称是Remote Procedure Call， 中文名字叫远程过程调用。大部份的 RPC 是基于TCP的。具体实现流程如下：
+1、前端通过 Proxy 代理调用相应的接口, Proxy 将 RPC 的服务名，方法名，参数等信息转换成 RPC Request 对象，交给 RPC 框架2、RPC 框架通过 RPC 协议将 RPC Request 对象序列化成二进制形式3、RPC 通过 TCP 通道把二进制数据传递给后端4、后端将二进制数据反序列化成 RPC Request 对象5、后端将反序列化后的数据对应到自己写的方法内，传入参数，获取数据，将获取后的数据进行封装，封装成 RPC Response 交给 RPC 框架6、RPC 框架通过 RPC 协议将 RPC Response 对象序列化成二进制形式, 通过 TCP 通道传递给前端6、前端将收到的二进制数据反序列化成 RPC response 对象，将结果通过 Proxy 返回给业务代码
+]]></content>
+      <categories>
+        <category>后端</category>
+      </categories>
+  </entry>
+  <entry>
     <title>笔者如何面对初中英语教师资格面试，含模板（Reading）～</title>
     <url>/posts/1835380571.html</url>
     <content><![CDATA[先谈一下面试时候的一些想法。首先，要做到把提前准备好的模版给记熟，以防见到面试官紧张忘记了。当然也可以平时多积累一些通用句，真正忘记时候还可以救场。其次，在考场拿到题目时，要懂得与当前一些节日、实事结合起来，这样导入时候也能更加有趣，同时能吸引到面试官。导入完之后问问题以及板书的时候都要假装是要在很多学生面前教书的，眼神给到四周，板书也要不完全挡住黑板。最后，一定要自信，自信的人真的会发光，加油～下面是我面试时候准备的一些模版～
@@ -523,192 +523,6 @@ Class is over, see you next time.
     <url>/posts/4106547056.html</url>
     <content><![CDATA[有个公司需求是在前端页面，点击按钮能成功跳到公司的APP。跟原生同事联调时候，记得让他们把URL scheme:&#x2F;&#x2F;告诉你。下面的脚本是通过jquery方式去判断当前手机是android还是ios，展示对应的跳转按钮；然后监听按钮的点击事件，通过iframe的方式试图打开APP，如果能正常打开，会直接切换到APP，并自动阻止a标签的默认行为。否则会alert提示用户下载。
 脚本部分：&lt;body&gt;  &lt;div id=&quot;btn&quot;&gt;     &lt;!-- &lt;button onclick=&quot;submitFn()&quot;&gt;打开app&lt;/button&gt; --&gt;      &lt;a href=&quot;安卓配置&quot; class=&quot;a-btn&quot; style=&quot;display: none&quot;&gt;安卓&lt;/a&gt;      &lt;a href=&quot;苹果URL scheme://&quot; class=&quot;i-btn&quot; style=&quot;display: none&quot;&gt;苹果&lt;/a&gt;      &lt;/div&gt; &lt;/body&gt;  &lt;script src=&quot;http://m-cdn.saclub.com.cn/app/2.4/js/jquery-1.11.3.min.js&quot;&gt;&lt;/script&gt;  &lt;script type=&quot;text/javascript&quot;&gt;  var ua = navigator.userAgent.toLowerCase();  var isWeixin = ua.indexOf(&#x27;micromessenger&#x27;) != -1;  var isAndroid = ua.indexOf(&#x27;android&#x27;) != -1;  var isIos = (ua.indexOf(&#x27;iphone&#x27;) != -1) || (ua.indexOf(&#x27;ipad&#x27;) != -1);   var d = new Date(); var t0 = d.getTime();  $(function()&#123; if(isAndroid)&#123; $(&quot;.a-btn&quot;).show(); &#125;else&#123; $(&quot;.i-btn&quot;).show(); &#125; &#125;);   $(&quot;.a-btn&quot;).click(function()&#123;  openApp(&quot;安卓下载链接&quot;); &#125;); $(&quot;.i-btn&quot;).click(function()&#123;  openApp(&quot;IOS App Store下载链接&quot;); &#125;);  function openApp(src) &#123;     var delay = setInterval(function()&#123;     var d = new Date(); var t1 = d.getTime();     if( t1-t0&lt;3000 &amp;&amp; t1-t0&gt;2000)&#123; alert(&#x27;请下载APP&#x27;); window.location.href =src; &#125;     if(t1-t0&gt;=3000)&#123; clearInterval(delay); &#125;     &#125;,2000); &#125; &lt;/script&gt;
-
-
-
-]]></content>
-      <categories>
-        <category>前端</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>前端面试题</title>
-    <url>/posts/545267987.html</url>
-    <content><![CDATA[
-  var、let、const 三者的区别?
-
-✅ 作用域
-var 定义的变量没有块作用域，可以跨块访问，但不能跨函数访问。
-let 定义的变量有块作用域，只能在声明的代码块中访问。
-const 定义的是常量，必须初始化，只能在声明的代码块中访问，且值不可更改。
-
-✅ 声明规则
-同一个变量名，只能用一种声明方式，否则会报错。
-
-✅ 结合 this 的区别
-
-
-特性
-var &#x2F; let &#x2F; const
-
-
-
-改变 this 指向
-✅ 可以
-
-
-第一个参数是 this 要指向的对象
-✅ 是
-
-
-没传对象或为 undefined/null
-默认指向全局 window
-
-
-参数传递
-apply 用数组，call 用参数列表，bind 可多次传参
-
-
-执行方式
-apply/call 立即执行，bind 返回新函数
-
-
-
-
-
-
-  什么是事件委托?
-
-
-
-事件委托，会把一个或者一组元素的事件委托到它的父层或者更外层元素上，真正绑定事件的是外层元素，而不是目标元素
-当事件响应到目标元素上时，会通过事件冒泡机制从而触发它的外层元素的绑定事件上，然后在外层元素上去执行函数
-
-
-
-
-  防抖跟节流的区别是什么？
-
-
-
-防抖：只执行最后一次。事件持续触发，但只有等事件停止触发后 n 秒后才执行函数。
-节流：控制执行频率。持续触发，每 n 秒执行一次函数。
-
-
-
-  Web 前端预防 SQL 注入的方法有哪些？
-
-
-参数化查询：使用预处理语句或参数化查询来避免 SQL 注入。
-验证用户输入：验证用户输入的数据，确保其符合预期格式，避免非法字符等。
-转义特殊字符：在使用用户输入的数据构造 SQL 语句时，对特殊字符进行转义，以防止注入。
-限制权限：限制用户的权限，使其不能执行不安全的 SQL 操作。
-白名单验证：白名单验证是指确保用户输入的数据只能是允许的值，避免非法数据的输入。
-审核代码：定期审核代码，以确保代码的安全性，特别是对于数据库连接和查询部分的代码。
-
-
-
-
-  http 和 https 的区别
-
-
-https 协议需要到 ca 申请证书，一般免费证书较少，因而需要一定费用。
-http 是超文本传输协议，信息是明文传输，https 则是具有安全性的 ssl 加密传输协议。
-http 和 https 使用的是完全不同的连接方式，用的端口也不一样，前者是 80，后者是 443。
-http 的连接很简单，是无状态的；HTTPS 协议是由 SSL+HTTP 协议构建的可进行加密传输、身份认证的网络协议，比 http 协议安全。
-
-
-
-
-  created跟mounted的区别
-
-
-created发生在mounted之前，此时DOM元素还没完全渲染出来，不过跟后端联调时候的请求可以放在这里，尽早获取到数据返回给变量。
-mounted这时候已经可以获取页面中的DOM元素了。
-
-
-
-
-  说说事件循环机制
-
-🔁 什么是事件循环？JavaScript 是单线程语言，执行代码时除了依赖调用栈，还依赖任务队列来控制异步代码的执行顺序。
-整个执行过程称为 事件循环（Event Loop）。
-🧠 事件循环的核心概念：
-一个线程中只有一个事件循环（主循环）。
-可以有多个任务队列，按类型分为：
-宏任务（Macro Task）
-微任务（Micro Task）
-
-
-
-
-⏱ 执行顺序是怎样的？执行顺序：
-
-
-宏任务 ➝ 微任务（清空） ➝ 下一个宏任务 ➝ 微任务（清空）… 依此循环
-
-
-执行一个宏任务（如 script 整体代码）
-在当前宏任务中执行所有产生的微任务
-若微任务中又产生新的微任务，继续执行，直到清空微任务队列
-开始下一轮宏任务循环
-
-
-🧩 宏任务（Macro Task）有哪些？
-script（整体代码）
-setTimeout
-setInterval
-setImmediate（Node.js）
-I/O 操作
-UI 渲染
-
-🧬 微任务（Micro Task）有哪些？
-process.nextTick（Node.js 专属，优先级更高）
-Promise.then / catch / finally
-async / await
-MutationObserver
-
-
-
-
-  说说 css 盒模型
-
-  css 中的盒子模型包括 IE 盒子模型和标准的 W3C 盒子模型
-  在标准的盒子模型中，width 指 content 部分的宽度，box-sizing:content-box(默认为content-box);
-  在 IE 盒子模型中，width 指的是 content+padding+border，box-sizing:border-box;
-  Box-sizing:padding-box 宽度包含了左右 padding+width
-
-
-
-  vue2 和 vue3 的区别
-
-
-双向数据绑定原理不同,vue2 使用 Es5 的 API defineProperty()对数据进行劫持, 只能监听某个属性,不能对整个对象监听;vue3 使用 ES6 的 proxy API 对数据代理, 可以监听整个对象和数组
-生命周期不同  vue2:beforeCreate、created 、beforeMount、mounted、beforeUpdate、updated、  beforeDestroy、destroyed  vue3:setup 、onBeforeMount 、 onMounted 、onBeforeUpdate 、onUpdated 、  onBeforeUnmount、onUnmounted
-vue2 必须有根标签,vue3 可以没有根标签,会默认将多个根标签包裹在 fragment虚拟标签中
-vue2 采用选项式 API,将函数和数据统一起来处理,将功能点切割了,当逻辑复杂时不利于代码阅读;vue3 采用组合式 API,将同一个功能的代码统一起来处理,使代码更有序,有利于代码的书写和维护
-vue2 和 vue3 匿名插槽不一样  具名插槽使用方式不同：vue2 使用 slot&#x3D;’’,vue3 使用 v-slot:’’  作用域插槽使用方式不同：vue2 中在父组件中使用 slot-scope&#x3D;”data”从子组件获取数据，vue3 中在父组件中使用 #data 或者 #default&#x3D;”{data}”获取
-
-
-
-
-
-
-
-
-
-
-]]></content>
-      <categories>
-        <category>前端</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>前端骨架屏</title>
-    <url>/posts/4094880158.html</url>
-    <content><![CDATA[什么时候需要用到前端骨架屏呢？ 其实就是在首页还没完全加载出来，可以先把骨架屏弄出来，避免白屏给用户造成不好的用户体验。那么具体是要如何去弄出来呢？设置Dps.config.js，配置如下：
-其中url字段输入待生成骨架屏页面的地址，比如百度（https://baidu.com）也可以。output主要代表输出。其中filepath代表生成骨架屏的存放页面，一般为项目的入口页面；然后injectSelector代表插入页面的某个节点。includeElement用于定制或排除某些节点的绘制行为，其中通过id来定位，比如需不需要在这个id上渲染。还能判断tagName是什么的时候，渲染什么。init的作用是生成骨架屏之前的操作，比如删除干扰节点。
-基本配置字段说明    const dpsConfig = &#123;    url: &#x27;file:///Users/myname/Desktop/project/pro/scaleTips/dist/index.html#/&#x27;,          // 待生成骨架屏页面的地址，用百度（https://baidu.com）试试也可以    output: &#123;        filepath: &#x27;/Users/myname/Desktop/project/pro&#x27;,        // 生成骨架屏的存放页面，一般为项目的入口页面        injectSelector: &#x27;#app&#x27;          // 生成的骨架屏插入页面的节点    &#125;,    // header: &#123;    //  height: 40,    //  background: &#x27;#1b9af4&#x27;    // &#125;,    // background: &#x27;#eee&#x27;,    // animation: &#x27;opacity 1s linear infinite;&#x27;,    //用于定制或排除某些节点的绘制行为    includeElement: function(node, draw) &#123;        // 定制某个节点画出来的样子，带上return false        if(node.id == &#x27;ui-alert&#x27;) &#123;            //跳过该节点及其子节点            return false;        &#125;        if(node.tagName.toLowerCase() === &#x27;img&#x27;) &#123;            // 对该图片生成宽100%，高8%，颜色为红色的色块            draw(&#123;                width: 100,                height: 8,                left: 0,                top: 0,                zIndex: 99999999,                background: &#x27;red&#x27;            &#125;);            return false;        &#125;     &#125;,    // writePageStructure: function(html) &#123;        // 自己处理生成的骨架屏        // fs.writeFileSync(filepath, html);        // console.log(html)    // &#125;,    init: function() &#123;        // 生成骨架屏之前的操作，比如删除干扰节点    &#125;&#125;module.exports = dpsConfig;
 
 
 
@@ -923,22 +737,6 @@ wget -O /etc/yum.repos.d/CentOS-Base.repo https://mirrors.aliyun.com/repo/Centos
 Centos8已不维护，只能找
 puppeteer报错下载依赖 参考链接：https://www.cnblogs.com/ilizhu/p/14504049.html报错sandbox：
 #添加启动参数const browser = await puppeteer.launch(&#123;args: [&#x27;--no-sandbox&#x27;, &#x27;--disable-setuid-sandbox&#x27;]&#125;);]]></content>
-      <categories>
-        <category>前端</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>小程序验证码输入框自动聚焦下个输入框</title>
-    <url>/posts/2770215437.html</url>
-    <content><![CDATA[最开始我想的是有多少个输入框，就放多少个input，做完会发现有各种bug。比如输入时跳转下个输入框不顺畅，键盘突然消失、操作不丝滑等。正确思路是一个输入框就够了，然后通过改变样式（间隔、高亮）来实现，就是表面看起来是六个输入框，本质上只有一个input
-正确解法：&lt;view class=&quot;w-80 h-100 rad-10 b-a-9 tc f-50&quot; v-for=&quot;(item,index)  in 6&quot;&gt;	&lt;input class=&quot;w-80 h-100 &quot; maxlength=&quot;1&quot; type=&quot;text&quot;    @input=&quot;inputListener(index)&quot;   :focus=&quot;focus &amp;&amp; (focusIndex == index)&quot;/&gt;&lt;/view&gt; 
-
-
-data()&#123;    return&#123;        focus: true,		code:[&#x27;&#x27;,&#x27;&#x27;,&#x27;&#x27;,&#x27;&#x27;,&#x27;&#x27;,&#x27;&#x27;],// 需要获取焦点的序号		focusIndex: 0    &#125;&#125;method:&#123;      // 输入时事件	inputListener(e) &#123;		if (this.focusIndex != e)this.focusIndex=e		if (e &lt; 6) &#123;					this.focus=true,					this.focusIndex=e + 1		&#125;else &#123;					this.focus=false		&#125;	&#125;,&#125;
-
-
-完整版可参考链接：https://blog.csdn.net/u011423258/article/details/106683068?spm=1001.2014.3001.5506
-]]></content>
       <categories>
         <category>前端</category>
       </categories>
@@ -1211,6 +1009,36 @@ allSettled：等全部结束，返回每个结果状态
       </categories>
   </entry>
   <entry>
+    <title>前端骨架屏</title>
+    <url>/posts/4094880158.html</url>
+    <content><![CDATA[什么时候需要用到前端骨架屏呢？ 其实就是在首页还没完全加载出来，可以先把骨架屏弄出来，避免白屏给用户造成不好的用户体验。那么具体是要如何去弄出来呢？设置Dps.config.js，配置如下：
+其中url字段输入待生成骨架屏页面的地址，比如百度（https://baidu.com）也可以。output主要代表输出。其中filepath代表生成骨架屏的存放页面，一般为项目的入口页面；然后injectSelector代表插入页面的某个节点。includeElement用于定制或排除某些节点的绘制行为，其中通过id来定位，比如需不需要在这个id上渲染。还能判断tagName是什么的时候，渲染什么。init的作用是生成骨架屏之前的操作，比如删除干扰节点。
+基本配置字段说明    const dpsConfig = &#123;    url: &#x27;file:///Users/myname/Desktop/project/pro/scaleTips/dist/index.html#/&#x27;,          // 待生成骨架屏页面的地址，用百度（https://baidu.com）试试也可以    output: &#123;        filepath: &#x27;/Users/myname/Desktop/project/pro&#x27;,        // 生成骨架屏的存放页面，一般为项目的入口页面        injectSelector: &#x27;#app&#x27;          // 生成的骨架屏插入页面的节点    &#125;,    // header: &#123;    //  height: 40,    //  background: &#x27;#1b9af4&#x27;    // &#125;,    // background: &#x27;#eee&#x27;,    // animation: &#x27;opacity 1s linear infinite;&#x27;,    //用于定制或排除某些节点的绘制行为    includeElement: function(node, draw) &#123;        // 定制某个节点画出来的样子，带上return false        if(node.id == &#x27;ui-alert&#x27;) &#123;            //跳过该节点及其子节点            return false;        &#125;        if(node.tagName.toLowerCase() === &#x27;img&#x27;) &#123;            // 对该图片生成宽100%，高8%，颜色为红色的色块            draw(&#123;                width: 100,                height: 8,                left: 0,                top: 0,                zIndex: 99999999,                background: &#x27;red&#x27;            &#125;);            return false;        &#125;     &#125;,    // writePageStructure: function(html) &#123;        // 自己处理生成的骨架屏        // fs.writeFileSync(filepath, html);        // console.log(html)    // &#125;,    init: function() &#123;        // 生成骨架屏之前的操作，比如删除干扰节点    &#125;&#125;module.exports = dpsConfig;
+
+
+
+]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>小程序验证码输入框自动聚焦下个输入框</title>
+    <url>/posts/2770215437.html</url>
+    <content><![CDATA[最开始我想的是有多少个输入框，就放多少个input，做完会发现有各种bug。比如输入时跳转下个输入框不顺畅，键盘突然消失、操作不丝滑等。正确思路是一个输入框就够了，然后通过改变样式（间隔、高亮）来实现，就是表面看起来是六个输入框，本质上只有一个input
+正确解法：&lt;view class=&quot;w-80 h-100 rad-10 b-a-9 tc f-50&quot; v-for=&quot;(item,index)  in 6&quot;&gt;	&lt;input class=&quot;w-80 h-100 &quot; maxlength=&quot;1&quot; type=&quot;text&quot;    @input=&quot;inputListener(index)&quot;   :focus=&quot;focus &amp;&amp; (focusIndex == index)&quot;/&gt;&lt;/view&gt; 
+
+
+data()&#123;    return&#123;        focus: true,		code:[&#x27;&#x27;,&#x27;&#x27;,&#x27;&#x27;,&#x27;&#x27;,&#x27;&#x27;,&#x27;&#x27;],// 需要获取焦点的序号		focusIndex: 0    &#125;&#125;method:&#123;      // 输入时事件	inputListener(e) &#123;		if (this.focusIndex != e)this.focusIndex=e		if (e &lt; 6) &#123;					this.focus=true,					this.focusIndex=e + 1		&#125;else &#123;					this.focus=false		&#125;	&#125;,&#125;
+
+
+完整版可参考链接：https://blog.csdn.net/u011423258/article/details/106683068?spm=1001.2014.3001.5506
+]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+  </entry>
+  <entry>
     <title>《皮囊》感悟</title>
     <url>/posts/1002941222.html</url>
     <content><![CDATA[阿太阿太倔强坚强，豁达的心态值得人学习。父亲最强大的地方就是娶了我的母亲。一个伟大的女人。真正的女人就是应该要积极乐观面对一切，用自己的双手打造自己想要的未来。
@@ -1312,6 +1140,178 @@ const processConversations = async (dateObj) =&gt; &#123;  const username = &#x2
 ]]></content>
       <categories>
         <category>读书感悟</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>前端面试题</title>
+    <url>/posts/545267987.html</url>
+    <content><![CDATA[
+  var、let、const 三者的区别?
+
+✅ 作用域
+var 定义的变量没有块作用域，可以跨块访问，但不能跨函数访问。
+let 定义的变量有块作用域，只能在声明的代码块中访问。
+const 定义的是常量，必须初始化，只能在声明的代码块中访问，且值不可更改。
+
+✅ 声明规则
+同一个变量名，只能用一种声明方式，否则会报错。
+
+✅ 结合 this 的区别
+
+
+特性
+var &#x2F; let &#x2F; const
+
+
+
+改变 this 指向
+✅ 可以
+
+
+第一个参数是 this 要指向的对象
+✅ 是
+
+
+没传对象或为 undefined/null
+默认指向全局 window
+
+
+参数传递
+apply 用数组，call 用参数列表，bind 可多次传参
+
+
+执行方式
+apply/call 立即执行，bind 返回新函数
+
+
+
+
+
+
+  什么是事件委托?
+
+
+
+事件委托，会把一个或者一组元素的事件委托到它的父层或者更外层元素上，真正绑定事件的是外层元素，而不是目标元素
+当事件响应到目标元素上时，会通过事件冒泡机制从而触发它的外层元素的绑定事件上，然后在外层元素上去执行函数
+
+
+
+
+  防抖跟节流的区别是什么？
+
+
+
+防抖：只执行最后一次。事件持续触发，但只有等事件停止触发后 n 秒后才执行函数。
+节流：控制执行频率。持续触发，每 n 秒执行一次函数。
+
+
+
+  Web 前端预防 SQL 注入的方法有哪些？
+
+
+参数化查询：使用预处理语句或参数化查询来避免 SQL 注入。
+验证用户输入：验证用户输入的数据，确保其符合预期格式，避免非法字符等。
+转义特殊字符：在使用用户输入的数据构造 SQL 语句时，对特殊字符进行转义，以防止注入。
+限制权限：限制用户的权限，使其不能执行不安全的 SQL 操作。
+白名单验证：白名单验证是指确保用户输入的数据只能是允许的值，避免非法数据的输入。
+审核代码：定期审核代码，以确保代码的安全性，特别是对于数据库连接和查询部分的代码。
+
+
+
+
+  http 和 https 的区别
+
+
+https 协议需要到 ca 申请证书，一般免费证书较少，因而需要一定费用。
+http 是超文本传输协议，信息是明文传输，https 则是具有安全性的 ssl 加密传输协议。
+http 和 https 使用的是完全不同的连接方式，用的端口也不一样，前者是 80，后者是 443。
+http 的连接很简单，是无状态的；HTTPS 协议是由 SSL+HTTP 协议构建的可进行加密传输、身份认证的网络协议，比 http 协议安全。
+
+
+
+
+  created跟mounted的区别
+
+
+created发生在mounted之前，此时DOM元素还没完全渲染出来，不过跟后端联调时候的请求可以放在这里，尽早获取到数据返回给变量。
+mounted这时候已经可以获取页面中的DOM元素了。
+
+
+
+
+  说说事件循环机制
+
+🔁 什么是事件循环？JavaScript 是单线程语言，执行代码时除了依赖调用栈，还依赖任务队列来控制异步代码的执行顺序。
+整个执行过程称为 事件循环（Event Loop）。
+🧠 事件循环的核心概念：
+一个线程中只有一个事件循环（主循环）。
+可以有多个任务队列，按类型分为：
+宏任务（Macro Task）
+微任务（Micro Task）
+
+
+
+
+⏱ 执行顺序是怎样的？执行顺序：
+
+
+宏任务 ➝ 微任务（清空） ➝ 下一个宏任务 ➝ 微任务（清空）… 依此循环
+
+
+执行一个宏任务（如 script 整体代码）
+在当前宏任务中执行所有产生的微任务
+若微任务中又产生新的微任务，继续执行，直到清空微任务队列
+开始下一轮宏任务循环
+
+
+🧩 宏任务（Macro Task）有哪些？
+script（整体代码）
+setTimeout
+setInterval
+setImmediate（Node.js）
+I/O 操作
+UI 渲染
+
+🧬 微任务（Micro Task）有哪些？
+process.nextTick（Node.js 专属，优先级更高）
+Promise.then / catch / finally
+async / await
+MutationObserver
+
+
+
+
+  说说 css 盒模型
+
+  css 中的盒子模型包括 IE 盒子模型和标准的 W3C 盒子模型
+  在标准的盒子模型中，width 指 content 部分的宽度，box-sizing:content-box(默认为content-box);
+  在 IE 盒子模型中，width 指的是 content+padding+border，box-sizing:border-box;
+  Box-sizing:padding-box 宽度包含了左右 padding+width
+
+
+
+  vue2 和 vue3 的区别
+
+
+双向数据绑定原理不同,vue2 使用 Es5 的 API defineProperty()对数据进行劫持, 只能监听某个属性,不能对整个对象监听;vue3 使用 ES6 的 proxy API 对数据代理, 可以监听整个对象和数组
+生命周期不同  vue2:beforeCreate、created 、beforeMount、mounted、beforeUpdate、updated、  beforeDestroy、destroyed  vue3:setup 、onBeforeMount 、 onMounted 、onBeforeUpdate 、onUpdated 、  onBeforeUnmount、onUnmounted
+vue2 必须有根标签,vue3 可以没有根标签,会默认将多个根标签包裹在 fragment虚拟标签中
+vue2 采用选项式 API,将函数和数据统一起来处理,将功能点切割了,当逻辑复杂时不利于代码阅读;vue3 采用组合式 API,将同一个功能的代码统一起来处理,使代码更有序,有利于代码的书写和维护
+vue2 和 vue3 匿名插槽不一样  具名插槽使用方式不同：vue2 使用 slot&#x3D;’’,vue3 使用 v-slot:’’  作用域插槽使用方式不同：vue2 中在父组件中使用 slot-scope&#x3D;”data”从子组件获取数据，vue3 中在父组件中使用 #data 或者 #default&#x3D;”{data}”获取
+
+
+
+
+
+
+
+
+
+
+]]></content>
+      <categories>
+        <category>前端</category>
       </categories>
   </entry>
 </search>
