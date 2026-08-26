@@ -422,15 +422,6 @@ Vue 模板中不能直接写 &lt;script&gt;，否则脚本不会执行
       </categories>
   </entry>
   <entry>
-    <title>中小学信息技术面试时的教学模版</title>
-    <url>/posts/3146395592.html</url>
-    <content><![CDATA[《if-elif条件语句》逐字稿  &emsp;&emsp;同学们，老师刚才留意到班级上的值日表，周一到周五有好多勤劳的小蜜蜂呀。老师想问下周一值日的同学有哪些举下手？诶，老师看见了。那么同学们记住这些周一值日的同学了吗？是的，总共有六位。那如果以三个班为单位，给你一个名字，你能快速给出这名同学是星期几值日吗？你们有什么好办法吗？请你，对了，可以自己用绕口令等方式背下来。还有更好的办法吗？请你，对了，可以利用程序的方式输出出来。那该使用什么语句来表示多个条件呢？今天我们就一起来学习python中的另一种条件语句if-elif-else&emsp;&emsp;现在请大家同桌两人为一小组，先来分析if-elif-else怎么实现同学名字对应星期几值日的问题，时间是8分钟。开始吧，时间到了，刚才在巡视的过程中，大家都在认真的讨论，那哪个小组代表想来分享你们的成果，你来说，你说想要判断同学是哪天值日的，只要输入他的名字，根据名字找到对应星期几输出就行了。还有补充的吗？第五小组，你们来说，他说可以弄五个数组对应星期一到星期五，把每个人的名字放进去对应的数组里，然后判断输出。你补充的非常关键。请坐。非常好，请坐，大家分析的很正确，说明大家有充分预习本节课的内容。 &emsp;&emsp;接下来我们就综合大家的分析，请同学们自主思考，并画出流程图，时间是5分钟，开始吧，时间到了，请这位同学来展示你的流程图，你说首先输入学生的名字，假如小花在星期一的数组里，那么输出星期一，依次类推。现在请大家尝试写出多分支结构的语句，老师提示一下，条件子句的如果需要用elif来表示。我们请这位同学将他的答案写到黑板上，请同学们来看跟你写的一样吗？哪些地方需要修改？你说将最后一个elif应该写成else，是表达都不满足条件的话，执行else后面的语句。你说要注意缩进和冒号。大家观察的很仔细，希望同学们写的时候一定要认真。请大家利用学到的if-elif语句去编写刚才你们设计的算法。我看到大家都能准确的写出来了，并且都避免了刚才的问题。&emsp;&emsp;语句我们已经写出来了，那他的执行过程是什么呢？现在请同学们以同桌两人为一小组，进行讨论，一会我们请一名小组代表展示讲解，时间是7分钟，开始吧，我看到有同学在小声的讨论，时间到了，第二小组，请你们讲一讲执行过程，他结合流程图告诉我们，执行过程是依次判断输入的同学姓名符合哪个条件，如符合则输出，若都不符合则输出错误。他用图文的形式讲解，非常的直观。那现在我们就可以就着大屏幕上的流程图，总结出if-elif语句的执行过程是从if行开始依次对条件进行判断，如果正确则执行改条件下面的语句块，然后跳出if语句，如果不正确则对下一个条件进行判断，如果所有条件都不成立，则执行else下面的语句块。&emsp;&emsp;新知识我们已经学完了，现在请大家编写完整程序，实现上述的执行过程，学有余力的同学，请自己思考生活中有哪些需要对多个条件进行检测的事情，自主进行编写。我们请这些同学来进行展示，他们中有的从数学出发，编写了比较三个数，求最大数问题，还有的是从生活出发，编写了出租车计费的问题。大家编写的语句和格式都很规范。&emsp;&emsp;这堂课已经接近尾声了，这节课你都有哪些收获呢？大家说学会了if-elif的格式和执行过程，看来这节课的知识同学们都掌握了。其实编程离咱们的生活和学习很近，并且也没有想象中的那么难，老师希望同学们以后都可以像今天一样在课堂上积极思考，表达想法。&emsp;&emsp;最后布置一个小作业，请同学们对比三种if语句特点，整理成表格。&emsp;&emsp;这节课就上到这里，同学们再见。
-]]></content>
-      <categories>
-        <category>教资</category>
-      </categories>
-  </entry>
-  <entry>
     <title>初中英语教师资格作文课模版</title>
     <url>/posts/2227105628.html</url>
     <content><![CDATA[开场问候Dear Judges, Now I’ll start the lesson. Good morning, Boys and girls. How are you today? Good? Fine? I’m fine, too. Before the class, Let’s sing a song together. If you can sing, sing along with me . “You are my sunshine, my only sunshine, you make me happy.” Do you feel better? Great, let’s start the lesson.At the beginning, I’ll show you a video, and you should try to answer the question: What can you see in the video? Who would like to try? Blair, please. You saw the girl had much fun. She had dinner and went shopping with friends. Thank you, Blair, you set a good example for us. You know so much about this topic. Do you want to learn more? Today, let’s learn a new lesson — How was your day off.
@@ -485,17 +476,9 @@ the modal verbs.(情态动词)Make inferences.(作出推断)The main structure o
       </categories>
   </entry>
   <entry>
-    <title>初中英语语篇课模版</title>
-    <url>/posts/1218163514.html</url>
-    <content><![CDATA[The intonation.（语调）Express the different feelings of the speaker.We often use the falling tone when we read a statement, a special question, an exclamatory or imperative sentence(祈使句、感叹句). We often use rising tone when we ask a Yes&#x2F;No question. We often use rising-falling tone to read an alternative question and a coordinate clause（选择疑问句、并列句）. There are two parts in a tag question（反义疑问句）. The first part is often in a falling tone and for second part, there are two cases. If we are not sure about the question, we often use a rising tone. If we are sure about that, we offen use a falling tone.We choose different intonations to express different feelings and moods.
-The word stress(单词重音)Read words more exactlyWhen we say a word with more than one syllable, some of the syllables need to be stressed.When we read two-syllable words, normally we stress the first syllable for nouns, and stress the second syllable for verbs. As for the multi-syllable words, we stress the third from the bottom.
-The sentence stress（句子重读）Draw attention to certain information.We usually stress the lexical words such as nouns, verbs, adjectives, adverbs and numbers. We don’t stress the function words such as a, the, is, of and so on. Besides, you can stress some information you want to emphasis.We should change it according to the situation and feelings of the speaker.
-The liaison&#x2F;ˈlēəˌzän,lēˈāˌzän&#x2F;&#x2F;Word linking.(连读)Speak English more fluently and naturally.In one sense group, we can read the two words together if the former word ends with a consonant&#x2F;ˈkänsənənt&#x2F;, a vowel or “r” sound, and the following word begins with a vowel. If the two words finish and start with the same consonant, we only read one of the consonants.The two words must be in one sense group.
-incomplete plosion&#x2F;‘pləʊʒ(ə)n&#x2F;（不完全爆破）Speak English more fluently and naturally.There are six plosive sounds &#x2F;t&#x2F; &#x2F;d&#x2F; &#x2F;p&#x2F; &#x2F;b&#x2F; &#x2F;k&#x2F; &#x2F;g&#x2F; in English.When two consonants of them are next to each other, we read the former sound silently.The two words must be in one sense group.
-Weak form(弱读)speak English more fluently and naturally.Some words often appear in a weak form such as function words, articles, auxiliary verbs and modal verbs.there are mainly three ways to change function words to weak forms. They are shortening, elision[ i’liʒən ] and vowel changed to schwa  [ʃwɑ:] sound.
-Assimilation(同化)We use it to speak English more fluently and naturally.As we can see, Two different sounds affect each other and become more alike.&#x2F;s+ j&#x2F; -&gt; &#x2F;F&#x2F;this year,&#x2F;d+j&#x2F; -&gt; &#x2F;d3&#x2F; would you
-Sense group(意群)We use it to make our expression more easily to understand.As we can see, a sentence may consists of several groups according to meaning or structure. Each group is called a sense group. It can be a word, a phrase, a clause. After a sense group, there should be a short pause.We should remind that we should change it according to the situation and feelings of the speaker.
-The pause(停顿)We use to speak English more fluently and naturally.As we can see, in a long sentence, we should pause several times according to the sense group. Normally, we pause based on meaning and grammatical structure.We should remind that there should be no pause in a sense group. Where to pause also depends on the situation and the feelings of the speaker.
+    <title>中小学信息技术面试时的教学模版</title>
+    <url>/posts/3146395592.html</url>
+    <content><![CDATA[《if-elif条件语句》逐字稿  &emsp;&emsp;同学们，老师刚才留意到班级上的值日表，周一到周五有好多勤劳的小蜜蜂呀。老师想问下周一值日的同学有哪些举下手？诶，老师看见了。那么同学们记住这些周一值日的同学了吗？是的，总共有六位。那如果以三个班为单位，给你一个名字，你能快速给出这名同学是星期几值日吗？你们有什么好办法吗？请你，对了，可以自己用绕口令等方式背下来。还有更好的办法吗？请你，对了，可以利用程序的方式输出出来。那该使用什么语句来表示多个条件呢？今天我们就一起来学习python中的另一种条件语句if-elif-else&emsp;&emsp;现在请大家同桌两人为一小组，先来分析if-elif-else怎么实现同学名字对应星期几值日的问题，时间是8分钟。开始吧，时间到了，刚才在巡视的过程中，大家都在认真的讨论，那哪个小组代表想来分享你们的成果，你来说，你说想要判断同学是哪天值日的，只要输入他的名字，根据名字找到对应星期几输出就行了。还有补充的吗？第五小组，你们来说，他说可以弄五个数组对应星期一到星期五，把每个人的名字放进去对应的数组里，然后判断输出。你补充的非常关键。请坐。非常好，请坐，大家分析的很正确，说明大家有充分预习本节课的内容。 &emsp;&emsp;接下来我们就综合大家的分析，请同学们自主思考，并画出流程图，时间是5分钟，开始吧，时间到了，请这位同学来展示你的流程图，你说首先输入学生的名字，假如小花在星期一的数组里，那么输出星期一，依次类推。现在请大家尝试写出多分支结构的语句，老师提示一下，条件子句的如果需要用elif来表示。我们请这位同学将他的答案写到黑板上，请同学们来看跟你写的一样吗？哪些地方需要修改？你说将最后一个elif应该写成else，是表达都不满足条件的话，执行else后面的语句。你说要注意缩进和冒号。大家观察的很仔细，希望同学们写的时候一定要认真。请大家利用学到的if-elif语句去编写刚才你们设计的算法。我看到大家都能准确的写出来了，并且都避免了刚才的问题。&emsp;&emsp;语句我们已经写出来了，那他的执行过程是什么呢？现在请同学们以同桌两人为一小组，进行讨论，一会我们请一名小组代表展示讲解，时间是7分钟，开始吧，我看到有同学在小声的讨论，时间到了，第二小组，请你们讲一讲执行过程，他结合流程图告诉我们，执行过程是依次判断输入的同学姓名符合哪个条件，如符合则输出，若都不符合则输出错误。他用图文的形式讲解，非常的直观。那现在我们就可以就着大屏幕上的流程图，总结出if-elif语句的执行过程是从if行开始依次对条件进行判断，如果正确则执行改条件下面的语句块，然后跳出if语句，如果不正确则对下一个条件进行判断，如果所有条件都不成立，则执行else下面的语句块。&emsp;&emsp;新知识我们已经学完了，现在请大家编写完整程序，实现上述的执行过程，学有余力的同学，请自己思考生活中有哪些需要对多个条件进行检测的事情，自主进行编写。我们请这些同学来进行展示，他们中有的从数学出发，编写了比较三个数，求最大数问题，还有的是从生活出发，编写了出租车计费的问题。大家编写的语句和格式都很规范。&emsp;&emsp;这堂课已经接近尾声了，这节课你都有哪些收获呢？大家说学会了if-elif的格式和执行过程，看来这节课的知识同学们都掌握了。其实编程离咱们的生活和学习很近，并且也没有想象中的那么难，老师希望同学们以后都可以像今天一样在课堂上积极思考，表达想法。&emsp;&emsp;最后布置一个小作业，请同学们对比三种if语句特点，整理成表格。&emsp;&emsp;这节课就上到这里，同学们再见。
 ]]></content>
       <categories>
         <category>教资</category>
@@ -525,6 +508,391 @@ Class is over, see you next time.
 脚本部分：&lt;body&gt;  &lt;div id=&quot;btn&quot;&gt;     &lt;!-- &lt;button onclick=&quot;submitFn()&quot;&gt;打开app&lt;/button&gt; --&gt;      &lt;a href=&quot;安卓配置&quot; class=&quot;a-btn&quot; style=&quot;display: none&quot;&gt;安卓&lt;/a&gt;      &lt;a href=&quot;苹果URL scheme://&quot; class=&quot;i-btn&quot; style=&quot;display: none&quot;&gt;苹果&lt;/a&gt;      &lt;/div&gt; &lt;/body&gt;  &lt;script src=&quot;http://m-cdn.saclub.com.cn/app/2.4/js/jquery-1.11.3.min.js&quot;&gt;&lt;/script&gt;  &lt;script type=&quot;text/javascript&quot;&gt;  var ua = navigator.userAgent.toLowerCase();  var isWeixin = ua.indexOf(&#x27;micromessenger&#x27;) != -1;  var isAndroid = ua.indexOf(&#x27;android&#x27;) != -1;  var isIos = (ua.indexOf(&#x27;iphone&#x27;) != -1) || (ua.indexOf(&#x27;ipad&#x27;) != -1);   var d = new Date(); var t0 = d.getTime();  $(function()&#123; if(isAndroid)&#123; $(&quot;.a-btn&quot;).show(); &#125;else&#123; $(&quot;.i-btn&quot;).show(); &#125; &#125;);   $(&quot;.a-btn&quot;).click(function()&#123;  openApp(&quot;安卓下载链接&quot;); &#125;); $(&quot;.i-btn&quot;).click(function()&#123;  openApp(&quot;IOS App Store下载链接&quot;); &#125;);  function openApp(src) &#123;     var delay = setInterval(function()&#123;     var d = new Date(); var t1 = d.getTime();     if( t1-t0&lt;3000 &amp;&amp; t1-t0&gt;2000)&#123; alert(&#x27;请下载APP&#x27;); window.location.href =src; &#125;     if(t1-t0&gt;=3000)&#123; clearInterval(delay); &#125;     &#125;,2000); &#125; &lt;/script&gt;
 
 
+
+]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>前端骨架屏</title>
+    <url>/posts/4094880158.html</url>
+    <content><![CDATA[什么时候需要用到前端骨架屏呢？ 其实就是在首页还没完全加载出来，可以先把骨架屏弄出来，避免白屏给用户造成不好的用户体验。那么具体是要如何去弄出来呢？设置Dps.config.js，配置如下：
+其中url字段输入待生成骨架屏页面的地址，比如百度（https://baidu.com）也可以。output主要代表输出。其中filepath代表生成骨架屏的存放页面，一般为项目的入口页面；然后injectSelector代表插入页面的某个节点。includeElement用于定制或排除某些节点的绘制行为，其中通过id来定位，比如需不需要在这个id上渲染。还能判断tagName是什么的时候，渲染什么。init的作用是生成骨架屏之前的操作，比如删除干扰节点。
+基本配置字段说明    const dpsConfig = &#123;    url: &#x27;file:///Users/myname/Desktop/project/pro/scaleTips/dist/index.html#/&#x27;,          // 待生成骨架屏页面的地址，用百度（https://baidu.com）试试也可以    output: &#123;        filepath: &#x27;/Users/myname/Desktop/project/pro&#x27;,        // 生成骨架屏的存放页面，一般为项目的入口页面        injectSelector: &#x27;#app&#x27;          // 生成的骨架屏插入页面的节点    &#125;,    // header: &#123;    //  height: 40,    //  background: &#x27;#1b9af4&#x27;    // &#125;,    // background: &#x27;#eee&#x27;,    // animation: &#x27;opacity 1s linear infinite;&#x27;,    //用于定制或排除某些节点的绘制行为    includeElement: function(node, draw) &#123;        // 定制某个节点画出来的样子，带上return false        if(node.id == &#x27;ui-alert&#x27;) &#123;            //跳过该节点及其子节点            return false;        &#125;        if(node.tagName.toLowerCase() === &#x27;img&#x27;) &#123;            // 对该图片生成宽100%，高8%，颜色为红色的色块            draw(&#123;                width: 100,                height: 8,                left: 0,                top: 0,                zIndex: 99999999,                background: &#x27;red&#x27;            &#125;);            return false;        &#125;     &#125;,    // writePageStructure: function(html) &#123;        // 自己处理生成的骨架屏        // fs.writeFileSync(filepath, html);        // console.log(html)    // &#125;,    init: function() &#123;        // 生成骨架屏之前的操作，比如删除干扰节点    &#125;&#125;module.exports = dpsConfig;
+
+
+
+]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>初中英语语篇课模版</title>
+    <url>/posts/1218163514.html</url>
+    <content><![CDATA[The intonation.（语调）Express the different feelings of the speaker.We often use the falling tone when we read a statement, a special question, an exclamatory or imperative sentence(祈使句、感叹句). We often use rising tone when we ask a Yes&#x2F;No question. We often use rising-falling tone to read an alternative question and a coordinate clause（选择疑问句、并列句）. There are two parts in a tag question（反义疑问句）. The first part is often in a falling tone and for second part, there are two cases. If we are not sure about the question, we often use a rising tone. If we are sure about that, we offen use a falling tone.We choose different intonations to express different feelings and moods.
+The word stress(单词重音)Read words more exactlyWhen we say a word with more than one syllable, some of the syllables need to be stressed.When we read two-syllable words, normally we stress the first syllable for nouns, and stress the second syllable for verbs. As for the multi-syllable words, we stress the third from the bottom.
+The sentence stress（句子重读）Draw attention to certain information.We usually stress the lexical words such as nouns, verbs, adjectives, adverbs and numbers. We don’t stress the function words such as a, the, is, of and so on. Besides, you can stress some information you want to emphasis.We should change it according to the situation and feelings of the speaker.
+The liaison&#x2F;ˈlēəˌzän,lēˈāˌzän&#x2F;&#x2F;Word linking.(连读)Speak English more fluently and naturally.In one sense group, we can read the two words together if the former word ends with a consonant&#x2F;ˈkänsənənt&#x2F;, a vowel or “r” sound, and the following word begins with a vowel. If the two words finish and start with the same consonant, we only read one of the consonants.The two words must be in one sense group.
+incomplete plosion&#x2F;‘pləʊʒ(ə)n&#x2F;（不完全爆破）Speak English more fluently and naturally.There are six plosive sounds &#x2F;t&#x2F; &#x2F;d&#x2F; &#x2F;p&#x2F; &#x2F;b&#x2F; &#x2F;k&#x2F; &#x2F;g&#x2F; in English.When two consonants of them are next to each other, we read the former sound silently.The two words must be in one sense group.
+Weak form(弱读)speak English more fluently and naturally.Some words often appear in a weak form such as function words, articles, auxiliary verbs and modal verbs.there are mainly three ways to change function words to weak forms. They are shortening, elision[ i’liʒən ] and vowel changed to schwa  [ʃwɑ:] sound.
+Assimilation(同化)We use it to speak English more fluently and naturally.As we can see, Two different sounds affect each other and become more alike.&#x2F;s+ j&#x2F; -&gt; &#x2F;F&#x2F;this year,&#x2F;d+j&#x2F; -&gt; &#x2F;d3&#x2F; would you
+Sense group(意群)We use it to make our expression more easily to understand.As we can see, a sentence may consists of several groups according to meaning or structure. Each group is called a sense group. It can be a word, a phrase, a clause. After a sense group, there should be a short pause.We should remind that we should change it according to the situation and feelings of the speaker.
+The pause(停顿)We use to speak English more fluently and naturally.As we can see, in a long sentence, we should pause several times according to the sense group. Normally, we pause based on meaning and grammatical structure.We should remind that there should be no pause in a sense group. Where to pause also depends on the situation and the feelings of the speaker.
+]]></content>
+      <categories>
+        <category>教资</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>如何优化前端性能</title>
+    <url>/posts/338223214.html</url>
+    <content><![CDATA[
+避免重复打包公共依赖将 Vue&#x2F;React 等设为 external，主应用通过 CDN 注入：
+ // vue.config.js 或 webpack.config.jsexternals: &#123;vue: &#x27;Vue&#x27;,react: &#x27;React&#x27;,&#x27;react-dom&#x27;: &#x27;ReactDOM&#x27;,&#125;
+
+预加载子应用资源
+ start(&#123;prefetch: true, // 开启资源预加载&#125;);
+缓存子应用在主应用中缓存子应用实例，避免每次进入都重新 mount。
+
+异步加载子应用脚本
+ &lt;script src=&quot;child-app.js&quot; defer&gt;&lt;/script&gt;
+
+全局事件通信 bus
+ // 主应用通信工具import mitt from &#x27;mitt&#x27;;export const eventBus = mitt();// 子应用中通信示例eventBus.emit(&#x27;login-success&#x27;, userInfo);eventBus.on(&#x27;set-theme&#x27;, (theme) =&gt; &#123; ... &#125;);
+
+]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>脱离框架开发</title>
+    <url>/posts/877328792.html</url>
+    <content><![CDATA[前端脱离框架去开发，就是不使用任何前端框架（Vue、React等）的情况下，直接用js、html和css去开发web。这意味更能深入了解前端底层原理和机制，避免依赖框架。
+在面对静态且不做过多功能的低项目下，其实脱离框架就已经足够了。框架编写的代码必须要进行编译才能在浏览器中渲染，所以便有了webpack。像Vue的出现就是为了解决一些痛点问题，比如双向数据流、自动响应式更新等，但我们又不得不遵守他们框架内的一些语法，随着vue的升级，我们也要不停学习更新的框架内容。框架本身是有利于开发的，但面对一些简单的问题时，不用框架反而是明智的。根据需求而决定去不去用框架进行下一步的开发。
+当开发多个类似的网站，没有打包过的代码放上服务器，能直接在服务器改源代码。而使用框架后打包的源码放在服务器中，要修改却只能本地修改，反而更浪费时间。当熟悉纯js开发后，还能开发一些工具以及框架出来。
+]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>宝塔安装puppeteer</title>
+    <url>/posts/2384738307.html</url>
+    <content><![CDATA[centos8使用yum失败，切换镜像源，更改镜像源文件，尝试清除缓存并重新建立
+wget -O /etc/yum.repos.d/CentOS-Base.repo https://mirrors.aliyun.com/repo/Centos-8.reposudo yum clean allsudo yum makecache
+
+Centos8已不维护，只能找
+puppeteer报错下载依赖 参考链接：https://www.cnblogs.com/ilizhu/p/14504049.html报错sandbox：
+#添加启动参数const browser = await puppeteer.launch(&#123;args: [&#x27;--no-sandbox&#x27;, &#x27;--disable-setuid-sandbox&#x27;]&#125;);]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>如何防御 XSS（跨站脚本攻击）：前端开发者必须掌握的安全实践</title>
+    <url>/posts/1588092017.html</url>
+    <content><![CDATA[在 Web 开发中，其实存在很多安全漏洞，其中跨站脚本攻击是最常见、危害也非常大的安全漏洞之一。一旦网站存在 XSS 漏洞，那么攻击者就会在用户浏览器中执行恶意脚本，进而窃取 Cookie、劫持会话、篡改页面内容，甚至控制用户账号。
+下面将从 原理 + 实战防御手段 的角度，系统讲解前端和全栈开发中 如何有效防御 XSS 攻击
+一、什么是 XSS 攻击？XSS 的本质是：
+
+攻击者将恶意 JavaScript 注入到网页中，并在其他用户的浏览器里执行。
+
+常见的 XSS 攻击类型包括：
+
+反射型 XSS：恶意脚本来自 URL 参数
+存储型 XSS：恶意脚本被存储在数据库中
+DOM 型 XSS：前端 JS 逻辑直接操作不可信数据
+
+不论是哪种形式，核心问题都在于：👉 用户输入被当作代码执行了
+二、输入验证和过滤（最基础也是最重要）永远不要相信用户输入。
+1. 前端层面的基本校验在前端可以做一些基础校验，例如：
+
+限制输入长度
+限制输入格式（如邮箱、手机号）
+过滤明显的危险字符
+
+示例（仅用于基础校验）：
+function sanitizeInput(input) &#123;  return input.replace(/[&lt;&gt;]/g, &#x27;&#x27;);&#125;
+
+⚠️ 注意：前端校验只能作为用户体验优化，不能作为最终安全防线。
+2. 后端必须做严格校验（关键）光是前端做个过滤是远远不够的，后端也需要做处理：
+
+校验数据类型
+校验长度
+拒绝不符合业务规则的输入
+对 HTML 内容进行转义或白名单过滤
+
+推荐策略：
+
+默认拒绝
+白名单优先
+
+三、对输出进行编码（比过滤更重要）很多 XSS 漏洞并不是输入有问题，而是输出方式不安全。
+1. HTML 转义输出在将用户输入输出到页面时，应进行 HTML 编码：
+
+
+
+原字符
+转义后
+
+
+
+&lt;
+&amp;lt;
+
+
+&gt;
+&amp;gt;
+
+
+&quot;
+&amp;quot;
+
+
+&#39;
+&amp;#39;
+
+
+很多模板引擎（如 Vue、React、Handlebars）默认会做转义，不要轻易关闭。
+
+2. 避免危险 API尽量避免以下写法：
+element.innerHTML = userInput;
+
+推荐安全方式：
+element.textContent = userInput;
+
+或者：
+const el = document.createElement(&#x27;div&#x27;);el.textContent = userInput;container.appendChild(el);
+
+
+
+四、使用安全的 API 和框架机制现代前端框架本身已经内置了大量 XSS 防护机制。
+1. React &#x2F; Vue 的默认保护
+JSX &#x2F; 模板语法默认转义
+明确标注危险行为（如 v-html、dangerouslySetInnerHTML）
+
+⚠️ 一旦使用这些 API，就必须 100% 确保内容可信
+2. 避免在前端拼接 HTML 字符串错误示例：
+container.innerHTML = `&lt;div&gt;$&#123;userInput&#125;&lt;/div&gt;`;
+
+正确做法：
+const div = document.createElement(&#x27;div&#x27;);div.textContent = userInput;container.appendChild(div);
+
+
+
+五、使用内容安全策略（CSP）CSP（Content Security Policy） 是防御 XSS 的“终极武器”之一。
+1. CSP 能做什么？
+禁止内联脚本执行
+限制脚本来源
+阻止恶意第三方资源加载
+
+示例 HTTP 头：
+Content-Security-Policy:  default-src &#x27;self&#x27;;  script-src &#x27;self&#x27;;  object-src &#x27;none&#x27;;
+
+即使攻击者成功注入脚本，只要 CSP 生效，浏览器也会拒绝执行。
+2. 为什么 CSP 非常重要？因为它属于：
+
+浏览器层面的安全防护
+就算代码有疏漏，也能兜底
+
+六、使用 HttpOnly 和 Secure Cookie1. HttpOnly 的作用设置 Cookie 时加上 HttpOnly：
+Set-Cookie: sessionId=xxx; HttpOnly;
+
+这样可以：
+
+防止 JavaScript 读取 Cookie
+即使发生 XSS，也能降低会话被盗风险
+
+2. 配合 Secure 和 SameSite推荐同时使用：
+
+Secure
+SameSite=Strict 或 Lax
+
+提升整体安全等级。
+七、定期更新第三方库和依赖现实中的 XSS 漏洞，大量来自第三方依赖：
+
+旧版本 UI 组件
+不再维护的插件
+存在漏洞的 npm 包
+
+建议：
+
+定期更新依赖
+使用 npm audit
+关注安全公告
+
+八、良好的安全编程习惯最后，防御 XSS 不是“某一个技巧”，而是一整套习惯：
+
+不信任任何外部输入
+不随意使用 innerHTML
+不忽略安全警告
+安全优先于“图方便”
+
+九、总结
+XSS 是最常见、也是最危险的 Web 安全问题之一
+真正有效的防御需要 前端 + 后端 + 浏览器策略 三层配合
+输入校验只是开始，安全输出和 CSP 才是关键
+养成良好的安全编程习惯，比任何补丁都重要
+
+对于前端开发者来说，懂得如何防御 XSS，是走向专业的重要一步。
+]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+      <tags>
+        <tag>XSS</tag>
+        <tag>Web安全</tag>
+        <tag>前端安全</tag>
+        <tag>JavaScript</tag>
+        <tag>浏览器安全</tag>
+        <tag>网络安全</tag>
+        <tag>Web开发</tag>
+        <tag>安全编程</tag>
+        <tag>Content Security Policy</tag>
+        <tag>HttpOnly</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>小程序验证码输入框自动聚焦下个输入框</title>
+    <url>/posts/2770215437.html</url>
+    <content><![CDATA[最开始我想的是有多少个输入框，就放多少个input，做完会发现有各种bug。比如输入时跳转下个输入框不顺畅，键盘突然消失、操作不丝滑等。正确思路是一个输入框就够了，然后通过改变样式（间隔、高亮）来实现，就是表面看起来是六个输入框，本质上只有一个input
+正确解法：&lt;view class=&quot;w-80 h-100 rad-10 b-a-9 tc f-50&quot; v-for=&quot;(item,index)  in 6&quot;&gt;	&lt;input class=&quot;w-80 h-100 &quot; maxlength=&quot;1&quot; type=&quot;text&quot;    @input=&quot;inputListener(index)&quot;   :focus=&quot;focus &amp;&amp; (focusIndex == index)&quot;/&gt;&lt;/view&gt; 
+
+
+data()&#123;    return&#123;        focus: true,		code:[&#x27;&#x27;,&#x27;&#x27;,&#x27;&#x27;,&#x27;&#x27;,&#x27;&#x27;,&#x27;&#x27;],// 需要获取焦点的序号		focusIndex: 0    &#125;&#125;method:&#123;      // 输入时事件	inputListener(e) &#123;		if (this.focusIndex != e)this.focusIndex=e		if (e &lt; 6) &#123;					this.focus=true,					this.focusIndex=e + 1		&#125;else &#123;					this.focus=false		&#125;	&#125;,&#125;
+
+
+完整版可参考链接：https://blog.csdn.net/u011423258/article/details/106683068?spm=1001.2014.3001.5506
+]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>《当我谈跑步时，我谈些什么》读后感</title>
+    <url>/posts/2608328413.html</url>
+    <content><![CDATA[《当我谈跑步时，我谈些什么》也就是看了这本书，才知道世界上会有另一个自己在做着自己喜欢的事情。看这本书之前，从没有看过村上君写的书。知道有这么一个火人，也知道那么多火书，但就是没怎么看过。可论及跑步呀，觉得能与之有所交流。一直跑下去，会不会就到月球上了呢？跑步并非为了长命百岁，而是在有限生命里让自己活得更轻松点罢了。
+惊喜于能发现村上君跑步时的想象力，天马行空我很喜欢，我也曾幻想过很多，也会跑着跑着就突然想起一句歌词，什么现在加快速度追幸福呀 blala……长跑需要耐力，但没有想象力可不行哟。当然前提是热爱跑步，一个不喜欢跑步的人，你说再多也无动于衷；一个热爱跑步的人，即使是雨天，也想要在停雨空隙去相遇另一个自己。人本孤独，但精神却能得到共鸣。
+想着未来一定会坚持跑下去，不管世界如何变化。自从有次在外一整天走了 30 公里，除了身体上晒伤的疼痛以外，我更喜欢的是精神世界的富足。没经历过，就没有话语权。可能我跟陈坤一样，是个悲观的极乐主义者，在世上积极活着，却也看透红尘。不以物喜，不以己悲。脉搏也降到一分钟 50 多次，看来还是很适合慢跑的。说这么多，主要还是兴趣使然。只要不限制我的自由，一切好说。
+想着来年，我也会参加马拉松，然后旁边的人都在为我加油，那该有多 happy。
+“我不是人，是一架纯粹的机器，所以什么也无须感觉，唯有向前奔跑。”
+极为像的一点就是我们都喜欢不停地奔跑，不是那种觉得自己快不行了就走几步，也不是适当的时候停下来看风景。可能每个人的见解不同。但我觉得能不停跑下去的人才是真正的王者。
+当抵达终点那一刻，会觉得怎么那么酷，一股自豪感涌上来，就好比中了彩票或是走了狗屎运。这是原则，亦是我的骄傲。
+噢对，好比尚三哥在终点等着我，然后我得意地笑了。
+]]></content>
+      <categories>
+        <category>读书感悟</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>手写 new</title>
+    <url>/posts/1814442917.html</url>
+    <content><![CDATA[在 JavaScript 中，new运算符是面试和日常开发中都会频繁遇到的知识点。很多人会用new，但不理解它的真正原理。
+下面通过手写new，一步步拆解new运算符的底层逻辑，帮助你真正掌握 JavaScript 对象创建机制。
+一、new 运算符到底做了什么？当我们执行下面这行代码时：
+const person = new Person(&#x27;Alice&#x27;, 25);
+
+
+  JavaScript 实际上在背后做了 4 件事情：
+
+创建一个新的空对象
+将新对象的原型指向构造函数的 prototype
+执行构造函数，并将 this 绑定到新对象
+如果构造函数返回的是对象，则返回该对象；否则返回新对象
+
+  理解这 4 步，是理解 new 的关键。
+二、为什么要手写 new？手写 new 的好处有三点：
+
+加深对 原型链 和 this 指向 的理解
+几乎是 前端面试高频题
+有助于理解框架中对象创建的底层逻辑
+
+接下来我们直接上代码。
+三、手写 new 的完整实现function myNew(constructor, ...args) &#123;  // 1. 创建一个新对象，并将其原型指向构造函数的 prototype  const obj = Object.create(constructor.prototype);  // 2. 执行构造函数，将 this 绑定到新对象  const result = constructor.apply(obj, args);  // 3. 如果构造函数返回的是对象，则返回该对象  //    否则返回我们创建的新对象  return result instanceof Object ? result : obj;&#125;
+
+这段代码完整复现了 new 运算符的核心行为。
+四、逐行拆解实现逻辑1. Object.create 的作用const obj = Object.create(constructor.prototype);
+
+这一步等价于：
+obj.__proto__ === constructor.prototype
+
+也就是说：
+
+新对象可以访问构造函数原型上的方法
+原型链关系得以建立
+
+2. constructor.apply(obj, args)const result = constructor.apply(obj, args);
+
+这一步做了两件事：
+
+执行构造函数
+将构造函数内部的 this 指向新创建的对象
+
+也就是：
+this.name = name;this.age = age;
+
+实际上是在给 obj 添加属性。
+3. 为什么要判断返回值？return result instanceof Object ? result : obj;
+
+这是很多人容易忽略的一点。
+来看一个例子：
+function Test() &#123;  this.a = 1;  return &#123; b: 2 &#125;;&#125;const t = new Test();console.log(t); // &#123; b: 2 &#125;
+
+如果构造函数 显式返回一个对象，new 会返回这个对象，而不是 this。
+所以我们在 myNew 中必须处理这种情况。
+五、测试手写的 myNewfunction Person(name, age) &#123;  this.name = name;  this.age = age;&#125;const p1 = myNew(Person, &#x27;Alice&#x27;, 25);console.log(p1.name); // Aliceconsole.log(p1.age);  // 25console.log(p1 instanceof Person); // true
+
+结果完全符合原生 new 的行为。
+六、myNew 与 new 的对比总结
+
+
+行为
+new
+myNew
+
+
+
+创建新对象
+✅
+✅
+
+
+绑定原型
+✅
+✅
+
+
+绑定 this
+✅
+✅
+
+
+处理返回对象
+✅
+✅
+
+
+可以说，myNew 已经实现了 90% 的 new 运算符行为，足以应付面试和深入理解 JS 原理。
+七、常见面试追问Q1：为什么不能直接 const obj = &#123;&#125;？因为 &#123;&#125; 创建的对象原型是 Object.prototype，而 new 创建的对象原型必须是 构造函数的 prototype。
+Q2：constructor.apply 能不能换成 call？可以，只是参数形式不同：
+constructor.call(obj, ...args);
+
+
+
+Q3：instanceof 是如何工作的？p1 instanceof Person
+
+本质是沿着原型链查找：
+Person.prototype 是否在 p1 的原型链上
+
+
+
+八、总结
+new 并不是魔法，而是一套明确的执行流程
+手写 new 是理解 原型链 + this + 构造函数 的最佳方式
+掌握这个知识点，对学习 Vue、React、Node.js 都有帮助
 
 ]]></content>
       <categories>
@@ -697,374 +1065,6 @@ vue2 和 vue3 匿名插槽不一样  具名插槽使用方式不同：vue2 使�
 
 
 
-
-]]></content>
-      <categories>
-        <category>前端</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>前端骨架屏</title>
-    <url>/posts/4094880158.html</url>
-    <content><![CDATA[什么时候需要用到前端骨架屏呢？ 其实就是在首页还没完全加载出来，可以先把骨架屏弄出来，避免白屏给用户造成不好的用户体验。那么具体是要如何去弄出来呢？设置Dps.config.js，配置如下：
-其中url字段输入待生成骨架屏页面的地址，比如百度（https://baidu.com）也可以。output主要代表输出。其中filepath代表生成骨架屏的存放页面，一般为项目的入口页面；然后injectSelector代表插入页面的某个节点。includeElement用于定制或排除某些节点的绘制行为，其中通过id来定位，比如需不需要在这个id上渲染。还能判断tagName是什么的时候，渲染什么。init的作用是生成骨架屏之前的操作，比如删除干扰节点。
-基本配置字段说明    const dpsConfig = &#123;    url: &#x27;file:///Users/myname/Desktop/project/pro/scaleTips/dist/index.html#/&#x27;,          // 待生成骨架屏页面的地址，用百度（https://baidu.com）试试也可以    output: &#123;        filepath: &#x27;/Users/myname/Desktop/project/pro&#x27;,        // 生成骨架屏的存放页面，一般为项目的入口页面        injectSelector: &#x27;#app&#x27;          // 生成的骨架屏插入页面的节点    &#125;,    // header: &#123;    //  height: 40,    //  background: &#x27;#1b9af4&#x27;    // &#125;,    // background: &#x27;#eee&#x27;,    // animation: &#x27;opacity 1s linear infinite;&#x27;,    //用于定制或排除某些节点的绘制行为    includeElement: function(node, draw) &#123;        // 定制某个节点画出来的样子，带上return false        if(node.id == &#x27;ui-alert&#x27;) &#123;            //跳过该节点及其子节点            return false;        &#125;        if(node.tagName.toLowerCase() === &#x27;img&#x27;) &#123;            // 对该图片生成宽100%，高8%，颜色为红色的色块            draw(&#123;                width: 100,                height: 8,                left: 0,                top: 0,                zIndex: 99999999,                background: &#x27;red&#x27;            &#125;);            return false;        &#125;     &#125;,    // writePageStructure: function(html) &#123;        // 自己处理生成的骨架屏        // fs.writeFileSync(filepath, html);        // console.log(html)    // &#125;,    init: function() &#123;        // 生成骨架屏之前的操作，比如删除干扰节点    &#125;&#125;module.exports = dpsConfig;
-
-
-
-]]></content>
-      <categories>
-        <category>前端</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>如何优化前端性能</title>
-    <url>/posts/338223214.html</url>
-    <content><![CDATA[
-避免重复打包公共依赖将 Vue&#x2F;React 等设为 external，主应用通过 CDN 注入：
- // vue.config.js 或 webpack.config.jsexternals: &#123;vue: &#x27;Vue&#x27;,react: &#x27;React&#x27;,&#x27;react-dom&#x27;: &#x27;ReactDOM&#x27;,&#125;
-
-预加载子应用资源
- start(&#123;prefetch: true, // 开启资源预加载&#125;);
-缓存子应用在主应用中缓存子应用实例，避免每次进入都重新 mount。
-
-异步加载子应用脚本
- &lt;script src=&quot;child-app.js&quot; defer&gt;&lt;/script&gt;
-
-全局事件通信 bus
- // 主应用通信工具import mitt from &#x27;mitt&#x27;;export const eventBus = mitt();// 子应用中通信示例eventBus.emit(&#x27;login-success&#x27;, userInfo);eventBus.on(&#x27;set-theme&#x27;, (theme) =&gt; &#123; ... &#125;);
-
-]]></content>
-      <categories>
-        <category>前端</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>脱离框架开发</title>
-    <url>/posts/877328792.html</url>
-    <content><![CDATA[前端脱离框架去开发，就是不使用任何前端框架（Vue、React等）的情况下，直接用js、html和css去开发web。这意味更能深入了解前端底层原理和机制，避免依赖框架。
-在面对静态且不做过多功能的低项目下，其实脱离框架就已经足够了。框架编写的代码必须要进行编译才能在浏览器中渲染，所以便有了webpack。像Vue的出现就是为了解决一些痛点问题，比如双向数据流、自动响应式更新等，但我们又不得不遵守他们框架内的一些语法，随着vue的升级，我们也要不停学习更新的框架内容。框架本身是有利于开发的，但面对一些简单的问题时，不用框架反而是明智的。根据需求而决定去不去用框架进行下一步的开发。
-当开发多个类似的网站，没有打包过的代码放上服务器，能直接在服务器改源代码。而使用框架后打包的源码放在服务器中，要修改却只能本地修改，反而更浪费时间。当熟悉纯js开发后，还能开发一些工具以及框架出来。
-]]></content>
-      <categories>
-        <category>前端</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>如何防御 XSS（跨站脚本攻击）：前端开发者必须掌握的安全实践</title>
-    <url>/posts/1588092017.html</url>
-    <content><![CDATA[在 Web 开发中，其实存在很多安全漏洞，其中跨站脚本攻击是最常见、危害也非常大的安全漏洞之一。一旦网站存在 XSS 漏洞，那么攻击者就会在用户浏览器中执行恶意脚本，进而窃取 Cookie、劫持会话、篡改页面内容，甚至控制用户账号。
-下面将从 原理 + 实战防御手段 的角度，系统讲解前端和全栈开发中 如何有效防御 XSS 攻击
-一、什么是 XSS 攻击？XSS 的本质是：
-
-攻击者将恶意 JavaScript 注入到网页中，并在其他用户的浏览器里执行。
-
-常见的 XSS 攻击类型包括：
-
-反射型 XSS：恶意脚本来自 URL 参数
-存储型 XSS：恶意脚本被存储在数据库中
-DOM 型 XSS：前端 JS 逻辑直接操作不可信数据
-
-不论是哪种形式，核心问题都在于：👉 用户输入被当作代码执行了
-二、输入验证和过滤（最基础也是最重要）永远不要相信用户输入。
-1. 前端层面的基本校验在前端可以做一些基础校验，例如：
-
-限制输入长度
-限制输入格式（如邮箱、手机号）
-过滤明显的危险字符
-
-示例（仅用于基础校验）：
-function sanitizeInput(input) &#123;  return input.replace(/[&lt;&gt;]/g, &#x27;&#x27;);&#125;
-
-⚠️ 注意：前端校验只能作为用户体验优化，不能作为最终安全防线。
-2. 后端必须做严格校验（关键）光是前端做个过滤是远远不够的，后端也需要做处理：
-
-校验数据类型
-校验长度
-拒绝不符合业务规则的输入
-对 HTML 内容进行转义或白名单过滤
-
-推荐策略：
-
-默认拒绝
-白名单优先
-
-三、对输出进行编码（比过滤更重要）很多 XSS 漏洞并不是输入有问题，而是输出方式不安全。
-1. HTML 转义输出在将用户输入输出到页面时，应进行 HTML 编码：
-
-
-
-原字符
-转义后
-
-
-
-&lt;
-&amp;lt;
-
-
-&gt;
-&amp;gt;
-
-
-&quot;
-&amp;quot;
-
-
-&#39;
-&amp;#39;
-
-
-很多模板引擎（如 Vue、React、Handlebars）默认会做转义，不要轻易关闭。
-
-2. 避免危险 API尽量避免以下写法：
-element.innerHTML = userInput;
-
-推荐安全方式：
-element.textContent = userInput;
-
-或者：
-const el = document.createElement(&#x27;div&#x27;);el.textContent = userInput;container.appendChild(el);
-
-
-
-四、使用安全的 API 和框架机制现代前端框架本身已经内置了大量 XSS 防护机制。
-1. React &#x2F; Vue 的默认保护
-JSX &#x2F; 模板语法默认转义
-明确标注危险行为（如 v-html、dangerouslySetInnerHTML）
-
-⚠️ 一旦使用这些 API，就必须 100% 确保内容可信
-2. 避免在前端拼接 HTML 字符串错误示例：
-container.innerHTML = `&lt;div&gt;$&#123;userInput&#125;&lt;/div&gt;`;
-
-正确做法：
-const div = document.createElement(&#x27;div&#x27;);div.textContent = userInput;container.appendChild(div);
-
-
-
-五、使用内容安全策略（CSP）CSP（Content Security Policy） 是防御 XSS 的“终极武器”之一。
-1. CSP 能做什么？
-禁止内联脚本执行
-限制脚本来源
-阻止恶意第三方资源加载
-
-示例 HTTP 头：
-Content-Security-Policy:  default-src &#x27;self&#x27;;  script-src &#x27;self&#x27;;  object-src &#x27;none&#x27;;
-
-即使攻击者成功注入脚本，只要 CSP 生效，浏览器也会拒绝执行。
-2. 为什么 CSP 非常重要？因为它属于：
-
-浏览器层面的安全防护
-就算代码有疏漏，也能兜底
-
-六、使用 HttpOnly 和 Secure Cookie1. HttpOnly 的作用设置 Cookie 时加上 HttpOnly：
-Set-Cookie: sessionId=xxx; HttpOnly;
-
-这样可以：
-
-防止 JavaScript 读取 Cookie
-即使发生 XSS，也能降低会话被盗风险
-
-2. 配合 Secure 和 SameSite推荐同时使用：
-
-Secure
-SameSite=Strict 或 Lax
-
-提升整体安全等级。
-七、定期更新第三方库和依赖现实中的 XSS 漏洞，大量来自第三方依赖：
-
-旧版本 UI 组件
-不再维护的插件
-存在漏洞的 npm 包
-
-建议：
-
-定期更新依赖
-使用 npm audit
-关注安全公告
-
-八、良好的安全编程习惯最后，防御 XSS 不是“某一个技巧”，而是一整套习惯：
-
-不信任任何外部输入
-不随意使用 innerHTML
-不忽略安全警告
-安全优先于“图方便”
-
-九、总结
-XSS 是最常见、也是最危险的 Web 安全问题之一
-真正有效的防御需要 前端 + 后端 + 浏览器策略 三层配合
-输入校验只是开始，安全输出和 CSP 才是关键
-养成良好的安全编程习惯，比任何补丁都重要
-
-对于前端开发者来说，懂得如何防御 XSS，是走向专业的重要一步。
-]]></content>
-      <categories>
-        <category>前端</category>
-      </categories>
-      <tags>
-        <tag>XSS</tag>
-        <tag>Web安全</tag>
-        <tag>前端安全</tag>
-        <tag>JavaScript</tag>
-        <tag>浏览器安全</tag>
-        <tag>网络安全</tag>
-        <tag>Web开发</tag>
-        <tag>安全编程</tag>
-        <tag>Content Security Policy</tag>
-        <tag>HttpOnly</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>宝塔安装puppeteer</title>
-    <url>/posts/2384738307.html</url>
-    <content><![CDATA[centos8使用yum失败，切换镜像源，更改镜像源文件，尝试清除缓存并重新建立
-wget -O /etc/yum.repos.d/CentOS-Base.repo https://mirrors.aliyun.com/repo/Centos-8.reposudo yum clean allsudo yum makecache
-
-Centos8已不维护，只能找
-puppeteer报错下载依赖 参考链接：https://www.cnblogs.com/ilizhu/p/14504049.html报错sandbox：
-#添加启动参数const browser = await puppeteer.launch(&#123;args: [&#x27;--no-sandbox&#x27;, &#x27;--disable-setuid-sandbox&#x27;]&#125;);]]></content>
-      <categories>
-        <category>前端</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>小程序验证码输入框自动聚焦下个输入框</title>
-    <url>/posts/2770215437.html</url>
-    <content><![CDATA[最开始我想的是有多少个输入框，就放多少个input，做完会发现有各种bug。比如输入时跳转下个输入框不顺畅，键盘突然消失、操作不丝滑等。正确思路是一个输入框就够了，然后通过改变样式（间隔、高亮）来实现，就是表面看起来是六个输入框，本质上只有一个input
-正确解法：&lt;view class=&quot;w-80 h-100 rad-10 b-a-9 tc f-50&quot; v-for=&quot;(item,index)  in 6&quot;&gt;	&lt;input class=&quot;w-80 h-100 &quot; maxlength=&quot;1&quot; type=&quot;text&quot;    @input=&quot;inputListener(index)&quot;   :focus=&quot;focus &amp;&amp; (focusIndex == index)&quot;/&gt;&lt;/view&gt; 
-
-
-data()&#123;    return&#123;        focus: true,		code:[&#x27;&#x27;,&#x27;&#x27;,&#x27;&#x27;,&#x27;&#x27;,&#x27;&#x27;,&#x27;&#x27;],// 需要获取焦点的序号		focusIndex: 0    &#125;&#125;method:&#123;      // 输入时事件	inputListener(e) &#123;		if (this.focusIndex != e)this.focusIndex=e		if (e &lt; 6) &#123;					this.focus=true,					this.focusIndex=e + 1		&#125;else &#123;					this.focus=false		&#125;	&#125;,&#125;
-
-
-完整版可参考链接：https://blog.csdn.net/u011423258/article/details/106683068?spm=1001.2014.3001.5506
-]]></content>
-      <categories>
-        <category>前端</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>《当我谈跑步时，我谈些什么》读后感</title>
-    <url>/posts/2608328413.html</url>
-    <content><![CDATA[《当我谈跑步时，我谈些什么》也就是看了这本书，才知道世界上会有另一个自己在做着自己喜欢的事情。看这本书之前，从没有看过村上君写的书。知道有这么一个火人，也知道那么多火书，但就是没怎么看过。可论及跑步呀，觉得能与之有所交流。一直跑下去，会不会就到月球上了呢？跑步并非为了长命百岁，而是在有限生命里让自己活得更轻松点罢了。
-惊喜于能发现村上君跑步时的想象力，天马行空我很喜欢，我也曾幻想过很多，也会跑着跑着就突然想起一句歌词，什么现在加快速度追幸福呀 blala……长跑需要耐力，但没有想象力可不行哟。当然前提是热爱跑步，一个不喜欢跑步的人，你说再多也无动于衷；一个热爱跑步的人，即使是雨天，也想要在停雨空隙去相遇另一个自己。人本孤独，但精神却能得到共鸣。
-想着未来一定会坚持跑下去，不管世界如何变化。自从有次在外一整天走了 30 公里，除了身体上晒伤的疼痛以外，我更喜欢的是精神世界的富足。没经历过，就没有话语权。可能我跟陈坤一样，是个悲观的极乐主义者，在世上积极活着，却也看透红尘。不以物喜，不以己悲。脉搏也降到一分钟 50 多次，看来还是很适合慢跑的。说这么多，主要还是兴趣使然。只要不限制我的自由，一切好说。
-想着来年，我也会参加马拉松，然后旁边的人都在为我加油，那该有多 happy。
-“我不是人，是一架纯粹的机器，所以什么也无须感觉，唯有向前奔跑。”
-极为像的一点就是我们都喜欢不停地奔跑，不是那种觉得自己快不行了就走几步，也不是适当的时候停下来看风景。可能每个人的见解不同。但我觉得能不停跑下去的人才是真正的王者。
-当抵达终点那一刻，会觉得怎么那么酷，一股自豪感涌上来，就好比中了彩票或是走了狗屎运。这是原则，亦是我的骄傲。
-噢对，好比尚三哥在终点等着我，然后我得意地笑了。
-]]></content>
-      <categories>
-        <category>读书感悟</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>手写 new</title>
-    <url>/posts/1814442917.html</url>
-    <content><![CDATA[在 JavaScript 中，new运算符是面试和日常开发中都会频繁遇到的知识点。很多人会用new，但不理解它的真正原理。
-下面通过手写new，一步步拆解new运算符的底层逻辑，帮助你真正掌握 JavaScript 对象创建机制。
-一、new 运算符到底做了什么？当我们执行下面这行代码时：
-const person = new Person(&#x27;Alice&#x27;, 25);
-
-
-  JavaScript 实际上在背后做了 4 件事情：
-
-创建一个新的空对象
-将新对象的原型指向构造函数的 prototype
-执行构造函数，并将 this 绑定到新对象
-如果构造函数返回的是对象，则返回该对象；否则返回新对象
-
-  理解这 4 步，是理解 new 的关键。
-二、为什么要手写 new？手写 new 的好处有三点：
-
-加深对 原型链 和 this 指向 的理解
-几乎是 前端面试高频题
-有助于理解框架中对象创建的底层逻辑
-
-接下来我们直接上代码。
-三、手写 new 的完整实现function myNew(constructor, ...args) &#123;  // 1. 创建一个新对象，并将其原型指向构造函数的 prototype  const obj = Object.create(constructor.prototype);  // 2. 执行构造函数，将 this 绑定到新对象  const result = constructor.apply(obj, args);  // 3. 如果构造函数返回的是对象，则返回该对象  //    否则返回我们创建的新对象  return result instanceof Object ? result : obj;&#125;
-
-这段代码完整复现了 new 运算符的核心行为。
-四、逐行拆解实现逻辑1. Object.create 的作用const obj = Object.create(constructor.prototype);
-
-这一步等价于：
-obj.__proto__ === constructor.prototype
-
-也就是说：
-
-新对象可以访问构造函数原型上的方法
-原型链关系得以建立
-
-2. constructor.apply(obj, args)const result = constructor.apply(obj, args);
-
-这一步做了两件事：
-
-执行构造函数
-将构造函数内部的 this 指向新创建的对象
-
-也就是：
-this.name = name;this.age = age;
-
-实际上是在给 obj 添加属性。
-3. 为什么要判断返回值？return result instanceof Object ? result : obj;
-
-这是很多人容易忽略的一点。
-来看一个例子：
-function Test() &#123;  this.a = 1;  return &#123; b: 2 &#125;;&#125;const t = new Test();console.log(t); // &#123; b: 2 &#125;
-
-如果构造函数 显式返回一个对象，new 会返回这个对象，而不是 this。
-所以我们在 myNew 中必须处理这种情况。
-五、测试手写的 myNewfunction Person(name, age) &#123;  this.name = name;  this.age = age;&#125;const p1 = myNew(Person, &#x27;Alice&#x27;, 25);console.log(p1.name); // Aliceconsole.log(p1.age);  // 25console.log(p1 instanceof Person); // true
-
-结果完全符合原生 new 的行为。
-六、myNew 与 new 的对比总结
-
-
-行为
-new
-myNew
-
-
-
-创建新对象
-✅
-✅
-
-
-绑定原型
-✅
-✅
-
-
-绑定 this
-✅
-✅
-
-
-处理返回对象
-✅
-✅
-
-
-可以说，myNew 已经实现了 90% 的 new 运算符行为，足以应付面试和深入理解 JS 原理。
-七、常见面试追问Q1：为什么不能直接 const obj = &#123;&#125;？因为 &#123;&#125; 创建的对象原型是 Object.prototype，而 new 创建的对象原型必须是 构造函数的 prototype。
-Q2：constructor.apply 能不能换成 call？可以，只是参数形式不同：
-constructor.call(obj, ...args);
-
-
-
-Q3：instanceof 是如何工作的？p1 instanceof Person
-
-本质是沿着原型链查找：
-Person.prototype 是否在 p1 的原型链上
-
-
-
-八、总结
-new 并不是魔法，而是一套明确的执行流程
-手写 new 是理解 原型链 + this + 构造函数 的最佳方式
-掌握这个知识点，对学习 Vue、React、Node.js 都有帮助
 
 ]]></content>
       <categories>
@@ -1253,6 +1253,17 @@ ALTER TABLE table_name ADD INDEX index_name (column);
       </categories>
   </entry>
   <entry>
+    <title>获取到的csv保存数据库</title>
+    <url>/posts/1193760521.html</url>
+    <content><![CDATA[最近接到一个需求，这个第三方接口获取到的数据，它的response为csv文档时，该如何处理？其实可以先把csv文档保存到本地某路径，再通过fs的createReadStream读取数据，保存到本地数据库。
+const processConversations = async (dateObj) =&gt; &#123;  const username = &#x27;你的帐户名&#x27;;  const password = &#x27;密码&#x27;;  const year = dateObj.format(&#x27;YYYY&#x27;);  const month = dateObj.format(&#x27;MM&#x27;);  const day = dateObj.format(&#x27;DD&#x27;);  const hour = dateObj.format(&#x27;HH&#x27;);  const dateStr = `$&#123;year&#125;-$&#123;month&#125;-$&#123;day&#125;-$&#123;hour&#125;`;  const fileName = `路径后半部份`;  const url = `https://api/$&#123;fileName&#125;`;  const outputPath = `/tmp/conversations`;  const tableName = &#x27;test&#x27;;  try &#123;    // 下载 CSV    const response = await axios.get(url, &#123;      responseType: &#x27;stream&#x27;,      headers: &#123;        Authorization: `Basic $&#123;Buffer.from(`$&#123;username&#125;:$&#123;password&#125;`).toString(&#x27;base64&#x27;)&#125;`      &#125;    &#125;);    const writer = fs.createWriteStream(outputPath);    response.data.pipe(writer);    await new Promise((resolve, reject) =&gt; &#123;      writer.on(&#x27;finish&#x27;, resolve);      writer.on(&#x27;error&#x27;, reject);    &#125;);    console.log(&#x27; CSV 文件下载成功:&#x27;, fileName);    const rows = [];    await new Promise((resolve, reject) =&gt; &#123;      fs.createReadStream(outputPath)        .pipe(csv())        .on(&#x27;data&#x27;, (row) =&gt; &#123;          rows.push([            row[&#x27;DATE_TIME&#x27;] ? dayjs(row[&#x27;DATE_TIME&#x27;]).format(&#x27;YYYY-MM-DD HH:mm:ss&#x27;) : null,            row[&#x27;CLID&#x27;] || null,            row[&#x27;CLID_SOURCE&#x27;] || null          ]);        &#125;)        .on(&#x27;end&#x27;, resolve)        .on(&#x27;error&#x27;, reject);    &#125;);    if (rows.length === 0) &#123;      console.warn(`CSV 中没有数据: $&#123;fileName&#125;`);      return;    &#125;    const insertSQL = `      INSERT INTO \`$&#123;tableName&#125;\` (        date_time, clid, clid_source      ) VALUES ?    `;    await query(insertSQL, [rows]);    console.log(`成功插入 $&#123;rows.length&#125; 条记录: $&#123;fileName&#125;`);  &#125; catch (error) &#123;    console.error(`报错 ($&#123;fileName&#125;):`, error.message);  &#125;&#125;;
+
+]]></content>
+      <categories>
+        <category>后端</category>
+      </categories>
+  </entry>
+  <entry>
     <title>遇见未知的自己</title>
     <url>/posts/1660666124.html</url>
     <content><![CDATA[《遇见未知的自己》读书笔记何为“未知”？“自己”即指“真我”，从“我是谁”到后来的“从有到无”，整本书以若菱与一位智者老人的对话为主线，引申出许多深刻的生命观念。
@@ -1301,17 +1312,6 @@ ALTER TABLE table_name ADD INDEX index_name (column);
 ]]></content>
       <categories>
         <category>读书感悟</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>获取到的csv保存数据库</title>
-    <url>/posts/1193760521.html</url>
-    <content><![CDATA[最近接到一个需求，这个第三方接口获取到的数据，它的response为csv文档时，该如何处理？其实可以先把csv文档保存到本地某路径，再通过fs的createReadStream读取数据，保存到本地数据库。
-const processConversations = async (dateObj) =&gt; &#123;  const username = &#x27;你的帐户名&#x27;;  const password = &#x27;密码&#x27;;  const year = dateObj.format(&#x27;YYYY&#x27;);  const month = dateObj.format(&#x27;MM&#x27;);  const day = dateObj.format(&#x27;DD&#x27;);  const hour = dateObj.format(&#x27;HH&#x27;);  const dateStr = `$&#123;year&#125;-$&#123;month&#125;-$&#123;day&#125;-$&#123;hour&#125;`;  const fileName = `路径后半部份`;  const url = `https://api/$&#123;fileName&#125;`;  const outputPath = `/tmp/conversations`;  const tableName = &#x27;test&#x27;;  try &#123;    // 下载 CSV    const response = await axios.get(url, &#123;      responseType: &#x27;stream&#x27;,      headers: &#123;        Authorization: `Basic $&#123;Buffer.from(`$&#123;username&#125;:$&#123;password&#125;`).toString(&#x27;base64&#x27;)&#125;`      &#125;    &#125;);    const writer = fs.createWriteStream(outputPath);    response.data.pipe(writer);    await new Promise((resolve, reject) =&gt; &#123;      writer.on(&#x27;finish&#x27;, resolve);      writer.on(&#x27;error&#x27;, reject);    &#125;);    console.log(&#x27; CSV 文件下载成功:&#x27;, fileName);    const rows = [];    await new Promise((resolve, reject) =&gt; &#123;      fs.createReadStream(outputPath)        .pipe(csv())        .on(&#x27;data&#x27;, (row) =&gt; &#123;          rows.push([            row[&#x27;DATE_TIME&#x27;] ? dayjs(row[&#x27;DATE_TIME&#x27;]).format(&#x27;YYYY-MM-DD HH:mm:ss&#x27;) : null,            row[&#x27;CLID&#x27;] || null,            row[&#x27;CLID_SOURCE&#x27;] || null          ]);        &#125;)        .on(&#x27;end&#x27;, resolve)        .on(&#x27;error&#x27;, reject);    &#125;);    if (rows.length === 0) &#123;      console.warn(`CSV 中没有数据: $&#123;fileName&#125;`);      return;    &#125;    const insertSQL = `      INSERT INTO \`$&#123;tableName&#125;\` (        date_time, clid, clid_source      ) VALUES ?    `;    await query(insertSQL, [rows]);    console.log(`成功插入 $&#123;rows.length&#125; 条记录: $&#123;fileName&#125;`);  &#125; catch (error) &#123;    console.error(`报错 ($&#123;fileName&#125;):`, error.message);  &#125;&#125;;
-
-]]></content>
-      <categories>
-        <category>后端</category>
       </categories>
   </entry>
 </search>
