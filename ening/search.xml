@@ -84,14 +84,13 @@ docker exec -u 0 -it some-kibana bash
       </categories>
   </entry>
   <entry>
-    <title>ReactNative新架构</title>
-    <url>/ening/posts/14373097.html</url>
-    <content><![CDATA[
-Fabric：同步渲染 UI，消除 Bridge 通信瓶颈
-TurboModules：按需加载原生模块，提升启动速度
-JSI（JavaScript Interface）：直接调用原生代码，替代异步 Bridge, Bridge是异步的、单线程的，会带来额外的开销；而JSI是同步的，更低开销、并发的。
+    <title>Hexo-Next-更改字体、代码可复制</title>
+    <url>/ening/posts/4166932310.html</url>
+    <content><![CDATA[Next版本为7.8.0，找到 &#x2F;themes&#x2F;next&#x2F;_config.yml 文件，搜索 font 关键词，这里注意一定要将 font 里面的 enable 设置为true, 因为默认为false，然后设置 family 为自己想要的，如果family在其他平台找的，就需要修改host。(只是修改了family， 没修改enable就会不生效，所以一定一定要记得)
+font:  enable: true  # Uri of fonts host, e.g. https://fonts.googleapis.com (Default).  host:   # Font options:  # `external: true` will load this font family from `host` above.  # `family: Times New Roman`. Without any quotes.  # `size: x.x`. Use `em` as unit. Default: 1 (16px)  # Global font settings used for all elements inside &lt;body&gt;.  global:    external: true    family: Noto Serif SC    size:  # Font settings for site title (.site-title).  title:    external: true    family: Noto Serif SC    size:  # Font settings for headlines (&lt;h1&gt; to &lt;h6&gt;).  headings:    external: true    family: Noto Serif SC    size:  # Font settings for posts (.post-body).  posts:    external: true    family:  Noto Serif SC  # Font settings for &lt;code&gt; and code blocks.  codes:    external: true    family: Source Code Pro
 
-]]></content>
+代码可复制，还是上面同一个文件，找到以下代码段，将copy_button的enable设置为true，启用就可以啦。show_result设置true后，复制完会显示一个勾。style对应的copy_button不同的样式，看个人喜好来～
+codeblock:  # Code Highlight theme  # Available values: normal | night | night eighties | night blue | night bright | solarized | solarized dark | galactic  # See: https://github.com/chriskempson/tomorrow-theme  highlight_theme: night eighties  # Add copy button on codeblock  copy_button:    enable: true    # Show text copy result.    show_result: true    # Available values: default | flat | mac    style: mac]]></content>
       <categories>
         <category>前端</category>
       </categories>
@@ -114,6 +113,19 @@ H5手机端日志工具(vconsole手机端)：&lt;script src=&quot;https://cdn.bo
       </categories>
   </entry>
   <entry>
+    <title>ReactNative新架构</title>
+    <url>/ening/posts/14373097.html</url>
+    <content><![CDATA[
+Fabric：同步渲染 UI，消除 Bridge 通信瓶颈
+TurboModules：按需加载原生模块，提升启动速度
+JSI（JavaScript Interface）：直接调用原生代码，替代异步 Bridge, Bridge是异步的、单线程的，会带来额外的开销；而JSI是同步的，更低开销、并发的。
+
+]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+  </entry>
+  <entry>
     <title>ReactNative自定义滑动条</title>
     <url>/ening/posts/1147373329.html</url>
     <content><![CDATA[测试、UI要求的会比较高，比如滑动图标改成自定义图片等，所以传统的@react-native-community&#x2F;slider已经不能满足所需，所以采取自定义形式，在网上找了很久才发现的一个宝藏依赖：https://github.com/miblanchard/react-native-slider
@@ -125,82 +137,6 @@ H5手机端日志工具(vconsole手机端)：&lt;script src=&quot;https://cdn.bo
 
 详细参数可参考链接：https://github.com/miblanchard/react-native-slider
 ]]></content>
-      <categories>
-        <category>前端</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>GitLab CI/CD</title>
-    <url>/ening/posts/3033313343.html</url>
-    <content><![CDATA[前端项目 GitLab CI&#x2F;CD 持续集成部署指南（Mac 环境）概要在日常开发过程中，我们经常需要将打包后的 dist 包手动发送给后端部署，效率低且容易出错。CI（Continuous Integration，持续集成）可以自动化这一过程，本文将介绍如何通过 GitLab CI 实现持续集成部署。
-
-一、安装 GitLab Runner请参考官方文档：GitLab Runner 安装指南
-
-二、本地注册 Runner
-打开你的 GitLab 项目页面，进入 Settings → CI&#x2F;CD，展开 Runners 部分。
-记住显示的 URL 和 token，用于后续注册。
-
-执行注册命令gitlab-runner register
-
-按照提示依次输入以下信息：
-
-GitLab CI Coordinator URL: https://gitlab.com
-GitLab CI Token: xxx（从项目中复制）
-Tags: my-tag,another-tag（自定义）
-Description: my-runner（自定义）
-Executor: shell（Mac 上建议选择 shell）
-
-注册完成后，回到 GitLab CI&#x2F;CD 设置页面，可看到 Runner 状态为绿色，说明已成功运行。如果不是绿色，请执行以下命令启动 Runner 服务：
-gitlab-runner run
-
-
-三、编写 .gitlab-ci.yml 文件并提交将以下内容保存为 .gitlab-ci.yml，并 push 到 GitLab：
-stages:  - deploydeploy_to_test:  stage: deploy  script:    - yarn    - rm -rf dist/    - yarn build    - ls -l -t ./dist/    - rsync -avz ./dist/ root@xxx.xx.xx.xxx:/dist
-
-
-这段 CI 脚本会自动打包项目，并使用 rsync 将 dist 目录部署到远程服务器。
-
-
-四、通过 Docker 实现 CI（可选）如果需要通过 Docker 实现更完整的 CI&#x2F;CD 流程，继续以下步骤：
-1. 安装 Docker（Mac）brew install --cask docker
-
-2. 拉取 GitLab 镜像docker pull drud/gitlab-ce:v0.29.1
-
-3. 创建 GitLab 容器docker run -d -p 8443:443 -p 8090:80 -p 8022:22 --restart always --name gitlab drud/gitlab-ce:v0.29.1
-
-说明：
-
--p 8443:443：映射 HTTPS 端口
--p 8090:80：映射 HTTP 端口
--p 8022:22：映射 SSH 端口
---restart always：容器崩溃或主机重启时自动恢复
---name gitlab：容器命名为 gitlab
-
-访问地址：
-http://localhost:8090/
-
-
-五、Docker 模式下的 .gitlab-ci.yml 示例variables:  TEST_NAME: &quot;tips&quot;  OUT_PORT: &quot;8081&quot;  IN_PORT: &quot;8081&quot;stages:  - deploydeploy_to_test:  stage: deploy  before_script:    - if [ $(docker ps -aq --filter name=$CI_PROJECT_NAME) ]; then docker rm -f $CI_PROJECT_NAME; fi  script:    - docker build -f Dockerfile -t $TEST_NAME:latest .    - docker run -d -p $OUT_PORT:$IN_PORT --name $TEST_NAME $TEST_NAME:latest
-
-部署成功后，在 GitLab 的 CI&#x2F;CD Pipelines 页面可看到构建过程，在 Containers 页面会生成新容器，点击对应端口即可访问部署后的页面。
-
-
-
-
-
-]]></content>
-      <categories>
-        <category>前端</category>
-      </categories>
-      <tags>
-        <tag>前端</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>google sheet如何同步表格数据</title>
-    <url>/ening/posts/3195695677.html</url>
-    <content><![CDATA[有个需求是根据一个表格的所有子表，同步到另个表格（包含子表）的数据，用google sheets里面的扩展程序里的apps 脚本功能，编写脚本。为什么要同步呢？因为原表默认是不可编辑的，打算同步过来后再进行编辑。sourceSpreadsheetId跟targetSpreadsheetId为google sheet 表格地址栏d后面的一串字符。具体的实现方式如下图方法所示：
-function synchronizeSheetsToAnotherFile() &#123;  const sourceSpreadsheetId = &quot;id1&quot;;  const targetSpreadsheetId = &quot;id2&quot;; # 比如：1NOtSSvDwXrca8vqyZW6OqQJwGaCICMVguSz1-i72oqg  const sourceSpreadsheet = SpreadsheetApp.openById(sourceSpreadsheetId);  const targetSpreadsheet = SpreadsheetApp.openById(targetSpreadsheetId);  const sourceSheets = sourceSpreadsheet.getSheets();  sourceSheets.forEach(sheet =&gt; &#123;    const sheetName = sheet.getName();    let targetSheet = targetSpreadsheet.getSheetByName(sheetName);    if (!targetSheet) &#123;      targetSheet = targetSpreadsheet.insertSheet(sheetName);    &#125; else &#123;      targetSheet.clear();     &#125;    const range = sheet.getDataRange();    const displayValues = range.getDisplayValues();     const formats = range.getBackgrounds();            const fontWeights = range.getFontWeights();        const targetRange = targetSheet.getRange(1, 1, displayValues.length, displayValues[0].length);    targetRange.setValues(displayValues);     targetRange.setBackgrounds(formats);     targetRange.setFontWeights(fontWeights);    &#125;);&#125;]]></content>
       <categories>
         <category>前端</category>
       </categories>
@@ -232,6 +168,17 @@ function foo() &#123;  &quot;use strict&quot;;  console.log(this.a); // ❌ Type
 ]]></content>
       <categories>
         <category>前端</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>聊聊Node RPC</title>
+    <url>/ening/posts/1680906009.html</url>
+    <content><![CDATA[什么是序列化在 TCP 通道里传输的数据只能是二进制形式的，所以将数据结构或对象转化成二进制的形式就叫序列化。反过来就叫反序列化，他们之间的规则就叫协议。
+RPC是什么全称是Remote Procedure Call， 中文名字叫远程过程调用。大部份的 RPC 是基于TCP的。具体实现流程如下：
+1、前端通过 Proxy 代理调用相应的接口, Proxy 将 RPC 的服务名，方法名，参数等信息转换成 RPC Request 对象，交给 RPC 框架2、RPC 框架通过 RPC 协议将 RPC Request 对象序列化成二进制形式3、RPC 通过 TCP 通道把二进制数据传递给后端4、后端将二进制数据反序列化成 RPC Request 对象5、后端将反序列化后的数据对应到自己写的方法内，传入参数，获取数据，将获取后的数据进行封装，封装成 RPC Response 交给 RPC 框架6、RPC 框架通过 RPC 协议将 RPC Response 对象序列化成二进制形式, 通过 TCP 通道传递给前端6、前端将收到的二进制数据反序列化成 RPC response 对象，将结果通过 Proxy 返回给业务代码
+]]></content>
+      <categories>
+        <category>后端</category>
       </categories>
   </entry>
   <entry>
@@ -368,6 +315,15 @@ Vue 模板中不能直接写 &lt;script&gt;，否则脚本不会执行
       </tags>
   </entry>
   <entry>
+    <title>google sheet如何同步表格数据</title>
+    <url>/ening/posts/3195695677.html</url>
+    <content><![CDATA[有个需求是根据一个表格的所有子表，同步到另个表格（包含子表）的数据，用google sheets里面的扩展程序里的apps 脚本功能，编写脚本。为什么要同步呢？因为原表默认是不可编辑的，打算同步过来后再进行编辑。sourceSpreadsheetId跟targetSpreadsheetId为google sheet 表格地址栏d后面的一串字符。具体的实现方式如下图方法所示：
+function synchronizeSheetsToAnotherFile() &#123;  const sourceSpreadsheetId = &quot;id1&quot;;  const targetSpreadsheetId = &quot;id2&quot;; # 比如：1NOtSSvDwXrca8vqyZW6OqQJwGaCICMVguSz1-i72oqg  const sourceSpreadsheet = SpreadsheetApp.openById(sourceSpreadsheetId);  const targetSpreadsheet = SpreadsheetApp.openById(targetSpreadsheetId);  const sourceSheets = sourceSpreadsheet.getSheets();  sourceSheets.forEach(sheet =&gt; &#123;    const sheetName = sheet.getName();    let targetSheet = targetSpreadsheet.getSheetByName(sheetName);    if (!targetSheet) &#123;      targetSheet = targetSpreadsheet.insertSheet(sheetName);    &#125; else &#123;      targetSheet.clear();     &#125;    const range = sheet.getDataRange();    const displayValues = range.getDisplayValues();     const formats = range.getBackgrounds();            const fontWeights = range.getFontWeights();        const targetRange = targetSheet.getRange(1, 1, displayValues.length, displayValues[0].length);    targetRange.setValues(displayValues);     targetRange.setBackgrounds(formats);     targetRange.setFontWeights(fontWeights);    &#125;);&#125;]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+  </entry>
+  <entry>
     <title>《终有一天你会懂》琢磨先生 - 读书笔记</title>
     <url>/ening/posts/1854544702.html</url>
     <content><![CDATA[
@@ -408,16 +364,84 @@ Vue 模板中不能直接写 &lt;script&gt;，否则脚本不会执行
       </categories>
   </entry>
   <entry>
-    <title>初中英语教师资格作文课模版</title>
-    <url>/ening/posts/2227105628.html</url>
-    <content><![CDATA[开场问候Dear Judges, Now I’ll start the lesson. Good morning, Boys and girls. How are you today? Good? Fine? I’m fine, too. Before the class, Let’s sing a song together. If you can sing, sing along with me . “You are my sunshine, my only sunshine, you make me happy.” Do you feel better? Great, let’s start the lesson.At the beginning, I’ll show you a video, and you should try to answer the question: What can you see in the video? Who would like to try? Blair, please. You saw the girl had much fun. She had dinner and went shopping with friends. Thank you, Blair, you set a good example for us. You know so much about this topic. Do you want to learn more? Today, let’s learn a new lesson — How was your day off.
-导入OK, everyone, here is a passage. I’ll read it for you. You should listen carefully and tell me the main idea, OK? Here we go! …….OK, Please share your ideas. Jenny, you please. It talks about the Bermuda Triangle, where a number of planes and ships disappeared.Do you agree? I totally agree with her.
-PreBoys and girls, since we already know the content of the letter, Let’s look at the structure of the letter.There are 4 parts of it, right?The first one is to whom. We call it salutation&#x2F;ˌsalyəˈtāSH(ə)n&#x2F;, such as Hi Henry, Dear Lucy and so on. The second part is body part. You can write whatever you want. The third part, we often add complementary close&#x2F;wishes, such as ‘yours’, ‘sincerely’. The last part is from whom, we call it signature. Am I clear? So when we write a letter, we can imitate it. Brilliant!
-the first part is introduction. It’s a fun day last Saturday. The second part is main body, it’s about what they did in the morning, afternoon and so on. The third part is conclusion. So if we want to write out our everyday life, we can imitate this structure, OK?
-写前Before writing, let’s have a brainstorm. As Tom, what information can you write to reply to Nick’s letter? You can have a discussion in groups. 3 minutes for you. Stop! Who can try, this boy? You will write some activities during camping. Your ideas are wonderful. Bravo! Thank you.OK，I can see you all have many ideas. How about writing down your ideas with the structure we just learned. You have 2 minutes to design your outline.OK, time is up. Finished? I see all of you nod your heads. Very good!It’s time to finish the whole letter. While writing, you should pay attention to the grammar.We should use simple past tense to talk about the experience in the past.And for the signature, you should write”Tom”. If you have any problems, just raise your hands, and I will help you. Are you ready? Let’s do it.
-写后Have you finished your writing? Show me your hands. Well done. Next, go over your writing one more time and then exchange it with your group members.Try to check and correct the mistakes, got it? You have 2 minutes.Stop here.Who wants to share your writing? Cindy, please. Wow, good pronunciation. You state the story vividly. The logic is clear! OK, anyone else? Tony. Please. Oh, you want to present Tina’s article.Can you read it? Very good. Thank you, Tony. Guys, Let’s look at Tina’s work together. “Tom” went to a mountain for camping. I think her article is perfect. We can learn a lot from it. Boys and girls, you all did a good job!
-总结How time files! The class is almost over. Before ending our class, let’s have a summary. Who can summarize what we have learned this class? Fiona please. Very good. I hope you can apply what we have learned in your daily life so that we can improve our reading and speaking ability, right?Our homework is as follows: You should finish the exercise book and search for more information about ask your parents about their day off. Next class, we will share them together.
-Class is over, see you next time.
+    <title>GitLab CI/CD</title>
+    <url>/ening/posts/3033313343.html</url>
+    <content><![CDATA[前端项目 GitLab CI&#x2F;CD 持续集成部署指南（Mac 环境）概要在日常开发过程中，我们经常需要将打包后的 dist 包手动发送给后端部署，效率低且容易出错。CI（Continuous Integration，持续集成）可以自动化这一过程，本文将介绍如何通过 GitLab CI 实现持续集成部署。
+
+一、安装 GitLab Runner请参考官方文档：GitLab Runner 安装指南
+
+二、本地注册 Runner
+打开你的 GitLab 项目页面，进入 Settings → CI&#x2F;CD，展开 Runners 部分。
+记住显示的 URL 和 token，用于后续注册。
+
+执行注册命令gitlab-runner register
+
+按照提示依次输入以下信息：
+
+GitLab CI Coordinator URL: https://gitlab.com
+GitLab CI Token: xxx（从项目中复制）
+Tags: my-tag,another-tag（自定义）
+Description: my-runner（自定义）
+Executor: shell（Mac 上建议选择 shell）
+
+注册完成后，回到 GitLab CI&#x2F;CD 设置页面，可看到 Runner 状态为绿色，说明已成功运行。如果不是绿色，请执行以下命令启动 Runner 服务：
+gitlab-runner run
+
+
+三、编写 .gitlab-ci.yml 文件并提交将以下内容保存为 .gitlab-ci.yml，并 push 到 GitLab：
+stages:  - deploydeploy_to_test:  stage: deploy  script:    - yarn    - rm -rf dist/    - yarn build    - ls -l -t ./dist/    - rsync -avz ./dist/ root@xxx.xx.xx.xxx:/dist
+
+
+这段 CI 脚本会自动打包项目，并使用 rsync 将 dist 目录部署到远程服务器。
+
+
+四、通过 Docker 实现 CI（可选）如果需要通过 Docker 实现更完整的 CI&#x2F;CD 流程，继续以下步骤：
+1. 安装 Docker（Mac）brew install --cask docker
+
+2. 拉取 GitLab 镜像docker pull drud/gitlab-ce:v0.29.1
+
+3. 创建 GitLab 容器docker run -d -p 8443:443 -p 8090:80 -p 8022:22 --restart always --name gitlab drud/gitlab-ce:v0.29.1
+
+说明：
+
+-p 8443:443：映射 HTTPS 端口
+-p 8090:80：映射 HTTP 端口
+-p 8022:22：映射 SSH 端口
+--restart always：容器崩溃或主机重启时自动恢复
+--name gitlab：容器命名为 gitlab
+
+访问地址：
+http://localhost:8090/
+
+
+五、Docker 模式下的 .gitlab-ci.yml 示例variables:  TEST_NAME: &quot;tips&quot;  OUT_PORT: &quot;8081&quot;  IN_PORT: &quot;8081&quot;stages:  - deploydeploy_to_test:  stage: deploy  before_script:    - if [ $(docker ps -aq --filter name=$CI_PROJECT_NAME) ]; then docker rm -f $CI_PROJECT_NAME; fi  script:    - docker build -f Dockerfile -t $TEST_NAME:latest .    - docker run -d -p $OUT_PORT:$IN_PORT --name $TEST_NAME $TEST_NAME:latest
+
+部署成功后，在 GitLab 的 CI&#x2F;CD Pipelines 页面可看到构建过程，在 Containers 页面会生成新容器，点击对应端口即可访问部署后的页面。
+
+
+
+
+
+]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+      <tags>
+        <tag>前端</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>初中英语语篇课模版</title>
+    <url>/ening/posts/1218163514.html</url>
+    <content><![CDATA[The intonation.（语调）Express the different feelings of the speaker.We often use the falling tone when we read a statement, a special question, an exclamatory or imperative sentence(祈使句、感叹句). We often use rising tone when we ask a Yes&#x2F;No question. We often use rising-falling tone to read an alternative question and a coordinate clause（选择疑问句、并列句）. There are two parts in a tag question（反义疑问句）. The first part is often in a falling tone and for second part, there are two cases. If we are not sure about the question, we often use a rising tone. If we are sure about that, we offen use a falling tone.We choose different intonations to express different feelings and moods.
+The word stress(单词重音)Read words more exactlyWhen we say a word with more than one syllable, some of the syllables need to be stressed.When we read two-syllable words, normally we stress the first syllable for nouns, and stress the second syllable for verbs. As for the multi-syllable words, we stress the third from the bottom.
+The sentence stress（句子重读）Draw attention to certain information.We usually stress the lexical words such as nouns, verbs, adjectives, adverbs and numbers. We don’t stress the function words such as a, the, is, of and so on. Besides, you can stress some information you want to emphasis.We should change it according to the situation and feelings of the speaker.
+The liaison&#x2F;ˈlēəˌzän,lēˈāˌzän&#x2F;&#x2F;Word linking.(连读)Speak English more fluently and naturally.In one sense group, we can read the two words together if the former word ends with a consonant&#x2F;ˈkänsənənt&#x2F;, a vowel or “r” sound, and the following word begins with a vowel. If the two words finish and start with the same consonant, we only read one of the consonants.The two words must be in one sense group.
+incomplete plosion&#x2F;‘pləʊʒ(ə)n&#x2F;（不完全爆破）Speak English more fluently and naturally.There are six plosive sounds &#x2F;t&#x2F; &#x2F;d&#x2F; &#x2F;p&#x2F; &#x2F;b&#x2F; &#x2F;k&#x2F; &#x2F;g&#x2F; in English.When two consonants of them are next to each other, we read the former sound silently.The two words must be in one sense group.
+Weak form(弱读)speak English more fluently and naturally.Some words often appear in a weak form such as function words, articles, auxiliary verbs and modal verbs.there are mainly three ways to change function words to weak forms. They are shortening, elision[ i’liʒən ] and vowel changed to schwa  [ʃwɑ:] sound.
+Assimilation(同化)We use it to speak English more fluently and naturally.As we can see, Two different sounds affect each other and become more alike.&#x2F;s+ j&#x2F; -&gt; &#x2F;F&#x2F;this year,&#x2F;d+j&#x2F; -&gt; &#x2F;d3&#x2F; would you
+Sense group(意群)We use it to make our expression more easily to understand.As we can see, a sentence may consists of several groups according to meaning or structure. Each group is called a sense group. It can be a word, a phrase, a clause. After a sense group, there should be a short pause.We should remind that we should change it according to the situation and feelings of the speaker.
+The pause(停顿)We use to speak English more fluently and naturally.As we can see, in a long sentence, we should pause several times according to the sense group. Normally, we pause based on meaning and grammatical structure.We should remind that there should be no pause in a sense group. Where to pause also depends on the situation and the feelings of the speaker.
 ]]></content>
       <categories>
         <category>教资</category>
@@ -462,43 +486,19 @@ the modal verbs.(情态动词)Make inferences.(作出推断)The main structure o
       </categories>
   </entry>
   <entry>
-    <title>初中英语语篇课模版</title>
-    <url>/ening/posts/1218163514.html</url>
-    <content><![CDATA[The intonation.（语调）Express the different feelings of the speaker.We often use the falling tone when we read a statement, a special question, an exclamatory or imperative sentence(祈使句、感叹句). We often use rising tone when we ask a Yes&#x2F;No question. We often use rising-falling tone to read an alternative question and a coordinate clause（选择疑问句、并列句）. There are two parts in a tag question（反义疑问句）. The first part is often in a falling tone and for second part, there are two cases. If we are not sure about the question, we often use a rising tone. If we are sure about that, we offen use a falling tone.We choose different intonations to express different feelings and moods.
-The word stress(单词重音)Read words more exactlyWhen we say a word with more than one syllable, some of the syllables need to be stressed.When we read two-syllable words, normally we stress the first syllable for nouns, and stress the second syllable for verbs. As for the multi-syllable words, we stress the third from the bottom.
-The sentence stress（句子重读）Draw attention to certain information.We usually stress the lexical words such as nouns, verbs, adjectives, adverbs and numbers. We don’t stress the function words such as a, the, is, of and so on. Besides, you can stress some information you want to emphasis.We should change it according to the situation and feelings of the speaker.
-The liaison&#x2F;ˈlēəˌzän,lēˈāˌzän&#x2F;&#x2F;Word linking.(连读)Speak English more fluently and naturally.In one sense group, we can read the two words together if the former word ends with a consonant&#x2F;ˈkänsənənt&#x2F;, a vowel or “r” sound, and the following word begins with a vowel. If the two words finish and start with the same consonant, we only read one of the consonants.The two words must be in one sense group.
-incomplete plosion&#x2F;‘pləʊʒ(ə)n&#x2F;（不完全爆破）Speak English more fluently and naturally.There are six plosive sounds &#x2F;t&#x2F; &#x2F;d&#x2F; &#x2F;p&#x2F; &#x2F;b&#x2F; &#x2F;k&#x2F; &#x2F;g&#x2F; in English.When two consonants of them are next to each other, we read the former sound silently.The two words must be in one sense group.
-Weak form(弱读)speak English more fluently and naturally.Some words often appear in a weak form such as function words, articles, auxiliary verbs and modal verbs.there are mainly three ways to change function words to weak forms. They are shortening, elision[ i’liʒən ] and vowel changed to schwa  [ʃwɑ:] sound.
-Assimilation(同化)We use it to speak English more fluently and naturally.As we can see, Two different sounds affect each other and become more alike.&#x2F;s+ j&#x2F; -&gt; &#x2F;F&#x2F;this year,&#x2F;d+j&#x2F; -&gt; &#x2F;d3&#x2F; would you
-Sense group(意群)We use it to make our expression more easily to understand.As we can see, a sentence may consists of several groups according to meaning or structure. Each group is called a sense group. It can be a word, a phrase, a clause. After a sense group, there should be a short pause.We should remind that we should change it according to the situation and feelings of the speaker.
-The pause(停顿)We use to speak English more fluently and naturally.As we can see, in a long sentence, we should pause several times according to the sense group. Normally, we pause based on meaning and grammatical structure.We should remind that there should be no pause in a sense group. Where to pause also depends on the situation and the feelings of the speaker.
+    <title>初中英语教师资格作文课模版</title>
+    <url>/ening/posts/2227105628.html</url>
+    <content><![CDATA[开场问候Dear Judges, Now I’ll start the lesson. Good morning, Boys and girls. How are you today? Good? Fine? I’m fine, too. Before the class, Let’s sing a song together. If you can sing, sing along with me . “You are my sunshine, my only sunshine, you make me happy.” Do you feel better? Great, let’s start the lesson.At the beginning, I’ll show you a video, and you should try to answer the question: What can you see in the video? Who would like to try? Blair, please. You saw the girl had much fun. She had dinner and went shopping with friends. Thank you, Blair, you set a good example for us. You know so much about this topic. Do you want to learn more? Today, let’s learn a new lesson — How was your day off.
+导入OK, everyone, here is a passage. I’ll read it for you. You should listen carefully and tell me the main idea, OK? Here we go! …….OK, Please share your ideas. Jenny, you please. It talks about the Bermuda Triangle, where a number of planes and ships disappeared.Do you agree? I totally agree with her.
+PreBoys and girls, since we already know the content of the letter, Let’s look at the structure of the letter.There are 4 parts of it, right?The first one is to whom. We call it salutation&#x2F;ˌsalyəˈtāSH(ə)n&#x2F;, such as Hi Henry, Dear Lucy and so on. The second part is body part. You can write whatever you want. The third part, we often add complementary close&#x2F;wishes, such as ‘yours’, ‘sincerely’. The last part is from whom, we call it signature. Am I clear? So when we write a letter, we can imitate it. Brilliant!
+the first part is introduction. It’s a fun day last Saturday. The second part is main body, it’s about what they did in the morning, afternoon and so on. The third part is conclusion. So if we want to write out our everyday life, we can imitate this structure, OK?
+写前Before writing, let’s have a brainstorm. As Tom, what information can you write to reply to Nick’s letter? You can have a discussion in groups. 3 minutes for you. Stop! Who can try, this boy? You will write some activities during camping. Your ideas are wonderful. Bravo! Thank you.OK，I can see you all have many ideas. How about writing down your ideas with the structure we just learned. You have 2 minutes to design your outline.OK, time is up. Finished? I see all of you nod your heads. Very good!It’s time to finish the whole letter. While writing, you should pay attention to the grammar.We should use simple past tense to talk about the experience in the past.And for the signature, you should write”Tom”. If you have any problems, just raise your hands, and I will help you. Are you ready? Let’s do it.
+写后Have you finished your writing? Show me your hands. Well done. Next, go over your writing one more time and then exchange it with your group members.Try to check and correct the mistakes, got it? You have 2 minutes.Stop here.Who wants to share your writing? Cindy, please. Wow, good pronunciation. You state the story vividly. The logic is clear! OK, anyone else? Tony. Please. Oh, you want to present Tina’s article.Can you read it? Very good. Thank you, Tony. Guys, Let’s look at Tina’s work together. “Tom” went to a mountain for camping. I think her article is perfect. We can learn a lot from it. Boys and girls, you all did a good job!
+总结How time files! The class is almost over. Before ending our class, let’s have a summary. Who can summarize what we have learned this class? Fiona please. Very good. I hope you can apply what we have learned in your daily life so that we can improve our reading and speaking ability, right?Our homework is as follows: You should finish the exercise book and search for more information about ask your parents about their day off. Next class, we will share them together.
+Class is over, see you next time.
 ]]></content>
       <categories>
         <category>教资</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>Hexo-Next-更改字体、代码可复制</title>
-    <url>/ening/posts/4166932310.html</url>
-    <content><![CDATA[Next版本为7.8.0，找到 &#x2F;themes&#x2F;next&#x2F;_config.yml 文件，搜索 font 关键词，这里注意一定要将 font 里面的 enable 设置为true, 因为默认为false，然后设置 family 为自己想要的，如果family在其他平台找的，就需要修改host。(只是修改了family， 没修改enable就会不生效，所以一定一定要记得)
-font:  enable: true  # Uri of fonts host, e.g. https://fonts.googleapis.com (Default).  host:   # Font options:  # `external: true` will load this font family from `host` above.  # `family: Times New Roman`. Without any quotes.  # `size: x.x`. Use `em` as unit. Default: 1 (16px)  # Global font settings used for all elements inside &lt;body&gt;.  global:    external: true    family: Noto Serif SC    size:  # Font settings for site title (.site-title).  title:    external: true    family: Noto Serif SC    size:  # Font settings for headlines (&lt;h1&gt; to &lt;h6&gt;).  headings:    external: true    family: Noto Serif SC    size:  # Font settings for posts (.post-body).  posts:    external: true    family:  Noto Serif SC  # Font settings for &lt;code&gt; and code blocks.  codes:    external: true    family: Source Code Pro
-
-代码可复制，还是上面同一个文件，找到以下代码段，将copy_button的enable设置为true，启用就可以啦。show_result设置true后，复制完会显示一个勾。style对应的copy_button不同的样式，看个人喜好来～
-codeblock:  # Code Highlight theme  # Available values: normal | night | night eighties | night blue | night bright | solarized | solarized dark | galactic  # See: https://github.com/chriskempson/tomorrow-theme  highlight_theme: night eighties  # Add copy button on codeblock  copy_button:    enable: true    # Show text copy result.    show_result: true    # Available values: default | flat | mac    style: mac]]></content>
-      <categories>
-        <category>前端</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>聊聊Node RPC</title>
-    <url>/ening/posts/1680906009.html</url>
-    <content><![CDATA[什么是序列化在 TCP 通道里传输的数据只能是二进制形式的，所以将数据结构或对象转化成二进制的形式就叫序列化。反过来就叫反序列化，他们之间的规则就叫协议。
-RPC是什么全称是Remote Procedure Call， 中文名字叫远程过程调用。大部份的 RPC 是基于TCP的。具体实现流程如下：
-1、前端通过 Proxy 代理调用相应的接口, Proxy 将 RPC 的服务名，方法名，参数等信息转换成 RPC Request 对象，交给 RPC 框架2、RPC 框架通过 RPC 协议将 RPC Request 对象序列化成二进制形式3、RPC 通过 TCP 通道把二进制数据传递给后端4、后端将二进制数据反序列化成 RPC Request 对象5、后端将反序列化后的数据对应到自己写的方法内，传入参数，获取数据，将获取后的数据进行封装，封装成 RPC Response 交给 RPC 框架6、RPC 框架通过 RPC 协议将 RPC Response 对象序列化成二进制形式, 通过 TCP 通道传递给前端6、前端将收到的二进制数据反序列化成 RPC response 对象，将结果通过 Proxy 返回给业务代码
-]]></content>
-      <categories>
-        <category>后端</category>
       </categories>
   </entry>
   <entry>
@@ -523,6 +523,20 @@ Class is over, see you next time.
     <url>/ening/posts/4106547056.html</url>
     <content><![CDATA[有个公司需求是在前端页面，点击按钮能成功跳到公司的APP。跟原生同事联调时候，记得让他们把URL scheme:&#x2F;&#x2F;告诉你。下面的脚本是通过jquery方式去判断当前手机是android还是ios，展示对应的跳转按钮；然后监听按钮的点击事件，通过iframe的方式试图打开APP，如果能正常打开，会直接切换到APP，并自动阻止a标签的默认行为。否则会alert提示用户下载。
 脚本部分：&lt;body&gt;  &lt;div id=&quot;btn&quot;&gt;     &lt;!-- &lt;button onclick=&quot;submitFn()&quot;&gt;打开app&lt;/button&gt; --&gt;      &lt;a href=&quot;安卓配置&quot; class=&quot;a-btn&quot; style=&quot;display: none&quot;&gt;安卓&lt;/a&gt;      &lt;a href=&quot;苹果URL scheme://&quot; class=&quot;i-btn&quot; style=&quot;display: none&quot;&gt;苹果&lt;/a&gt;      &lt;/div&gt; &lt;/body&gt;  &lt;script src=&quot;http://m-cdn.saclub.com.cn/app/2.4/js/jquery-1.11.3.min.js&quot;&gt;&lt;/script&gt;  &lt;script type=&quot;text/javascript&quot;&gt;  var ua = navigator.userAgent.toLowerCase();  var isWeixin = ua.indexOf(&#x27;micromessenger&#x27;) != -1;  var isAndroid = ua.indexOf(&#x27;android&#x27;) != -1;  var isIos = (ua.indexOf(&#x27;iphone&#x27;) != -1) || (ua.indexOf(&#x27;ipad&#x27;) != -1);   var d = new Date(); var t0 = d.getTime();  $(function()&#123; if(isAndroid)&#123; $(&quot;.a-btn&quot;).show(); &#125;else&#123; $(&quot;.i-btn&quot;).show(); &#125; &#125;);   $(&quot;.a-btn&quot;).click(function()&#123;  openApp(&quot;安卓下载链接&quot;); &#125;); $(&quot;.i-btn&quot;).click(function()&#123;  openApp(&quot;IOS App Store下载链接&quot;); &#125;);  function openApp(src) &#123;     var delay = setInterval(function()&#123;     var d = new Date(); var t1 = d.getTime();     if( t1-t0&lt;3000 &amp;&amp; t1-t0&gt;2000)&#123; alert(&#x27;请下载APP&#x27;); window.location.href =src; &#125;     if(t1-t0&gt;=3000)&#123; clearInterval(delay); &#125;     &#125;,2000); &#125; &lt;/script&gt;
+
+
+
+]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>前端骨架屏</title>
+    <url>/ening/posts/4094880158.html</url>
+    <content><![CDATA[什么时候需要用到前端骨架屏呢？ 其实就是在首页还没完全加载出来，可以先把骨架屏弄出来，避免白屏给用户造成不好的用户体验。那么具体是要如何去弄出来呢？设置Dps.config.js，配置如下：
+其中url字段输入待生成骨架屏页面的地址，比如百度（https://baidu.com）也可以。output主要代表输出。其中filepath代表生成骨架屏的存放页面，一般为项目的入口页面；然后injectSelector代表插入页面的某个节点。includeElement用于定制或排除某些节点的绘制行为，其中通过id来定位，比如需不需要在这个id上渲染。还能判断tagName是什么的时候，渲染什么。init的作用是生成骨架屏之前的操作，比如删除干扰节点。
+基本配置字段说明    const dpsConfig = &#123;    url: &#x27;file:///Users/myname/Desktop/project/pro/scaleTips/dist/index.html#/&#x27;,          // 待生成骨架屏页面的地址，用百度（https://baidu.com）试试也可以    output: &#123;        filepath: &#x27;/Users/myname/Desktop/project/pro&#x27;,        // 生成骨架屏的存放页面，一般为项目的入口页面        injectSelector: &#x27;#app&#x27;          // 生成的骨架屏插入页面的节点    &#125;,    // header: &#123;    //  height: 40,    //  background: &#x27;#1b9af4&#x27;    // &#125;,    // background: &#x27;#eee&#x27;,    // animation: &#x27;opacity 1s linear infinite;&#x27;,    //用于定制或排除某些节点的绘制行为    includeElement: function(node, draw) &#123;        // 定制某个节点画出来的样子，带上return false        if(node.id == &#x27;ui-alert&#x27;) &#123;            //跳过该节点及其子节点            return false;        &#125;        if(node.tagName.toLowerCase() === &#x27;img&#x27;) &#123;            // 对该图片生成宽100%，高8%，颜色为红色的色块            draw(&#123;                width: 100,                height: 8,                left: 0,                top: 0,                zIndex: 99999999,                background: &#x27;red&#x27;            &#125;);            return false;        &#125;     &#125;,    // writePageStructure: function(html) &#123;        // 自己处理生成的骨架屏        // fs.writeFileSync(filepath, html);        // console.log(html)    // &#125;,    init: function() &#123;        // 生成骨架屏之前的操作，比如删除干扰节点    &#125;&#125;module.exports = dpsConfig;
 
 
 
@@ -704,20 +718,6 @@ vue2 和 vue3 匿名插槽不一样  具名插槽使用方式不同：vue2 使�
       </categories>
   </entry>
   <entry>
-    <title>前端骨架屏</title>
-    <url>/ening/posts/4094880158.html</url>
-    <content><![CDATA[什么时候需要用到前端骨架屏呢？ 其实就是在首页还没完全加载出来，可以先把骨架屏弄出来，避免白屏给用户造成不好的用户体验。那么具体是要如何去弄出来呢？设置Dps.config.js，配置如下：
-其中url字段输入待生成骨架屏页面的地址，比如百度（https://baidu.com）也可以。output主要代表输出。其中filepath代表生成骨架屏的存放页面，一般为项目的入口页面；然后injectSelector代表插入页面的某个节点。includeElement用于定制或排除某些节点的绘制行为，其中通过id来定位，比如需不需要在这个id上渲染。还能判断tagName是什么的时候，渲染什么。init的作用是生成骨架屏之前的操作，比如删除干扰节点。
-基本配置字段说明    const dpsConfig = &#123;    url: &#x27;file:///Users/myname/Desktop/project/pro/scaleTips/dist/index.html#/&#x27;,          // 待生成骨架屏页面的地址，用百度（https://baidu.com）试试也可以    output: &#123;        filepath: &#x27;/Users/myname/Desktop/project/pro&#x27;,        // 生成骨架屏的存放页面，一般为项目的入口页面        injectSelector: &#x27;#app&#x27;          // 生成的骨架屏插入页面的节点    &#125;,    // header: &#123;    //  height: 40,    //  background: &#x27;#1b9af4&#x27;    // &#125;,    // background: &#x27;#eee&#x27;,    // animation: &#x27;opacity 1s linear infinite;&#x27;,    //用于定制或排除某些节点的绘制行为    includeElement: function(node, draw) &#123;        // 定制某个节点画出来的样子，带上return false        if(node.id == &#x27;ui-alert&#x27;) &#123;            //跳过该节点及其子节点            return false;        &#125;        if(node.tagName.toLowerCase() === &#x27;img&#x27;) &#123;            // 对该图片生成宽100%，高8%，颜色为红色的色块            draw(&#123;                width: 100,                height: 8,                left: 0,                top: 0,                zIndex: 99999999,                background: &#x27;red&#x27;            &#125;);            return false;        &#125;     &#125;,    // writePageStructure: function(html) &#123;        // 自己处理生成的骨架屏        // fs.writeFileSync(filepath, html);        // console.log(html)    // &#125;,    init: function() &#123;        // 生成骨架屏之前的操作，比如删除干扰节点    &#125;&#125;module.exports = dpsConfig;
-
-
-
-]]></content>
-      <categories>
-        <category>前端</category>
-      </categories>
-  </entry>
-  <entry>
     <title>如何优化前端性能</title>
     <url>/ening/posts/338223214.html</url>
     <content><![CDATA[
@@ -749,6 +749,170 @@ vue2 和 vue3 匿名插槽不一样  具名插槽使用方式不同：vue2 使�
       <categories>
         <category>前端</category>
       </categories>
+  </entry>
+  <entry>
+    <title>如何防御 XSS（跨站脚本攻击）：前端开发者必须掌握的安全实践</title>
+    <url>/ening/posts/1588092017.html</url>
+    <content><![CDATA[在 Web 开发中，其实存在很多安全漏洞，其中跨站脚本攻击是最常见、危害也非常大的安全漏洞之一。一旦网站存在 XSS 漏洞，那么攻击者就会在用户浏览器中执行恶意脚本，进而窃取 Cookie、劫持会话、篡改页面内容，甚至控制用户账号。
+下面将从 原理 + 实战防御手段 的角度，系统讲解前端和全栈开发中 如何有效防御 XSS 攻击
+一、什么是 XSS 攻击？XSS 的本质是：
+
+攻击者将恶意 JavaScript 注入到网页中，并在其他用户的浏览器里执行。
+
+常见的 XSS 攻击类型包括：
+
+反射型 XSS：恶意脚本来自 URL 参数
+存储型 XSS：恶意脚本被存储在数据库中
+DOM 型 XSS：前端 JS 逻辑直接操作不可信数据
+
+不论是哪种形式，核心问题都在于：👉 用户输入被当作代码执行了
+二、输入验证和过滤（最基础也是最重要）永远不要相信用户输入。
+1. 前端层面的基本校验在前端可以做一些基础校验，例如：
+
+限制输入长度
+限制输入格式（如邮箱、手机号）
+过滤明显的危险字符
+
+示例（仅用于基础校验）：
+function sanitizeInput(input) &#123;  return input.replace(/[&lt;&gt;]/g, &#x27;&#x27;);&#125;
+
+⚠️ 注意：前端校验只能作为用户体验优化，不能作为最终安全防线。
+2. 后端必须做严格校验（关键）光是前端做个过滤是远远不够的，后端也需要做处理：
+
+校验数据类型
+校验长度
+拒绝不符合业务规则的输入
+对 HTML 内容进行转义或白名单过滤
+
+推荐策略：
+
+默认拒绝
+白名单优先
+
+三、对输出进行编码（比过滤更重要）很多 XSS 漏洞并不是输入有问题，而是输出方式不安全。
+1. HTML 转义输出在将用户输入输出到页面时，应进行 HTML 编码：
+
+
+
+原字符
+转义后
+
+
+
+&lt;
+&amp;lt;
+
+
+&gt;
+&amp;gt;
+
+
+&quot;
+&amp;quot;
+
+
+&#39;
+&amp;#39;
+
+
+很多模板引擎（如 Vue、React、Handlebars）默认会做转义，不要轻易关闭。
+
+2. 避免危险 API尽量避免以下写法：
+element.innerHTML = userInput;
+
+推荐安全方式：
+element.textContent = userInput;
+
+或者：
+const el = document.createElement(&#x27;div&#x27;);el.textContent = userInput;container.appendChild(el);
+
+
+
+四、使用安全的 API 和框架机制现代前端框架本身已经内置了大量 XSS 防护机制。
+1. React &#x2F; Vue 的默认保护
+JSX &#x2F; 模板语法默认转义
+明确标注危险行为（如 v-html、dangerouslySetInnerHTML）
+
+⚠️ 一旦使用这些 API，就必须 100% 确保内容可信
+2. 避免在前端拼接 HTML 字符串错误示例：
+container.innerHTML = `&lt;div&gt;$&#123;userInput&#125;&lt;/div&gt;`;
+
+正确做法：
+const div = document.createElement(&#x27;div&#x27;);div.textContent = userInput;container.appendChild(div);
+
+
+
+五、使用内容安全策略（CSP）CSP（Content Security Policy） 是防御 XSS 的“终极武器”之一。
+1. CSP 能做什么？
+禁止内联脚本执行
+限制脚本来源
+阻止恶意第三方资源加载
+
+示例 HTTP 头：
+Content-Security-Policy:  default-src &#x27;self&#x27;;  script-src &#x27;self&#x27;;  object-src &#x27;none&#x27;;
+
+即使攻击者成功注入脚本，只要 CSP 生效，浏览器也会拒绝执行。
+2. 为什么 CSP 非常重要？因为它属于：
+
+浏览器层面的安全防护
+就算代码有疏漏，也能兜底
+
+六、使用 HttpOnly 和 Secure Cookie1. HttpOnly 的作用设置 Cookie 时加上 HttpOnly：
+Set-Cookie: sessionId=xxx; HttpOnly;
+
+这样可以：
+
+防止 JavaScript 读取 Cookie
+即使发生 XSS，也能降低会话被盗风险
+
+2. 配合 Secure 和 SameSite推荐同时使用：
+
+Secure
+SameSite=Strict 或 Lax
+
+提升整体安全等级。
+七、定期更新第三方库和依赖现实中的 XSS 漏洞，大量来自第三方依赖：
+
+旧版本 UI 组件
+不再维护的插件
+存在漏洞的 npm 包
+
+建议：
+
+定期更新依赖
+使用 npm audit
+关注安全公告
+
+八、良好的安全编程习惯最后，防御 XSS 不是“某一个技巧”，而是一整套习惯：
+
+不信任任何外部输入
+不随意使用 innerHTML
+不忽略安全警告
+安全优先于“图方便”
+
+九、总结
+XSS 是最常见、也是最危险的 Web 安全问题之一
+真正有效的防御需要 前端 + 后端 + 浏览器策略 三层配合
+输入校验只是开始，安全输出和 CSP 才是关键
+养成良好的安全编程习惯，比任何补丁都重要
+
+对于前端开发者来说，懂得如何防御 XSS，是走向专业的重要一步。
+]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+      <tags>
+        <tag>XSS</tag>
+        <tag>Web安全</tag>
+        <tag>前端安全</tag>
+        <tag>JavaScript</tag>
+        <tag>浏览器安全</tag>
+        <tag>网络安全</tag>
+        <tag>Web开发</tag>
+        <tag>安全编程</tag>
+        <tag>Content Security Policy</tag>
+        <tag>HttpOnly</tag>
+      </tags>
   </entry>
   <entry>
     <title>宝塔安装puppeteer</title>
@@ -1047,168 +1211,19 @@ allSettled：等全部结束，返回每个结果状态
       </categories>
   </entry>
   <entry>
-    <title>如何防御 XSS（跨站脚本攻击）：前端开发者必须掌握的安全实践</title>
-    <url>/ening/posts/1588092017.html</url>
-    <content><![CDATA[在 Web 开发中，其实存在很多安全漏洞，其中跨站脚本攻击是最常见、危害也非常大的安全漏洞之一。一旦网站存在 XSS 漏洞，那么攻击者就会在用户浏览器中执行恶意脚本，进而窃取 Cookie、劫持会话、篡改页面内容，甚至控制用户账号。
-下面将从 原理 + 实战防御手段 的角度，系统讲解前端和全栈开发中 如何有效防御 XSS 攻击
-一、什么是 XSS 攻击？XSS 的本质是：
-
-攻击者将恶意 JavaScript 注入到网页中，并在其他用户的浏览器里执行。
-
-常见的 XSS 攻击类型包括：
-
-反射型 XSS：恶意脚本来自 URL 参数
-存储型 XSS：恶意脚本被存储在数据库中
-DOM 型 XSS：前端 JS 逻辑直接操作不可信数据
-
-不论是哪种形式，核心问题都在于：👉 用户输入被当作代码执行了
-二、输入验证和过滤（最基础也是最重要）永远不要相信用户输入。
-1. 前端层面的基本校验在前端可以做一些基础校验，例如：
-
-限制输入长度
-限制输入格式（如邮箱、手机号）
-过滤明显的危险字符
-
-示例（仅用于基础校验）：
-function sanitizeInput(input) &#123;  return input.replace(/[&lt;&gt;]/g, &#x27;&#x27;);&#125;
-
-⚠️ 注意：前端校验只能作为用户体验优化，不能作为最终安全防线。
-2. 后端必须做严格校验（关键）光是前端做个过滤是远远不够的，后端也需要做处理：
-
-校验数据类型
-校验长度
-拒绝不符合业务规则的输入
-对 HTML 内容进行转义或白名单过滤
-
-推荐策略：
-
-默认拒绝
-白名单优先
-
-三、对输出进行编码（比过滤更重要）很多 XSS 漏洞并不是输入有问题，而是输出方式不安全。
-1. HTML 转义输出在将用户输入输出到页面时，应进行 HTML 编码：
-
-
-
-原字符
-转义后
-
-
-
-&lt;
-&amp;lt;
-
-
-&gt;
-&amp;gt;
-
-
-&quot;
-&amp;quot;
-
-
-&#39;
-&amp;#39;
-
-
-很多模板引擎（如 Vue、React、Handlebars）默认会做转义，不要轻易关闭。
-
-2. 避免危险 API尽量避免以下写法：
-element.innerHTML = userInput;
-
-推荐安全方式：
-element.textContent = userInput;
-
-或者：
-const el = document.createElement(&#x27;div&#x27;);el.textContent = userInput;container.appendChild(el);
-
-
-
-四、使用安全的 API 和框架机制现代前端框架本身已经内置了大量 XSS 防护机制。
-1. React &#x2F; Vue 的默认保护
-JSX &#x2F; 模板语法默认转义
-明确标注危险行为（如 v-html、dangerouslySetInnerHTML）
-
-⚠️ 一旦使用这些 API，就必须 100% 确保内容可信
-2. 避免在前端拼接 HTML 字符串错误示例：
-container.innerHTML = `&lt;div&gt;$&#123;userInput&#125;&lt;/div&gt;`;
-
-正确做法：
-const div = document.createElement(&#x27;div&#x27;);div.textContent = userInput;container.appendChild(div);
-
-
-
-五、使用内容安全策略（CSP）CSP（Content Security Policy） 是防御 XSS 的“终极武器”之一。
-1. CSP 能做什么？
-禁止内联脚本执行
-限制脚本来源
-阻止恶意第三方资源加载
-
-示例 HTTP 头：
-Content-Security-Policy:  default-src &#x27;self&#x27;;  script-src &#x27;self&#x27;;  object-src &#x27;none&#x27;;
-
-即使攻击者成功注入脚本，只要 CSP 生效，浏览器也会拒绝执行。
-2. 为什么 CSP 非常重要？因为它属于：
-
-浏览器层面的安全防护
-就算代码有疏漏，也能兜底
-
-六、使用 HttpOnly 和 Secure Cookie1. HttpOnly 的作用设置 Cookie 时加上 HttpOnly：
-Set-Cookie: sessionId=xxx; HttpOnly;
-
-这样可以：
-
-防止 JavaScript 读取 Cookie
-即使发生 XSS，也能降低会话被盗风险
-
-2. 配合 Secure 和 SameSite推荐同时使用：
-
-Secure
-SameSite=Strict 或 Lax
-
-提升整体安全等级。
-七、定期更新第三方库和依赖现实中的 XSS 漏洞，大量来自第三方依赖：
-
-旧版本 UI 组件
-不再维护的插件
-存在漏洞的 npm 包
-
-建议：
-
-定期更新依赖
-使用 npm audit
-关注安全公告
-
-八、良好的安全编程习惯最后，防御 XSS 不是“某一个技巧”，而是一整套习惯：
-
-不信任任何外部输入
-不随意使用 innerHTML
-不忽略安全警告
-安全优先于“图方便”
-
-九、总结
-XSS 是最常见、也是最危险的 Web 安全问题之一
-真正有效的防御需要 前端 + 后端 + 浏览器策略 三层配合
-输入校验只是开始，安全输出和 CSP 才是关键
-养成良好的安全编程习惯，比任何补丁都重要
-
-对于前端开发者来说，懂得如何防御 XSS，是走向专业的重要一步。
+    <title>《皮囊》感悟</title>
+    <url>/ening/posts/1002941222.html</url>
+    <content><![CDATA[阿太阿太倔强坚强，豁达的心态值得人学习。父亲最强大的地方就是娶了我的母亲。一个伟大的女人。真正的女人就是应该要积极乐观面对一切，用自己的双手打造自己想要的未来。
+虽然有偷窃，但也是生活所迫，为了生存，为了家人，放下面子干一些违心事，又何尝不是一种积极的心态呢？而不是一哭二闹三上吊。
+想来作者能有如此作为，跟他伟大的母亲脱不了干系。
+那可爱的母亲呀！为了父亲的面子，为了父亲开心，都坚持要把房子建完，这何尝不是一种力量，向往心之所向，佩服这种勇气。
+其实最了解父亲的人是母亲，母亲知道父亲好面子，爱情不就是这样吗？你不用说，我懂，我懂你懂我，所以我们才会在一起这么久。
+张美丽从哪里跌倒，就从哪里爬起来。仿佛看见一个追求真爱，为爱为自己想要的东西不懈努力的人，虽说最终还是被迫性解放了自己，但她曾经的所作所为仍让我敬佩。
+舆论的力量是强大的，但比其而言，张美丽的内心力量更强大。
 ]]></content>
       <categories>
-        <category>前端</category>
+        <category>读书感悟</category>
       </categories>
-      <tags>
-        <tag>XSS</tag>
-        <tag>Web安全</tag>
-        <tag>前端安全</tag>
-        <tag>JavaScript</tag>
-        <tag>浏览器安全</tag>
-        <tag>网络安全</tag>
-        <tag>Web开发</tag>
-        <tag>安全编程</tag>
-        <tag>Content Security Policy</tag>
-        <tag>HttpOnly</tag>
-      </tags>
   </entry>
   <entry>
     <title>索引</title>
@@ -1235,21 +1250,6 @@ ALTER TABLE table_name ADD INDEX index_name (column);
 ]]></content>
       <categories>
         <category>后端</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>《皮囊》感悟</title>
-    <url>/ening/posts/1002941222.html</url>
-    <content><![CDATA[阿太阿太倔强坚强，豁达的心态值得人学习。父亲最强大的地方就是娶了我的母亲。一个伟大的女人。真正的女人就是应该要积极乐观面对一切，用自己的双手打造自己想要的未来。
-虽然有偷窃，但也是生活所迫，为了生存，为了家人，放下面子干一些违心事，又何尝不是一种积极的心态呢？而不是一哭二闹三上吊。
-想来作者能有如此作为，跟他伟大的母亲脱不了干系。
-那可爱的母亲呀！为了父亲的面子，为了父亲开心，都坚持要把房子建完，这何尝不是一种力量，向往心之所向，佩服这种勇气。
-其实最了解父亲的人是母亲，母亲知道父亲好面子，爱情不就是这样吗？你不用说，我懂，我懂你懂我，所以我们才会在一起这么久。
-张美丽从哪里跌倒，就从哪里爬起来。仿佛看见一个追求真爱，为爱为自己想要的东西不懈努力的人，虽说最终还是被迫性解放了自己，但她曾经的所作所为仍让我敬佩。
-舆论的力量是强大的，但比其而言，张美丽的内心力量更强大。
-]]></content>
-      <categories>
-        <category>读书感悟</category>
       </categories>
   </entry>
   <entry>
